@@ -25,6 +25,7 @@ Deep Learning, Transformers, modelos generativos, GNN y Reinforcement Learning.*
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-sitio%20vivo-222?style=flat-square&logo=githubpages&logoColor=white)](https://vladimiracunadev-create.github.io/computational-mathematics-program/)
 
 [🌐 **Sitio de estudio (vivo)**](https://vladimiracunadev-create.github.io/computational-mathematics-program/) ·
+[📄 **Manual completo (PDF)**](https://vladimiracunadev-create.github.io/computational-mathematics-program/downloads/computational-mathematics-program-manual.pdf) ·
 [🧭 Ruta de aprendizaje](docs/LEARNING_PATH.md) ·
 [🤖 Mapa matemático de IA](docs/AI_MATHEMATICS_MAP.md) ·
 [🏗️ Arquitectura](docs/ARCHITECTURE.md) ·
@@ -52,6 +53,8 @@ Deep Learning, Transformers, modelos generativos, GNN y Reinforcement Learning.*
 | Laboratorios | ✅ 360 `lab.py` que ejecutan la demostración de su clase |
 | CLI | ✅ `compmath catalog`, `show`, `run`, `validate`, `progress`, `stats` |
 | Sitio | ✅ portal estático HTML/PWA con buscador y progreso local |
+| Manual | ✅ documento completo en HTML y PDF, generado ejecutando las 360 demostraciones |
+| Contenido pedagógico | 🟡 fundamentos, ejemplo trabajado y referencias redactados por clase (en curso) |
 | CI | ✅ 3 sistemas operativos × 3 versiones de Python, tests y validación estricta |
 | Seguridad | ✅ `pip-audit`, `bandit`, `zizmor` y CodeQL en cada push |
 | Dependencias científicas | ⚪ opcionales: ningún laboratorio las necesita para ejecutarse |
@@ -195,6 +198,7 @@ python classes/part-15-matematica-de-deep-learning/320-capstone-red-neuronal-des
 
 ```text
 curriculum.yaml                 fuente de verdad: 18 partes, 360 clases y su metadata
+content/part-NN.yaml            contenido pedagógico: fundamentos, ejemplos, glosario y fuentes
 src/computational_math/
   ├── curriculum.py             acceso al currículo y al catálogo derivado
   ├── cli.py                    CLI `compmath`
@@ -209,6 +213,7 @@ scripts/
   └── validate_pages.py         verifica el sitio ya publicado
 tests/                          suite unittest (currículo, motores, estructura, CLI y sitio)
 site/                           portal estático (generado; no versionado)
+manual/                         manual completo HTML y PDF (generado; no versionado)
 docs/                           documentación del programa
 learning-paths/                 12 rutas por perfil profesional
 ```
@@ -220,8 +225,9 @@ Detalle completo en [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 Las clases son **artefactos derivados**: no se editan a mano.
 
 ```bash
-make generate    # curriculum.yaml + motores → 360 clases, catálogo, rutas e integraciones
-make site        # curriculum.yaml + motores → site/ (y lo valida)
+make generate    # curriculum.yaml + content/ + motores → 360 clases, catálogo, rutas, glosarios
+make manual      # → manual/ en HTML y PDF, ejecutando las 360 demostraciones
+make site        # → site/ (incluye el manual descargable) y lo valida
 make validate    # falla si algo quedó desfasado; es lo que corre CI
 make all         # todo lo anterior más tests, lint y los 360 laboratorios
 ```
@@ -257,6 +263,7 @@ referencia como superficies de aplicación. Ver [docs/integrations/README.md](do
 | [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | por qué el programa está diseñado así |
 | [docs/GLOSSARY.md](docs/GLOSSARY.md) | vocabulario preciso del programa |
 | [docs/BIBLIOGRAPHY.md](docs/BIBLIOGRAPHY.md) | bibliografía primaria por parte |
+| `classes/part-NN-*/GLOSARIO.md` | glosario de cada parte, enlazado a sus clases |
 | [INSTALL.md](INSTALL.md) | instalación en Windows, macOS y Linux |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | cómo contribuir sin romper el contrato |
 

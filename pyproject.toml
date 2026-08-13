@@ -49,6 +49,7 @@ scientific = ["numpy>=1.26", "scipy>=1.11", "sympy>=1.12", "matplotlib>=3.8", "p
 ai = ["scikit-learn>=1.4", "torch>=2.2"]
 research = ["jax>=0.4", "cvxpy>=1.4", "pymc>=5.10", "networkx>=3.2"]
 notebooks = ["jupyterlab>=4.1", "nbformat>=5.10"]
+manual = ["xhtml2pdf>=0.2,<1"]
 dev = ["ruff>=0.4"]
 
 [project.scripts]

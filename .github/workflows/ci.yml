@@ -93,8 +93,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - name: Instalar el paquete
-        run: python -m pip install -e .
+      - name: Instalar el paquete y el motor de PDF
+        run: python -m pip install -e ".[manual]"
+      - name: Construir y validar el manual completo
+        run: python scripts/build_manual.py --check
       - name: Generar el sitio
         run: python scripts/generate_site.py
       - name: Validar el artefacto

@@ -1,4 +1,4 @@
-.PHONY: help install generate site validate test lint labs capstones all clean
+.PHONY: help install generate manual site validate test lint labs capstones all clean
 
 PYTHON ?= python
 
@@ -11,7 +11,10 @@ install:  ## Instala el paquete en modo editable
 generate:  ## Regenera clases, catálogo, rutas e integraciones desde curriculum.yaml
 	$(PYTHON) scripts/generate_classes.py
 
-site:  ## Genera y valida el portal estático en site/
+manual:  ## Construye el manual completo en HTML y PDF
+	$(PYTHON) scripts/build_manual.py
+
+site: manual  ## Genera y valida el portal estático en site/ (incluye el manual)
 	$(PYTHON) scripts/generate_site.py
 	$(PYTHON) scripts/validate_site.py
 
@@ -31,7 +34,7 @@ labs:  ## Ejecuta las 360 demostraciones
 capstones:  ## Ejecuta los 18 laboratorios capstone como scripts independientes
 	$(PYTHON) scripts/run_capstone_labs.py
 
-all: generate site validate test lint labs capstones  ## Todo lo que exige CI
+all: generate manual site validate test lint labs capstones  ## Todo lo que exige CI
 
 clean:  ## Borra artefactos generados y cachés
 	rm -rf site .ruff_cache .pytest_cache build dist *.egg-info

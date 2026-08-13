@@ -75,7 +75,10 @@ def main() -> int:
 
     rotos = 0
     externos_no_permitidos = set()
-    for pagina in SITE.rglob("*.html"):
+    # El manual de site/downloads es un documento independiente: cita fuentes
+    # externas legítimamente y no forma parte de la navegación del portal.
+    paginas = [p for p in SITE.rglob("*.html") if "downloads" not in p.parts]
+    for pagina in paginas:
         texto = pagina.read_text(encoding="utf-8")
         for destino in ENLACE.findall(texto):
             if destino.startswith(("http://", "https://", "data:", "mailto:", "//")):
@@ -94,6 +97,16 @@ def main() -> int:
 
     if externos_no_permitidos:
         errores.append(f"recursos externos no permitidos: {sorted(externos_no_permitidos)[:5]}")
+
+    descargas = SITE / "downloads"
+    manual_html = descargas / "computational-mathematics-program-manual.html"
+    manual_pdf = descargas / "computational-mathematics-program-manual.pdf"
+    if "downloads/computational-mathematics-program-manual" in index:
+        if not manual_html.exists():
+            errores.append("el índice enlaza el manual HTML pero no está en site/downloads")
+        if not manual_pdf.exists():
+            print("  · aviso: el PDF del manual no está en site/downloads "
+                  "(instala el extra `manual` para generarlo)")
 
     sitemap = (SITE / "sitemap.xml").read_text(encoding="utf-8")
     urls = sitemap.count("<loc>")

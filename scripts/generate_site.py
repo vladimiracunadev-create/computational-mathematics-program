@@ -313,6 +313,7 @@ def _layout(titulo: str, contenido: str, prefijo: str = "", descripcion: str = "
     <nav>
       <a href="{prefijo}index.html#partes">Partes</a>
       <a href="{prefijo}index.html#buscar">Buscar</a>
+      <a href="{prefijo}index.html#descargas">Manual</a>
       <a href="{prefijo}index.html#rutas">Rutas</a>
       <a href="https://github.com/{REPO}">GitHub</a>
     </nav>
@@ -378,6 +379,7 @@ def _index(partes: List[Dict[str, Any]], catalogo: List[Dict[str, Any]]) -> str:
     <p>
       <a class="btn" href="#buscar">Buscar una clase</a>
       <a class="btn ghost" href="parts/part-00.html">Empezar por la parte 00</a>
+      <a class="btn ghost" href="#descargas">Manual completo (PDF)</a>
       <a class="btn ghost" href="https://github.com/{REPO}">Ver el repositorio</a>
     </p>
     <div class="stats">
@@ -438,6 +440,23 @@ compmath validate --strict  # la misma validación que corre en CI</code></pre>
       <strong>Límites honestos.</strong> Un repositorio educativo no sustituye una carrera,
       un posgrado ni supervisión académica. Las derivaciones se orientan a comprensión
       computacional; la profundidad formal completa exige textos especializados.
+    </div>
+  </div>
+</section>
+
+<section id="descargas">
+  <div class="wrap">
+    <h2>Manual completo</h2>
+    <p class="sub">Todo el programa en un solo documento: 18 partes, 360 clases, fundamentos,
+    ejemplos trabajados y las salidas reales de cada laboratorio.</p>
+    <p>
+      <a class="btn" href="downloads/computational-mathematics-program-manual.pdf">📄 Descargar PDF</a>
+      <a class="btn ghost" href="downloads/computational-mathematics-program-manual.html">🌐 Ver en HTML</a>
+    </p>
+    <div class="callout">
+      El manual se regenera en cada despliegue con
+      <code>python scripts/build_manual.py</code>, ejecutando las 360 demostraciones para
+      extraer sus salidas reales. Ninguna cifra del documento está escrita a mano.
     </div>
   </div>
 </section>
@@ -620,6 +639,22 @@ def _404() -> str:
                    descripcion="Página no encontrada")
 
 
+def _copiar_manual() -> list[str]:
+    """Copia el manual a site/downloads si ya está construido."""
+    origen = ROOT / "manual"
+    copiados = []
+    for nombre in ("computational-mathematics-program-manual.html",
+                   "computational-mathematics-program-manual.pdf"):
+        ruta = origen / nombre
+        if ruta.exists():
+            shutil.copy2(ruta, SITE / "downloads" / nombre)
+            copiados.append(nombre)
+    if not copiados:
+        print("  · manual no encontrado: ejecuta `python scripts/build_manual.py` antes "
+              "si quieres publicarlo en el sitio.")
+    return copiados
+
+
 def generar() -> int:
     if SITE.exists():
         shutil.rmtree(SITE)
@@ -627,6 +662,7 @@ def generar() -> int:
     (SITE / "parts").mkdir()
     (SITE / "classes").mkdir()
     (SITE / "data").mkdir()
+    (SITE / "downloads").mkdir()
 
     partes = curriculum.parts()
     indice = list(curriculum.classes())
@@ -691,6 +727,8 @@ def generar() -> int:
     sitemap += [f"  <url><loc>{u}</loc></url>" for u in urls]
     sitemap.append("</urlset>")
     (SITE / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
+
+    _copiar_manual()
 
     archivos = sum(1 for _ in SITE.rglob("*") if _.is_file())
     print(f"OK: sitio generado en site/ — {archivos} archivos, "

@@ -55,9 +55,13 @@ class TestSitio(unittest.TestCase):
         self.assertIn(str(totales["notebooks"]), index)
         self.assertIn("window.CATALOG", index)
 
+    def _paginas(self):
+        """Páginas del portal, excluyendo el manual descargable."""
+        return [p for p in SITE.rglob("*.html") if "downloads" not in p.parts]
+
     def test_no_hay_recursos_de_hosts_externos(self):
         permitidos = ("github.com", "github.io", "www.sitemaps.org", "www.w3.org")
-        for pagina in SITE.rglob("*.html"):
+        for pagina in self._paginas():
             texto = pagina.read_text(encoding="utf-8")
             for url in re.findall(r'(?:href|src)="(https?://[^"]+)"', texto):
                 with self.subTest(pagina=pagina.name, url=url):
@@ -65,7 +69,7 @@ class TestSitio(unittest.TestCase):
 
     def test_no_hay_enlaces_internos_rotos(self):
         rotos = []
-        for pagina in SITE.rglob("*.html"):
+        for pagina in self._paginas():
             for destino in re.findall(r'(?:href|src)="([^"#]+)"', pagina.read_text(encoding="utf-8")):
                 if destino.startswith(("http", "data:", "mailto:", "//", "/")):
                     continue
@@ -74,7 +78,7 @@ class TestSitio(unittest.TestCase):
         self.assertEqual(rotos, [], f"enlaces rotos: {rotos[:5]}")
 
     def test_toda_pagina_declara_charset_y_viewport(self):
-        for pagina in SITE.rglob("*.html"):
+        for pagina in self._paginas():
             texto = pagina.read_text(encoding="utf-8")
             with self.subTest(pagina=pagina.name):
                 self.assertIn('<meta charset="utf-8">', texto)

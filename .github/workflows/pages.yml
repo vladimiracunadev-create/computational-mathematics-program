@@ -26,8 +26,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - name: Instalar el paquete
-        run: python -m pip install -e .
+      - name: Instalar el paquete y el motor de PDF
+        run: python -m pip install -e ".[manual]"
+      - name: Construir el manual completo (HTML y PDF)
+        run: python scripts/build_manual.py
       - name: Generar el portal
         run: python scripts/generate_site.py
       - name: Validar el artefacto
@@ -42,6 +44,8 @@ jobs:
           test -s site/classes/001.html
           test -s site/classes/360.html
           test -f site/.nojekyll
+          test -s site/downloads/computational-mathematics-program-manual.html
+          test -s site/downloads/computational-mathematics-program-manual.pdf
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:

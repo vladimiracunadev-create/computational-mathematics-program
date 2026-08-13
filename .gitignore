@@ -16,8 +16,11 @@ dist/
 # Notebooks
 .ipynb_checkpoints/
 
-# Artefactos generados (los reconstruye `python scripts/generate_site.py`)
+# Artefactos generados
+# site/    → `python scripts/generate_site.py`
+# manual/  → `python scripts/build_manual.py`
 site/
+manual/
 
 # Progreso local del estudiante
 .compmath-progress.json
