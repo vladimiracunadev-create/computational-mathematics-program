@@ -54,7 +54,8 @@ Deep Learning, Transformers, modelos generativos, GNN y Reinforcement Learning.*
 | CLI | ✅ `compmath catalog`, `show`, `run`, `validate`, `progress`, `stats` |
 | Sitio | ✅ portal estático HTML/PWA con buscador y progreso local |
 | Manual | ✅ documento completo en HTML y PDF, generado ejecutando las 360 demostraciones |
-| Contenido pedagógico | 🟡 fundamentos, ejemplo trabajado y referencias redactados por clase (en curso) |
+| Contenido pedagógico | ✅ 360/360 clases con desarrollo, ejemplo trabajado, errores y fuentes |
+| Glosarios y diagramas | ✅ 489 términos en 18 glosarios y un mapa mermaid por parte |
 | CI | ✅ 3 sistemas operativos × 3 versiones de Python, tests y validación estricta |
 | Seguridad | ✅ `pip-audit`, `bandit`, `zizmor` y CodeQL en cada push |
 | Dependencias científicas | ⚪ opcionales: ningún laboratorio las necesita para ejecutarse |
