@@ -1,0 +1,32 @@
+id: "009"
+title: "Raíces y radicales"
+part: "00"
+part_title: "Pensamiento matemático desde cero"
+level: "cero-absoluto"
+index_in_part: 9
+hours: 4
+engine: "part00"
+demo: "radicals"
+demo_summary: "Raíces como exponentes fraccionarios y su dominio real."
+prerequisite: "clase 008"
+outputs:
+  - "sqrt(2)"
+  - "2**0.5"
+  - "coinciden"
+  - "cuadrado_de_la_raiz"
+  - "error_del_roundtrip"
+  - "raiz_cubica_de_-8"
+  - "raiz_par_de_negativo_en_R"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

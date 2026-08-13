@@ -1,0 +1,32 @@
+id: "131"
+title: "Mínimos cuadrados lineales"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 11
+hours: 4
+engine: "part06"
+demo: "least_squares"
+demo_summary: "Mínimos cuadrados por ecuaciones normales."
+prerequisite: "clase 130"
+outputs:
+  - "datos"
+  - "intercepto"
+  - "pendiente"
+  - "predicciones"
+  - "residuos"
+  - "SSE"
+  - "residuo_ortogonal_a_las_columnas"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

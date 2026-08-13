@@ -1,0 +1,33 @@
+id: "346"
+title: "Optimal transport"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 6
+hours: 4
+engine: "part17"
+demo: "optimal_transport"
+demo_summary: "Transporte óptimo por Sinkhorn: coste de mover una distribución a otra."
+prerequisite: "clase 345"
+outputs:
+  - "distribucion_origen"
+  - "distribucion_destino"
+  - "matriz_de_coste"
+  - "regularizacion_entropica"
+  - "plan_de_transporte"
+  - "marginales_fila"
+  - "marginales_columna"
+  - "coste_de_transporte"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

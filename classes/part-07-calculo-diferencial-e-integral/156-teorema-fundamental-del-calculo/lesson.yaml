@@ -1,0 +1,32 @@
+id: "156"
+title: "Teorema fundamental del cálculo"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 16
+hours: 4
+engine: "part07"
+demo: "fundamental_theorem"
+demo_summary: "Teorema fundamental: derivar deshace integrar."
+prerequisite: "clase 155"
+outputs:
+  - "f"
+  - "F(x)=∫₀ˣcos"
+  - "sin(x)"
+  - "primera_parte_ok"
+  - "dF/dx_numerica"
+  - "f(x)"
+  - "segunda_parte_ok"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,11 @@
+# Dependencia base del programa. Los 360 laboratorios se ejecutan solo con esto.
+PyYAML>=6,<7
+
+# Las bibliotecas científicas son OPCIONALES: aparecen en los notebooks como
+# contraste profesional, nunca como requisito para ejecutar una clase.
+#
+#   pip install -e ".[scientific]"   numpy, scipy, sympy, matplotlib, pandas
+#   pip install -e ".[notebooks]"    jupyterlab
+#   pip install -e ".[ai]"           scikit-learn, torch
+#   pip install -e ".[research]"     jax, cvxpy, pymc, networkx
+#   pip install -e ".[dev]"          ruff

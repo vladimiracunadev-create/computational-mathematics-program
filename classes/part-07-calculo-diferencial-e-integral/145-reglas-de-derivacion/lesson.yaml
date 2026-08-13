@@ -1,0 +1,29 @@
+id: "145"
+title: "Reglas de derivación"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 5
+hours: 4
+engine: "part07"
+demo: "derivative_rules"
+demo_summary: "Reglas de potencia, suma y constante verificadas numéricamente."
+prerequisite: "clase 144"
+outputs:
+  - "x³ en 2"
+  - "5x en 7"
+  - "x³+5x en 2"
+  - "constante 4"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

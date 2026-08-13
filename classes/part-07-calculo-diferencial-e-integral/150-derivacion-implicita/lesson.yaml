@@ -1,0 +1,32 @@
+id: "150"
+title: "Derivación implícita"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 10
+hours: 4
+engine: "part07"
+demo: "implicit_differentiation"
+demo_summary: "Derivación implícita sobre la circunferencia x²+y²=25."
+prerequisite: "clase 149"
+outputs:
+  - "ecuacion"
+  - "punto"
+  - "dy/dx_implicita"
+  - "dy/dx_numerica"
+  - "coinciden"
+  - "recta_tangente"
+  - "tangente_perpendicular_al_radio"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

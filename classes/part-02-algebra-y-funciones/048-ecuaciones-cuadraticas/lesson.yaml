@@ -1,0 +1,31 @@
+id: "048"
+title: "Ecuaciones cuadráticas"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 8
+hours: 4
+engine: "part02"
+demo: "quadratic_equation"
+demo_summary: "Resolver una cuadrática y contrastar con la forma de vértice."
+prerequisite: "clase 047"
+outputs:
+  - "ecuacion"
+  - "discriminante"
+  - "raices"
+  - "vertice_x"
+  - "vertice_y"
+  - "vertice_es_punto_medio_de_raices"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

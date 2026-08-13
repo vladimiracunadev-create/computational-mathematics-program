@@ -1,0 +1,31 @@
+id: "073"
+title: "Transformaciones: traslación y escala"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 13
+hours: 4
+engine: "part03"
+demo: "translation_scale"
+demo_summary: "Traslación y escala en coordenadas homogéneas."
+prerequisite: "clase 072"
+outputs:
+  - "punto_homogeneo"
+  - "trasladado"
+  - "escalado"
+  - "escala_luego_traslada"
+  - "traslada_luego_escala"
+  - "el_orden_importa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

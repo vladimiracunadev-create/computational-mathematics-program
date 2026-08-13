@@ -1,0 +1,30 @@
+id: "196"
+title: "Ley de los grandes números"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 16
+hours: 4
+engine: "part09"
+demo: "law_large_numbers"
+demo_summary: "La media muestral converge, pero lentamente."
+prerequisite: "clase 195"
+outputs:
+  - "distribucion"
+  - "informe"
+  - "velocidad"
+  - "cuadruplicar_n_reduce_el_error_a_la_mitad"
+  - "no_garantiza_ninguna_muestra_concreta"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

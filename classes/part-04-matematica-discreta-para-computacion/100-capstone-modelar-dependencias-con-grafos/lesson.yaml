@@ -1,0 +1,31 @@
+id: "100"
+title: "Capstone: modelar dependencias con grafos"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 20
+hours: 4
+engine: "part04"
+demo: "capstone_dependency_graph"
+demo_summary: "Capstone: planificar un pipeline con grafos y detectar dependencias rotas."
+prerequisite: "clase 099"
+outputs:
+  - "orden_de_ejecucion"
+  - "niveles_paralelizables"
+  - "pasos_secuenciales_minimos"
+  - "tareas"
+  - "grafo_con_ciclo_detectado"
+  - "nodos_bloqueados_por_el_ciclo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

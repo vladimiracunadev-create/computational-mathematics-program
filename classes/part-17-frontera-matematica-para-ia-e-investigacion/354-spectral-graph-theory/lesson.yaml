@@ -1,0 +1,33 @@
+id: "354"
+title: "Spectral graph theory"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 14
+hours: 4
+engine: "part17"
+demo: "spectral_graph_theory"
+demo_summary: "Clustering espectral: el vector de Fiedler separa el grafo."
+prerequisite: "clase 353"
+outputs:
+  - "nodos"
+  - "aristas"
+  - "autovalores_ordenados"
+  - "conectividad_algebraica"
+  - "grafo_conexo"
+  - "vector_de_Fiedler"
+  - "particion"
+  - "aristas_cortadas"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

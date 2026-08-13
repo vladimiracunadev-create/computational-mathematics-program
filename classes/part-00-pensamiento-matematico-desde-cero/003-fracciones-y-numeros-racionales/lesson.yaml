@@ -1,0 +1,31 @@
+id: "003"
+title: "Fracciones y números racionales"
+part: "00"
+part_title: "Pensamiento matemático desde cero"
+level: "cero-absoluto"
+index_in_part: 3
+hours: 4
+engine: "part00"
+demo: "rational_arithmetic"
+demo_summary: "Un tercio exacto frente a un tercio en punto flotante."
+prerequisite: "clase 002"
+outputs:
+  - "1/3 + 1/6 exacto"
+  - "1/3 + 1/6 float"
+  - "es_igual_a_1/2_exacto"
+  - "es_igual_a_0.5_float"
+  - "error_absoluto"
+  - "denominador_reducido"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

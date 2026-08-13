@@ -1,0 +1,32 @@
+id: "023"
+title: "Binario, octal y hexadecimal"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 3
+hours: 4
+engine: "part01"
+demo: "bases"
+demo_summary: "La misma cantidad en base 2, 8, 10 y 16."
+prerequisite: "clase 022"
+outputs:
+  - "decimal"
+  - "binario"
+  - "octal"
+  - "hexadecimal"
+  - "digitos_binarios"
+  - "un_hex_equivale_a_bits"
+  - "un_octal_equivale_a_bits"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

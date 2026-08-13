@@ -1,0 +1,33 @@
+id: "127"
+title: "Matrices positivas definidas"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 7
+hours: 4
+engine: "part06"
+demo: "positive_definite"
+demo_summary: "Definida positiva: todos los autovalores positivos, xᵀAx > 0."
+prerequisite: "clase 126"
+outputs:
+  - "A_definida_positiva"
+  - "autovalores_A"
+  - "todos_positivos"
+  - "B_indefinida"
+  - "autovalores_B"
+  - "xᵀBx_con_x=(1,-1)"
+  - "criterio_de_Sylvester_A"
+  - "uso"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,32 @@
+id: "163"
+title: "Derivadas parciales"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 3
+hours: 4
+engine: "part08"
+demo: "partial_derivatives"
+demo_summary: "Derivadas parciales: mover una variable congelando el resto."
+prerequisite: "clase 162"
+outputs:
+  - "punto"
+  - "∂f/∂x_analitica"
+  - "∂f/∂x_numerica"
+  - "∂f/∂y_analitica"
+  - "∂f/∂y_numerica"
+  - "coinciden"
+  - "cruzadas_iguales_(Schwarz)"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

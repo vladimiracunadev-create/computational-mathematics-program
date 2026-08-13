@@ -1,0 +1,31 @@
+id: "020"
+title: "Capstone: modelar un problema cotidiano con matemáticas"
+part: "00"
+part_title: "Pensamiento matemático desde cero"
+level: "cero-absoluto"
+index_in_part: 20
+hours: 4
+engine: "part00"
+demo: "capstone_budget_model"
+demo_summary: "Capstone: modelar un presupuesto con dinero exacto y proporciones."
+prerequisite: "clase 019"
+outputs:
+  - "ingreso"
+  - "porcentajes_suman_1"
+  - "montos"
+  - "total_asignado"
+  - "descuadre_por_redondeo"
+  - "meses_para_ahorrar_5M"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

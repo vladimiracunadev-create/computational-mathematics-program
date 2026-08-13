@@ -1,0 +1,33 @@
+id: "324"
+title: "Query, Key y Value"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 4
+hours: 4
+engine: "part16"
+demo: "query_key_value"
+demo_summary: "Q, K, V: tres proyecciones distintas del mismo token."
+prerequisite: "clase 323"
+outputs:
+  - "token_de_entrada"
+  - "d_model"
+  - "d_k"
+  - "query"
+  - "key"
+  - "value"
+  - "roles"
+  - "parametros_por_cabeza"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

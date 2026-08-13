@@ -1,0 +1,33 @@
+id: "251"
+title: "AdamW"
+part: "12"
+part_title: "Optimización matemática y computacional"
+level: "avanzado"
+index_in_part: 11
+hours: 4
+engine: "part12"
+demo: "adamw"
+demo_summary: "AdamW desacopla el weight decay del gradiente adaptativo."
+prerequisite: "clase 250"
+outputs:
+  - "objetivo"
+  - "optimo_sin_regularizacion"
+  - "weight_decay"
+  - "adam_con_L2_en_el_gradiente"
+  - "adamw_desacoplado"
+  - "norma_adam_L2"
+  - "norma_adamw"
+  - "diferencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

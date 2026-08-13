@@ -1,0 +1,33 @@
+id: "205"
+title: "Intervalos de confianza"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 5
+hours: 4
+engine: "part10"
+demo: "confidence_intervals"
+demo_summary: "Un IC 95 % describe el procedimiento, no una probabilidad del parámetro."
+prerequisite: "clase 204"
+outputs:
+  - "cobertura_simulada_%"
+  - "cobertura_nominal_%"
+  - "replicas"
+  - "muestra_de_ejemplo_media"
+  - "IC_95%"
+  - "amplitud"
+  - "lectura_correcta"
+  - "lectura_incorrecta"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

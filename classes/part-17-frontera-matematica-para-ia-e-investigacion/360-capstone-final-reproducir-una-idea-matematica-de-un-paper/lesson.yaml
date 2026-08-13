@@ -1,0 +1,33 @@
+id: "360"
+title: "Capstone final: reproducir una idea matemática de un paper"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 20
+hours: 4
+engine: "part17"
+demo: "capstone_reproduce_paper_idea"
+demo_summary: "Capstone: reproducir el núcleo matemático de un resultado publicado."
+prerequisite: "clase 359"
+outputs:
+  - "resultado_reproducido"
+  - "fuente"
+  - "protocolo"
+  - "matriz_de_coste"
+  - "optimo_exacto_por_barrido"
+  - "plan_optimo"
+  - "peor_plan_extremo"
+  - "el_problema_no_es_degenerado"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

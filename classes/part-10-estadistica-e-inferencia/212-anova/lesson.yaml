@@ -1,0 +1,33 @@
+id: "212"
+title: "ANOVA"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 12
+hours: 4
+engine: "part10"
+demo: "anova"
+demo_summary: "ANOVA de un factor: descomposición de la variabilidad."
+prerequisite: "clase 211"
+outputs:
+  - "grupos"
+  - "medias"
+  - "gran_media"
+  - "SS_entre"
+  - "SS_dentro"
+  - "SS_total"
+  - "estadistico_F"
+  - "gl"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

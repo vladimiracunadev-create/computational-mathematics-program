@@ -1,0 +1,33 @@
+id: "328"
+title: "Transformer completo"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 8
+hours: 4
+engine: "part16"
+demo: "transformer_block"
+demo_summary: "Bloque Transformer: atención, residual, layer norm y feed-forward."
+prerequisite: "clase 327"
+outputs:
+  - "arquitectura"
+  - "d_model"
+  - "d_ff"
+  - "razon_d_ff/d_model"
+  - "tokens"
+  - "norma_media_entrada"
+  - "norma_media_salida"
+  - "shape_preservada"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

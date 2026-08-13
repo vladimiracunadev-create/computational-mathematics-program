@@ -1,0 +1,32 @@
+id: "191"
+title: "Covarianza y correlación"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 11
+hours: 4
+engine: "part09"
+demo: "covariance_correlation"
+demo_summary: "Covarianza depende de la escala; la correlación no."
+prerequisite: "clase 190"
+outputs:
+  - "cov(x,y)"
+  - "cov(x,z)_escala_x1000"
+  - "corr(x,y)"
+  - "corr(x,z)"
+  - "la_correlacion_es_invariante_a_escala"
+  - "rango_de_la_correlacion"
+  - "correlacion_0_no_implica_independencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

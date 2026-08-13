@@ -1,0 +1,30 @@
+id: "015"
+title: "Variables como cantidades desconocidas"
+part: "00"
+part_title: "Pensamiento matemático desde cero"
+level: "cero-absoluto"
+index_in_part: 15
+hours: 4
+engine: "part00"
+demo: "variables"
+demo_summary: "Una incógnita convierte una pregunta en una ecuación resoluble."
+prerequisite: "clase 014"
+outputs:
+  - "ecuacion"
+  - "x"
+  - "verificacion"
+  - "residuo"
+  - "resuelta"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

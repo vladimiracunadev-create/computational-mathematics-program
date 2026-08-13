@@ -1,0 +1,33 @@
+id: "286"
+title: "Cross-entropy en clasificación"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 6
+hours: 4
+engine: "part14"
+demo: "classification_loss"
+demo_summary: "Cross-entropy penaliza la confianza equivocada de forma no acotada."
+prerequisite: "clase 285"
+outputs:
+  - "correcto_seguro"
+  - "correcto_dudoso"
+  - "incorrecto_dudoso"
+  - "incorrecto_seguro"
+  - "razon_CE_seguro_vs_dudoso"
+  - "razon_MSE_seguro_vs_dudoso"
+  - "CE_castiga_mucho_mas"
+  - "gradiente_de_CE_con_sigmoid"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

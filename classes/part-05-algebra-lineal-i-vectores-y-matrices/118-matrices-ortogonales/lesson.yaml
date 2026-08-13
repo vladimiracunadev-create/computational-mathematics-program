@@ -1,0 +1,33 @@
+id: "118"
+title: "Matrices ortogonales"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 18
+hours: 4
+engine: "part05"
+demo: "orthogonal_matrices"
+demo_summary: "Matriz ortogonal: QᵀQ = I, preserva normas y ángulos."
+prerequisite: "clase 117"
+outputs:
+  - "Q"
+  - "QᵀQ"
+  - "det_Q"
+  - "|v|"
+  - "|Qv|"
+  - "preserva_norma"
+  - "inversa_es_la_transpuesta"
+  - "por_que_importa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

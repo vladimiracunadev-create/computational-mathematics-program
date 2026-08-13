@@ -1,0 +1,33 @@
+id: "341"
+title: "Gaussian Processes"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 1
+hours: 4
+engine: "part17"
+demo: "gaussian_processes"
+demo_summary: "GP: distribución sobre funciones, con media y varianza posterior."
+prerequisite: "clase 340"
+outputs:
+  - "observaciones"
+  - "kernel"
+  - "ruido"
+  - "predicciones"
+  - "en_un_punto_observado_la_varianza_es_minima"
+  - "lejos_de_los_datos_vuelve_al_prior"
+  - "coste"
+  - "por_que_jitter"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

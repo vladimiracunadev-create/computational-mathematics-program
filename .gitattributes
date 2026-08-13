@@ -1,0 +1,14 @@
+# Normaliza los finales de línea: el repositorio se valida en Linux, macOS y Windows.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.gif binary
+*.pdf binary
+*.ico binary
+
+# Los artefactos generados no cuentan en las estadísticas de lenguaje de GitHub.
+classes/** linguist-documentation
+docs/** linguist-documentation
+learning-paths/** linguist-documentation
+catalog.json linguist-generated

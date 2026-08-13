@@ -1,0 +1,29 @@
+id: "255"
+title: "Regularización como optimización"
+part: "12"
+part_title: "Optimización matemática y computacional"
+level: "avanzado"
+index_in_part: 15
+hours: 4
+engine: "part12"
+demo: "regularization_as_optimization"
+demo_summary: "Regularizar es cambiar el objetivo, no el algoritmo."
+prerequisite: "clase 254"
+outputs:
+  - "λ=0.0"
+  - "λ=0.01"
+  - "λ=0.5"
+  - "conclusion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

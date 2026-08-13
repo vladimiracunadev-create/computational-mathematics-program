@@ -1,0 +1,33 @@
+id: "192"
+title: "Bernoulli y binomial"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 12
+hours: 4
+engine: "part09"
+demo: "bernoulli_binomial"
+demo_summary: "De un ensayo a n ensayos: Bernoulli y binomial."
+prerequisite: "clase 191"
+outputs:
+  - "p"
+  - "n"
+  - "media_teorica_np"
+  - "varianza_teorica_np(1-p)"
+  - "media_simulada"
+  - "pmf_k=3"
+  - "frecuencia_simulada_k=3"
+  - "suma_pmf"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

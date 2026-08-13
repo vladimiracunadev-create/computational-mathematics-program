@@ -1,0 +1,33 @@
+id: "323"
+title: "Positional encoding"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 3
+hours: 4
+engine: "part16"
+demo: "positional_encoding"
+demo_summary: "Positional encoding sinusoidal: posición sin parámetros aprendidos."
+prerequisite: "clase 322"
+outputs:
+  - "dimension"
+  - "codificaciones"
+  - "normas"
+  - "producto_pos0_pos1"
+  - "producto_pos0_pos5"
+  - "la_similitud_decae_con_la_distancia"
+  - "parametros_aprendidos"
+  - "extrapola_a_secuencias_mas_largas"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "330"
+title: "Sampling, temperatura, top-k y top-p"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 10
+hours: 4
+engine: "part16"
+demo: "sampling_strategies"
+demo_summary: "Temperatura, top-k y top-p reescriben la distribución antes de muestrear."
+prerequisite: "clase 329"
+outputs:
+  - "logits"
+  - "greedy_argmax"
+  - "T=1.0"
+  - "T=0.5_mas_determinista"
+  - "T=2.0_mas_diverso"
+  - "top_k=3"
+  - "top_p=0.9"
+  - "top_p_es_adaptativo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "297"
+title: "PCA aplicado a ML"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 17
+hours: 4
+engine: "part14"
+demo: "pca_ml"
+demo_summary: "PCA como preprocesamiento: cuánta varianza se conserva."
+prerequisite: "clase 296"
+outputs:
+  - "dimension_original"
+  - "covarianza"
+  - "autovalores"
+  - "varianza_explicada_PC1_%"
+  - "PC1"
+  - "accuracy_usando_solo_PC1"
+  - "dimension_reducida"
+  - "centrar_es_obligatorio"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "334"
+title: "Diffusion models: forward process"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 14
+hours: 4
+engine: "part16"
+demo: "diffusion_forward"
+demo_summary: "Proceso directo de difusión: ruido añadido con horario fijo."
+prerequisite: "clase 333"
+outputs:
+  - "pasos_T"
+  - "beta_inicial"
+  - "beta_final"
+  - "formula"
+  - "traza"
+  - "salto_directo_a_cualquier_t"
+  - "x_T_es_ruido_puro"
+  - "el_proceso_directo_no_se_aprende"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

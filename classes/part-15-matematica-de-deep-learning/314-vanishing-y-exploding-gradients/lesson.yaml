@@ -1,0 +1,33 @@
+id: "314"
+title: "Vanishing y exploding gradients"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 14
+hours: 4
+engine: "part15"
+demo: "vanishing_exploding"
+demo_summary: "Gradientes que se desvanecen o explotan: un producto de derivadas."
+prerequisite: "clase 313"
+outputs:
+  - "w=0.5_desvanece"
+  - "w=1.0_estable"
+  - "w=1.5_explota"
+  - "causa"
+  - "si_cada_factor_<1"
+  - "si_cada_factor_>1"
+  - "remedios"
+  - "por_que_las_relu_ayudan"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

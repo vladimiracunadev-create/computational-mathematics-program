@@ -1,0 +1,33 @@
+id: "199"
+title: "Cadenas de Markov"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 19
+hours: 4
+engine: "part09"
+demo: "markov_chains"
+demo_summary: "Cadena de Markov: matriz de transición y distribución estacionaria."
+prerequisite: "clase 198"
+outputs:
+  - "matriz_de_transicion"
+  - "filas_suman_1"
+  - "estado_inicial"
+  - "trayectoria"
+  - "distribucion_final"
+  - "estacionaria_teorica"
+  - "converge"
+  - "olvida_el_estado_inicial"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

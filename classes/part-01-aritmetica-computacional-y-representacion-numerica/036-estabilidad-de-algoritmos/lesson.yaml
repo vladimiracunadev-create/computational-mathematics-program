@@ -1,0 +1,32 @@
+id: "036"
+title: "Estabilidad de algoritmos"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 16
+hours: 4
+engine: "part01"
+demo: "stability"
+demo_summary: "Misma raíz cuadrática por dos algoritmos: uno estable, otro no."
+prerequisite: "clase 035"
+outputs:
+  - "coeficientes"
+  - "raiz_pequena_ingenua"
+  - "raiz_pequena_estable"
+  - "raiz_grande"
+  - "producto_raices_ingenua"
+  - "producto_raices_estable"
+  - "producto_teorico_c/a"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

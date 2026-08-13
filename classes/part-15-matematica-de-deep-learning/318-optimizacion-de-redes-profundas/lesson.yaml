@@ -1,0 +1,33 @@
+id: "318"
+title: "Optimización de redes profundas"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 18
+hours: 4
+engine: "part15"
+demo: "deep_optimization"
+demo_summary: "Entrenar una red profunda: learning rate, warmup y clipping."
+prerequisite: "clase 317"
+outputs:
+  - "objetivo"
+  - "lr_alto_sin_clipping"
+  - "lr_alto_con_clipping"
+  - "lr_moderado"
+  - "lr_moderado_con_warmup"
+  - "gradient_clipping"
+  - "warmup"
+  - "scheduler"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "137"
+title: "Tensores: índices, shape y orden"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 17
+hours: 4
+engine: "part06"
+demo: "tensors"
+demo_summary: "Orden, shape y reordenamiento de índices."
+prerequisite: "clase 136"
+outputs:
+  - "orden"
+  - "shape"
+  - "tensor"
+  - "elementos"
+  - "aplanado_row_major"
+  - "elemento_[1][0][1]"
+  - "indice_lineal"
+  - "un_batch_de_imagenes_es_orden_4"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

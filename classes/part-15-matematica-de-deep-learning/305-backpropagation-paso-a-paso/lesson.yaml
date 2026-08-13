@@ -1,0 +1,33 @@
+id: "305"
+title: "Backpropagation paso a paso"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 5
+hours: 4
+engine: "part15"
+demo: "backpropagation"
+demo_summary: "Backpropagation paso a paso sobre una red 2-2-1."
+prerequisite: "clase 304"
+outputs:
+  - "entrada"
+  - "objetivo"
+  - "forward"
+  - "dL/da2"
+  - "dL/dz2_simplificado"
+  - "dL/dW2"
+  - "dL/db2"
+  - "dL/dz1"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

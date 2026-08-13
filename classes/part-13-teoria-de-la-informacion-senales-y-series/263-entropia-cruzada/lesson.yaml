@@ -1,0 +1,32 @@
+id: "263"
+title: "Entropía cruzada"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 3
+hours: 4
+engine: "part13"
+demo: "cross_entropy"
+demo_summary: "Entropía cruzada: el coste de codificar p con un código para q."
+prerequisite: "clase 262"
+outputs:
+  - "etiqueta_real"
+  - "perdidas"
+  - "prediccion_perfecta"
+  - "H(p)"
+  - "CE = H(p) + KL(p||q)"
+  - "por_que_hace_falta_epsilon"
+  - "es_la_perdida_de_todo_clasificador"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

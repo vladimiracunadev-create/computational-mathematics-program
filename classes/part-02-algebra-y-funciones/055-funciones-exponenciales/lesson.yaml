@@ -1,0 +1,30 @@
+id: "055"
+title: "Funciones exponenciales"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 15
+hours: 4
+engine: "part02"
+demo: "exponential_function"
+demo_summary: "Crecimiento exponencial: razón constante, no diferencia constante."
+prerequisite: "clase 054"
+outputs:
+  - "modelo"
+  - "valores"
+  - "razon_entre_años_consecutivos"
+  - "tiempo_de_duplicacion"
+  - "regla_del_72_aproximada"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

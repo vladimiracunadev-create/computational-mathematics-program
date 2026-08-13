@@ -1,0 +1,33 @@
+id: "349"
+title: "Geometría diferencial para ML"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 9
+hours: 4
+engine: "part17"
+demo: "differential_geometry"
+demo_summary: "Geometría diferencial: métrica, longitud de curva y curvatura."
+prerequisite: "clase 348"
+outputs:
+  - "curva"
+  - "velocidad_en_t=1"
+  - "rapidez"
+  - "rapidez_teorica_√(1+0.09)"
+  - "longitud_de_arco_0_a_2π"
+  - "longitud_teorica"
+  - "curvatura"
+  - "curvatura_teorica_1/1.09"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

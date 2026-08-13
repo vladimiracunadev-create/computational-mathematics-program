@@ -1,0 +1,32 @@
+id: "162"
+title: "Superficies y curvas de nivel"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 2
+hours: 4
+engine: "part08"
+demo: "level_curves"
+demo_summary: "Curvas de nivel: dónde la función vale lo mismo."
+prerequisite: "clase 161"
+outputs:
+  - "funcion"
+  - "nivel"
+  - "puntos_del_nivel"
+  - "forma_geometrica"
+  - "gradiente_en_(2,0)"
+  - "gradiente_perpendicular_a_la_curva"
+  - "curvas_mas_juntas"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

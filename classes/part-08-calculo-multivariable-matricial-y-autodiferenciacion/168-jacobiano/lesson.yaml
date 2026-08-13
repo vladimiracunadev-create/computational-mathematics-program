@@ -1,0 +1,33 @@
+id: "168"
+title: "Jacobiano"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 8
+hours: 4
+engine: "part08"
+demo: "jacobian"
+demo_summary: "Jacobiano de una función vectorial."
+prerequisite: "clase 167"
+outputs:
+  - "F"
+  - "punto"
+  - "shape_del_jacobiano"
+  - "jacobiano"
+  - "fila_i_es_el_gradiente_de_Fi"
+  - "analitico_fila_1"
+  - "vjp"
+  - "jvp"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

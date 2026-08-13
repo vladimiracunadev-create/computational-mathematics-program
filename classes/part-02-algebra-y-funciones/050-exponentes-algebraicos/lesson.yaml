@@ -1,0 +1,32 @@
+id: "050"
+title: "Exponentes algebraicos"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 10
+hours: 4
+engine: "part02"
+demo: "algebraic_exponents"
+demo_summary: "Exponentes negativos, fraccionarios y su dominio."
+prerequisite: "clase 049"
+outputs:
+  - "x^(1/3)"
+  - "x^(2/3)"
+  - "x^(-1)"
+  - "x^(-1/3)"
+  - "producto_x^(1/3)*x^(2/3)"
+  - "es_x"
+  - "dominio_de_x^(1/2)"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,32 @@
+id: "133"
+title: "SVD y compresión"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 13
+hours: 4
+engine: "part06"
+demo: "svd_compression"
+demo_summary: "Aproximación de rango 1 y energía retenida."
+prerequisite: "clase 132"
+outputs:
+  - "A"
+  - "valores_singulares"
+  - "aproximacion_rango_1"
+  - "error_de_frobenius"
+  - "error_teorico_sigma2"
+  - "energia_retenida_%"
+  - "teorema"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

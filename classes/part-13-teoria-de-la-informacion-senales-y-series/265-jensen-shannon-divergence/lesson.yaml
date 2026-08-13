@@ -1,0 +1,33 @@
+id: "265"
+title: "Jensen-Shannon divergence"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 5
+hours: 4
+engine: "part13"
+demo: "js_divergence"
+demo_summary: "Jensen-Shannon: simétrica y acotada."
+prerequisite: "clase 264"
+outputs:
+  - "p"
+  - "q"
+  - "mezcla_M"
+  - "JS(p,q)_bits"
+  - "JS(q,p)_bits"
+  - "simetrica"
+  - "distribuciones_disjuntas"
+  - "cota_superior_en_bits"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

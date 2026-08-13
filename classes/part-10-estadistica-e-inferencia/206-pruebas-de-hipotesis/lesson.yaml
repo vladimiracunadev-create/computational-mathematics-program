@@ -1,0 +1,33 @@
+id: "206"
+title: "Pruebas de hipótesis"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 6
+hours: 4
+engine: "part10"
+demo: "hypothesis_testing"
+demo_summary: "Estructura completa de una prueba de hipótesis."
+prerequisite: "clase 205"
+outputs:
+  - "H0"
+  - "H1"
+  - "alfa"
+  - "media_muestral"
+  - "error_estandar"
+  - "estadistico_z"
+  - "p_value"
+  - "decision"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

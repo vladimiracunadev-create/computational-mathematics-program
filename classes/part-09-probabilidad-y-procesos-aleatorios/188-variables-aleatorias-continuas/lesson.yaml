@@ -1,0 +1,33 @@
+id: "188"
+title: "Variables aleatorias continuas"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 8
+hours: 4
+engine: "part09"
+demo: "continuous_rv"
+demo_summary: "Variable continua: la densidad no es una probabilidad."
+prerequisite: "clase 187"
+outputs:
+  - "distribucion"
+  - "pdf(0)"
+  - "pdf_puede_superar_1"
+  - "P(X=0.5)"
+  - "P(X<=0.5)"
+  - "P(0.5<X<=1)"
+  - "integral_total"
+  - "media_1/λ"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

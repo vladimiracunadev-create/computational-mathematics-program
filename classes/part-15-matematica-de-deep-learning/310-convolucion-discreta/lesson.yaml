@@ -1,0 +1,33 @@
+id: "310"
+title: "Convolución discreta"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 10
+hours: 4
+engine: "part15"
+demo: "discrete_convolution"
+demo_summary: "Convolución 2D con padding y stride: el cálculo de la forma de salida."
+prerequisite: "clase 309"
+outputs:
+  - "entrada_shape"
+  - "kernel_shape"
+  - "kernel"
+  - "salida_stride_1"
+  - "shape_stride_1"
+  - "shape_stride_2"
+  - "formula"
+  - "verificacion_stride_1"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

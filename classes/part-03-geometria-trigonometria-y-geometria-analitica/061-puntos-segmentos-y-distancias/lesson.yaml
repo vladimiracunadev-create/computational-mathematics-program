@@ -1,0 +1,32 @@
+id: "061"
+title: "Puntos, segmentos y distancias"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 1
+hours: 4
+engine: "part03"
+demo: "distances"
+demo_summary: "Distancia euclídea, Manhattan y Chebyshev sobre los mismos puntos."
+prerequisite: "clase 060"
+outputs:
+  - "p"
+  - "q"
+  - "euclidea_L2"
+  - "manhattan_L1"
+  - "chebyshev_Linf"
+  - "punto_medio"
+  - "orden_L1>=L2>=Linf"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

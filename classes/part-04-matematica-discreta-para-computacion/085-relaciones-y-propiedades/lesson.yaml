@@ -1,0 +1,32 @@
+id: "085"
+title: "Relaciones y propiedades"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 5
+hours: 4
+engine: "part04"
+demo: "relations"
+demo_summary: "Reflexiva, simétrica y transitiva: la receta de una relación de equivalencia."
+prerequisite: "clase 084"
+outputs:
+  - "relacion"
+  - "reflexiva"
+  - "simetrica"
+  - "transitiva"
+  - "es_equivalencia"
+  - "clases_de_equivalencia"
+  - "particiona_el_universo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,32 @@
+id: "039"
+title: "Reproducibilidad numérica entre plataformas"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 19
+hours: 4
+engine: "part01"
+demo: "reproducibility"
+demo_summary: "El orden de la suma cambia el resultado en punto flotante."
+prerequisite: "clase 038"
+outputs:
+  - "valores"
+  - "suma_de_izquierda_a_derecha"
+  - "suma_de_derecha_a_izquierda"
+  - "coinciden"
+  - "suma_compensada"
+  - "suma_es_asociativa_en_R"
+  - "suma_es_asociativa_en_float64"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,30 @@
+id: "276"
+title: "Procesos estacionarios"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 16
+hours: 4
+engine: "part13"
+demo: "stationarity"
+demo_summary: "Serie estacionaria frente a serie con tendencia."
+prerequisite: "clase 275"
+outputs:
+  - "serie_estacionaria"
+  - "serie_con_tendencia"
+  - "tras_diferenciar"
+  - "diferenciar_elimina_la_tendencia_lineal"
+  - "por_que_importa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

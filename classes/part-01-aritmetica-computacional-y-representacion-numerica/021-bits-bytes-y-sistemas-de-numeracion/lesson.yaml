@@ -1,0 +1,32 @@
+id: "021"
+title: "Bits, bytes y sistemas de numeración"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 1
+hours: 4
+engine: "part01"
+demo: "bits_and_bytes"
+demo_summary: "Cuántos valores distintos codifica cada ancho de palabra."
+prerequisite: "clase 020"
+outputs:
+  - "valores_por_bit"
+  - "valores_en_1_byte"
+  - "valores_en_16_bits"
+  - "valores_en_32_bits"
+  - "valores_en_64_bits"
+  - "bits_para_1000_valores"
+  - "bits_para_1_millon"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

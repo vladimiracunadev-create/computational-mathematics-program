@@ -1,0 +1,32 @@
+id: "173"
+title: "Integrales dobles"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 13
+hours: 4
+engine: "part08"
+demo: "double_integrals"
+demo_summary: "Integral doble sobre un rectángulo por suma de Riemann."
+prerequisite: "clase 172"
+outputs:
+  - "integrando"
+  - "region"
+  - "aproximacion"
+  - "valor_exacto"
+  - "error"
+  - "teorema_de_Fubini"
+  - "subdivisiones"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

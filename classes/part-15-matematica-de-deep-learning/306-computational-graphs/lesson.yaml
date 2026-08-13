@@ -1,0 +1,33 @@
+id: "306"
+title: "Computational graphs"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 6
+hours: 4
+engine: "part15"
+demo: "computational_graphs"
+demo_summary: "El grafo de cómputo y la acumulación de gradientes en nodos reutilizados."
+prerequisite: "clase 305"
+outputs:
+  - "expresion_1"
+  - "y"
+  - "dy/dx"
+  - "dy/dx_analitico_2x+1"
+  - "acumulacion_correcta"
+  - "expresion_2"
+  - "e"
+  - "de/da"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

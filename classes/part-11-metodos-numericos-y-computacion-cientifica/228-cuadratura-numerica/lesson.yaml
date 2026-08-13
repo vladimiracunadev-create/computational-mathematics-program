@@ -1,0 +1,33 @@
+id: "228"
+title: "Cuadratura numérica"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 8
+hours: 4
+engine: "part11"
+demo: "quadrature"
+demo_summary: "Cuadratura gaussiana: máxima exactitud con mínimos nodos."
+prerequisite: "clase 227"
+outputs:
+  - "integrando"
+  - "referencia"
+  - "gauss_3_nodos"
+  - "error_gauss"
+  - "trapecio_3_subintervalos"
+  - "error_trapecio"
+  - "gauss_n_puntos_es_exacta_hasta_grado"
+  - "evaluaciones_usadas"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

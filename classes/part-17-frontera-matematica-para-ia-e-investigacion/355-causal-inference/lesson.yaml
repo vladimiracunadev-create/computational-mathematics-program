@@ -1,0 +1,33 @@
+id: "355"
+title: "Causal inference"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 15
+hours: 4
+engine: "part17"
+demo: "causal_inference"
+demo_summary: "Confusión, ajuste por backdoor y el sesgo de colisionador."
+prerequisite: "clase 354"
+outputs:
+  - "efecto_causal_real_de_X_sobre_Y"
+  - "coeficiente_sin_ajustar"
+  - "coeficiente_ajustando_por_Z"
+  - "el_ajuste_recupera_el_efecto"
+  - "criterio_backdoor"
+  - "correlacion_X_Y_sin_condicionar_el_colisionador"
+  - "correlacion_condicionando_el_colisionador"
+  - "condicionar_un_colisionador_crea_sesgo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

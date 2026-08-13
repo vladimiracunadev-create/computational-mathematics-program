@@ -1,0 +1,33 @@
+id: "078"
+title: "Proyecciones y perspectiva"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 18
+hours: 4
+engine: "part03"
+demo: "projection"
+demo_summary: "Proyección ortogonal de un vector y proyección en perspectiva."
+prerequisite: "clase 077"
+outputs:
+  - "v"
+  - "direccion_u"
+  - "proyeccion"
+  - "residuo"
+  - "residuo_ortogonal_a_u"
+  - "pitagoras"
+  - "perspectiva_x'_con_f=2_z=5"
+  - "objetos_lejanos_se_encogen"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

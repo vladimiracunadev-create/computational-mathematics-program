@@ -1,0 +1,31 @@
+id: "139"
+title: "Einstein summation"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 19
+hours: 4
+engine: "part06"
+demo: "einsum"
+demo_summary: "Notación de Einstein: índices repetidos se suman."
+prerequisite: "clase 138"
+outputs:
+  - "'ij,jk->ik' (producto)"
+  - "'ii->' (traza)"
+  - "'ij,ij->ij' (Hadamard)"
+  - "'ij,ij->' (Frobenius)"
+  - "'ij->ji' (transpuesta)"
+  - "ventaja"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

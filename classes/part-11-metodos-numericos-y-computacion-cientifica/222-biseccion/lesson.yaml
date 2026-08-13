@@ -1,0 +1,33 @@
+id: "222"
+title: "Bisección"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 2
+hours: 4
+engine: "part11"
+demo: "bisection"
+demo_summary: "Bisección: lenta pero garantizada si hay cambio de signo."
+prerequisite: "clase 221"
+outputs:
+  - "funcion"
+  - "intervalo_inicial"
+  - "cambio_de_signo"
+  - "iteraciones_registradas"
+  - "raiz"
+  - "residuo"
+  - "iteraciones_totales"
+  - "convergencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

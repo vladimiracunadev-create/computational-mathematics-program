@@ -1,0 +1,33 @@
+id: "059"
+title: "Funciones por tramos"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 19
+hours: 4
+engine: "part02"
+demo: "piecewise_function"
+demo_summary: "Una función por tramos y su continuidad en el punto de corte."
+prerequisite: "clase 058"
+outputs:
+  - "definicion"
+  - "f(-3)"
+  - "f(0)"
+  - "f(1.999)"
+  - "f(2)"
+  - "continua_en_0"
+  - "continua_en_2"
+  - "relu_es_por_tramos"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

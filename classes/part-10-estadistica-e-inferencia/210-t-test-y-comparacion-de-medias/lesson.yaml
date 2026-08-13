@@ -1,0 +1,33 @@
+id: "210"
+title: "t-test y comparación de medias"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 10
+hours: 4
+engine: "part10"
+demo: "t_test"
+demo_summary: "t-test de dos muestras independientes."
+prerequisite: "clase 209"
+outputs:
+  - "grupo_A_media"
+  - "grupo_B_media"
+  - "diferencia"
+  - "desviacion_combinada"
+  - "estadistico_t"
+  - "grados_de_libertad"
+  - "valor_critico_aprox_2.01"
+  - "significativo_al_5%"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

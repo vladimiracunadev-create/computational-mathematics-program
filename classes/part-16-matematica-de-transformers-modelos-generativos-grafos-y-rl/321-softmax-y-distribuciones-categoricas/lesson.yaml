@@ -1,0 +1,33 @@
+id: "321"
+title: "Softmax y distribuciones categóricas"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 1
+hours: 4
+engine: "part16"
+demo: "softmax_distributions"
+demo_summary: "Softmax: de logits arbitrarios a una distribución categórica."
+prerequisite: "clase 320"
+outputs:
+  - "logits"
+  - "probabilidades"
+  - "suman_1"
+  - "invariante_a_desplazamiento"
+  - "con_logits_enormes"
+  - "sin_restar_el_maximo"
+  - "el_orden_se_conserva"
+  - "temperatura_alta_aplana"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

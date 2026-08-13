@@ -1,0 +1,30 @@
+id: "067"
+title: "Círculo unitario"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 7
+hours: 4
+engine: "part03"
+demo: "unit_circle"
+demo_summary: "El círculo unitario como diccionario de ángulos notables."
+prerequisite: "clase 066"
+outputs:
+  - "coordenadas"
+  - "radio"
+  - "periodo_sin"
+  - "sin_es_impar"
+  - "cos_es_par"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

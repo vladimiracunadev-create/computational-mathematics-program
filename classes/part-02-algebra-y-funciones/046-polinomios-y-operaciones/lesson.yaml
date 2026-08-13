@@ -1,0 +1,33 @@
+id: "046"
+title: "Polinomios y operaciones"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 6
+hours: 4
+engine: "part02"
+demo: "polynomial_ops"
+demo_summary: "Suma, producto y evaluación de polinomios por Horner."
+prerequisite: "clase 045"
+outputs:
+  - "p"
+  - "q"
+  - "grado_p"
+  - "grado_producto"
+  - "coeficientes_producto"
+  - "p(3)_horner"
+  - "p(3)_directo"
+  - "multiplicaciones_horner"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

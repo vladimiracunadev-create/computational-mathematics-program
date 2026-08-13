@@ -1,0 +1,30 @@
+id: "153"
+title: "Integral como acumulación"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 13
+hours: 4
+engine: "part07"
+demo: "integral_as_accumulation"
+demo_summary: "Sumas de Riemann convergiendo a la integral."
+prerequisite: "clase 152"
+outputs:
+  - "integrando"
+  - "intervalo"
+  - "valor_exacto_1/3"
+  - "sumas_de_riemann"
+  - "orden_de_convergencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

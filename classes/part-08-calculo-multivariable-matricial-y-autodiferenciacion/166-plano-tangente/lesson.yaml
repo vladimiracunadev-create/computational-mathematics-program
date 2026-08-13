@@ -1,0 +1,32 @@
+id: "166"
+title: "Plano tangente"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 6
+hours: 4
+engine: "part08"
+demo: "tangent_plane"
+demo_summary: "Plano tangente: la aproximación lineal en dos variables."
+prerequisite: "clase 165"
+outputs:
+  - "punto"
+  - "f(p)"
+  - "gradiente"
+  - "plano"
+  - "error_cerca"
+  - "error_lejos"
+  - "el_error_crece_cuadraticamente"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

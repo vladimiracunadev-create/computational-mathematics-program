@@ -1,0 +1,33 @@
+id: "357"
+title: "VC dimension"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 17
+hours: 4
+engine: "part17"
+demo: "vc_dimension"
+demo_summary: "Dimensión VC: cuántos puntos puede fragmentar una clase de hipótesis."
+prerequisite: "clase 356"
+outputs:
+  - "clase_umbral_1D"
+  - "intervalos_1D"
+  - "hiperplanos_en_R^d"
+  - "hiperplanos_en_R^2"
+  - "por_que_no_4_puntos_en_R2"
+  - "clase_infinita_con_VC_finita"
+  - "lema_de_Sauer"
+  - "cota_de_generalizacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

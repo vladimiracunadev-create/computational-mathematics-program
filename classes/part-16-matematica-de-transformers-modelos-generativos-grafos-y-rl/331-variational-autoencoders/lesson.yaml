@@ -1,0 +1,33 @@
+id: "331"
+title: "Variational Autoencoders"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 11
+hours: 4
+engine: "part16"
+demo: "variational_autoencoder"
+demo_summary: "VAE: reparametrización y el término KL en forma cerrada."
+prerequisite: "clase 330"
+outputs:
+  - "dimension_latente"
+  - "mu"
+  - "log_var"
+  - "sigma"
+  - "media_empirica"
+  - "varianza_empirica"
+  - "varianza_teorica"
+  - "truco_de_reparametrizacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "288"
+title: "k-Nearest Neighbors y métricas"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 8
+hours: 4
+engine: "part14"
+demo: "knn"
+demo_summary: "k-NN: la métrica y el escalado deciden el resultado."
+prerequisite: "clase 287"
+outputs:
+  - "consulta"
+  - "prediccion_k=1"
+  - "prediccion_k=5"
+  - "prediccion_k=21"
+  - "prediccion_con_x2_escalada_x100"
+  - "el_escalado_cambia_la_respuesta"
+  - "coste_de_prediccion"
+  - "k_par_puede_empatar"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

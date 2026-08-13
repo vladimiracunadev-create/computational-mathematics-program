@@ -1,0 +1,32 @@
+id: "095"
+title: "Árboles y árboles de expansión"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 15
+hours: 4
+engine: "part04"
+demo: "trees"
+demo_summary: "Un árbol con n nodos tiene exactamente n-1 aristas."
+prerequisite: "clase 094"
+outputs:
+  - "nodos"
+  - "aristas"
+  - "n-1"
+  - "es_arbol"
+  - "hojas"
+  - "altura"
+  - "profundidades"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

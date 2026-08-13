@@ -1,0 +1,33 @@
+id: "204"
+title: "Estimadores y propiedades"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 4
+hours: 4
+engine: "part10"
+demo: "estimators"
+demo_summary: "Sesgo, varianza y consistencia de dos estimadores de la varianza."
+prerequisite: "clase 203"
+outputs:
+  - "varianza_real"
+  - "tamaño_muestral"
+  - "E[estimador_/n]"
+  - "sesgo_/n"
+  - "E[estimador_/(n-1)]"
+  - "sesgo_/(n-1)"
+  - "factor_teorico_(n-1)/n"
+  - "insesgado_no_significa_mejor"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

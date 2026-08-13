@@ -1,0 +1,31 @@
+id: "122"
+title: "Cambio de base"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 2
+hours: 4
+engine: "part06"
+demo: "change_of_basis"
+demo_summary: "Matriz de cambio de base y su inversa."
+prerequisite: "clase 121"
+outputs:
+  - "P"
+  - "P⁻¹"
+  - "coordenadas_nuevas_P⁻¹v"
+  - "vuelta_a_la_canonica"
+  - "P·P⁻¹"
+  - "similaridad"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

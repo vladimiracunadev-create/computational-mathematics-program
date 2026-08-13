@@ -1,0 +1,137 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coherence:
+    name: Coherencia del currículo
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar el paquete
+        run: python -m pip install -e .
+      - name: Las clases coinciden con curriculum.yaml
+        run: python scripts/generate_classes.py --check
+      - name: Validación estricta del repositorio
+        run: python scripts/validate_repository.py --strict
+      - name: Compilar todo el Python del repositorio
+        run: python -m compileall -q src scripts tests classes
+
+  tests:
+    name: Tests · Python ${{ matrix.python }} · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Instalar el paquete
+        run: python -m pip install -e .
+      - name: Suite de tests
+        run: python -m unittest discover -s tests -v
+      - name: La CLI responde
+        run: |
+          compmath stats
+          compmath catalog --part 00
+          compmath show 250
+
+  labs:
+    name: Los 360 laboratorios
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar el paquete
+        run: python -m pip install -e .
+      - name: Ejecutar las 360 demostraciones
+        run: compmath run --all --quiet
+      - name: Ejecutar los 18 laboratorios capstone como scripts independientes
+        run: python scripts/run_capstone_labs.py
+
+  site:
+    name: Portal estático
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar el paquete
+        run: python -m pip install -e .
+      - name: Generar el sitio
+        run: python scripts/generate_site.py
+      - name: Validar el artefacto
+        run: python scripts/validate_site.py
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Instalar ruff
+        run: python -m pip install -e ".[dev]"
+      - name: ruff check
+        run: ruff check src scripts tests
+
+  quality-gate:
+    name: Puerta de calidad
+    if: always()
+    needs: [coherence, tests, labs, site, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Exigir que todos los jobs estén en verde
+        run: |
+          echo "coherence : ${{ needs.coherence.result }}"
+          echo "tests     : ${{ needs.tests.result }}"
+          echo "labs      : ${{ needs.labs.result }}"
+          echo "site      : ${{ needs.site.result }}"
+          echo "lint      : ${{ needs.lint.result }}"
+          test "${{ needs.coherence.result }}" = "success"
+          test "${{ needs.tests.result }}" = "success"
+          test "${{ needs.labs.result }}" = "success"
+          test "${{ needs.site.result }}" = "success"
+          test "${{ needs.lint.result }}" = "success"

@@ -1,0 +1,33 @@
+id: "271"
+title: "Convolución"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 11
+hours: 4
+engine: "part13"
+demo: "convolution"
+demo_summary: "Convolución discreta: el operador de las CNN."
+prerequisite: "clase 270"
+outputs:
+  - "señal"
+  - "kernel_media_movil"
+  - "suavizada"
+  - "kernel_detector_de_bordes"
+  - "bordes"
+  - "longitud_valida"
+  - "longitud_completa"
+  - "es_conmutativa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

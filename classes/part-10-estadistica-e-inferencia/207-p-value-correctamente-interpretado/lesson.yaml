@@ -1,0 +1,33 @@
+id: "207"
+title: "p-value correctamente interpretado"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 7
+hours: 4
+engine: "part10"
+demo: "p_value"
+demo_summary: "Qué mide y qué no mide un p-value."
+prerequisite: "clase 206"
+outputs:
+  - "definicion"
+  - "no_es"
+  - "bajo_H0_es_uniforme"
+  - "proporcion_p<0.05"
+  - "proporcion_p<0.01"
+  - "media_de_los_p"
+  - "riesgo_de_20_pruebas"
+  - "correccion_de_Bonferroni_alfa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

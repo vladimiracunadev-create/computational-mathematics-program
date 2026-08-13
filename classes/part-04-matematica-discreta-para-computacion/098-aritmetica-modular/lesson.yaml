@@ -1,0 +1,31 @@
+id: "098"
+title: "Aritmética modular"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 18
+hours: 4
+engine: "part04"
+demo: "modular_arithmetic"
+demo_summary: "Aritmética modular: exponenciación rápida e inverso modular."
+prerequisite: "clase 097"
+outputs:
+  - "7^128 mod 13"
+  - "pequeño_teorema_de_fermat"
+  - "inverso_de_7_mod_13"
+  - "verificacion_inverso"
+  - "suma_modular"
+  - "usos"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

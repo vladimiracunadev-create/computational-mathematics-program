@@ -1,0 +1,32 @@
+id: "114"
+title: "Eliminación de Gauss"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 14
+hours: 4
+engine: "part05"
+demo: "gaussian_elimination_demo"
+demo_summary: "Eliminación de Gauss con pivoteo parcial, paso a paso."
+prerequisite: "clase 113"
+outputs:
+  - "matriz_original"
+  - "triangular_superior"
+  - "intercambios_de_fila"
+  - "solucion"
+  - "pivoteo_evita"
+  - "coste"
+  - "verificacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

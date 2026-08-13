@@ -1,0 +1,33 @@
+id: "274"
+title: "FFT"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 14
+hours: 4
+engine: "part13"
+demo: "fft"
+demo_summary: "FFT frente a DFT: mismo resultado, coste muy distinto."
+prerequisite: "clase 273"
+outputs:
+  - "muestras"
+  - "picos_detectados"
+  - "frecuencias_reales"
+  - "coinciden"
+  - "fft_y_dft_coinciden"
+  - "operaciones_DFT"
+  - "operaciones_FFT"
+  - "factor_de_ahorro"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,32 @@
+id: "105"
+title: "Vectores unitarios"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 5
+hours: 4
+engine: "part05"
+demo: "unit_vectors"
+demo_summary: "Normalizar separa dirección de magnitud."
+prerequisite: "clase 104"
+outputs:
+  - "v"
+  - "|v|"
+  - "v_normalizado"
+  - "|v_normalizado|"
+  - "reconstruccion"
+  - "vector_cero_no_se_normaliza"
+  - "uso"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

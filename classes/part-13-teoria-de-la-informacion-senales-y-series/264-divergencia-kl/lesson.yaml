@@ -1,0 +1,33 @@
+id: "264"
+title: "Divergencia KL"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 4
+hours: 4
+engine: "part13"
+demo: "kl_divergence"
+demo_summary: "KL: no simétrica y no es una distancia."
+prerequisite: "clase 263"
+outputs:
+  - "p"
+  - "q"
+  - "KL(p||q)"
+  - "KL(q||p)"
+  - "simetrica"
+  - "KL(p||p)"
+  - "siempre_no_negativa"
+  - "no_cumple_desigualdad_triangular"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

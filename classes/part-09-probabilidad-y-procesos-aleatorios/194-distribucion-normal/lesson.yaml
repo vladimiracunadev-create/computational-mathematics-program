@@ -1,0 +1,33 @@
+id: "194"
+title: "Distribución normal"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 14
+hours: 4
+engine: "part09"
+demo: "normal_distribution"
+demo_summary: "Normal: regla 68-95-99.7 y estandarización."
+prerequisite: "clase 193"
+outputs:
+  - "μ"
+  - "σ"
+  - "P(μ-σ < X < μ+σ)"
+  - "P(μ-2σ < X < μ+2σ)"
+  - "P(μ-3σ < X < μ+3σ)"
+  - "z_de_130"
+  - "P(X>130)"
+  - "percentil_95_aprox"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "146"
+title: "Regla del producto y cociente"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 6
+hours: 4
+engine: "part07"
+demo: "product_quotient_rule"
+demo_summary: "Regla del producto y del cociente."
+prerequisite: "clase 145"
+outputs:
+  - "f"
+  - "g"
+  - "x"
+  - "(fg)'_numerica"
+  - "(fg)'_regla"
+  - "producto_ok"
+  - "(f/g)'_numerica"
+  - "(f/g)'_regla"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

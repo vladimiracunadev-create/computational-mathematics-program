@@ -1,0 +1,32 @@
+id: "144"
+title: "Derivada como tasa de cambio"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 4
+hours: 4
+engine: "part07"
+demo: "derivative_as_rate"
+demo_summary: "Derivada como límite del cociente incremental."
+prerequisite: "clase 143"
+outputs:
+  - "funcion"
+  - "punto"
+  - "cocientes_incrementales"
+  - "derivada_exacta_2x"
+  - "diferencia_central"
+  - "error_central"
+  - "la_central_es_de_orden_h²"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

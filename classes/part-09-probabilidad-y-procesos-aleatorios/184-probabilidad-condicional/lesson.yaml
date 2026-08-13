@@ -1,0 +1,31 @@
+id: "184"
+title: "Probabilidad condicional"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 4
+hours: 4
+engine: "part09"
+demo: "conditional"
+demo_summary: "P(A|B) cambia el espacio muestral, no la realidad."
+prerequisite: "clase 183"
+outputs:
+  - "P(suma>9)"
+  - "P(primer_dado=6)"
+  - "P(suma>9 | primer=6)"
+  - "formula_P(A∩B)/P(B)"
+  - "la_informacion_cambia_la_probabilidad"
+  - "espacio_reducido"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

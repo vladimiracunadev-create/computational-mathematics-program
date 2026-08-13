@@ -1,0 +1,33 @@
+id: "107"
+title: "Independencia y dependencia lineal"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 7
+hours: 4
+engine: "part05"
+demo: "linear_independence"
+demo_summary: "Independencia detectada por el rango, no por inspección."
+prerequisite: "clase 106"
+outputs:
+  - "conjunto_A"
+  - "rango_A"
+  - "A_independiente"
+  - "conjunto_B"
+  - "rango_B"
+  - "B_independiente"
+  - "relacion_en_B"
+  - "determinante_B"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

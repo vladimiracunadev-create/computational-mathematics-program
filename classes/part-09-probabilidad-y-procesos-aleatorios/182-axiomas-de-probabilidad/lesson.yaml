@@ -1,0 +1,33 @@
+id: "182"
+title: "Axiomas de probabilidad"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 2
+hours: 4
+engine: "part09"
+demo: "axioms"
+demo_summary: "Los tres axiomas de Kolmogorov verificados sobre un modelo."
+prerequisite: "clase 181"
+outputs:
+  - "distribucion"
+  - "axioma_1_no_negatividad"
+  - "axioma_2_P(Ω)=1"
+  - "axioma_3_aditividad"
+  - "P(∅)"
+  - "P(Aᶜ)"
+  - "monotonia"
+  - "P_nunca_supera_1"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,32 @@
+id: "157"
+title: "Integración por sustitución"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 17
+hours: 4
+engine: "part07"
+demo: "substitution"
+demo_summary: "Integración por sustitución: la regla de la cadena al revés."
+prerequisite: "clase 156"
+outputs:
+  - "integral"
+  - "sustitucion"
+  - "integral_transformada"
+  - "valor_directo"
+  - "valor_sustituido"
+  - "valor_analitico_sin(1)"
+  - "coinciden"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

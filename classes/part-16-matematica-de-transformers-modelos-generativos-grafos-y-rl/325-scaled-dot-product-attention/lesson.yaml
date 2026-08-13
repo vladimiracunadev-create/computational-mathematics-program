@@ -1,0 +1,33 @@
+id: "325"
+title: "Scaled dot-product attention"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 5
+hours: 4
+engine: "part16"
+demo: "scaled_dot_product_attention"
+demo_summary: "Atención escalada: por qué existe el 1/√d."
+prerequisite: "clase 324"
+outputs:
+  - "formula"
+  - "d=8_sin_escalar"
+  - "d=8_escalado"
+  - "d=256_sin_escalar"
+  - "d=256_escalado"
+  - "varianza_del_producto_punto"
+  - "por_que_1/√d"
+  - "sintoma_de_saturacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

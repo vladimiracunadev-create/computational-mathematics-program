@@ -1,0 +1,33 @@
+id: "304"
+title: "Funciones de pérdida"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 4
+hours: 4
+engine: "part15"
+demo: "loss_functions"
+demo_summary: "MSE, MAE, Huber y cross-entropy frente a un valor atípico."
+prerequisite: "clase 303"
+outputs:
+  - "objetivos"
+  - "predicciones"
+  - "MSE"
+  - "MAE"
+  - "Huber_delta_1"
+  - "MSE_sin_el_atipico"
+  - "el_atipico_domina_el_MSE"
+  - "MAE_es_robusto"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

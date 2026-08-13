@@ -1,0 +1,32 @@
+id: "134"
+title: "Pseudoinversa de Moore-Penrose"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 14
+hours: 4
+engine: "part06"
+demo: "pseudoinverse"
+demo_summary: "Pseudoinversa de Moore-Penrose para sistemas sobredeterminados."
+prerequisite: "clase 133"
+outputs:
+  - "A_shape"
+  - "sistema_sobredeterminado"
+  - "A⁺"
+  - "A⁺b"
+  - "solucion_por_ecuaciones_normales"
+  - "coinciden"
+  - "A⁺A"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

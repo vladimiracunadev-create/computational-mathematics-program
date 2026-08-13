@@ -1,0 +1,31 @@
+id: "261"
+title: "Información y sorpresa"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 1
+hours: 4
+engine: "part13"
+demo: "surprise"
+demo_summary: "La sorpresa de un evento es -log de su probabilidad."
+prerequisite: "clase 260"
+outputs:
+  - "sorpresa_en_bits"
+  - "un_evento_de_p=1_no_sorprende"
+  - "aditiva_para_independientes"
+  - "suma_de_sorpresas"
+  - "por_que_logaritmo"
+  - "unidad"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "102"
+title: "Operaciones con vectores"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 2
+hours: 4
+engine: "part05"
+demo: "vector_operations"
+demo_summary: "Suma, resta y combinación lineal con interpretación geométrica."
+prerequisite: "clase 101"
+outputs:
+  - "u"
+  - "v"
+  - "u+v"
+  - "u-v"
+  - "2u-3v"
+  - "|u+v|"
+  - "|u|+|v|"
+  - "desigualdad_triangular"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

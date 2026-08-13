@@ -1,0 +1,31 @@
+id: "213"
+title: "Correlación frente a causalidad"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 13
+hours: 4
+engine: "part10"
+demo: "correlation_causation"
+demo_summary: "Una variable de confusión genera correlación sin causalidad."
+prerequisite: "clase 212"
+outputs:
+  - "corr(helados, ahogamientos)"
+  - "corr(temperatura, helados)"
+  - "corr(temperatura, ahogamientos)"
+  - "confusor"
+  - "hay_flecha_causal_helados→ahogamientos"
+  - "como_se_detecta"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

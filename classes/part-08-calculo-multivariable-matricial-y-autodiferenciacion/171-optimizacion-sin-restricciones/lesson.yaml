@@ -1,0 +1,32 @@
+id: "171"
+title: "Optimización sin restricciones"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 11
+hours: 4
+engine: "part08"
+demo: "unconstrained_optimization"
+demo_summary: "Descenso de gradiente sobre una cuadrática con historial."
+prerequisite: "clase 170"
+outputs:
+  - "funcion"
+  - "minimo_teorico"
+  - "learning_rate"
+  - "historial"
+  - "solucion_final"
+  - "gradiente_final"
+  - "convergio"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,31 @@
+id: "019"
+title: "Comprobación y contraejemplos"
+part: "00"
+part_title: "Pensamiento matemático desde cero"
+level: "cero-absoluto"
+index_in_part: 19
+hours: 4
+engine: "part00"
+demo: "counterexample"
+demo_summary: "Una conjetura plausible destruida por un único contraejemplo."
+prerequisite: "clase 018"
+outputs:
+  - "conjetura"
+  - "casos_favorables_consecutivos"
+  - "primer_contraejemplo_n"
+  - "valor_en_el_contraejemplo"
+  - "factor"
+  - "leccion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

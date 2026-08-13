@@ -1,0 +1,33 @@
+id: "142"
+title: "Límites algebraicos"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 2
+hours: 4
+engine: "part07"
+demo: "algebraic_limits"
+demo_summary: "Indeterminación 0/0 resuelta por factorización."
+prerequisite: "clase 141"
+outputs:
+  - "funcion"
+  - "en_x=2"
+  - "simplificada"
+  - "limite_en_2"
+  - "f(2.0001)"
+  - "f(1.9999)"
+  - "error"
+  - "leccion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

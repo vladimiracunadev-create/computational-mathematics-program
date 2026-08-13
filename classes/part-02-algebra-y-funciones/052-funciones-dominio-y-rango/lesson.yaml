@@ -1,0 +1,32 @@
+id: "052"
+title: "Funciones: dominio y rango"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 12
+hours: 4
+engine: "part02"
+demo: "domain_range"
+demo_summary: "El dominio forma parte de la definición de la función."
+prerequisite: "clase 051"
+outputs:
+  - "funcion"
+  - "dominio"
+  - "imagen"
+  - "valores"
+  - "x=2_definido"
+  - "asintota_vertical"
+  - "asintota_horizontal"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

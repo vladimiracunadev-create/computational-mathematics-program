@@ -1,0 +1,33 @@
+id: "356"
+title: "Statistical learning theory"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 16
+hours: 4
+engine: "part17"
+demo: "statistical_learning_theory"
+demo_summary: "Riesgo empírico frente a riesgo verdadero y la brecha de generalización."
+prerequisite: "clase 355"
+outputs:
+  - "señal_real_en_los_datos"
+  - "accuracy_esperada"
+  - "resultados"
+  - "mas_parametros_que_datos_memoriza"
+  - "descomposicion"
+  - "cota_uniforme"
+  - "el_riesgo_empirico_solo_no_basta"
+  - "semilla"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

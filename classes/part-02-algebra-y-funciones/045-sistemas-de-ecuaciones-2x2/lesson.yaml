@@ -1,0 +1,32 @@
+id: "045"
+title: "Sistemas de ecuaciones 2x2"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 5
+hours: 4
+engine: "part02"
+demo: "system_2x2"
+demo_summary: "Sistema 2x2 por determinantes (regla de Cramer) y verificación."
+prerequisite: "clase 044"
+outputs:
+  - "sistema"
+  - "determinante"
+  - "x"
+  - "y"
+  - "verificacion_1"
+  - "verificacion_2"
+  - "unica_solucion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

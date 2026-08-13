@@ -1,0 +1,33 @@
+id: "031"
+title: "ULP y machine epsilon"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 11
+hours: 4
+engine: "part01"
+demo: "ulp_epsilon"
+demo_summary: "Machine epsilon y la distancia al float siguiente."
+prerequisite: "clase 030"
+outputs:
+  - "sys.float_info.epsilon"
+  - "2**-52"
+  - "1.0 + eps != 1.0"
+  - "1.0 + eps/2 == 1.0"
+  - "ulp_en_1.0"
+  - "ulp_en_1e6"
+  - "ulp_en_1e-6"
+  - "siguiente_float_tras_1.0"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

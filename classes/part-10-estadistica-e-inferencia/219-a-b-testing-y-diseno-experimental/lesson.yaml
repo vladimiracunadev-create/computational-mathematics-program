@@ -1,0 +1,33 @@
+id: "219"
+title: "A/B testing y diseño experimental"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 19
+hours: 4
+engine: "part10"
+demo: "ab_testing"
+demo_summary: "A/B test de proporciones con tamaño muestral y significancia."
+prerequisite: "clase 218"
+outputs:
+  - "conversion_A"
+  - "conversion_B"
+  - "lift_relativo_%"
+  - "n_por_grupo"
+  - "estadistico_z"
+  - "p_value"
+  - "significativo_al_5%"
+  - "n_requerido_para_80%_de_potencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "348"
+title: "Manifold learning"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 8
+hours: 4
+engine: "part17"
+demo: "manifold_learning"
+demo_summary: "Variedad: dimensión intrínseca menor que la del espacio ambiente."
+prerequisite: "clase 347"
+outputs:
+  - "puntos"
+  - "dimension_ambiente"
+  - "dimension_intrinseca"
+  - "autovalores_de_la_covarianza"
+  - "varianza_explicada_%"
+  - "PCA_no_detecta_1_dimension"
+  - "distancia_euclidea_extremos"
+  - "distancia_geodesica_extremos"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

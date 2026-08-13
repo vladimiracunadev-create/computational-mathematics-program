@@ -1,0 +1,32 @@
+id: "302"
+title: "MLP como composición de funciones"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 2
+hours: 4
+engine: "part15"
+demo: "mlp"
+demo_summary: "MLP resolviendo XOR: la capa oculta crea una representación separable."
+prerequisite: "clase 301"
+outputs:
+  - "arquitectura"
+  - "parametros"
+  - "historial"
+  - "predicciones"
+  - "todas_correctas"
+  - "sin_no_linealidad"
+  - "semilla"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

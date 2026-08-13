@@ -1,0 +1,33 @@
+id: "344"
+title: "Hamiltonian Monte Carlo"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 4
+hours: 4
+engine: "part17"
+demo: "hamiltonian_monte_carlo"
+demo_summary: "HMC: usar el gradiente para proponer estados lejanos con alta aceptación."
+prerequisite: "clase 343"
+outputs:
+  - "objetivo"
+  - "iteraciones"
+  - "step_size_epsilon"
+  - "pasos_de_leapfrog"
+  - "tasa_de_aceptacion"
+  - "media_estimada"
+  - "desviacion_estimada"
+  - "autocorrelacion_lag_1"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "289"
+title: "SVM y margen máximo"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 9
+hours: 4
+engine: "part14"
+demo: "svm_margin"
+demo_summary: "SVM: maximizar el margen equivale a minimizar ‖w‖."
+prerequisite: "clase 288"
+outputs:
+  - "w"
+  - "b"
+  - "norma_de_w"
+  - "ancho_del_margen_2/|w|"
+  - "vectores_de_soporte"
+  - "accuracy"
+  - "objetivo"
+  - "hinge_loss"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,32 @@
+id: "076"
+title: "Coordenadas polares"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 16
+hours: 4
+engine: "part03"
+demo: "polar_coordinates"
+demo_summary: "Conversión cartesiana ↔ polar y su ida y vuelta."
+prerequisite: "clase 075"
+outputs:
+  - "cartesianas"
+  - "r"
+  - "theta_rad"
+  - "theta_grados"
+  - "vuelta_a_cartesianas"
+  - "roundtrip_ok"
+  - "atan2_maneja_cuadrantes"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

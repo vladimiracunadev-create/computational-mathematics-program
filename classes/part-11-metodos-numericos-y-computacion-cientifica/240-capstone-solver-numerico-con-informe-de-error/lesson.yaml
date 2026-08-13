@@ -1,0 +1,33 @@
+id: "240"
+title: "Capstone: solver numérico con informe de error"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 20
+hours: 4
+engine: "part11"
+demo: "capstone_numerical_solver"
+demo_summary: "Capstone: solver con informe de error y criterio de parada declarado."
+prerequisite: "clase 239"
+outputs:
+  - "problema_1"
+  - "informe_edo"
+  - "mejor_relacion_error_por_evaluacion"
+  - "problema_2"
+  - "biseccion"
+  - "newton"
+  - "tolerancia_declarada"
+  - "max_iteraciones_declarado"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

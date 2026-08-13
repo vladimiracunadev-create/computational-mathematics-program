@@ -1,0 +1,33 @@
+id: "024"
+title: "Aritmética binaria"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 4
+hours: 4
+engine: "part01"
+demo: "binary_arithmetic"
+demo_summary: "Suma y desplazamiento en binario, con acarreo visible."
+prerequisite: "clase 023"
+outputs:
+  - "a"
+  - "b"
+  - "a+b"
+  - "a&b"
+  - "a|b"
+  - "a^b"
+  - "a<<2 (multiplica por 4)"
+  - "a>>1 (divide por 2)"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

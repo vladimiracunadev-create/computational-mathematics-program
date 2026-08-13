@@ -1,0 +1,33 @@
+id: "290"
+title: "Kernel trick"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 10
+hours: 4
+engine: "part14"
+demo: "kernel_trick"
+demo_summary: "El kernel calcula el producto punto sin construir el espacio."
+prerequisite: "clase 289"
+outputs:
+  - "a"
+  - "b"
+  - "phi(a)"
+  - "producto_en_el_espacio_expandido"
+  - "kernel_polinomico_(aᵀb)²"
+  - "coinciden"
+  - "dimension_explicita"
+  - "operaciones_kernel"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

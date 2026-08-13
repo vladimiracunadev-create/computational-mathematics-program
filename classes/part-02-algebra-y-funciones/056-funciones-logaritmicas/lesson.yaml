@@ -1,0 +1,31 @@
+id: "056"
+title: "Funciones logarítmicas"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 16
+hours: 4
+engine: "part02"
+demo: "logarithmic_function"
+demo_summary: "El logaritmo como inversa de la exponencial y como escala."
+prerequisite: "clase 055"
+outputs:
+  - "log10(1000)"
+  - "10^3"
+  - "inversa_verificada"
+  - "escala_decibel_de_1e-3"
+  - "crecimiento_de_log_entre_1e3_y_1e6"
+  - "dominio"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

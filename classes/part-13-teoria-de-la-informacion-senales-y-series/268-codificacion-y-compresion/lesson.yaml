@@ -1,0 +1,33 @@
+id: "268"
+title: "Codificación y compresión"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 8
+hours: 4
+engine: "part13"
+demo: "coding_compression"
+demo_summary: "Código de Huffman frente a codificación de longitud fija."
+prerequisite: "clase 267"
+outputs:
+  - "frecuencias"
+  - "codigos_huffman"
+  - "longitud_media_bits"
+  - "entropia_bits"
+  - "longitud_fija_necesaria"
+  - "ahorro_vs_longitud_fija_%"
+  - "cumple_la_cota_de_Shannon"
+  - "codigo_libre_de_prefijos"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

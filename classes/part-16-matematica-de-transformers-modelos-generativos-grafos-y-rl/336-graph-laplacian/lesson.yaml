@@ -1,0 +1,33 @@
+id: "336"
+title: "Graph Laplacian"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 16
+hours: 4
+engine: "part16"
+demo: "graph_laplacian"
+demo_summary: "Laplaciano del grafo: espectro y componentes conexas."
+prerequisite: "clase 335"
+outputs:
+  - "nodos"
+  - "aristas"
+  - "grados"
+  - "matriz_de_adyacencia"
+  - "laplaciano"
+  - "autovalores"
+  - "autovalores_nulos"
+  - "componentes_conexas"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

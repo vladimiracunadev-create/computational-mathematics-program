@@ -1,0 +1,32 @@
+id: "121"
+title: "Bases y coordenadas"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 1
+hours: 4
+engine: "part06"
+demo: "bases_coordinates"
+demo_summary: "Las coordenadas dependen de la base elegida."
+prerequisite: "clase 120"
+outputs:
+  - "vector_en_base_canonica"
+  - "base_alternativa"
+  - "coordenadas_en_la_nueva_base"
+  - "reconstruccion"
+  - "el_vector_no_cambia"
+  - "lo_que_cambia"
+  - "base_es_independiente"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

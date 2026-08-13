@@ -1,0 +1,33 @@
+id: "296"
+title: "EM algorithm"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 16
+hours: 4
+engine: "part14"
+demo: "em_algorithm"
+demo_summary: "EM: E-step y M-step sobre datos con una variable latente."
+prerequisite: "clase 295"
+outputs:
+  - "tandas"
+  - "lanzamientos_por_tanda"
+  - "sesgos_reales"
+  - "inicializacion"
+  - "historial"
+  - "estimacion_final"
+  - "variable_latente"
+  - "garantia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

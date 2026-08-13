@@ -1,0 +1,33 @@
+id: "232"
+title: "Jacobi y Gauss-Seidel"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 12
+hours: 4
+engine: "part11"
+demo: "jacobi_gauss_seidel"
+demo_summary: "Métodos iterativos sobre una matriz diagonalmente dominante."
+prerequisite: "clase 231"
+outputs:
+  - "A"
+  - "diagonalmente_dominante"
+  - "jacobi_solucion"
+  - "jacobi_iteraciones"
+  - "gauss_seidel_solucion"
+  - "gauss_seidel_iteraciones"
+  - "gauss_seidel_es_mas_rapido"
+  - "jacobi_es_paralelizable"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

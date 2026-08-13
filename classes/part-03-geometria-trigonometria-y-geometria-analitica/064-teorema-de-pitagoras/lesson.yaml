@@ -1,0 +1,32 @@
+id: "064"
+title: "Teorema de Pitágoras"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 4
+hours: 4
+engine: "part03"
+demo: "pythagoras"
+demo_summary: "Pitágoras, su recíproco y una terna pitagórica generada."
+prerequisite: "clase 063"
+outputs:
+  - "catetos"
+  - "hipotenusa"
+  - "a²+b²"
+  - "c²"
+  - "es_rectangulo"
+  - "generador_(m,n)"
+  - "triangulo_5_5_7_es_rectangulo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

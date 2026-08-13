@@ -1,0 +1,32 @@
+id: "141"
+title: "Intuición de límite"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 1
+hours: 4
+engine: "part07"
+demo: "limit_intuition"
+demo_summary: "sin(x)/x cuando x→0: indeterminado en el punto, definido en el límite."
+prerequisite: "clase 140"
+outputs:
+  - "funcion"
+  - "definida_en_0"
+  - "tabla_de_aproximacion"
+  - "limite"
+  - "error_en_1e-6"
+  - "por_la_izquierda"
+  - "limites_laterales_coinciden"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,32 @@
+id: "154"
+title: "Integral definida"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 14
+hours: 4
+engine: "part07"
+demo: "definite_integral"
+demo_summary: "Propiedades de la integral definida."
+prerequisite: "clase 153"
+outputs:
+  - "∫₀¹x²"
+  - "∫₁²x²"
+  - "∫₀²x²"
+  - "aditividad"
+  - "∫₁⁰x² (orientación)"
+  - "∫₀⁰x²"
+  - "valor_medio_en_[0,2]"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

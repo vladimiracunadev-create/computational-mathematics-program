@@ -1,0 +1,33 @@
+id: "200"
+title: "Capstone: simulador probabilístico y bayesiano"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 20
+hours: 4
+engine: "part09"
+demo: "capstone_probabilistic_simulator"
+demo_summary: "Capstone: simulador probabilístico con actualización bayesiana."
+prerequisite: "clase 199"
+outputs:
+  - "parametro_real"
+  - "prior"
+  - "actualizacion"
+  - "estimacion_frecuentista"
+  - "estimacion_bayesiana_final"
+  - "el_prior_se_diluye_con_datos"
+  - "semilla"
+  - "reproducible"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

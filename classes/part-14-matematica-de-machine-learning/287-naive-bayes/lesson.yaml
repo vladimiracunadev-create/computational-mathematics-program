@@ -1,0 +1,31 @@
+id: "287"
+title: "Naive Bayes"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 7
+hours: 4
+engine: "part14"
+demo: "naive_bayes"
+demo_summary: "Naive Bayes gaussiano: independencia condicional como supuesto explícito."
+prerequisite: "clase 286"
+outputs:
+  - "clases"
+  - "accuracy"
+  - "supuesto"
+  - "se_cumple_aqui"
+  - "por_que_funciona_igual_si_falla"
+  - "se_trabaja_en_log"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,31 @@
+id: "026"
+title: "Rango, overflow y wraparound"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 6
+hours: 4
+engine: "part01"
+demo: "overflow_wraparound"
+demo_summary: "Wraparound en enteros de ancho fijo simulado sobre Python."
+prerequisite: "clase 025"
+outputs:
+  - "maximo_int8"
+  - "maximo+1_con_wraparound"
+  - "maximo+2_con_wraparound"
+  - "python_int_es_ilimitado"
+  - "sys_maxsize"
+  - "leccion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

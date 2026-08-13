@@ -1,0 +1,31 @@
+id: "216"
+title: "Estimación MAP"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 16
+hours: 4
+engine: "part10"
+demo: "map_estimation"
+demo_summary: "MAP: verosimilitud más prior, y su límite con muchos datos."
+prerequisite: "clase 215"
+outputs:
+  - "parametro_real"
+  - "prior"
+  - "informe"
+  - "MAP_converge_al_MLE"
+  - "el_prior_domina_con_pocos_datos"
+  - "MAP_con_prior_uniforme_es_MLE"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

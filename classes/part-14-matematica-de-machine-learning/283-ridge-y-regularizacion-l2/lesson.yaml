@@ -1,0 +1,33 @@
+id: "283"
+title: "Ridge y regularización L2"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 3
+hours: 4
+engine: "part14"
+demo: "ridge"
+demo_summary: "Ridge: L2 encoge los coeficientes y estabiliza el mal condicionamiento."
+prerequisite: "clase 282"
+outputs:
+  - "λ=0.0"
+  - "λ=0.1"
+  - "λ=1.0"
+  - "λ=10.0"
+  - "condicion_sin_regularizar"
+  - "condicion_con_λ=1"
+  - "ridge_nunca_anula_coeficientes"
+  - "solucion_cerrada"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

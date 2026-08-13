@@ -1,0 +1,33 @@
+id: "072"
+title: "Vectores geométricos 2D"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 12
+hours: 4
+engine: "part03"
+demo: "vectors_2d"
+demo_summary: "Vector como dirección y magnitud; ángulo entre vectores."
+prerequisite: "clase 071"
+outputs:
+  - "u"
+  - "v"
+  - "|u|"
+  - "|v|"
+  - "u·v"
+  - "cos_theta"
+  - "angulo_grados"
+  - "son_ortogonales"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

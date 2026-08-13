@@ -1,0 +1,33 @@
+id: "309"
+title: "Regularización y dropout"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 9
+hours: 4
+engine: "part15"
+demo: "dropout_regularization"
+demo_summary: "Dropout: ruido en entrenamiento, escalado coherente en inferencia."
+prerequisite: "clase 308"
+outputs:
+  - "neuronas"
+  - "probabilidad_de_apagado"
+  - "media_sin_dropout"
+  - "media_con_inverted_dropout"
+  - "la_esperanza_se_conserva"
+  - "varianza_introducida"
+  - "en_inferencia"
+  - "interpretacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

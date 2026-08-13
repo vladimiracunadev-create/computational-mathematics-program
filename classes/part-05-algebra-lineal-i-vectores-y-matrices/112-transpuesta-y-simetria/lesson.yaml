@@ -1,0 +1,31 @@
+id: "112"
+title: "Transpuesta y simetría"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 12
+hours: 4
+engine: "part05"
+demo: "transpose_symmetry"
+demo_summary: "Toda matriz cuadrada se descompone en parte simétrica y antisimétrica."
+prerequisite: "clase 111"
+outputs:
+  - "A"
+  - "parte_simetrica"
+  - "parte_antisimetrica"
+  - "suma_reconstruye_A"
+  - "sim_es_simetrica"
+  - "AᵀA_es_simetrica"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,31 @@
+id: "237"
+title: "Runge-Kutta"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 17
+hours: 4
+engine: "part11"
+demo: "runge_kutta"
+demo_summary: "RK4: cuatro evaluaciones por paso, error O(h⁴)."
+prerequisite: "clase 236"
+outputs:
+  - "metodo"
+  - "informe"
+  - "orden"
+  - "duplicar_pasos_divide_el_error_por_16"
+  - "coste_por_paso"
+  - "comparacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

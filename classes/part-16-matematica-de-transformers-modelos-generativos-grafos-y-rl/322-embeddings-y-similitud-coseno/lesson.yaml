@@ -1,0 +1,33 @@
+id: "322"
+title: "Embeddings y similitud coseno"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 2
+hours: 4
+engine: "part16"
+demo: "cosine_similarity"
+demo_summary: "Similitud coseno: la métrica estándar entre embeddings."
+prerequisite: "clase 321"
+outputs:
+  - "consulta"
+  - "similitudes"
+  - "distancias_euclideas"
+  - "el_escalado_no_afecta_al_coseno"
+  - "el_escalado_si_afecta_a_la_distancia"
+  - "rango"
+  - "mas_similar"
+  - "uso"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "090"
+title: "Principio del palomar"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 10
+hours: 4
+engine: "part04"
+demo: "pigeonhole"
+demo_summary: "Principio del palomar: colisiones garantizadas sin construirlas."
+prerequisite: "clase 089"
+outputs:
+  - "personas"
+  - "dias_del_año"
+  - "coincidencia_de_cumpleaños_garantizada"
+  - "minimo_repeticiones"
+  - "espacio_hash"
+  - "entradas"
+  - "colision_garantizada"
+  - "leccion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

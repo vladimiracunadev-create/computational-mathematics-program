@@ -1,0 +1,33 @@
+id: "101"
+title: "Escalares, vectores y matrices"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 1
+hours: 4
+engine: "part05"
+demo: "scalars_vectors_matrices"
+demo_summary: "Escalar, vector y matriz como objetos con forma y significado."
+prerequisite: "clase 100"
+outputs:
+  - "escalar"
+  - "vector"
+  - "shape_vector"
+  - "matriz"
+  - "shape_matriz"
+  - "escalar_por_vector"
+  - "transpuesta_shape"
+  - "un_tensor_de_orden_0_es_un_escalar"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

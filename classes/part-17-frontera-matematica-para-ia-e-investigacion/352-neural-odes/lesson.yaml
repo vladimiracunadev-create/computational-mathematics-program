@@ -1,0 +1,33 @@
+id: "352"
+title: "Neural ODEs"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 12
+hours: 4
+engine: "part17"
+demo: "neural_odes"
+demo_summary: "Neural ODE: capas continuas y el método adjunto."
+prerequisite: "clase 351"
+outputs:
+  - "ODE"
+  - "solucion_analitica"
+  - "z(T)_exacto"
+  - "convergencia_de_Euler"
+  - "perdida"
+  - "dL/dθ_por_metodo_adjunto"
+  - "dL/dθ_analitico"
+  - "coinciden_aproximadamente"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

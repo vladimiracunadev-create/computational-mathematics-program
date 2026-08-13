@@ -1,0 +1,32 @@
+id: "080"
+title: "Capstone: motor geométrico 2D"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 20
+hours: 4
+engine: "part03"
+demo: "capstone_geometry_engine"
+demo_summary: "Capstone: motor 2D que compone transformaciones sobre un polígono."
+prerequisite: "clase 079"
+outputs:
+  - "poligono_original"
+  - "matriz_compuesta"
+  - "poligono_transformado"
+  - "area_original"
+  - "area_transformada"
+  - "determinante"
+  - "area_escala_como_|det|"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

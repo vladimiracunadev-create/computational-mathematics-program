@@ -1,0 +1,33 @@
+id: "351"
+title: "Stochastic differential equations"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 11
+hours: 4
+engine: "part17"
+demo: "stochastic_differential_equations"
+demo_summary: "SDE: proceso de Ornstein-Uhlenbeck simulado con Euler-Maruyama."
+prerequisite: "clase 350"
+outputs:
+  - "SDE"
+  - "parametros"
+  - "integrador"
+  - "dt"
+  - "trayectoria_de_ejemplo"
+  - "replicas"
+  - "media_estacionaria_empirica"
+  - "media_estacionaria_teorica"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

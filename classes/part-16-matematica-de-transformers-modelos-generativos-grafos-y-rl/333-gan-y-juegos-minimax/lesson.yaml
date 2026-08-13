@@ -1,0 +1,33 @@
+id: "333"
+title: "GAN y juegos minimax"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 13
+hours: 4
+engine: "part16"
+demo: "gan_minimax"
+demo_summary: "GAN: el equilibrio del juego minimax y su punto óptimo."
+prerequisite: "clase 332"
+outputs:
+  - "objetivo"
+  - "escenarios"
+  - "D_optimo"
+  - "en_el_equilibrio_D=0.5"
+  - "perdida_teorica_en_equilibrio"
+  - "el_objetivo_original_equivale_a"
+  - "problema_del_gradiente_saturado"
+  - "solucion_practica"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

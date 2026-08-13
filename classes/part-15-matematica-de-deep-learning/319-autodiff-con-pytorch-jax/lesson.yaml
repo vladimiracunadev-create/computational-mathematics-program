@@ -1,0 +1,33 @@
+id: "319"
+title: "Autodiff con PyTorch/JAX"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 19
+hours: 4
+engine: "part15"
+demo: "autodiff_frameworks"
+demo_summary: "Nuestro Var frente a PyTorch/JAX: mismo principio, distinta escala."
+prerequisite: "clase 318"
+outputs:
+  - "expresion"
+  - "loss"
+  - "dloss/dw"
+  - "dloss/db"
+  - "dloss/dx"
+  - "frameworks_disponibles"
+  - "lo_que_añaden_los_frameworks"
+  - "lo_que_no_cambia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

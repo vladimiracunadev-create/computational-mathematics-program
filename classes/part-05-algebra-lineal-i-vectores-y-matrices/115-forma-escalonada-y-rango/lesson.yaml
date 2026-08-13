@@ -1,0 +1,32 @@
+id: "115"
+title: "Forma escalonada y rango"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 15
+hours: 4
+engine: "part05"
+demo: "echelon_rank"
+demo_summary: "Rango: la dimensión efectiva de la transformación."
+prerequisite: "clase 114"
+outputs:
+  - "rango_completa"
+  - "rango_deficiente"
+  - "rango_rectangular_2x3"
+  - "rango_maximo_posible"
+  - "deficiente_es_invertible"
+  - "nulidad_de_la_deficiente"
+  - "teorema_rango_nulidad"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

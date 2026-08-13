@@ -1,0 +1,32 @@
+id: "202"
+title: "Población, muestra y sesgo de selección"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 2
+hours: 4
+engine: "part10"
+demo: "population_sample"
+demo_summary: "Sesgo de selección: la muestra no representa a la población."
+prerequisite: "clase 201"
+outputs:
+  - "media_poblacional"
+  - "media_muestra_aleatoria"
+  - "error_muestra_aleatoria"
+  - "media_muestra_sesgada"
+  - "error_muestra_sesgada"
+  - "el_tamaño_no_corrige_el_sesgo"
+  - "leccion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

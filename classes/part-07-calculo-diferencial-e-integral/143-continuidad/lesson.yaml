@@ -1,0 +1,30 @@
+id: "143"
+title: "Continuidad"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 3
+hours: 4
+engine: "part07"
+demo: "continuity"
+demo_summary: "Los tres requisitos de continuidad en un punto."
+prerequisite: "clase 142"
+outputs:
+  - "funcion_con_salto"
+  - "discontinuidad_removible"
+  - "requisitos"
+  - "continua_no_implica_derivable"
+  - "derivable_implica_continua"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

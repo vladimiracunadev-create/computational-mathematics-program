@@ -1,0 +1,33 @@
+id: "280"
+title: "Capstone: analizar señal y construir features"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 20
+hours: 4
+engine: "part13"
+demo: "capstone_signal_features"
+demo_summary: "Capstone: de una señal cruda a un vector de características."
+prerequisite: "clase 279"
+outputs:
+  - "muestras"
+  - "frecuencia_de_muestreo_Hz"
+  - "features_temporales"
+  - "features_espectrales"
+  - "componentes_reales_Hz"
+  - "dominante_detectada_correctamente"
+  - "vector_de_features"
+  - "uso"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

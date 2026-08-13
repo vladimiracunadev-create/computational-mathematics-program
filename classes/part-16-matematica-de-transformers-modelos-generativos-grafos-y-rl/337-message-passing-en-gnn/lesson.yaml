@@ -1,0 +1,33 @@
+id: "337"
+title: "Message passing en GNN"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 17
+hours: 4
+engine: "part16"
+demo: "message_passing"
+demo_summary: "Message passing: cada capa agrega información de un salto más lejos."
+prerequisite: "clase 336"
+outputs:
+  - "nodos"
+  - "features_iniciales"
+  - "tras_1_capa"
+  - "tras_2_capas"
+  - "receptivo_tras_k_capas"
+  - "normalizacion"
+  - "el_nodo_4_solo_tiene_1_vecino"
+  - "permutacion_equivariante"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

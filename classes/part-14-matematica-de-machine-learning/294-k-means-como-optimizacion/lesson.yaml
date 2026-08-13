@@ -1,0 +1,33 @@
+id: "294"
+title: "k-means como optimización"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 14
+hours: 4
+engine: "part14"
+demo: "kmeans"
+demo_summary: "k-means como minimización de la inercia (Lloyd)."
+prerequisite: "clase 293"
+outputs:
+  - "k"
+  - "iteraciones_hasta_converger"
+  - "centroides"
+  - "historial_de_inercia"
+  - "la_inercia_nunca_sube"
+  - "objetivo"
+  - "converge_a_un_optimo_local"
+  - "sensible_a_la_inicializacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

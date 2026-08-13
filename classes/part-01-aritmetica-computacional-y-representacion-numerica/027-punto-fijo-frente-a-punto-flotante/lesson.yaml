@@ -1,0 +1,31 @@
+id: "027"
+title: "Punto fijo frente a punto flotante"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 7
+hours: 4
+engine: "part01"
+demo: "fixed_vs_floating"
+demo_summary: "Punto fijo (centavos enteros) frente a punto flotante."
+prerequisite: "clase 026"
+outputs:
+  - "suma_float_de_0.1_x10"
+  - "es_exactamente_1.0"
+  - "error"
+  - "suma_en_centavos_enteros"
+  - "centavos_a_unidades"
+  - "punto_fijo_exacto"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

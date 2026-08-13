@@ -1,0 +1,33 @@
+id: "278"
+title: "Series temporales y ventanas"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 18
+hours: 4
+engine: "part13"
+demo: "windowing"
+demo_summary: "Ventaneo: el precio de analizar un trozo finito de señal."
+prerequisite: "clase 277"
+outputs:
+  - "muestras"
+  - "frecuencia_real"
+  - "pico_con_ventana_rectangular"
+  - "pico_con_ventana_de_Hann"
+  - "fuga_espectral_rectangular_%"
+  - "fuga_espectral_hann_%"
+  - "hann_reduce_la_fuga"
+  - "coste"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

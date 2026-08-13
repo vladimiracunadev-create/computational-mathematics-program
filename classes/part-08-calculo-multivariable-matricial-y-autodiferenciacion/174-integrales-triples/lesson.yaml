@@ -1,0 +1,33 @@
+id: "174"
+title: "Integrales triples"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 14
+hours: 4
+engine: "part08"
+demo: "triple_integrals"
+demo_summary: "Volumen y masa de un cubo con densidad variable."
+prerequisite: "clase 173"
+outputs:
+  - "region"
+  - "volumen_aproximado"
+  - "volumen_exacto"
+  - "densidad"
+  - "masa_aproximada"
+  - "masa_exacta_3/2"
+  - "error_masa"
+  - "coste"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

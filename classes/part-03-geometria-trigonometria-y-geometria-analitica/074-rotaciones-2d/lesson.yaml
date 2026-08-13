@@ -1,0 +1,32 @@
+id: "074"
+title: "Rotaciones 2D"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 14
+hours: 4
+engine: "part03"
+demo: "rotation_2d"
+demo_summary: "Matriz de rotación: ortogonal y de determinante 1."
+prerequisite: "clase 073"
+outputs:
+  - "angulo_grados"
+  - "matriz"
+  - "R·(1,0)"
+  - "determinante"
+  - "RᵀR_es_identidad"
+  - "preserva_la_norma"
+  - "cuatro_rotaciones_vuelven_al_origen"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

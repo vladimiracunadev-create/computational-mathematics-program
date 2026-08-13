@@ -1,0 +1,32 @@
+id: "116"
+title: "Inversa de una matriz"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 16
+hours: 4
+engine: "part05"
+demo: "matrix_inverse"
+demo_summary: "La inversa existe, pero rara vez conviene calcularla."
+prerequisite: "clase 115"
+outputs:
+  - "A"
+  - "A⁻¹"
+  - "A·A⁻¹"
+  - "es_identidad"
+  - "determinante"
+  - "formula_2x2"
+  - "recomendacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

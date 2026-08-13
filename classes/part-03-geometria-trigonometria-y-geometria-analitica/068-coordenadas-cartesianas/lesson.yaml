@@ -1,0 +1,31 @@
+id: "068"
+title: "Coordenadas cartesianas"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 8
+hours: 4
+engine: "part03"
+demo: "cartesian_coordinates"
+demo_summary: "Cuadrantes, simetrías y traslación de origen."
+prerequisite: "clase 067"
+outputs:
+  - "puntos"
+  - "cuadrantes"
+  - "simetrico_respecto_a_x"
+  - "simetrico_respecto_a_y"
+  - "simetrico_respecto_al_origen"
+  - "trasladado_(+1,-1)"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,28 @@
+id: "030"
+title: "Error absoluto y error relativo"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 10
+hours: 4
+engine: "part01"
+demo: "absolute_relative_error"
+demo_summary: "El error relativo es el que se propaga; el absoluto engaña con la escala."
+prerequisite: "clase 029"
+outputs:
+  - "exacto=1.0"
+  - "exacto=1000000.0"
+  - "conclusion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

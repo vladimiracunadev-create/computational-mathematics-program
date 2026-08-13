@@ -1,0 +1,33 @@
+id: "320"
+title: "Capstone: red neuronal desde cero en Python puro"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 20
+hours: 4
+engine: "part15"
+demo: "capstone_neural_network"
+demo_summary: "Capstone: red neuronal completa desde cero, entrenada y evaluada."
+prerequisite: "clase 319"
+outputs:
+  - "problema"
+  - "arquitectura"
+  - "parametros"
+  - "inicializacion"
+  - "optimizador"
+  - "learning_rate"
+  - "epocas"
+  - "historial"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

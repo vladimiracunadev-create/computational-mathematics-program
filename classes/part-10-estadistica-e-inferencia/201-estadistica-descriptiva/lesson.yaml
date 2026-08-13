@@ -1,0 +1,33 @@
+id: "201"
+title: "Estadística descriptiva"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 1
+hours: 4
+engine: "part10"
+demo: "descriptive_statistics"
+demo_summary: "Centro, dispersión y forma: tres preguntas distintas."
+prerequisite: "clase 200"
+outputs:
+  - "n"
+  - "media"
+  - "mediana"
+  - "desviacion_estandar"
+  - "rango"
+  - "Q1"
+  - "Q3"
+  - "IQR"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

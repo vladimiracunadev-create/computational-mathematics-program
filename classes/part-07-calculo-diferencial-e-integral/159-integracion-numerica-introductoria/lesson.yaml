@@ -1,0 +1,33 @@
+id: "159"
+title: "Integración numérica introductoria"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 19
+hours: 4
+engine: "part07"
+demo: "numerical_integration_intro"
+demo_summary: "Trapecio frente a Simpson sobre la misma integral."
+prerequisite: "clase 158"
+outputs:
+  - "integrando"
+  - "intervalo"
+  - "subintervalos"
+  - "trapecio"
+  - "simpson"
+  - "referencia_erf"
+  - "error_trapecio"
+  - "error_simpson"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

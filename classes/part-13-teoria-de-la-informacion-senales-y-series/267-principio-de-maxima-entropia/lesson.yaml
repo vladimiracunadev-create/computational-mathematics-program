@@ -1,0 +1,32 @@
+id: "267"
+title: "Principio de máxima entropía"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 7
+hours: 4
+engine: "part13"
+demo: "max_entropy"
+demo_summary: "Principio de máxima entropía: la distribución menos comprometida."
+prerequisite: "clase 266"
+outputs:
+  - "candidatas"
+  - "medias"
+  - "maxima_entropia"
+  - "entropia_maxima_teorica"
+  - "sin_restricciones_gana_la_uniforme"
+  - "con_media_y_varianza_fijas"
+  - "con_soporte_positivo_y_media_fija"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

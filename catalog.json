@@ -1,0 +1,3242 @@
+[
+  {
+    "id": "001",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Números naturales y conteo",
+    "level": "cero-absoluto",
+    "slug": "001-numeros-naturales-y-conteo",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/001-numeros-naturales-y-conteo/README.md"
+  },
+  {
+    "id": "002",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Enteros, signo y recta numérica",
+    "level": "cero-absoluto",
+    "slug": "002-enteros-signo-y-recta-numerica",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/002-enteros-signo-y-recta-numerica/README.md"
+  },
+  {
+    "id": "003",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Fracciones y números racionales",
+    "level": "cero-absoluto",
+    "slug": "003-fracciones-y-numeros-racionales",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/003-fracciones-y-numeros-racionales/README.md"
+  },
+  {
+    "id": "004",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Decimales y conversiones",
+    "level": "cero-absoluto",
+    "slug": "004-decimales-y-conversiones",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/004-decimales-y-conversiones/README.md"
+  },
+  {
+    "id": "005",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Porcentajes desde cero",
+    "level": "cero-absoluto",
+    "slug": "005-porcentajes-desde-cero",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/005-porcentajes-desde-cero/README.md"
+  },
+  {
+    "id": "006",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Razones, tasas y proporciones",
+    "level": "cero-absoluto",
+    "slug": "006-razones-tasas-y-proporciones",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/006-razones-tasas-y-proporciones/README.md"
+  },
+  {
+    "id": "007",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Regla de tres y escalas",
+    "level": "cero-absoluto",
+    "slug": "007-regla-de-tres-y-escalas",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/007-regla-de-tres-y-escalas/README.md"
+  },
+  {
+    "id": "008",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Potencias y leyes de exponentes",
+    "level": "cero-absoluto",
+    "slug": "008-potencias-y-leyes-de-exponentes",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/008-potencias-y-leyes-de-exponentes/README.md"
+  },
+  {
+    "id": "009",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Raíces y radicales",
+    "level": "cero-absoluto",
+    "slug": "009-raices-y-radicales",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/009-raices-y-radicales/README.md"
+  },
+  {
+    "id": "010",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Orden de operaciones y paréntesis",
+    "level": "cero-absoluto",
+    "slug": "010-orden-de-operaciones-y-parentesis",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/010-orden-de-operaciones-y-parentesis/README.md"
+  },
+  {
+    "id": "011",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Notación científica",
+    "level": "cero-absoluto",
+    "slug": "011-notacion-cientifica",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/011-notacion-cientifica/README.md"
+  },
+  {
+    "id": "012",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Unidades y análisis dimensional",
+    "level": "cero-absoluto",
+    "slug": "012-unidades-y-analisis-dimensional",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/012-unidades-y-analisis-dimensional/README.md"
+  },
+  {
+    "id": "013",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Aproximación, redondeo y cifras significativas",
+    "level": "cero-absoluto",
+    "slug": "013-aproximacion-redondeo-y-cifras-significativas",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/013-aproximacion-redondeo-y-cifras-significativas/README.md"
+  },
+  {
+    "id": "014",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Estimación y cálculo mental",
+    "level": "cero-absoluto",
+    "slug": "014-estimacion-y-calculo-mental",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/014-estimacion-y-calculo-mental/README.md"
+  },
+  {
+    "id": "015",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Variables como cantidades desconocidas",
+    "level": "cero-absoluto",
+    "slug": "015-variables-como-cantidades-desconocidas",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/015-variables-como-cantidades-desconocidas/README.md"
+  },
+  {
+    "id": "016",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Expresiones y fórmulas",
+    "level": "cero-absoluto",
+    "slug": "016-expresiones-y-formulas",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/016-expresiones-y-formulas/README.md"
+  },
+  {
+    "id": "017",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Patrones, secuencias y regularidades",
+    "level": "cero-absoluto",
+    "slug": "017-patrones-secuencias-y-regularidades",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/017-patrones-secuencias-y-regularidades/README.md"
+  },
+  {
+    "id": "018",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Problemas verbales a lenguaje matemático",
+    "level": "cero-absoluto",
+    "slug": "018-problemas-verbales-a-lenguaje-matematico",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/018-problemas-verbales-a-lenguaje-matematico/README.md"
+  },
+  {
+    "id": "019",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Comprobación y contraejemplos",
+    "level": "cero-absoluto",
+    "slug": "019-comprobacion-y-contraejemplos",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/019-comprobacion-y-contraejemplos/README.md"
+  },
+  {
+    "id": "020",
+    "part": "00",
+    "part_title": "Pensamiento matemático desde cero",
+    "title": "Capstone: modelar un problema cotidiano con matemáticas",
+    "level": "cero-absoluto",
+    "slug": "020-capstone-modelar-un-problema-cotidiano-con-matematicas",
+    "path": "classes/part-00-pensamiento-matematico-desde-cero/020-capstone-modelar-un-problema-cotidiano-con-matematicas/README.md"
+  },
+  {
+    "id": "021",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Bits, bytes y sistemas de numeración",
+    "level": "basico-computacional",
+    "slug": "021-bits-bytes-y-sistemas-de-numeracion",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/021-bits-bytes-y-sistemas-de-numeracion/README.md"
+  },
+  {
+    "id": "022",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Conversión decimal a binario",
+    "level": "basico-computacional",
+    "slug": "022-conversion-decimal-a-binario",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/022-conversion-decimal-a-binario/README.md"
+  },
+  {
+    "id": "023",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Binario, octal y hexadecimal",
+    "level": "basico-computacional",
+    "slug": "023-binario-octal-y-hexadecimal",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/023-binario-octal-y-hexadecimal/README.md"
+  },
+  {
+    "id": "024",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Aritmética binaria",
+    "level": "basico-computacional",
+    "slug": "024-aritmetica-binaria",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/024-aritmetica-binaria/README.md"
+  },
+  {
+    "id": "025",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Enteros con signo y complemento a dos",
+    "level": "basico-computacional",
+    "slug": "025-enteros-con-signo-y-complemento-a-dos",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/025-enteros-con-signo-y-complemento-a-dos/README.md"
+  },
+  {
+    "id": "026",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Rango, overflow y wraparound",
+    "level": "basico-computacional",
+    "slug": "026-rango-overflow-y-wraparound",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/026-rango-overflow-y-wraparound/README.md"
+  },
+  {
+    "id": "027",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Punto fijo frente a punto flotante",
+    "level": "basico-computacional",
+    "slug": "027-punto-fijo-frente-a-punto-flotante",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/027-punto-fijo-frente-a-punto-flotante/README.md"
+  },
+  {
+    "id": "028",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "IEEE 754: estructura de un float",
+    "level": "basico-computacional",
+    "slug": "028-ieee-754-estructura-de-un-float",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/028-ieee-754-estructura-de-un-float/README.md"
+  },
+  {
+    "id": "029",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Por qué 0.1 + 0.2 no es exactamente 0.3",
+    "level": "basico-computacional",
+    "slug": "029-por-que-0-1-0-2-no-es-exactamente-0-3",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/029-por-que-0-1-0-2-no-es-exactamente-0-3/README.md"
+  },
+  {
+    "id": "030",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Error absoluto y error relativo",
+    "level": "basico-computacional",
+    "slug": "030-error-absoluto-y-error-relativo",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/030-error-absoluto-y-error-relativo/README.md"
+  },
+  {
+    "id": "031",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "ULP y machine epsilon",
+    "level": "basico-computacional",
+    "slug": "031-ulp-y-machine-epsilon",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/031-ulp-y-machine-epsilon/README.md"
+  },
+  {
+    "id": "032",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Cancelación catastrófica",
+    "level": "basico-computacional",
+    "slug": "032-cancelacion-catastrofica",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/032-cancelacion-catastrofica/README.md"
+  },
+  {
+    "id": "033",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Overflow y underflow flotante",
+    "level": "basico-computacional",
+    "slug": "033-overflow-y-underflow-flotante",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/033-overflow-y-underflow-flotante/README.md"
+  },
+  {
+    "id": "034",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Propagación de errores",
+    "level": "basico-computacional",
+    "slug": "034-propagacion-de-errores",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/034-propagacion-de-errores/README.md"
+  },
+  {
+    "id": "035",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Condicionamiento de problemas",
+    "level": "basico-computacional",
+    "slug": "035-condicionamiento-de-problemas",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/035-condicionamiento-de-problemas/README.md"
+  },
+  {
+    "id": "036",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Estabilidad de algoritmos",
+    "level": "basico-computacional",
+    "slug": "036-estabilidad-de-algoritmos",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/036-estabilidad-de-algoritmos/README.md"
+  },
+  {
+    "id": "037",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Precisión arbitraria y Decimal",
+    "level": "basico-computacional",
+    "slug": "037-precision-arbitraria-y-decimal",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/037-precision-arbitraria-y-decimal/README.md"
+  },
+  {
+    "id": "038",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Racional exacto y Fraction",
+    "level": "basico-computacional",
+    "slug": "038-racional-exacto-y-fraction",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/038-racional-exacto-y-fraction/README.md"
+  },
+  {
+    "id": "039",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Reproducibilidad numérica entre plataformas",
+    "level": "basico-computacional",
+    "slug": "039-reproducibilidad-numerica-entre-plataformas",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/039-reproducibilidad-numerica-entre-plataformas/README.md"
+  },
+  {
+    "id": "040",
+    "part": "01",
+    "part_title": "Aritmética computacional y representación numérica",
+    "title": "Capstone: auditor de precisión numérica",
+    "level": "basico-computacional",
+    "slug": "040-capstone-auditor-de-precision-numerica",
+    "path": "classes/part-01-aritmetica-computacional-y-representacion-numerica/040-capstone-auditor-de-precision-numerica/README.md"
+  },
+  {
+    "id": "041",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Expresiones algebraicas y términos",
+    "level": "basico",
+    "slug": "041-expresiones-algebraicas-y-terminos",
+    "path": "classes/part-02-algebra-y-funciones/041-expresiones-algebraicas-y-terminos/README.md"
+  },
+  {
+    "id": "042",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Propiedades distributiva, asociativa y conmutativa",
+    "level": "basico",
+    "slug": "042-propiedades-distributiva-asociativa-y-conmutativa",
+    "path": "classes/part-02-algebra-y-funciones/042-propiedades-distributiva-asociativa-y-conmutativa/README.md"
+  },
+  {
+    "id": "043",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Ecuaciones lineales de una variable",
+    "level": "basico",
+    "slug": "043-ecuaciones-lineales-de-una-variable",
+    "path": "classes/part-02-algebra-y-funciones/043-ecuaciones-lineales-de-una-variable/README.md"
+  },
+  {
+    "id": "044",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Desigualdades lineales",
+    "level": "basico",
+    "slug": "044-desigualdades-lineales",
+    "path": "classes/part-02-algebra-y-funciones/044-desigualdades-lineales/README.md"
+  },
+  {
+    "id": "045",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Sistemas de ecuaciones 2x2",
+    "level": "basico",
+    "slug": "045-sistemas-de-ecuaciones-2x2",
+    "path": "classes/part-02-algebra-y-funciones/045-sistemas-de-ecuaciones-2x2/README.md"
+  },
+  {
+    "id": "046",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Polinomios y operaciones",
+    "level": "basico",
+    "slug": "046-polinomios-y-operaciones",
+    "path": "classes/part-02-algebra-y-funciones/046-polinomios-y-operaciones/README.md"
+  },
+  {
+    "id": "047",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Factorización elemental",
+    "level": "basico",
+    "slug": "047-factorizacion-elemental",
+    "path": "classes/part-02-algebra-y-funciones/047-factorizacion-elemental/README.md"
+  },
+  {
+    "id": "048",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Ecuaciones cuadráticas",
+    "level": "basico",
+    "slug": "048-ecuaciones-cuadraticas",
+    "path": "classes/part-02-algebra-y-funciones/048-ecuaciones-cuadraticas/README.md"
+  },
+  {
+    "id": "049",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Fórmula cuadrática y discriminante",
+    "level": "basico",
+    "slug": "049-formula-cuadratica-y-discriminante",
+    "path": "classes/part-02-algebra-y-funciones/049-formula-cuadratica-y-discriminante/README.md"
+  },
+  {
+    "id": "050",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Exponentes algebraicos",
+    "level": "basico",
+    "slug": "050-exponentes-algebraicos",
+    "path": "classes/part-02-algebra-y-funciones/050-exponentes-algebraicos/README.md"
+  },
+  {
+    "id": "051",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Logaritmos y sus propiedades",
+    "level": "basico",
+    "slug": "051-logaritmos-y-sus-propiedades",
+    "path": "classes/part-02-algebra-y-funciones/051-logaritmos-y-sus-propiedades/README.md"
+  },
+  {
+    "id": "052",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Funciones: dominio y rango",
+    "level": "basico",
+    "slug": "052-funciones-dominio-y-rango",
+    "path": "classes/part-02-algebra-y-funciones/052-funciones-dominio-y-rango/README.md"
+  },
+  {
+    "id": "053",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Funciones lineales y pendiente",
+    "level": "basico",
+    "slug": "053-funciones-lineales-y-pendiente",
+    "path": "classes/part-02-algebra-y-funciones/053-funciones-lineales-y-pendiente/README.md"
+  },
+  {
+    "id": "054",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Funciones cuadráticas y parábolas",
+    "level": "basico",
+    "slug": "054-funciones-cuadraticas-y-parabolas",
+    "path": "classes/part-02-algebra-y-funciones/054-funciones-cuadraticas-y-parabolas/README.md"
+  },
+  {
+    "id": "055",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Funciones exponenciales",
+    "level": "basico",
+    "slug": "055-funciones-exponenciales",
+    "path": "classes/part-02-algebra-y-funciones/055-funciones-exponenciales/README.md"
+  },
+  {
+    "id": "056",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Funciones logarítmicas",
+    "level": "basico",
+    "slug": "056-funciones-logaritmicas",
+    "path": "classes/part-02-algebra-y-funciones/056-funciones-logaritmicas/README.md"
+  },
+  {
+    "id": "057",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Composición de funciones",
+    "level": "basico",
+    "slug": "057-composicion-de-funciones",
+    "path": "classes/part-02-algebra-y-funciones/057-composicion-de-funciones/README.md"
+  },
+  {
+    "id": "058",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Funciones inversas",
+    "level": "basico",
+    "slug": "058-funciones-inversas",
+    "path": "classes/part-02-algebra-y-funciones/058-funciones-inversas/README.md"
+  },
+  {
+    "id": "059",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Funciones por tramos",
+    "level": "basico",
+    "slug": "059-funciones-por-tramos",
+    "path": "classes/part-02-algebra-y-funciones/059-funciones-por-tramos/README.md"
+  },
+  {
+    "id": "060",
+    "part": "02",
+    "part_title": "Álgebra y funciones",
+    "title": "Capstone: construir y comparar modelos funcionales",
+    "level": "basico",
+    "slug": "060-capstone-construir-y-comparar-modelos-funcionales",
+    "path": "classes/part-02-algebra-y-funciones/060-capstone-construir-y-comparar-modelos-funcionales/README.md"
+  },
+  {
+    "id": "061",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Puntos, segmentos y distancias",
+    "level": "basico-intermedio",
+    "slug": "061-puntos-segmentos-y-distancias",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/061-puntos-segmentos-y-distancias/README.md"
+  },
+  {
+    "id": "062",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Ángulos y radianes",
+    "level": "basico-intermedio",
+    "slug": "062-angulos-y-radianes",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/062-angulos-y-radianes/README.md"
+  },
+  {
+    "id": "063",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Triángulos y semejanza",
+    "level": "basico-intermedio",
+    "slug": "063-triangulos-y-semejanza",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/063-triangulos-y-semejanza/README.md"
+  },
+  {
+    "id": "064",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Teorema de Pitágoras",
+    "level": "basico-intermedio",
+    "slug": "064-teorema-de-pitagoras",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/064-teorema-de-pitagoras/README.md"
+  },
+  {
+    "id": "065",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Seno, coseno y tangente",
+    "level": "basico-intermedio",
+    "slug": "065-seno-coseno-y-tangente",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/065-seno-coseno-y-tangente/README.md"
+  },
+  {
+    "id": "066",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Identidades trigonométricas básicas",
+    "level": "basico-intermedio",
+    "slug": "066-identidades-trigonometricas-basicas",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/066-identidades-trigonometricas-basicas/README.md"
+  },
+  {
+    "id": "067",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Círculo unitario",
+    "level": "basico-intermedio",
+    "slug": "067-circulo-unitario",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/067-circulo-unitario/README.md"
+  },
+  {
+    "id": "068",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Coordenadas cartesianas",
+    "level": "basico-intermedio",
+    "slug": "068-coordenadas-cartesianas",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/068-coordenadas-cartesianas/README.md"
+  },
+  {
+    "id": "069",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Pendiente y ecuación de la recta",
+    "level": "basico-intermedio",
+    "slug": "069-pendiente-y-ecuacion-de-la-recta",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/069-pendiente-y-ecuacion-de-la-recta/README.md"
+  },
+  {
+    "id": "070",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Distancia punto-recta",
+    "level": "basico-intermedio",
+    "slug": "070-distancia-punto-recta",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/070-distancia-punto-recta/README.md"
+  },
+  {
+    "id": "071",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Circunferencias y cónicas",
+    "level": "basico-intermedio",
+    "slug": "071-circunferencias-y-conicas",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/071-circunferencias-y-conicas/README.md"
+  },
+  {
+    "id": "072",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Vectores geométricos 2D",
+    "level": "basico-intermedio",
+    "slug": "072-vectores-geometricos-2d",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/072-vectores-geometricos-2d/README.md"
+  },
+  {
+    "id": "073",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Transformaciones: traslación y escala",
+    "level": "basico-intermedio",
+    "slug": "073-transformaciones-traslacion-y-escala",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/073-transformaciones-traslacion-y-escala/README.md"
+  },
+  {
+    "id": "074",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Rotaciones 2D",
+    "level": "basico-intermedio",
+    "slug": "074-rotaciones-2d",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/074-rotaciones-2d/README.md"
+  },
+  {
+    "id": "075",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Matrices de transformación",
+    "level": "basico-intermedio",
+    "slug": "075-matrices-de-transformacion",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/075-matrices-de-transformacion/README.md"
+  },
+  {
+    "id": "076",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Coordenadas polares",
+    "level": "basico-intermedio",
+    "slug": "076-coordenadas-polares",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/076-coordenadas-polares/README.md"
+  },
+  {
+    "id": "077",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Geometría 3D y planos",
+    "level": "basico-intermedio",
+    "slug": "077-geometria-3d-y-planos",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/077-geometria-3d-y-planos/README.md"
+  },
+  {
+    "id": "078",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Proyecciones y perspectiva",
+    "level": "basico-intermedio",
+    "slug": "078-proyecciones-y-perspectiva",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/078-proyecciones-y-perspectiva/README.md"
+  },
+  {
+    "id": "079",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Aplicaciones en visión, robótica y videojuegos",
+    "level": "basico-intermedio",
+    "slug": "079-aplicaciones-en-vision-robotica-y-videojuegos",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/079-aplicaciones-en-vision-robotica-y-videojuegos/README.md"
+  },
+  {
+    "id": "080",
+    "part": "03",
+    "part_title": "Geometría, trigonometría y geometría analítica",
+    "title": "Capstone: motor geométrico 2D",
+    "level": "basico-intermedio",
+    "slug": "080-capstone-motor-geometrico-2d",
+    "path": "classes/part-03-geometria-trigonometria-y-geometria-analitica/080-capstone-motor-geometrico-2d/README.md"
+  },
+  {
+    "id": "081",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Lógica proposicional",
+    "level": "intermedio",
+    "slug": "081-logica-proposicional",
+    "path": "classes/part-04-matematica-discreta-para-computacion/081-logica-proposicional/README.md"
+  },
+  {
+    "id": "082",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Tablas de verdad y equivalencias",
+    "level": "intermedio",
+    "slug": "082-tablas-de-verdad-y-equivalencias",
+    "path": "classes/part-04-matematica-discreta-para-computacion/082-tablas-de-verdad-y-equivalencias/README.md"
+  },
+  {
+    "id": "083",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Lógica de predicados y cuantificadores",
+    "level": "intermedio",
+    "slug": "083-logica-de-predicados-y-cuantificadores",
+    "path": "classes/part-04-matematica-discreta-para-computacion/083-logica-de-predicados-y-cuantificadores/README.md"
+  },
+  {
+    "id": "084",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Conjuntos y operaciones",
+    "level": "intermedio",
+    "slug": "084-conjuntos-y-operaciones",
+    "path": "classes/part-04-matematica-discreta-para-computacion/084-conjuntos-y-operaciones/README.md"
+  },
+  {
+    "id": "085",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Relaciones y propiedades",
+    "level": "intermedio",
+    "slug": "085-relaciones-y-propiedades",
+    "path": "classes/part-04-matematica-discreta-para-computacion/085-relaciones-y-propiedades/README.md"
+  },
+  {
+    "id": "086",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Funciones discretas",
+    "level": "intermedio",
+    "slug": "086-funciones-discretas",
+    "path": "classes/part-04-matematica-discreta-para-computacion/086-funciones-discretas/README.md"
+  },
+  {
+    "id": "087",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Principios de conteo",
+    "level": "intermedio",
+    "slug": "087-principios-de-conteo",
+    "path": "classes/part-04-matematica-discreta-para-computacion/087-principios-de-conteo/README.md"
+  },
+  {
+    "id": "088",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Permutaciones",
+    "level": "intermedio",
+    "slug": "088-permutaciones",
+    "path": "classes/part-04-matematica-discreta-para-computacion/088-permutaciones/README.md"
+  },
+  {
+    "id": "089",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Combinaciones",
+    "level": "intermedio",
+    "slug": "089-combinaciones",
+    "path": "classes/part-04-matematica-discreta-para-computacion/089-combinaciones/README.md"
+  },
+  {
+    "id": "090",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Principio del palomar",
+    "level": "intermedio",
+    "slug": "090-principio-del-palomar",
+    "path": "classes/part-04-matematica-discreta-para-computacion/090-principio-del-palomar/README.md"
+  },
+  {
+    "id": "091",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Inducción matemática",
+    "level": "intermedio",
+    "slug": "091-induccion-matematica",
+    "path": "classes/part-04-matematica-discreta-para-computacion/091-induccion-matematica/README.md"
+  },
+  {
+    "id": "092",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Recurrencias",
+    "level": "intermedio",
+    "slug": "092-recurrencias",
+    "path": "classes/part-04-matematica-discreta-para-computacion/092-recurrencias/README.md"
+  },
+  {
+    "id": "093",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Grafos: vértices y aristas",
+    "level": "intermedio",
+    "slug": "093-grafos-vertices-y-aristas",
+    "path": "classes/part-04-matematica-discreta-para-computacion/093-grafos-vertices-y-aristas/README.md"
+  },
+  {
+    "id": "094",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Caminos, ciclos y conectividad",
+    "level": "intermedio",
+    "slug": "094-caminos-ciclos-y-conectividad",
+    "path": "classes/part-04-matematica-discreta-para-computacion/094-caminos-ciclos-y-conectividad/README.md"
+  },
+  {
+    "id": "095",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Árboles y árboles de expansión",
+    "level": "intermedio",
+    "slug": "095-arboles-y-arboles-de-expansion",
+    "path": "classes/part-04-matematica-discreta-para-computacion/095-arboles-y-arboles-de-expansion/README.md"
+  },
+  {
+    "id": "096",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "DAG y orden topológico",
+    "level": "intermedio",
+    "slug": "096-dag-y-orden-topologico",
+    "path": "classes/part-04-matematica-discreta-para-computacion/096-dag-y-orden-topologico/README.md"
+  },
+  {
+    "id": "097",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Álgebra booleana",
+    "level": "intermedio",
+    "slug": "097-algebra-booleana",
+    "path": "classes/part-04-matematica-discreta-para-computacion/097-algebra-booleana/README.md"
+  },
+  {
+    "id": "098",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Aritmética modular",
+    "level": "intermedio",
+    "slug": "098-aritmetica-modular",
+    "path": "classes/part-04-matematica-discreta-para-computacion/098-aritmetica-modular/README.md"
+  },
+  {
+    "id": "099",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Números primos y máximo común divisor",
+    "level": "intermedio",
+    "slug": "099-numeros-primos-y-maximo-comun-divisor",
+    "path": "classes/part-04-matematica-discreta-para-computacion/099-numeros-primos-y-maximo-comun-divisor/README.md"
+  },
+  {
+    "id": "100",
+    "part": "04",
+    "part_title": "Matemática discreta para computación",
+    "title": "Capstone: modelar dependencias con grafos",
+    "level": "intermedio",
+    "slug": "100-capstone-modelar-dependencias-con-grafos",
+    "path": "classes/part-04-matematica-discreta-para-computacion/100-capstone-modelar-dependencias-con-grafos/README.md"
+  },
+  {
+    "id": "101",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Escalares, vectores y matrices",
+    "level": "intermedio",
+    "slug": "101-escalares-vectores-y-matrices",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/101-escalares-vectores-y-matrices/README.md"
+  },
+  {
+    "id": "102",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Operaciones con vectores",
+    "level": "intermedio",
+    "slug": "102-operaciones-con-vectores",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/102-operaciones-con-vectores/README.md"
+  },
+  {
+    "id": "103",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Producto punto y similitud",
+    "level": "intermedio",
+    "slug": "103-producto-punto-y-similitud",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/103-producto-punto-y-similitud/README.md"
+  },
+  {
+    "id": "104",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Normas y distancias",
+    "level": "intermedio",
+    "slug": "104-normas-y-distancias",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/104-normas-y-distancias/README.md"
+  },
+  {
+    "id": "105",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Vectores unitarios",
+    "level": "intermedio",
+    "slug": "105-vectores-unitarios",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/105-vectores-unitarios/README.md"
+  },
+  {
+    "id": "106",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Combinaciones lineales",
+    "level": "intermedio",
+    "slug": "106-combinaciones-lineales",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/106-combinaciones-lineales/README.md"
+  },
+  {
+    "id": "107",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Independencia y dependencia lineal",
+    "level": "intermedio",
+    "slug": "107-independencia-y-dependencia-lineal",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/107-independencia-y-dependencia-lineal/README.md"
+  },
+  {
+    "id": "108",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Span y subespacios",
+    "level": "intermedio",
+    "slug": "108-span-y-subespacios",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/108-span-y-subespacios/README.md"
+  },
+  {
+    "id": "109",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Matrices y operaciones básicas",
+    "level": "intermedio",
+    "slug": "109-matrices-y-operaciones-basicas",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/109-matrices-y-operaciones-basicas/README.md"
+  },
+  {
+    "id": "110",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Producto matriz-vector",
+    "level": "intermedio",
+    "slug": "110-producto-matriz-vector",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/110-producto-matriz-vector/README.md"
+  },
+  {
+    "id": "111",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Producto de matrices",
+    "level": "intermedio",
+    "slug": "111-producto-de-matrices",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/111-producto-de-matrices/README.md"
+  },
+  {
+    "id": "112",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Transpuesta y simetría",
+    "level": "intermedio",
+    "slug": "112-transpuesta-y-simetria",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/112-transpuesta-y-simetria/README.md"
+  },
+  {
+    "id": "113",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Sistemas lineales",
+    "level": "intermedio",
+    "slug": "113-sistemas-lineales",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/113-sistemas-lineales/README.md"
+  },
+  {
+    "id": "114",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Eliminación de Gauss",
+    "level": "intermedio",
+    "slug": "114-eliminacion-de-gauss",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/114-eliminacion-de-gauss/README.md"
+  },
+  {
+    "id": "115",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Forma escalonada y rango",
+    "level": "intermedio",
+    "slug": "115-forma-escalonada-y-rango",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/115-forma-escalonada-y-rango/README.md"
+  },
+  {
+    "id": "116",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Inversa de una matriz",
+    "level": "intermedio",
+    "slug": "116-inversa-de-una-matriz",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/116-inversa-de-una-matriz/README.md"
+  },
+  {
+    "id": "117",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Determinantes",
+    "level": "intermedio",
+    "slug": "117-determinantes",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/117-determinantes/README.md"
+  },
+  {
+    "id": "118",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Matrices ortogonales",
+    "level": "intermedio",
+    "slug": "118-matrices-ortogonales",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/118-matrices-ortogonales/README.md"
+  },
+  {
+    "id": "119",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Proyecciones ortogonales",
+    "level": "intermedio",
+    "slug": "119-proyecciones-ortogonales",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/119-proyecciones-ortogonales/README.md"
+  },
+  {
+    "id": "120",
+    "part": "05",
+    "part_title": "Álgebra lineal I: vectores y matrices",
+    "title": "Capstone: resolver un sistema de recomendación lineal",
+    "level": "intermedio",
+    "slug": "120-capstone-resolver-un-sistema-de-recomendacion-lineal",
+    "path": "classes/part-05-algebra-lineal-i-vectores-y-matrices/120-capstone-resolver-un-sistema-de-recomendacion-lineal/README.md"
+  },
+  {
+    "id": "121",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Bases y coordenadas",
+    "level": "intermedio-avanzado",
+    "slug": "121-bases-y-coordenadas",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/121-bases-y-coordenadas/README.md"
+  },
+  {
+    "id": "122",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Cambio de base",
+    "level": "intermedio-avanzado",
+    "slug": "122-cambio-de-base",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/122-cambio-de-base/README.md"
+  },
+  {
+    "id": "123",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Transformaciones lineales",
+    "level": "intermedio-avanzado",
+    "slug": "123-transformaciones-lineales",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/123-transformaciones-lineales/README.md"
+  },
+  {
+    "id": "124",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Núcleo e imagen",
+    "level": "intermedio-avanzado",
+    "slug": "124-nucleo-e-imagen",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/124-nucleo-e-imagen/README.md"
+  },
+  {
+    "id": "125",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Autovalores y autovectores",
+    "level": "intermedio-avanzado",
+    "slug": "125-autovalores-y-autovectores",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/125-autovalores-y-autovectores/README.md"
+  },
+  {
+    "id": "126",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Diagonalización",
+    "level": "intermedio-avanzado",
+    "slug": "126-diagonalizacion",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/126-diagonalizacion/README.md"
+  },
+  {
+    "id": "127",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Matrices positivas definidas",
+    "level": "intermedio-avanzado",
+    "slug": "127-matrices-positivas-definidas",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/127-matrices-positivas-definidas/README.md"
+  },
+  {
+    "id": "128",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Formas cuadráticas",
+    "level": "intermedio-avanzado",
+    "slug": "128-formas-cuadraticas",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/128-formas-cuadraticas/README.md"
+  },
+  {
+    "id": "129",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Descomposición LU",
+    "level": "intermedio-avanzado",
+    "slug": "129-descomposicion-lu",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/129-descomposicion-lu/README.md"
+  },
+  {
+    "id": "130",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Descomposición QR",
+    "level": "intermedio-avanzado",
+    "slug": "130-descomposicion-qr",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/130-descomposicion-qr/README.md"
+  },
+  {
+    "id": "131",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Mínimos cuadrados lineales",
+    "level": "intermedio-avanzado",
+    "slug": "131-minimos-cuadrados-lineales",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/131-minimos-cuadrados-lineales/README.md"
+  },
+  {
+    "id": "132",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "SVD desde la intuición",
+    "level": "intermedio-avanzado",
+    "slug": "132-svd-desde-la-intuicion",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/132-svd-desde-la-intuicion/README.md"
+  },
+  {
+    "id": "133",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "SVD y compresión",
+    "level": "intermedio-avanzado",
+    "slug": "133-svd-y-compresion",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/133-svd-y-compresion/README.md"
+  },
+  {
+    "id": "134",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Pseudoinversa de Moore-Penrose",
+    "level": "intermedio-avanzado",
+    "slug": "134-pseudoinversa-de-moore-penrose",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/134-pseudoinversa-de-moore-penrose/README.md"
+  },
+  {
+    "id": "135",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "PCA desde álgebra lineal",
+    "level": "intermedio-avanzado",
+    "slug": "135-pca-desde-algebra-lineal",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/135-pca-desde-algebra-lineal/README.md"
+  },
+  {
+    "id": "136",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Producto de Kronecker",
+    "level": "intermedio-avanzado",
+    "slug": "136-producto-de-kronecker",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/136-producto-de-kronecker/README.md"
+  },
+  {
+    "id": "137",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Tensores: índices, shape y orden",
+    "level": "intermedio-avanzado",
+    "slug": "137-tensores-indices-shape-y-orden",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/137-tensores-indices-shape-y-orden/README.md"
+  },
+  {
+    "id": "138",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Broadcasting como operación tensorial",
+    "level": "intermedio-avanzado",
+    "slug": "138-broadcasting-como-operacion-tensorial",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/138-broadcasting-como-operacion-tensorial/README.md"
+  },
+  {
+    "id": "139",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Einstein summation",
+    "level": "intermedio-avanzado",
+    "slug": "139-einstein-summation",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/139-einstein-summation/README.md"
+  },
+  {
+    "id": "140",
+    "part": "06",
+    "part_title": "Álgebra lineal II: descomposiciones y tensores",
+    "title": "Capstone: PCA y compresión de imágenes",
+    "level": "intermedio-avanzado",
+    "slug": "140-capstone-pca-y-compresion-de-imagenes",
+    "path": "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/140-capstone-pca-y-compresion-de-imagenes/README.md"
+  },
+  {
+    "id": "141",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Intuición de límite",
+    "level": "universitario",
+    "slug": "141-intuicion-de-limite",
+    "path": "classes/part-07-calculo-diferencial-e-integral/141-intuicion-de-limite/README.md"
+  },
+  {
+    "id": "142",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Límites algebraicos",
+    "level": "universitario",
+    "slug": "142-limites-algebraicos",
+    "path": "classes/part-07-calculo-diferencial-e-integral/142-limites-algebraicos/README.md"
+  },
+  {
+    "id": "143",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Continuidad",
+    "level": "universitario",
+    "slug": "143-continuidad",
+    "path": "classes/part-07-calculo-diferencial-e-integral/143-continuidad/README.md"
+  },
+  {
+    "id": "144",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Derivada como tasa de cambio",
+    "level": "universitario",
+    "slug": "144-derivada-como-tasa-de-cambio",
+    "path": "classes/part-07-calculo-diferencial-e-integral/144-derivada-como-tasa-de-cambio/README.md"
+  },
+  {
+    "id": "145",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Reglas de derivación",
+    "level": "universitario",
+    "slug": "145-reglas-de-derivacion",
+    "path": "classes/part-07-calculo-diferencial-e-integral/145-reglas-de-derivacion/README.md"
+  },
+  {
+    "id": "146",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Regla del producto y cociente",
+    "level": "universitario",
+    "slug": "146-regla-del-producto-y-cociente",
+    "path": "classes/part-07-calculo-diferencial-e-integral/146-regla-del-producto-y-cociente/README.md"
+  },
+  {
+    "id": "147",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Regla de la cadena",
+    "level": "universitario",
+    "slug": "147-regla-de-la-cadena",
+    "path": "classes/part-07-calculo-diferencial-e-integral/147-regla-de-la-cadena/README.md"
+  },
+  {
+    "id": "148",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Derivadas de exponenciales y logaritmos",
+    "level": "universitario",
+    "slug": "148-derivadas-de-exponenciales-y-logaritmos",
+    "path": "classes/part-07-calculo-diferencial-e-integral/148-derivadas-de-exponenciales-y-logaritmos/README.md"
+  },
+  {
+    "id": "149",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Derivadas trigonométricas",
+    "level": "universitario",
+    "slug": "149-derivadas-trigonometricas",
+    "path": "classes/part-07-calculo-diferencial-e-integral/149-derivadas-trigonometricas/README.md"
+  },
+  {
+    "id": "150",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Derivación implícita",
+    "level": "universitario",
+    "slug": "150-derivacion-implicita",
+    "path": "classes/part-07-calculo-diferencial-e-integral/150-derivacion-implicita/README.md"
+  },
+  {
+    "id": "151",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Aproximación lineal y Taylor",
+    "level": "universitario",
+    "slug": "151-aproximacion-lineal-y-taylor",
+    "path": "classes/part-07-calculo-diferencial-e-integral/151-aproximacion-lineal-y-taylor/README.md"
+  },
+  {
+    "id": "152",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Máximos y mínimos",
+    "level": "universitario",
+    "slug": "152-maximos-y-minimos",
+    "path": "classes/part-07-calculo-diferencial-e-integral/152-maximos-y-minimos/README.md"
+  },
+  {
+    "id": "153",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Integral como acumulación",
+    "level": "universitario",
+    "slug": "153-integral-como-acumulacion",
+    "path": "classes/part-07-calculo-diferencial-e-integral/153-integral-como-acumulacion/README.md"
+  },
+  {
+    "id": "154",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Integral definida",
+    "level": "universitario",
+    "slug": "154-integral-definida",
+    "path": "classes/part-07-calculo-diferencial-e-integral/154-integral-definida/README.md"
+  },
+  {
+    "id": "155",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Antiderivadas",
+    "level": "universitario",
+    "slug": "155-antiderivadas",
+    "path": "classes/part-07-calculo-diferencial-e-integral/155-antiderivadas/README.md"
+  },
+  {
+    "id": "156",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Teorema fundamental del cálculo",
+    "level": "universitario",
+    "slug": "156-teorema-fundamental-del-calculo",
+    "path": "classes/part-07-calculo-diferencial-e-integral/156-teorema-fundamental-del-calculo/README.md"
+  },
+  {
+    "id": "157",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Integración por sustitución",
+    "level": "universitario",
+    "slug": "157-integracion-por-sustitucion",
+    "path": "classes/part-07-calculo-diferencial-e-integral/157-integracion-por-sustitucion/README.md"
+  },
+  {
+    "id": "158",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Integración por partes",
+    "level": "universitario",
+    "slug": "158-integracion-por-partes",
+    "path": "classes/part-07-calculo-diferencial-e-integral/158-integracion-por-partes/README.md"
+  },
+  {
+    "id": "159",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Integración numérica introductoria",
+    "level": "universitario",
+    "slug": "159-integracion-numerica-introductoria",
+    "path": "classes/part-07-calculo-diferencial-e-integral/159-integracion-numerica-introductoria/README.md"
+  },
+  {
+    "id": "160",
+    "part": "07",
+    "part_title": "Cálculo diferencial e integral",
+    "title": "Capstone: optimizar y acumular una señal",
+    "level": "universitario",
+    "slug": "160-capstone-optimizar-y-acumular-una-senal",
+    "path": "classes/part-07-calculo-diferencial-e-integral/160-capstone-optimizar-y-acumular-una-senal/README.md"
+  },
+  {
+    "id": "161",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Funciones de varias variables",
+    "level": "universitario-avanzado",
+    "slug": "161-funciones-de-varias-variables",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/161-funciones-de-varias-variables/README.md"
+  },
+  {
+    "id": "162",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Superficies y curvas de nivel",
+    "level": "universitario-avanzado",
+    "slug": "162-superficies-y-curvas-de-nivel",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/162-superficies-y-curvas-de-nivel/README.md"
+  },
+  {
+    "id": "163",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Derivadas parciales",
+    "level": "universitario-avanzado",
+    "slug": "163-derivadas-parciales",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/163-derivadas-parciales/README.md"
+  },
+  {
+    "id": "164",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Gradiente",
+    "level": "universitario-avanzado",
+    "slug": "164-gradiente",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/164-gradiente/README.md"
+  },
+  {
+    "id": "165",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Derivada direccional",
+    "level": "universitario-avanzado",
+    "slug": "165-derivada-direccional",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/165-derivada-direccional/README.md"
+  },
+  {
+    "id": "166",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Plano tangente",
+    "level": "universitario-avanzado",
+    "slug": "166-plano-tangente",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/166-plano-tangente/README.md"
+  },
+  {
+    "id": "167",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Regla de la cadena multivariable",
+    "level": "universitario-avanzado",
+    "slug": "167-regla-de-la-cadena-multivariable",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/167-regla-de-la-cadena-multivariable/README.md"
+  },
+  {
+    "id": "168",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Jacobiano",
+    "level": "universitario-avanzado",
+    "slug": "168-jacobiano",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/168-jacobiano/README.md"
+  },
+  {
+    "id": "169",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Hessiano",
+    "level": "universitario-avanzado",
+    "slug": "169-hessiano",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/169-hessiano/README.md"
+  },
+  {
+    "id": "170",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Taylor multivariable",
+    "level": "universitario-avanzado",
+    "slug": "170-taylor-multivariable",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/170-taylor-multivariable/README.md"
+  },
+  {
+    "id": "171",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Optimización sin restricciones",
+    "level": "universitario-avanzado",
+    "slug": "171-optimizacion-sin-restricciones",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/171-optimizacion-sin-restricciones/README.md"
+  },
+  {
+    "id": "172",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Multiplicadores de Lagrange",
+    "level": "universitario-avanzado",
+    "slug": "172-multiplicadores-de-lagrange",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/172-multiplicadores-de-lagrange/README.md"
+  },
+  {
+    "id": "173",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Integrales dobles",
+    "level": "universitario-avanzado",
+    "slug": "173-integrales-dobles",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/173-integrales-dobles/README.md"
+  },
+  {
+    "id": "174",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Integrales triples",
+    "level": "universitario-avanzado",
+    "slug": "174-integrales-triples",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/174-integrales-triples/README.md"
+  },
+  {
+    "id": "175",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Campos vectoriales",
+    "level": "universitario-avanzado",
+    "slug": "175-campos-vectoriales",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/175-campos-vectoriales/README.md"
+  },
+  {
+    "id": "176",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Divergencia y rotacional",
+    "level": "universitario-avanzado",
+    "slug": "176-divergencia-y-rotacional",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/176-divergencia-y-rotacional/README.md"
+  },
+  {
+    "id": "177",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Cálculo matricial",
+    "level": "universitario-avanzado",
+    "slug": "177-calculo-matricial",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/177-calculo-matricial/README.md"
+  },
+  {
+    "id": "178",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Derivadas respecto de vectores y matrices",
+    "level": "universitario-avanzado",
+    "slug": "178-derivadas-respecto-de-vectores-y-matrices",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/178-derivadas-respecto-de-vectores-y-matrices/README.md"
+  },
+  {
+    "id": "179",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Automatic differentiation y computational graphs",
+    "level": "universitario-avanzado",
+    "slug": "179-automatic-differentiation-y-computational-graphs",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/179-automatic-differentiation-y-computational-graphs/README.md"
+  },
+  {
+    "id": "180",
+    "part": "08",
+    "part_title": "Cálculo multivariable, matricial y autodiferenciación",
+    "title": "Capstone: backpropagation manual y automática",
+    "level": "universitario-avanzado",
+    "slug": "180-capstone-backpropagation-manual-y-automatica",
+    "path": "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/180-capstone-backpropagation-manual-y-automatica/README.md"
+  },
+  {
+    "id": "181",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Experimentos, espacio muestral y eventos",
+    "level": "universitario",
+    "slug": "181-experimentos-espacio-muestral-y-eventos",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/181-experimentos-espacio-muestral-y-eventos/README.md"
+  },
+  {
+    "id": "182",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Axiomas de probabilidad",
+    "level": "universitario",
+    "slug": "182-axiomas-de-probabilidad",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/182-axiomas-de-probabilidad/README.md"
+  },
+  {
+    "id": "183",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Reglas de suma y producto",
+    "level": "universitario",
+    "slug": "183-reglas-de-suma-y-producto",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/183-reglas-de-suma-y-producto/README.md"
+  },
+  {
+    "id": "184",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Probabilidad condicional",
+    "level": "universitario",
+    "slug": "184-probabilidad-condicional",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/184-probabilidad-condicional/README.md"
+  },
+  {
+    "id": "185",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Independencia",
+    "level": "universitario",
+    "slug": "185-independencia",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/185-independencia/README.md"
+  },
+  {
+    "id": "186",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Teorema de Bayes",
+    "level": "universitario",
+    "slug": "186-teorema-de-bayes",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/186-teorema-de-bayes/README.md"
+  },
+  {
+    "id": "187",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Variables aleatorias discretas",
+    "level": "universitario",
+    "slug": "187-variables-aleatorias-discretas",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/187-variables-aleatorias-discretas/README.md"
+  },
+  {
+    "id": "188",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Variables aleatorias continuas",
+    "level": "universitario",
+    "slug": "188-variables-aleatorias-continuas",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/188-variables-aleatorias-continuas/README.md"
+  },
+  {
+    "id": "189",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Esperanza matemática",
+    "level": "universitario",
+    "slug": "189-esperanza-matematica",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/189-esperanza-matematica/README.md"
+  },
+  {
+    "id": "190",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Varianza y desviación estándar",
+    "level": "universitario",
+    "slug": "190-varianza-y-desviacion-estandar",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/190-varianza-y-desviacion-estandar/README.md"
+  },
+  {
+    "id": "191",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Covarianza y correlación",
+    "level": "universitario",
+    "slug": "191-covarianza-y-correlacion",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/191-covarianza-y-correlacion/README.md"
+  },
+  {
+    "id": "192",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Bernoulli y binomial",
+    "level": "universitario",
+    "slug": "192-bernoulli-y-binomial",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/192-bernoulli-y-binomial/README.md"
+  },
+  {
+    "id": "193",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Poisson y exponencial",
+    "level": "universitario",
+    "slug": "193-poisson-y-exponencial",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/193-poisson-y-exponencial/README.md"
+  },
+  {
+    "id": "194",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Distribución normal",
+    "level": "universitario",
+    "slug": "194-distribucion-normal",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/194-distribucion-normal/README.md"
+  },
+  {
+    "id": "195",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Distribuciones conjuntas y marginales",
+    "level": "universitario",
+    "slug": "195-distribuciones-conjuntas-y-marginales",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/195-distribuciones-conjuntas-y-marginales/README.md"
+  },
+  {
+    "id": "196",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Ley de los grandes números",
+    "level": "universitario",
+    "slug": "196-ley-de-los-grandes-numeros",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/196-ley-de-los-grandes-numeros/README.md"
+  },
+  {
+    "id": "197",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Teorema central del límite",
+    "level": "universitario",
+    "slug": "197-teorema-central-del-limite",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/197-teorema-central-del-limite/README.md"
+  },
+  {
+    "id": "198",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Métodos Monte Carlo",
+    "level": "universitario",
+    "slug": "198-metodos-monte-carlo",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/198-metodos-monte-carlo/README.md"
+  },
+  {
+    "id": "199",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Cadenas de Markov",
+    "level": "universitario",
+    "slug": "199-cadenas-de-markov",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/199-cadenas-de-markov/README.md"
+  },
+  {
+    "id": "200",
+    "part": "09",
+    "part_title": "Probabilidad y procesos aleatorios",
+    "title": "Capstone: simulador probabilístico y bayesiano",
+    "level": "universitario",
+    "slug": "200-capstone-simulador-probabilistico-y-bayesiano",
+    "path": "classes/part-09-probabilidad-y-procesos-aleatorios/200-capstone-simulador-probabilistico-y-bayesiano/README.md"
+  },
+  {
+    "id": "201",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Estadística descriptiva",
+    "level": "universitario-avanzado",
+    "slug": "201-estadistica-descriptiva",
+    "path": "classes/part-10-estadistica-e-inferencia/201-estadistica-descriptiva/README.md"
+  },
+  {
+    "id": "202",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Población, muestra y sesgo de selección",
+    "level": "universitario-avanzado",
+    "slug": "202-poblacion-muestra-y-sesgo-de-seleccion",
+    "path": "classes/part-10-estadistica-e-inferencia/202-poblacion-muestra-y-sesgo-de-seleccion/README.md"
+  },
+  {
+    "id": "203",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Muestreo y distribuciones muestrales",
+    "level": "universitario-avanzado",
+    "slug": "203-muestreo-y-distribuciones-muestrales",
+    "path": "classes/part-10-estadistica-e-inferencia/203-muestreo-y-distribuciones-muestrales/README.md"
+  },
+  {
+    "id": "204",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Estimadores y propiedades",
+    "level": "universitario-avanzado",
+    "slug": "204-estimadores-y-propiedades",
+    "path": "classes/part-10-estadistica-e-inferencia/204-estimadores-y-propiedades/README.md"
+  },
+  {
+    "id": "205",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Intervalos de confianza",
+    "level": "universitario-avanzado",
+    "slug": "205-intervalos-de-confianza",
+    "path": "classes/part-10-estadistica-e-inferencia/205-intervalos-de-confianza/README.md"
+  },
+  {
+    "id": "206",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Pruebas de hipótesis",
+    "level": "universitario-avanzado",
+    "slug": "206-pruebas-de-hipotesis",
+    "path": "classes/part-10-estadistica-e-inferencia/206-pruebas-de-hipotesis/README.md"
+  },
+  {
+    "id": "207",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "p-value correctamente interpretado",
+    "level": "universitario-avanzado",
+    "slug": "207-p-value-correctamente-interpretado",
+    "path": "classes/part-10-estadistica-e-inferencia/207-p-value-correctamente-interpretado/README.md"
+  },
+  {
+    "id": "208",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Errores tipo I y II",
+    "level": "universitario-avanzado",
+    "slug": "208-errores-tipo-i-y-ii",
+    "path": "classes/part-10-estadistica-e-inferencia/208-errores-tipo-i-y-ii/README.md"
+  },
+  {
+    "id": "209",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Potencia estadística",
+    "level": "universitario-avanzado",
+    "slug": "209-potencia-estadistica",
+    "path": "classes/part-10-estadistica-e-inferencia/209-potencia-estadistica/README.md"
+  },
+  {
+    "id": "210",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "t-test y comparación de medias",
+    "level": "universitario-avanzado",
+    "slug": "210-t-test-y-comparacion-de-medias",
+    "path": "classes/part-10-estadistica-e-inferencia/210-t-test-y-comparacion-de-medias/README.md"
+  },
+  {
+    "id": "211",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Chi-cuadrado y tablas de contingencia",
+    "level": "universitario-avanzado",
+    "slug": "211-chi-cuadrado-y-tablas-de-contingencia",
+    "path": "classes/part-10-estadistica-e-inferencia/211-chi-cuadrado-y-tablas-de-contingencia/README.md"
+  },
+  {
+    "id": "212",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "ANOVA",
+    "level": "universitario-avanzado",
+    "slug": "212-anova",
+    "path": "classes/part-10-estadistica-e-inferencia/212-anova/README.md"
+  },
+  {
+    "id": "213",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Correlación frente a causalidad",
+    "level": "universitario-avanzado",
+    "slug": "213-correlacion-frente-a-causalidad",
+    "path": "classes/part-10-estadistica-e-inferencia/213-correlacion-frente-a-causalidad/README.md"
+  },
+  {
+    "id": "214",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Regresión lineal estadística",
+    "level": "universitario-avanzado",
+    "slug": "214-regresion-lineal-estadistica",
+    "path": "classes/part-10-estadistica-e-inferencia/214-regresion-lineal-estadistica/README.md"
+  },
+  {
+    "id": "215",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Máxima verosimilitud",
+    "level": "universitario-avanzado",
+    "slug": "215-maxima-verosimilitud",
+    "path": "classes/part-10-estadistica-e-inferencia/215-maxima-verosimilitud/README.md"
+  },
+  {
+    "id": "216",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Estimación MAP",
+    "level": "universitario-avanzado",
+    "slug": "216-estimacion-map",
+    "path": "classes/part-10-estadistica-e-inferencia/216-estimacion-map/README.md"
+  },
+  {
+    "id": "217",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Inferencia bayesiana",
+    "level": "universitario-avanzado",
+    "slug": "217-inferencia-bayesiana",
+    "path": "classes/part-10-estadistica-e-inferencia/217-inferencia-bayesiana/README.md"
+  },
+  {
+    "id": "218",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Bootstrap y remuestreo",
+    "level": "universitario-avanzado",
+    "slug": "218-bootstrap-y-remuestreo",
+    "path": "classes/part-10-estadistica-e-inferencia/218-bootstrap-y-remuestreo/README.md"
+  },
+  {
+    "id": "219",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "A/B testing y diseño experimental",
+    "level": "universitario-avanzado",
+    "slug": "219-a-b-testing-y-diseno-experimental",
+    "path": "classes/part-10-estadistica-e-inferencia/219-a-b-testing-y-diseno-experimental/README.md"
+  },
+  {
+    "id": "220",
+    "part": "10",
+    "part_title": "Estadística e inferencia",
+    "title": "Capstone: estudio estadístico reproducible",
+    "level": "universitario-avanzado",
+    "slug": "220-capstone-estudio-estadistico-reproducible",
+    "path": "classes/part-10-estadistica-e-inferencia/220-capstone-estudio-estadistico-reproducible/README.md"
+  },
+  {
+    "id": "221",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Errores numéricos y convergencia",
+    "level": "cientifico",
+    "slug": "221-errores-numericos-y-convergencia",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/221-errores-numericos-y-convergencia/README.md"
+  },
+  {
+    "id": "222",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Bisección",
+    "level": "cientifico",
+    "slug": "222-biseccion",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/222-biseccion/README.md"
+  },
+  {
+    "id": "223",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Newton-Raphson",
+    "level": "cientifico",
+    "slug": "223-newton-raphson",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/223-newton-raphson/README.md"
+  },
+  {
+    "id": "224",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Método de la secante",
+    "level": "cientifico",
+    "slug": "224-metodo-de-la-secante",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/224-metodo-de-la-secante/README.md"
+  },
+  {
+    "id": "225",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Interpolación de Lagrange",
+    "level": "cientifico",
+    "slug": "225-interpolacion-de-lagrange",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/225-interpolacion-de-lagrange/README.md"
+  },
+  {
+    "id": "226",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Splines",
+    "level": "cientifico",
+    "slug": "226-splines",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/226-splines/README.md"
+  },
+  {
+    "id": "227",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Diferenciación numérica",
+    "level": "cientifico",
+    "slug": "227-diferenciacion-numerica",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/227-diferenciacion-numerica/README.md"
+  },
+  {
+    "id": "228",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Cuadratura numérica",
+    "level": "cientifico",
+    "slug": "228-cuadratura-numerica",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/228-cuadratura-numerica/README.md"
+  },
+  {
+    "id": "229",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Regla del trapecio",
+    "level": "cientifico",
+    "slug": "229-regla-del-trapecio",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/229-regla-del-trapecio/README.md"
+  },
+  {
+    "id": "230",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Simpson",
+    "level": "cientifico",
+    "slug": "230-simpson",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/230-simpson/README.md"
+  },
+  {
+    "id": "231",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Sistemas lineales directos",
+    "level": "cientifico",
+    "slug": "231-sistemas-lineales-directos",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/231-sistemas-lineales-directos/README.md"
+  },
+  {
+    "id": "232",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Jacobi y Gauss-Seidel",
+    "level": "cientifico",
+    "slug": "232-jacobi-y-gauss-seidel",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/232-jacobi-y-gauss-seidel/README.md"
+  },
+  {
+    "id": "233",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Métodos iterativos y tolerancias",
+    "level": "cientifico",
+    "slug": "233-metodos-iterativos-y-tolerancias",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/233-metodos-iterativos-y-tolerancias/README.md"
+  },
+  {
+    "id": "234",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Mínimos cuadrados numéricos",
+    "level": "cientifico",
+    "slug": "234-minimos-cuadrados-numericos",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/234-minimos-cuadrados-numericos/README.md"
+  },
+  {
+    "id": "235",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Ecuaciones diferenciales ordinarias",
+    "level": "cientifico",
+    "slug": "235-ecuaciones-diferenciales-ordinarias",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/235-ecuaciones-diferenciales-ordinarias/README.md"
+  },
+  {
+    "id": "236",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Método de Euler",
+    "level": "cientifico",
+    "slug": "236-metodo-de-euler",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/236-metodo-de-euler/README.md"
+  },
+  {
+    "id": "237",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Runge-Kutta",
+    "level": "cientifico",
+    "slug": "237-runge-kutta",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/237-runge-kutta/README.md"
+  },
+  {
+    "id": "238",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Introducción a PDE y discretización",
+    "level": "cientifico",
+    "slug": "238-introduccion-a-pde-y-discretizacion",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/238-introduccion-a-pde-y-discretizacion/README.md"
+  },
+  {
+    "id": "239",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Computación científica con SciPy",
+    "level": "cientifico",
+    "slug": "239-computacion-cientifica-con-scipy",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/239-computacion-cientifica-con-scipy/README.md"
+  },
+  {
+    "id": "240",
+    "part": "11",
+    "part_title": "Métodos numéricos y computación científica",
+    "title": "Capstone: solver numérico con informe de error",
+    "level": "cientifico",
+    "slug": "240-capstone-solver-numerico-con-informe-de-error",
+    "path": "classes/part-11-metodos-numericos-y-computacion-cientifica/240-capstone-solver-numerico-con-informe-de-error/README.md"
+  },
+  {
+    "id": "241",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Problemas de optimización y función objetivo",
+    "level": "avanzado",
+    "slug": "241-problemas-de-optimizacion-y-funcion-objetivo",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/241-problemas-de-optimizacion-y-funcion-objetivo/README.md"
+  },
+  {
+    "id": "242",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Convexidad",
+    "level": "avanzado",
+    "slug": "242-convexidad",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/242-convexidad/README.md"
+  },
+  {
+    "id": "243",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Gradiente y direcciones de descenso",
+    "level": "avanzado",
+    "slug": "243-gradiente-y-direcciones-de-descenso",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/243-gradiente-y-direcciones-de-descenso/README.md"
+  },
+  {
+    "id": "244",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Gradient descent",
+    "level": "avanzado",
+    "slug": "244-gradient-descent",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/244-gradient-descent/README.md"
+  },
+  {
+    "id": "245",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Stochastic gradient descent",
+    "level": "avanzado",
+    "slug": "245-stochastic-gradient-descent",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/245-stochastic-gradient-descent/README.md"
+  },
+  {
+    "id": "246",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Momentum",
+    "level": "avanzado",
+    "slug": "246-momentum",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/246-momentum/README.md"
+  },
+  {
+    "id": "247",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Nesterov accelerated gradient",
+    "level": "avanzado",
+    "slug": "247-nesterov-accelerated-gradient",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/247-nesterov-accelerated-gradient/README.md"
+  },
+  {
+    "id": "248",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "AdaGrad",
+    "level": "avanzado",
+    "slug": "248-adagrad",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/248-adagrad/README.md"
+  },
+  {
+    "id": "249",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "RMSProp",
+    "level": "avanzado",
+    "slug": "249-rmsprop",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/249-rmsprop/README.md"
+  },
+  {
+    "id": "250",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Adam",
+    "level": "avanzado",
+    "slug": "250-adam",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/250-adam/README.md"
+  },
+  {
+    "id": "251",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "AdamW",
+    "level": "avanzado",
+    "slug": "251-adamw",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/251-adamw/README.md"
+  },
+  {
+    "id": "252",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Método de Newton",
+    "level": "avanzado",
+    "slug": "252-metodo-de-newton",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/252-metodo-de-newton/README.md"
+  },
+  {
+    "id": "253",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Quasi-Newton y BFGS",
+    "level": "avanzado",
+    "slug": "253-quasi-newton-y-bfgs",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/253-quasi-newton-y-bfgs/README.md"
+  },
+  {
+    "id": "254",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Line search",
+    "level": "avanzado",
+    "slug": "254-line-search",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/254-line-search/README.md"
+  },
+  {
+    "id": "255",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Regularización como optimización",
+    "level": "avanzado",
+    "slug": "255-regularizacion-como-optimizacion",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/255-regularizacion-como-optimizacion/README.md"
+  },
+  {
+    "id": "256",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Restricciones y Lagrangianos",
+    "level": "avanzado",
+    "slug": "256-restricciones-y-lagrangianos",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/256-restricciones-y-lagrangianos/README.md"
+  },
+  {
+    "id": "257",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Condiciones KKT",
+    "level": "avanzado",
+    "slug": "257-condiciones-kkt",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/257-condiciones-kkt/README.md"
+  },
+  {
+    "id": "258",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Optimización cuadrática",
+    "level": "avanzado",
+    "slug": "258-optimizacion-cuadratica",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/258-optimizacion-cuadratica/README.md"
+  },
+  {
+    "id": "259",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Optimización evolutiva",
+    "level": "avanzado",
+    "slug": "259-optimizacion-evolutiva",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/259-optimizacion-evolutiva/README.md"
+  },
+  {
+    "id": "260",
+    "part": "12",
+    "part_title": "Optimización matemática y computacional",
+    "title": "Capstone: banco de optimizadores comparables",
+    "level": "avanzado",
+    "slug": "260-capstone-banco-de-optimizadores-comparables",
+    "path": "classes/part-12-optimizacion-matematica-y-computacional/260-capstone-banco-de-optimizadores-comparables/README.md"
+  },
+  {
+    "id": "261",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Información y sorpresa",
+    "level": "avanzado",
+    "slug": "261-informacion-y-sorpresa",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/261-informacion-y-sorpresa/README.md"
+  },
+  {
+    "id": "262",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Entropía de Shannon",
+    "level": "avanzado",
+    "slug": "262-entropia-de-shannon",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/262-entropia-de-shannon/README.md"
+  },
+  {
+    "id": "263",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Entropía cruzada",
+    "level": "avanzado",
+    "slug": "263-entropia-cruzada",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/263-entropia-cruzada/README.md"
+  },
+  {
+    "id": "264",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Divergencia KL",
+    "level": "avanzado",
+    "slug": "264-divergencia-kl",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/264-divergencia-kl/README.md"
+  },
+  {
+    "id": "265",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Jensen-Shannon divergence",
+    "level": "avanzado",
+    "slug": "265-jensen-shannon-divergence",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/265-jensen-shannon-divergence/README.md"
+  },
+  {
+    "id": "266",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Información mutua",
+    "level": "avanzado",
+    "slug": "266-informacion-mutua",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/266-informacion-mutua/README.md"
+  },
+  {
+    "id": "267",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Principio de máxima entropía",
+    "level": "avanzado",
+    "slug": "267-principio-de-maxima-entropia",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/267-principio-de-maxima-entropia/README.md"
+  },
+  {
+    "id": "268",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Codificación y compresión",
+    "level": "avanzado",
+    "slug": "268-codificacion-y-compresion",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/268-codificacion-y-compresion/README.md"
+  },
+  {
+    "id": "269",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Señales discretas y continuas",
+    "level": "avanzado",
+    "slug": "269-senales-discretas-y-continuas",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/269-senales-discretas-y-continuas/README.md"
+  },
+  {
+    "id": "270",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Muestreo y aliasing",
+    "level": "avanzado",
+    "slug": "270-muestreo-y-aliasing",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/270-muestreo-y-aliasing/README.md"
+  },
+  {
+    "id": "271",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Convolución",
+    "level": "avanzado",
+    "slug": "271-convolucion",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/271-convolucion/README.md"
+  },
+  {
+    "id": "272",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Correlación de señales",
+    "level": "avanzado",
+    "slug": "272-correlacion-de-senales",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/272-correlacion-de-senales/README.md"
+  },
+  {
+    "id": "273",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Series y transformada de Fourier",
+    "level": "avanzado",
+    "slug": "273-series-y-transformada-de-fourier",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/273-series-y-transformada-de-fourier/README.md"
+  },
+  {
+    "id": "274",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "FFT",
+    "level": "avanzado",
+    "slug": "274-fft",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/274-fft/README.md"
+  },
+  {
+    "id": "275",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Filtros y respuesta en frecuencia",
+    "level": "avanzado",
+    "slug": "275-filtros-y-respuesta-en-frecuencia",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/275-filtros-y-respuesta-en-frecuencia/README.md"
+  },
+  {
+    "id": "276",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Procesos estacionarios",
+    "level": "avanzado",
+    "slug": "276-procesos-estacionarios",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/276-procesos-estacionarios/README.md"
+  },
+  {
+    "id": "277",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Autocorrelación",
+    "level": "avanzado",
+    "slug": "277-autocorrelacion",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/277-autocorrelacion/README.md"
+  },
+  {
+    "id": "278",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Series temporales y ventanas",
+    "level": "avanzado",
+    "slug": "278-series-temporales-y-ventanas",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/278-series-temporales-y-ventanas/README.md"
+  },
+  {
+    "id": "279",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Espectro y densidad espectral",
+    "level": "avanzado",
+    "slug": "279-espectro-y-densidad-espectral",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/279-espectro-y-densidad-espectral/README.md"
+  },
+  {
+    "id": "280",
+    "part": "13",
+    "part_title": "Teoría de la información, señales y series",
+    "title": "Capstone: analizar señal y construir features",
+    "level": "avanzado",
+    "slug": "280-capstone-analizar-senal-y-construir-features",
+    "path": "classes/part-13-teoria-de-la-informacion-senales-y-series/280-capstone-analizar-senal-y-construir-features/README.md"
+  },
+  {
+    "id": "281",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Geometría del aprendizaje supervisado",
+    "level": "ml-avanzado",
+    "slug": "281-geometria-del-aprendizaje-supervisado",
+    "path": "classes/part-14-matematica-de-machine-learning/281-geometria-del-aprendizaje-supervisado/README.md"
+  },
+  {
+    "id": "282",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Regresión lineal desde mínimos cuadrados",
+    "level": "ml-avanzado",
+    "slug": "282-regresion-lineal-desde-minimos-cuadrados",
+    "path": "classes/part-14-matematica-de-machine-learning/282-regresion-lineal-desde-minimos-cuadrados/README.md"
+  },
+  {
+    "id": "283",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Ridge y regularización L2",
+    "level": "ml-avanzado",
+    "slug": "283-ridge-y-regularizacion-l2",
+    "path": "classes/part-14-matematica-de-machine-learning/283-ridge-y-regularizacion-l2/README.md"
+  },
+  {
+    "id": "284",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Lasso y regularización L1",
+    "level": "ml-avanzado",
+    "slug": "284-lasso-y-regularizacion-l1",
+    "path": "classes/part-14-matematica-de-machine-learning/284-lasso-y-regularizacion-l1/README.md"
+  },
+  {
+    "id": "285",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Regresión logística y sigmoid",
+    "level": "ml-avanzado",
+    "slug": "285-regresion-logistica-y-sigmoid",
+    "path": "classes/part-14-matematica-de-machine-learning/285-regresion-logistica-y-sigmoid/README.md"
+  },
+  {
+    "id": "286",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Cross-entropy en clasificación",
+    "level": "ml-avanzado",
+    "slug": "286-cross-entropy-en-clasificacion",
+    "path": "classes/part-14-matematica-de-machine-learning/286-cross-entropy-en-clasificacion/README.md"
+  },
+  {
+    "id": "287",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Naive Bayes",
+    "level": "ml-avanzado",
+    "slug": "287-naive-bayes",
+    "path": "classes/part-14-matematica-de-machine-learning/287-naive-bayes/README.md"
+  },
+  {
+    "id": "288",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "k-Nearest Neighbors y métricas",
+    "level": "ml-avanzado",
+    "slug": "288-k-nearest-neighbors-y-metricas",
+    "path": "classes/part-14-matematica-de-machine-learning/288-k-nearest-neighbors-y-metricas/README.md"
+  },
+  {
+    "id": "289",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "SVM y margen máximo",
+    "level": "ml-avanzado",
+    "slug": "289-svm-y-margen-maximo",
+    "path": "classes/part-14-matematica-de-machine-learning/289-svm-y-margen-maximo/README.md"
+  },
+  {
+    "id": "290",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Kernel trick",
+    "level": "ml-avanzado",
+    "slug": "290-kernel-trick",
+    "path": "classes/part-14-matematica-de-machine-learning/290-kernel-trick/README.md"
+  },
+  {
+    "id": "291",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Árboles: entropía y Gini",
+    "level": "ml-avanzado",
+    "slug": "291-arboles-entropia-y-gini",
+    "path": "classes/part-14-matematica-de-machine-learning/291-arboles-entropia-y-gini/README.md"
+  },
+  {
+    "id": "292",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Random Forest desde probabilidad",
+    "level": "ml-avanzado",
+    "slug": "292-random-forest-desde-probabilidad",
+    "path": "classes/part-14-matematica-de-machine-learning/292-random-forest-desde-probabilidad/README.md"
+  },
+  {
+    "id": "293",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Boosting y descenso funcional",
+    "level": "ml-avanzado",
+    "slug": "293-boosting-y-descenso-funcional",
+    "path": "classes/part-14-matematica-de-machine-learning/293-boosting-y-descenso-funcional/README.md"
+  },
+  {
+    "id": "294",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "k-means como optimización",
+    "level": "ml-avanzado",
+    "slug": "294-k-means-como-optimizacion",
+    "path": "classes/part-14-matematica-de-machine-learning/294-k-means-como-optimizacion/README.md"
+  },
+  {
+    "id": "295",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Gaussian Mixture Models",
+    "level": "ml-avanzado",
+    "slug": "295-gaussian-mixture-models",
+    "path": "classes/part-14-matematica-de-machine-learning/295-gaussian-mixture-models/README.md"
+  },
+  {
+    "id": "296",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "EM algorithm",
+    "level": "ml-avanzado",
+    "slug": "296-em-algorithm",
+    "path": "classes/part-14-matematica-de-machine-learning/296-em-algorithm/README.md"
+  },
+  {
+    "id": "297",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "PCA aplicado a ML",
+    "level": "ml-avanzado",
+    "slug": "297-pca-aplicado-a-ml",
+    "path": "classes/part-14-matematica-de-machine-learning/297-pca-aplicado-a-ml/README.md"
+  },
+  {
+    "id": "298",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Bias-variance tradeoff",
+    "level": "ml-avanzado",
+    "slug": "298-bias-variance-tradeoff",
+    "path": "classes/part-14-matematica-de-machine-learning/298-bias-variance-tradeoff/README.md"
+  },
+  {
+    "id": "299",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Generalización, validación y leakage",
+    "level": "ml-avanzado",
+    "slug": "299-generalizacion-validacion-y-leakage",
+    "path": "classes/part-14-matematica-de-machine-learning/299-generalizacion-validacion-y-leakage/README.md"
+  },
+  {
+    "id": "300",
+    "part": "14",
+    "part_title": "Matemática de Machine Learning",
+    "title": "Capstone: derivar y comparar 6 algoritmos ML",
+    "level": "ml-avanzado",
+    "slug": "300-capstone-derivar-y-comparar-6-algoritmos-ml",
+    "path": "classes/part-14-matematica-de-machine-learning/300-capstone-derivar-y-comparar-6-algoritmos-ml/README.md"
+  },
+  {
+    "id": "301",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Perceptrón y separabilidad",
+    "level": "deep-learning",
+    "slug": "301-perceptron-y-separabilidad",
+    "path": "classes/part-15-matematica-de-deep-learning/301-perceptron-y-separabilidad/README.md"
+  },
+  {
+    "id": "302",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "MLP como composición de funciones",
+    "level": "deep-learning",
+    "slug": "302-mlp-como-composicion-de-funciones",
+    "path": "classes/part-15-matematica-de-deep-learning/302-mlp-como-composicion-de-funciones/README.md"
+  },
+  {
+    "id": "303",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Funciones de activación",
+    "level": "deep-learning",
+    "slug": "303-funciones-de-activacion",
+    "path": "classes/part-15-matematica-de-deep-learning/303-funciones-de-activacion/README.md"
+  },
+  {
+    "id": "304",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Funciones de pérdida",
+    "level": "deep-learning",
+    "slug": "304-funciones-de-perdida",
+    "path": "classes/part-15-matematica-de-deep-learning/304-funciones-de-perdida/README.md"
+  },
+  {
+    "id": "305",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Backpropagation paso a paso",
+    "level": "deep-learning",
+    "slug": "305-backpropagation-paso-a-paso",
+    "path": "classes/part-15-matematica-de-deep-learning/305-backpropagation-paso-a-paso/README.md"
+  },
+  {
+    "id": "306",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Computational graphs",
+    "level": "deep-learning",
+    "slug": "306-computational-graphs",
+    "path": "classes/part-15-matematica-de-deep-learning/306-computational-graphs/README.md"
+  },
+  {
+    "id": "307",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Inicialización de pesos",
+    "level": "deep-learning",
+    "slug": "307-inicializacion-de-pesos",
+    "path": "classes/part-15-matematica-de-deep-learning/307-inicializacion-de-pesos/README.md"
+  },
+  {
+    "id": "308",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Batch normalization y layer normalization",
+    "level": "deep-learning",
+    "slug": "308-batch-normalization-y-layer-normalization",
+    "path": "classes/part-15-matematica-de-deep-learning/308-batch-normalization-y-layer-normalization/README.md"
+  },
+  {
+    "id": "309",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Regularización y dropout",
+    "level": "deep-learning",
+    "slug": "309-regularizacion-y-dropout",
+    "path": "classes/part-15-matematica-de-deep-learning/309-regularizacion-y-dropout/README.md"
+  },
+  {
+    "id": "310",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Convolución discreta",
+    "level": "deep-learning",
+    "slug": "310-convolucion-discreta",
+    "path": "classes/part-15-matematica-de-deep-learning/310-convolucion-discreta/README.md"
+  },
+  {
+    "id": "311",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "CNN y receptive fields",
+    "level": "deep-learning",
+    "slug": "311-cnn-y-receptive-fields",
+    "path": "classes/part-15-matematica-de-deep-learning/311-cnn-y-receptive-fields/README.md"
+  },
+  {
+    "id": "312",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Pooling y downsampling",
+    "level": "deep-learning",
+    "slug": "312-pooling-y-downsampling",
+    "path": "classes/part-15-matematica-de-deep-learning/312-pooling-y-downsampling/README.md"
+  },
+  {
+    "id": "313",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "RNN y recurrencia",
+    "level": "deep-learning",
+    "slug": "313-rnn-y-recurrencia",
+    "path": "classes/part-15-matematica-de-deep-learning/313-rnn-y-recurrencia/README.md"
+  },
+  {
+    "id": "314",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Vanishing y exploding gradients",
+    "level": "deep-learning",
+    "slug": "314-vanishing-y-exploding-gradients",
+    "path": "classes/part-15-matematica-de-deep-learning/314-vanishing-y-exploding-gradients/README.md"
+  },
+  {
+    "id": "315",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "LSTM y compuertas",
+    "level": "deep-learning",
+    "slug": "315-lstm-y-compuertas",
+    "path": "classes/part-15-matematica-de-deep-learning/315-lstm-y-compuertas/README.md"
+  },
+  {
+    "id": "316",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "GRU",
+    "level": "deep-learning",
+    "slug": "316-gru",
+    "path": "classes/part-15-matematica-de-deep-learning/316-gru/README.md"
+  },
+  {
+    "id": "317",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Embeddings como espacios vectoriales",
+    "level": "deep-learning",
+    "slug": "317-embeddings-como-espacios-vectoriales",
+    "path": "classes/part-15-matematica-de-deep-learning/317-embeddings-como-espacios-vectoriales/README.md"
+  },
+  {
+    "id": "318",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Optimización de redes profundas",
+    "level": "deep-learning",
+    "slug": "318-optimizacion-de-redes-profundas",
+    "path": "classes/part-15-matematica-de-deep-learning/318-optimizacion-de-redes-profundas/README.md"
+  },
+  {
+    "id": "319",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Autodiff con PyTorch/JAX",
+    "level": "deep-learning",
+    "slug": "319-autodiff-con-pytorch-jax",
+    "path": "classes/part-15-matematica-de-deep-learning/319-autodiff-con-pytorch-jax/README.md"
+  },
+  {
+    "id": "320",
+    "part": "15",
+    "part_title": "Matemática de Deep Learning",
+    "title": "Capstone: red neuronal desde cero en Python puro",
+    "level": "deep-learning",
+    "slug": "320-capstone-red-neuronal-desde-cero-en-python-puro",
+    "path": "classes/part-15-matematica-de-deep-learning/320-capstone-red-neuronal-desde-cero-en-python-puro/README.md"
+  },
+  {
+    "id": "321",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Softmax y distribuciones categóricas",
+    "level": "experto",
+    "slug": "321-softmax-y-distribuciones-categoricas",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/321-softmax-y-distribuciones-categoricas/README.md"
+  },
+  {
+    "id": "322",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Embeddings y similitud coseno",
+    "level": "experto",
+    "slug": "322-embeddings-y-similitud-coseno",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/322-embeddings-y-similitud-coseno/README.md"
+  },
+  {
+    "id": "323",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Positional encoding",
+    "level": "experto",
+    "slug": "323-positional-encoding",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/323-positional-encoding/README.md"
+  },
+  {
+    "id": "324",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Query, Key y Value",
+    "level": "experto",
+    "slug": "324-query-key-y-value",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/324-query-key-y-value/README.md"
+  },
+  {
+    "id": "325",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Scaled dot-product attention",
+    "level": "experto",
+    "slug": "325-scaled-dot-product-attention",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/325-scaled-dot-product-attention/README.md"
+  },
+  {
+    "id": "326",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Self-attention",
+    "level": "experto",
+    "slug": "326-self-attention",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/326-self-attention/README.md"
+  },
+  {
+    "id": "327",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Multi-head attention",
+    "level": "experto",
+    "slug": "327-multi-head-attention",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/327-multi-head-attention/README.md"
+  },
+  {
+    "id": "328",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Transformer completo",
+    "level": "experto",
+    "slug": "328-transformer-completo",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/328-transformer-completo/README.md"
+  },
+  {
+    "id": "329",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Modelado autoregresivo",
+    "level": "experto",
+    "slug": "329-modelado-autoregresivo",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/329-modelado-autoregresivo/README.md"
+  },
+  {
+    "id": "330",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Sampling, temperatura, top-k y top-p",
+    "level": "experto",
+    "slug": "330-sampling-temperatura-top-k-y-top-p",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/330-sampling-temperatura-top-k-y-top-p/README.md"
+  },
+  {
+    "id": "331",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Variational Autoencoders",
+    "level": "experto",
+    "slug": "331-variational-autoencoders",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/331-variational-autoencoders/README.md"
+  },
+  {
+    "id": "332",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "ELBO y variational inference",
+    "level": "experto",
+    "slug": "332-elbo-y-variational-inference",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/332-elbo-y-variational-inference/README.md"
+  },
+  {
+    "id": "333",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "GAN y juegos minimax",
+    "level": "experto",
+    "slug": "333-gan-y-juegos-minimax",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/333-gan-y-juegos-minimax/README.md"
+  },
+  {
+    "id": "334",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Diffusion models: forward process",
+    "level": "experto",
+    "slug": "334-diffusion-models-forward-process",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/334-diffusion-models-forward-process/README.md"
+  },
+  {
+    "id": "335",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Diffusion models: reverse process",
+    "level": "experto",
+    "slug": "335-diffusion-models-reverse-process",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/335-diffusion-models-reverse-process/README.md"
+  },
+  {
+    "id": "336",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Graph Laplacian",
+    "level": "experto",
+    "slug": "336-graph-laplacian",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/336-graph-laplacian/README.md"
+  },
+  {
+    "id": "337",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Message passing en GNN",
+    "level": "experto",
+    "slug": "337-message-passing-en-gnn",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/337-message-passing-en-gnn/README.md"
+  },
+  {
+    "id": "338",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Bellman equations",
+    "level": "experto",
+    "slug": "338-bellman-equations",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/338-bellman-equations/README.md"
+  },
+  {
+    "id": "339",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Policy gradients",
+    "level": "experto",
+    "slug": "339-policy-gradients",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/339-policy-gradients/README.md"
+  },
+  {
+    "id": "340",
+    "part": "16",
+    "part_title": "Matemática de Transformers, modelos generativos, grafos y RL",
+    "title": "Capstone: mini-Transformer matemático",
+    "level": "experto",
+    "slug": "340-capstone-mini-transformer-matematico",
+    "path": "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/340-capstone-mini-transformer-matematico/README.md"
+  },
+  {
+    "id": "341",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Gaussian Processes",
+    "level": "frontera-investigacion",
+    "slug": "341-gaussian-processes",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/341-gaussian-processes/README.md"
+  },
+  {
+    "id": "342",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Kernel methods avanzados",
+    "level": "frontera-investigacion",
+    "slug": "342-kernel-methods-avanzados",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/342-kernel-methods-avanzados/README.md"
+  },
+  {
+    "id": "343",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "MCMC avanzado",
+    "level": "frontera-investigacion",
+    "slug": "343-mcmc-avanzado",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/343-mcmc-avanzado/README.md"
+  },
+  {
+    "id": "344",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Hamiltonian Monte Carlo",
+    "level": "frontera-investigacion",
+    "slug": "344-hamiltonian-monte-carlo",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/344-hamiltonian-monte-carlo/README.md"
+  },
+  {
+    "id": "345",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Variational inference avanzada",
+    "level": "frontera-investigacion",
+    "slug": "345-variational-inference-avanzada",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/345-variational-inference-avanzada/README.md"
+  },
+  {
+    "id": "346",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Optimal transport",
+    "level": "frontera-investigacion",
+    "slug": "346-optimal-transport",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/346-optimal-transport/README.md"
+  },
+  {
+    "id": "347",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Wasserstein distance",
+    "level": "frontera-investigacion",
+    "slug": "347-wasserstein-distance",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/347-wasserstein-distance/README.md"
+  },
+  {
+    "id": "348",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Manifold learning",
+    "level": "frontera-investigacion",
+    "slug": "348-manifold-learning",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/348-manifold-learning/README.md"
+  },
+  {
+    "id": "349",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Geometría diferencial para ML",
+    "level": "frontera-investigacion",
+    "slug": "349-geometria-diferencial-para-ml",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/349-geometria-diferencial-para-ml/README.md"
+  },
+  {
+    "id": "350",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Information geometry",
+    "level": "frontera-investigacion",
+    "slug": "350-information-geometry",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/350-information-geometry/README.md"
+  },
+  {
+    "id": "351",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Stochastic differential equations",
+    "level": "frontera-investigacion",
+    "slug": "351-stochastic-differential-equations",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/351-stochastic-differential-equations/README.md"
+  },
+  {
+    "id": "352",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Neural ODEs",
+    "level": "frontera-investigacion",
+    "slug": "352-neural-odes",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/352-neural-odes/README.md"
+  },
+  {
+    "id": "353",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Score matching",
+    "level": "frontera-investigacion",
+    "slug": "353-score-matching",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/353-score-matching/README.md"
+  },
+  {
+    "id": "354",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Spectral graph theory",
+    "level": "frontera-investigacion",
+    "slug": "354-spectral-graph-theory",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/354-spectral-graph-theory/README.md"
+  },
+  {
+    "id": "355",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Causal inference",
+    "level": "frontera-investigacion",
+    "slug": "355-causal-inference",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/355-causal-inference/README.md"
+  },
+  {
+    "id": "356",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Statistical learning theory",
+    "level": "frontera-investigacion",
+    "slug": "356-statistical-learning-theory",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/356-statistical-learning-theory/README.md"
+  },
+  {
+    "id": "357",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "VC dimension",
+    "level": "frontera-investigacion",
+    "slug": "357-vc-dimension",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/357-vc-dimension/README.md"
+  },
+  {
+    "id": "358",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "PAC learning",
+    "level": "frontera-investigacion",
+    "slug": "358-pac-learning",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/358-pac-learning/README.md"
+  },
+  {
+    "id": "359",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Approximation theory y scaling",
+    "level": "frontera-investigacion",
+    "slug": "359-approximation-theory-y-scaling",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/359-approximation-theory-y-scaling/README.md"
+  },
+  {
+    "id": "360",
+    "part": "17",
+    "part_title": "Frontera matemática para IA e investigación",
+    "title": "Capstone final: reproducir una idea matemática de un paper",
+    "level": "frontera-investigacion",
+    "slug": "360-capstone-final-reproducir-una-idea-matematica-de-un-paper",
+    "path": "classes/part-17-frontera-matematica-para-ia-e-investigacion/360-capstone-final-reproducir-una-idea-matematica-de-un-paper/README.md"
+  }
+]

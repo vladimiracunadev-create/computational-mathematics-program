@@ -1,0 +1,33 @@
+id: "327"
+title: "Multi-head attention"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 7
+hours: 4
+engine: "part16"
+demo: "multi_head_attention"
+demo_summary: "Multi-head: varias atenciones en subespacios distintos."
+prerequisite: "clase 326"
+outputs:
+  - "d_model"
+  - "cabezas"
+  - "d_por_cabeza"
+  - "patrones_de_atencion_por_cabeza"
+  - "las_cabezas_atienden_distinto"
+  - "parametros_totales"
+  - "parametros_de_una_sola_cabeza_ancha"
+  - "coste_igual"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

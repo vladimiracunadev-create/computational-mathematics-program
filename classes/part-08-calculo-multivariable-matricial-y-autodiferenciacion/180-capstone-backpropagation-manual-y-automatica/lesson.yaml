@@ -1,0 +1,33 @@
+id: "180"
+title: "Capstone: backpropagation manual y automática"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 20
+hours: 4
+engine: "part08"
+demo: "capstone_backpropagation"
+demo_summary: "Capstone: backpropagation manual y automática sobre la misma red."
+prerequisite: "clase 179"
+outputs:
+  - "arquitectura"
+  - "prediccion"
+  - "objetivo"
+  - "perdida"
+  - "gradientes_manuales"
+  - "gradientes_autodiff"
+  - "parametros"
+  - "coinciden"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

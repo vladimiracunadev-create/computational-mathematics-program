@@ -1,0 +1,31 @@
+id: "091"
+title: "Inducción matemática"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 11
+hours: 4
+engine: "part04"
+demo: "induction"
+demo_summary: "Inducción: caso base, paso inductivo y verificación empírica."
+prerequisite: "clase 090"
+outputs:
+  - "proposicion"
+  - "caso_base_n=1"
+  - "paso_inductivo"
+  - "verificado_hasta"
+  - "contraejemplos"
+  - "la_verificacion_no_es_demostracion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

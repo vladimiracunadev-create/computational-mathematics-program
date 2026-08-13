@@ -1,0 +1,33 @@
+id: "189"
+title: "Esperanza matemática"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 9
+hours: 4
+engine: "part09"
+demo: "expectation"
+demo_summary: "Linealidad de la esperanza, incluso sin independencia."
+prerequisite: "clase 188"
+outputs:
+  - "E[X]_teorica_uniforme"
+  - "E[X]_muestral"
+  - "E[X²]_teorica"
+  - "E[X²]_muestral"
+  - "E[X]²"
+  - "E[X²]≠E[X]²"
+  - "E[2X+3Y]"
+  - "2E[X]+3E[Y]"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

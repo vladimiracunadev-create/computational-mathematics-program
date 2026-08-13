@@ -1,0 +1,33 @@
+id: "179"
+title: "Automatic differentiation y computational graphs"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 19
+hours: 4
+engine: "part08"
+demo: "autodiff"
+demo_summary: "Autodiferenciación en modo reverso sobre el grafo de cómputo."
+prerequisite: "clase 178"
+outputs:
+  - "expresion"
+  - "valor"
+  - "dz/dx_autodiff"
+  - "dz/dx_numerico"
+  - "dz/dy_autodiff"
+  - "dz/dy_numerico"
+  - "coinciden"
+  - "barridos_necesarios"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

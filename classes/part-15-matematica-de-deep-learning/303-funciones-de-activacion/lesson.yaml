@@ -1,0 +1,33 @@
+id: "303"
+title: "Funciones de activación"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 3
+hours: 4
+engine: "part15"
+demo: "activations"
+demo_summary: "Activaciones y sus derivadas: dónde se saturan."
+prerequisite: "clase 302"
+outputs:
+  - "sigmoid"
+  - "tanh"
+  - "relu"
+  - "leaky_relu"
+  - "gelu"
+  - "sigmoid_se_satura"
+  - "relu_no_se_satura_en_positivos"
+  - "relu_muere_en_negativos"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

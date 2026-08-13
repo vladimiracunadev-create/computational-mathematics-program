@@ -1,0 +1,30 @@
+id: "225"
+title: "Interpolación de Lagrange"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 5
+hours: 4
+engine: "part11"
+demo: "lagrange_interpolation"
+demo_summary: "Interpolación de Lagrange y el fenómeno de Runge."
+prerequisite: "clase 224"
+outputs:
+  - "polinomio_por_3_puntos"
+  - "pasa_por_los_nodos"
+  - "error_maximo_de_Runge_por_grado"
+  - "el_error_crece_con_el_grado"
+  - "solucion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

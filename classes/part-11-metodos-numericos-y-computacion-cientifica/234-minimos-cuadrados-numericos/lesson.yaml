@@ -1,0 +1,33 @@
+id: "234"
+title: "Mínimos cuadrados numéricos"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 14
+hours: 4
+engine: "part11"
+demo: "numerical_least_squares"
+demo_summary: "Mínimos cuadrados: ecuaciones normales frente a QR."
+prerequisite: "clase 233"
+outputs:
+  - "datos"
+  - "coeficientes_ecuaciones_normales"
+  - "coeficientes_QR"
+  - "coinciden"
+  - "condicion_de_AᵀA"
+  - "las_normales_elevan_al_cuadrado_la_condicion"
+  - "recomendacion"
+  - "SSE"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

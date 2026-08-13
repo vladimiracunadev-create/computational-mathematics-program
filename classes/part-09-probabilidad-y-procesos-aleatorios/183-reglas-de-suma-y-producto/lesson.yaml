@@ -1,0 +1,33 @@
+id: "183"
+title: "Reglas de suma y producto"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 3
+hours: 4
+engine: "part09"
+demo: "sum_product_rules"
+demo_summary: "Regla de la suma con y sin exclusión mutua."
+prerequisite: "clase 182"
+outputs:
+  - "P(A)_primer_dado_1"
+  - "P(B)_suma_7"
+  - "P(A∩B)"
+  - "P(A∪B)_inclusion_exclusion"
+  - "P(A∪B)_directo"
+  - "son_mutuamente_excluyentes"
+  - "P(A)·P(B)"
+  - "son_independientes"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

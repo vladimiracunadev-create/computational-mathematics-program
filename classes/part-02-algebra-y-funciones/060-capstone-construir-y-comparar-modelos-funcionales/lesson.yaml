@@ -1,0 +1,32 @@
+id: "060"
+title: "Capstone: construir y comparar modelos funcionales"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 20
+hours: 4
+engine: "part02"
+demo: "capstone_model_fitting"
+demo_summary: "Capstone: ¿lineal, cuadrático o exponencial? Decidir con residuos."
+prerequisite: "clase 059"
+outputs:
+  - "datos"
+  - "modelo_lineal_SSE"
+  - "modelo_exponencial"
+  - "modelo_exponencial_SSE"
+  - "razon_de_crecimiento"
+  - "modelo_elegido"
+  - "criterio"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

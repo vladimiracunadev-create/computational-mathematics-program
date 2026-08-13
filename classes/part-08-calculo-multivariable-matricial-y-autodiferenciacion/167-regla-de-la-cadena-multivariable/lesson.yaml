@@ -1,0 +1,31 @@
+id: "167"
+title: "Regla de la cadena multivariable"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 7
+hours: 4
+engine: "part08"
+demo: "multivariable_chain_rule"
+demo_summary: "Regla de la cadena con variables intermedias."
+prerequisite: "clase 166"
+outputs:
+  - "composicion"
+  - "t"
+  - "∂f/∂x·dx/dt + ∂f/∂y·dy/dt"
+  - "dh/dt_numerica"
+  - "coinciden"
+  - "estructura"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

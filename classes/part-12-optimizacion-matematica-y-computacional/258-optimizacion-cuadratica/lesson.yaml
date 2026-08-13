@@ -1,0 +1,33 @@
+id: "258"
+title: "Optimización cuadrática"
+part: "12"
+part_title: "Optimización matemática y computacional"
+level: "avanzado"
+index_in_part: 18
+hours: 4
+engine: "part12"
+demo: "quadratic_programming"
+demo_summary: "Programa cuadrático resuelto por su sistema KKT."
+prerequisite: "clase 257"
+outputs:
+  - "Q"
+  - "c"
+  - "A"
+  - "b"
+  - "Q_definida_positiva"
+  - "sistema_KKT"
+  - "solucion_x"
+  - "multiplicador_lambda"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

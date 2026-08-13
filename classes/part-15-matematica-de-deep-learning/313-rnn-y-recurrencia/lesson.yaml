@@ -1,0 +1,33 @@
+id: "313"
+title: "RNN y recurrencia"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 13
+hours: 4
+engine: "part15"
+demo: "rnn"
+demo_summary: "RNN: el estado oculto acumula historia con pesos compartidos."
+prerequisite: "clase 312"
+outputs:
+  - "secuencia"
+  - "parametros"
+  - "estados"
+  - "estado_final"
+  - "pesos_compartidos_en_el_tiempo"
+  - "parametros_totales"
+  - "longitud_de_secuencia"
+  - "BPTT"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

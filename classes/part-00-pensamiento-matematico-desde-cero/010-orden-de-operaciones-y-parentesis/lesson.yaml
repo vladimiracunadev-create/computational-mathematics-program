@@ -1,0 +1,31 @@
+id: "010"
+title: "Orden de operaciones y paréntesis"
+part: "00"
+part_title: "Pensamiento matemático desde cero"
+level: "cero-absoluto"
+index_in_part: 10
+hours: 4
+engine: "part00"
+demo: "operator_precedence"
+demo_summary: "Precedencia y asociatividad: dos lecturas de la misma cadena."
+prerequisite: "clase 009"
+outputs:
+  - "2+3*4"
+  - "(2+3)*4"
+  - "2**3**2 (asocia derecha)"
+  - "(2**3)**2"
+  - "-3**2"
+  - "(-3)**2"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

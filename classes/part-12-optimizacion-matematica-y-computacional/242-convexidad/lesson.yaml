@@ -1,0 +1,31 @@
+id: "242"
+title: "Convexidad"
+part: "12"
+part_title: "Optimización matemática y computacional"
+level: "avanzado"
+index_in_part: 2
+hours: 4
+engine: "part12"
+demo: "convexity"
+demo_summary: "Convexidad: la propiedad que convierte un mínimo local en global."
+prerequisite: "clase 241"
+outputs:
+  - "test_de_la_cuerda_convexa"
+  - "test_no_convexa"
+  - "hessiano_de_x²+20y²"
+  - "autovalores"
+  - "definido_positivo"
+  - "consecuencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

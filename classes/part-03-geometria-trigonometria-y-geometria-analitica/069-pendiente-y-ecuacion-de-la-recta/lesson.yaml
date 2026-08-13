@@ -1,0 +1,32 @@
+id: "069"
+title: "Pendiente y ecuación de la recta"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 9
+hours: 4
+engine: "part03"
+demo: "line_equation"
+demo_summary: "Recta en forma pendiente-intercepto y en forma general."
+prerequisite: "clase 068"
+outputs:
+  - "puntos"
+  - "pendiente"
+  - "intercepto"
+  - "forma_explicita"
+  - "forma_general"
+  - "verifica_p"
+  - "pendiente_perpendicular"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

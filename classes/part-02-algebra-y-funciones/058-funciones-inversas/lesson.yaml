@@ -1,0 +1,33 @@
+id: "058"
+title: "Funciones inversas"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 18
+hours: 4
+engine: "part02"
+demo: "inverse_function"
+demo_summary: "Inversa frente a recíproco: dos objetos distintos."
+prerequisite: "clase 057"
+outputs:
+  - "f"
+  - "f_inversa"
+  - "f(5)"
+  - "f_inv(f(5))"
+  - "roundtrip_ok"
+  - "reciproco_1/f(5)"
+  - "inversa_es_reciproco"
+  - "condicion_de_existencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

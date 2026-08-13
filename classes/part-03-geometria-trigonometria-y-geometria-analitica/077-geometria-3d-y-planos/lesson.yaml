@@ -1,0 +1,33 @@
+id: "077"
+title: "Geometría 3D y planos"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 17
+hours: 4
+engine: "part03"
+demo: "planes_3d"
+demo_summary: "Plano por su normal, distancia de un punto y producto cruz."
+prerequisite: "clase 076"
+outputs:
+  - "vector_a"
+  - "vector_b"
+  - "normal_axb"
+  - "plano"
+  - "punto"
+  - "distancia_al_plano"
+  - "normal_es_ortogonal_a_a"
+  - "norma_del_producto_cruz_es_el_area"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

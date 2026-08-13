@@ -1,0 +1,31 @@
+id: "221"
+title: "Errores numéricos y convergencia"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 1
+hours: 4
+engine: "part11"
+demo: "numerical_errors"
+demo_summary: "Error de truncamiento frente a error de redondeo."
+prerequisite: "clase 220"
+outputs:
+  - "derivada_exacta"
+  - "informe"
+  - "h_optimo_aprox"
+  - "por_que_hay_un_optimo"
+  - "orden_adelante"
+  - "orden_central"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,31 @@
+id: "244"
+title: "Gradient descent"
+part: "12"
+part_title: "Optimización matemática y computacional"
+level: "avanzado"
+index_in_part: 4
+hours: 4
+engine: "part12"
+demo: "gradient_descent"
+demo_summary: "Descenso de gradiente y el efecto del learning rate."
+prerequisite: "clase 243"
+outputs:
+  - "funcion"
+  - "punto_inicial"
+  - "iteraciones"
+  - "resultados"
+  - "lr_maximo_estable"
+  - "regla"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

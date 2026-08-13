@@ -1,0 +1,33 @@
+id: "312"
+title: "Pooling y downsampling"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 12
+hours: 4
+engine: "part15"
+demo: "pooling"
+demo_summary: "Max y average pooling: reducción con y sin pérdida de posición."
+prerequisite: "clase 311"
+outputs:
+  - "entrada_shape"
+  - "max_pool_2x2"
+  - "avg_pool_2x2"
+  - "salida_shape"
+  - "reduccion_de_elementos"
+  - "parametros_aprendidos"
+  - "gradiente_del_max_pool"
+  - "gradiente_del_avg_pool"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

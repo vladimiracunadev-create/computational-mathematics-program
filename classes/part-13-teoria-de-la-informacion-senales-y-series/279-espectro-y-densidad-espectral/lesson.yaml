@@ -1,0 +1,33 @@
+id: "279"
+title: "Espectro y densidad espectral"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 19
+hours: 4
+engine: "part13"
+demo: "power_spectrum"
+demo_summary: "Densidad espectral de potencia y reparto de la energía."
+prerequisite: "clase 278"
+outputs:
+  - "muestras"
+  - "componentes"
+  - "bins_dominantes"
+  - "potencia_relativa_5Hz_%"
+  - "potencia_relativa_20Hz_%"
+  - "razon_de_potencias"
+  - "razon_teorica_amplitudes²"
+  - "energia_total_tiempo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

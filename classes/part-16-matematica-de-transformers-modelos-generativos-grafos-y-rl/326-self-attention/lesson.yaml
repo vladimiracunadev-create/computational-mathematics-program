@@ -1,0 +1,33 @@
+id: "326"
+title: "Self-attention"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 6
+hours: 4
+engine: "part16"
+demo: "self_attention"
+demo_summary: "Self-attention completa sobre una secuencia de 4 tokens."
+prerequisite: "clase 325"
+outputs:
+  - "tokens"
+  - "d_model"
+  - "matriz_de_atencion"
+  - "cada_fila_suma_1"
+  - "matriz_causal"
+  - "el_token_0_solo_se_ve_a_si_mismo"
+  - "salida_del_token_1"
+  - "coste"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

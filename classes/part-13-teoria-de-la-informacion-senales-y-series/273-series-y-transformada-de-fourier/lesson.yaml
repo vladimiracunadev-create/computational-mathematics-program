@@ -1,0 +1,33 @@
+id: "273"
+title: "Series y transformada de Fourier"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 13
+hours: 4
+engine: "part13"
+demo: "fourier_series"
+demo_summary: "Descomponer una señal en senos y cosenos."
+prerequisite: "clase 272"
+outputs:
+  - "muestras"
+  - "componentes_reales"
+  - "picos_detectados_Hz"
+  - "magnitudes_de_los_picos"
+  - "energia_en_el_tiempo"
+  - "energia_en_frecuencia"
+  - "teorema_de_Parseval"
+  - "cualquier_periodica_es_suma_de_senoidales"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

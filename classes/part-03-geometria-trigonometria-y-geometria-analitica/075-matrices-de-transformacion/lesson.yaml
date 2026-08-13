@@ -1,0 +1,33 @@
+id: "075"
+title: "Matrices de transformación"
+part: "03"
+part_title: "Geometría, trigonometría y geometría analítica"
+level: "basico-intermedio"
+index_in_part: 15
+hours: 4
+engine: "part03"
+demo: "transform_matrices"
+demo_summary: "Composición de rotación, escala y reflexión."
+prerequisite: "clase 074"
+outputs:
+  - "rotacion_45"
+  - "escala_2x"
+  - "reflexion_en_x"
+  - "RS·v"
+  - "det_rotacion"
+  - "det_escala"
+  - "det_reflexion"
+  - "reflexion_invierte_orientacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

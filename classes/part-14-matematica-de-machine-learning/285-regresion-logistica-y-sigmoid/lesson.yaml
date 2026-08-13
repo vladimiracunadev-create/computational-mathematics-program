@@ -1,0 +1,33 @@
+id: "285"
+title: "Regresión logística y sigmoid"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 5
+hours: 4
+engine: "part14"
+demo: "logistic_regression"
+demo_summary: "Regresión logística derivada desde la log-verosimilitud."
+prerequisite: "clase 284"
+outputs:
+  - "observaciones"
+  - "pesos"
+  - "accuracy"
+  - "log_loss"
+  - "sigmoid(0)"
+  - "gradiente_es_(p-y)x"
+  - "frontera_de_decision"
+  - "modelo_lineal_en_el_log_odds"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

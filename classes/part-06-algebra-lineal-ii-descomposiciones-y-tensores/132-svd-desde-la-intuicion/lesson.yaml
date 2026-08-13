@@ -1,0 +1,33 @@
+id: "132"
+title: "SVD desde la intuición"
+part: "06"
+part_title: "Álgebra lineal II: descomposiciones y tensores"
+level: "intermedio-avanzado"
+index_in_part: 12
+hours: 4
+engine: "part06"
+demo: "svd_intuition"
+demo_summary: "SVD: rotar, escalar, rotar. Existe siempre."
+prerequisite: "clase 131"
+outputs:
+  - "A"
+  - "valores_singulares"
+  - "U"
+  - "V"
+  - "sigma1_es_la_norma_espectral"
+  - "numero_de_condicion"
+  - "rango_numerico"
+  - "existe_para_toda_matriz"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

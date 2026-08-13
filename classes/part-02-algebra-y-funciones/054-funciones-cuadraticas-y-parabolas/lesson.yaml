@@ -1,0 +1,33 @@
+id: "054"
+title: "Funciones cuadráticas y parábolas"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 14
+hours: 4
+engine: "part02"
+demo: "quadratic_function"
+demo_summary: "Vértice, eje de simetría y concavidad."
+prerequisite: "clase 053"
+outputs:
+  - "funcion"
+  - "concavidad"
+  - "vertice"
+  - "eje_de_simetria"
+  - "es_maximo"
+  - "f(xv-2)"
+  - "f(xv+2)"
+  - "simetria_verificada"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

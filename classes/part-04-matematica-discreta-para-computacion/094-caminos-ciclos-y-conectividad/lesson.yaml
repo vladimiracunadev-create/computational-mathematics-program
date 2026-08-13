@@ -1,0 +1,31 @@
+id: "094"
+title: "Caminos, ciclos y conectividad"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 14
+hours: 4
+engine: "part04"
+demo: "paths_connectivity"
+demo_summary: "Recorrido BFS: alcanzabilidad y distancia en aristas."
+prerequisite: "clase 093"
+outputs:
+  - "origen"
+  - "orden_de_visita"
+  - "distancias"
+  - "todos_alcanzables"
+  - "excentricidad"
+  - "complejidad_BFS"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

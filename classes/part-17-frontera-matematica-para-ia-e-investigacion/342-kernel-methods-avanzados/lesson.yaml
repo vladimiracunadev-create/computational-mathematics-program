@@ -1,0 +1,33 @@
+id: "342"
+title: "Kernel methods avanzados"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 2
+hours: 4
+engine: "part17"
+demo: "advanced_kernels"
+demo_summary: "Familias de kernels y la condición de Mercer."
+prerequisite: "clase 341"
+outputs:
+  - "kernels"
+  - "matriz_de_Gram_RBF"
+  - "autovalores_de_Gram"
+  - "es_semidefinida_positiva"
+  - "condicion_de_Mercer"
+  - "suma_de_kernels_es_kernel"
+  - "producto_de_kernels_es_kernel"
+  - "matern_es_menos_suave_que_RBF"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

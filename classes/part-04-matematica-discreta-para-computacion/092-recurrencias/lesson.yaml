@@ -1,0 +1,33 @@
+id: "092"
+title: "Recurrencias"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 12
+hours: 4
+engine: "part04"
+demo: "recurrences"
+demo_summary: "Recurrencia lineal: iterativo, memoizado y forma cerrada."
+prerequisite: "clase 091"
+outputs:
+  - "recurrencia"
+  - "F(30)_iterativo"
+  - "F(30)_binet"
+  - "coinciden"
+  - "coste_recursivo_ingenuo"
+  - "coste_iterativo"
+  - "razon_asintotica"
+  - "razon_aurea"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

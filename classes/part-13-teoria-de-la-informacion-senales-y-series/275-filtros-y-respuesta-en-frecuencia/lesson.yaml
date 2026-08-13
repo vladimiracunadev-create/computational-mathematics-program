@@ -1,0 +1,33 @@
+id: "275"
+title: "Filtros y respuesta en frecuencia"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 15
+hours: 4
+engine: "part13"
+demo: "filters"
+demo_summary: "Filtro paso-bajo aplicado a una señal con ruido de alta frecuencia."
+prerequisite: "clase 274"
+outputs:
+  - "muestras"
+  - "ventana_del_filtro"
+  - "RMSE_antes_del_filtro"
+  - "RMSE_despues_del_filtro"
+  - "mejora_%"
+  - "tipo"
+  - "coste"
+  - "compromiso"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

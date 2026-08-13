@@ -1,0 +1,32 @@
+id: "109"
+title: "Matrices y operaciones básicas"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 9
+hours: 4
+engine: "part05"
+demo: "matrix_basics"
+demo_summary: "Suma, escala y transpuesta de matrices."
+prerequisite: "clase 108"
+outputs:
+  - "A"
+  - "B"
+  - "A+B"
+  - "3A"
+  - "Aᵀ"
+  - "(Aᵀ)ᵀ=A"
+  - "traza_A"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

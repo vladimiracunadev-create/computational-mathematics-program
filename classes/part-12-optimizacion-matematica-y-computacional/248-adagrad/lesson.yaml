@@ -1,0 +1,31 @@
+id: "248"
+title: "AdaGrad"
+part: "12"
+part_title: "Optimización matemática y computacional"
+level: "avanzado"
+index_in_part: 8
+hours: 4
+engine: "part12"
+demo: "adagrad"
+demo_summary: "AdaGrad adapta el paso por coordenada, pero se apaga."
+prerequisite: "clase 247"
+outputs:
+  - "learning_rate_base"
+  - "resultado"
+  - "tamaño_de_paso_por_iteracion"
+  - "el_paso_decrece_monotonamente"
+  - "problema"
+  - "solucion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

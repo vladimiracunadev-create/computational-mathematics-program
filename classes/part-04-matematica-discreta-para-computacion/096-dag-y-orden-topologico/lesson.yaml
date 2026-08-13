@@ -1,0 +1,31 @@
+id: "096"
+title: "DAG y orden topológico"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 16
+hours: 4
+engine: "part04"
+demo: "topological_order"
+demo_summary: "Orden topológico y detección de ciclos por conteo de Kahn."
+prerequisite: "clase 095"
+outputs:
+  - "grafo"
+  - "orden_topologico"
+  - "es_DAG"
+  - "nodos_ordenados"
+  - "diagnostico_si_falla"
+  - "uso"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

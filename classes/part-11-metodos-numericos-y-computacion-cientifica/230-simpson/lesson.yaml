@@ -1,0 +1,31 @@
+id: "230"
+title: "Simpson"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 10
+hours: 4
+engine: "part11"
+demo: "simpson_rule"
+demo_summary: "Simpson y su convergencia O(h⁴)."
+prerequisite: "clase 229"
+outputs:
+  - "integrando"
+  - "valor_exacto"
+  - "informe"
+  - "requiere_n_par"
+  - "duplicar_n_divide_el_error_por_16"
+  - "exacta_para_polinomios_de_grado_3"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "158"
+title: "Integración por partes"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 18
+hours: 4
+engine: "part07"
+demo: "integration_by_parts"
+demo_summary: "Integración por partes: la regla del producto al revés."
+prerequisite: "clase 157"
+outputs:
+  - "integral"
+  - "u"
+  - "dv"
+  - "formula"
+  - "resultado_analitico"
+  - "resultado_numerico"
+  - "error"
+  - "criterio_LIATE"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

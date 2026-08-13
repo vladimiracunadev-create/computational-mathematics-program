@@ -1,0 +1,33 @@
+id: "277"
+title: "Autocorrelación"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 17
+hours: 4
+engine: "part13"
+demo: "autocorrelation"
+demo_summary: "Autocorrelación revela la periodicidad oculta."
+prerequisite: "clase 276"
+outputs:
+  - "muestras"
+  - "periodo_real"
+  - "acf_lag_0"
+  - "acf_lag_5"
+  - "acf_lag_10"
+  - "acf_lag_20"
+  - "primer_pico_positivo_en_lag"
+  - "detecta_el_periodo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

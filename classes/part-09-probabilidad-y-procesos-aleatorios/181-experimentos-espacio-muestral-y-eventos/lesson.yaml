@@ -1,0 +1,33 @@
+id: "181"
+title: "Experimentos, espacio muestral y eventos"
+part: "09"
+part_title: "Probabilidad y procesos aleatorios"
+level: "universitario"
+index_in_part: 1
+hours: 4
+engine: "part09"
+demo: "sample_space"
+demo_summary: "Espacio muestral, eventos y su probabilidad en un modelo equiprobable."
+prerequisite: "clase 180"
+outputs:
+  - "experimento"
+  - "|Ω|"
+  - "evento_suma_7"
+  - "P(suma=7)"
+  - "evento_ambos_pares"
+  - "P(ambos_pares)"
+  - "P(complemento_suma_7)"
+  - "suma_mas_probable"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

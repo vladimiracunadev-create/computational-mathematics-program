@@ -1,0 +1,33 @@
+id: "220"
+title: "Capstone: estudio estadístico reproducible"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 20
+hours: 4
+engine: "part10"
+demo: "capstone_reproducible_study"
+demo_summary: "Capstone: estudio completo, reproducible y con límites declarados."
+prerequisite: "clase 219"
+outputs:
+  - "semilla"
+  - "diseño"
+  - "media_control"
+  - "media_tratamiento"
+  - "diferencia"
+  - "IC_95%_parametrico"
+  - "IC_95%_bootstrap"
+  - "estadistico_t"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,31 @@
+id: "087"
+title: "Principios de conteo"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 7
+hours: 4
+engine: "part04"
+demo: "counting_principles"
+demo_summary: "Regla del producto, de la suma y conteo de contraseñas."
+prerequisite: "clase 086"
+outputs:
+  - "regla_del_producto_3x4"
+  - "regla_de_la_suma_3+4"
+  - "contraseñas_alfanumericas_8"
+  - "contraseñas_solo_digitos_8"
+  - "factor_de_ventaja"
+  - "bits_de_entropia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

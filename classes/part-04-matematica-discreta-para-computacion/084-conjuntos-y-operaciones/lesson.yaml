@@ -1,0 +1,33 @@
+id: "084"
+title: "Conjuntos y operaciones"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 4
+hours: 4
+engine: "part04"
+demo: "sets"
+demo_summary: "Operaciones de conjuntos e inclusión-exclusión."
+prerequisite: "clase 083"
+outputs:
+  - "A"
+  - "B"
+  - "union"
+  - "interseccion"
+  - "diferencia_A-B"
+  - "diferencia_simetrica"
+  - "|A|+|B|-|A∩B|"
+  - "|A∪B|"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

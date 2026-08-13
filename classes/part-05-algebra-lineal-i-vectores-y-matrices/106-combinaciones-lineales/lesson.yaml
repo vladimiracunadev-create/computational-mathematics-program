@@ -1,0 +1,31 @@
+id: "106"
+title: "Combinaciones lineales"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 6
+hours: 4
+engine: "part05"
+demo: "linear_combinations"
+demo_summary: "Toda combinación lineal de la base canónica reconstruye el vector."
+prerequisite: "clase 105"
+outputs:
+  - "base_canonica"
+  - "coeficientes"
+  - "combinacion"
+  - "coincide_con_los_coeficientes"
+  - "una_capa_densa_es_una_combinacion_lineal"
+  - "mas_sesgo"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "211"
+title: "Chi-cuadrado y tablas de contingencia"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 11
+hours: 4
+engine: "part10"
+demo: "chi_square"
+demo_summary: "Chi-cuadrado de independencia sobre una tabla de contingencia."
+prerequisite: "clase 210"
+outputs:
+  - "tabla_observada"
+  - "totales_fila"
+  - "totales_columna"
+  - "tabla_esperada"
+  - "chi_cuadrado"
+  - "grados_de_libertad"
+  - "valor_critico_5%"
+  - "rechaza_independencia"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

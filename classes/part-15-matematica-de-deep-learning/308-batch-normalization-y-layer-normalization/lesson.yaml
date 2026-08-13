@@ -1,0 +1,33 @@
+id: "308"
+title: "Batch normalization y layer normalization"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 8
+hours: 4
+engine: "part15"
+demo: "normalization"
+demo_summary: "Batch norm y layer norm: qué eje se normaliza."
+prerequisite: "clase 307"
+outputs:
+  - "lote_original"
+  - "escalas_por_feature"
+  - "batch_norm_(por_columna)"
+  - "layer_norm_(por_fila)"
+  - "media_por_columna_tras_BN"
+  - "media_por_fila_tras_LN"
+  - "batch_norm_depende_del_lote"
+  - "layer_norm_no_depende_del_lote"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

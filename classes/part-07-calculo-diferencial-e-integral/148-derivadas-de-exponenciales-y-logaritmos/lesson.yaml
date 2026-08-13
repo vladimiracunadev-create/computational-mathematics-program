@@ -1,0 +1,32 @@
+id: "148"
+title: "Derivadas de exponenciales y logaritmos"
+part: "07"
+part_title: "Cálculo diferencial e integral"
+level: "universitario"
+index_in_part: 8
+hours: 4
+engine: "part07"
+demo: "exp_log_derivatives"
+demo_summary: "e^x es su propia derivada; log tiene derivada 1/x."
+prerequisite: "clase 147"
+outputs:
+  - "d(e^x)/dx_numerica"
+  - "e^x"
+  - "es_su_propia_derivada"
+  - "d(ln x)/dx_numerica"
+  - "1/x"
+  - "d(a^x)/dx_con_a=3"
+  - "a^x·ln(a)"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

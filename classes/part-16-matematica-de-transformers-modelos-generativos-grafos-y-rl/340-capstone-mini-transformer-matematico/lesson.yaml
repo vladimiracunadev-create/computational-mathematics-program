@@ -1,0 +1,33 @@
+id: "340"
+title: "Capstone: mini-Transformer matemático"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 20
+hours: 4
+engine: "part16"
+demo: "capstone_mini_transformer"
+demo_summary: "Capstone: mini-Transformer que aprende a copiar el token anterior."
+prerequisite: "clase 339"
+outputs:
+  - "tarea"
+  - "vocabulario"
+  - "d_model"
+  - "longitud_de_secuencia"
+  - "componentes"
+  - "parametros_entrenados"
+  - "ejemplos_train"
+  - "ejemplos_test"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

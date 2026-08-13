@@ -1,0 +1,31 @@
+id: "022"
+title: "Conversión decimal a binario"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 2
+hours: 4
+engine: "part01"
+demo: "decimal_to_binary"
+demo_summary: "Divisiones sucesivas frente a la conversión de la biblioteca."
+prerequisite: "clase 021"
+outputs:
+  - "decimal"
+  - "restos_en_orden_de_calculo"
+  - "binario_manual"
+  - "binario_builtin"
+  - "coinciden"
+  - "reconstruido"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

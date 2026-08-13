@@ -1,0 +1,32 @@
+id: "110"
+title: "Producto matriz-vector"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 10
+hours: 4
+engine: "part05"
+demo: "matrix_vector"
+demo_summary: "Ax como combinación lineal de las columnas de A."
+prerequisite: "clase 109"
+outputs:
+  - "A_shape"
+  - "x"
+  - "Ax"
+  - "combinacion_de_columnas"
+  - "coinciden"
+  - "lectura"
+  - "una_capa_densa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

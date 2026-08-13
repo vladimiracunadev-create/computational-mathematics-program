@@ -1,0 +1,31 @@
+id: "032"
+title: "Cancelación catastrófica"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 12
+hours: 4
+engine: "part01"
+demo: "catastrophic_cancellation"
+demo_summary: "Dos fórmulas algebraicamente iguales con precisión muy distinta."
+prerequisite: "clase 031"
+outputs:
+  - "x"
+  - "formula_ingenua_sqrt(x^2+1)-x"
+  - "formula_estable_1/(sqrt(x^2+1)+x)"
+  - "diferencia"
+  - "error_relativo_de_la_ingenua"
+  - "causa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

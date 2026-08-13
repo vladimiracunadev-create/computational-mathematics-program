@@ -1,0 +1,33 @@
+id: "317"
+title: "Embeddings como espacios vectoriales"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 17
+hours: 4
+engine: "part15"
+demo: "embeddings"
+demo_summary: "Embeddings: geometría del significado y similitud coseno."
+prerequisite: "clase 316"
+outputs:
+  - "dimension"
+  - "vocabulario"
+  - "similitudes_con_'rey'"
+  - "mas_similar_a_rey"
+  - "analogia_rey-hombre+mujer"
+  - "ranking_de_la_analogia"
+  - "one_hot_necesitaria"
+  - "embedding_denso_usa"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

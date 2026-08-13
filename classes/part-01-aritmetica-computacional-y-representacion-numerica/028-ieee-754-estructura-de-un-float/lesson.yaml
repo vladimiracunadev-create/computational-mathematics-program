@@ -1,0 +1,33 @@
+id: "028"
+title: "IEEE 754: estructura de un float"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 8
+hours: 4
+engine: "part01"
+demo: "ieee754_layout"
+demo_summary: "Signo, exponente y mantisa de un float64."
+prerequisite: "clase 027"
+outputs:
+  - "valor"
+  - "bits"
+  - "signo"
+  - "exponente_bruto"
+  - "sesgo"
+  - "exponente_real"
+  - "mantisa_bits"
+  - "reconstruido"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

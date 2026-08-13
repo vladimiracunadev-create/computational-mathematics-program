@@ -1,0 +1,32 @@
+id: "108"
+title: "Span y subespacios"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 8
+hours: 4
+engine: "part05"
+demo: "span_subspaces"
+demo_summary: "El span de dos vectores en ℝ³ es un plano, no todo el espacio."
+prerequisite: "clase 107"
+outputs:
+  - "generadores"
+  - "dimension_del_span"
+  - "es_un_plano"
+  - "vector_fuera_del_span"
+  - "rango_al_añadirlo"
+  - "ahora_genera_R3"
+  - "subespacio_contiene_al_cero"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

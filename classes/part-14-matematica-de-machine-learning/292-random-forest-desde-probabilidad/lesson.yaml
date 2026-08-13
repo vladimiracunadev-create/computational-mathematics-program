@@ -1,0 +1,33 @@
+id: "292"
+title: "Random Forest desde probabilidad"
+part: "14"
+part_title: "Matemática de Machine Learning"
+level: "ml-avanzado"
+index_in_part: 12
+hours: 4
+engine: "part14"
+demo: "random_forest"
+demo_summary: "Bagging: promediar modelos decorrelacionados reduce la varianza."
+prerequisite: "clase 291"
+outputs:
+  - "arboles"
+  - "profundidad"
+  - "accuracy_arbol_unico"
+  - "accuracy_del_bosque"
+  - "muestreo"
+  - "por_que_funciona"
+  - "reduce_varianza_no_sesgo"
+  - "semilla"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

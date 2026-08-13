@@ -1,0 +1,33 @@
+id: "316"
+title: "GRU"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 16
+hours: 4
+engine: "part15"
+demo: "gru"
+demo_summary: "GRU: dos puertas en lugar de tres, menos parámetros."
+prerequisite: "clase 315"
+outputs:
+  - "puertas"
+  - "traza"
+  - "parametros_por_celda"
+  - "parametros_LSTM"
+  - "ahorro_%"
+  - "z=0_conserva_el_estado"
+  - "z=1_lo_reemplaza"
+  - "rendimiento"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

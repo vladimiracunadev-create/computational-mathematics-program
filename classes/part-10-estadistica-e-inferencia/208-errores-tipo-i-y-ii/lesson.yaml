@@ -1,0 +1,32 @@
+id: "208"
+title: "Errores tipo I y II"
+part: "10"
+part_title: "Estadística e inferencia"
+level: "universitario-avanzado"
+index_in_part: 8
+hours: 4
+engine: "part10"
+demo: "type_errors"
+demo_summary: "Errores tipo I y II: el compromiso es inevitable."
+prerequisite: "clase 207"
+outputs:
+  - "alfa_nominal"
+  - "tasa_error_tipo_I_observada"
+  - "efecto_real"
+  - "tasa_error_tipo_II_(beta)"
+  - "potencia_1-beta"
+  - "bajar_alfa_sube_beta"
+  - "solucion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

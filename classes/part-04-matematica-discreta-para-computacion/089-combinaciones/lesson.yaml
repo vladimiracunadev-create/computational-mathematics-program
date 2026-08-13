@@ -1,0 +1,32 @@
+id: "089"
+title: "Combinaciones"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 9
+hours: 4
+engine: "part04"
+demo: "combinations_demo"
+demo_summary: "Combinaciones: el orden no importa."
+prerequisite: "clase 088"
+outputs:
+  - "elementos"
+  - "C(5,3)"
+  - "math.comb"
+  - "simetria_C(5,3)=C(5,2)"
+  - "todas"
+  - "suma_fila_de_pascal"
+  - "2^5"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "347"
+title: "Wasserstein distance"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 7
+hours: 4
+engine: "part17"
+demo: "wasserstein_distance"
+demo_summary: "Wasserstein-1 en 1D: comparar distribuciones sin soporte común."
+prerequisite: "clase 346"
+outputs:
+  - "muestras"
+  - "W1(N(0,1), N(0.5,1))"
+  - "diferencia_de_medias_teorica"
+  - "W1(N(0,1), N(5,1))"
+  - "diferencia_teorica_lejana"
+  - "KL_empirica_cercana"
+  - "KL_empirica_lejana_(soportes_casi_disjuntos)"
+  - "W1_crece_de_forma_proporcional"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

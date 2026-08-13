@@ -1,0 +1,31 @@
+id: "037"
+title: "Precisión arbitraria y Decimal"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 17
+hours: 4
+engine: "part01"
+demo: "arbitrary_precision"
+demo_summary: "Decimal con precisión declarada frente a float."
+prerequisite: "clase 036"
+outputs:
+  - "precision_configurada"
+  - "1/3_decimal"
+  - "1/3_float"
+  - "suma_0.1x3_decimal"
+  - "es_exactamente_0.3"
+  - "coste"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

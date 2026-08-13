@@ -1,0 +1,33 @@
+id: "272"
+title: "Correlación de señales"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 12
+hours: 4
+engine: "part13"
+demo: "cross_correlation"
+demo_summary: "Correlación cruzada: convolución sin invertir el kernel."
+prerequisite: "clase 271"
+outputs:
+  - "patron_buscado"
+  - "señal"
+  - "correlacion"
+  - "posicion_del_pico"
+  - "valor_del_pico"
+  - "coincidencia_exacta_en"
+  - "convolucion_invierte_el_kernel"
+  - "las_CNN_hacen_correlacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

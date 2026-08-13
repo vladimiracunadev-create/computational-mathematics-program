@@ -1,0 +1,33 @@
+id: "358"
+title: "PAC learning"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 18
+hours: 4
+engine: "part17"
+demo: "pac_learning"
+demo_summary: "PAC: cuántas muestras hacen falta para (ε, δ)."
+prerequisite: "clase 357"
+outputs:
+  - "definicion"
+  - "delta"
+  - "muestras_necesarias"
+  - "el_coste_crece_como_1/ε"
+  - "el_coste_crece_como_log(1/δ)"
+  - "dependencia_de_la_complejidad"
+  - "es_una_cota_del_peor_caso"
+  - "limite_practico"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

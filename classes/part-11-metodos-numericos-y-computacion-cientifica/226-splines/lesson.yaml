@@ -1,0 +1,33 @@
+id: "226"
+title: "Splines"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 6
+hours: 4
+engine: "part11"
+demo: "splines"
+demo_summary: "Spline lineal por tramos frente a un polinomio único."
+prerequisite: "clase 225"
+outputs:
+  - "nodos"
+  - "valores"
+  - "spline_en_0.5"
+  - "spline_en_1.5"
+  - "spline_en_2.25"
+  - "pasa_por_todos_los_nodos"
+  - "acotado_entre_min_y_max"
+  - "ventaja_sobre_polinomio_global"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

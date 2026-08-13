@@ -1,0 +1,33 @@
+id: "343"
+title: "MCMC avanzado"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 3
+hours: 4
+engine: "part17"
+demo: "advanced_mcmc"
+demo_summary: "Metropolis-Hastings con diagnóstico de aceptación y autocorrelación."
+prerequisite: "clase 342"
+outputs:
+  - "objetivo"
+  - "iteraciones"
+  - "burn_in"
+  - "resultados"
+  - "aceptacion_optima_1D"
+  - "paso_pequeño"
+  - "paso_grande"
+  - "diagnosticos_obligatorios"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

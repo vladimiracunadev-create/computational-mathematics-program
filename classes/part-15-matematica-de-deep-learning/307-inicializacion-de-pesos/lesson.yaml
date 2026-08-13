@@ -1,0 +1,33 @@
+id: "307"
+title: "Inicialización de pesos"
+part: "15"
+part_title: "Matemática de Deep Learning"
+level: "deep-learning"
+index_in_part: 7
+hours: 4
+engine: "part15"
+demo: "weight_initialization"
+demo_summary: "Xavier y He: controlar la varianza de las activaciones capa a capa."
+prerequisite: "clase 306"
+outputs:
+  - "capas"
+  - "neuronas_por_capa"
+  - "escala_muy_pequeña_0.01_tanh"
+  - "xavier_tanh_(1/√n)"
+  - "he_relu_(√(2/n))"
+  - "escala_muy_grande_1.0_tanh"
+  - "xavier"
+  - "he"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

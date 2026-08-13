@@ -1,0 +1,33 @@
+id: "231"
+title: "Sistemas lineales directos"
+part: "11"
+part_title: "Métodos numéricos y computación científica"
+level: "cientifico"
+index_in_part: 11
+hours: 4
+engine: "part11"
+demo: "direct_linear_solvers"
+demo_summary: "Solvers directos: LU y sustitución, con conteo de operaciones."
+prerequisite: "clase 230"
+outputs:
+  - "A"
+  - "b"
+  - "solucion"
+  - "residuo"
+  - "intercambios"
+  - "L"
+  - "U"
+  - "determinante"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

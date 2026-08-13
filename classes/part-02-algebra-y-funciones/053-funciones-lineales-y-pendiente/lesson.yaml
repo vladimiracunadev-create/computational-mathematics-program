@@ -1,0 +1,31 @@
+id: "053"
+title: "Funciones lineales y pendiente"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 13
+hours: 4
+engine: "part02"
+demo: "linear_function"
+demo_summary: "Pendiente como razón de cambio constante."
+prerequisite: "clase 052"
+outputs:
+  - "puntos"
+  - "pendiente"
+  - "intercepto"
+  - "ecuacion"
+  - "predice_tercer_punto"
+  - "es_lineal"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

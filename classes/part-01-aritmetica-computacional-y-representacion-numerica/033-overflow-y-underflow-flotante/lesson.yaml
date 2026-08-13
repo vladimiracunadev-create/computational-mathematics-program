@@ -1,0 +1,32 @@
+id: "033"
+title: "Overflow y underflow flotante"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 13
+hours: 4
+engine: "part01"
+demo: "float_overflow_underflow"
+demo_summary: "Límites del float64 y el paso por subnormales."
+prerequisite: "clase 032"
+outputs:
+  - "max_float"
+  - "max*2_da_inf"
+  - "min_normal"
+  - "min_subnormal"
+  - "min_subnormal/2"
+  - "underflow_a_cero"
+  - "inf-inf_es_nan"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

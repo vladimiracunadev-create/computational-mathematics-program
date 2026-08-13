@@ -1,0 +1,33 @@
+id: "025"
+title: "Enteros con signo y complemento a dos"
+part: "01"
+part_title: "Aritmética computacional y representación numérica"
+level: "basico-computacional"
+index_in_part: 5
+hours: 4
+engine: "part01"
+demo: "twos_complement"
+demo_summary: "Representación de negativos en 8 bits."
+prerequisite: "clase 024"
+outputs:
+  - "ancho_bits"
+  - "5"
+  - "-5"
+  - "suma_5_y_-5"
+  - "decodifica_11111011"
+  - "minimo_representable"
+  - "maximo_representable"
+  - "asimetria"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

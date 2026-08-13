@@ -1,0 +1,28 @@
+id: "049"
+title: "Fórmula cuadrática y discriminante"
+part: "02"
+part_title: "Álgebra y funciones"
+level: "basico"
+index_in_part: 9
+hours: 4
+engine: "part02"
+demo: "discriminant"
+demo_summary: "El discriminante clasifica las raíces antes de calcularlas."
+prerequisite: "clase 048"
+outputs:
+  - "dos_reales"
+  - "una_doble"
+  - "complejas"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

@@ -1,0 +1,33 @@
+id: "329"
+title: "Modelado autoregresivo"
+part: "16"
+part_title: "Matemática de Transformers, modelos generativos, grafos y RL"
+level: "experto"
+index_in_part: 9
+hours: 4
+engine: "part16"
+demo: "autoregressive_modeling"
+demo_summary: "Modelado autoregresivo: la regla de la cadena de la probabilidad."
+prerequisite: "clase 328"
+outputs:
+  - "secuencia"
+  - "descomposicion"
+  - "detalle"
+  - "probabilidad_conjunta"
+  - "log_probabilidad"
+  - "perplejidad"
+  - "por_que_en_log"
+  - "entrenamiento"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

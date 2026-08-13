@@ -1,0 +1,32 @@
+id: "350"
+title: "Information geometry"
+part: "17"
+part_title: "Frontera matemática para IA e investigación"
+level: "frontera-investigacion"
+index_in_part: 10
+hours: 4
+engine: "part17"
+demo: "information_geometry"
+demo_summary: "Información de Fisher: la métrica natural del espacio de parámetros."
+prerequisite: "clase 349"
+outputs:
+  - "informacion_de_Fisher_Bernoulli"
+  - "la_informacion_es_maxima_en_los_extremos"
+  - "informacion_de_Fisher_Normal"
+  - "KL_localmente_es_una_metrica"
+  - "cota_de_Cramer_Rao"
+  - "gradiente_natural"
+  - "conexion_con_ML"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

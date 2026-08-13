@@ -1,0 +1,33 @@
+id: "164"
+title: "Gradiente"
+part: "08"
+part_title: "Cálculo multivariable, matricial y autodiferenciación"
+level: "universitario-avanzado"
+index_in_part: 4
+hours: 4
+engine: "part08"
+demo: "gradient"
+demo_summary: "El gradiente apunta al mayor ascenso."
+prerequisite: "clase 163"
+outputs:
+  - "punto"
+  - "gradiente"
+  - "norma"
+  - "direccion_unitaria"
+  - "f(p)"
+  - "f(p + h·∇f)"
+  - "f(p - h·∇f)"
+  - "el_gradiente_sube"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

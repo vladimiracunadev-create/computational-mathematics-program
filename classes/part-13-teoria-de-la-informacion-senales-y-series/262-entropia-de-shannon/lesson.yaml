@@ -1,0 +1,31 @@
+id: "262"
+title: "Entropía de Shannon"
+part: "13"
+part_title: "Teoría de la información, señales y series"
+level: "avanzado"
+index_in_part: 2
+hours: 4
+engine: "part13"
+demo: "shannon_entropy"
+demo_summary: "La entropía es la sorpresa esperada y el límite de compresión."
+prerequisite: "clase 261"
+outputs:
+  - "entropias_bits"
+  - "maxima_para_4_simbolos"
+  - "la_uniforme_maximiza"
+  - "la_determinista_es_0"
+  - "entropia_en_nats_uniforme"
+  - "interpretacion"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

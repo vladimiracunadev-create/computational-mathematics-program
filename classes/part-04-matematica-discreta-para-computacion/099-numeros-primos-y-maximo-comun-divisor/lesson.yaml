@@ -1,0 +1,33 @@
+id: "099"
+title: "Números primos y máximo común divisor"
+part: "04"
+part_title: "Matemática discreta para computación"
+level: "intermedio"
+index_in_part: 19
+hours: 4
+engine: "part04"
+demo: "primes_gcd"
+demo_summary: "Criba, MCD por Euclides y su relación con el mínimo común múltiplo."
+prerequisite: "clase 098"
+outputs:
+  - "primos_hasta_50"
+  - "cantidad"
+  - "a"
+  - "b"
+  - "mcd"
+  - "mcm"
+  - "mcd*mcm=a*b"
+  - "factorizacion_de_252"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb

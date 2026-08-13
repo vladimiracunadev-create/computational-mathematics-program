@@ -1,0 +1,33 @@
+id: "119"
+title: "Proyecciones ortogonales"
+part: "05"
+part_title: "Álgebra lineal I: vectores y matrices"
+level: "intermedio"
+index_in_part: 19
+hours: 4
+engine: "part05"
+demo: "orthogonal_projection"
+demo_summary: "Proyección sobre un subespacio y descomposición ortogonal."
+prerequisite: "clase 118"
+outputs:
+  - "columnas_del_subespacio"
+  - "b"
+  - "coeficientes"
+  - "proyeccion"
+  - "residuo"
+  - "residuo_ortogonal"
+  - "norma_del_residuo"
+  - "es_la_mejor_aproximacion_en_L2"
+artifacts:
+  - README.md
+  - intuition.md
+  - theory.md
+  - derivation.md
+  - exercises.md
+  - assessment.md
+  - where-is-this-used.md
+  - lesson.yaml
+  - lab.py
+  - notebook.ipynb
+  - notebook_student.ipynb
+  - notebook_solution.ipynb
