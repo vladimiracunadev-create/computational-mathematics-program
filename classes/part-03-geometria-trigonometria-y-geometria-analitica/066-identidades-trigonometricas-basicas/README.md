@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**La identidad pitagórica es el teorema de Pitágoras sobre el círculo unitario; de ella se derivan las demás.**
 
-Esta clase concreta ese objetivo sobre **Identidades trigonométricas básicas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `trig_identities`.
 4. Interpretar las 5 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar normalizar antes de comparar direcciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+sin²θ + cos²θ = 1
+sin(2θ) = 2 sin θ cos θ
+cos(2θ) = cos²θ − sin²θ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> El radián no es una unidad decorativa: es la que hace que d(sin x)/dx = cos x.
+La identidad fundamental `sin²θ + cos²θ = 1` no es una fórmula que memorizar: es el
+teorema de Pitágoras aplicado al triángulo que forma un punto del círculo unitario con
+los ejes. La hipotenusa es el radio, que vale 1, y los catetos son el coseno y el seno.
+Verla así hace innecesario recordarla.
+
+De ella se derivan las demás mediante las fórmulas de suma de ángulos. La del ángulo
+doble, `sin(2θ) = 2 sin θ cos θ`, es el caso particular de `sin(a+b)` con a = b, y su
+utilidad es de eficiencia: permite calcular una función de 2θ sin evaluar la función
+trigonométrica de nuevo.
+
+Las identidades cumplen además un papel de **verificación**: comprobar que
+`sin²θ + cos²θ` da 1 en varios ángulos es una prueba barata de que una implementación
+trigonométrica funciona. En punto flotante el resultado no será exactamente 1, y esa
+desviación —del orden del epsilon de máquina— es una medida de la calidad de la
+biblioteca.
+
+En procesamiento de señales estas identidades permiten reescribir productos de
+senoidales como sumas, que es lo que hace la modulación y lo que subyace al análisis de
+Fourier de la parte 13. Y en el positional encoding de los Transformers, la fórmula de
+suma de ángulos es la que garantiza que un desplazamiento de posición sea una
+transformación lineal de la codificación.
+
+## 🧮 Ejemplo trabajado
+
+Verificar las identidades en cinco ángulos.
+
+```text
+θ       sin²+cos²    sin(2θ)      2·sin·cos    coinciden
+0°      1.000000     0.000000     0.000000     ✓
+30°     1.000000     0.866025     0.866025     ✓
+45°     1.000000     1.000000     1.000000     ✓
+60°     1.000000     0.866025     0.866025     ✓
+90°     1.000000     0.000000     0.000000     ✓
+
+Nota numérica: sin²+cos² da 1.0 con error < 1e−16
+(es una prueba de calidad de la implementación)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,16 @@ compmath run 066
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Memorizar las identidades en lugar de derivarlas del círculo unitario.
+2. Comparar identidades con == en punto flotante en lugar de con tolerancia.
+3. Confundir sin²θ con sin(θ²).
+
+## 🚀 Dónde se usa de verdad
+
+Simplificación de expresiones trigonométricas, modulación de señales, verificación de
+bibliotecas matemáticas y la construcción del positional encoding.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Gelfand, I. M.; Saul, M. *Trigonometry*. Birkhäuser, 2001](https://link.springer.com/book/10.1007/978-1-4612-0149-8)
+- [Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017 (sección 3.5)](https://arxiv.org/abs/1706.03762)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

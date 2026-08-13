@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El área de un polígono transformado es la original multiplicada por el valor absoluto del determinante.**
 
-Esta clase concreta ese objetivo sobre **Capstone: motor geométrico 2D**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_geometry_engine`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar rotación y traslación en el orden equivocado.
+
+## 🧩 Fórmulas de la clase
+
+```text
+fórmula del cordón: A = ½|Σ(xᵢyᵢ₊₁ − xᵢ₊₁yᵢ)|
+A' = |det M| · A
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,48 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Las coordenadas homogéneas convierten la traslación en multiplicación.
+El capstone reúne las tres ideas centrales de la parte: una matriz es una
+transformación, componerlas es multiplicarlas, y el determinante mide cómo cambian las
+áreas. Se construye un motor mínimo que aplica una transformación compuesta a un
+polígono y comprueba la relación entre áreas.
+
+El área se calcula con la **fórmula del cordón** (o de Gauss), que suma productos
+cruzados de vértices consecutivos. Es un resultado notable: el área de un polígono
+arbitrario se obtiene recorriendo su frontera, sin necesidad de triangularlo. El signo
+de la suma indica además el sentido del recorrido, información que se usa para detectar
+orientación en geometría computacional.
+
+La verificación central es que `área_transformada = |det M| · área_original`. Que se
+cumpla para un cuadrado rotado y escalado no es sorprendente; que se cumpla para
+**cualquier** polígono es el contenido geométrico del determinante, y comprobarlo
+numéricamente cierra la parte con una relación que se usará en integración múltiple y en
+transformación de densidades.
+
+Un motor así, con unas pocas decenas de líneas, es el núcleo de cualquier sistema de
+gráficos 2D. Lo que añaden las bibliotecas reales es rendimiento, antialiasing y
+gestión de recursos; la matemática es exactamente esta.
+
+## 🧮 Ejemplo trabajado
+
+Cuadrado unitario rotado 45° y escalado ×2.
+
+```text
+polígono original: (0,0), (1,0), (1,1), (0,1)
+área (cordón): 1.0
+
+M = R(45°) · S(2)
+  = [[1.414, −1.414], [1.414, 1.414]]
+
+polígono transformado:
+  (0,0), (1.414, 1.414), (0, 2.828), (−1.414, 1.414)
+
+área transformada: 4.0
+det M = 1.414² + 1.414² = 4.0
+
+Verificación: 1.0 × |4.0| = 4.0     ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 080
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Recorrer los vértices del polígono en orden no consecutivo al aplicar la fórmula del cordón.
+2. Olvidar el valor absoluto y obtener áreas negativas.
+3. Aplicar las transformaciones en el orden equivocado al componerlas.
+
+## 🚀 Dónde se usa de verdad
+
+Motores gráficos 2D, cálculo de áreas en SIG, detección de orientación de polígonos y
+cambio de variable en integrales.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Shoelace formula — Wolfram MathWorld](https://mathworld.wolfram.com/PolygonArea.html)
+- [de Berg, M. et al. *Computational Geometry*, 3ª ed., Springer, 2008](https://link.springer.com/book/10.1007/978-3-540-77974-2)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

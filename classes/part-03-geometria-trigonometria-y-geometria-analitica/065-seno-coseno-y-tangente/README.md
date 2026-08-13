@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**Seno, coseno y tangente son razones que dependen solo del ángulo, por semejanza de triángulos.**
 
-Esta clase concreta ese objetivo sobre **Seno, coseno y tangente**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `trig_ratios`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar rotación y traslación en el orden equivocado.
+
+## 🧩 Fórmulas de la clase
+
+```text
+sin θ = opuesto/hipotenusa,  cos θ = adyacente/hipotenusa
+tan θ = sin θ / cos θ
+atan2(y, x) devuelve el ángulo en el cuadrante correcto
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,49 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Las coordenadas homogéneas convierten la traslación en multiplicación.
+Las razones trigonométricas están bien definidas gracias a la semejanza (clase 063):
+todos los triángulos rectángulos con el mismo ángulo agudo son semejantes, así que la
+razón entre dos de sus lados no depende del tamaño del triángulo, solo del ángulo. Sin
+ese hecho, «el seno de 30°» no significaría nada.
+
+La tangente es el cociente de las otras dos, y por eso no está definida donde el coseno
+se anula: en 90° y 270° la tangente diverge. Esa singularidad es real y hay que
+manejarla; en implementaciones se evita la tangente siempre que se pueda, usando
+directamente seno y coseno.
+
+Para recuperar el ángulo a partir de las coordenadas, la función correcta es **atan2**,
+no `atan`. `atan(y/x)` pierde la información del cuadrante —el cociente es el mismo para
+(1,1) y (−1,−1)— y además falla si x es cero. `atan2(y, x)` recibe los dos argumentos
+por separado, devuelve el ángulo en el rango (−π, π] y maneja los cuatro cuadrantes.
+Usar `atan` donde correspondía `atan2` es un error clásico en robótica y gráficos.
+
+El programa usa estas razones en la clase 076 (coordenadas polares), en la 323
+(positional encoding, construido con senos y cosenos de frecuencias distintas) y en
+cualquier cálculo de ángulo entre vectores.
+
+## 🧮 Ejemplo trabajado
+
+Triángulo con catetos 3 y 4.
+
+```text
+opuesto = 3,  adyacente = 4
+hipotenusa = √(9+16) = 5
+
+θ = atan2(3, 4) = 0.6435 rad = 36.87°
+
+sin θ = 3/5 = 0.6
+cos θ = 4/5 = 0.8
+tan θ = 3/4 = 0.75
+
+Comprobación: tan θ = sin θ / cos θ = 0.6/0.8 = 0.75    ✓
+
+Por qué atan2 y no atan:
+  atan(3/4)   = 0.6435   (cuadrante I)
+  atan(-3/-4) = 0.6435   ← ¡mismo valor, cuadrante III!
+  atan2(-3,-4) = -2.498  ✓ correcto
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +112,16 @@ compmath run 065
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Usar atan(y/x) en lugar de atan2(y, x) y perder el cuadrante.
+2. Evaluar la tangente cerca de 90° sin controlar la singularidad.
+3. Confundir cateto opuesto con adyacente al identificar el ángulo.
+
+## 🚀 Dónde se usa de verdad
+
+Cálculo de ángulos en robótica y gráficos, conversión a coordenadas polares, positional
+encoding y análisis de fase en señales.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Python: `math.atan2`](https://docs.python.org/3/library/math.html#math.atan2)
+- [Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*, 3ª ed., 2011](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

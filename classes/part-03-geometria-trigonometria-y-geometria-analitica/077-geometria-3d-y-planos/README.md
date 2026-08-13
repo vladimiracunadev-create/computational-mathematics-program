@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El producto cruz da un vector ortogonal a dos dados, y su norma es el área del paralelogramo que forman.**
 
-Esta clase concreta ese objetivo sobre **Geometría 3D y planos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `planes_3d`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar rotación y traslación en el orden equivocado.
+
+## 🧩 Fórmulas de la clase
+
+```text
+a × b = (a₂b₃−a₃b₂, a₃b₁−a₁b₃, a₁b₂−a₂b₁)
+‖a × b‖ = ‖a‖‖b‖ sin θ = área del paralelogramo
+plano: n·(x − p₀) = 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Toda rotación 2D es una matriz ortogonal de determinante 1.
+En tres dimensiones aparece una operación sin análogo en 2D: el producto cruz, que a dos
+vectores les asocia un tercero perpendicular a ambos. Su norma es el área del
+paralelogramo que forman, y su sentido lo da la regla de la mano derecha. Es una
+operación específica de ℝ³ —no se generaliza a dimensión arbitraria sin cambiar de
+formalismo—, y por eso es tan característica de la geometría espacial.
+
+Un plano queda determinado por un punto y un **vector normal**: la ecuación
+`n·(x − p₀) = 0` dice que el vector que va de `p₀` a `x` es perpendicular a `n`. Como el
+producto cruz de dos vectores del plano da su normal, dos direcciones bastan para
+definir un plano.
+
+La distancia de un punto a un plano se calcula con la misma estructura que la distancia
+punto-recta de la clase 070: producto punto con la normal, dividido por la norma de la
+normal. Cambia la dimensión, no la idea, y esa es la ventaja de haber entendido la
+versión 2D correctamente.
+
+En gráficos por computador las normales son omnipresentes: determinan la iluminación
+(el brillo depende del producto punto entre la normal y la dirección de la luz), la
+orientación de una cara y si un polígono mira hacia la cámara o hacia el lado opuesto
+(*backface culling*).
+
+## 🧮 Ejemplo trabajado
+
+Normal al plano z = 0 y distancia de un punto.
+
+```text
+a = (1,0,0),  b = (0,1,0)
+
+a × b = (0·0 − 0·1, 0·0 − 1·0, 1·1 − 0·0) = (0, 0, 1)
+
+Verificaciones:
+  (a×b)·a = 0        ✓ ortogonal a a
+  (a×b)·b = 0        ✓ ortogonal a b
+  ‖a×b‖ = 1          = área del cuadrado unitario ✓
+
+Distancia de (2,3,5) al plano z = 0:
+  |(0,0,1)·(2,3,5)| / ‖(0,0,1)‖ = 5/1 = 5
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 077
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Suponer que el producto cruz es conmutativo: a×b = −(b×a).
+2. Usar el producto cruz en dimensiones distintas de 3.
+3. Olvidar normalizar la normal antes de usarla en cálculos de iluminación.
+
+## 🚀 Dónde se usa de verdad
+
+Iluminación y sombreado, orientación de superficies, detección de caras traseras,
+cinemática de sólidos rígidos y momento de fuerzas en física.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*, 3ª ed., 2011](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

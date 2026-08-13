@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**Una matriz de rotación es ortogonal y de determinante 1: preserva normas, ángulos y orientación.**
 
-Esta clase concreta ese objetivo sobre **Rotaciones 2D**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `rotation_2d`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar rotación y traslación en el orden equivocado.
+
+## 🧩 Fórmulas de la clase
+
+```text
+R(θ) = [[cos θ, −sin θ], [sin θ, cos θ]]
+RᵀR = I,  det R = 1
+R(α)·R(β) = R(α+β)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Componer transformaciones es multiplicar matrices, y el orden importa.
+La matriz de rotación se construye viendo a dónde van los vectores de la base: `(1,0)`
+va a `(cos θ, sin θ)` y `(0,1)` va a `(−sin θ, cos θ)`. Esas dos imágenes son las
+columnas de la matriz. Este método —las columnas de una matriz son las imágenes de la
+base— es general y es la forma correcta de leer cualquier matriz de transformación
+(clase 123).
+
+Dos propiedades la caracterizan. Es **ortogonal**, `RᵀR = I`, lo que significa que su
+inversa es su transpuesta: deshacer una rotación es transponer, sin necesidad de
+invertir. Y su **determinante es 1**, lo que indica que preserva áreas y orientación
+(una reflexión tendría determinante −1).
+
+La consecuencia numérica es importante: las transformaciones ortogonales **no amplifican
+el error**. Su número de condición es 1, el mejor posible. Por eso los algoritmos
+numéricamente estables se construyen con rotaciones y reflexiones (Givens, Householder)
+en lugar de con transformaciones generales, y por eso la factorización QR es preferible
+a las ecuaciones normales (clase 234).
+
+La composición de rotaciones suma ángulos, `R(α)R(β) = R(α+β)`, lo que se demuestra con
+las fórmulas de suma de la clase 066. En 2D las rotaciones conmutan; en 3D **no**, y esa
+es una de las diferencias más importantes entre ambos casos.
+
+## 🧮 Ejemplo trabajado
+
+Rotar (1,0) noventa grados.
+
+```text
+R(90°) = [[cos 90, −sin 90], [sin 90, cos 90]]
+       = [[0, −1], [1, 0]]
+
+R·(1,0) = (0, 1)          ✓ el eje x va al eje y
+
+det R = 0·0 − (−1)·1 = 1            ✓ preserva área y orientación
+RᵀR   = [[1,0],[0,1]] = I           ✓ ortogonal
+
+‖(1,0)‖ = 1,  ‖R(1,0)‖ = 1          ✓ preserva la norma
+
+Cuatro rotaciones de 90° = identidad
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 074
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Colocar el signo negativo en la posición equivocada de la matriz.
+2. Invertir una matriz de rotación en lugar de transponerla.
+3. Suponer que las rotaciones en 3D conmutan.
+
+## 🚀 Dónde se usa de verdad
+
+Gráficos, robótica, aumento de datos por rotación, factorizaciones QR estables y
+transformaciones ortogonales en general.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*, 3ª ed., 2011](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

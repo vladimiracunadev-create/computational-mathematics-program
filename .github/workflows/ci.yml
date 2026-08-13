@@ -95,12 +95,17 @@ jobs:
           cache: pip
       - name: Instalar el paquete y el motor de PDF
         run: python -m pip install -e ".[manual]"
-      - name: Construir y validar el manual completo
-        run: python scripts/build_manual.py --check
+      - name: Construir el manual completo (HTML y PDF)
+        run: python scripts/build_manual.py
       - name: Generar el sitio
         run: python scripts/generate_site.py
       - name: Validar el artefacto
         run: python scripts/validate_site.py
+      - name: El manual llega al sitio con sus dos formatos
+        run: |
+          test -s site/downloads/computational-mathematics-program-manual.html
+          test -s site/downloads/computational-mathematics-program-manual.pdf
+          grep -q "Descargar PDF" site/index.html
 
   lint:
     name: Lint

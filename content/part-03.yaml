@@ -1,0 +1,1184 @@
+part: "03"
+titulo: "Geometría, trigonometría y geometría analítica"
+
+resumen_extendido: |
+  Descartes hizo en 1637 el movimiento que define esta parte: identificar un punto del
+  plano con un par de números. A partir de ahí, toda pregunta geométrica se convierte en
+  una pregunta algebraica, y toda respuesta algebraica tiene lectura geométrica. Esa doble
+  vía es la que permite que un ordenador —que solo sabe operar con números— haga gráficos,
+  robótica y visión artificial.
+
+  Las clases 061 a 067 construyen la trigonometría desde la geometría del triángulo y del
+  círculo unitario. El punto que conviene no perder es por qué el **radián** es la unidad
+  correcta: es la única en la que la derivada del seno es el coseno, sin factores de
+  conversión. Trabajar en grados obliga a arrastrar un π/180 en cada derivada, y de ahí
+  salen errores que no producen excepción, solo resultados escalados.
+
+  Las clases 068 a 071 son geometría analítica clásica: coordenadas, rectas, distancias y
+  cónicas. La distancia punto-recta de la clase 070 es la misma fórmula que define el
+  margen de una SVM (clase 289), y la ecuación general `Ax + By + C = 0` es exactamente
+  `wᵀx + b = 0`, la frontera de decisión de cualquier clasificador lineal.
+
+  Las clases 072 a 078 son el corazón computacional: vectores, transformaciones, matrices
+  de transformación, coordenadas polares, planos y proyección. Aquí aparece por primera vez
+  una **matriz como transformación** —no como tabla— y aparecen dos hechos que la parte 05
+  formalizará: componer transformaciones es multiplicar matrices, y el orden importa.
+
+  Las coordenadas homogéneas de la clase 073 son un truco brillante y poco intuitivo:
+  añadiendo una dimensión, la traslación —que no es lineal— se convierte en una
+  multiplicación de matrices. Es la razón por la que las GPU pueden aplicar toda la cadena
+  de transformaciones de un vértice con un único producto matricial.
+
+  El cierre (079 y 080) monta el pipeline completo: modelo → mundo → cámara → pantalla, el
+  mismo que ejecuta cualquier motor de videojuego y cualquier sistema de visión. Y el
+  capstone comprueba una relación que resume la parte: el área de un polígono transformado
+  es el área original multiplicada por el valor absoluto del determinante.
+
+mapa: |
+  flowchart TD
+      A["061-064<br/>Geometría métrica<br/>distancia · ángulo · semejanza · Pitágoras"] --> B["065-067<br/>Trigonometría<br/>razones · identidades · círculo unitario"]
+      A --> C["068-071<br/>Geometría analítica<br/>coordenadas · rectas · cónicas"]
+      B --> D["072-076<br/>Vectores y transformaciones<br/>rotación · escala · matrices · polares"]
+      C --> D
+      D --> E["077-078<br/>Tres dimensiones<br/>planos · proyección · perspectiva"]
+      E --> F["079-080<br/>Pipeline y capstone<br/>modelo → mundo → cámara → pantalla"]
+      D ==> G["Parte 05<br/>Álgebra lineal:<br/>la matriz como transformación"]
+      B -.-> H["Positional encoding<br/>Parte 16"]
+      D -.-> I["Similitud coseno<br/>Parte 05"]
+      C -.-> J["Frontera de decisión wᵀx+b=0<br/>Parte 14"]
+
+glosario:
+  - termino: "Distancia euclídea"
+    definicion: "Norma L2 de la diferencia de dos puntos. Es la distancia 'en línea recta'."
+    clase: "061"
+  - termino: "Radián"
+    definicion: "Ángulo cuyo arco mide igual que el radio. Es la unidad en la que d(sin x)/dx = cos x sin factores extra."
+    clase: "062"
+  - termino: "Semejanza"
+    definicion: "Relación entre figuras con los mismos ángulos y lados proporcionales. Las áreas escalan con el cuadrado del factor."
+    clase: "063"
+  - termino: "Terna pitagórica"
+    definicion: "Tres enteros que cumplen a² + b² = c². Se generan con a = m²−n², b = 2mn, c = m²+n²."
+    clase: "064"
+  - termino: "atan2"
+    definicion: "Arcotangente de dos argumentos que devuelve el ángulo correcto en los cuatro cuadrantes."
+    clase: "065"
+  - termino: "Identidad pitagórica"
+    definicion: "sin²θ + cos²θ = 1. Es el teorema de Pitágoras sobre el círculo unitario."
+    clase: "066"
+  - termino: "Círculo unitario"
+    definicion: "Circunferencia de radio 1 centrada en el origen. Define seno y coseno para cualquier ángulo real."
+    clase: "067"
+  - termino: "Cuadrante"
+    definicion: "Cada una de las cuatro regiones en que los ejes dividen el plano, numeradas en sentido antihorario."
+    clase: "068"
+  - termino: "Forma general de la recta"
+    definicion: "Ax + By + C = 0. Es la misma expresión que la frontera de decisión wᵀx + b = 0."
+    clase: "069"
+  - termino: "Pie de perpendicular"
+    definicion: "Proyección ortogonal de un punto sobre una recta; el punto de la recta más cercano a él."
+    clase: "070"
+  - termino: "Excentricidad"
+    definicion: "Cociente c/a que clasifica una cónica: 0 circunferencia, <1 elipse, 1 parábola, >1 hipérbola."
+    clase: "071"
+  - termino: "Vector unitario"
+    definicion: "Vector de norma 1. Codifica dirección sin magnitud."
+    clase: "072"
+  - termino: "Coordenadas homogéneas"
+    definicion: "Representación con una dimensión extra que convierte la traslación en multiplicación de matrices."
+    clase: "073"
+  - termino: "Matriz de rotación"
+    definicion: "Matriz ortogonal de determinante 1 que preserva normas y ángulos."
+    clase: "074"
+  - termino: "Determinante como factor de área"
+    definicion: "El valor absoluto del determinante es el factor por el que una transformación multiplica las áreas."
+    clase: "075"
+  - termino: "Coordenadas polares"
+    definicion: "Representación (r, θ) de un punto por su distancia al origen y su ángulo."
+    clase: "076"
+  - termino: "Producto cruz"
+    definicion: "Vector ortogonal a dos dados, cuya norma es el área del paralelogramo que forman."
+    clase: "077"
+  - termino: "Proyección en perspectiva"
+    definicion: "División por la profundidad que hace que los objetos lejanos se vean más pequeños."
+    clase: "078"
+
+clases:
+  "061":
+    concepto: "La distancia euclídea es una de varias métricas posibles; cuál se elige cambia qué está cerca."
+    formulas:
+      - "L2: d(p,q) = √Σ(pᵢ−qᵢ)²"
+      - "L1: d(p,q) = Σ|pᵢ−qᵢ|"
+      - "L∞: d(p,q) = máx|pᵢ−qᵢ|"
+    desarrollo: |
+      Una distancia no es «la» distancia: es cualquier función que cumpla tres condiciones
+      —no negatividad con `d(p,q)=0` solo si `p=q`, simetría y desigualdad triangular—. Bajo
+      esa definición, la euclídea es una entre muchas, y elegir una u otra cambia qué puntos
+      se consideran cercanos.
+
+      Las tres más usadas tienen interpretación directa. La **euclídea (L2)** es la línea
+      recta: la que mediría una regla. La **Manhattan (L1)** es la distancia por calles en
+      cuadrícula, y su nombre viene de ahí. La **Chebyshev (L∞)** es el máximo de las
+      diferencias por coordenada: el movimiento del rey en ajedrez.
+
+      Siempre se cumple `L∞ ≤ L2 ≤ L1`, hecho que conviene comprobar numéricamente porque da
+      una intuición útil: L1 penaliza más el total de desviaciones, L∞ solo mira la peor. Esa
+      diferencia reaparece en la parte 14 como la diferencia entre regularización Lasso (L1)
+      y Ridge (L2), y en la 15 entre pérdida MAE y MSE.
+
+      En alta dimensión la intuición euclídea falla. Todas las distancias entre puntos
+      aleatorios se concentran alrededor de un valor común, y la noción de «vecino más
+      cercano» pierde significado. Es la maldición de la dimensionalidad, y es la razón por
+      la que en embeddings se usa similitud coseno en lugar de distancia euclídea.
+    ejemplo: |
+      Tres distancias entre p = (1,2) y q = (4,6).
+
+      ```text
+      diferencias: (3, 4)
+
+      L2 (euclídea):  √(9 + 16) = √25 = 5.0
+      L1 (Manhattan): |3| + |4|       = 7.0
+      L∞ (Chebyshev): máx(3, 4)       = 4.0
+
+      Orden:  L∞ (4) ≤ L2 (5) ≤ L1 (7)      ✓
+
+      Punto medio: ((1+4)/2, (2+6)/2) = (2.5, 4.0)
+      ```
+
+      El triángulo (3,4,5) no es casual: es la terna pitagórica más simple, tema de la
+      clase 064.
+    errores:
+      - "Suponer que «distancia» siempre significa euclídea."
+      - "Comparar distancias entre variables de escalas distintas sin estandarizar."
+      - "Confiar en la intuición euclídea de 2D o 3D al trabajar en dimensión 768."
+    aplicacion: |
+      k-NN y k-means (parte 14), detección de anomalías, búsqueda de vecinos en embeddings y
+      elección de norma en regularización.
+    referencias:
+      - "[Aggarwal, Hinneburg & Keim. *On the Surprising Behavior of Distance Metrics in High Dimensional Space*. ICDT, 2001](https://bib.dbvis.de/uploadedFiles/155.pdf)"
+      - "[Python: `math.dist`](https://docs.python.org/3/library/math.html#math.dist)"
+
+  "062":
+    concepto: "El radián es la unidad natural del ángulo: en ella, la derivada del seno es el coseno sin factores de conversión."
+    formulas:
+      - "θ(rad) = θ(grados) · π/180"
+      - "vuelta completa = 2π rad = 360°"
+      - "d(sin x)/dx = cos x   solo si x está en radianes"
+    desarrollo: |
+      Un radián es el ángulo cuyo arco mide lo mismo que el radio. Esa definición hace que la
+      longitud de arco sea simplemente `s = rθ`, sin constantes, y es el primer indicio de
+      por qué el radián es «natural»: elimina factores arbitrarios.
+
+      El motivo profundo aparece en cálculo. La derivada de `sin x` es `cos x` **únicamente**
+      si x está en radianes; en grados, la derivada es `(π/180)·cos x`. Ese factor
+      contaminaría cada derivada, cada serie de Taylor y cada ecuación diferencial. Por eso
+      todas las bibliotecas matemáticas trabajan internamente en radianes, y `math.sin(90)`
+      no devuelve 1 sino el seno de 90 radianes.
+
+      El error de unidad angular es de los más frecuentes y de los más silenciosos: el
+      resultado no lanza excepción, simplemente es incorrecto por un factor. La defensa es la
+      misma que la clase 012 propuso: declarar la unidad en el nombre de la variable
+      (`angulo_rad`, `angulo_deg`) y convertir explícitamente en las fronteras.
+
+      La comprobación numérica que hace el laboratorio es directa: calcular la derivada de
+      `sin` por diferencias finitas en un ángulo dado en radianes y verificar que coincide con
+      el coseno de ese ángulo. Si se hiciera en grados, la discrepancia sería de un factor
+      57.3.
+    ejemplo: |
+      Verificar que d(sin)/dx = cos solo en radianes.
+
+      ```text
+      30° = 30 · π/180 = 0.5236 rad = π/6
+
+      Derivada numérica en x = 0.5236 rad:
+        (sin(x+h) − sin(x−h)) / 2h   con h = 1e−7
+        = 0.8660254
+
+      cos(0.5236) = 0.8660254                      ✓ coinciden
+
+      Si el ángulo se pasara en grados (x = 30):
+        d(sin)/dx en grados = (π/180)·cos(30°) = 0.01511
+        factor de discrepancia: 180/π = 57.3
+      ```
+    errores:
+      - "Pasar grados a una función trigonométrica que espera radianes."
+      - "Convertir con 180/π donde correspondía π/180."
+      - "No declarar la unidad angular en el nombre de la variable."
+    aplicacion: |
+      Toda la trigonometría computacional, rotaciones en gráficos y robótica, positional
+      encoding de los Transformers (clase 323) y análisis de Fourier (parte 13).
+    referencias:
+      - "[Python: `math.radians` y `math.degrees`](https://docs.python.org/3/library/math.html#math.radians)"
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 15](https://www.mathpop.com/calculus)"
+
+  "063":
+    concepto: "En figuras semejantes los ángulos se conservan, las longitudes escalan con k y las áreas con k²."
+    formulas:
+      - "longitudes: L' = k·L"
+      - "áreas: A' = k²·A"
+      - "volúmenes: V' = k³·V"
+    desarrollo: |
+      Dos figuras son semejantes si tienen los mismos ángulos y sus lados son proporcionales.
+      La consecuencia que sorprende es la ley de escalado: al multiplicar las longitudes por
+      k, las áreas se multiplican por k² y los volúmenes por k³. Duplicar el tamaño de una
+      figura cuadruplica su área y octuplica su volumen.
+
+      Esta ley explica fenómenos aparentemente inconexos. Por qué los animales grandes tienen
+      extremidades proporcionalmente más gruesas (el peso crece con el volumen, la resistencia
+      del hueso con la sección); por qué una pizza de 40 cm tiene cuatro veces más superficie
+      que una de 20; por qué duplicar la resolución de una imagen cuadruplica los píxeles y,
+      con ellos, el coste de procesarla.
+
+      En computación la ley de escalado es la que convierte una decisión aparentemente menor
+      en un factor de coste. Pasar de imágenes de 224×224 a 448×448 no duplica el cómputo de
+      una CNN: lo cuadruplica. Y en la atención de un Transformer, la memoria crece con el
+      **cuadrado** de la longitud de secuencia, que es la razón de casi toda la investigación
+      en atención eficiente.
+
+      El criterio de semejanza AA —dos ángulos iguales bastan— es el que hace útil el
+      concepto: permite deducir proporcionalidad de lados sin medirlos, y es la base de la
+      trigonometría, donde las razones seno y coseno dependen solo del ángulo precisamente
+      porque todos los triángulos rectángulos con ese ángulo son semejantes.
+    ejemplo: |
+      Escalar un triángulo 3-4-5 por k = 2.5.
+
+      ```text
+      original:   catetos 3 y 4, hipotenusa 5
+                  perímetro 12,  área 6
+
+      escalado:   catetos 7.5 y 10, hipotenusa 12.5
+                  perímetro 30,  área 37.5
+
+      razón de perímetros: 30/12  = 2.5  = k     ✓
+      razón de áreas:      37.5/6 = 6.25 = k²    ✓
+
+      Los ángulos no cambian: 36.87°, 53.13°, 90°
+      ```
+    errores:
+      - "Suponer que al duplicar las dimensiones se duplica el área."
+      - "Comparar densidades o costes entre figuras de escalas distintas sin normalizar."
+      - "Olvidar que la semejanza exige ángulos iguales, no solo proporción de algunos lados."
+    aplicacion: |
+      Coste de procesar imágenes según resolución, memoria cuadrática de la atención,
+      escalado de mallas en gráficos y análisis dimensional en ingeniería.
+    referencias:
+      - "[Coxeter, H. S. M. *Introduction to Geometry*, 2ª ed., Wiley, 1989](https://www.wiley.com/en-us/Introduction+to+Geometry%2C+2nd+Edition-p-9780471504580)"
+      - "[Haldane, J. B. S. *On Being the Right Size*, 1926](https://www.phys.ufl.edu/courses/phy3221/spring10/HaldaneRightSize.pdf)"
+
+  "064":
+    concepto: "El teorema de Pitágoras y su recíproco caracterizan el ángulo recto; las ternas se generan sistemáticamente."
+    formulas:
+      - "a² + b² = c²  ⟺  el triángulo es rectángulo"
+      - "generador: a = m²−n²,  b = 2mn,  c = m²+n²  (m > n > 0)"
+    desarrollo: |
+      El teorema de Pitágoras es la relación métrica más usada de toda la matemática
+      computacional, aunque casi nunca se la llame por su nombre: cada vez que se calcula una
+      norma euclídea, se está aplicando. Su recíproco es igual de útil: si `a² + b² = c²`,
+      el triángulo **es** rectángulo, lo que da una prueba de perpendicularidad sin medir
+      ángulos.
+
+      Las ternas pitagóricas —tríos de enteros que lo cumplen— se generan con la fórmula de
+      Euclides a partir de dos enteros m > n: `(m²−n², 2mn, m²+n²)`. Con m=2, n=1 sale la
+      (3,4,5); con m=3, n=2 la (5,12,13). Que exista una parametrización completa es un
+      resultado clásico de teoría de números, y conecta esta clase con la parte 04.
+
+      La generalización a n dimensiones es directa: `‖v‖² = Σvᵢ²`. Y la generalización
+      conceptual es aún más importante: en cualquier espacio con producto interno, si dos
+      vectores son ortogonales entonces `‖u+v‖² = ‖u‖² + ‖v‖²`. Ese es el teorema de
+      Pitágoras abstracto, y es lo que hace que la descomposición de la varianza en
+      estadística funcione (clase 214) y que la proyección ortogonal sea la mejor
+      aproximación (clase 119).
+
+      Una precaución numérica: calcular `√(a² + b²)` directamente puede desbordar si a o b
+      son grandes, aunque el resultado quepa. Por eso existe `math.hypot`, que reescala antes
+      de elevar al cuadrado.
+    ejemplo: |
+      Generar una terna y verificar el recíproco.
+
+      ```text
+      Generador con m = 3, n = 2:
+        a = 9 − 4 = 5
+        b = 2·3·2 = 12
+        c = 9 + 4 = 13
+
+      Verificación:  25 + 144 = 169 = 13²      ✓ rectángulo
+
+      Contraejemplo:  triángulo 5-5-7
+        25 + 25 = 50 ≠ 49 = 7²                 ✗ no es rectángulo
+
+      Precaución numérica:
+        √(1e200² + 1e200²) desborda
+        math.hypot(1e200, 1e200) = 1.414e200    ✓
+      ```
+    errores:
+      - "Aplicar el teorema a un triángulo que no es rectángulo."
+      - "Calcular √(a²+b²) directamente con valores grandes en lugar de usar hypot."
+      - "Confundir el teorema (rectángulo ⟹ relación) con su recíproco (relación ⟹ rectángulo); ambos son ciertos, pero son afirmaciones distintas."
+    aplicacion: |
+      Norma euclídea, cálculo de distancias, verificación de ortogonalidad, descomposición de
+      la varianza y el teorema de Pitágoras en espacios de Hilbert.
+    referencias:
+      - "[Python: `math.hypot`](https://docs.python.org/3/library/math.html#math.hypot)"
+      - "[Maor, E. *The Pythagorean Theorem: A 4,000-Year History*. Princeton, 2007](https://press.princeton.edu/books/paperback/9780691196886/the-pythagorean-theorem)"
+
+  "065":
+    concepto: "Seno, coseno y tangente son razones que dependen solo del ángulo, por semejanza de triángulos."
+    formulas:
+      - "sin θ = opuesto/hipotenusa,  cos θ = adyacente/hipotenusa"
+      - "tan θ = sin θ / cos θ"
+      - "atan2(y, x) devuelve el ángulo en el cuadrante correcto"
+    desarrollo: |
+      Las razones trigonométricas están bien definidas gracias a la semejanza (clase 063):
+      todos los triángulos rectángulos con el mismo ángulo agudo son semejantes, así que la
+      razón entre dos de sus lados no depende del tamaño del triángulo, solo del ángulo. Sin
+      ese hecho, «el seno de 30°» no significaría nada.
+
+      La tangente es el cociente de las otras dos, y por eso no está definida donde el coseno
+      se anula: en 90° y 270° la tangente diverge. Esa singularidad es real y hay que
+      manejarla; en implementaciones se evita la tangente siempre que se pueda, usando
+      directamente seno y coseno.
+
+      Para recuperar el ángulo a partir de las coordenadas, la función correcta es **atan2**,
+      no `atan`. `atan(y/x)` pierde la información del cuadrante —el cociente es el mismo para
+      (1,1) y (−1,−1)— y además falla si x es cero. `atan2(y, x)` recibe los dos argumentos
+      por separado, devuelve el ángulo en el rango (−π, π] y maneja los cuatro cuadrantes.
+      Usar `atan` donde correspondía `atan2` es un error clásico en robótica y gráficos.
+
+      El programa usa estas razones en la clase 076 (coordenadas polares), en la 323
+      (positional encoding, construido con senos y cosenos de frecuencias distintas) y en
+      cualquier cálculo de ángulo entre vectores.
+    ejemplo: |
+      Triángulo con catetos 3 y 4.
+
+      ```text
+      opuesto = 3,  adyacente = 4
+      hipotenusa = √(9+16) = 5
+
+      θ = atan2(3, 4) = 0.6435 rad = 36.87°
+
+      sin θ = 3/5 = 0.6
+      cos θ = 4/5 = 0.8
+      tan θ = 3/4 = 0.75
+
+      Comprobación: tan θ = sin θ / cos θ = 0.6/0.8 = 0.75    ✓
+
+      Por qué atan2 y no atan:
+        atan(3/4)   = 0.6435   (cuadrante I)
+        atan(-3/-4) = 0.6435   ← ¡mismo valor, cuadrante III!
+        atan2(-3,-4) = -2.498  ✓ correcto
+      ```
+    errores:
+      - "Usar atan(y/x) en lugar de atan2(y, x) y perder el cuadrante."
+      - "Evaluar la tangente cerca de 90° sin controlar la singularidad."
+      - "Confundir cateto opuesto con adyacente al identificar el ángulo."
+    aplicacion: |
+      Cálculo de ángulos en robótica y gráficos, conversión a coordenadas polares, positional
+      encoding y análisis de fase en señales.
+    referencias:
+      - "[Python: `math.atan2`](https://docs.python.org/3/library/math.html#math.atan2)"
+      - "[Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*, 3ª ed., 2011](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/)"
+
+  "066":
+    concepto: "La identidad pitagórica es el teorema de Pitágoras sobre el círculo unitario; de ella se derivan las demás."
+    formulas:
+      - "sin²θ + cos²θ = 1"
+      - "sin(2θ) = 2 sin θ cos θ"
+      - "cos(2θ) = cos²θ − sin²θ"
+    desarrollo: |
+      La identidad fundamental `sin²θ + cos²θ = 1` no es una fórmula que memorizar: es el
+      teorema de Pitágoras aplicado al triángulo que forma un punto del círculo unitario con
+      los ejes. La hipotenusa es el radio, que vale 1, y los catetos son el coseno y el seno.
+      Verla así hace innecesario recordarla.
+
+      De ella se derivan las demás mediante las fórmulas de suma de ángulos. La del ángulo
+      doble, `sin(2θ) = 2 sin θ cos θ`, es el caso particular de `sin(a+b)` con a = b, y su
+      utilidad es de eficiencia: permite calcular una función de 2θ sin evaluar la función
+      trigonométrica de nuevo.
+
+      Las identidades cumplen además un papel de **verificación**: comprobar que
+      `sin²θ + cos²θ` da 1 en varios ángulos es una prueba barata de que una implementación
+      trigonométrica funciona. En punto flotante el resultado no será exactamente 1, y esa
+      desviación —del orden del epsilon de máquina— es una medida de la calidad de la
+      biblioteca.
+
+      En procesamiento de señales estas identidades permiten reescribir productos de
+      senoidales como sumas, que es lo que hace la modulación y lo que subyace al análisis de
+      Fourier de la parte 13. Y en el positional encoding de los Transformers, la fórmula de
+      suma de ángulos es la que garantiza que un desplazamiento de posición sea una
+      transformación lineal de la codificación.
+    ejemplo: |
+      Verificar las identidades en cinco ángulos.
+
+      ```text
+      θ       sin²+cos²    sin(2θ)      2·sin·cos    coinciden
+      0°      1.000000     0.000000     0.000000     ✓
+      30°     1.000000     0.866025     0.866025     ✓
+      45°     1.000000     1.000000     1.000000     ✓
+      60°     1.000000     0.866025     0.866025     ✓
+      90°     1.000000     0.000000     0.000000     ✓
+
+      Nota numérica: sin²+cos² da 1.0 con error < 1e−16
+      (es una prueba de calidad de la implementación)
+      ```
+    errores:
+      - "Memorizar las identidades en lugar de derivarlas del círculo unitario."
+      - "Comparar identidades con == en punto flotante en lugar de con tolerancia."
+      - "Confundir sin²θ con sin(θ²)."
+    aplicacion: |
+      Simplificación de expresiones trigonométricas, modulación de señales, verificación de
+      bibliotecas matemáticas y la construcción del positional encoding.
+    referencias:
+      - "[Gelfand, I. M.; Saul, M. *Trigonometry*. Birkhäuser, 2001](https://link.springer.com/book/10.1007/978-1-4612-0149-8)"
+      - "[Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017 (sección 3.5)](https://arxiv.org/abs/1706.03762)"
+
+  "067":
+    concepto: "El círculo unitario extiende seno y coseno a cualquier ángulo real y muestra su periodicidad y paridad."
+    formulas:
+      - "punto del círculo: (cos θ, sin θ)"
+      - "periodo: sin(θ + 2π) = sin θ"
+      - "paridad: sin(−θ) = −sin θ,  cos(−θ) = cos θ"
+    desarrollo: |
+      El triángulo rectángulo solo define las razones trigonométricas para ángulos entre 0 y
+      90°. El círculo unitario las extiende a **cualquier** número real: el punto que resulta
+      de recorrer un arco de longitud θ desde (1,0) tiene coordenadas `(cos θ, sin θ)`, y esa
+      definición funciona para ángulos negativos, mayores que una vuelta o irracionales.
+
+      De esa definición se leen dos propiedades sin cálculo. La **periodicidad**: dar una
+      vuelta completa devuelve al mismo punto, así que `sin(θ + 2π) = sin θ`. Y la
+      **paridad**: reflejar respecto al eje x cambia el signo de la ordenada pero no de la
+      abscisa, así que el seno es impar y el coseno es par.
+
+      La periodicidad tiene una consecuencia práctica que conviene tener presente: los
+      ángulos no son comparables directamente. La diferencia entre 359° y 1° es de 2°, no de
+      358°. Calcular diferencias angulares exige normalizar al rango (−π, π], y olvidarlo
+      produce saltos bruscos en robótica y en seguimiento de orientación.
+
+      La tabla de valores notables —0, 90, 180, 270, 360— conviene poder reconstruirla
+      mirando el círculo en lugar de memorizarla: en 90° el punto es (0,1), así que el coseno
+      es 0 y el seno 1. Numéricamente hay un detalle: `cos(π/2)` no da exactamente 0 sino
+      6.1e−17, porque π/2 no es representable exactamente.
+    ejemplo: |
+      Coordenadas en los ángulos notables.
+
+      ```text
+      ángulo    (cos, sin)
+        0°      ( 1,  0)
+       90°      ( 0,  1)
+      180°      (−1,  0)
+      270°      ( 0, −1)
+      360°      ( 1,  0)      ← igual que 0°: periodo 2π
+
+      Paridad:
+        sin(−1) = −0.841471 = −sin(1)     ✓ impar
+        cos(−1) =  0.540302 =  cos(1)     ✓ par
+
+      Detalle numérico: cos(π/2) = 6.12e−17, no exactamente 0
+      (π/2 no es representable en float64)
+      ```
+    errores:
+      - "Restar ángulos sin normalizar el resultado al rango (−π, π]."
+      - "Esperar que cos(π/2) sea exactamente 0."
+      - "Limitar la definición de seno y coseno a ángulos agudos."
+    aplicacion: |
+      Orientación en robótica, ángulos de fase en señales, animación cíclica y cualquier
+      fenómeno periódico. La periodicidad es la propiedad que explota Fourier.
+    referencias:
+      - "[Gelfand, I. M.; Saul, M. *Trigonometry*. Birkhäuser, 2001](https://link.springer.com/book/10.1007/978-1-4612-0149-8)"
+      - "[Python: `math.fmod` y normalización de ángulos](https://docs.python.org/3/library/math.html#math.fmod)"
+
+  "068":
+    concepto: "Las coordenadas convierten preguntas geométricas en preguntas algebraicas."
+    formulas:
+      - "simetría respecto a x: (a, b) → (a, −b)"
+      - "simetría respecto a y: (a, b) → (−a, b)"
+      - "simetría respecto al origen: (a, b) → (−a, −b)"
+    desarrollo: |
+      La idea de Descartes —identificar el plano con ℝ²— es probablemente la más productiva
+      de la matemática moderna. Convierte la geometría en álgebra: una recta es una ecuación,
+      una circunferencia es otra, y la intersección de dos figuras es la solución de un
+      sistema. Sin ella no habría gráficos por computador ni análisis de datos.
+
+      Los cuatro cuadrantes se numeran en sentido antihorario empezando por el de coordenadas
+      positivas. Esa convención importa al interpretar `atan2`, cuyo signo depende del
+      cuadrante, y al leer gráficas donde el eje y crece hacia abajo —convención habitual en
+      pantallas e imágenes, que invierte el sentido de las rotaciones.
+
+      Las simetrías se expresan como cambios de signo, y ese es el primer ejemplo de que una
+      transformación geométrica es una operación algebraica sobre coordenadas. La reflexión
+      respecto al eje x es la matriz `diag(1, −1)`, y su determinante negativo indica que
+      invierte la orientación (clase 075).
+
+      En machine learning el «espacio de features» es literalmente un espacio de coordenadas,
+      y cada observación es un punto. Toda la intuición geométrica de esta parte —distancia,
+      proyección, frontera— se traslada directamente allí, con la advertencia de la clase 061
+      sobre la alta dimensión.
+    ejemplo: |
+      Los cuatro cuadrantes y las simetrías.
+
+      ```text
+      punto      cuadrante
+      ( 3,  2)       I
+      (−3,  2)       II
+      (−3, −2)       III
+      ( 3, −2)       IV
+
+      Simetrías de (3, 2):
+        respecto al eje x:  ( 3, −2)
+        respecto al eje y:  (−3,  2)
+        respecto al origen: (−3, −2)
+
+      Traslación (+1, −1): (3,2) → (4,1)
+      ```
+    errores:
+      - "Olvidar que en pantallas e imágenes el eje y suele crecer hacia abajo."
+      - "Numerar los cuadrantes en sentido horario."
+      - "Confundir traslación (sumar) con escala (multiplicar)."
+    aplicacion: |
+      Espacios de features, sistemas de coordenadas de pantalla frente a mundo, visualización
+      de datos y transformaciones geométricas.
+    referencias:
+      - "[Descartes, R. *La Géométrie*, 1637 — contexto histórico](https://mathshistory.st-andrews.ac.uk/Biographies/Descartes/)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+
+  "069":
+    concepto: "La forma general Ax + By + C = 0 es la misma expresión que la frontera de decisión de un clasificador lineal."
+    formulas:
+      - "explícita: y = mx + b"
+      - "general: Ax + By + C = 0"
+      - "perpendicular: m⊥ = −1/m"
+    desarrollo: |
+      Una recta admite varias escrituras y cada una sirve para algo distinto. La forma
+      **explícita** `y = mx + b` es cómoda para evaluar y graficar, pero no puede representar
+      rectas verticales (pendiente infinita). La forma **general** `Ax + By + C = 0` no tiene
+      esa limitación y es la que se usa en geometría computacional.
+
+      La forma general tiene además una lectura vectorial importante: el vector `(A, B)` es
+      **normal** a la recta, es decir, perpendicular a ella. Y esa observación es la que
+      conecta esta clase con machine learning: la frontera de decisión de un clasificador
+      lineal es `wᵀx + b = 0`, exactamente la misma ecuación, donde `w` es el vector normal.
+      El signo de `wᵀx + b` dice de qué lado cae un punto, que es literalmente la predicción.
+
+      La condición de perpendicularidad `m·m⊥ = −1` se deduce de que los vectores directores
+      deben tener producto punto nulo. Es un caso particular de ortogonalidad, concepto que la
+      parte 05 generaliza a cualquier dimensión.
+
+      Calcular la pendiente entre dos puntos exige cuidado numérico: si las abscisas son casi
+      iguales, la resta del denominador sufre cancelación (clase 032) y la pendiente resultante
+      es ruido. En geometría computacional se prefiere la forma general precisamente por eso.
+    ejemplo: |
+      Recta por (1,2) y (5,10).
+
+      ```text
+      pendiente:  m = (10 − 2)/(5 − 1) = 2
+      intercepto: b = 2 − 2·1 = 0
+
+      explícita: y = 2x
+      general:   2x − y + 0 = 0        →  A = 2, B = −1, C = 0
+
+      Verificación en (1,2):  2·1 − 1·2 + 0 = 0    ✓
+
+      Vector normal: (2, −1)
+      Pendiente perpendicular: −1/2
+
+      Lectura en ML:
+        w = (2, −1),  b = 0
+        clasificador: signo(wᵀx + b)
+      ```
+    errores:
+      - "Usar la forma explícita para rectas verticales."
+      - "Calcular la pendiente con abscisas casi iguales sin considerar la cancelación."
+      - "Confundir el vector normal (A,B) con el vector director (B,−A)."
+    aplicacion: |
+      Fronteras de decisión lineales, detección de colisiones, ajuste de rectas y geometría
+      computacional en general.
+    referencias:
+      - "[Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., 2009, cap. 4](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+
+  "070":
+    concepto: "La distancia de un punto a una recta es la misma fórmula que define el margen de una SVM."
+    formulas:
+      - "d = |Ax₀ + By₀ + C| / √(A² + B²)"
+      - "pie de perpendicular: p − ((Ap₁+Bp₂+C)/(A²+B²))·(A,B)"
+    desarrollo: |
+      La distancia de un punto a una recta es la longitud del segmento perpendicular que los
+      une, y esa longitud tiene fórmula cerrada. El numerador `|Ax₀ + By₀ + C|` mide cuánto
+      «falla» el punto la ecuación de la recta; el denominador `√(A²+B²)` normaliza por la
+      longitud del vector normal, para que el resultado sea una distancia y no dependa de
+      cómo se escaló la ecuación.
+
+      Esa normalización es exactamente lo que ocurre en una SVM. El margen geométrico de un
+      punto respecto al hiperplano `wᵀx + b = 0` es `|wᵀx + b| / ‖w‖`, la misma expresión.
+      Maximizar el margen equivale entonces a minimizar `‖w‖` sujeto a que todos los puntos
+      queden bien clasificados, que es precisamente el problema de la clase 289.
+
+      El **pie de perpendicular** es el punto de la recta más cercano, y calcularlo es
+      proyectar. La comprobación es doble: el pie debe satisfacer la ecuación de la recta, y
+      la distancia del punto al pie debe coincidir con la fórmula. El laboratorio verifica
+      ambas cosas.
+
+      La generalización a un hiperplano en ℝⁿ es inmediata y no requiere ideas nuevas: la
+      fórmula es idéntica con más términos. Esa es la ventaja de haber escrito la recta en
+      forma general en lugar de explícita.
+    ejemplo: |
+      Distancia del punto (2,7) a la recta 3x − 4y + 5 = 0.
+
+      ```text
+      numerador:   |3·2 − 4·7 + 5| = |6 − 28 + 5| = 17
+      denominador: √(9 + 16) = 5
+      distancia:   17/5 = 3.4
+
+      Pie de perpendicular:
+        t = (3·2 − 4·7 + 5)/(9+16) = −17/25 = −0.68
+        pie = (2 − 3·(−0.68), 7 − (−4)·(−0.68)) = (4.04, 4.28)
+
+      Verificaciones:
+        3·4.04 − 4·4.28 + 5 = 0        ✓ el pie está en la recta
+        dist((2,7), (4.04,4.28)) = 3.4  ✓ coincide con la fórmula
+      ```
+    errores:
+      - "Olvidar el valor absoluto en el numerador y obtener distancias negativas."
+      - "No normalizar por √(A²+B²): el resultado deja de ser una distancia."
+      - "Suponer que la fórmula solo vale en 2D: se generaliza sin cambios."
+    aplicacion: |
+      Margen de una SVM, detección de colisiones, clustering basado en distancia a fronteras y
+      métricas de separabilidad.
+    referencias:
+      - "[Cortes, C.; Vapnik, V. *Support-Vector Networks*. Machine Learning, 1995](https://link.springer.com/article/10.1007/BF00994018)"
+      - "[Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., Cambridge, 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/)"
+
+  "071":
+    concepto: "La excentricidad clasifica las cónicas en una única familia continua."
+    formulas:
+      - "circunferencia: x² + y² = r²"
+      - "elipse: x²/a² + y²/b² = 1,  c = √(a²−b²),  e = c/a"
+      - "parábola y = x²: foco en (0, 1/4)"
+    desarrollo: |
+      Las cónicas —circunferencia, elipse, parábola e hipérbola— son las curvas que resultan
+      de cortar un cono con un plano, y ese origen común explica que compartan una
+      descripción unificada. La **excentricidad** `e` es el parámetro que las distingue: 0
+      para la circunferencia, entre 0 y 1 para la elipse, exactamente 1 para la parábola y
+      mayor que 1 para la hipérbola.
+
+      No son una curiosidad clásica. Las órbitas planetarias son elipses con el Sol en un
+      foco (primera ley de Kepler); las antenas parabólicas concentran las señales paralelas
+      en el foco; las curvas de nivel de una forma cuadrática definida positiva son elipses,
+      hecho central en la parte 06 y en la parte 12, donde la forma de esas elipses determina
+      lo rápido que converge el descenso de gradiente.
+
+      Esa última conexión merece énfasis. Cuando la función objetivo tiene curvas de nivel muy
+      alargadas —elipses de excentricidad alta—, el gradiente apunta casi perpendicular a la
+      dirección del mínimo y el descenso zigzaguea. El cociente entre los semiejes es
+      precisamente el número de condición del Hessiano.
+
+      La propiedad focal de la parábola —todos los rayos paralelos al eje se reflejan hacia
+      el foco— es la que la hace útil en antenas y faros, y se demuestra con geometría
+      elemental.
+    ejemplo: |
+      Tres cónicas y sus parámetros.
+
+      ```text
+      Circunferencia x² + y² = 9
+        radio 3,  área = π·9 = 28.27,  e = 0
+
+      Elipse x²/25 + y²/9 = 1
+        a = 5 (semieje mayor), b = 3 (semieje menor)
+        c = √(25 − 9) = 4        (distancia focal)
+        e = c/a = 0.8            (bastante alargada)
+
+      Parábola y = x²
+        foco en (0, 0.25),  e = 1
+
+      Lectura en optimización:
+        curvas de nivel de x² + 20y² → elipse con e alta
+        → el descenso de gradiente zigzaguea
+      ```
+    errores:
+      - "Confundir el semieje mayor con el menor al calcular la distancia focal."
+      - "Suponer que las órbitas planetarias son circulares."
+      - "Olvidar que la excentricidad de una elipse informa sobre el condicionamiento del problema asociado."
+    aplicacion: |
+      Órbitas, óptica, curvas de nivel de formas cuadráticas y diagnóstico de convergencia en
+      optimización.
+    referencias:
+      - "[Coxeter, H. S. M. *Introduction to Geometry*, 2ª ed., Wiley, 1989](https://www.wiley.com/en-us/Introduction+to+Geometry%2C+2nd+Edition-p-9780471504580)"
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+
+  "072":
+    concepto: "El producto punto mide alineación; la norma mide magnitud; juntos dan el ángulo."
+    formulas:
+      - "u·v = Σuᵢvᵢ = ‖u‖‖v‖cos θ"
+      - "‖u‖ = √(u·u)"
+      - "u ⊥ v  ⟺  u·v = 0"
+    desarrollo: |
+      Un vector admite dos lecturas que conviene mantener a la vez: es una lista de números y
+      es una flecha con dirección y magnitud. El producto punto conecta ambas: definido
+      algebraicamente como suma de productos componente a componente, resulta ser
+      geométricamente `‖u‖‖v‖cos θ`. Esa identidad es la que convierte el álgebra en
+      geometría.
+
+      De ella se lee todo lo demás. Si el producto punto es positivo, los vectores apuntan
+      hacia el mismo semiespacio; si es cero, son **ortogonales**; si es negativo, se oponen.
+      La ortogonalidad como «producto punto nulo» es la definición que se generaliza a
+      cualquier dimensión, donde el concepto de «ángulo recto» ya no es visualizable.
+
+      Normalizar un vector —dividirlo por su norma— separa dirección de magnitud. Comparar
+      direcciones exige normalizar primero, y esa operación es exactamente la que define la
+      **similitud coseno**, la métrica estándar entre embeddings (clase 322). Comparar sin
+      normalizar mezcla «de qué habla» con «cuánto texto es», que casi nunca es lo que se
+      quiere.
+
+      Este es el punto donde la parte 03 entrega el testigo a la parte 05: todo lo dicho aquí
+      en dos dimensiones vale sin cambios en 768, con la salvedad de que la intuición visual
+      deja de funcionar y hay que confiar en el álgebra.
+    ejemplo: |
+      Dos vectores perpendiculares.
+
+      ```text
+      u = (3, 4),  v = (−4, 3)
+
+      ‖u‖ = √(9+16) = 5
+      ‖v‖ = √(16+9) = 5
+
+      u·v = 3·(−4) + 4·3 = −12 + 12 = 0     → ortogonales ✓
+
+      cos θ = 0/(5·5) = 0  →  θ = 90°
+
+      u normalizado: (0.6, 0.8),  norma = 1.0    ✓
+      ```
+    errores:
+      - "Comparar direcciones sin normalizar los vectores."
+      - "Confundir el producto punto (escalar) con el producto componente a componente (vector)."
+      - "Calcular el ángulo con acos sin acotar el argumento a [−1,1]: el redondeo puede sacarlo del dominio."
+    aplicacion: |
+      Similitud coseno entre embeddings, proyecciones, detección de ortogonalidad, iluminación
+      en gráficos (producto punto entre normal y dirección de luz) y capas densas.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[3Blue1Brown. *Essence of Linear Algebra*](https://www.3blue1brown.com/topics/linear-algebra)"
+
+  "073":
+    concepto: "Las coordenadas homogéneas convierten la traslación —que no es lineal— en una multiplicación de matrices."
+    formulas:
+      - "punto homogéneo: (x, y, 1)"
+      - "traslación: [[1,0,tx],[0,1,ty],[0,0,1]]"
+      - "escala: [[sx,0,0],[0,sy,0],[0,0,1]]"
+    desarrollo: |
+      La traslación tiene un problema estructural: no es una transformación lineal. Una
+      transformación lineal debe mandar el origen al origen, y trasladar precisamente lo
+      mueve. Eso impide componerla con rotaciones y escalas usando un único producto de
+      matrices, que es lo que la hace incómoda.
+
+      Las coordenadas homogéneas resuelven el problema con un truco elegante: se añade una
+      coordenada extra fija a 1, de modo que un punto del plano se representa como `(x, y, 1)`
+      en ℝ³. En ese espacio ampliado, la traslación **sí** es lineal, y se escribe como una
+      matriz 3×3 cuya última columna contiene el desplazamiento.
+
+      La ganancia es enorme en la práctica. Toda la cadena de transformaciones de un vértice
+      —modelo, mundo, vista, proyección— se compone en una única matriz que se calcula una vez
+      y se aplica a millones de vértices con un solo producto. Es la razón por la que las GPU
+      están optimizadas para multiplicar matrices 4×4.
+
+      El orden de composición importa y es la fuente de errores más común: `T·S` escala y
+      luego traslada; `S·T` traslada y luego escala, con lo que el desplazamiento también se
+      escala. El laboratorio comprueba que ambos productos dan resultados distintos, que es
+      la forma más directa de recordarlo.
+    ejemplo: |
+      Trasladar y escalar el punto (2,3), en los dos órdenes.
+
+      ```text
+      punto homogéneo: (2, 3, 1)
+
+      T (traslación +5, −2)     S (escala ×2, ×0.5)
+      [1 0  5]                  [2   0 0]
+      [0 1 −2]                  [0 0.5 0]
+      [0 0  1]                  [0   0 1]
+
+      T·(2,3,1) = (7, 1, 1)
+      S·(2,3,1) = (4, 1.5, 1)
+
+      T·S aplicado a (2,3,1) = (9, −0.5, 1)     escala y luego traslada
+      S·T aplicado a (2,3,1) = (14, −0.5, 1)    traslada y luego escala
+
+      ¿iguales?  No.  El orden importa.
+      ```
+    errores:
+      - "Componer transformaciones en el orden equivocado."
+      - "Olvidar la coordenada homogénea 1 al construir el punto."
+      - "Suponer que la traslación es una transformación lineal en coordenadas normales."
+    aplicacion: |
+      Pipeline gráfico, robótica (matrices de transformación homogénea entre articulaciones),
+      visión artificial y cualquier composición de transformaciones afines.
+    referencias:
+      - "[Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., 2004, cap. 2](https://www.robots.ox.ac.uk/~vgg/hzbook/)"
+      - "[Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*, 3ª ed., 2011](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/)"
+
+  "074":
+    concepto: "Una matriz de rotación es ortogonal y de determinante 1: preserva normas, ángulos y orientación."
+    formulas:
+      - "R(θ) = [[cos θ, −sin θ], [sin θ, cos θ]]"
+      - "RᵀR = I,  det R = 1"
+      - "R(α)·R(β) = R(α+β)"
+    desarrollo: |
+      La matriz de rotación se construye viendo a dónde van los vectores de la base: `(1,0)`
+      va a `(cos θ, sin θ)` y `(0,1)` va a `(−sin θ, cos θ)`. Esas dos imágenes son las
+      columnas de la matriz. Este método —las columnas de una matriz son las imágenes de la
+      base— es general y es la forma correcta de leer cualquier matriz de transformación
+      (clase 123).
+
+      Dos propiedades la caracterizan. Es **ortogonal**, `RᵀR = I`, lo que significa que su
+      inversa es su transpuesta: deshacer una rotación es transponer, sin necesidad de
+      invertir. Y su **determinante es 1**, lo que indica que preserva áreas y orientación
+      (una reflexión tendría determinante −1).
+
+      La consecuencia numérica es importante: las transformaciones ortogonales **no amplifican
+      el error**. Su número de condición es 1, el mejor posible. Por eso los algoritmos
+      numéricamente estables se construyen con rotaciones y reflexiones (Givens, Householder)
+      en lugar de con transformaciones generales, y por eso la factorización QR es preferible
+      a las ecuaciones normales (clase 234).
+
+      La composición de rotaciones suma ángulos, `R(α)R(β) = R(α+β)`, lo que se demuestra con
+      las fórmulas de suma de la clase 066. En 2D las rotaciones conmutan; en 3D **no**, y esa
+      es una de las diferencias más importantes entre ambos casos.
+    ejemplo: |
+      Rotar (1,0) noventa grados.
+
+      ```text
+      R(90°) = [[cos 90, −sin 90], [sin 90, cos 90]]
+             = [[0, −1], [1, 0]]
+
+      R·(1,0) = (0, 1)          ✓ el eje x va al eje y
+
+      det R = 0·0 − (−1)·1 = 1            ✓ preserva área y orientación
+      RᵀR   = [[1,0],[0,1]] = I           ✓ ortogonal
+
+      ‖(1,0)‖ = 1,  ‖R(1,0)‖ = 1          ✓ preserva la norma
+
+      Cuatro rotaciones de 90° = identidad
+      ```
+    errores:
+      - "Colocar el signo negativo en la posición equivocada de la matriz."
+      - "Invertir una matriz de rotación en lugar de transponerla."
+      - "Suponer que las rotaciones en 3D conmutan."
+    aplicacion: |
+      Gráficos, robótica, aumento de datos por rotación, factorizaciones QR estables y
+      transformaciones ortogonales en general.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*, 3ª ed., 2011](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/)"
+
+  "075":
+    concepto: "El valor absoluto del determinante es el factor por el que la transformación multiplica las áreas; su signo indica si invierte la orientación."
+    formulas:
+      - "área transformada = |det M| · área original"
+      - "det R = 1 (rotación),  det S = sx·sy (escala),  det F = −1 (reflexión)"
+    desarrollo: |
+      El determinante de una matriz 2×2 tiene una interpretación geométrica precisa: es el
+      área con signo del paralelogramo que forman sus columnas. Como las columnas son las
+      imágenes de los vectores de la base —que forman un cuadrado de área 1—, el determinante
+      es exactamente el factor por el que la transformación escala las áreas.
+
+      El **signo** aporta información adicional: si es negativo, la transformación invierte la
+      orientación, es decir, convierte un recorrido antihorario en horario. Las reflexiones
+      tienen determinante negativo; las rotaciones, positivo. Un determinante **nulo**
+      significa que la transformación aplasta el plano sobre una recta o un punto: pierde
+      información y no es invertible.
+
+      Esta lectura hace comprensible por qué `det(AB) = det(A)·det(B)`: aplicar dos
+      transformaciones escala el área por el producto de sus factores. Y por qué una matriz
+      con determinante cero no tiene inversa: no se puede recuperar un área a partir de algo
+      que quedó aplastado.
+
+      La generalización a n dimensiones es directa: el determinante es el factor de escalado
+      del volumen n-dimensional. Ese hecho es el que aparece en el cambio de variable de una
+      integral múltiple (clase 173) y en el jacobiano de una transformación de variables
+      aleatorias, donde el determinante corrige la densidad.
+    ejemplo: |
+      Tres transformaciones y su determinante.
+
+      ```text
+      Rotación 45°:   det = 1        preserva área, mantiene orientación
+      Escala ×2:      det = 4        cuadruplica el área (2·2)
+      Reflexión en x: det = −1       preserva área, INVIERTE orientación
+
+      Composición R·S aplicada a (1,1):
+        primero escala ×2 → (2,2)
+        luego rota 45°    → (0, 2.83)
+
+      det(R·S) = det(R)·det(S) = 1·4 = 4     ✓
+      ```
+    errores:
+      - "Ignorar el signo del determinante y perder la información de orientación."
+      - "Suponer que determinante cero significa «error» en lugar de «transformación no invertible»."
+      - "Confundir el determinante con la traza."
+    aplicacion: |
+      Cambio de variable en integrales múltiples, jacobiano en transformaciones de
+      distribuciones, detección de degeneración en geometría computacional y normalizing flows.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 5](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[3Blue1Brown. *The determinant*](https://www.3blue1brown.com/lessons/determinant)"
+
+  "076":
+    concepto: "Las coordenadas polares describen un punto por distancia y ángulo; atan2 hace la conversión inversa correctamente."
+    formulas:
+      - "r = √(x²+y²),  θ = atan2(y, x)"
+      - "x = r·cos θ,  y = r·sin θ"
+    desarrollo: |
+      Elegir el sistema de coordenadas adecuado puede convertir un problema difícil en uno
+      trivial. Una circunferencia en cartesianas es `x² + y² = r²`; en polares es simplemente
+      `r = constante`. Los problemas con simetría radial —campos centrales, difusión desde un
+      punto, patrones de radiación— se simplifican radicalmente al cambiar de coordenadas.
+
+      La conversión de cartesianas a polares exige `atan2` por la razón de la clase 065: el
+      cociente `y/x` no distingue cuadrantes opuestos. Con `atan2(y, x)` el ángulo sale
+      correcto en los cuatro cuadrantes y en los ejes, incluido el caso `x = 0` que rompería
+      la división.
+
+      La conversión no es biyectiva sin restricciones: el ángulo está determinado salvo
+      múltiplos de 2π, y el origen (r = 0) no tiene ángulo definido. Al implementar hay que
+      decidir el rango del ángulo —habitualmente (−π, π]— y documentarlo, porque comparar
+      ángulos de rangos distintos produce discrepancias.
+
+      En dimensiones superiores el análogo son las coordenadas esféricas, y en la parte 09
+      aparece el mismo cambio de variable al deducir la distribución normal multivariante. El
+      jacobiano de la transformación —`r` en polares— es el factor que la clase 075 explicó.
+    ejemplo: |
+      Convertir (−3, 4) a polares y volver.
+
+      ```text
+      r = √(9 + 16) = 5
+      θ = atan2(4, −3) = 2.2143 rad = 126.87°     (cuadrante II) ✓
+
+      Vuelta a cartesianas:
+        x = 5·cos(2.2143) = −3.0
+        y = 5·sin(2.2143) =  4.0                  ✓ roundtrip exacto
+
+      Con atan(4/−3) se habría obtenido −0.9273 rad = −53.13°,
+      que es el cuadrante IV: incorrecto.
+      ```
+    errores:
+      - "Usar atan en lugar de atan2 y perder el cuadrante."
+      - "No declarar el rango del ángulo devuelto."
+      - "Intentar definir el ángulo del origen."
+    aplicacion: |
+      Problemas con simetría radial, patrones de radiación, transformadas en coordenadas
+      polares, robótica y representación de fase y magnitud en señales complejas.
+    referencias:
+      - "[Python: `math.atan2` y `cmath.polar`](https://docs.python.org/3/library/cmath.html#cmath.polar)"
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 10](https://www.cengage.com/c/calculus-8e-stewart/)"
+
+  "077":
+    concepto: "El producto cruz da un vector ortogonal a dos dados, y su norma es el área del paralelogramo que forman."
+    formulas:
+      - "a × b = (a₂b₃−a₃b₂, a₃b₁−a₁b₃, a₁b₂−a₂b₁)"
+      - "‖a × b‖ = ‖a‖‖b‖ sin θ = área del paralelogramo"
+      - "plano: n·(x − p₀) = 0"
+    desarrollo: |
+      En tres dimensiones aparece una operación sin análogo en 2D: el producto cruz, que a dos
+      vectores les asocia un tercero perpendicular a ambos. Su norma es el área del
+      paralelogramo que forman, y su sentido lo da la regla de la mano derecha. Es una
+      operación específica de ℝ³ —no se generaliza a dimensión arbitraria sin cambiar de
+      formalismo—, y por eso es tan característica de la geometría espacial.
+
+      Un plano queda determinado por un punto y un **vector normal**: la ecuación
+      `n·(x − p₀) = 0` dice que el vector que va de `p₀` a `x` es perpendicular a `n`. Como el
+      producto cruz de dos vectores del plano da su normal, dos direcciones bastan para
+      definir un plano.
+
+      La distancia de un punto a un plano se calcula con la misma estructura que la distancia
+      punto-recta de la clase 070: producto punto con la normal, dividido por la norma de la
+      normal. Cambia la dimensión, no la idea, y esa es la ventaja de haber entendido la
+      versión 2D correctamente.
+
+      En gráficos por computador las normales son omnipresentes: determinan la iluminación
+      (el brillo depende del producto punto entre la normal y la dirección de la luz), la
+      orientación de una cara y si un polígono mira hacia la cámara o hacia el lado opuesto
+      (*backface culling*).
+    ejemplo: |
+      Normal al plano z = 0 y distancia de un punto.
+
+      ```text
+      a = (1,0,0),  b = (0,1,0)
+
+      a × b = (0·0 − 0·1, 0·0 − 1·0, 1·1 − 0·0) = (0, 0, 1)
+
+      Verificaciones:
+        (a×b)·a = 0        ✓ ortogonal a a
+        (a×b)·b = 0        ✓ ortogonal a b
+        ‖a×b‖ = 1          = área del cuadrado unitario ✓
+
+      Distancia de (2,3,5) al plano z = 0:
+        |(0,0,1)·(2,3,5)| / ‖(0,0,1)‖ = 5/1 = 5
+      ```
+    errores:
+      - "Suponer que el producto cruz es conmutativo: a×b = −(b×a)."
+      - "Usar el producto cruz en dimensiones distintas de 3."
+      - "Olvidar normalizar la normal antes de usarla en cálculos de iluminación."
+    aplicacion: |
+      Iluminación y sombreado, orientación de superficies, detección de caras traseras,
+      cinemática de sólidos rígidos y momento de fuerzas en física.
+    referencias:
+      - "[Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*, 3ª ed., 2011](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "078":
+    concepto: "La perspectiva divide por la profundidad, y esa división es lo que hace que los objetos lejanos se vean pequeños."
+    formulas:
+      - "proyección ortogonal sobre u: proj_u(x) = (x·u/u·u)·u"
+      - "perspectiva: x' = f·x/z,  y' = f·y/z"
+    desarrollo: |
+      Hay dos proyecciones distintas y conviene no mezclarlas. La **proyección ortogonal**
+      sobre una dirección es una operación lineal que descompone un vector en una componente
+      paralela y otra perpendicular. Es la base de PCA (clase 135), de mínimos cuadrados
+      (clase 119) y de cualquier «cuánto de esta dirección hay en este vector».
+
+      La **proyección en perspectiva** es otra cosa: divide las coordenadas por la
+      profundidad, y por eso **no es lineal**. Es la que reproduce cómo vemos: dos objetos del
+      mismo tamaño a distancias distintas ocupan ángulos distintos en la retina. La división
+      por z es exactamente lo que hace que las vías del tren converjan en el horizonte.
+
+      La proyección ortogonal viene acompañada de un teorema de Pitágoras: si `x = p + r` con
+      `p` la proyección y `r` el residuo ortogonal, entonces `‖x‖² = ‖p‖² + ‖r‖²`. Comprobar
+      esa identidad es la verificación estándar de que una proyección se calculó bien, y el
+      laboratorio la incluye.
+
+      Que la perspectiva no sea lineal explica por qué las coordenadas homogéneas de la
+      clase 073 son imprescindibles en gráficos: la división por z se difiere hasta el final
+      (la «división de perspectiva») y todo lo anterior se mantiene como productos de
+      matrices.
+    ejemplo: |
+      Proyección ortogonal y perspectiva.
+
+      ```text
+      Ortogonal de v = (4,3) sobre u = (1,0):
+        coef = (v·u)/(u·u) = 4/1 = 4
+        proyección = (4, 0)
+        residuo    = (0, 3)
+        residuo·u  = 0                    ✓ ortogonal
+        Pitágoras: 25 = 16 + 9            ✓
+
+      Perspectiva con f = 2, z = 5:
+        x' = 2·4/5 = 1.6
+        el mismo punto a z = 10 daría 0.8
+        → al doblar la distancia, el tamaño se reduce a la mitad
+      ```
+    errores:
+      - "Confundir proyección ortogonal (lineal) con perspectiva (no lineal)."
+      - "Olvidar dividir por (u·u) cuando u no es unitario."
+      - "Dividir por z sin comprobar que es no nulo (plano de recorte cercano)."
+    aplicacion: |
+      Pipeline gráfico, calibración de cámaras, PCA, mínimos cuadrados y descomposición
+      ortogonal en general.
+    referencias:
+      - "[Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 4](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "079":
+    concepto: "El pipeline geométrico encadena modelo, mundo, cámara y pantalla como una composición de transformaciones."
+    formulas:
+      - "x_pantalla = Proyección · Vista · Modelo · x_local"
+      - "perspectiva final: (f·x/z, f·y/z)"
+    desarrollo: |
+      Todo sistema que dibuja o interpreta escenas tridimensionales ejecuta la misma
+      secuencia de cambios de coordenadas. El objeto se define en su **espacio local**; una
+      matriz de modelo lo coloca en el **mundo**; una matriz de vista lo lleva al sistema de
+      la **cámara**; y una proyección lo pasa a **pantalla**. Cada etapa es una
+      transformación, y componerlas es multiplicar sus matrices.
+
+      La ventaja de esta arquitectura es de reutilización: un mismo modelo 3D se puede colocar
+      cien veces en la escena cambiando solo la matriz de modelo, sin tocar sus vértices. Y la
+      composición se calcula una vez por objeto, no una vez por vértice.
+
+      El orden de multiplicación es la fuente inagotable de errores, y no hay atajo: hay que
+      fijar una convención (fila o columna, premultiplicar o posmultiplicar) y respetarla en
+      todo el sistema. Las bibliotecas difieren entre sí, y mezclar dos convenciones produce
+      escenas que se ven «casi bien».
+
+      El mismo pipeline, recorrido al revés, es el problema de la visión artificial:
+      dada una imagen, recuperar la geometría de la escena. Ahí la división por z se convierte
+      en la ambigüedad fundamental —no se puede distinguir un objeto pequeño y cercano de uno
+      grande y lejano sin información adicional— y de ahí nacen la estereovisión y la
+      estructura a partir del movimiento.
+    ejemplo: |
+      Un punto recorriendo las cuatro etapas.
+
+      ```text
+      1. espacio modelo:   (1, 1, 1)
+
+      2. rotación 30° en Z → mundo:
+         (0.366, 1.366, 1.0)
+
+      3. cámara desplazada 4 en Z:
+         (0.366, 1.366, 5.0)
+
+      4. proyección con f = 1.5:
+         x' = 1.5·0.366/5 = 0.1098
+         y' = 1.5·1.366/5 = 0.4098
+
+      Etapas: modelo → mundo → cámara → proyección → pantalla
+      ```
+    errores:
+      - "Mezclar convenciones de fila y columna entre bibliotecas."
+      - "Aplicar la proyección antes que la transformación de vista."
+      - "Olvidar el plano de recorte cercano y dividir por z ≈ 0."
+    aplicacion: |
+      Motores de videojuegos, realidad aumentada, calibración de cámaras, robótica y
+      reconstrucción 3D.
+    referencias:
+      - "[Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/)"
+      - "[Akenine-Möller, Haines & Hoffman. *Real-Time Rendering*, 4ª ed., CRC Press, 2018](https://www.realtimerendering.com/)"
+
+  "080":
+    concepto: "El área de un polígono transformado es la original multiplicada por el valor absoluto del determinante."
+    formulas:
+      - "fórmula del cordón: A = ½|Σ(xᵢyᵢ₊₁ − xᵢ₊₁yᵢ)|"
+      - "A' = |det M| · A"
+    desarrollo: |
+      El capstone reúne las tres ideas centrales de la parte: una matriz es una
+      transformación, componerlas es multiplicarlas, y el determinante mide cómo cambian las
+      áreas. Se construye un motor mínimo que aplica una transformación compuesta a un
+      polígono y comprueba la relación entre áreas.
+
+      El área se calcula con la **fórmula del cordón** (o de Gauss), que suma productos
+      cruzados de vértices consecutivos. Es un resultado notable: el área de un polígono
+      arbitrario se obtiene recorriendo su frontera, sin necesidad de triangularlo. El signo
+      de la suma indica además el sentido del recorrido, información que se usa para detectar
+      orientación en geometría computacional.
+
+      La verificación central es que `área_transformada = |det M| · área_original`. Que se
+      cumpla para un cuadrado rotado y escalado no es sorprendente; que se cumpla para
+      **cualquier** polígono es el contenido geométrico del determinante, y comprobarlo
+      numéricamente cierra la parte con una relación que se usará en integración múltiple y en
+      transformación de densidades.
+
+      Un motor así, con unas pocas decenas de líneas, es el núcleo de cualquier sistema de
+      gráficos 2D. Lo que añaden las bibliotecas reales es rendimiento, antialiasing y
+      gestión de recursos; la matemática es exactamente esta.
+    ejemplo: |
+      Cuadrado unitario rotado 45° y escalado ×2.
+
+      ```text
+      polígono original: (0,0), (1,0), (1,1), (0,1)
+      área (cordón): 1.0
+
+      M = R(45°) · S(2)
+        = [[1.414, −1.414], [1.414, 1.414]]
+
+      polígono transformado:
+        (0,0), (1.414, 1.414), (0, 2.828), (−1.414, 1.414)
+
+      área transformada: 4.0
+      det M = 1.414² + 1.414² = 4.0
+
+      Verificación: 1.0 × |4.0| = 4.0     ✓
+      ```
+    errores:
+      - "Recorrer los vértices del polígono en orden no consecutivo al aplicar la fórmula del cordón."
+      - "Olvidar el valor absoluto y obtener áreas negativas."
+      - "Aplicar las transformaciones en el orden equivocado al componerlas."
+    aplicacion: |
+      Motores gráficos 2D, cálculo de áreas en SIG, detección de orientación de polígonos y
+      cambio de variable en integrales.
+    referencias:
+      - "[Shoelace formula — Wolfram MathWorld](https://mathworld.wolfram.com/PolygonArea.html)"
+      - "[de Berg, M. et al. *Computational Geometry*, 3ª ed., Springer, 2008](https://link.springer.com/book/10.1007/978-3-540-77974-2)"

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El radián es la unidad natural del ángulo: en ella, la derivada del seno es el coseno sin factores de conversión.**
 
-Esta clase concreta ese objetivo sobre **Ángulos y radianes**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `angles_radians`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar rotación y traslación en el orden equivocado.
+
+## 🧩 Fórmulas de la clase
+
+```text
+θ(rad) = θ(grados) · π/180
+vuelta completa = 2π rad = 360°
+d(sin x)/dx = cos x   solo si x está en radianes
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Toda rotación 2D es una matriz ortogonal de determinante 1.
+Un radián es el ángulo cuyo arco mide lo mismo que el radio. Esa definición hace que la
+longitud de arco sea simplemente `s = rθ`, sin constantes, y es el primer indicio de
+por qué el radián es «natural»: elimina factores arbitrarios.
+
+El motivo profundo aparece en cálculo. La derivada de `sin x` es `cos x` **únicamente**
+si x está en radianes; en grados, la derivada es `(π/180)·cos x`. Ese factor
+contaminaría cada derivada, cada serie de Taylor y cada ecuación diferencial. Por eso
+todas las bibliotecas matemáticas trabajan internamente en radianes, y `math.sin(90)`
+no devuelve 1 sino el seno de 90 radianes.
+
+El error de unidad angular es de los más frecuentes y de los más silenciosos: el
+resultado no lanza excepción, simplemente es incorrecto por un factor. La defensa es la
+misma que la clase 012 propuso: declarar la unidad en el nombre de la variable
+(`angulo_rad`, `angulo_deg`) y convertir explícitamente en las fronteras.
+
+La comprobación numérica que hace el laboratorio es directa: calcular la derivada de
+`sin` por diferencias finitas en un ángulo dado en radianes y verificar que coincide con
+el coseno de ese ángulo. Si se hiciera en grados, la discrepancia sería de un factor
+57.3.
+
+## 🧮 Ejemplo trabajado
+
+Verificar que d(sin)/dx = cos solo en radianes.
+
+```text
+30° = 30 · π/180 = 0.5236 rad = π/6
+
+Derivada numérica en x = 0.5236 rad:
+  (sin(x+h) − sin(x−h)) / 2h   con h = 1e−7
+  = 0.8660254
+
+cos(0.5236) = 0.8660254                      ✓ coinciden
+
+Si el ángulo se pasara en grados (x = 30):
+  d(sin)/dx en grados = (π/180)·cos(30°) = 0.01511
+  factor de discrepancia: 180/π = 57.3
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,16 @@ compmath run 062
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Pasar grados a una función trigonométrica que espera radianes.
+2. Convertir con 180/π donde correspondía π/180.
+3. No declarar la unidad angular en el nombre de la variable.
+
+## 🚀 Dónde se usa de verdad
+
+Toda la trigonometría computacional, rotaciones en gráficos y robótica, positional
+encoding de los Transformers (clase 323) y análisis de Fourier (parte 13).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Python: `math.radians` y `math.degrees`](https://docs.python.org/3/library/math.html#math.radians)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 15](https://www.mathpop.com/calculus)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

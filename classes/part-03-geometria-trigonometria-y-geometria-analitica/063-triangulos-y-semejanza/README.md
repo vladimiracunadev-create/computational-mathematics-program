@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**En figuras semejantes los ángulos se conservan, las longitudes escalan con k y las áreas con k².**
 
-Esta clase concreta ese objetivo sobre **Triángulos y semejanza**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `similar_triangles`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar normalizar antes de comparar direcciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+longitudes: L' = k·L
+áreas: A' = k²·A
+volúmenes: V' = k³·V
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> El producto punto mide alineación; la norma mide magnitud.
+Dos figuras son semejantes si tienen los mismos ángulos y sus lados son proporcionales.
+La consecuencia que sorprende es la ley de escalado: al multiplicar las longitudes por
+k, las áreas se multiplican por k² y los volúmenes por k³. Duplicar el tamaño de una
+figura cuadruplica su área y octuplica su volumen.
+
+Esta ley explica fenómenos aparentemente inconexos. Por qué los animales grandes tienen
+extremidades proporcionalmente más gruesas (el peso crece con el volumen, la resistencia
+del hueso con la sección); por qué una pizza de 40 cm tiene cuatro veces más superficie
+que una de 20; por qué duplicar la resolución de una imagen cuadruplica los píxeles y,
+con ellos, el coste de procesarla.
+
+En computación la ley de escalado es la que convierte una decisión aparentemente menor
+en un factor de coste. Pasar de imágenes de 224×224 a 448×448 no duplica el cómputo de
+una CNN: lo cuadruplica. Y en la atención de un Transformer, la memoria crece con el
+**cuadrado** de la longitud de secuencia, que es la razón de casi toda la investigación
+en atención eficiente.
+
+El criterio de semejanza AA —dos ángulos iguales bastan— es el que hace útil el
+concepto: permite deducir proporcionalidad de lados sin medirlos, y es la base de la
+trigonometría, donde las razones seno y coseno dependen solo del ángulo precisamente
+porque todos los triángulos rectángulos con ese ángulo son semejantes.
+
+## 🧮 Ejemplo trabajado
+
+Escalar un triángulo 3-4-5 por k = 2.5.
+
+```text
+original:   catetos 3 y 4, hipotenusa 5
+            perímetro 12,  área 6
+
+escalado:   catetos 7.5 y 10, hipotenusa 12.5
+            perímetro 30,  área 37.5
+
+razón de perímetros: 30/12  = 2.5  = k     ✓
+razón de áreas:      37.5/6 = 6.25 = k²    ✓
+
+Los ángulos no cambian: 36.87°, 53.13°, 90°
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 063
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Suponer que al duplicar las dimensiones se duplica el área.
+2. Comparar densidades o costes entre figuras de escalas distintas sin normalizar.
+3. Olvidar que la semejanza exige ángulos iguales, no solo proporción de algunos lados.
+
+## 🚀 Dónde se usa de verdad
+
+Coste de procesar imágenes según resolución, memoria cuadrática de la atención,
+escalado de mallas en gráficos y análisis dimensional en ingeniería.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Coxeter, H. S. M. *Introduction to Geometry*, 2ª ed., Wiley, 1989](https://www.wiley.com/en-us/Introduction+to+Geometry%2C+2nd+Edition-p-9780471504580)
+- [Haldane, J. B. S. *On Being the Right Size*, 1926](https://www.phys.ufl.edu/courses/phy3221/spring10/HaldaneRightSize.pdf)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

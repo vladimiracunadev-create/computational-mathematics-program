@@ -338,7 +338,8 @@ def _nivel_tag(nivel: str) -> str:
     return f'<span class="tag" style="color:{color}">{esc(nivel)}</span>'
 
 
-def _index(partes: List[Dict[str, Any]], catalogo: List[Dict[str, Any]]) -> str:
+def _index(partes: List[Dict[str, Any]], catalogo: List[Dict[str, Any]],
+           descargas: List[str]) -> str:
     totales = curriculum.totals()
     niveles = []
     vistos = set()
@@ -368,6 +369,18 @@ def _index(partes: List[Dict[str, Any]], catalogo: List[Dict[str, Any]]) -> str:
         f'{esc(f.stem.split("-", 1)[1].replace("-", " ").capitalize())}</a></li>'
         for f in sorted(rutas.glob("*.md"))
     ) if rutas.is_dir() else ""
+
+    botones = []
+    if "computational-mathematics-program-manual.pdf" in descargas:
+        botones.append('<a class="btn" href="downloads/computational-mathematics-program-manual.pdf">'
+                       "📄 Descargar PDF</a>")
+    if "computational-mathematics-program-manual.html" in descargas:
+        botones.append('<a class="btn ghost" href="downloads/computational-mathematics-program-manual.html">'
+                       "🌐 Ver en HTML</a>")
+    botones_descarga = " ".join(botones) or (
+        "<em>El manual todavía no se ha construido en esta copia del sitio. "
+        "Ejecuta <code>python scripts/build_manual.py</code> y vuelve a generarlo.</em>"
+    )
 
     contenido = f"""
 <div class="hero">
@@ -449,10 +462,7 @@ compmath validate --strict  # la misma validación que corre en CI</code></pre>
     <h2>Manual completo</h2>
     <p class="sub">Todo el programa en un solo documento: 18 partes, 360 clases, fundamentos,
     ejemplos trabajados y las salidas reales de cada laboratorio.</p>
-    <p>
-      <a class="btn" href="downloads/computational-mathematics-program-manual.pdf">📄 Descargar PDF</a>
-      <a class="btn ghost" href="downloads/computational-mathematics-program-manual.html">🌐 Ver en HTML</a>
-    </p>
+    <p>{botones_descarga}</p>
     <div class="callout">
       El manual se regenera en cada despliegue con
       <code>python scripts/build_manual.py</code>, ejecutando las 360 demostraciones para
@@ -684,7 +694,8 @@ def generar() -> int:
     (SITE / "data" / "catalog.json").write_text(
         json.dumps(catalogo, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
-    (SITE / "index.html").write_text(_index(partes, catalogo), encoding="utf-8")
+    descargas = _copiar_manual()
+    (SITE / "index.html").write_text(_index(partes, catalogo, descargas), encoding="utf-8")
     (SITE / "404.html").write_text(_404(), encoding="utf-8")
 
     for parte in partes:
@@ -727,8 +738,6 @@ def generar() -> int:
     sitemap += [f"  <url><loc>{u}</loc></url>" for u in urls]
     sitemap.append("</urlset>")
     (SITE / "sitemap.xml").write_text("\n".join(sitemap) + "\n", encoding="utf-8")
-
-    _copiar_manual()
 
     archivos = sum(1 for _ in SITE.rglob("*") if _.is_file())
     print(f"OK: sitio generado en site/ — {archivos} archivos, "

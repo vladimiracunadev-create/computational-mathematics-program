@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El teorema de Pitágoras y su recíproco caracterizan el ángulo recto; las ternas se generan sistemáticamente.**
 
-Esta clase concreta ese objetivo sobre **Teorema de Pitágoras**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `pythagoras`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar grados y radianes en la misma expresión.
+
+## 🧩 Fórmulas de la clase
+
+```text
+a² + b² = c²  ⟺  el triángulo es rectángulo
+generador: a = m²−n²,  b = 2mn,  c = m²+n²  (m > n > 0)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,49 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Componer transformaciones es multiplicar matrices, y el orden importa.
+El teorema de Pitágoras es la relación métrica más usada de toda la matemática
+computacional, aunque casi nunca se la llame por su nombre: cada vez que se calcula una
+norma euclídea, se está aplicando. Su recíproco es igual de útil: si `a² + b² = c²`,
+el triángulo **es** rectángulo, lo que da una prueba de perpendicularidad sin medir
+ángulos.
+
+Las ternas pitagóricas —tríos de enteros que lo cumplen— se generan con la fórmula de
+Euclides a partir de dos enteros m > n: `(m²−n², 2mn, m²+n²)`. Con m=2, n=1 sale la
+(3,4,5); con m=3, n=2 la (5,12,13). Que exista una parametrización completa es un
+resultado clásico de teoría de números, y conecta esta clase con la parte 04.
+
+La generalización a n dimensiones es directa: `‖v‖² = Σvᵢ²`. Y la generalización
+conceptual es aún más importante: en cualquier espacio con producto interno, si dos
+vectores son ortogonales entonces `‖u+v‖² = ‖u‖² + ‖v‖²`. Ese es el teorema de
+Pitágoras abstracto, y es lo que hace que la descomposición de la varianza en
+estadística funcione (clase 214) y que la proyección ortogonal sea la mejor
+aproximación (clase 119).
+
+Una precaución numérica: calcular `√(a² + b²)` directamente puede desbordar si a o b
+son grandes, aunque el resultado quepa. Por eso existe `math.hypot`, que reescala antes
+de elevar al cuadrado.
+
+## 🧮 Ejemplo trabajado
+
+Generar una terna y verificar el recíproco.
+
+```text
+Generador con m = 3, n = 2:
+  a = 9 − 4 = 5
+  b = 2·3·2 = 12
+  c = 9 + 4 = 13
+
+Verificación:  25 + 144 = 169 = 13²      ✓ rectángulo
+
+Contraejemplo:  triángulo 5-5-7
+  25 + 25 = 50 ≠ 49 = 7²                 ✗ no es rectángulo
+
+Precaución numérica:
+  √(1e200² + 1e200²) desborda
+  math.hypot(1e200, 1e200) = 1.414e200    ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 064
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Aplicar el teorema a un triángulo que no es rectángulo.
+2. Calcular √(a²+b²) directamente con valores grandes en lugar de usar hypot.
+3. Confundir el teorema (rectángulo ⟹ relación) con su recíproco (relación ⟹ rectángulo); ambos son ciertos, pero son afirmaciones distintas.
+
+## 🚀 Dónde se usa de verdad
+
+Norma euclídea, cálculo de distancias, verificación de ortogonalidad, descomposición de
+la varianza y el teorema de Pitágoras en espacios de Hilbert.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Python: `math.hypot`](https://docs.python.org/3/library/math.html#math.hypot)
+- [Maor, E. *The Pythagorean Theorem: A 4,000-Year History*. Princeton, 2007](https://press.princeton.edu/books/paperback/9780691196886/the-pythagorean-theorem)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

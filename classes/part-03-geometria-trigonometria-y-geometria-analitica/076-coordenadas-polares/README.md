@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**Las coordenadas polares describen un punto por distancia y ángulo; atan2 hace la conversión inversa correctamente.**
 
-Esta clase concreta ese objetivo sobre **Coordenadas polares**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `polar_coordinates`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar grados y radianes en la misma expresión.
+
+## 🧩 Fórmulas de la clase
+
+```text
+r = √(x²+y²),  θ = atan2(y, x)
+x = r·cos θ,  y = r·sin θ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,42 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> El radián no es una unidad decorativa: es la que hace que d(sin x)/dx = cos x.
+Elegir el sistema de coordenadas adecuado puede convertir un problema difícil en uno
+trivial. Una circunferencia en cartesianas es `x² + y² = r²`; en polares es simplemente
+`r = constante`. Los problemas con simetría radial —campos centrales, difusión desde un
+punto, patrones de radiación— se simplifican radicalmente al cambiar de coordenadas.
+
+La conversión de cartesianas a polares exige `atan2` por la razón de la clase 065: el
+cociente `y/x` no distingue cuadrantes opuestos. Con `atan2(y, x)` el ángulo sale
+correcto en los cuatro cuadrantes y en los ejes, incluido el caso `x = 0` que rompería
+la división.
+
+La conversión no es biyectiva sin restricciones: el ángulo está determinado salvo
+múltiplos de 2π, y el origen (r = 0) no tiene ángulo definido. Al implementar hay que
+decidir el rango del ángulo —habitualmente (−π, π]— y documentarlo, porque comparar
+ángulos de rangos distintos produce discrepancias.
+
+En dimensiones superiores el análogo son las coordenadas esféricas, y en la parte 09
+aparece el mismo cambio de variable al deducir la distribución normal multivariante. El
+jacobiano de la transformación —`r` en polares— es el factor que la clase 075 explicó.
+
+## 🧮 Ejemplo trabajado
+
+Convertir (−3, 4) a polares y volver.
+
+```text
+r = √(9 + 16) = 5
+θ = atan2(4, −3) = 2.2143 rad = 126.87°     (cuadrante II) ✓
+
+Vuelta a cartesianas:
+  x = 5·cos(2.2143) = −3.0
+  y = 5·sin(2.2143) =  4.0                  ✓ roundtrip exacto
+
+Con atan(4/−3) se habría obtenido −0.9273 rad = −53.13°,
+que es el cuadrante IV: incorrecto.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +104,16 @@ compmath run 076
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Usar atan en lugar de atan2 y perder el cuadrante.
+2. No declarar el rango del ángulo devuelto.
+3. Intentar definir el ángulo del origen.
+
+## 🚀 Dónde se usa de verdad
+
+Problemas con simetría radial, patrones de radiación, transformadas en coordenadas
+polares, robótica y representación de fase y magnitud en señales complejas.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +156,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Python: `math.atan2` y `cmath.polar`](https://docs.python.org/3/library/cmath.html#cmath.polar)
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 10](https://www.cengage.com/c/calculus-8e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

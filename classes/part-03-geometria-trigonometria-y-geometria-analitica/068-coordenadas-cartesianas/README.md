@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**Las coordenadas convierten preguntas geométricas en preguntas algebraicas.**
 
-Esta clase concreta ese objetivo sobre **Coordenadas cartesianas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `cartesian_coordinates`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar rotación y traslación en el orden equivocado.
+
+## 🧩 Fórmulas de la clase
+
+```text
+simetría respecto a x: (a, b) → (a, −b)
+simetría respecto a y: (a, b) → (−a, b)
+simetría respecto al origen: (a, b) → (−a, −b)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> El producto punto mide alineación; la norma mide magnitud.
+La idea de Descartes —identificar el plano con ℝ²— es probablemente la más productiva
+de la matemática moderna. Convierte la geometría en álgebra: una recta es una ecuación,
+una circunferencia es otra, y la intersección de dos figuras es la solución de un
+sistema. Sin ella no habría gráficos por computador ni análisis de datos.
+
+Los cuatro cuadrantes se numeran en sentido antihorario empezando por el de coordenadas
+positivas. Esa convención importa al interpretar `atan2`, cuyo signo depende del
+cuadrante, y al leer gráficas donde el eje y crece hacia abajo —convención habitual en
+pantallas e imágenes, que invierte el sentido de las rotaciones.
+
+Las simetrías se expresan como cambios de signo, y ese es el primer ejemplo de que una
+transformación geométrica es una operación algebraica sobre coordenadas. La reflexión
+respecto al eje x es la matriz `diag(1, −1)`, y su determinante negativo indica que
+invierte la orientación (clase 075).
+
+En machine learning el «espacio de features» es literalmente un espacio de coordenadas,
+y cada observación es un punto. Toda la intuición geométrica de esta parte —distancia,
+proyección, frontera— se traslada directamente allí, con la advertencia de la clase 061
+sobre la alta dimensión.
+
+## 🧮 Ejemplo trabajado
+
+Los cuatro cuadrantes y las simetrías.
+
+```text
+punto      cuadrante
+( 3,  2)       I
+(−3,  2)       II
+(−3, −2)       III
+( 3, −2)       IV
+
+Simetrías de (3, 2):
+  respecto al eje x:  ( 3, −2)
+  respecto al eje y:  (−3,  2)
+  respecto al origen: (−3, −2)
+
+Traslación (+1, −1): (3,2) → (4,1)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 068
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Olvidar que en pantallas e imágenes el eje y suele crecer hacia abajo.
+2. Numerar los cuadrantes en sentido horario.
+3. Confundir traslación (sumar) con escala (multiplicar).
+
+## 🚀 Dónde se usa de verdad
+
+Espacios de features, sistemas de coordenadas de pantalla frente a mundo, visualización
+de datos y transformaciones geométricas.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Descartes, R. *La Géométrie*, 1637 — contexto histórico](https://mathshistory.st-andrews.ac.uk/Biographies/Descartes/)
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

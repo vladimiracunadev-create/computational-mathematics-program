@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**La distancia de un punto a una recta es la misma fórmula que define el margen de una SVM.**
 
-Esta clase concreta ese objetivo sobre **Distancia punto-recta**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `point_line_distance`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar grados y radianes en la misma expresión.
+
+## 🧩 Fórmulas de la clase
+
+```text
+d = |Ax₀ + By₀ + C| / √(A² + B²)
+pie de perpendicular: p − ((Ap₁+Bp₂+C)/(A²+B²))·(A,B)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Las coordenadas homogéneas convierten la traslación en multiplicación.
+La distancia de un punto a una recta es la longitud del segmento perpendicular que los
+une, y esa longitud tiene fórmula cerrada. El numerador `|Ax₀ + By₀ + C|` mide cuánto
+«falla» el punto la ecuación de la recta; el denominador `√(A²+B²)` normaliza por la
+longitud del vector normal, para que el resultado sea una distancia y no dependa de
+cómo se escaló la ecuación.
+
+Esa normalización es exactamente lo que ocurre en una SVM. El margen geométrico de un
+punto respecto al hiperplano `wᵀx + b = 0` es `|wᵀx + b| / ‖w‖`, la misma expresión.
+Maximizar el margen equivale entonces a minimizar `‖w‖` sujeto a que todos los puntos
+queden bien clasificados, que es precisamente el problema de la clase 289.
+
+El **pie de perpendicular** es el punto de la recta más cercano, y calcularlo es
+proyectar. La comprobación es doble: el pie debe satisfacer la ecuación de la recta, y
+la distancia del punto al pie debe coincidir con la fórmula. El laboratorio verifica
+ambas cosas.
+
+La generalización a un hiperplano en ℝⁿ es inmediata y no requiere ideas nuevas: la
+fórmula es idéntica con más términos. Esa es la ventaja de haber escrito la recta en
+forma general en lugar de explícita.
+
+## 🧮 Ejemplo trabajado
+
+Distancia del punto (2,7) a la recta 3x − 4y + 5 = 0.
+
+```text
+numerador:   |3·2 − 4·7 + 5| = |6 − 28 + 5| = 17
+denominador: √(9 + 16) = 5
+distancia:   17/5 = 3.4
+
+Pie de perpendicular:
+  t = (3·2 − 4·7 + 5)/(9+16) = −17/25 = −0.68
+  pie = (2 − 3·(−0.68), 7 − (−4)·(−0.68)) = (4.04, 4.28)
+
+Verificaciones:
+  3·4.04 − 4·4.28 + 5 = 0        ✓ el pie está en la recta
+  dist((2,7), (4.04,4.28)) = 3.4  ✓ coincide con la fórmula
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +107,16 @@ compmath run 070
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Olvidar el valor absoluto en el numerador y obtener distancias negativas.
+2. No normalizar por √(A²+B²): el resultado deja de ser una distancia.
+3. Suponer que la fórmula solo vale en 2D: se generaliza sin cambios.
+
+## 🚀 Dónde se usa de verdad
+
+Margen de una SVM, detección de colisiones, clustering basado en distancia a fronteras y
+métricas de separabilidad.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Cortes, C.; Vapnik, V. *Support-Vector Networks*. Machine Learning, 1995](https://link.springer.com/article/10.1007/BF00994018)
+- [Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., Cambridge, 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El pipeline geométrico encadena modelo, mundo, cámara y pantalla como una composición de transformaciones.**
 
-Esta clase concreta ese objetivo sobre **Aplicaciones en visión, robótica y videojuegos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `applications_pipeline`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar grados y radianes en la misma expresión.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x_pantalla = Proyección · Vista · Modelo · x_local
+perspectiva final: (f·x/z, f·y/z)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,48 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Componer transformaciones es multiplicar matrices, y el orden importa.
+Todo sistema que dibuja o interpreta escenas tridimensionales ejecuta la misma
+secuencia de cambios de coordenadas. El objeto se define en su **espacio local**; una
+matriz de modelo lo coloca en el **mundo**; una matriz de vista lo lleva al sistema de
+la **cámara**; y una proyección lo pasa a **pantalla**. Cada etapa es una
+transformación, y componerlas es multiplicar sus matrices.
+
+La ventaja de esta arquitectura es de reutilización: un mismo modelo 3D se puede colocar
+cien veces en la escena cambiando solo la matriz de modelo, sin tocar sus vértices. Y la
+composición se calcula una vez por objeto, no una vez por vértice.
+
+El orden de multiplicación es la fuente inagotable de errores, y no hay atajo: hay que
+fijar una convención (fila o columna, premultiplicar o posmultiplicar) y respetarla en
+todo el sistema. Las bibliotecas difieren entre sí, y mezclar dos convenciones produce
+escenas que se ven «casi bien».
+
+El mismo pipeline, recorrido al revés, es el problema de la visión artificial:
+dada una imagen, recuperar la geometría de la escena. Ahí la división por z se convierte
+en la ambigüedad fundamental —no se puede distinguir un objeto pequeño y cercano de uno
+grande y lejano sin información adicional— y de ahí nacen la estereovisión y la
+estructura a partir del movimiento.
+
+## 🧮 Ejemplo trabajado
+
+Un punto recorriendo las cuatro etapas.
+
+```text
+1. espacio modelo:   (1, 1, 1)
+
+2. rotación 30° en Z → mundo:
+   (0.366, 1.366, 1.0)
+
+3. cámara desplazada 4 en Z:
+   (0.366, 1.366, 5.0)
+
+4. proyección con f = 1.5:
+   x' = 1.5·0.366/5 = 0.1098
+   y' = 1.5·1.366/5 = 0.4098
+
+Etapas: modelo → mundo → cámara → proyección → pantalla
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 079
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Mezclar convenciones de fila y columna entre bibliotecas.
+2. Aplicar la proyección antes que la transformación de vista.
+3. Olvidar el plano de recorte cercano y dividir por z ≈ 0.
+
+## 🚀 Dónde se usa de verdad
+
+Motores de videojuegos, realidad aumentada, calibración de cámaras, robótica y
+reconstrucción 3D.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/)
+- [Akenine-Möller, Haines & Hoffman. *Real-Time Rendering*, 4ª ed., CRC Press, 2018](https://www.realtimerendering.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

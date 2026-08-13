@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**La distancia euclídea es una de varias métricas posibles; cuál se elige cambia qué está cerca.**
 
-Esta clase concreta ese objetivo sobre **Puntos, segmentos y distancias**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `distances`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar grados y radianes en la misma expresión.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L2: d(p,q) = √Σ(pᵢ−qᵢ)²
+L1: d(p,q) = Σ|pᵢ−qᵢ|
+L∞: d(p,q) = máx|pᵢ−qᵢ|
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> El radián no es una unidad decorativa: es la que hace que d(sin x)/dx = cos x.
+Una distancia no es «la» distancia: es cualquier función que cumpla tres condiciones
+—no negatividad con `d(p,q)=0` solo si `p=q`, simetría y desigualdad triangular—. Bajo
+esa definición, la euclídea es una entre muchas, y elegir una u otra cambia qué puntos
+se consideran cercanos.
+
+Las tres más usadas tienen interpretación directa. La **euclídea (L2)** es la línea
+recta: la que mediría una regla. La **Manhattan (L1)** es la distancia por calles en
+cuadrícula, y su nombre viene de ahí. La **Chebyshev (L∞)** es el máximo de las
+diferencias por coordenada: el movimiento del rey en ajedrez.
+
+Siempre se cumple `L∞ ≤ L2 ≤ L1`, hecho que conviene comprobar numéricamente porque da
+una intuición útil: L1 penaliza más el total de desviaciones, L∞ solo mira la peor. Esa
+diferencia reaparece en la parte 14 como la diferencia entre regularización Lasso (L1)
+y Ridge (L2), y en la 15 entre pérdida MAE y MSE.
+
+En alta dimensión la intuición euclídea falla. Todas las distancias entre puntos
+aleatorios se concentran alrededor de un valor común, y la noción de «vecino más
+cercano» pierde significado. Es la maldición de la dimensionalidad, y es la razón por
+la que en embeddings se usa similitud coseno en lugar de distancia euclídea.
+
+## 🧮 Ejemplo trabajado
+
+Tres distancias entre p = (1,2) y q = (4,6).
+
+```text
+diferencias: (3, 4)
+
+L2 (euclídea):  √(9 + 16) = √25 = 5.0
+L1 (Manhattan): |3| + |4|       = 7.0
+L∞ (Chebyshev): máx(3, 4)       = 4.0
+
+Orden:  L∞ (4) ≤ L2 (5) ≤ L1 (7)      ✓
+
+Punto medio: ((1+4)/2, (2+6)/2) = (2.5, 4.0)
+```
+
+El triángulo (3,4,5) no es casual: es la terna pitagórica más simple, tema de la
+clase 064.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 061
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Suponer que «distancia» siempre significa euclídea.
+2. Comparar distancias entre variables de escalas distintas sin estandarizar.
+3. Confiar en la intuición euclídea de 2D o 3D al trabajar en dimensión 768.
+
+## 🚀 Dónde se usa de verdad
+
+k-NN y k-means (parte 14), detección de anomalías, búsqueda de vecinos en embeddings y
+elección de norma en regularización.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Aggarwal, Hinneburg & Keim. *On the Surprising Behavior of Distance Metrics in High Dimensional Space*. ICDT, 2001](https://bib.dbvis.de/uploadedFiles/155.pdf)
+- [Python: `math.dist`](https://docs.python.org/3/library/math.html#math.dist)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**La forma general Ax + By + C = 0 es la misma expresión que la frontera de decisión de un clasificador lineal.**
 
-Esta clase concreta ese objetivo sobre **Pendiente y ecuación de la recta**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `line_equation`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar normalizar antes de comparar direcciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+explícita: y = mx + b
+general: Ax + By + C = 0
+perpendicular: m⊥ = −1/m
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,47 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Componer transformaciones es multiplicar matrices, y el orden importa.
+Una recta admite varias escrituras y cada una sirve para algo distinto. La forma
+**explícita** `y = mx + b` es cómoda para evaluar y graficar, pero no puede representar
+rectas verticales (pendiente infinita). La forma **general** `Ax + By + C = 0` no tiene
+esa limitación y es la que se usa en geometría computacional.
+
+La forma general tiene además una lectura vectorial importante: el vector `(A, B)` es
+**normal** a la recta, es decir, perpendicular a ella. Y esa observación es la que
+conecta esta clase con machine learning: la frontera de decisión de un clasificador
+lineal es `wᵀx + b = 0`, exactamente la misma ecuación, donde `w` es el vector normal.
+El signo de `wᵀx + b` dice de qué lado cae un punto, que es literalmente la predicción.
+
+La condición de perpendicularidad `m·m⊥ = −1` se deduce de que los vectores directores
+deben tener producto punto nulo. Es un caso particular de ortogonalidad, concepto que la
+parte 05 generaliza a cualquier dimensión.
+
+Calcular la pendiente entre dos puntos exige cuidado numérico: si las abscisas son casi
+iguales, la resta del denominador sufre cancelación (clase 032) y la pendiente resultante
+es ruido. En geometría computacional se prefiere la forma general precisamente por eso.
+
+## 🧮 Ejemplo trabajado
+
+Recta por (1,2) y (5,10).
+
+```text
+pendiente:  m = (10 − 2)/(5 − 1) = 2
+intercepto: b = 2 − 2·1 = 0
+
+explícita: y = 2x
+general:   2x − y + 0 = 0        →  A = 2, B = −1, C = 0
+
+Verificación en (1,2):  2·1 − 1·2 + 0 = 0    ✓
+
+Vector normal: (2, −1)
+Pendiente perpendicular: −1/2
+
+Lectura en ML:
+  w = (2, −1),  b = 0
+  clasificador: signo(wᵀx + b)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 069
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Usar la forma explícita para rectas verticales.
+2. Calcular la pendiente con abscisas casi iguales sin considerar la cancelación.
+3. Confundir el vector normal (A,B) con el vector director (B,−A).
+
+## 🚀 Dónde se usa de verdad
+
+Fronteras de decisión lineales, detección de colisiones, ajuste de rectas y geometría
+computacional en general.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., 2009, cap. 4](https://hastie.su.domains/ElemStatLearn/)
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

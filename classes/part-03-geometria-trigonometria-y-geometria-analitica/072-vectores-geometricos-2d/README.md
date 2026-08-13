@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El producto punto mide alineación; la norma mide magnitud; juntos dan el ángulo.**
 
-Esta clase concreta ese objetivo sobre **Vectores geométricos 2D**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `vectors_2d`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar normalizar antes de comparar direcciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+u·v = Σuᵢvᵢ = ‖u‖‖v‖cos θ
+‖u‖ = √(u·u)
+u ⊥ v  ⟺  u·v = 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Toda rotación 2D es una matriz ortogonal de determinante 1.
+Un vector admite dos lecturas que conviene mantener a la vez: es una lista de números y
+es una flecha con dirección y magnitud. El producto punto conecta ambas: definido
+algebraicamente como suma de productos componente a componente, resulta ser
+geométricamente `‖u‖‖v‖cos θ`. Esa identidad es la que convierte el álgebra en
+geometría.
+
+De ella se lee todo lo demás. Si el producto punto es positivo, los vectores apuntan
+hacia el mismo semiespacio; si es cero, son **ortogonales**; si es negativo, se oponen.
+La ortogonalidad como «producto punto nulo» es la definición que se generaliza a
+cualquier dimensión, donde el concepto de «ángulo recto» ya no es visualizable.
+
+Normalizar un vector —dividirlo por su norma— separa dirección de magnitud. Comparar
+direcciones exige normalizar primero, y esa operación es exactamente la que define la
+**similitud coseno**, la métrica estándar entre embeddings (clase 322). Comparar sin
+normalizar mezcla «de qué habla» con «cuánto texto es», que casi nunca es lo que se
+quiere.
+
+Este es el punto donde la parte 03 entrega el testigo a la parte 05: todo lo dicho aquí
+en dos dimensiones vale sin cambios en 768, con la salvedad de que la intuición visual
+deja de funcionar y hay que confiar en el álgebra.
+
+## 🧮 Ejemplo trabajado
+
+Dos vectores perpendiculares.
+
+```text
+u = (3, 4),  v = (−4, 3)
+
+‖u‖ = √(9+16) = 5
+‖v‖ = √(16+9) = 5
+
+u·v = 3·(−4) + 4·3 = −12 + 12 = 0     → ortogonales ✓
+
+cos θ = 0/(5·5) = 0  →  θ = 90°
+
+u normalizado: (0.6, 0.8),  norma = 1.0    ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,16 @@ compmath run 072
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Comparar direcciones sin normalizar los vectores.
+2. Confundir el producto punto (escalar) con el producto componente a componente (vector).
+3. Calcular el ángulo con acos sin acotar el argumento a [−1,1]: el redondeo puede sacarlo del dominio.
+
+## 🚀 Dónde se usa de verdad
+
+Similitud coseno entre embeddings, proyecciones, detección de ortogonalidad, iluminación
+en gráficos (producto punto entre normal y dirección de luz) y capas densas.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)
+- [3Blue1Brown. *Essence of Linear Algebra*](https://www.3blue1brown.com/topics/linear-algebra)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

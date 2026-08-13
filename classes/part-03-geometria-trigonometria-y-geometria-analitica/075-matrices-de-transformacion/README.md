@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El valor absoluto del determinante es el factor por el que la transformación multiplica las áreas; su signo indica si invierte la orientación.**
 
-Esta clase concreta ese objetivo sobre **Matrices de transformación**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `transform_matrices`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar normalizar antes de comparar direcciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+área transformada = |det M| · área original
+det R = 1 (rotación),  det S = sx·sy (escala),  det F = −1 (reflexión)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,44 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Las coordenadas homogéneas convierten la traslación en multiplicación.
+El determinante de una matriz 2×2 tiene una interpretación geométrica precisa: es el
+área con signo del paralelogramo que forman sus columnas. Como las columnas son las
+imágenes de los vectores de la base —que forman un cuadrado de área 1—, el determinante
+es exactamente el factor por el que la transformación escala las áreas.
+
+El **signo** aporta información adicional: si es negativo, la transformación invierte la
+orientación, es decir, convierte un recorrido antihorario en horario. Las reflexiones
+tienen determinante negativo; las rotaciones, positivo. Un determinante **nulo**
+significa que la transformación aplasta el plano sobre una recta o un punto: pierde
+información y no es invertible.
+
+Esta lectura hace comprensible por qué `det(AB) = det(A)·det(B)`: aplicar dos
+transformaciones escala el área por el producto de sus factores. Y por qué una matriz
+con determinante cero no tiene inversa: no se puede recuperar un área a partir de algo
+que quedó aplastado.
+
+La generalización a n dimensiones es directa: el determinante es el factor de escalado
+del volumen n-dimensional. Ese hecho es el que aparece en el cambio de variable de una
+integral múltiple (clase 173) y en el jacobiano de una transformación de variables
+aleatorias, donde el determinante corrige la densidad.
+
+## 🧮 Ejemplo trabajado
+
+Tres transformaciones y su determinante.
+
+```text
+Rotación 45°:   det = 1        preserva área, mantiene orientación
+Escala ×2:      det = 4        cuadruplica el área (2·2)
+Reflexión en x: det = −1       preserva área, INVIERTE orientación
+
+Composición R·S aplicada a (1,1):
+  primero escala ×2 → (2,2)
+  luego rota 45°    → (0, 2.83)
+
+det(R·S) = det(R)·det(S) = 1·4 = 4     ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +106,16 @@ compmath run 075
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Ignorar el signo del determinante y perder la información de orientación.
+2. Suponer que determinante cero significa «error» en lugar de «transformación no invertible».
+3. Confundir el determinante con la traza.
+
+## 🚀 Dónde se usa de verdad
+
+Cambio de variable en integrales múltiples, jacobiano en transformaciones de
+distribuciones, detección de degeneración en geometría computacional y normalizing flows.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 5](https://math.mit.edu/~gs/linearalgebra/)
+- [3Blue1Brown. *The determinant*](https://www.3blue1brown.com/lessons/determinant)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

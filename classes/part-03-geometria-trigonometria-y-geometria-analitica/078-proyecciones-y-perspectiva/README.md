@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**La perspectiva divide por la profundidad, y esa división es lo que hace que los objetos lejanos se vean pequeños.**
 
-Esta clase concreta ese objetivo sobre **Proyecciones y perspectiva**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `projection`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar normalizar antes de comparar direcciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+proyección ortogonal sobre u: proj_u(x) = (x·u/u·u)·u
+perspectiva: x' = f·x/z,  y' = f·y/z
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> El producto punto mide alineación; la norma mide magnitud.
+Hay dos proyecciones distintas y conviene no mezclarlas. La **proyección ortogonal**
+sobre una dirección es una operación lineal que descompone un vector en una componente
+paralela y otra perpendicular. Es la base de PCA (clase 135), de mínimos cuadrados
+(clase 119) y de cualquier «cuánto de esta dirección hay en este vector».
+
+La **proyección en perspectiva** es otra cosa: divide las coordenadas por la
+profundidad, y por eso **no es lineal**. Es la que reproduce cómo vemos: dos objetos del
+mismo tamaño a distancias distintas ocupan ángulos distintos en la retina. La división
+por z es exactamente lo que hace que las vías del tren converjan en el horizonte.
+
+La proyección ortogonal viene acompañada de un teorema de Pitágoras: si `x = p + r` con
+`p` la proyección y `r` el residuo ortogonal, entonces `‖x‖² = ‖p‖² + ‖r‖²`. Comprobar
+esa identidad es la verificación estándar de que una proyección se calculó bien, y el
+laboratorio la incluye.
+
+Que la perspectiva no sea lineal explica por qué las coordenadas homogéneas de la
+clase 073 son imprescindibles en gráficos: la división por z se difiere hasta el final
+(la «división de perspectiva») y todo lo anterior se mantiene como productos de
+matrices.
+
+## 🧮 Ejemplo trabajado
+
+Proyección ortogonal y perspectiva.
+
+```text
+Ortogonal de v = (4,3) sobre u = (1,0):
+  coef = (v·u)/(u·u) = 4/1 = 4
+  proyección = (4, 0)
+  residuo    = (0, 3)
+  residuo·u  = 0                    ✓ ortogonal
+  Pitágoras: 25 = 16 + 9            ✓
+
+Perspectiva con f = 2, z = 5:
+  x' = 2·4/5 = 1.6
+  el mismo punto a z = 10 daría 0.8
+  → al doblar la distancia, el tamaño se reduce a la mitad
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +107,16 @@ compmath run 078
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Confundir proyección ortogonal (lineal) con perspectiva (no lineal).
+2. Olvidar dividir por (u·u) cuando u no es unitario.
+3. Dividir por z sin comprobar que es no nulo (plano de recorte cercano).
+
+## 🚀 Dónde se usa de verdad
+
+Pipeline gráfico, calibración de cámaras, PCA, mínimos cuadrados y descomposición
+ortogonal en general.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 4](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

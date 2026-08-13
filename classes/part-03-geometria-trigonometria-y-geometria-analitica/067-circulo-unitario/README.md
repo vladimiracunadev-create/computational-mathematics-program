@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
+**El círculo unitario extiende seno y coseno a cualquier ángulo real y muestra su periodicidad y paridad.**
 
-Esta clase concreta ese objetivo sobre **Círculo unitario**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Del espacio a las coordenadas: distancia, ángulo, trigonometría, transformaciones lineales en el plano, coordenadas polares y proyección.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `unit_circle`.
 4. Interpretar las 5 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar grados y radianes en la misma expresión.
+
+## 🧩 Fórmulas de la clase
+
+```text
+punto del círculo: (cos θ, sin θ)
+periodo: sin(θ + 2π) = sin θ
+paridad: sin(−θ) = −sin θ,  cos(−θ) = cos θ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,47 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 03"]
 ```
 
-## 🧠 Idea rectora de la parte 03
+## 📖 Fundamentos
 
-> Toda rotación 2D es una matriz ortogonal de determinante 1.
+El triángulo rectángulo solo define las razones trigonométricas para ángulos entre 0 y
+90°. El círculo unitario las extiende a **cualquier** número real: el punto que resulta
+de recorrer un arco de longitud θ desde (1,0) tiene coordenadas `(cos θ, sin θ)`, y esa
+definición funciona para ángulos negativos, mayores que una vuelta o irracionales.
+
+De esa definición se leen dos propiedades sin cálculo. La **periodicidad**: dar una
+vuelta completa devuelve al mismo punto, así que `sin(θ + 2π) = sin θ`. Y la
+**paridad**: reflejar respecto al eje x cambia el signo de la ordenada pero no de la
+abscisa, así que el seno es impar y el coseno es par.
+
+La periodicidad tiene una consecuencia práctica que conviene tener presente: los
+ángulos no son comparables directamente. La diferencia entre 359° y 1° es de 2°, no de
+358°. Calcular diferencias angulares exige normalizar al rango (−π, π], y olvidarlo
+produce saltos bruscos en robótica y en seguimiento de orientación.
+
+La tabla de valores notables —0, 90, 180, 270, 360— conviene poder reconstruirla
+mirando el círculo en lugar de memorizarla: en 90° el punto es (0,1), así que el coseno
+es 0 y el seno 1. Numéricamente hay un detalle: `cos(π/2)` no da exactamente 0 sino
+6.1e−17, porque π/2 no es representable exactamente.
+
+## 🧮 Ejemplo trabajado
+
+Coordenadas en los ángulos notables.
+
+```text
+ángulo    (cos, sin)
+  0°      ( 1,  0)
+ 90°      ( 0,  1)
+180°      (−1,  0)
+270°      ( 0, −1)
+360°      ( 1,  0)      ← igual que 0°: periodo 2π
+
+Paridad:
+  sin(−1) = −0.841471 = −sin(1)     ✓ impar
+  cos(−1) =  0.540302 =  cos(1)     ✓ par
+
+Detalle numérico: cos(π/2) = 6.12e−17, no exactamente 0
+(π/2 no es representable en float64)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 067
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Mezclar grados y radianes en la misma expresión.
-- Aplicar rotación y traslación en el orden equivocado.
-- Olvidar normalizar antes de comparar direcciones.
+1. Restar ángulos sin normalizar el resultado al rango (−π, π].
+2. Esperar que cos(π/2) sea exactamente 0.
+3. Limitar la definición de seno y coseno a ángulos agudos.
+
+## 🚀 Dónde se usa de verdad
+
+Orientación en robótica, ángulos de fase en señales, animación cíclica y cualquier
+fenómeno periódico. La periodicidad es la propiedad que explota Fourier.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
-- Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
-- Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+- [Gelfand, I. M.; Saul, M. *Trigonometry*. Birkhäuser, 2001](https://link.springer.com/book/10.1007/978-1-4612-0149-8)
+- [Python: `math.fmod` y normalización de ángulos](https://docs.python.org/3/library/math.html#math.fmod)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
