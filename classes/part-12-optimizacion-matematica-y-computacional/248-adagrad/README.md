@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**AdaGrad da pasos grandes a coordenadas poco vistas, pero su acumulador nunca olvida.**
 
-Esta clase concreta ese objetivo sobre **AdaGrad**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `adagrad`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar weight decay dentro del gradiente en adam (y no como adamw).
+
+## 🧩 Fórmulas de la clase
+
+```text
+Gₖ = Gₖ₋₁ + ∇f(xₖ)²   (por coordenada)
+xₖ₊₁ = xₖ − lr·∇f(xₖ) / (√Gₖ + ε)
+el paso decrece monótonamente
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Momentum promedia gradientes; Adam además normaliza por su escala.
+AdaGrad abandona la idea de un learning rate único para todas las coordenadas. Acumula
+para cada una la suma de sus gradientes al cuadrado y divide el paso por su raíz. Las
+coordenadas con gradientes históricamente grandes reciben pasos pequeños; las que apenas
+se han movido reciben pasos grandes.
+
+Esto resuelve un problema real en datos **dispersos**. En procesamiento de lenguaje, unas
+pocas palabras aparecen constantemente y la mayoría casi nunca. Con learning rate único,
+los embeddings de las palabras raras apenas se actualizan. AdaGrad les da pasos grandes
+precisamente porque han acumulado poco, y por eso funcionó tan bien en su momento.
+
+El defecto es estructural y no tiene arreglo dentro del método: el acumulador es una suma
+de términos no negativos y por tanto **solo crece**. El paso efectivo decrece
+monótonamente hacia cero, y en entrenamientos largos el aprendizaje se detiene aunque el
+modelo esté lejos del óptimo. No es un problema de ajuste; es una consecuencia de la
+fórmula.
+
+El diagnóstico de ese defecto llevó directamente a RMSProp, que sustituye la suma por una
+media móvil exponencial y por tanto **olvida** el pasado lejano. AdaGrad conserva interés
+histórico y sigue siendo razonable en problemas convexos dispersos con horizontes cortos.
+
+## 🧮 Ejemplo trabajado
+
+Evolución del tamaño de paso a lo largo de las iteraciones.
+
+```text
+lr base = 0,5
+
+iteración    tamaño de paso efectivo
+     1            0,7071
+    50            0,1004
+   100            0,0710
+   200            0,0502
+
+El paso cae como 1/√k y no vuelve a subir nunca.
+
+Resultado sobre x² + 20y²:
+  x final = (−0,0 ; 2,2e-07)     f final = 1e-12
+
+Aquí converge porque el problema es fácil y corto.
+En un entrenamiento de 100 000 pasos, el paso efectivo
+caería a menos del 1 % del inicial.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 248
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Usar AdaGrad en entrenamientos largos de redes profundas.
+2. Aumentar el learning rate base para compensar el decaimiento, sin resolver la causa.
+3. Omitir ε y provocar división por cero en coordenadas nunca actualizadas.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos con datos dispersos, embeddings de vocabularios grandes, sistemas de recomendación
+y problemas convexos con horizonte corto.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Duchi, J.; Hazan, E.; Singer, Y. *Adaptive subgradient methods*, JMLR, 2011](https://jmlr.org/papers/v12/duchi11a.html)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

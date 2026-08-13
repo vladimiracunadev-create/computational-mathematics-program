@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**En Adam, sumar L2 al gradiente no es lo mismo que decaer el peso: AdamW los separa.**
 
-Esta clase concreta ese objetivo sobre **AdamW**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `adamw`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar weight decay dentro del gradiente en adam (y no como adamw).
+
+## 🧩 Fórmulas de la clase
+
+```text
+Adam + L2:  g ← g + λ·w,  luego se divide por √v̂
+AdamW:  xₖ₊₁ = xₖ − lr·m̂/(√v̂+ε) − lr·λ·xₖ
+en SGD ambas formas coinciden; en Adam no
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> En un problema convexo todo mínimo local es global; fuera de él no hay garantía.
+En el descenso de gradiente clásico, añadir `λ‖w‖²` al objetivo y decaer los pesos
+multiplicándolos por `(1 − lr·λ)` son operaciones **idénticas**. Esa equivalencia es tan
+familiar que se dio por válida también en Adam durante años, y era falsa.
+
+La razón es el escalado adaptativo. En Adam, el término `λ·w` que se suma al gradiente pasa
+por la división entre `√v̂`, igual que el resto del gradiente. El resultado es que los
+pesos con gradientes históricamente grandes reciben **menos** regularización, exactamente
+al revés de lo que se pretendía. La intensidad de la regularización pasa a depender del
+historial de gradientes de cada coordenada.
+
+**AdamW** aplica el decaimiento directamente sobre el peso, fuera del mecanismo adaptativo.
+Cada parámetro recibe la misma proporción de decaimiento independientemente de su
+gradiente, que es lo que se quería desde el principio. El cambio en el código es de una
+línea; el efecto en el rendimiento fue lo bastante grande como para convertirlo en el
+estándar.
+
+Hoy AdamW es el optimizador por defecto para transformers y modelos de lenguaje. La lección
+metodológica va más allá del caso: una equivalencia válida en un algoritmo puede romperse
+en otro, y trasladar intuiciones sin verificarlas cuesta caro. Este error concreto estuvo
+en producción desde 2015 hasta 2019.
+
+## 🧮 Ejemplo trabajado
+
+Mismo objetivo y mismo weight decay, dos implementaciones.
+
+```text
+objetivo: (x−3)² + (y−4)²        óptimo sin regularizar: (3, 4)
+weight decay λ = 0,05
+
+Adam con L2 dentro del gradiente:
+  solución = (2,926829 ; 3,902440)      norma = 4,87805
+
+AdamW con decay desacoplado:
+  solución = (2,918662 ; 3,830002)      norma = 4,80800
+
+AdamW regulariza más y de forma uniforme.
+
+La diferencia crece con la dispersión de los gradientes:
+aquí es del 1,4 %, en un transformer real es suficiente
+para cambiar la calidad del modelo de forma medible.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 251
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Usar el argumento weight_decay de Adam creyendo que equivale a AdamW.
+2. Aplicar decaimiento a los parámetros de normalización y a los sesgos.
+3. Trasladar equivalencias de SGD a optimizadores adaptativos sin comprobarlas.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de transformers, ajuste fino de modelos de lenguaje, recetas de
+regularización moderna y reproducción de resultados publicados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*, ICLR, 2019](https://arxiv.org/abs/1711.05101)
+- [Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

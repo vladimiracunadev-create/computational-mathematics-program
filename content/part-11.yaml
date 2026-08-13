@@ -1,0 +1,1307 @@
+part: "11"
+titulo: "Métodos numéricos y computación científica"
+
+resumen_extendido: |
+  Casi ninguna ecuación interesante tiene solución en forma cerrada. No hay fórmula para las
+  raíces de un polinomio de grado cinco, ni para la integral de `e^(−x²)`, ni para la mayoría
+  de las ecuaciones diferenciales que describen el mundo físico. Los métodos numéricos son la
+  respuesta a ese hecho: **aproximar con error controlado** en vez de resolver exactamente.
+
+  La palabra clave es controlado. Un método numérico sin estimación de error es un generador de
+  números plausibles, y la diferencia entre un resultado y un número plausible es exactamente
+  lo que esta parte enseña a establecer. Por eso la clase 221 abre con la tensión que gobierna
+  todo lo demás: el **error de truncamiento** baja al reducir el paso `h`, pero el **error de
+  redondeo** sube, y existe un `h` óptimo por debajo del cual afinar más empeora el resultado.
+  Es la parte 01 reapareciendo con consecuencias prácticas.
+
+  Las clases 222 a 224 buscan raíces. Bisección es lenta pero **garantizada**: si hay cambio de
+  signo, converge siempre. Newton es cuadrático —duplica los dígitos correctos en cada paso—
+  pero solo cerca de la raíz, necesita la derivada y puede divergir espectacularmente desde un
+  mal punto inicial. La secante renuncia a la derivada a cambio de un orden 1,618, el número
+  áureo, y suele ser el mejor compromiso práctico.
+
+  Las clases 225 a 230 tratan de reconstruir funciones y de integrarlas. El **fenómeno de
+  Runge** es la lección central: subir el grado del polinomio interpolador no mejora la
+  aproximación, la empeora, con oscilaciones cada vez más violentas cerca de los extremos. La
+  solución no es más grado sino trozos pequeños, y de ahí salen los splines. En integración
+  aparece el concepto de **orden**: el trapecio es `O(h²)` y duplicar los subintervalos divide
+  el error por 4; Simpson es `O(h⁴)` y lo divide por 16; la cuadratura gaussiana consigue con
+  tres nodos lo que al trapecio le cuesta cientos.
+
+  Las clases 231 a 234 vuelven al álgebra lineal, ahora desde el punto de vista computacional.
+  Los métodos directos como LU resuelven en un número fijo de operaciones; los iterativos como
+  Jacobi y Gauss-Seidel se acercan progresivamente y son los únicos viables en sistemas
+  enormes y dispersos. Aquí aparece la disciplina de los **criterios de parada**: tolerancia
+  relativa, residuo y tope de iteraciones, los tres a la vez, siempre declarados.
+
+  Las clases 235 a 238 resuelven ecuaciones diferenciales. Euler es el método más simple y el
+  peor: orden 1, error que solo se reduce a la mitad al duplicar el trabajo. RK4 cuesta cuatro
+  evaluaciones por paso y es de orden 4, lo que en la práctica significa que **RK4 con 5 pasos
+  supera a Euler con 80**. La estabilidad aparece como restricción independiente de la
+  precisión, y con problemas rígidos o con ecuaciones en derivadas parciales se vuelve el
+  factor decisivo: la condición de Courant no es una recomendación, es la frontera entre una
+  simulación y una explosión numérica.
+
+  El cierre conecta con la práctica: qué aporta SciPy sobre una implementación propia, y por
+  qué merece la pena haber escrito ambas. Se implementa a mano para saber cuándo la biblioteca
+  falla o miente; se usa la biblioteca porque su estabilidad, su control de error y su
+  rendimiento están probados. En inteligencia artificial estos métodos no son historia: los
+  Neural ODE integran con RK4, los samplers de difusión son integradores de ecuaciones
+  estocásticas, y los optimizadores de segundo orden son Newton con la derivada aproximada.
+
+mapa: |
+  flowchart TD
+      A["Clase 221 · Truncamiento, redondeo y convergencia"] --> B["Clases 222-224 · Biseccion, Newton y secante"]
+      A --> C["Clases 225-227 · Interpolacion, splines y derivadas"]
+      C --> D["Clases 228-230 · Cuadratura, trapecio y Simpson"]
+      B --> E["Clases 231-234 · Sistemas lineales y minimos cuadrados"]
+      D --> F["Clases 235-237 · EDO, Euler y Runge-Kutta"]
+      E --> F
+      F --> G["Clases 238-239 · PDE, estabilidad y SciPy"]
+      G --> H["Clase 240 · Capstone solver con informe de error"]
+      F ==> I["Parte 12 · Optimizacion numerica"]
+      A -.-> J["Punto flotante y condicionamiento · Parte 01"]
+      F -.-> K["Neural ODE y samplers de difusion · Parte 17"]
+
+glosario:
+  - termino: "Error de truncamiento"
+    definicion: "El que introduce el método al aproximar. Disminuye al reducir el paso h."
+    clase: "221"
+  - termino: "Error de redondeo"
+    definicion: "El que introduce la aritmética finita. Aumenta al reducir h por cancelación."
+    clase: "221"
+  - termino: "Paso óptimo"
+    definicion: "Valor de h que minimiza el error total. Por debajo, afinar empeora el resultado."
+    clase: "221"
+  - termino: "Orden de convergencia"
+    definicion: "Exponente p tal que el error se comporta como O(hᵖ). Predice la ganancia al refinar."
+    clase: "221"
+  - termino: "Bisección"
+    definicion: "Partir por la mitad un intervalo con cambio de signo. Lenta pero convergencia garantizada."
+    clase: "222"
+  - termino: "Teorema de Bolzano"
+    definicion: "Si f es continua y cambia de signo en un intervalo, hay una raíz dentro."
+    clase: "222"
+  - termino: "Newton-Raphson"
+    definicion: "Iteración x − f(x)/f'(x). Convergencia cuadrática cerca de la raíz."
+    clase: "223"
+  - termino: "Convergencia cuadrática"
+    definicion: "El número de dígitos correctos se duplica en cada iteración."
+    clase: "223"
+  - termino: "Método de la secante"
+    definicion: "Newton con la derivada aproximada por diferencias. Orden 1,618."
+    clase: "224"
+  - termino: "Interpolación de Lagrange"
+    definicion: "Polinomio único de grado n−1 que pasa por n puntos dados."
+    clase: "225"
+  - termino: "Fenómeno de Runge"
+    definicion: "Oscilaciones crecientes al interpolar con grado alto en nodos equiespaciados."
+    clase: "225"
+  - termino: "Nodos de Chebyshev"
+    definicion: "Nodos concentrados en los extremos que controlan el error de interpolación."
+    clase: "225"
+  - termino: "Spline"
+    definicion: "Interpolación por tramos de grado bajo. Evita las oscilaciones del grado alto."
+    clase: "226"
+  - termino: "Diferencia central"
+    definicion: "(f(x+h) − f(x−h)) / 2h. Error O(h²) frente al O(h) de la diferencia adelantada."
+    clase: "227"
+  - termino: "Cuadratura"
+    definicion: "Aproximación de una integral por suma ponderada de valores de la función."
+    clase: "228"
+  - termino: "Cuadratura gaussiana"
+    definicion: "Nodos y pesos elegidos para ser exactos con polinomios de grado 2n−1."
+    clase: "228"
+  - termino: "Regla del trapecio"
+    definicion: "Aproxima por trapecios. Error O(h²): duplicar n divide el error por 4."
+    clase: "229"
+  - termino: "Regla de Simpson"
+    definicion: "Aproxima por parábolas. Error O(h⁴) y exacta hasta grado 3."
+    clase: "230"
+  - termino: "Método directo"
+    definicion: "Resuelve en un número fijo de operaciones, como LU. Coste O(n³)."
+    clase: "231"
+  - termino: "Pivoteo parcial"
+    definicion: "Intercambiar filas para usar el pivote de mayor módulo y ganar estabilidad."
+    clase: "231"
+  - termino: "Diagonalmente dominante"
+    definicion: "Cada elemento diagonal supera en módulo a la suma de su fila. Garantiza convergencia iterativa."
+    clase: "232"
+  - termino: "Gauss-Seidel"
+    definicion: "Como Jacobi pero reutilizando los valores ya actualizados. Suele converger el doble de rápido."
+    clase: "232"
+  - termino: "Tolerancia relativa"
+    definicion: "Criterio de parada escalado por la magnitud de la solución. Robusto ante cambios de escala."
+    clase: "233"
+  - termino: "Residuo"
+    definicion: "‖Ax − b‖. Mide cuánto incumple la ecuación la solución aproximada."
+    clase: "233"
+  - termino: "Ecuaciones normales"
+    definicion: "AᵀAx = Aᵀb. Resuelven mínimos cuadrados pero elevan al cuadrado el número de condición."
+    clase: "234"
+  - termino: "Problema de valor inicial"
+    definicion: "EDO más condición inicial. Determina una única trayectoria."
+    clase: "235"
+  - termino: "Método de Euler"
+    definicion: "Avanzar por la tangente. Orden 1 y una sola evaluación por paso."
+    clase: "236"
+  - termino: "Región de estabilidad"
+    definicion: "Valores del paso para los que el método no amplifica el error. Independiente de la precisión."
+    clase: "236"
+  - termino: "Runge-Kutta 4"
+    definicion: "Cuatro evaluaciones por paso y error O(h⁴). Estándar de facto para EDO no rígidas."
+    clase: "237"
+  - termino: "Problema rígido"
+    definicion: "El que tiene escalas de tiempo muy dispares. Exige métodos implícitos."
+    clase: "237"
+  - termino: "Diferencias finitas"
+    definicion: "Sustituir derivadas por cocientes sobre una malla para discretizar una PDE."
+    clase: "238"
+  - termino: "Condición de Courant"
+    definicion: "Restricción entre paso temporal y espacial. Violarla hace divergir el esquema explícito."
+    clase: "238"
+
+clases:
+  "221":
+    concepto: "Reducir el paso mejora hasta que el redondeo toma el control y empeora."
+    formulas:
+      - "error total ≈ C₁·hᵖ + C₂·ε/h"
+      - "diferencia adelantada: O(h);  central: O(h²)"
+      - "h óptimo de la central ≈ ε^(1/3) ≈ 6·10⁻⁶"
+    desarrollo: |
+      Todo método numérico arrastra dos errores de naturaleza opuesta. El **error de
+      truncamiento** proviene de la aproximación matemática —cortar una serie de Taylor,
+      sustituir una curva por una recta— y se reduce al hacer el paso más pequeño. El **error de
+      redondeo** proviene de la aritmética de precisión finita y **crece** al reducir el paso,
+      porque restar dos números casi iguales y dividir por algo diminuto amplifica el ruido.
+
+      La suma de ambos tiene un mínimo. Existe un `h` óptimo, y por debajo de él afinar más
+      empeora el resultado. Esto contradice la intuición de que «más pequeño es más preciso», y
+      es la razón de que una derivada numérica con `h = 10⁻¹⁵` sea basura mientras que con
+      `h = 10⁻⁶` sea buena.
+
+      El **orden** de un método es la potencia de `h` en el término de truncamiento, y es la
+      cifra que permite predecir el comportamiento sin ejecutar nada. Un método de orden 1
+      divide el error por 2 al duplicar el trabajo; uno de orden 2 lo divide por 4; uno de orden
+      4, por 16. Esa diferencia es lo que decide entre segundos y horas de cómputo.
+
+      La consecuencia metodológica es que hay que **medir el orden empíricamente**. Ejecutar con
+      `h` y con `h/2`, calcular el cociente de errores y comprobar que sale lo que la teoría
+      predice, es la prueba más eficaz de que una implementación es correcta: un método de orden
+      4 cuyo error solo se divide por 2 tiene un error de programación.
+    ejemplo: |
+      Derivada numérica de sen en x = 1, con distintos pasos.
+
+      ```text
+      valor exacto: cos(1) = 0,5403023058681398
+
+            h        error adelantada    error central
+        1e-01          4,294e-02          9,00e-04
+        1e-03          4,207e-04          9,00e-08
+        1e-05          4,207e-06          9,04e-12
+        1e-07          4,361e-08          6,07e-10   ← empeora
+        1e-09          2,721e-08          2,72e-08   ← ruido
+        1e-11          6,004e-06          6,00e-06   ← basura
+
+      La central es O(h²): h × 0,01 → error × 0,0001            ✓
+      hasta que el redondeo domina cerca de h ≈ 1e-6.
+
+      h óptimo aproximado para la central: ε^(1/3) ≈ 6e-6
+      ```
+    errores:
+      - "Reducir h indefinidamente creyendo que siempre mejora."
+      - "Publicar un método sin haber medido su orden empírico."
+      - "Confundir precisión de la máquina con precisión del resultado."
+    aplicacion: |
+      Comprobación de gradientes numéricos frente a autodiferenciación, validación de
+      integradores y elección de pasos en simulación.
+    referencias:
+      - "[Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 1](https://doi.org/10.1137/1.9781611975581)"
+      - "[Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027)"
+
+  "222":
+    concepto: "Bisección es la única que nunca falla si hay cambio de signo, y por eso es la red de seguridad."
+    formulas:
+      - "si f(a)·f(b) < 0, hay raíz en (a,b)"
+      - "amplitud tras n pasos: (b−a)/2ⁿ"
+      - "n ≈ log₂((b−a)/tol) iteraciones"
+    desarrollo: |
+      La bisección se apoya en el teorema de Bolzano: si una función continua cambia de signo
+      entre dos puntos, hay al menos una raíz entre ellos. El método evalúa el punto medio,
+      mira el signo, y se queda con la mitad que sigue conteniendo el cambio. Cada paso reduce
+      exactamente a la mitad la incertidumbre.
+
+      Su virtud es la **garantía**. No hay condiciones adicionales, no hay puntos iniciales
+      malos, no diverge nunca. El número de iteraciones se conoce de antemano:
+      `log₂((b−a)/tol)`, unas 41 para pasar de un intervalo de amplitud 2 a la precisión de la
+      máquina. Esa previsibilidad es lo que la hace insustituible como respaldo.
+
+      Su defecto es la **lentitud**. Cada iteración gana un solo bit de precisión, mientras que
+      Newton duplica los dígitos correctos. Para el mismo problema, bisección necesita 41
+      evaluaciones donde Newton necesita 6. Cuando la evaluación de la función es cara, la
+      diferencia es determinante.
+
+      La limitación menos obvia es que **necesita un cambio de signo**, y por tanto no encuentra
+      raíces dobles como la de `x²`, donde la función toca el eje sin cruzarlo. Los métodos
+      robustos de producción, como Brent, combinan bisección con interpolación: usan la rápida
+      cuando funciona y caen a la garantizada cuando no.
+    ejemplo: |
+      Raíz de x³ − 2x − 4 en el intervalo de 1 a 3.
+
+      ```text
+      f(1) = −5 < 0        f(3) = 17 > 0        hay cambio de signo
+
+      iter    x        f(x)         amplitud
+        1   2,0000    0,000000        1,000
+        5   1,9375   −0,603760        0,0625
+       10   2,0020    0,020000        0,00195
+       20   2,0000    1,9e-05         1,9e-06
+       41   2,0000   −4,55e-12        9,1e-13
+
+      raíz = 2,0        41 iteraciones para 12 dígitos
+
+      Predicción teórica: log₂(2 / 1e-12) ≈ 41                 ✓
+
+      Newton alcanza la misma precisión en 6 iteraciones,
+      pero necesita la derivada y un buen punto inicial.
+      ```
+    errores:
+      - "Aplicarla sin comprobar el cambio de signo en el intervalo."
+      - "Esperar que encuentre raíces de multiplicidad par."
+      - "Usarla sin tope de iteraciones aunque su convergencia esté acotada."
+    aplicacion: |
+      Búsqueda robusta de raíces, calibración de umbrales, respaldo dentro de métodos híbridos y
+      búsqueda de puntos de cruce en curvas monótonas.
+    referencias:
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](http://numerical.recipes/)"
+
+  "223":
+    concepto: "Newton duplica los dígitos correctos en cada paso, pero solo si empieza cerca."
+    formulas:
+      - "xₙ₊₁ = xₙ − f(xₙ)/f'(xₙ)"
+      - "error: eₙ₊₁ ≈ C·eₙ²  (convergencia cuadrática)"
+      - "falla si f'(xₙ) ≈ 0"
+    desarrollo: |
+      Newton-Raphson aproxima la función por su recta tangente en el punto actual y toma como
+      siguiente candidato el corte de esa recta con el eje. Es el método de la derivada aplicado
+      a la búsqueda de raíces, y su deducción cabe en dos líneas a partir del desarrollo de
+      Taylor de primer orden.
+
+      Su **convergencia cuadrática** es espectacular cuando funciona: si en un paso hay 3
+      dígitos correctos, en el siguiente hay 6, y en el siguiente 12. Por eso 6 iteraciones
+      bastan donde bisección necesita 41. La cuadraticidad se pierde en raíces múltiples, donde
+      degenera a convergencia lineal.
+
+      Los modos de fallo son reales y variados. Si la derivada se anula cerca del iterado, el
+      paso se dispara a infinito. Si el punto inicial está lejos, la iteración puede alejarse,
+      oscilar en un ciclo o converger a una raíz distinta de la buscada. Los fractales de Newton
+      son la representación gráfica de esa sensibilidad extrema al punto de partida.
+
+      Su generalización a varias dimensiones sustituye la derivada por el **Jacobiano** y la
+      división por la resolución de un sistema lineal. Esa versión es la que subyace a los
+      métodos de segundo orden en optimización: minimizar es buscar la raíz del gradiente, y
+      Newton aplicado al gradiente usa el Hessiano. La parte 12 desarrolla esa línea.
+    ejemplo: |
+      Raíz de x³ − 2x − 4 desde x₀ = 3.
+
+      ```text
+      f(x) = x³ − 2x − 4        f'(x) = 3x² − 2
+
+      iter      x           error
+        1    2,320000     3,20e-01
+        2    2,059716     5,97e-02
+        3    2,003100     3,10e-03
+        4    2,000009     9,58e-06
+        5    2,000000     9,17e-11
+        6    2,000000     0,00e+00
+
+      Los dígitos correctos se duplican: 1 → 2 → 3 → 5 → 10 → 16
+
+      6 iteraciones frente a las 41 de bisección.
+
+      Modo de fallo: desde x₀ = 0,8 se tiene f'(0,8) = −0,08,
+      el paso salta a x ≈ −65 y la iteración se descontrola.
+      ```
+    errores:
+      - "Usarlo sin salvaguarda cuando la derivada puede anularse."
+      - "Esperar convergencia cuadrática en raíces múltiples."
+      - "Omitir el tope de iteraciones y colgar el proceso en un ciclo."
+    aplicacion: |
+      Optimización de segundo orden, resolución de sistemas no lineales, cálculo de funciones
+      inversas y calibración de modelos.
+    referencias:
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006](https://doi.org/10.1007/978-0-387-40065-5)"
+
+  "224":
+    concepto: "La secante alcanza orden 1,618 sin necesitar la derivada."
+    formulas:
+      - "xₙ₊₁ = xₙ − f(xₙ)·(xₙ − xₙ₋₁) / (f(xₙ) − f(xₙ₋₁))"
+      - "orden de convergencia φ = (1+√5)/2 ≈ 1,618"
+      - "una sola evaluación de f por iteración"
+    desarrollo: |
+      La secante sustituye la derivada de Newton por su aproximación mediante los dos últimos
+      iterados. Geométricamente, en vez de la tangente usa la recta que pasa por los dos últimos
+      puntos, y toma su corte con el eje. La fórmula es la de Newton con `f'` reemplazado por un
+      cociente de diferencias.
+
+      El precio es un orden de convergencia menor, exactamente el **número áureo** `φ ≈ 1,618`.
+      Que aparezca φ no es casualidad decorativa: la recurrencia que gobierna los exponentes del
+      error es la de Fibonacci, y su razón límite es φ. Es uno de los sitios donde ese número
+      surge por necesidad matemática y no por misticismo.
+
+      A cambio, cada iteración cuesta **una sola evaluación** de `f`, frente a las dos de Newton
+      —función y derivada—. Cuando evaluar la derivada cuesta lo mismo que evaluar la función,
+      la secante es más eficiente por unidad de trabajo: `φ² ≈ 2,6 > 2`. Y cuando la derivada no
+      existe en forma cerrada, es directamente la única opción de las dos.
+
+      Sus debilidades son parientes de las de Newton: puede diverger desde puntos malos, y falla
+      si los dos últimos valores de la función son casi iguales, porque el denominador se anula.
+      La familia de los métodos **cuasi-Newton** —BFGS y L-BFGS en optimización— es esta misma
+      idea llevada a varias dimensiones: aproximar la información de segundo orden a partir de
+      la historia de evaluaciones.
+    ejemplo: |
+      Misma raíz que Newton, ahora sin derivada.
+
+      ```text
+      f(x) = x³ − 2x − 4       puntos iniciales: 1,0 y 3,0
+
+      iter        x            error
+        1     1,454545      5,45e-01
+        3     1,876254      1,24e-01
+        5     1,996327      3,67e-03
+        7     1,999999      6,32e-07
+        9     2,000000      0,00e+00
+
+      9 iteraciones frente a las 6 de Newton
+      pero sin necesitar f' y con una evaluación por paso.
+
+      Eficiencia por evaluación:
+        Newton:  orden 2 con 2 evaluaciones  →  √2 ≈ 1,414
+        Secante: orden 1,618 con 1 evaluación →  1,618        mejor
+      ```
+    errores:
+      - "Elegir dos puntos iniciales donde f toma valores casi idénticos."
+      - "Usarla sin control del denominador y provocar división por casi cero."
+      - "Suponer que hereda la garantía de convergencia de la bisección."
+    aplicacion: |
+      Búsqueda de raíces sin derivada analítica, métodos cuasi-Newton, calibración de parámetros
+      y ajuste de umbrales en funciones costosas de evaluar.
+    referencias:
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](http://numerical.recipes/)"
+
+  "225":
+    concepto: "Subir el grado del polinomio interpolador empeora la aproximación en vez de mejorarla."
+    formulas:
+      - "P(x) = Σ yᵢ · Πⱼ≠ᵢ (x − xⱼ)/(xᵢ − xⱼ)"
+      - "n puntos determinan un único polinomio de grado ≤ n−1"
+      - "nodos de Chebyshev: xₖ = cos((2k+1)π / 2n)"
+    desarrollo: |
+      Por `n` puntos con abscisas distintas pasa un **único** polinomio de grado a lo sumo `n−1`.
+      La forma de Lagrange lo construye explícitamente como combinación de bases que valen 1 en
+      su nodo y 0 en los demás. Es elegante para demostrar la existencia y unicidad, y mala para
+      calcular: las formas de Newton o baricéntrica son numéricamente preferibles.
+
+      El resultado que hay que retener es negativo y contraintuitivo. Al aumentar el número de
+      nodos **equiespaciados**, el polinomio no converge a la función: oscila cada vez más
+      violentamente cerca de los extremos del intervalo. Es el **fenómeno de Runge**, y su
+      ejemplo canónico es `1/(1+25x²)`, donde el error máximo crece con el grado.
+
+      La causa no es el redondeo sino la propia teoría: el término de error de interpolación
+      contiene el producto de las distancias a todos los nodos, y con nodos equiespaciados ese
+      producto se dispara cerca de los bordes. La consecuencia práctica es que **interpolación
+      de grado alto y nodos uniformes no se deben combinar nunca**.
+
+      Hay dos salidas. La primera es cambiar los nodos: los de **Chebyshev** se concentran cerca
+      de los extremos y controlan el producto, haciendo que el error sí decrezca con el grado. La
+      segunda, más usada en la práctica, es renunciar al grado alto y usar trozos de grado bajo,
+      que es exactamente lo que hacen los splines de la clase siguiente.
+    ejemplo: |
+      Runge sobre 1/(1+25x²): el error crece con el grado.
+
+      ```text
+      Interpolación por 3 puntos (1,1), (2,3), (4,7):
+        el polinomio evaluado da [1,75 ; 4,75] en x = 1,5 y 3
+        pasa exactamente por los nodos: 1, 3, 7                ✓
+
+      Función de Runge con nodos equiespaciados:
+
+        grado    error máximo
+          5        0,438177
+          9        1,045174
+         13        3,656710
+
+      El error se multiplica por 8 al pasar de grado 5 a 13.
+      Más grado, peor aproximación.
+
+      Con nodos de Chebyshev el error sí decrece con el grado.
+      ```
+    errores:
+      - "Interpolar muchos puntos con un solo polinomio de grado alto."
+      - "Usar la forma de Lagrange para evaluar en vez de la baricéntrica."
+      - "Extrapolar fuera del intervalo de los nodos."
+    aplicacion: |
+      Reconstrucción de curvas a partir de muestras, diseño de esquemas de cuadratura,
+      aproximación de funciones costosas y remuestreo de señales.
+    referencias:
+      - "[Trefethen, L. N. *Approximation Theory and Approximation Practice*, SIAM, 2019](https://doi.org/10.1137/1.9781611975949)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://www.cengage.com/)"
+
+  "226":
+    concepto: "Muchos trozos de grado bajo baten a un único polinomio de grado alto."
+    formulas:
+      - "spline lineal: recta entre cada par de nodos consecutivos"
+      - "spline cúbico: continuidad de valor, primera y segunda derivada"
+      - "n nodos ⟹ n−1 tramos"
+    desarrollo: |
+      Un spline es una función definida a trozos, con un polinomio de grado bajo en cada
+      intervalo entre nodos consecutivos, empalmados con condiciones de continuidad. La idea
+      resuelve el problema de Runge por la vía directa: si el grado alto oscila, no se usa grado
+      alto.
+
+      El **spline lineal** simplemente une los puntos con segmentos. Es continuo, no oscila
+      nunca, y su error es `O(h²)` en cada tramo. Su defecto es visible: tiene esquinas en los
+      nodos, la derivada salta, y para animación o diseño gráfico eso se nota.
+
+      El **spline cúbico** usa polinomios de grado 3 e impone continuidad del valor, de la
+      primera derivada y de la segunda. El resultado es visualmente suave y matemáticamente
+      notable: entre todas las funciones que pasan por los puntos, el spline cúbico natural es
+      **la que minimiza la curvatura total**, que es la formalización de «la curva más suave
+      posible». El nombre viene de las varillas flexibles que usaban los constructores navales.
+
+      Los splines están en todas partes: en las curvas de las herramientas de diseño gráfico, en
+      la interpolación de datos científicos, en las trayectorias de robots y en los modelos
+      aditivos generalizados. Su ventaja decisiva es la **localidad**: mover un punto solo
+      afecta a los tramos vecinos, mientras que en un polinomio global un cambio en un extremo
+      altera toda la curva.
+    ejemplo: |
+      Spline lineal sobre datos que oscilan entre 0 y 1.
+
+      ```text
+      nodos:   0    1    2    3    4
+      valores: 0    1    0    1    0
+
+      Evaluaciones del spline lineal:
+        s(0,50) = 0,50      dentro del tramo [0,1]
+        s(1,50) = 0,50      dentro del tramo [1,2]
+        s(2,25) = 0,25      dentro del tramo [2,3]
+
+      Pasa por todos los nodos                                 ✓
+      Nunca sale del rango [0,1] de los datos                  ✓
+
+      Un polinomio único de grado 4 por estos 5 puntos
+      llega a valores por debajo de −0,3 entre los nodos.
+
+      Localidad: cambiar el valor en x = 4 no altera
+      el spline en el tramo [0,1].
+      ```
+    errores:
+      - "Esperar derivada continua de un spline lineal."
+      - "Usar splines para extrapolar más allá del último nodo."
+      - "Olvidar declarar las condiciones de contorno del spline cúbico."
+    aplicacion: |
+      Curvas en diseño gráfico y CAD, interpolación de series temporales, trayectorias suaves en
+      robótica y modelos aditivos generalizados.
+    referencias:
+      - "[de Boor, C. *A Practical Guide to Splines*, ed. rev., Springer, 2001](https://doi.org/10.1007/978-1-4612-6333-3)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://www.cengage.com/)"
+
+  "227":
+    concepto: "La diferencia central cuesta lo mismo que la adelantada y tiene un orden más."
+    formulas:
+      - "adelantada: (f(x+h) − f(x)) / h,  error O(h)"
+      - "central: (f(x+h) − f(x−h)) / 2h,  error O(h²)"
+      - "segunda derivada: (f(x+h) − 2f(x) + f(x−h)) / h²"
+    desarrollo: |
+      Aproximar derivadas por cocientes de diferencias es la traducción literal de la definición
+      de derivada a aritmética finita. Las tres fórmulas básicas se obtienen combinando
+      desarrollos de Taylor y eligiendo los coeficientes que cancelan los términos de orden bajo.
+
+      La **diferencia central** es estrictamente mejor que la adelantada: mismo número de
+      evaluaciones, un orden más de precisión. La razón es la simetría, que hace que el término
+      de orden `h` se cancele entre los desarrollos de `f(x+h)` y `f(x−h)`. Cuando se puede
+      evaluar a ambos lados, no hay motivo para usar la adelantada.
+
+      La **segunda derivada** por diferencias es la fórmula que discretiza el laplaciano y está
+      en el corazón de casi todo esquema para ecuaciones en derivadas parciales. Su error también
+      es `O(h²)`, pero su sensibilidad al redondeo es peor porque divide entre `h²`: el paso
+      óptimo es mayor que para la primera derivada.
+
+      La aplicación más útil en aprendizaje automático es la **verificación de gradientes**:
+      comparar el gradiente calculado por autodiferenciación con el obtenido por diferencia
+      central detecta errores de implementación en las derivadas manuales. Es lento y no sirve
+      para entrenar, pero como prueba unitaria es insustituible.
+    ejemplo: |
+      Derivada de e^x en x = 0,5 con h = 1e-4.
+
+      ```text
+      valor exacto: e^0,5 = 1,6487212707001282
+
+      adelantada: (f(x+h) − f(x))/h     = 1,6488037095
+        error = 8,24e-05
+
+      atrás:      (f(x) − f(x−h))/h     = 1,6486388374
+        error = 8,24e-05
+
+      central:    (f(x+h) − f(x−h))/2h  = 1,6487212735
+        error = 2,75e-09          30 000 veces menor
+
+      Mismo coste en evaluaciones, tres órdenes de magnitud de ganancia.
+
+      Segunda derivada: (f(x+h) − 2f(x) + f(x−h))/h² = 1,64872132
+        error = 5,4e-08, mayor por dividir entre h².
+      ```
+    errores:
+      - "Usar la diferencia adelantada cuando se puede evaluar a ambos lados."
+      - "Elegir h demasiado pequeño y caer en la zona dominada por el redondeo."
+      - "Usar diferencias finitas para entrenar en vez de autodiferenciación."
+    aplicacion: |
+      Verificación de gradientes, discretización de PDE, sensibilidad de modelos y optimización
+      sin derivadas analíticas.
+    referencias:
+      - "[Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 8](https://doi.org/10.1137/1.9781611975581)"
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 8](https://doi.org/10.1007/978-0-387-40065-5)"
+
+  "228":
+    concepto: "Elegir bien los nodos vale más que multiplicarlos: Gauss lo demuestra con tres."
+    formulas:
+      - "∫f ≈ Σ wᵢ·f(xᵢ)"
+      - "Gauss con n nodos: exacta para polinomios de grado 2n−1"
+      - "cambio de variable de [a,b] a [−1,1]"
+    desarrollo: |
+      Toda regla de cuadratura tiene la misma forma: una suma ponderada de valores de la
+      función. Lo que distingue a unas de otras es dónde se colocan los nodos y qué pesos se
+      les asigna. Las reglas de Newton-Cotes —trapecio, Simpson— fijan nodos equiespaciados y
+      calculan los pesos.
+
+      La **cuadratura gaussiana** hace algo más ambicioso: trata también las posiciones de los
+      nodos como incógnitas. Con `n` nodos hay `2n` grados de libertad, y se eligen para que la
+      regla sea exacta con polinomios de grado hasta `2n−1`. Con tres nodos se integra
+      exactamente cualquier polinomio de grado 5, lo cual es notable.
+
+      Los nodos resultantes son las raíces de los polinomios de Legendre y no son
+      equiespaciados: se concentran hacia el centro y evitan los extremos. Los pesos se calculan
+      una vez y se tabulan. El cambio de variable lleva cualquier intervalo `[a,b]` al `[−1,1]`
+      donde están tabulados.
+
+      La comparación con el trapecio es demoledora y explica por qué las bibliotecas serias usan
+      variantes de Gauss: con el mismo número de evaluaciones, el error es varios órdenes de
+      magnitud menor. Su límite es que necesita evaluar en puntos concretos, así que no sirve
+      cuando solo se dispone de datos tabulados en una malla fija.
+    ejemplo: |
+      Integral de e^(−x²) entre 0 y 1, sin primitiva elemental.
+
+      ```text
+      valor de referencia: 0,746824132812
+
+      Gauss con 3 nodos:
+        estimación = 0,746814584191
+        error      = 9,55e-06
+
+      Trapecio con 3 subintervalos (4 evaluaciones):
+        estimación = 0,739986475277
+        error      = 6,84e-03
+
+      Gauss es 716 veces más preciso con menos evaluaciones.
+
+      Para igualar a Gauss-3, el trapecio necesitaría
+      unos 27 subintervalos.
+      ```
+    errores:
+      - "Aplicar los nodos tabulados sin el cambio de variable al intervalo real."
+      - "Usar cuadratura gaussiana con datos tabulados en una malla fija."
+      - "Aplicarla a integrandos con singularidades sin transformación previa."
+    aplicacion: |
+      Integración en métodos de elementos finitos, cálculo de esperanzas en modelos
+      probabilísticos, evaluación de funciones especiales y física computacional.
+    referencias:
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
+
+  "229":
+    concepto: "El trapecio es de orden 2: duplicar los subintervalos divide el error por cuatro."
+    formulas:
+      - "∫ₐᵇ f ≈ (h/2)·[f(x₀) + 2f(x₁) + … + 2f(xₙ₋₁) + f(xₙ)]"
+      - "error total O(h²)"
+      - "n × 2  ⟹  error / 4"
+    desarrollo: |
+      La regla del trapecio aproxima la función por segmentos rectos entre nodos consecutivos y
+      suma las áreas de los trapecios resultantes. Es la regla más simple que va más allá de los
+      rectángulos, y su fórmula compuesta tiene la estructura característica: los extremos pesan
+      la mitad que los puntos interiores.
+
+      Su error es `O(h²)`, lo que da la regla práctica más útil para verificar una
+      implementación: **duplicar el número de subintervalos divide el error por cuatro**. Si al
+      duplicar `n` el error solo se divide por dos, hay un error de programación o la función no
+      es suficientemente suave.
+
+      El signo del error es predecible: el trapecio **sobreestima** para funciones convexas y
+      subestima para cóncavas, porque la cuerda queda por encima o por debajo de la curva. Esa
+      previsibilidad permite corregir, y de ahí sale la extrapolación de Richardson y el método
+      de Romberg, que combinan estimaciones con distintos `h` para cancelar términos de error.
+
+      Tiene además una propiedad que lo hace insustituible en un caso concreto: para funciones
+      **periódicas** integradas sobre un periodo completo, el trapecio converge
+      exponencialmente, mucho más rápido que Simpson. Es el fundamento de los métodos
+      espectrales y de la precisión de la transformada discreta de Fourier.
+    ejemplo: |
+      Integral de 1/(1+x²) entre 0 y 1, que vale exactamente π/4.
+
+      ```text
+      valor exacto: 0,785398163397
+
+         n      valor            error       razón
+         2   0,775000000    1,0398e-02        —
+         4   0,782794010    2,6042e-03      3,993
+         8   0,784747124    6,5104e-04      4,000
+        16   0,785235400    1,6276e-04      4,000
+        32   0,785357472    4,0690e-05      4,000
+
+      La razón se estabiliza en 4 → orden 2 confirmado    ✓
+
+      El trapecio subestima aquí porque el integrando es cóncavo
+      en la mayor parte del intervalo.
+      ```
+    errores:
+      - "No verificar el orden empírico al implementarlo."
+      - "Aplicarlo a integrandos con discontinuidades sin partir el intervalo."
+      - "Olvidar que los extremos llevan peso mitad en la fórmula compuesta."
+    aplicacion: |
+      Integración de datos experimentales muestreados, cálculo de áreas bajo curvas ROC,
+      métodos espectrales con funciones periódicas y base del método de Romberg.
+    referencias:
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
+      - "[Trefethen, L. N.; Weideman, J. *The exponentially convergent trapezoidal rule*, SIAM Review, 2014](https://doi.org/10.1137/130932132)"
+
+  "230":
+    concepto: "Simpson usa parábolas y gana dos órdenes por el mismo precio."
+    formulas:
+      - "∫ ≈ (h/3)·[f₀ + 4f₁ + 2f₂ + 4f₃ + … + fₙ]"
+      - "error O(h⁴):  n × 2 ⟹ error / 16"
+      - "requiere n par; exacta hasta grado 3"
+    desarrollo: |
+      Simpson ajusta una parábola por cada par de subintervalos en vez de una recta por cada
+      uno. El patrón de pesos `1, 4, 2, 4, …, 4, 1` sale de integrar exactamente esas parábolas,
+      y exige que el número de subintervalos sea **par**.
+
+      Su error es `O(h⁴)`, dos órdenes por encima del trapecio con esencialmente el mismo coste
+      de evaluaciones. La regla de verificación correspondiente es que duplicar `n` divide el
+      error por 16, y comprobarla es la forma estándar de validar la implementación.
+
+      Hay una sorpresa agradable: aunque se construye con parábolas, Simpson es **exacto para
+      polinomios de grado 3**. El término cúbico se cancela por simetría, y ese grado extra
+      gratuito es la razón de su excelente relación precisión-coste. Es el método por defecto
+      cuando hay que integrar a mano y con pocos recursos.
+
+      El orden alto tiene una condición que se olvida: exige que la función tenga cuarta derivada
+      acotada. Con integrandos poco suaves, con esquinas o con oscilaciones rápidas, Simpson
+      pierde su ventaja y puede comportarse peor que el trapecio. Con funciones de suavidad
+      dudosa conviene un método adaptativo que subdivida donde haga falta.
+    ejemplo: |
+      Misma integral que el trapecio, para comparar órdenes.
+
+      ```text
+      valor exacto: 0,785398163397
+
+         n      valor            error        razón
+         2   0,783333333    2,0648e-03         —
+         4   0,785259259    1,3890e-04      14,87
+         8   0,785388765    9,3984e-06      14,78
+        16   0,785397555    6,0812e-07      15,46
+
+      La razón tiende a 16 → orden 4 confirmado           ✓
+
+      Comparación con n = 16:
+        trapecio: error 1,63e-04
+        Simpson:  error 6,08e-07        268 veces mejor
+
+      Verificación del grado 3: sobre x³ en [0,1]
+        Simpson con n = 2 da exactamente 0,25             ✓
+      ```
+    errores:
+      - "Usar un número impar de subintervalos."
+      - "Aplicarlo a funciones con esquinas o discontinuidades."
+      - "Confundir el patrón de pesos y usar 1,4,4,1 en vez de 1,4,2,4,1."
+    aplicacion: |
+      Integración numérica de propósito general, cálculo de momentos de distribuciones,
+      procesamiento de señales muestreadas y base de los métodos adaptativos.
+    referencias:
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+
+  "231":
+    concepto: "Factorizar una vez y sustituir muchas: LU convierte O(n³) en O(n²) por sistema."
+    formulas:
+      - "A = LU  con pivoteo parcial:  PA = LU"
+      - "resolver Ly = Pb, luego Ux = y"
+      - "coste: LU ≈ (2/3)n³;  cada sustitución ≈ n²"
+    desarrollo: |
+      Un método directo resuelve el sistema en un número predeterminado de operaciones, sin
+      iterar. La eliminación gaussiana es el prototipo, y su versión organizada como
+      factorización **LU** separa el trabajo en dos fases: descomponer la matriz, que cuesta
+      `O(n³)`, y resolver por sustitución, que cuesta `O(n²)`.
+
+      Esa separación es lo que hace valiosa la factorización. Si hay que resolver el mismo
+      sistema con veinte lados derechos distintos —algo habitual en simulación, en control y en
+      métodos implícitos para EDO— se factoriza una vez y se sustituye veinte, en vez de repetir
+      la eliminación completa veinte veces.
+
+      El **pivoteo parcial** es obligatorio, no opcional. Intercambiar filas para que el pivote
+      sea el elemento de mayor módulo evita dividir por números diminutos, y con ello evita la
+      amplificación de errores que puede destruir la solución. Sin pivoteo, sistemas
+      perfectamente resolubles dan resultados sin ningún dígito correcto.
+
+      Verificar la solución es barato y obligatorio: calcular el **residuo** `Ax − b`. Un residuo
+      pequeño no garantiza que la solución sea precisa —en sistemas mal condicionados puede ser
+      minúsculo con una solución muy alejada de la real— pero un residuo grande sí garantiza que
+      algo va mal. Combinar residuo y número de condición da el diagnóstico completo.
+    ejemplo: |
+      Sistema 3×3 simétrico definido positivo, resuelto por LU.
+
+      ```text
+      A = [[ 4  −2   1]        b = [ 11]
+           [−2   4  −2]            [−16]
+           [ 1  −2   4]]           [ 17]
+
+      L = [[ 1,00   0,00   0,00]
+           [−0,50   1,00   0,00]
+           [ 0,25  −0,50   1,00]]
+
+      intercambios de fila: 0     (ya es dominante)
+
+      solución x = [1, −2, 3]
+      residuo Ax − b = [0, 0, 0]                          ✓
+
+      Coste con n = 3:  LU ≈ 18 operaciones
+      Cada nuevo lado derecho: ≈ 9 operaciones, sin refactorizar.
+      ```
+    errores:
+      - "Implementar eliminación sin pivoteo parcial."
+      - "Calcular la inversa explícita para resolver un sistema."
+      - "Aceptar la solución sin comprobar el residuo."
+    aplicacion: |
+      Resolución de sistemas en simulación, mínimos cuadrados, métodos implícitos para EDO y
+      cualquier problema con múltiples lados derechos.
+    referencias:
+      - "[Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*, SIAM, 1997](https://doi.org/10.1137/1.9780898719574)"
+      - "[Golub, G.; Van Loan, C. *Matrix Computations*, 4ª ed., JHU Press, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)"
+
+  "232":
+    concepto: "Gauss-Seidel usa los valores recién calculados y converge en la mitad de iteraciones."
+    formulas:
+      - "Jacobi: xᵢ⁽ᵏ⁺¹⁾ = (bᵢ − Σⱼ≠ᵢ aᵢⱼ·xⱼ⁽ᵏ⁾) / aᵢᵢ"
+      - "Gauss-Seidel: usa xⱼ⁽ᵏ⁺¹⁾ para j < i"
+      - "convergencia garantizada si A es diagonalmente dominante"
+    desarrollo: |
+      Los métodos iterativos parten de una solución aproximada y la refinan hasta que deja de
+      cambiar. Su interés no es competir con LU en sistemas pequeños, sino resolver los que LU no
+      puede: matrices de millones de incógnitas y muy dispersas, donde una factorización
+      llenaría de ceros la memoria disponible.
+
+      **Jacobi** despeja cada incógnita de su ecuación usando exclusivamente los valores de la
+      iteración anterior. Eso lo hace trivialmente paralelizable, porque todas las componentes se
+      actualizan de forma independiente. **Gauss-Seidel** usa los valores ya actualizados dentro
+      de la misma pasada, lo que suele reducir a la mitad el número de iteraciones a costa de
+      volverse secuencial.
+
+      La condición suficiente clásica de convergencia es la **dominancia diagonal**: que cada
+      elemento de la diagonal supere en módulo a la suma de los demás de su fila. Es suficiente,
+      no necesaria, y hay sistemas no dominantes donde ambos métodos convergen igualmente. Sin
+      alguna condición de este tipo, la iteración puede divergir.
+
+      Estos dos métodos son el punto de entrada a una familia mucho mayor —SOR, gradiente
+      conjugado, GMRES, multigrid— que es la que realmente se usa en producción. Conviene
+      entenderlos porque la estructura es la misma: una iteración barata, un criterio de parada
+      y un análisis de convergencia.
+    ejemplo: |
+      Sistema 3×3 diagonalmente dominante, ambos métodos.
+
+      ```text
+      A = [[10  −1   2]      diagonalmente dominante:
+           [−1  11  −1]        10 > 3,  11 > 2,  10 > 3      ✓
+           [ 2  −1  10]]
+
+      solución:  [1,04327 ; 2,26923 ; −1,08173]
+
+      Jacobi:        22 iteraciones hasta tolerancia 1e-10
+      Gauss-Seidel:  11 iteraciones hasta la misma tolerancia
+
+      Gauss-Seidel converge en la mitad de pasos.
+
+      Contrapartida: Jacobi actualiza las tres componentes
+      en paralelo; Gauss-Seidel debe hacerlo en orden.
+      ```
+    errores:
+      - "Aplicarlos sin comprobar dominancia diagonal ni otra condición de convergencia."
+      - "Iterar sin tope máximo y bloquear el proceso."
+      - "Usar iterativos en sistemas pequeños y densos donde LU es más rápido."
+    aplicacion: |
+      Resolución de sistemas dispersos enormes, discretización de PDE, PageRank y precondicionado
+      dentro de métodos de Krylov.
+    referencias:
+      - "[Saad, Y. *Iterative Methods for Sparse Linear Systems*, 2ª ed., SIAM, 2003](https://doi.org/10.1137/1.9780898718003)"
+      - "[Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 11](https://doi.org/10.1137/1.9781611975581)"
+
+  "233":
+    concepto: "Todo bucle iterativo necesita tres frenos: tolerancia relativa, residuo y tope de pasos."
+    formulas:
+      - "criterio absoluto: ‖xₖ₊₁ − xₖ‖ < tol"
+      - "criterio relativo: ‖xₖ₊₁ − xₖ‖ / ‖xₖ₊₁‖ < tol"
+      - "criterio de residuo: ‖Axₖ − b‖ / ‖b‖ < tol"
+    desarrollo: |
+      El criterio de parada no es un detalle de implementación: determina qué significa el
+      resultado. Un método iterativo sin criterio declarado devuelve un número cuyo error nadie
+      conoce, y eso lo invalida como resultado científico.
+
+      El criterio **absoluto** falla al cambiar de escala. Una tolerancia de `10⁻⁶` es exigente
+      si la solución vale 1 y absurda si vale `10¹²`, donde ni siquiera es representable en doble
+      precisión. El criterio **relativo** escala con la magnitud de la solución y es el que hay
+      que usar por defecto, con la precaución de manejar el caso de solución próxima a cero.
+
+      El criterio de **residuo** mide algo distinto: cuánto incumple la ecuación la solución
+      actual. Es complementario, no equivalente. En un sistema mal condicionado el cambio entre
+      iterados puede ser minúsculo mientras el residuo sigue siendo grande, y al revés. Por eso
+      lo prudente es combinar ambos.
+
+      Y siempre, sin excepción, un **tope de iteraciones**. No es una tolerancia sino una
+      salvaguarda: si el método no converge —porque el problema es singular, porque la condición
+      falla o porque hay un error de programación— el bucle debe terminar e informar de que no
+      convergió, en vez de girar indefinidamente. Un solver que devuelve «no convergí» es
+      infinitamente más útil que uno que se cuelga.
+    ejemplo: |
+      Evolución de los tres criterios en una iteración convergente.
+
+      ```text
+      iter   cambio abs.   cambio rel.   norma residuo
+        1     0,990000      1,000000       1,40e+00
+        3     0,090000      0,090909       1,27e-01
+        5     0,009000      0,009009       1,27e-02
+        7     0,000900      0,000900       1,27e-03
+        9     1,00e-14      1,00e-14       1,41e-14
+
+      solución = [1, 1]      9 iteraciones hasta 1e-14
+
+      Criterio recomendado:
+        parar si (cambio relativo < tol) Y (residuo relativo < tol)
+        o si iter alcanza max_iter, informando de no convergencia.
+
+      Peligro del criterio solo absoluto: si la solución fuera
+      del orden de 1e12, tol = 1e-6 nunca se alcanzaría.
+      ```
+    errores:
+      - "Usar tolerancia absoluta con soluciones de magnitud desconocida."
+      - "Omitir el tope de iteraciones."
+      - "Dar por convergido por cambio pequeño sin mirar el residuo."
+    aplicacion: |
+      Cualquier solver iterativo, criterios de parada en entrenamiento de modelos, bucles de
+      punto fijo y control de convergencia en simulación.
+    referencias:
+      - "[Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 2](http://numerical.recipes/)"
+
+  "234":
+    concepto: "Las ecuaciones normales elevan al cuadrado el número de condición; QR no."
+    formulas:
+      - "ecuaciones normales: AᵀAx = Aᵀb"
+      - "cond(AᵀA) = cond(A)²"
+      - "vía QR: A = QR ⟹ Rx = Qᵀb"
+    desarrollo: |
+      El problema de mínimos cuadrados busca el `x` que minimiza `‖Ax − b‖` cuando el sistema
+      tiene más ecuaciones que incógnitas. Geométricamente es la proyección de `b` sobre el
+      espacio columna de `A`, y anular la derivada conduce a las **ecuaciones normales**
+      `AᵀAx = Aᵀb`.
+
+      Esas ecuaciones son correctas en teoría y peligrosas en práctica. Formar `AᵀA` **eleva al
+      cuadrado el número de condición**: una matriz con condición `10⁶`, que en doble precisión
+      es manejable, produce una `AᵀA` con condición `10¹²`, que se lleva por delante la mitad de
+      los dígitos disponibles. El daño se hace al construir la matriz, antes de resolver nada.
+
+      La vía **QR** evita el problema. Descomponiendo `A = QR` con `Q` ortogonal, el sistema se
+      reduce a `Rx = Qᵀb`, triangular y con la condición original de `A` sin elevar. Cuesta
+      aproximadamente el doble de operaciones, y ese factor 2 es un precio muy pequeño por
+      conservar la mitad de los dígitos.
+
+      Cuando `A` es además deficiente de rango o casi singular, ni siquiera QR basta y hay que
+      recurrir a la **SVD** con truncamiento de valores singulares pequeños, que es la
+      pseudoinversa de la parte 06. La regla práctica: ecuaciones normales solo para problemas
+      pequeños y bien condicionados; QR por defecto; SVD cuando hay dudas sobre el rango.
+    ejemplo: |
+      Ajuste lineal por dos vías sobre los mismos seis puntos.
+
+      ```text
+      6 observaciones, modelo de 2 parámetros
+
+      ecuaciones normales: [1,03809524 ; 0,99142857]
+      vía QR:              [1,03809524 ; 0,99142857]
+      coinciden a 8 dígitos                                    ✓
+
+      cond(AᵀA) = 33,41        cond(A) = 5,78
+      relación: 5,78² = 33,41                                  ✓
+
+      Aquí el problema está bien condicionado y ambas sirven.
+
+      Si cond(A) fuera 1e6:
+        cond(AᵀA) = 1e12  →  se pierden 12 de los 16 dígitos
+        QR mantendría la pérdida en 6.
+      ```
+    errores:
+      - "Formar AᵀA sin mirar el condicionamiento de A."
+      - "Invertir AᵀA explícitamente en vez de resolver el sistema."
+      - "Ignorar la deficiencia de rango en vez de usar SVD."
+    aplicacion: |
+      Regresión lineal, ajuste de curvas, calibración de sensores y capas lineales resueltas en
+      forma cerrada.
+    referencias:
+      - "[Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*, SIAM, 1997, cap. 11](https://doi.org/10.1137/1.9780898719574)"
+      - "[Golub, G.; Van Loan, C. *Matrix Computations*, 4ª ed., JHU Press, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)"
+
+  "235":
+    concepto: "Un problema de valor inicial fija una única trayectoria, y conocerla permite medir el error."
+    formulas:
+      - "y' = f(t, y),   y(t₀) = y₀"
+      - "ejemplo: y' = −2y + t,  y(0) = 1"
+      - "solución: y(t) = 0,25(2t − 1) + 1,25·e^(−2t)"
+    desarrollo: |
+      Una ecuación diferencial ordinaria relaciona una función desconocida con sus derivadas. El
+      **problema de valor inicial** añade el valor en un punto, y bajo condiciones suaves de `f`
+      eso determina una única trayectoria: el teorema de Picard-Lindelöf garantiza existencia y
+      unicidad local.
+
+      Las EDO son el lenguaje de casi toda la modelización dinámica: mecánica, circuitos,
+      cinética química, poblaciones, epidemias y control. Que la mayoría no tenga solución
+      analítica es lo que motiva las clases siguientes, y es la norma más que la excepción.
+
+      Para desarrollar y validar métodos numéricos conviene partir de un problema **con solución
+      conocida**. El ejemplo de esta parte, `y' = −2y + t`, es lineal de primer orden y se
+      resuelve con factor integrante. Tener la solución exacta permite medir el error real de
+      cada método y verificar empíricamente su orden.
+
+      La estructura de la ecuación anticipa un problema que aparecerá luego. El coeficiente −2
+      del término lineal determina la escala de tiempo del decaimiento, y con ella el paso
+      máximo que un método explícito puede dar sin volverse inestable. Cuando en un sistema
+      conviven coeficientes muy dispares —−2 y −2000— aparece la **rigidez**, y los métodos
+      explícitos dejan de ser viables.
+    ejemplo: |
+      El problema de referencia de esta parte.
+
+      ```text
+      EDO:  y' = −2y + t          y(0) = 1
+
+      Solución analítica por factor integrante:
+        y(t) = 0,25·(2t − 1) + 1,25·e^(−2t)
+
+      Comprobación en t = 0:
+        0,25·(−1) + 1,25·1 = −0,25 + 1,25 = 1,0             ✓
+
+      Valores de referencia:
+        y(0)   = 1,000000000000
+        y(0,5) = 0,459849979076
+        y(1)   = 0,419169104046
+
+      Pendiente inicial: f(0, 1) = −2·1 + 0 = −2,0
+
+      Toda la parte mide los métodos contra y(1) = 0,419169104046.
+      ```
+    errores:
+      - "Resolver numéricamente sin comprobar antes si hay solución analítica."
+      - "Olvidar la condición inicial y quedarse con una familia de soluciones."
+      - "Ignorar la escala de tiempo del problema al elegir el paso."
+    aplicacion: |
+      Modelos dinámicos en física e ingeniería, farmacocinética, modelos epidemiológicos,
+      sistemas de control y Neural ODE.
+    referencias:
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://www.cengage.com/)"
+      - "[Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1)"
+
+  "236":
+    concepto: "Euler es el método más barato por paso y el más caro por dígito de precisión."
+    formulas:
+      - "yₙ₊₁ = yₙ + h·f(tₙ, yₙ)"
+      - "error global O(h): duplicar pasos divide el error por 2"
+      - "estabilidad para y' = λy:  h < 2/|λ|"
+    desarrollo: |
+      El método de Euler avanza siguiendo la tangente: evalúa la pendiente en el punto actual y
+      da un paso recto en esa dirección. Es la traducción directa de la definición de derivada, y
+      su valor es pedagógico: todo método más sofisticado se entiende como una mejora sobre esta
+      idea.
+
+      Su error local por paso es `O(h²)`, pero al acumularse sobre `1/h` pasos el error global
+      resulta `O(h)`. Eso significa que **duplicar el trabajo solo divide el error por dos**, una
+      relación pésima. Para diez veces más precisión hacen falta diez veces más pasos, y para
+      precisión de ingeniería el coste se vuelve prohibitivo.
+
+      La **estabilidad** es un problema distinto y suele confundirse con la precisión. Para
+      `y' = λy` con `λ` negativo, la solución decae, pero Euler solo reproduce ese decaimiento si
+      `h < 2/|λ|`. Con un paso mayor, la solución numérica **oscila y crece sin límite** aunque
+      la real tienda a cero. No es imprecisión: es divergencia.
+
+      Existe la variante **implícita**, `yₙ₊₁ = yₙ + h·f(tₙ₊₁, yₙ₊₁)`, que exige resolver una
+      ecuación en cada paso pero es incondicionalmente estable. Ese intercambio —más trabajo por
+      paso a cambio de pasos mucho mayores— es exactamente la razón de ser de los métodos
+      implícitos en problemas rígidos.
+    ejemplo: |
+      Euler sobre el problema de referencia, hacia y(1) = 0,419169.
+
+      ```text
+      pasos     h        y(1)         error      razón
+         5    0,200    0,347200     7,197e-02      —
+        10    0,100    0,384218     3,495e-02     2,06
+        20    0,050    0,401953     1,722e-02     2,03
+        40    0,025    0,410620     8,549e-03     2,01
+        80    0,0125   0,414909     4,260e-03     2,01
+
+      La razón se estabiliza en 2 → orden 1 confirmado     ✓
+
+      Con 80 pasos el error sigue siendo 4,3e-03.
+      RK4 con 5 pasos alcanza 1,0e-04: 40 veces mejor
+      con 16 veces menos trabajo.
+
+      Estabilidad: para λ = −2 se exige h < 1,0.
+      Con h = 1,1 la solución numérica oscila y diverge.
+      ```
+    errores:
+      - "Usar Euler explícito en problemas rígidos."
+      - "Confundir inestabilidad con falta de precisión."
+      - "Reducir h para ganar precisión sin comprobar el coste acumulado."
+    aplicacion: |
+      Prototipado rápido de simulaciones, comprensión conceptual de integradores, esquemas de
+      difusión discretizados y base del descenso por gradiente visto como flujo.
+    referencias:
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://www.cengage.com/)"
+      - "[Hairer, E.; Wanner, G. *Solving Ordinary Differential Equations II*, 2ª ed., Springer, 1996](https://doi.org/10.1007/978-3-642-05221-7)"
+
+  "237":
+    concepto: "RK4 cuesta cuatro evaluaciones por paso y las devuelve multiplicadas."
+    formulas:
+      - "k₁ = f(tₙ, yₙ);  k₂ = f(tₙ+h/2, yₙ+h·k₁/2)"
+      - "k₃ = f(tₙ+h/2, yₙ+h·k₂/2);  k₄ = f(tₙ+h, yₙ+h·k₃)"
+      - "yₙ₊₁ = yₙ + (h/6)(k₁ + 2k₂ + 2k₃ + k₄)"
+    desarrollo: |
+      Runge-Kutta de cuarto orden promedia cuatro estimaciones de la pendiente dentro del
+      intervalo: una al inicio, dos en el punto medio y una al final, con pesos `1, 2, 2, 1`. Ese
+      promedio ponderado cancela los términos de error hasta orden 4 del desarrollo de Taylor.
+
+      El resultado es una relación coste-beneficio excelente. Cuatro evaluaciones por paso, pero
+      error `O(h⁴)`: duplicar los pasos divide el error por 16. La comparación con Euler es
+      contundente y merece verse en números: **RK4 con 5 pasos —20 evaluaciones— supera a Euler
+      con 80 pasos —80 evaluaciones—** por un factor de 40 en precisión.
+
+      RK4 es el estándar de facto para problemas no rígidos, y su variante adaptativa
+      —Dormand-Prince, el `RK45` de las bibliotecas— añade una estimación del error por paso que
+      permite ajustar `h` automáticamente: pasos grandes donde la solución es suave y pequeños
+      donde cambia rápido. Es lo que se usa en producción.
+
+      Su límite es el mismo que el de Euler, solo que desplazado: sigue siendo explícito y su
+      región de estabilidad, aunque mayor, es finita. Con **problemas rígidos** —donde conviven
+      escalas de tiempo que difieren en órdenes de magnitud— el paso queda limitado por la escala
+      más rápida aunque la solución de interés sea lenta, y hay que pasar a métodos implícitos
+      como BDF.
+    ejemplo: |
+      RK4 sobre el mismo problema de referencia.
+
+      ```text
+      pasos     y(1)              error        razón
+         5   0,419270018     1,0091e-04         —
+        10   0,419175447     6,3430e-06       15,91
+        20   0,419169501     3,9700e-07       15,98
+        40   0,419169129     2,4820e-08       16,00
+
+      La razón tiende a 16 → orden 4 confirmado            ✓
+
+      Comparación por evaluaciones de f:
+        Euler,  80 pasos =  80 evaluaciones → error 4,26e-03
+        RK4,     5 pasos =  20 evaluaciones → error 1,01e-04
+
+      RK4 gana por 42 veces con la cuarta parte del trabajo.
+      ```
+    errores:
+      - "Aplicar RK4 con paso fijo a un sistema rígido."
+      - "Comparar métodos por número de pasos en vez de por evaluaciones de f."
+      - "Usar paso fijo cuando la solución tiene regiones de cambio rápido."
+    aplicacion: |
+      Simulación de sistemas dinámicos, mecánica orbital, Neural ODE, samplers de modelos de
+      difusión y motores físicos.
+    referencias:
+      - "[Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 17](http://numerical.recipes/)"
+
+  "238":
+    concepto: "La condición de estabilidad no es una recomendación: violarla hace explotar la simulación."
+    formulas:
+      - "ecuación del calor: u_t = u_xx"
+      - "esquema explícito: u_i^(n+1) = u_i^n + α(u_{i+1}^n − 2u_i^n + u_{i−1}^n)"
+      - "α = Δt/Δx² ≤ 0,5 para estabilidad"
+    desarrollo: |
+      Una ecuación en derivadas parciales involucra derivadas respecto de varias variables, y
+      describe fenómenos distribuidos en espacio y tiempo: calor, ondas, fluidos, difusión. El
+      método de **diferencias finitas** las discretiza sustituyendo cada derivada por un cociente
+      de diferencias sobre una malla.
+
+      Para la ecuación del calor en una dimensión, la derivada temporal se aproxima con
+      diferencia adelantada y la espacial de segundo orden con la fórmula central de la clase
+      227. El resultado es un esquema explícito donde cada valor nuevo se calcula directamente a
+      partir de tres valores viejos, sin resolver ningún sistema.
+
+      La sorpresa está en la restricción. El parámetro `α = Δt/Δx²` debe cumplir `α ≤ 0,5`, y esa
+      condición de tipo **Courant** tiene una consecuencia brutal: refinar la malla espacial a la
+      mitad obliga a dividir el paso temporal por **cuatro**. El coste total se multiplica por
+      ocho, y por eso las simulaciones explícitas de difusión se vuelven caras muy deprisa.
+
+      Violar la condición no produce imprecisión sino **divergencia**: la solución numérica
+      oscila con amplitud creciente hasta desbordar, y lo hace en pocos pasos. Los esquemas
+      implícitos como Crank-Nicolson son incondicionalmente estables y permiten pasos temporales
+      mucho mayores a cambio de resolver un sistema tridiagonal en cada paso, que es barato.
+    ejemplo: |
+      Calor en una barra con extremos fríos, esquema explícito.
+
+      ```text
+      u_t = u_xx      u(0,t) = u(1,t) = 0
+
+      nodos = 21      Δx = 0,05      Δt = 0,001
+      α = Δt / Δx² = 0,001 / 0,0025 = 0,4
+
+      α = 0,4 ≤ 0,5   →   esquema estable                  ✓
+      La solución decae suavemente hacia cero, como debe.
+
+      Si se subiera a Δt = 0,002:
+        α = 0,8 > 0,5  →  oscilaciones que crecen
+        en 20 pasos los valores desbordan.
+
+      Coste de refinar: Δx a la mitad (41 nodos)
+        exige Δt / 4  →  4× más pasos × 2× más nodos = 8× coste.
+      ```
+    errores:
+      - "Refinar la malla espacial sin ajustar el paso temporal."
+      - "Interpretar las oscilaciones crecientes como un fenómeno físico."
+      - "Usar esquemas explícitos donde el implícito sería mucho más barato."
+    aplicacion: |
+      Simulación térmica, dinámica de fluidos, propagación de ondas, modelos financieros de tipo
+      Black-Scholes y difusión en visión por computador.
+    referencias:
+      - "[LeVeque, R. *Finite Difference Methods for Ordinary and Partial Differential Equations*, SIAM, 2007](https://doi.org/10.1137/1.9780898717839)"
+      - "[Courant, R.; Friedrichs, K.; Lewy, H. *Über die partiellen Differenzengleichungen der mathematischen Physik*, 1928](https://doi.org/10.1007/BF01448839)"
+
+  "239":
+    concepto: "Se implementa a mano para saber cuándo la biblioteca falla, y se usa la biblioteca para producción."
+    formulas:
+      - "bisección → scipy.optimize.brentq"
+      - "RK4 → scipy.integrate.solve_ivp"
+      - "cuadratura → scipy.integrate.quad"
+    desarrollo: |
+      SciPy implementa versiones de todos los métodos de esta parte, y con mejor calidad de la
+      que se puede alcanzar en un curso: control adaptativo del paso, detección de rigidez,
+      selección automática de algoritmo, estimación de error y décadas de código Fortran probado
+      debajo.
+
+      La pregunta legítima es entonces por qué implementarlos a mano. La respuesta es que **usar
+      un método sin entenderlo impide saber cuándo falla**. `solve_ivp` con opciones por defecto
+      puede devolver resultados sin sentido en un problema rígido, y solo quien sabe qué es la
+      rigidez interpretará el aviso y cambiará a `method='BDF'`. La biblioteca no protege de la
+      ignorancia del usuario.
+
+      Hay además una razón de diagnóstico. Cuando un cálculo produce números extraños, saber
+      distinguir entre un error de modelado, un problema mal condicionado, una tolerancia mal
+      puesta y un fallo real de la biblioteca exige entender el algoritmo. Sin ese conocimiento,
+      el único recurso es probar opciones al azar.
+
+      La regla práctica es clara: **implementar para aprender, usar la biblioteca para
+      producir**. Reescribir un integrador en código de producción es reintroducir errores que
+      SciPy resolvió hace veinte años. El motor de esta parte no depende de SciPy precisamente
+      para que las implementaciones didácticas sean legibles y ejecutables en cualquier entorno.
+    ejemplo: |
+      Correspondencia entre lo implementado y su equivalente en SciPy.
+
+      ```text
+      SciPy 1.17.1 disponible en este entorno
+
+      implementación propia        equivalente en SciPy
+      ---------------------------------------------------------
+      bisection                    scipy.optimize.brentq
+      newton_raphson               scipy.optimize.newton
+      lagrange_interpolation       scipy.interpolate.lagrange
+      splines                      scipy.interpolate.CubicSpline
+      trapezoid_rule               scipy.integrate.trapezoid
+      simpson_rule                 scipy.integrate.simpson
+      quadrature                   scipy.integrate.quad
+      direct_linear_solvers        scipy.linalg.lu_solve
+      jacobi_gauss_seidel          scipy.sparse.linalg.cg
+      numerical_least_squares      scipy.linalg.lstsq
+      euler_method / runge_kutta   scipy.integrate.solve_ivp
+
+      Este motor no requiere SciPy: todas las implementaciones
+      son de biblioteca estándar y ejecutables sin dependencias.
+      ```
+    errores:
+      - "Reescribir integradores propios en código de producción."
+      - "Usar solve_ivp con opciones por defecto en problemas rígidos."
+      - "Confiar en la salida de una biblioteca sin comprobar su diagnóstico de convergencia."
+    aplicacion: |
+      Elección de herramientas en proyectos científicos, depuración de cálculos numéricos,
+      validación cruzada entre implementaciones y decisiones de rendimiento.
+    referencias:
+      - "[Virtanen, P. et al. *SciPy 1.0: fundamental algorithms for scientific computing*, Nature Methods, 2020](https://doi.org/10.1038/s41592-019-0686-2)"
+      - "[Documentación de SciPy](https://docs.scipy.org/doc/scipy/)"
+
+  "240":
+    concepto: "Un solver serio reporta su método, su tolerancia, su coste y su error estimado."
+    formulas:
+      - "comparar métodos por evaluaciones de f, no por número de pasos"
+      - "orden empírico: log₂(errorₕ / error_{h/2})"
+      - "reportar: método, tolerancia, iteraciones, residuo"
+    desarrollo: |
+      El capstone integra la parte entera resolviendo dos problemas —una EDO y una raíz— con
+      varios métodos, y produciendo un informe comparativo. El objetivo no es encontrar el
+      resultado sino **justificarlo**: qué método, con qué tolerancia, a qué coste y con qué
+      error estimado.
+
+      La métrica de comparación correcta es el **número de evaluaciones de la función**, no el
+      número de pasos. RK4 da un paso por cada cuatro evaluaciones, y comparar «5 pasos de RK4»
+      con «5 pasos de Euler» es comparar cuatro unidades de trabajo con una. Con la métrica
+      correcta, RK4 sigue ganando por un margen enorme, y esa es la conclusión defendible.
+
+      El **orden empírico** se mide ejecutando con `h` y `h/2` y tomando el logaritmo en base 2
+      del cociente de errores. Si sale 1 para Euler y 4 para RK4, la implementación es correcta;
+      si sale otra cosa, hay un error o el problema no cumple las hipótesis de suavidad. Es la
+      prueba unitaria natural de un integrador.
+
+      El informe final debe declarar lo mismo que declararía un artículo: método usado,
+      tolerancia, número de iteraciones o pasos, residuo o error estimado, y las limitaciones
+      conocidas. Un solver que devuelve un número desnudo obliga al lector a confiar; uno que
+      devuelve el número con su diagnóstico permite verificar. Esa es toda la diferencia.
+    ejemplo: |
+      Informe comparativo de los dos problemas del capstone.
+
+      ```text
+      Problema 1:  y' = −2y + t,  y(0) = 1,  objetivo y(1)
+      exacto: 0,419169104046
+
+      método   pasos  evaluaciones    y(1)          error
+      euler      10        10       0,384218      3,49e-02
+      euler      40        40       0,410620      8,55e-03
+      rk4         5        20       0,419270      1,01e-04
+      rk4        10        40       0,419175      6,34e-06
+
+      Con 40 evaluaciones:
+        euler → 8,55e-03        rk4 → 6,34e-06
+        rk4 es 1 349 veces más preciso al mismo coste.
+
+      Problema 2:  raíz de x³ − 2x − 4
+        bisección: raíz 1,999999999999   41 iteraciones
+        newton:    raíz 2,000000000000    6 iteraciones
+
+      Recomendación: rk4 para la EDO, newton con respaldo
+      de bisección para la raíz, tolerancia relativa 1e-10
+      y tope de 100 iteraciones.
+      ```
+    errores:
+      - "Comparar métodos por pasos en vez de por evaluaciones."
+      - "Reportar un resultado sin la tolerancia ni el método usado."
+      - "Omitir el orden empírico como verificación de la implementación."
+    aplicacion: |
+      Informes de simulación, selección de solvers en proyectos científicos, benchmarking de
+      integradores y documentación de resultados numéricos.
+    referencias:
+      - "[Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018](https://doi.org/10.1137/1.9781611975581)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](http://numerical.recipes/)"

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Muchos trozos de grado bajo baten a un único polinomio de grado alto.**
 
-Esta clase concreta ese objetivo sobre **Splines**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `splines`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar runge-kutta con paso fijo a un sistema rígido.
+
+## 🧩 Fórmulas de la clase
+
+```text
+spline lineal: recta entre cada par de nodos consecutivos
+spline cúbico: continuidad de valor, primera y segunda derivada
+n nodos ⟹ n−1 tramos
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Todo método iterativo necesita criterio de parada y tolerancia declarada.
+Un spline es una función definida a trozos, con un polinomio de grado bajo en cada
+intervalo entre nodos consecutivos, empalmados con condiciones de continuidad. La idea
+resuelve el problema de Runge por la vía directa: si el grado alto oscila, no se usa grado
+alto.
+
+El **spline lineal** simplemente une los puntos con segmentos. Es continuo, no oscila
+nunca, y su error es `O(h²)` en cada tramo. Su defecto es visible: tiene esquinas en los
+nodos, la derivada salta, y para animación o diseño gráfico eso se nota.
+
+El **spline cúbico** usa polinomios de grado 3 e impone continuidad del valor, de la
+primera derivada y de la segunda. El resultado es visualmente suave y matemáticamente
+notable: entre todas las funciones que pasan por los puntos, el spline cúbico natural es
+**la que minimiza la curvatura total**, que es la formalización de «la curva más suave
+posible». El nombre viene de las varillas flexibles que usaban los constructores navales.
+
+Los splines están en todas partes: en las curvas de las herramientas de diseño gráfico, en
+la interpolación de datos científicos, en las trayectorias de robots y en los modelos
+aditivos generalizados. Su ventaja decisiva es la **localidad**: mover un punto solo
+afecta a los tramos vecinos, mientras que en un polinomio global un cambio en un extremo
+altera toda la curva.
+
+## 🧮 Ejemplo trabajado
+
+Spline lineal sobre datos que oscilan entre 0 y 1.
+
+```text
+nodos:   0    1    2    3    4
+valores: 0    1    0    1    0
+
+Evaluaciones del spline lineal:
+  s(0,50) = 0,50      dentro del tramo [0,1]
+  s(1,50) = 0,50      dentro del tramo [1,2]
+  s(2,25) = 0,25      dentro del tramo [2,3]
+
+Pasa por todos los nodos                                 ✓
+Nunca sale del rango [0,1] de los datos                  ✓
+
+Un polinomio único de grado 4 por estos 5 puntos
+llega a valores por debajo de −0,3 entre los nodos.
+
+Localidad: cambiar el valor en x = 4 no altera
+el spline en el tramo [0,1].
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 226
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Esperar derivada continua de un spline lineal.
+2. Usar splines para extrapolar más allá del último nodo.
+3. Olvidar declarar las condiciones de contorno del spline cúbico.
+
+## 🚀 Dónde se usa de verdad
+
+Curvas en diseño gráfico y CAD, interpolación de series temporales, trayectorias suaves en
+robótica y modelos aditivos generalizados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [de Boor, C. *A Practical Guide to Splines*, ed. rev., Springer, 2001](https://doi.org/10.1007/978-1-4612-6333-3)
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://www.cengage.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

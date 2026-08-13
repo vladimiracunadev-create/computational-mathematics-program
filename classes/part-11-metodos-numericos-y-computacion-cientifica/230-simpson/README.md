@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Simpson usa parábolas y gana dos órdenes por el mismo precio.**
 
-Esta clase concreta ese objetivo sobre **Simpson**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `simpson_rule`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar tolerancia absoluta cuando la escala del problema es grande.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∫ ≈ (h/3)·[f₀ + 4f₁ + 2f₂ + 4f₃ + … + fₙ]
+error O(h⁴):  n × 2 ⟹ error / 16
+requiere n par; exacta hasta grado 3
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Un solver sin estimación de error es un generador de números plausibles.
+Simpson ajusta una parábola por cada par de subintervalos en vez de una recta por cada
+uno. El patrón de pesos `1, 4, 2, 4, …, 4, 1` sale de integrar exactamente esas parábolas,
+y exige que el número de subintervalos sea **par**.
+
+Su error es `O(h⁴)`, dos órdenes por encima del trapecio con esencialmente el mismo coste
+de evaluaciones. La regla de verificación correspondiente es que duplicar `n` divide el
+error por 16, y comprobarla es la forma estándar de validar la implementación.
+
+Hay una sorpresa agradable: aunque se construye con parábolas, Simpson es **exacto para
+polinomios de grado 3**. El término cúbico se cancela por simetría, y ese grado extra
+gratuito es la razón de su excelente relación precisión-coste. Es el método por defecto
+cuando hay que integrar a mano y con pocos recursos.
+
+El orden alto tiene una condición que se olvida: exige que la función tenga cuarta derivada
+acotada. Con integrandos poco suaves, con esquinas o con oscilaciones rápidas, Simpson
+pierde su ventaja y puede comportarse peor que el trapecio. Con funciones de suavidad
+dudosa conviene un método adaptativo que subdivida donde haga falta.
+
+## 🧮 Ejemplo trabajado
+
+Misma integral que el trapecio, para comparar órdenes.
+
+```text
+valor exacto: 0,785398163397
+
+   n      valor            error        razón
+   2   0,783333333    2,0648e-03         —
+   4   0,785259259    1,3890e-04      14,87
+   8   0,785388765    9,3984e-06      14,78
+  16   0,785397555    6,0812e-07      15,46
+
+La razón tiende a 16 → orden 4 confirmado           ✓
+
+Comparación con n = 16:
+  trapecio: error 1,63e-04
+  Simpson:  error 6,08e-07        268 veces mejor
+
+Verificación del grado 3: sobre x³ en [0,1]
+  Simpson con n = 2 da exactamente 0,25             ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 230
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Usar un número impar de subintervalos.
+2. Aplicarlo a funciones con esquinas o discontinuidades.
+3. Confundir el patrón de pesos y usar 1,4,4,1 en vez de 1,4,2,4,1.
+
+## 🚀 Dónde se usa de verdad
+
+Integración numérica de propósito general, cálculo de momentos de distribuciones,
+procesamiento de señales muestreadas y base de los métodos adaptativos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

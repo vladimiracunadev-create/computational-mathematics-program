@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**El gradiente negativo es la dirección más empinada, pero no la única que sirve.**
 
-Esta clase concreta ese objetivo sobre **Gradiente y direcciones de descenso**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `descent_directions`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: declarar convergencia por número de épocas y no por criterio numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+d es de descenso ⟺ dᵀ∇f < 0
+la más empinada: d = −∇f
+Newton: d = −H⁻¹∇f  (también de descenso si H es definida positiva)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Momentum promedia gradientes; Adam además normaliza por su escala.
+El criterio para que una dirección sirva es sencillo: su producto escalar con el gradiente
+debe ser negativo. Eso significa que forma un ángulo mayor de 90 grados con el gradiente,
+y que moverse un poco en esa dirección **reduce** la función. Hay infinitas direcciones que
+lo cumplen, no solo una.
+
+El gradiente negativo es la de **máximo descenso local**, en el sentido de que maximiza la
+reducción por unidad de longitud del paso. Pero «localmente óptima» no significa
+«globalmente eficiente»: en un valle alargado el gradiente apunta hacia las paredes en vez
+de a lo largo del valle, y el descenso zigzaguea desperdiciando la mayor parte del
+movimiento.
+
+Ese defecto es exactamente lo que corrigen los métodos posteriores. Momentum promedia
+gradientes sucesivos y el zigzag se cancela. Newton usa la curvatura para reescalar cada
+dirección y apunta directamente al mínimo de la aproximación cuadrática. Los métodos
+adaptativos escalan por coordenada. Todos siguen siendo direcciones de descenso, solo que
+mejor elegidas.
+
+Conviene retener que **cualquier** dirección con producto escalar negativo funciona,
+incluso una aleatoria. Los métodos de optimización sin gradiente explotan esa libertad
+probando direcciones al azar y quedándose con las que reducen el objetivo. Son lentos pero
+aplicables donde no hay derivada, y la clase 259 los desarrolla.
+
+## 🧮 Ejemplo trabajado
+
+Cuatro direcciones evaluadas desde el mismo punto.
+
+```text
+f(x,y) = x² + 20y²      punto (−2, 3)      f = 184,0
+∇f = (−4, 120)
+
+dirección           dᵀ∇f      ¿descenso?   f tras un paso
+−gradiente        −14 416         sí         183,8800
+aleatoria válida     −116         sí         183,9180
+eje x                 + 4         no         184,0040
++gradiente        +14 416         no         184,1201
+
+La más empinada es −∇f, pero la aleatoria también sirve.
+
+Nota: el gradiente vale 120 en y y −4 en x. El descenso
+corregirá sobre todo y, y avanzará muy poco en x: ese
+desequilibrio es el que produce el zigzag.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 243
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Creer que solo el gradiente negativo es dirección válida.
+2. Usar la dirección más empinada en problemas mal escalados sin corregir.
+3. Olvidar normalizar la dirección al comparar tamaños de paso.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de optimizadores, métodos de región de confianza, optimización sin derivadas y
+análisis de convergencia.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://doi.org/10.1007/978-0-387-40065-5)
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 9](https://web.stanford.edu/~boyd/cvxbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

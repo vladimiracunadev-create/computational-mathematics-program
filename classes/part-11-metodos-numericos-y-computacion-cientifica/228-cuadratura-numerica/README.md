@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Elegir bien los nodos vale más que multiplicarlos: Gauss lo demuestra con tres.**
 
-Esta clase concreta ese objetivo sobre **Cuadratura numérica**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `quadrature`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: iterar sin límite máximo y colgar el proceso.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∫f ≈ Σ wᵢ·f(xᵢ)
+Gauss con n nodos: exacta para polinomios de grado 2n−1
+cambio de variable de [a,b] a [−1,1]
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Interpolar de grado alto oscila (fenómeno de Runge): por eso existen los splines.
+Toda regla de cuadratura tiene la misma forma: una suma ponderada de valores de la
+función. Lo que distingue a unas de otras es dónde se colocan los nodos y qué pesos se
+les asigna. Las reglas de Newton-Cotes —trapecio, Simpson— fijan nodos equiespaciados y
+calculan los pesos.
+
+La **cuadratura gaussiana** hace algo más ambicioso: trata también las posiciones de los
+nodos como incógnitas. Con `n` nodos hay `2n` grados de libertad, y se eligen para que la
+regla sea exacta con polinomios de grado hasta `2n−1`. Con tres nodos se integra
+exactamente cualquier polinomio de grado 5, lo cual es notable.
+
+Los nodos resultantes son las raíces de los polinomios de Legendre y no son
+equiespaciados: se concentran hacia el centro y evitan los extremos. Los pesos se calculan
+una vez y se tabulan. El cambio de variable lleva cualquier intervalo `[a,b]` al `[−1,1]`
+donde están tabulados.
+
+La comparación con el trapecio es demoledora y explica por qué las bibliotecas serias usan
+variantes de Gauss: con el mismo número de evaluaciones, el error es varios órdenes de
+magnitud menor. Su límite es que necesita evaluar en puntos concretos, así que no sirve
+cuando solo se dispone de datos tabulados en una malla fija.
+
+## 🧮 Ejemplo trabajado
+
+Integral de e^(−x²) entre 0 y 1, sin primitiva elemental.
+
+```text
+valor de referencia: 0,746824132812
+
+Gauss con 3 nodos:
+  estimación = 0,746814584191
+  error      = 9,55e-06
+
+Trapecio con 3 subintervalos (4 evaluaciones):
+  estimación = 0,739986475277
+  error      = 6,84e-03
+
+Gauss es 716 veces más preciso con menos evaluaciones.
+
+Para igualar a Gauss-3, el trapecio necesitaría
+unos 27 subintervalos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 228
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Aplicar los nodos tabulados sin el cambio de variable al intervalo real.
+2. Usar cuadratura gaussiana con datos tabulados en una malla fija.
+3. Aplicarla a integrandos con singularidades sin transformación previa.
+
+## 🚀 Dónde se usa de verdad
+
+Integración en métodos de elementos finitos, cálculo de esperanzas en modelos
+probabilísticos, evaluación de funciones especiales y física computacional.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

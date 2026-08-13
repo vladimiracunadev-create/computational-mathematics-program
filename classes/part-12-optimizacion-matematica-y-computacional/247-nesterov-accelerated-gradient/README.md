@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Nesterov calcula el gradiente donde va a estar, no donde está.**
 
-Esta clase concreta ese objetivo sobre **Nesterov accelerated gradient**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `nesterov`.
 4. Interpretar las 5 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+punto adelantado: x̃ = xₖ + β·vₖ
+vₖ₊₁ = β·vₖ − lr·∇f(x̃)
+cota O(1/k²) frente a O(1/k) del descenso simple
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> El learning rate es el hiperparámetro que más veces explica una divergencia.
+El gradiente acelerado de Nesterov introduce un cambio que parece menor y no lo es: evalúa
+el gradiente en el punto al que el momentum va a llevar, no en el punto actual. Primero se
+mira hacia dónde empuja la inercia, y allí se calcula la corrección.
+
+La intuición es la de un conductor que frena antes de la curva en vez de al llegar a ella.
+Si el punto adelantado ya ha pasado el mínimo, el gradiente en él apunta hacia atrás y
+**frena** la velocidad antes de que el sobrepaso ocurra. Momentum clásico solo se entera
+del sobrepaso después de haberlo cometido.
+
+El resultado no es solo empírico. Para funciones convexas suaves, Nesterov alcanza una tasa
+de convergencia `O(1/k²)` frente al `O(1/k)` del descenso simple, y esa tasa es
+**óptima**: ningún método de primer orden puede hacerlo mejor en esa clase de problemas.
+Es uno de los resultados más elegantes de la optimización convexa.
+
+En aprendizaje profundo la ventaja es más modesta que en el caso convexo, pero real y
+gratuita: el coste computacional es idéntico al de momentum. Está disponible como opción
+en prácticamente todas las bibliotecas —`nesterov=True`— y activarla rara vez perjudica.
+
+## 🧮 Ejemplo trabajado
+
+Momentum clásico frente a Nesterov, condiciones idénticas.
+
+```text
+f(x,y) = x² + 20y²      lr = 0,02      β = 0,9
+
+momentum clásico:
+  x final = (1,741e-05 ; −6,475e-05)
+  f final = 8,4165e-08
+
+Nesterov:
+  x final = (−5,6e-07 ; 0,0)
+  f final = 0,0            (por debajo de la precisión)
+
+Diferencia de implementación:
+  clásico:  ∇f evaluado en x
+  Nesterov: ∇f evaluado en x + β·v
+
+Ventaja teórica en convexas suaves:
+  descenso simple  O(1/k)
+  Nesterov         O(1/k²)   y es óptimo
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 247
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Implementar la fórmula evaluando el gradiente en x en vez del punto adelantado.
+2. Esperar la ganancia teórica del caso convexo en redes profundas.
+3. Confundir las dos formulaciones equivalentes de NAG al portar código.
+
+## 🚀 Dónde se usa de verdad
+
+SGD con Nesterov en entrenamiento de redes, optimización convexa acelerada y métodos
+proximales acelerados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Nesterov, Y. *A method for solving the convex programming problem with convergence rate O(1/k²)*, 1983](https://cir.nii.ac.jp/crid/1570572699326076416)
+- [Sutskever, I. et al. *On the importance of initialization and momentum in deep learning*, ICML, 2013](https://proceedings.mlr.press/v28/sutskever13.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

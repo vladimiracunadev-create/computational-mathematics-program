@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Newton resuelve una cuadrática en un solo paso, y por eso no escala.**
 
-Esta clase concreta ese objetivo sobre **Método de Newton**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `newton_method`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: declarar convergencia por número de épocas y no por criterio numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+xₖ₊₁ = xₖ − H⁻¹·∇f(xₖ)
+convergencia cuadrática cerca del óptimo
+coste O(n³) por iteración, memoria O(n²)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> El learning rate es el hiperparámetro que más veces explica una divergencia.
+El método de Newton aplicado a optimización aproxima la función por su desarrollo de Taylor
+de segundo orden y salta al mínimo de esa parábola. Usa por tanto la **curvatura**, no solo
+la pendiente, y eso le permite elegir simultáneamente dirección y tamaño de paso sin
+learning rate.
+
+En una función cuadrática, la aproximación de segundo orden **es** la función, y Newton
+alcanza el mínimo exacto en una única iteración desde cualquier punto de partida. En
+funciones generales conserva convergencia cuadrática cerca del óptimo: el número de dígitos
+correctos se duplica en cada paso, igual que en la búsqueda de raíces de la clase 223.
+
+El obstáculo es el coste. El Hessiano tiene `n²` entradas e invertirlo cuesta `O(n³)`. Con
+un modelo de mil millones de parámetros, el Hessiano tendría `10¹⁸` entradas: no cabe en
+ninguna memoria existente. Por eso los métodos de segundo orden puros son inviables en
+aprendizaje profundo, por muy atractiva que sea su tasa de convergencia.
+
+Hay un segundo problema, cualitativo: si el Hessiano **no es definido positivo** —lo cual
+ocurre en puntos de silla, abundantes en dimensión alta— la dirección de Newton puede
+apuntar cuesta arriba. Las variantes prácticas añaden regularización al Hessiano o usan
+regiones de confianza para evitarlo.
+
+## 🧮 Ejemplo trabajado
+
+Newton sobre una cuadrática: un paso y termina.
+
+```text
+f(x,y) = x² + 20y²        punto inicial (−2, 3)
+
+Hessiano = [[2,  0],        H⁻¹ = [[0,5,   0   ],
+            [0, 40]]                [0  ,  0,025]]
+
+Paso 1:  x = (−2,3) − H⁻¹·(−4,120) = (0, 0)
+  f = 0,0                                            ✓
+
+Paso 2:  ya está en el óptimo, no se mueve.
+
+Un paso frente a las 200 iteraciones del descenso.
+
+Coste: invertir H es O(n³). Con n = 10⁹ el Hessiano
+tendría 10¹⁸ entradas: imposible de almacenar.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 252
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Aplicar Newton sin comprobar que el Hessiano es definido positivo.
+2. Formar e invertir el Hessiano explícitamente en vez de resolver el sistema.
+3. Considerarlo viable en modelos con millones de parámetros.
+
+## 🚀 Dónde se usa de verdad
+
+Optimización de pocos parámetros, ajuste de modelos estadísticos, IRLS en regresión
+logística y base conceptual de los métodos cuasi-Newton.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 3](https://doi.org/10.1007/978-0-387-40065-5)
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 9](https://web.stanford.edu/~boyd/cvxbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Un problema de optimización se define por variables, objetivo, sentido y restricciones.**
 
-Esta clase concreta ese objetivo sobre **Problemas de optimización y función objetivo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `objective_function`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+min f(x)  sujeto a  gᵢ(x) ≤ 0,  hⱼ(x) = 0
+maximizar f  ⟺  minimizar −f
+óptimo local: f(x*) ≤ f(x) en un entorno
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> En un problema convexo todo mínimo local es global; fuera de él no hay garantía.
+Todo problema de optimización tiene cuatro componentes que conviene nombrar antes de tocar
+nada: las **variables de decisión** sobre las que se puede actuar, la **función objetivo**
+que se quiere mejorar, el **sentido** —minimizar o maximizar— y las **restricciones** que
+delimitan qué soluciones son admisibles.
+
+Maximizar y minimizar son el mismo problema: maximizar `f` es minimizar `−f`. Por convenio
+la literatura se escribe siempre en forma de minimización, y por eso en aprendizaje
+automático se habla de minimizar la pérdida en vez de maximizar la verosimilitud, aunque
+sean lo mismo con signo cambiado.
+
+Un problema sin restricciones se llama **irrestricto**, y es el caso de casi todo el
+entrenamiento de redes neuronales: los pesos pueden tomar cualquier valor real. Cuando hay
+restricciones el problema se complica sustancialmente, y las clases 256 a 258 desarrollan
+la maquinaria correspondiente.
+
+La distinción entre óptimo **local** y **global** es la que decide la dificultad. Un
+óptimo local es mejor que todos sus vecinos; uno global es mejor que todos los puntos. Sin
+convexidad, ningún algoritmo basado en información local puede distinguir uno del otro, y
+esa es la razón de que la clase siguiente sea la más importante de la parte.
+
+## 🧮 Ejemplo trabajado
+
+Anatomía de un problema irrestricto de dos variables.
+
+```text
+variables de decisión: x, y
+función objetivo:      f(x,y) = x² + 20y²
+sentido:               minimizar
+restricciones:         ninguna
+
+punto inicial X₀ = (−2, 3)
+  f(X₀) = 4 + 180 = 184,0
+  ∇f(X₀) = (2x, 40y) = (−4, 120)
+
+El gradiente es 30 veces mayor en y que en x:
+la función es muchísimo más sensible en esa dirección.
+
+Óptimo: (0, 0) con f = 0.
+Al ser convexo, ese mínimo local es también global.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 241
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Optimizar sin haber escrito explícitamente la función objetivo.
+2. Olvidar las restricciones implícitas del dominio del problema.
+3. Confundir un óptimo local con la solución del problema.
+
+## 🚀 Dónde se usa de verdad
+
+Formulación de problemas de entrenamiento, diseño de ingeniería, asignación de recursos y
+planificación logística.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 1](https://web.stanford.edu/~boyd/cvxbook/)
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006](https://doi.org/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

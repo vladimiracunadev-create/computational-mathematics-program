@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**El mismo learning rate que converge en una cuadrática diverge en Rosenbrock.**
 
-Esta clase concreta ese objetivo sobre **Capstone: banco de optimizadores comparables**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_optimizer_bench`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar weight decay dentro del gradiente en adam (y no como adamw).
+
+## 🧩 Fórmulas de la clase
+
+```text
+protocolo: mismo punto inicial, mismo lr, mismas iteraciones
+reportar f final, ‖∇f‖ y si divergió
+no existe un optimizador uniformemente mejor
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> KKT generaliza Lagrange a restricciones de desigualdad.
+El capstone somete a siete optimizadores al mismo presupuesto —300 iteraciones, `lr` común,
+punto inicial idéntico— sobre dos problemas de dificultad muy distinta: una cuadrática bien
+condicionada y la función de Rosenbrock, con su valle curvo y estrecho.
+
+El resultado principal es incómodo y verdadero: **ningún optimizador gana en ambos**.
+Momentum es el mejor en la cuadrática y **diverge** en Rosenbrock con el mismo paso.
+RMSProp gana en Rosenbrock precisamente porque su escalado adaptativo reduce el paso
+efectivo en las direcciones de gradiente grande. El descenso simple también diverge.
+
+Que la divergencia aparezca en el banco no es un defecto del experimento: es su hallazgo
+más útil. Un `lr = 0,02` perfectamente razonable en una cuadrática con `L = 40` es
+suicida en un valle donde la curvatura local supera con creces ese valor. Esa es
+exactamente la situación de una red neuronal real, donde `L` cambia durante el
+entrenamiento.
+
+La lección metodológica es que **comparar optimizadores exige un protocolo**: misma
+semilla, mismo punto inicial, mismo presupuesto de iteraciones y reporte explícito de los
+que divergieron. Un banco que oculta las divergencias, o que ajusta el `lr` de cada método
+por separado sin decirlo, produce rankings que no significan nada.
+
+## 🧮 Ejemplo trabajado
+
+Banco con presupuesto idéntico sobre dos problemas.
+
+```text
+protocolo: 300 iteraciones, lr = 0,02, punto inicial fijo
+
+método      cuadrática f      Rosenbrock
+gd            9,2e-11          divergió
+momentum      ~1e-14           divergió
+nesterov      ~1e-14           convergió
+adagrad       2,3e-04          convergió
+rmsprop       6,9e-03          mejor
+adam          5,9e-08          convergió
+adamw         6,1e-08          convergió
+
+mejor en cuadrática:  momentum
+mejor en Rosenbrock:  rmsprop
+divergieron en Rosenbrock: gd, momentum
+
+El mismo lr no sirve para ambos problemas.
+Reportar las divergencias es parte del resultado.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 260
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Comparar optimizadores ajustando el lr de cada uno sin declararlo.
+2. Omitir del informe los métodos que divergieron.
+3. Generalizar el ganador de un banco a todos los problemas.
+
+## 🚀 Dónde se usa de verdad
+
+Selección de optimizador para un proyecto, benchmarking reproducible, diagnóstico de
+divergencias en entrenamiento y diseño de experimentos de ablación.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Schmidt, R.; Schneider, F.; Hennig, P. *Descending through a crowded valley*, ICML, 2021](https://arxiv.org/abs/2007.01547)
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006](https://doi.org/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

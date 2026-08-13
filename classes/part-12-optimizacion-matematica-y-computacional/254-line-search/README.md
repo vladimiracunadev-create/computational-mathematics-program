@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Armijo pide una reducción proporcional a lo que el gradiente prometía, no cualquier reducción.**
 
-Esta clase concreta ese objetivo sobre **Line search**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `line_search`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar weight decay dentro del gradiente en adam (y no como adamw).
+
+## 🧩 Fórmulas de la clase
+
+```text
+condición de Armijo: f(x + αd) ≤ f(x) + c₁·α·∇fᵀd
+retroceso: empezar en α = 1 y multiplicar por 0,5 hasta cumplirla
+c₁ típico: 10⁻⁴
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Regularizar es añadir un término al objetivo, no un truco de implementación.
+Elegir el tamaño de paso a mano es frágil: demasiado grande diverge, demasiado pequeño
+malgasta iteraciones. La búsqueda de línea automatiza esa elección probando valores y
+quedándose con uno que garantice progreso suficiente.
+
+El criterio ingenuo —aceptar cualquier `α` que reduzca `f`— no basta. Se pueden construir
+sucesiones de pasos que reducen la función cada vez y aun así no convergen al mínimo,
+porque la reducción se hace arbitrariamente pequeña. Hace falta exigir un progreso
+**proporcional** al prometido por el gradiente.
+
+Esa exigencia es la **condición de Armijo**: la reducción debe ser al menos una fracción
+`c₁` de la que predice la aproximación lineal. Con `c₁ = 10⁻⁴` la exigencia es muy laxa —se
+pide capturar la diezmilésima parte del descenso prometido— y aun así basta para garantizar
+convergencia.
+
+La implementación estándar es el **retroceso**: empezar con `α = 1`, y mientras no se
+cumpla Armijo multiplicar por 0,5. Termina en pocas iteraciones y solo requiere evaluar la
+función. Las condiciones de Wolfe añaden una segunda desigualdad sobre la curvatura para
+evitar pasos demasiado cortos, y son las que necesita BFGS para mantener válida su
+aproximación.
+
+## 🧮 Ejemplo trabajado
+
+Retroceso desde un punto con gradiente muy desequilibrado.
+
+```text
+punto (−2, 3)      f = 184,0
+dirección d = −∇f = (4, −120)      c₁ = 1e-4
+
+α        f(x + αd)      ¿Armijo?
+1,000    273 784,0         no
+0,500     64 900,0         no
+0,250     15 016,0         no
+0,125      3 271,0         no
+0,0625       634,0         no
+0,03125      146,3         sí   ← aceptado
+
+6 evaluaciones de f y ningún hiperparámetro que ajustar.
+
+Sin línea de búsqueda, α = 1 habría multiplicado
+la función por 1 488.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 254
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Aceptar cualquier α que reduzca f, sin condición de progreso suficiente.
+2. Empezar el retroceso desde un α inicial demasiado pequeño.
+3. Usar solo Armijo con BFGS, donde hacen falta las condiciones de Wolfe.
+
+## 🚀 Dónde se usa de verdad
+
+Métodos cuasi-Newton, optimización sin ajuste manual de paso, entrenamiento con paso
+adaptativo y solvers de propósito general.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 3](https://doi.org/10.1007/978-0-387-40065-5)
+- [Armijo, L. *Minimization of functions having Lipschitz continuous first partial derivatives*, 1966](https://doi.org/10.2140/pjm.1966.16.1)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

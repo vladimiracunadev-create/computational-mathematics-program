@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**El trapecio es de orden 2: duplicar los subintervalos divide el error por cuatro.**
 
-Esta clase concreta ese objetivo sobre **Regla del trapecio**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `trapezoid_rule`.
 4. Interpretar las 5 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar runge-kutta con paso fijo a un sistema rígido.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∫ₐᵇ f ≈ (h/2)·[f(x₀) + 2f(x₁) + … + 2f(xₙ₋₁) + f(xₙ)]
+error total O(h²)
+n × 2  ⟹  error / 4
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> El orden de un método de integración predice cómo cae el error con el paso.
+La regla del trapecio aproxima la función por segmentos rectos entre nodos consecutivos y
+suma las áreas de los trapecios resultantes. Es la regla más simple que va más allá de los
+rectángulos, y su fórmula compuesta tiene la estructura característica: los extremos pesan
+la mitad que los puntos interiores.
+
+Su error es `O(h²)`, lo que da la regla práctica más útil para verificar una
+implementación: **duplicar el número de subintervalos divide el error por cuatro**. Si al
+duplicar `n` el error solo se divide por dos, hay un error de programación o la función no
+es suficientemente suave.
+
+El signo del error es predecible: el trapecio **sobreestima** para funciones convexas y
+subestima para cóncavas, porque la cuerda queda por encima o por debajo de la curva. Esa
+previsibilidad permite corregir, y de ahí sale la extrapolación de Richardson y el método
+de Romberg, que combinan estimaciones con distintos `h` para cancelar términos de error.
+
+Tiene además una propiedad que lo hace insustituible en un caso concreto: para funciones
+**periódicas** integradas sobre un periodo completo, el trapecio converge
+exponencialmente, mucho más rápido que Simpson. Es el fundamento de los métodos
+espectrales y de la precisión de la transformada discreta de Fourier.
+
+## 🧮 Ejemplo trabajado
+
+Integral de 1/(1+x²) entre 0 y 1, que vale exactamente π/4.
+
+```text
+valor exacto: 0,785398163397
+
+   n      valor            error       razón
+   2   0,775000000    1,0398e-02        —
+   4   0,782794010    2,6042e-03      3,993
+   8   0,784747124    6,5104e-04      4,000
+  16   0,785235400    1,6276e-04      4,000
+  32   0,785357472    4,0690e-05      4,000
+
+La razón se estabiliza en 4 → orden 2 confirmado    ✓
+
+El trapecio subestima aquí porque el integrando es cóncavo
+en la mayor parte del intervalo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 229
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. No verificar el orden empírico al implementarlo.
+2. Aplicarlo a integrandos con discontinuidades sin partir el intervalo.
+3. Olvidar que los extremos llevan peso mitad en la fórmula compuesta.
+
+## 🚀 Dónde se usa de verdad
+
+Integración de datos experimentales muestreados, cálculo de áreas bajo curvas ROC,
+métodos espectrales con funciones periódicas y base del método de Romberg.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)
+- [Trefethen, L. N.; Weideman, J. *The exponentially convergent trapezoidal rule*, SIAM Review, 2014](https://doi.org/10.1137/130932132)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

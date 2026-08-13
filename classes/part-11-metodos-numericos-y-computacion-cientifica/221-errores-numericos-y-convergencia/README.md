@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Reducir el paso mejora hasta que el redondeo toma el control y empeora.**
 
-Esta clase concreta ese objetivo sobre **Errores numéricos y convergencia**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `numerical_errors`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar tolerancia absoluta cuando la escala del problema es grande.
+
+## 🧩 Fórmulas de la clase
+
+```text
+error total ≈ C₁·hᵖ + C₂·ε/h
+diferencia adelantada: O(h);  central: O(h²)
+h óptimo de la central ≈ ε^(1/3) ≈ 6·10⁻⁶
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Todo método iterativo necesita criterio de parada y tolerancia declarada.
+Todo método numérico arrastra dos errores de naturaleza opuesta. El **error de
+truncamiento** proviene de la aproximación matemática —cortar una serie de Taylor,
+sustituir una curva por una recta— y se reduce al hacer el paso más pequeño. El **error de
+redondeo** proviene de la aritmética de precisión finita y **crece** al reducir el paso,
+porque restar dos números casi iguales y dividir por algo diminuto amplifica el ruido.
+
+La suma de ambos tiene un mínimo. Existe un `h` óptimo, y por debajo de él afinar más
+empeora el resultado. Esto contradice la intuición de que «más pequeño es más preciso», y
+es la razón de que una derivada numérica con `h = 10⁻¹⁵` sea basura mientras que con
+`h = 10⁻⁶` sea buena.
+
+El **orden** de un método es la potencia de `h` en el término de truncamiento, y es la
+cifra que permite predecir el comportamiento sin ejecutar nada. Un método de orden 1
+divide el error por 2 al duplicar el trabajo; uno de orden 2 lo divide por 4; uno de orden
+4, por 16. Esa diferencia es lo que decide entre segundos y horas de cómputo.
+
+La consecuencia metodológica es que hay que **medir el orden empíricamente**. Ejecutar con
+`h` y con `h/2`, calcular el cociente de errores y comprobar que sale lo que la teoría
+predice, es la prueba más eficaz de que una implementación es correcta: un método de orden
+4 cuyo error solo se divide por 2 tiene un error de programación.
+
+## 🧮 Ejemplo trabajado
+
+Derivada numérica de sen en x = 1, con distintos pasos.
+
+```text
+valor exacto: cos(1) = 0,5403023058681398
+
+      h        error adelantada    error central
+  1e-01          4,294e-02          9,00e-04
+  1e-03          4,207e-04          9,00e-08
+  1e-05          4,207e-06          9,04e-12
+  1e-07          4,361e-08          6,07e-10   ← empeora
+  1e-09          2,721e-08          2,72e-08   ← ruido
+  1e-11          6,004e-06          6,00e-06   ← basura
+
+La central es O(h²): h × 0,01 → error × 0,0001            ✓
+hasta que el redondeo domina cerca de h ≈ 1e-6.
+
+h óptimo aproximado para la central: ε^(1/3) ≈ 6e-6
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 221
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Reducir h indefinidamente creyendo que siempre mejora.
+2. Publicar un método sin haber medido su orden empírico.
+3. Confundir precisión de la máquina con precisión del resultado.
+
+## 🚀 Dónde se usa de verdad
+
+Comprobación de gradientes numéricos frente a autodiferenciación, validación de
+integradores y elección de pasos en simulación.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 1](https://doi.org/10.1137/1.9781611975581)
+- [Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

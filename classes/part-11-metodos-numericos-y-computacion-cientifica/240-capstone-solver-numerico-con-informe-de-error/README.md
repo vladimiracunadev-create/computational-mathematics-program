@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Un solver serio reporta su método, su tolerancia, su coste y su error estimado.**
 
-Esta clase concreta ese objetivo sobre **Capstone: solver numérico con informe de error**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_numerical_solver`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: iterar sin límite máximo y colgar el proceso.
+
+## 🧩 Fórmulas de la clase
+
+```text
+comparar métodos por evaluaciones de f, no por número de pasos
+orden empírico: log₂(errorₕ / error_{h/2})
+reportar: método, tolerancia, iteraciones, residuo
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Un solver sin estimación de error es un generador de números plausibles.
+El capstone integra la parte entera resolviendo dos problemas —una EDO y una raíz— con
+varios métodos, y produciendo un informe comparativo. El objetivo no es encontrar el
+resultado sino **justificarlo**: qué método, con qué tolerancia, a qué coste y con qué
+error estimado.
+
+La métrica de comparación correcta es el **número de evaluaciones de la función**, no el
+número de pasos. RK4 da un paso por cada cuatro evaluaciones, y comparar «5 pasos de RK4»
+con «5 pasos de Euler» es comparar cuatro unidades de trabajo con una. Con la métrica
+correcta, RK4 sigue ganando por un margen enorme, y esa es la conclusión defendible.
+
+El **orden empírico** se mide ejecutando con `h` y `h/2` y tomando el logaritmo en base 2
+del cociente de errores. Si sale 1 para Euler y 4 para RK4, la implementación es correcta;
+si sale otra cosa, hay un error o el problema no cumple las hipótesis de suavidad. Es la
+prueba unitaria natural de un integrador.
+
+El informe final debe declarar lo mismo que declararía un artículo: método usado,
+tolerancia, número de iteraciones o pasos, residuo o error estimado, y las limitaciones
+conocidas. Un solver que devuelve un número desnudo obliga al lector a confiar; uno que
+devuelve el número con su diagnóstico permite verificar. Esa es toda la diferencia.
+
+## 🧮 Ejemplo trabajado
+
+Informe comparativo de los dos problemas del capstone.
+
+```text
+Problema 1:  y' = −2y + t,  y(0) = 1,  objetivo y(1)
+exacto: 0,419169104046
+
+método   pasos  evaluaciones    y(1)          error
+euler      10        10       0,384218      3,49e-02
+euler      40        40       0,410620      8,55e-03
+rk4         5        20       0,419270      1,01e-04
+rk4        10        40       0,419175      6,34e-06
+
+Con 40 evaluaciones:
+  euler → 8,55e-03        rk4 → 6,34e-06
+  rk4 es 1 349 veces más preciso al mismo coste.
+
+Problema 2:  raíz de x³ − 2x − 4
+  bisección: raíz 1,999999999999   41 iteraciones
+  newton:    raíz 2,000000000000    6 iteraciones
+
+Recomendación: rk4 para la EDO, newton con respaldo
+de bisección para la raíz, tolerancia relativa 1e-10
+y tope de 100 iteraciones.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 240
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Comparar métodos por pasos en vez de por evaluaciones.
+2. Reportar un resultado sin la tolerancia ni el método usado.
+3. Omitir el orden empírico como verificación de la implementación.
+
+## 🚀 Dónde se usa de verdad
+
+Informes de simulación, selección de solvers en proyectos científicos, benchmarking de
+integradores y documentación de resultados numéricos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018](https://doi.org/10.1137/1.9781611975581)
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](http://numerical.recipes/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

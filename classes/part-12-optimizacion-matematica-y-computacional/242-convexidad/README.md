@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**La convexidad es la frontera entre optimizar con garantías y optimizar con esperanza.**
 
-Esta clase concreta ese objetivo sobre **Convexidad**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `convexity`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar weight decay dentro del gradiente en adam (y no como adamw).
+
+## 🧩 Fórmulas de la clase
+
+```text
+f(λa + (1−λ)b) ≤ λf(a) + (1−λ)f(b)
+convexa ⟺ Hessiano semidefinido positivo
+convexa ⟹ todo mínimo local es global
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> El learning rate es el hiperparámetro que más veces explica una divergencia.
+Una función es convexa si el segmento que une dos puntos cualesquiera de su gráfica queda
+**por encima** de la curva. Esa definición geométrica se traduce en la desigualdad de la
+cuerda, y en el caso diferenciable equivale a que el Hessiano sea semidefinido positivo:
+curvatura no negativa en todas las direcciones.
+
+La consecuencia es la que justifica toda la atención al concepto: **en un problema convexo
+todo mínimo local es global**. Un algoritmo que solo mira información local —que es lo
+único que hace el descenso de gradiente— tiene garantía de encontrar la solución óptima.
+Sin convexidad esa garantía desaparece por completo.
+
+Hay una jerarquía útil de problemas por dificultad, y no es lineal-versus-no-lineal como
+suele creerse, sino **convexo-versus-no-convexo**. Un problema convexo de un millón de
+variables es tratable; uno no convexo de veinte puede ser imposible de resolver con
+garantías. Programación lineal, mínimos cuadrados, regresión logística y SVM son convexos,
+y por eso se resuelven de forma fiable.
+
+Las redes neuronales no son convexas, y masivamente. Sin embargo se entrenan bien, y la
+explicación que va emergiendo es que en dimensión muy alta los mínimos locales malos son
+raros: lo abundante son puntos de silla, de los que el ruido de SGD escapa con facilidad.
+No es un teorema cerrado, y conviene decirlo así.
+
+## 🧮 Ejemplo trabajado
+
+Test de la cuerda y criterio del Hessiano.
+
+```text
+f(x) = x²  con a = 0,5,  b = 2,0,  λ = 0,7
+
+  f(λa + (1−λ)b) = f(0,95)  = 0,9025
+  λf(a) + (1−λ)f(b)         = 2,9500
+  0,9025 ≤ 2,9500   →   convexa                       ✓
+
+f(x,y) = x² + 20y²
+
+  Hessiano = [[2,  0],
+              [0, 40]]
+  autovalores: 40 y 2, ambos positivos
+  → definido positivo → estrictamente convexa         ✓
+
+Consecuencia: el mínimo (0,0) es global.
+Cualquier método de descenso lo encontrará.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 242
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Suponer convexidad sin comprobar el Hessiano.
+2. Aplicar garantías de la teoría convexa a redes neuronales.
+3. Confundir función convexa con función con forma de cuenco en una sola dirección.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de funciones de pérdida, elección de algoritmos con garantías, SVM y regresión
+regularizada, y análisis de por qué el entrenamiento profundo es difícil.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 3](https://web.stanford.edu/~boyd/cvxbook/)
+- [Dauphin, Y. et al. *Identifying and attacking the saddle point problem*, NeurIPS, 2014](https://arxiv.org/abs/1406.2572)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

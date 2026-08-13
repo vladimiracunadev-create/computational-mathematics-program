@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Euler es el método más barato por paso y el más caro por dígito de precisión.**
 
-Esta clase concreta ese objetivo sobre **Método de Euler**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `euler_method`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar tolerancia absoluta cuando la escala del problema es grande.
+
+## 🧩 Fórmulas de la clase
+
+```text
+yₙ₊₁ = yₙ + h·f(tₙ, yₙ)
+error global O(h): duplicar pasos divide el error por 2
+estabilidad para y' = λy:  h < 2/|λ|
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Todo método iterativo necesita criterio de parada y tolerancia declarada.
+El método de Euler avanza siguiendo la tangente: evalúa la pendiente en el punto actual y
+da un paso recto en esa dirección. Es la traducción directa de la definición de derivada, y
+su valor es pedagógico: todo método más sofisticado se entiende como una mejora sobre esta
+idea.
+
+Su error local por paso es `O(h²)`, pero al acumularse sobre `1/h` pasos el error global
+resulta `O(h)`. Eso significa que **duplicar el trabajo solo divide el error por dos**, una
+relación pésima. Para diez veces más precisión hacen falta diez veces más pasos, y para
+precisión de ingeniería el coste se vuelve prohibitivo.
+
+La **estabilidad** es un problema distinto y suele confundirse con la precisión. Para
+`y' = λy` con `λ` negativo, la solución decae, pero Euler solo reproduce ese decaimiento si
+`h < 2/|λ|`. Con un paso mayor, la solución numérica **oscila y crece sin límite** aunque
+la real tienda a cero. No es imprecisión: es divergencia.
+
+Existe la variante **implícita**, `yₙ₊₁ = yₙ + h·f(tₙ₊₁, yₙ₊₁)`, que exige resolver una
+ecuación en cada paso pero es incondicionalmente estable. Ese intercambio —más trabajo por
+paso a cambio de pasos mucho mayores— es exactamente la razón de ser de los métodos
+implícitos en problemas rígidos.
+
+## 🧮 Ejemplo trabajado
+
+Euler sobre el problema de referencia, hacia y(1) = 0,419169.
+
+```text
+pasos     h        y(1)         error      razón
+   5    0,200    0,347200     7,197e-02      —
+  10    0,100    0,384218     3,495e-02     2,06
+  20    0,050    0,401953     1,722e-02     2,03
+  40    0,025    0,410620     8,549e-03     2,01
+  80    0,0125   0,414909     4,260e-03     2,01
+
+La razón se estabiliza en 2 → orden 1 confirmado     ✓
+
+Con 80 pasos el error sigue siendo 4,3e-03.
+RK4 con 5 pasos alcanza 1,0e-04: 40 veces mejor
+con 16 veces menos trabajo.
+
+Estabilidad: para λ = −2 se exige h < 1,0.
+Con h = 1,1 la solución numérica oscila y diverge.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 236
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Usar Euler explícito en problemas rígidos.
+2. Confundir inestabilidad con falta de precisión.
+3. Reducir h para ganar precisión sin comprobar el coste acumulado.
+
+## 🚀 Dónde se usa de verdad
+
+Prototipado rápido de simulaciones, comprensión conceptual de integradores, esquemas de
+difusión discretizados y base del descenso por gradiente visto como flujo.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://www.cengage.com/)
+- [Hairer, E.; Wanner, G. *Solving Ordinary Differential Equations II*, 2ª ed., Springer, 1996](https://doi.org/10.1007/978-3-642-05221-7)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

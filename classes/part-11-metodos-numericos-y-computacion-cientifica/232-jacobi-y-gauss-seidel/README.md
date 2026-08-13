@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Gauss-Seidel usa los valores recién calculados y converge en la mitad de iteraciones.**
 
-Esta clase concreta ese objetivo sobre **Jacobi y Gauss-Seidel**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `jacobi_gauss_seidel`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar runge-kutta con paso fijo a un sistema rígido.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Jacobi: xᵢ⁽ᵏ⁺¹⁾ = (bᵢ − Σⱼ≠ᵢ aᵢⱼ·xⱼ⁽ᵏ⁾) / aᵢᵢ
+Gauss-Seidel: usa xⱼ⁽ᵏ⁺¹⁾ para j < i
+convergencia garantizada si A es diagonalmente dominante
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Newton converge cuadráticamente, pero solo cerca de la raíz.
+Los métodos iterativos parten de una solución aproximada y la refinan hasta que deja de
+cambiar. Su interés no es competir con LU en sistemas pequeños, sino resolver los que LU no
+puede: matrices de millones de incógnitas y muy dispersas, donde una factorización
+llenaría de ceros la memoria disponible.
+
+**Jacobi** despeja cada incógnita de su ecuación usando exclusivamente los valores de la
+iteración anterior. Eso lo hace trivialmente paralelizable, porque todas las componentes se
+actualizan de forma independiente. **Gauss-Seidel** usa los valores ya actualizados dentro
+de la misma pasada, lo que suele reducir a la mitad el número de iteraciones a costa de
+volverse secuencial.
+
+La condición suficiente clásica de convergencia es la **dominancia diagonal**: que cada
+elemento de la diagonal supere en módulo a la suma de los demás de su fila. Es suficiente,
+no necesaria, y hay sistemas no dominantes donde ambos métodos convergen igualmente. Sin
+alguna condición de este tipo, la iteración puede divergir.
+
+Estos dos métodos son el punto de entrada a una familia mucho mayor —SOR, gradiente
+conjugado, GMRES, multigrid— que es la que realmente se usa en producción. Conviene
+entenderlos porque la estructura es la misma: una iteración barata, un criterio de parada
+y un análisis de convergencia.
+
+## 🧮 Ejemplo trabajado
+
+Sistema 3×3 diagonalmente dominante, ambos métodos.
+
+```text
+A = [[10  −1   2]      diagonalmente dominante:
+     [−1  11  −1]        10 > 3,  11 > 2,  10 > 3      ✓
+     [ 2  −1  10]]
+
+solución:  [1,04327 ; 2,26923 ; −1,08173]
+
+Jacobi:        22 iteraciones hasta tolerancia 1e-10
+Gauss-Seidel:  11 iteraciones hasta la misma tolerancia
+
+Gauss-Seidel converge en la mitad de pasos.
+
+Contrapartida: Jacobi actualiza las tres componentes
+en paralelo; Gauss-Seidel debe hacerlo en orden.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 232
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Aplicarlos sin comprobar dominancia diagonal ni otra condición de convergencia.
+2. Iterar sin tope máximo y bloquear el proceso.
+3. Usar iterativos en sistemas pequeños y densos donde LU es más rápido.
+
+## 🚀 Dónde se usa de verdad
+
+Resolución de sistemas dispersos enormes, discretización de PDE, PageRank y precondicionado
+dentro de métodos de Krylov.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Saad, Y. *Iterative Methods for Sparse Linear Systems*, 2ª ed., SIAM, 2003](https://doi.org/10.1137/1.9780898718003)
+- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 11](https://doi.org/10.1137/1.9781611975581)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

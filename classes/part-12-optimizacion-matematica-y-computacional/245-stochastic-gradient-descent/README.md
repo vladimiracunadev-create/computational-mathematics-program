@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**SGD cambia exactitud del gradiente por número de actualizaciones, y suele salir ganando.**
 
-Esta clase concreta ese objetivo sobre **Stochastic gradient descent**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `sgd`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar weight decay dentro del gradiente en adam (y no como adamw).
+
+## 🧩 Fórmulas de la clase
+
+```text
+∇f ≈ (1/|B|)·Σ_{i∈B} ∇fᵢ
+E[gradiente de lote] = gradiente completo
+varianza del estimador ∝ 1/|B|
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> KKT generaliza Lagrange a restricciones de desigualdad.
+El gradiente exacto de una función de pérdida sobre un millón de ejemplos requiere recorrer
+el millón. El descenso estocástico observa que un subconjunto pequeño ya da una estimación
+**insesgada** del gradiente, y que con el mismo presupuesto de cómputo se pueden dar
+muchísimas más actualizaciones aunque cada una sea ruidosa.
+
+El intercambio es favorable en la práctica. Mil actualizaciones aproximadas avanzan más
+que una exacta, porque el error de la estimación se promedia a lo largo de las iteraciones
+mientras que el progreso se acumula. Ese es el resultado empírico que hizo viable el
+aprendizaje profundo a escala.
+
+El **ruido tiene además un efecto beneficioso** que no es un accidente. Las fluctuaciones
+del gradiente estocástico permiten escapar de puntos de silla y de mínimos locales
+estrechos, y hay evidencia de que sesgan la solución hacia mínimos anchos, que generalizan
+mejor. Un gradiente perfecto no siempre es lo deseable.
+
+El **tamaño de lote** es el mando que regula el compromiso. Lotes grandes dan gradientes
+precisos, aprovechan mejor la GPU y permiten más paralelismo, pero pierden el efecto
+regularizador del ruido y suelen necesitar ajustar el learning rate al alza. Lotes
+pequeños son ruidosos y lentos por muestra, pero exploran más. No hay valor universal.
+
+## 🧮 Ejemplo trabajado
+
+Ajuste de dos parámetros con 100 datos, mismo presupuesto.
+
+```text
+parámetros reales: [2,0 ; 3,0]
+
+lote completo (200 épocas):
+  estimación = [2,038924 ; 2,996817]
+  MSE = 0,094537
+  gradientes evaluados: 20 000
+
+SGD con 1 muestra (200 épocas):
+  estimación = [2,142997 ; 2,967811]
+  gradientes evaluados: 20 000
+
+Con el mismo número de evaluaciones, el lote completo
+da 200 actualizaciones y SGD da 20 000.
+
+SGD llega a una solución comparable con actualizaciones
+mucho más baratas, y su trayectoria es visiblemente ruidosa.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 245
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Comparar SGD y lote completo por épocas en vez de por coste de cómputo.
+2. Subir el tamaño de lote sin reajustar el learning rate.
+3. Interpretar el ruido de la curva de pérdida como fallo del entrenamiento.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de redes profundas, aprendizaje en línea, sistemas de recomendación y
+cualquier ajuste con conjuntos de datos grandes.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Bottou, L.; Curtis, F.; Nocedal, J. *Optimization methods for large-scale machine learning*, SIAM Review, 2018](https://doi.org/10.1137/16M1080173)
+- [Robbins, H.; Monro, S. *A stochastic approximation method*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729586)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

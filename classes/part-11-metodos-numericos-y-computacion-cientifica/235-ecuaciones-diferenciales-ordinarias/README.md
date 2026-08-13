@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Un problema de valor inicial fija una única trayectoria, y conocerla permite medir el error.**
 
-Esta clase concreta ese objetivo sobre **Ecuaciones diferenciales ordinarias**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `odes`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar runge-kutta con paso fijo a un sistema rígido.
+
+## 🧩 Fórmulas de la clase
+
+```text
+y' = f(t, y),   y(t₀) = y₀
+ejemplo: y' = −2y + t,  y(0) = 1
+solución: y(t) = 0,25(2t − 1) + 1,25·e^(−2t)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Un solver sin estimación de error es un generador de números plausibles.
+Una ecuación diferencial ordinaria relaciona una función desconocida con sus derivadas. El
+**problema de valor inicial** añade el valor en un punto, y bajo condiciones suaves de `f`
+eso determina una única trayectoria: el teorema de Picard-Lindelöf garantiza existencia y
+unicidad local.
+
+Las EDO son el lenguaje de casi toda la modelización dinámica: mecánica, circuitos,
+cinética química, poblaciones, epidemias y control. Que la mayoría no tenga solución
+analítica es lo que motiva las clases siguientes, y es la norma más que la excepción.
+
+Para desarrollar y validar métodos numéricos conviene partir de un problema **con solución
+conocida**. El ejemplo de esta parte, `y' = −2y + t`, es lineal de primer orden y se
+resuelve con factor integrante. Tener la solución exacta permite medir el error real de
+cada método y verificar empíricamente su orden.
+
+La estructura de la ecuación anticipa un problema que aparecerá luego. El coeficiente −2
+del término lineal determina la escala de tiempo del decaimiento, y con ella el paso
+máximo que un método explícito puede dar sin volverse inestable. Cuando en un sistema
+conviven coeficientes muy dispares —−2 y −2000— aparece la **rigidez**, y los métodos
+explícitos dejan de ser viables.
+
+## 🧮 Ejemplo trabajado
+
+El problema de referencia de esta parte.
+
+```text
+EDO:  y' = −2y + t          y(0) = 1
+
+Solución analítica por factor integrante:
+  y(t) = 0,25·(2t − 1) + 1,25·e^(−2t)
+
+Comprobación en t = 0:
+  0,25·(−1) + 1,25·1 = −0,25 + 1,25 = 1,0             ✓
+
+Valores de referencia:
+  y(0)   = 1,000000000000
+  y(0,5) = 0,459849979076
+  y(1)   = 0,419169104046
+
+Pendiente inicial: f(0, 1) = −2·1 + 0 = −2,0
+
+Toda la parte mide los métodos contra y(1) = 0,419169104046.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 235
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Resolver numéricamente sin comprobar antes si hay solución analítica.
+2. Olvidar la condición inicial y quedarse con una familia de soluciones.
+3. Ignorar la escala de tiempo del problema al elegir el paso.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos dinámicos en física e ingeniería, farmacocinética, modelos epidemiológicos,
+sistemas de control y Neural ODE.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://www.cengage.com/)
+- [Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

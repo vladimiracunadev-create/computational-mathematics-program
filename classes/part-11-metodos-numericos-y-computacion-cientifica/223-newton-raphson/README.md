@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Newton duplica los dígitos correctos en cada paso, pero solo si empieza cerca.**
 
-Esta clase concreta ese objetivo sobre **Newton-Raphson**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `newton_raphson`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar runge-kutta con paso fijo a un sistema rígido.
+
+## 🧩 Fórmulas de la clase
+
+```text
+xₙ₊₁ = xₙ − f(xₙ)/f'(xₙ)
+error: eₙ₊₁ ≈ C·eₙ²  (convergencia cuadrática)
+falla si f'(xₙ) ≈ 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Interpolar de grado alto oscila (fenómeno de Runge): por eso existen los splines.
+Newton-Raphson aproxima la función por su recta tangente en el punto actual y toma como
+siguiente candidato el corte de esa recta con el eje. Es el método de la derivada aplicado
+a la búsqueda de raíces, y su deducción cabe en dos líneas a partir del desarrollo de
+Taylor de primer orden.
+
+Su **convergencia cuadrática** es espectacular cuando funciona: si en un paso hay 3
+dígitos correctos, en el siguiente hay 6, y en el siguiente 12. Por eso 6 iteraciones
+bastan donde bisección necesita 41. La cuadraticidad se pierde en raíces múltiples, donde
+degenera a convergencia lineal.
+
+Los modos de fallo son reales y variados. Si la derivada se anula cerca del iterado, el
+paso se dispara a infinito. Si el punto inicial está lejos, la iteración puede alejarse,
+oscilar en un ciclo o converger a una raíz distinta de la buscada. Los fractales de Newton
+son la representación gráfica de esa sensibilidad extrema al punto de partida.
+
+Su generalización a varias dimensiones sustituye la derivada por el **Jacobiano** y la
+división por la resolución de un sistema lineal. Esa versión es la que subyace a los
+métodos de segundo orden en optimización: minimizar es buscar la raíz del gradiente, y
+Newton aplicado al gradiente usa el Hessiano. La parte 12 desarrolla esa línea.
+
+## 🧮 Ejemplo trabajado
+
+Raíz de x³ − 2x − 4 desde x₀ = 3.
+
+```text
+f(x) = x³ − 2x − 4        f'(x) = 3x² − 2
+
+iter      x           error
+  1    2,320000     3,20e-01
+  2    2,059716     5,97e-02
+  3    2,003100     3,10e-03
+  4    2,000009     9,58e-06
+  5    2,000000     9,17e-11
+  6    2,000000     0,00e+00
+
+Los dígitos correctos se duplican: 1 → 2 → 3 → 5 → 10 → 16
+
+6 iteraciones frente a las 41 de bisección.
+
+Modo de fallo: desde x₀ = 0,8 se tiene f'(0,8) = −0,08,
+el paso salta a x ≈ −65 y la iteración se descontrola.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 223
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Usarlo sin salvaguarda cuando la derivada puede anularse.
+2. Esperar convergencia cuadrática en raíces múltiples.
+3. Omitir el tope de iteraciones y colgar el proceso en un ciclo.
+
+## 🚀 Dónde se usa de verdad
+
+Optimización de segundo orden, resolución de sistemas no lineales, cálculo de funciones
+inversas y calibración de modelos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006](https://doi.org/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

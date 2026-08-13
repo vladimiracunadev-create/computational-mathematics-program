@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Momentum promedia gradientes: el zigzag se cancela y la componente útil se acumula.**
 
-Esta clase concreta ese objetivo sobre **Momentum**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `momentum`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: declarar convergencia por número de épocas y no por criterio numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+vₖ₊₁ = β·vₖ − lr·∇f(xₖ)
+xₖ₊₁ = xₖ + vₖ₊₁
+paso efectivo ≈ lr/(1−β):  β = 0,9 multiplica por 10
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> En un problema convexo todo mínimo local es global; fuera de él no hay garantía.
+Momentum añade memoria al descenso. En vez de moverse según el gradiente actual, mantiene
+una **velocidad** que es una media móvil exponencial de los gradientes pasados. La analogía
+física es exacta: una bola que rueda por la superficie acumula inercia en vez de reaccionar
+solo a la pendiente instantánea.
+
+El efecto en valles alargados es el que justifica el método. Las componentes del gradiente
+que apuntan a las paredes cambian de signo en cada iteración y **se cancelan** al
+promediarse; las que apuntan a lo largo del valle son consistentes y **se acumulan**. El
+zigzag desaparece y el avance en la dirección útil se multiplica.
+
+El paso efectivo en una dirección de gradiente constante es `lr/(1−β)`, de modo que `β=0,9`
+equivale a multiplicar el learning rate por 10 en esas direcciones. Ese factor explica por
+qué al activar momentum suele haber que **bajar** el learning rate: si no, se cruza el
+umbral de estabilidad.
+
+El coste es mínimo: un vector de estado del tamaño de los parámetros y una operación por
+paso. Con esa inversión, momentum acelera prácticamente siempre en problemas mal
+condicionados, que son la norma. Por eso el SGD con momentum siguió siendo competitivo con
+Adam en visión por computador durante años.
+
+## 🧮 Ejemplo trabajado
+
+Mismo problema y mismo learning rate, con y sin momentum.
+
+```text
+f(x,y) = x² + 20y²      lr = 0,02      β = 0,9
+
+sin momentum:
+  x final = (−0,00056922 ; 0,0)
+  f final = 3,24e-07
+
+con momentum:
+  x final = (1,741e-05 ; −6,475e-05)
+  f final = 8,42e-08
+
+factor de mejora en f: 3,85×
+
+La diferencia crece con el número de condición:
+con condición 20 la mejora es de 4×; con condición 1000
+momentum es la diferencia entre converger y no converger.
+
+Paso efectivo: lr/(1−β) = 0,02/0,1 = 0,2, diez veces mayor.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 246
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Mantener el mismo learning rate al activar momentum.
+2. Usar β muy cercano a 1 sin controlar la estabilidad.
+3. Olvidar reiniciar la velocidad al cambiar de fase de entrenamiento.
+
+## 🚀 Dónde se usa de verdad
+
+SGD con momentum en visión, aceleración de convergencia en problemas mal condicionados y
+base de Adam y sus variantes.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Polyak, B. *Some methods of speeding up the convergence of iteration methods*, 1964](https://doi.org/10.1016/0041-5553(64)90137-5)
+- [Goh, G. *Why momentum really works*, Distill, 2017](https://distill.pub/2017/momentum/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

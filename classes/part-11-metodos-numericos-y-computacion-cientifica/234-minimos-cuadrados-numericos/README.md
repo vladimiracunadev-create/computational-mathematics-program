@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Las ecuaciones normales elevan al cuadrado el número de condición; QR no.**
 
-Esta clase concreta ese objetivo sobre **Mínimos cuadrados numéricos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `numerical_least_squares`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: iterar sin límite máximo y colgar el proceso.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ecuaciones normales: AᵀAx = Aᵀb
+cond(AᵀA) = cond(A)²
+vía QR: A = QR ⟹ Rx = Qᵀb
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> El orden de un método de integración predice cómo cae el error con el paso.
+El problema de mínimos cuadrados busca el `x` que minimiza `‖Ax − b‖` cuando el sistema
+tiene más ecuaciones que incógnitas. Geométricamente es la proyección de `b` sobre el
+espacio columna de `A`, y anular la derivada conduce a las **ecuaciones normales**
+`AᵀAx = Aᵀb`.
+
+Esas ecuaciones son correctas en teoría y peligrosas en práctica. Formar `AᵀA` **eleva al
+cuadrado el número de condición**: una matriz con condición `10⁶`, que en doble precisión
+es manejable, produce una `AᵀA` con condición `10¹²`, que se lleva por delante la mitad de
+los dígitos disponibles. El daño se hace al construir la matriz, antes de resolver nada.
+
+La vía **QR** evita el problema. Descomponiendo `A = QR` con `Q` ortogonal, el sistema se
+reduce a `Rx = Qᵀb`, triangular y con la condición original de `A` sin elevar. Cuesta
+aproximadamente el doble de operaciones, y ese factor 2 es un precio muy pequeño por
+conservar la mitad de los dígitos.
+
+Cuando `A` es además deficiente de rango o casi singular, ni siquiera QR basta y hay que
+recurrir a la **SVD** con truncamiento de valores singulares pequeños, que es la
+pseudoinversa de la parte 06. La regla práctica: ecuaciones normales solo para problemas
+pequeños y bien condicionados; QR por defecto; SVD cuando hay dudas sobre el rango.
+
+## 🧮 Ejemplo trabajado
+
+Ajuste lineal por dos vías sobre los mismos seis puntos.
+
+```text
+6 observaciones, modelo de 2 parámetros
+
+ecuaciones normales: [1,03809524 ; 0,99142857]
+vía QR:              [1,03809524 ; 0,99142857]
+coinciden a 8 dígitos                                    ✓
+
+cond(AᵀA) = 33,41        cond(A) = 5,78
+relación: 5,78² = 33,41                                  ✓
+
+Aquí el problema está bien condicionado y ambas sirven.
+
+Si cond(A) fuera 1e6:
+  cond(AᵀA) = 1e12  →  se pierden 12 de los 16 dígitos
+  QR mantendría la pérdida en 6.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 234
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Formar AᵀA sin mirar el condicionamiento de A.
+2. Invertir AᵀA explícitamente en vez de resolver el sistema.
+3. Ignorar la deficiencia de rango en vez de usar SVD.
+
+## 🚀 Dónde se usa de verdad
+
+Regresión lineal, ajuste de curvas, calibración de sensores y capas lineales resueltas en
+forma cerrada.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*, SIAM, 1997, cap. 11](https://doi.org/10.1137/1.9780898719574)
+- [Golub, G.; Van Loan, C. *Matrix Computations*, 4ª ed., JHU Press, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

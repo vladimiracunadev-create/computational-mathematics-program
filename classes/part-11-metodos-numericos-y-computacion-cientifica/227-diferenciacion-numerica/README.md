@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**La diferencia central cuesta lo mismo que la adelantada y tiene un orden más.**
 
-Esta clase concreta ese objetivo sobre **Diferenciación numérica**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `numerical_differentiation`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar tolerancia absoluta cuando la escala del problema es grande.
+
+## 🧩 Fórmulas de la clase
+
+```text
+adelantada: (f(x+h) − f(x)) / h,  error O(h)
+central: (f(x+h) − f(x−h)) / 2h,  error O(h²)
+segunda derivada: (f(x+h) − 2f(x) + f(x−h)) / h²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Newton converge cuadráticamente, pero solo cerca de la raíz.
+Aproximar derivadas por cocientes de diferencias es la traducción literal de la definición
+de derivada a aritmética finita. Las tres fórmulas básicas se obtienen combinando
+desarrollos de Taylor y eligiendo los coeficientes que cancelan los términos de orden bajo.
+
+La **diferencia central** es estrictamente mejor que la adelantada: mismo número de
+evaluaciones, un orden más de precisión. La razón es la simetría, que hace que el término
+de orden `h` se cancele entre los desarrollos de `f(x+h)` y `f(x−h)`. Cuando se puede
+evaluar a ambos lados, no hay motivo para usar la adelantada.
+
+La **segunda derivada** por diferencias es la fórmula que discretiza el laplaciano y está
+en el corazón de casi todo esquema para ecuaciones en derivadas parciales. Su error también
+es `O(h²)`, pero su sensibilidad al redondeo es peor porque divide entre `h²`: el paso
+óptimo es mayor que para la primera derivada.
+
+La aplicación más útil en aprendizaje automático es la **verificación de gradientes**:
+comparar el gradiente calculado por autodiferenciación con el obtenido por diferencia
+central detecta errores de implementación en las derivadas manuales. Es lento y no sirve
+para entrenar, pero como prueba unitaria es insustituible.
+
+## 🧮 Ejemplo trabajado
+
+Derivada de e^x en x = 0,5 con h = 1e-4.
+
+```text
+valor exacto: e^0,5 = 1,6487212707001282
+
+adelantada: (f(x+h) − f(x))/h     = 1,6488037095
+  error = 8,24e-05
+
+atrás:      (f(x) − f(x−h))/h     = 1,6486388374
+  error = 8,24e-05
+
+central:    (f(x+h) − f(x−h))/2h  = 1,6487212735
+  error = 2,75e-09          30 000 veces menor
+
+Mismo coste en evaluaciones, tres órdenes de magnitud de ganancia.
+
+Segunda derivada: (f(x+h) − 2f(x) + f(x−h))/h² = 1,64872132
+  error = 5,4e-08, mayor por dividir entre h².
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 227
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Usar la diferencia adelantada cuando se puede evaluar a ambos lados.
+2. Elegir h demasiado pequeño y caer en la zona dominada por el redondeo.
+3. Usar diferencias finitas para entrenar en vez de autodiferenciación.
+
+## 🚀 Dónde se usa de verdad
+
+Verificación de gradientes, discretización de PDE, sensibilidad de modelos y optimización
+sin derivadas analíticas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 8](https://doi.org/10.1137/1.9781611975581)
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 8](https://doi.org/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

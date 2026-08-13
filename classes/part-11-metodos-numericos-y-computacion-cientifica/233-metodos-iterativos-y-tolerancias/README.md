@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Todo bucle iterativo necesita tres frenos: tolerancia relativa, residuo y tope de pasos.**
 
-Esta clase concreta ese objetivo sobre **Métodos iterativos y tolerancias**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `iterative_tolerances`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar tolerancia absoluta cuando la escala del problema es grande.
+
+## 🧩 Fórmulas de la clase
+
+```text
+criterio absoluto: ‖xₖ₊₁ − xₖ‖ < tol
+criterio relativo: ‖xₖ₊₁ − xₖ‖ / ‖xₖ₊₁‖ < tol
+criterio de residuo: ‖Axₖ − b‖ / ‖b‖ < tol
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Interpolar de grado alto oscila (fenómeno de Runge): por eso existen los splines.
+El criterio de parada no es un detalle de implementación: determina qué significa el
+resultado. Un método iterativo sin criterio declarado devuelve un número cuyo error nadie
+conoce, y eso lo invalida como resultado científico.
+
+El criterio **absoluto** falla al cambiar de escala. Una tolerancia de `10⁻⁶` es exigente
+si la solución vale 1 y absurda si vale `10¹²`, donde ni siquiera es representable en doble
+precisión. El criterio **relativo** escala con la magnitud de la solución y es el que hay
+que usar por defecto, con la precaución de manejar el caso de solución próxima a cero.
+
+El criterio de **residuo** mide algo distinto: cuánto incumple la ecuación la solución
+actual. Es complementario, no equivalente. En un sistema mal condicionado el cambio entre
+iterados puede ser minúsculo mientras el residuo sigue siendo grande, y al revés. Por eso
+lo prudente es combinar ambos.
+
+Y siempre, sin excepción, un **tope de iteraciones**. No es una tolerancia sino una
+salvaguarda: si el método no converge —porque el problema es singular, porque la condición
+falla o porque hay un error de programación— el bucle debe terminar e informar de que no
+convergió, en vez de girar indefinidamente. Un solver que devuelve «no convergí» es
+infinitamente más útil que uno que se cuelga.
+
+## 🧮 Ejemplo trabajado
+
+Evolución de los tres criterios en una iteración convergente.
+
+```text
+iter   cambio abs.   cambio rel.   norma residuo
+  1     0,990000      1,000000       1,40e+00
+  3     0,090000      0,090909       1,27e-01
+  5     0,009000      0,009009       1,27e-02
+  7     0,000900      0,000900       1,27e-03
+  9     1,00e-14      1,00e-14       1,41e-14
+
+solución = [1, 1]      9 iteraciones hasta 1e-14
+
+Criterio recomendado:
+  parar si (cambio relativo < tol) Y (residuo relativo < tol)
+  o si iter alcanza max_iter, informando de no convergencia.
+
+Peligro del criterio solo absoluto: si la solución fuera
+del orden de 1e12, tol = 1e-6 nunca se alcanzaría.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 233
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Usar tolerancia absoluta con soluciones de magnitud desconocida.
+2. Omitir el tope de iteraciones.
+3. Dar por convergido por cambio pequeño sin mirar el residuo.
+
+## 🚀 Dónde se usa de verdad
+
+Cualquier solver iterativo, criterios de parada en entrenamiento de modelos, bucles de
+punto fijo y control de convergencia en simulación.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027)
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 2](http://numerical.recipes/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

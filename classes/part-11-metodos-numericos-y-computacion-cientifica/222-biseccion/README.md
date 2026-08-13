@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Bisección es la única que nunca falla si hay cambio de signo, y por eso es la red de seguridad.**
 
-Esta clase concreta ese objetivo sobre **Bisección**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bisection`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: iterar sin límite máximo y colgar el proceso.
+
+## 🧩 Fórmulas de la clase
+
+```text
+si f(a)·f(b) < 0, hay raíz en (a,b)
+amplitud tras n pasos: (b−a)/2ⁿ
+n ≈ log₂((b−a)/tol) iteraciones
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Newton converge cuadráticamente, pero solo cerca de la raíz.
+La bisección se apoya en el teorema de Bolzano: si una función continua cambia de signo
+entre dos puntos, hay al menos una raíz entre ellos. El método evalúa el punto medio,
+mira el signo, y se queda con la mitad que sigue conteniendo el cambio. Cada paso reduce
+exactamente a la mitad la incertidumbre.
+
+Su virtud es la **garantía**. No hay condiciones adicionales, no hay puntos iniciales
+malos, no diverge nunca. El número de iteraciones se conoce de antemano:
+`log₂((b−a)/tol)`, unas 41 para pasar de un intervalo de amplitud 2 a la precisión de la
+máquina. Esa previsibilidad es lo que la hace insustituible como respaldo.
+
+Su defecto es la **lentitud**. Cada iteración gana un solo bit de precisión, mientras que
+Newton duplica los dígitos correctos. Para el mismo problema, bisección necesita 41
+evaluaciones donde Newton necesita 6. Cuando la evaluación de la función es cara, la
+diferencia es determinante.
+
+La limitación menos obvia es que **necesita un cambio de signo**, y por tanto no encuentra
+raíces dobles como la de `x²`, donde la función toca el eje sin cruzarlo. Los métodos
+robustos de producción, como Brent, combinan bisección con interpolación: usan la rápida
+cuando funciona y caen a la garantizada cuando no.
+
+## 🧮 Ejemplo trabajado
+
+Raíz de x³ − 2x − 4 en el intervalo de 1 a 3.
+
+```text
+f(1) = −5 < 0        f(3) = 17 > 0        hay cambio de signo
+
+iter    x        f(x)         amplitud
+  1   2,0000    0,000000        1,000
+  5   1,9375   −0,603760        0,0625
+ 10   2,0020    0,020000        0,00195
+ 20   2,0000    1,9e-05         1,9e-06
+ 41   2,0000   −4,55e-12        9,1e-13
+
+raíz = 2,0        41 iteraciones para 12 dígitos
+
+Predicción teórica: log₂(2 / 1e-12) ≈ 41                 ✓
+
+Newton alcanza la misma precisión en 6 iteraciones,
+pero necesita la derivada y un buen punto inicial.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 222
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Aplicarla sin comprobar el cambio de signo en el intervalo.
+2. Esperar que encuentre raíces de multiplicidad par.
+3. Usarla sin tope de iteraciones aunque su convergencia esté acotada.
+
+## 🚀 Dónde se usa de verdad
+
+Búsqueda robusta de raíces, calibración de umbrales, respaldo dentro de métodos híbridos y
+búsqueda de puntos de cruce en curvas monótonas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](http://numerical.recipes/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

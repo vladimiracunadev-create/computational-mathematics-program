@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Regularizar es cambiar la función objetivo, no modificar el algoritmo.**
 
-Esta clase concreta ese objetivo sobre **Regularización como optimización**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `regularization_as_optimization`.
 4. Interpretar las 4 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: declarar convergencia por número de épocas y no por criterio numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+objetivo regularizado: J(w) = L(w) + λ·R(w)
+L2: R(w) = ‖w‖²  → encoge todos los pesos
+L1: R(w) = ‖w‖₁  → anula coeficientes
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> KKT generaliza Lagrange a restricciones de desigualdad.
+La regularización se presenta a menudo como un truco para evitar el sobreajuste, y esa
+descripción oscurece lo que realmente es: **una modificación explícita de la función
+objetivo**. Se está optimizando un problema distinto, con un término adicional que penaliza
+la complejidad, y todo el análisis de optimización sigue aplicándose sin cambios.
+
+El parámetro `λ` fija el precio de la complejidad. Con `λ = 0` se minimiza solo el error de
+ajuste y los pesos crecen sin límite si eso ayuda. Con `λ` grande domina la penalización y
+los pesos se encogen hacia cero a costa de un ajuste peor. Es una **frontera de Pareto**
+entre dos objetivos en conflicto, y elegir `λ` es elegir un punto sobre ella.
+
+La elección de norma cambia cualitativamente la solución. **L2** encoge todos los
+coeficientes de forma proporcional pero no anula ninguno, porque su gradiente se hace
+pequeño cerca de cero. **L1** tiene gradiente constante y empuja los coeficientes
+exactamente a cero, produciendo soluciones **dispersas** que sirven como selección
+automática de variables.
+
+La conexión con la parte 10 es directa y merece recordarse: L2 equivale a un prior
+gaussiano sobre los pesos y L1 a un prior de Laplace, y minimizar el objetivo regularizado
+es exactamente la estimación MAP. Regularizar no es un truco de ingeniería sino la
+formulación de una creencia previa.
+
+## 🧮 Ejemplo trabajado
+
+Mismo problema con tres valores de λ.
+
+```text
+  λ        pesos              MSE       ‖w‖₂
+0,00   [1,010977 ; 9,927716]  0,0151    9,979
+0,01   [1,634097 ; 5,663765]  0,2503    5,895
+0,50   [1,618590 ; 0,480769]  1,8027    1,688
+
+Al subir λ:
+  la norma de w baja de 9,98 a 1,69
+  el error de ajuste sube de 0,015 a 1,803
+
+Es un intercambio explícito, no un efecto secundario.
+
+El segundo peso, que valía 9,93 sin regularizar,
+queda reducido a 0,48: el modelo decide que no
+merece la pena pagarlo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 255
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Tratar la regularización como un ajuste del algoritmo y no del objetivo.
+2. Elegir λ sin validación, por costumbre.
+3. Regularizar los sesgos y los parámetros de normalización junto con los pesos.
+
+## 🚀 Dónde se usa de verdad
+
+Ridge y Lasso, weight decay en redes, selección de variables, compressed sensing y control
+del sobreajuste.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/)
+- [Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

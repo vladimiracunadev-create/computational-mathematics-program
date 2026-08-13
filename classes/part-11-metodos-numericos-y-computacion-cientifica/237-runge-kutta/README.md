@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**RK4 cuesta cuatro evaluaciones por paso y las devuelve multiplicadas.**
 
-Esta clase concreta ese objetivo sobre **Runge-Kutta**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `runge_kutta`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: iterar sin límite máximo y colgar el proceso.
+
+## 🧩 Fórmulas de la clase
+
+```text
+k₁ = f(tₙ, yₙ);  k₂ = f(tₙ+h/2, yₙ+h·k₁/2)
+k₃ = f(tₙ+h/2, yₙ+h·k₂/2);  k₄ = f(tₙ+h, yₙ+h·k₃)
+yₙ₊₁ = yₙ + (h/6)(k₁ + 2k₂ + 2k₃ + k₄)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Newton converge cuadráticamente, pero solo cerca de la raíz.
+Runge-Kutta de cuarto orden promedia cuatro estimaciones de la pendiente dentro del
+intervalo: una al inicio, dos en el punto medio y una al final, con pesos `1, 2, 2, 1`. Ese
+promedio ponderado cancela los términos de error hasta orden 4 del desarrollo de Taylor.
+
+El resultado es una relación coste-beneficio excelente. Cuatro evaluaciones por paso, pero
+error `O(h⁴)`: duplicar los pasos divide el error por 16. La comparación con Euler es
+contundente y merece verse en números: **RK4 con 5 pasos —20 evaluaciones— supera a Euler
+con 80 pasos —80 evaluaciones—** por un factor de 40 en precisión.
+
+RK4 es el estándar de facto para problemas no rígidos, y su variante adaptativa
+—Dormand-Prince, el `RK45` de las bibliotecas— añade una estimación del error por paso que
+permite ajustar `h` automáticamente: pasos grandes donde la solución es suave y pequeños
+donde cambia rápido. Es lo que se usa en producción.
+
+Su límite es el mismo que el de Euler, solo que desplazado: sigue siendo explícito y su
+región de estabilidad, aunque mayor, es finita. Con **problemas rígidos** —donde conviven
+escalas de tiempo que difieren en órdenes de magnitud— el paso queda limitado por la escala
+más rápida aunque la solución de interés sea lenta, y hay que pasar a métodos implícitos
+como BDF.
+
+## 🧮 Ejemplo trabajado
+
+RK4 sobre el mismo problema de referencia.
+
+```text
+pasos     y(1)              error        razón
+   5   0,419270018     1,0091e-04         —
+  10   0,419175447     6,3430e-06       15,91
+  20   0,419169501     3,9700e-07       15,98
+  40   0,419169129     2,4820e-08       16,00
+
+La razón tiende a 16 → orden 4 confirmado            ✓
+
+Comparación por evaluaciones de f:
+  Euler,  80 pasos =  80 evaluaciones → error 4,26e-03
+  RK4,     5 pasos =  20 evaluaciones → error 1,01e-04
+
+RK4 gana por 42 veces con la cuarta parte del trabajo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 237
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Aplicar RK4 con paso fijo a un sistema rígido.
+2. Comparar métodos por número de pasos en vez de por evaluaciones de f.
+3. Usar paso fijo cuando la solución tiene regiones de cambio rápido.
+
+## 🚀 Dónde se usa de verdad
+
+Simulación de sistemas dinámicos, mecánica orbital, Neural ODE, samplers de modelos de
+difusión y motores físicos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1)
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 17](http://numerical.recipes/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

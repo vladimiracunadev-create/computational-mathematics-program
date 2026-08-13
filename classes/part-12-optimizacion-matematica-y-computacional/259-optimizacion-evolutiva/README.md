@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Sin gradiente y sobre funciones con muchos mínimos, una población busca mejor que un punto.**
 
-Esta clase concreta ese objetivo sobre **Optimización evolutiva**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `evolutionary_optimization`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+población → selección → cruce → mutación → nueva población
+elitismo: conservar los k mejores intactos
+coste: sin gradiente, muchas evaluaciones de f
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Regularizar es añadir un término al objetivo, no un truco de implementación.
+Los algoritmos evolutivos mantienen una **población** de soluciones candidatas y la hacen
+evolucionar por selección, recombinación y mutación. No necesitan gradiente ni continuidad,
+solo poder evaluar la función objetivo, y eso los hace aplicables donde los métodos
+basados en derivadas no llegan.
+
+Su ventaja aparece en funciones **multimodales**, con muchos mínimos locales. La función de
+Rastrigin, con su rejilla de mínimos, atrapa al descenso de gradiente en el primer valle
+que encuentre. Una población dispersa explora simultáneamente muchas regiones y la
+selección concentra el esfuerzo donde hay señal.
+
+El **elitismo** es un detalle de implementación con efecto grande: conservar intactos los
+mejores individuos garantiza que el óptimo encontrado no se pierda por azar en la siguiente
+generación. Sin él, el algoritmo puede empeorar entre generaciones y la convergencia deja
+de ser monótona.
+
+El precio es el número de evaluaciones. Donde el descenso de gradiente necesita cientos,
+un evolutivo necesita decenas de miles, porque cada generación evalúa la población entera.
+La regla práctica es clara: **si hay gradiente fiable, usarlo**. Los evolutivos son para
+cuando no lo hay —búsqueda de arquitecturas, hiperparámetros discretos, simuladores como
+caja negra— o cuando la multimodalidad es severa.
+
+## 🧮 Ejemplo trabajado
+
+Algoritmo evolutivo sobre Rastrigin en dos dimensiones.
+
+```text
+función: Rastrigin 2D, mínimo global en (0,0) con f = 0
+población 60, generaciones 120, elitismo 12
+
+generación    mejor f
+     1        2,468792
+    20        0,183441
+    60        0,004127
+   120        0,000062
+
+mejor solución: (0,001375 ; 0,005583)
+
+Rastrigin tiene un mínimo local aproximadamente en cada
+punto de coordenadas enteras. El descenso de gradiente
+desde un punto aleatorio se queda en el más cercano.
+
+Coste: 60 × 120 = 7 200 evaluaciones de f
+para un problema de 2 variables.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 259
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Usar un evolutivo donde hay gradiente disponible y fiable.
+2. Prescindir del elitismo y perder el mejor individuo.
+3. Comparar con métodos de gradiente sin igualar el número de evaluaciones.
+
+## 🚀 Dónde se usa de verdad
+
+Búsqueda de arquitecturas neuronales, ajuste de hiperparámetros discretos, diseño de
+ingeniería con simuladores y optimización de funciones no derivables.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Eiben, A.; Smith, J. *Introduction to Evolutionary Computing*, 2ª ed., Springer, 2015](https://doi.org/10.1007/978-3-662-44874-8)
+- [Hansen, N.; Ostermeier, A. *Completely derandomized self-adaptation in evolution strategies*, 2001](https://doi.org/10.1162/106365601750190398)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

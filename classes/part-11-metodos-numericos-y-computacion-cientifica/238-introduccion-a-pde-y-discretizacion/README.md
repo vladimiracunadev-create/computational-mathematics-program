@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**La condición de estabilidad no es una recomendación: violarla hace explotar la simulación.**
 
-Esta clase concreta ese objetivo sobre **Introducción a PDE y discretización**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `pde_discretization`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar runge-kutta con paso fijo a un sistema rígido.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ecuación del calor: u_t = u_xx
+esquema explícito: u_i^(n+1) = u_i^n + α(u_{i+1}^n − 2u_i^n + u_{i−1}^n)
+α = Δt/Δx² ≤ 0,5 para estabilidad
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Interpolar de grado alto oscila (fenómeno de Runge): por eso existen los splines.
+Una ecuación en derivadas parciales involucra derivadas respecto de varias variables, y
+describe fenómenos distribuidos en espacio y tiempo: calor, ondas, fluidos, difusión. El
+método de **diferencias finitas** las discretiza sustituyendo cada derivada por un cociente
+de diferencias sobre una malla.
+
+Para la ecuación del calor en una dimensión, la derivada temporal se aproxima con
+diferencia adelantada y la espacial de segundo orden con la fórmula central de la clase
+227. El resultado es un esquema explícito donde cada valor nuevo se calcula directamente a
+partir de tres valores viejos, sin resolver ningún sistema.
+
+La sorpresa está en la restricción. El parámetro `α = Δt/Δx²` debe cumplir `α ≤ 0,5`, y esa
+condición de tipo **Courant** tiene una consecuencia brutal: refinar la malla espacial a la
+mitad obliga a dividir el paso temporal por **cuatro**. El coste total se multiplica por
+ocho, y por eso las simulaciones explícitas de difusión se vuelven caras muy deprisa.
+
+Violar la condición no produce imprecisión sino **divergencia**: la solución numérica
+oscila con amplitud creciente hasta desbordar, y lo hace en pocos pasos. Los esquemas
+implícitos como Crank-Nicolson son incondicionalmente estables y permiten pasos temporales
+mucho mayores a cambio de resolver un sistema tridiagonal en cada paso, que es barato.
+
+## 🧮 Ejemplo trabajado
+
+Calor en una barra con extremos fríos, esquema explícito.
+
+```text
+u_t = u_xx      u(0,t) = u(1,t) = 0
+
+nodos = 21      Δx = 0,05      Δt = 0,001
+α = Δt / Δx² = 0,001 / 0,0025 = 0,4
+
+α = 0,4 ≤ 0,5   →   esquema estable                  ✓
+La solución decae suavemente hacia cero, como debe.
+
+Si se subiera a Δt = 0,002:
+  α = 0,8 > 0,5  →  oscilaciones que crecen
+  en 20 pasos los valores desbordan.
+
+Coste de refinar: Δx a la mitad (41 nodos)
+  exige Δt / 4  →  4× más pasos × 2× más nodos = 8× coste.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 238
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Refinar la malla espacial sin ajustar el paso temporal.
+2. Interpretar las oscilaciones crecientes como un fenómeno físico.
+3. Usar esquemas explícitos donde el implícito sería mucho más barato.
+
+## 🚀 Dónde se usa de verdad
+
+Simulación térmica, dinámica de fluidos, propagación de ondas, modelos financieros de tipo
+Black-Scholes y difusión en visión por computador.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [LeVeque, R. *Finite Difference Methods for Ordinary and Partial Differential Equations*, SIAM, 2007](https://doi.org/10.1137/1.9780898717839)
+- [Courant, R.; Friedrichs, K.; Lewy, H. *Über die partiellen Differenzengleichungen der mathematischen Physik*, 1928](https://doi.org/10.1007/BF01448839)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

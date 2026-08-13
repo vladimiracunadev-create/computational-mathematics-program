@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Adam combina momentum y escalado adaptativo, y corrige el sesgo del arranque.**
 
-Esta clase concreta ese objetivo sobre **Adam**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `adam`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+mₖ = β₁·mₖ₋₁ + (1−β₁)·g;   vₖ = β₂·vₖ₋₁ + (1−β₂)·g²
+m̂ = mₖ/(1−β₁ᵏ);   v̂ = vₖ/(1−β₂ᵏ)
+xₖ₊₁ = xₖ − lr·m̂ / (√v̂ + ε)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> KKT generaliza Lagrange a restricciones de desigualdad.
+Adam junta las dos ideas que funcionaban por separado: el **primer momento** `m` es la
+media móvil del gradiente, que es momentum, y el **segundo momento** `v` es la media móvil
+del gradiente al cuadrado, que es RMSProp. La actualización divide uno por la raíz del
+otro.
+
+La aportación propia es la **corrección de sesgo**, y merece entenderse porque es la parte
+que más se copia sin comprender. Ambos acumuladores se inicializan a cero, así que en los
+primeros pasos están fuertemente sesgados hacia cero: con `β₂ = 0,999`, tras un paso `v`
+vale solo el 0,1 % del valor correcto. Dividir por `1 − βᵏ` compensa exactamente ese
+arranque, y sin esa corrección los primeros pasos serían enormes.
+
+Los valores por defecto —`β₁ = 0,9`, `β₂ = 0,999`, `ε = 10⁻⁸`— funcionan sorprendentemente
+bien en una variedad enorme de problemas, y esa robustez es la razón real de su dominio: se
+puede empezar a entrenar sin ajustar nada. Es el optimizador por defecto del aprendizaje
+profundo desde 2015.
+
+No está libre de críticas. Hay problemas convexos donde Adam no converge, señalados por
+Reddi y otros en 2018, lo que motivó AMSGrad. Y en visión por computador el SGD con
+momentum bien ajustado suele generalizar mejor. Adam es el mejor punto de partida, no la
+respuesta final.
+
+## 🧮 Ejemplo trabajado
+
+Adam sobre el problema de referencia y la corrección de sesgo.
+
+```text
+β₁ = 0,9    β₂ = 0,999    lr = 0,1    ε = 1e-8
+
+resultado:
+  x final = (−5,69e-05 ; −5,303e-05)
+  f final = 5,95e-08
+
+Por qué hace falta la corrección de sesgo:
+
+  paso k    1 − β₂ᵏ      v subestima por factor
+     1      0,001              1000×
+    10      0,00995             100×
+   100      0,0952               10×
+  1000      0,632                1,6×
+
+Sin corregir, los primeros pasos dividirían por una raíz
+demasiado pequeña y el paso efectivo sería desmesurado.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 250
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Implementar Adam sin la corrección de sesgo.
+2. Usar el weight decay como término L2 dentro del gradiente en vez de AdamW.
+3. Suponer que Adam siempre generaliza mejor que SGD con momentum.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento por defecto de redes profundas, ajuste fino de modelos de lenguaje,
+transformers y prácticamente todo el aprendizaje profundo actual.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980)
+- [Reddi, S.; Kale, S.; Kumar, S. *On the convergence of Adam and beyond*, ICLR, 2018](https://arxiv.org/abs/1904.09237)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

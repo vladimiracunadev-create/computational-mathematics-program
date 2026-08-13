@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Factorizar una vez y sustituir muchas: LU convierte O(n³) en O(n²) por sistema.**
 
-Esta clase concreta ese objetivo sobre **Sistemas lineales directos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `direct_linear_solvers`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: iterar sin límite máximo y colgar el proceso.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A = LU  con pivoteo parcial:  PA = LU
+resolver Ly = Pb, luego Ux = y
+coste: LU ≈ (2/3)n³;  cada sustitución ≈ n²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Todo método iterativo necesita criterio de parada y tolerancia declarada.
+Un método directo resuelve el sistema en un número predeterminado de operaciones, sin
+iterar. La eliminación gaussiana es el prototipo, y su versión organizada como
+factorización **LU** separa el trabajo en dos fases: descomponer la matriz, que cuesta
+`O(n³)`, y resolver por sustitución, que cuesta `O(n²)`.
+
+Esa separación es lo que hace valiosa la factorización. Si hay que resolver el mismo
+sistema con veinte lados derechos distintos —algo habitual en simulación, en control y en
+métodos implícitos para EDO— se factoriza una vez y se sustituye veinte, en vez de repetir
+la eliminación completa veinte veces.
+
+El **pivoteo parcial** es obligatorio, no opcional. Intercambiar filas para que el pivote
+sea el elemento de mayor módulo evita dividir por números diminutos, y con ello evita la
+amplificación de errores que puede destruir la solución. Sin pivoteo, sistemas
+perfectamente resolubles dan resultados sin ningún dígito correcto.
+
+Verificar la solución es barato y obligatorio: calcular el **residuo** `Ax − b`. Un residuo
+pequeño no garantiza que la solución sea precisa —en sistemas mal condicionados puede ser
+minúsculo con una solución muy alejada de la real— pero un residuo grande sí garantiza que
+algo va mal. Combinar residuo y número de condición da el diagnóstico completo.
+
+## 🧮 Ejemplo trabajado
+
+Sistema 3×3 simétrico definido positivo, resuelto por LU.
+
+```text
+A = [[ 4  −2   1]        b = [ 11]
+     [−2   4  −2]            [−16]
+     [ 1  −2   4]]           [ 17]
+
+L = [[ 1,00   0,00   0,00]
+     [−0,50   1,00   0,00]
+     [ 0,25  −0,50   1,00]]
+
+intercambios de fila: 0     (ya es dominante)
+
+solución x = [1, −2, 3]
+residuo Ax − b = [0, 0, 0]                          ✓
+
+Coste con n = 3:  LU ≈ 18 operaciones
+Cada nuevo lado derecho: ≈ 9 operaciones, sin refactorizar.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 231
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Implementar eliminación sin pivoteo parcial.
+2. Calcular la inversa explícita para resolver un sistema.
+3. Aceptar la solución sin comprobar el residuo.
+
+## 🚀 Dónde se usa de verdad
+
+Resolución de sistemas en simulación, mínimos cuadrados, métodos implícitos para EDO y
+cualquier problema con múltiples lados derechos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*, SIAM, 1997](https://doi.org/10.1137/1.9780898719574)
+- [Golub, G.; Van Loan, C. *Matrix Computations*, 4ª ed., JHU Press, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**Un programa cuadrático con Q definida positiva se resuelve por un solo sistema lineal.**
 
-Esta clase concreta ese objetivo sobre **Optimización cuadrática**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `quadratic_programming`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: declarar convergencia por número de épocas y no por criterio numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+min (1/2)xᵀQx + cᵀx  sujeto a  Ax = b
+sistema KKT: [[Q, Aᵀ], [A, 0]]·[x; λ] = [−c; b]
+convexo si Q es semidefinida positiva
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Momentum promedia gradientes; Adam además normaliza por su escala.
+La programación cuadrática es la clase de problemas con objetivo cuadrático y restricciones
+lineales. Es la siguiente en complejidad después de la lineal, y sigue siendo tratable: si
+`Q` es semidefinida positiva el problema es convexo y tiene solución global.
+
+Con restricciones de **igualdad**, las condiciones KKT son lineales en las incógnitas, y el
+problema entero se reduce a resolver un único sistema que agrupa variables y
+multiplicadores. No hace falta iterar: se plantea el sistema aumentado y se resuelve con
+los métodos de la parte 11.
+
+Con restricciones de **desigualdad** aparece la dificultad combinatoria de decidir qué
+restricciones están activas en el óptimo. Los algoritmos de conjunto activo prueban
+combinaciones sistemáticamente; los de punto interior siguen una trayectoria por el
+interior de la región factible y son los que mejor escalan.
+
+Los programas cuadráticos aparecen en sitios importantes: la formulación dual de las **SVM**
+es exactamente uno, la optimización de carteras de Markowitz es otro, y el control
+predictivo por modelo resuelve uno en cada instante de muestreo. Reconocer que un problema
+es un QP es reconocer que se puede resolver de forma fiable y rápida.
+
+## 🧮 Ejemplo trabajado
+
+QP de dos variables con una restricción de igualdad.
+
+```text
+minimizar  x² + y² − 2x − 5y
+sujeto a   x + y = 3
+
+Q = [[2, 0]      c = (−2, −5)      A = [1  1]     b = 3
+     [0, 2]]
+
+Q definida positiva → problema convexo                ✓
+
+Sistema KKT:
+  [[2  0  1]   [x]     [ 2]
+   [0  2  1] · [y]  =  [ 5]
+   [1  1  0]]  [λ]     [ 3]
+
+solución: x = 1,25   y = 1,75   λ = −0,5
+
+Comprobación: 1,25 + 1,75 = 3                         ✓
+El óptimo sin restricción sería (1 ; 2,5), que suma 3,5:
+la restricción sí aprieta.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 258
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Aplicar la solución directa cuando hay restricciones de desigualdad.
+2. No comprobar que Q es semidefinida positiva antes de suponer convexidad.
+3. Formar el sistema KKT con los signos cambiados.
+
+## 🚀 Dónde se usa de verdad
+
+SVM, optimización de carteras, control predictivo por modelo, ajuste con restricciones y
+problemas de mínimos cuadrados restringidos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 16](https://doi.org/10.1007/978-0-387-40065-5)
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 4](https://web.stanford.edu/~boyd/cvxbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

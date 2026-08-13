@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**RMSProp sustituye la suma de AdaGrad por una media móvil, y el paso deja de apagarse.**
 
-Esta clase concreta ese objetivo sobre **RMSProp**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `rmsprop`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: declarar convergencia por número de épocas y no por criterio numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Eₖ = ρ·Eₖ₋₁ + (1−ρ)·∇f(xₖ)²
+xₖ₊₁ = xₖ − lr·∇f(xₖ) / (√Eₖ + ε)
+ρ = 0,9 equivale a recordar unos 10 pasos
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Regularizar es añadir un término al objetivo, no un truco de implementación.
+RMSProp aplica una corrección mínima a AdaGrad con consecuencias grandes: en vez de sumar
+todos los gradientes al cuadrado, mantiene una **media móvil exponencial**. Los gradientes
+antiguos se descuentan geométricamente y el acumulador puede bajar además de subir.
+
+Eso resuelve el apagado. Si una coordenada tuvo gradientes grandes al principio y luego se
+calmó, AdaGrad la mantiene penalizada para siempre mientras que RMSProp la libera. El
+método se adapta al **régimen actual** del entrenamiento en vez de a toda su historia, que
+es lo apropiado en problemas no estacionarios como el aprendizaje profundo.
+
+El parámetro `ρ` fija la longitud de la memoria: con `ρ = 0,9` la ventana efectiva es de
+unos 10 pasos, con `0,99` de unos 100. El valor por defecto funciona en la mayoría de los
+casos y rara vez merece ajustarse. El `ε` en el denominador evita divisiones por cero y
+típicamente vale `10⁻⁸`.
+
+RMSProp tiene una peculiaridad histórica: **nunca se publicó como artículo**. Apareció en
+una diapositiva del curso de Hinton en Coursera en 2012 y se citó así durante años. Su
+combinación con momentum es lo que da Adam, que es la clase siguiente.
+
+## 🧮 Ejemplo trabajado
+
+RMSProp y AdaGrad con el mismo learning rate.
+
+```text
+ρ = 0,9      ε = 1e-8      mismo lr para ambos
+
+RMSProp:
+  x final = (0,02310943 ; 0,01786889)
+  f final = 0,00692
+
+AdaGrad con el mismo lr:
+  x final = (−0,85543159 ; 1,78114968)
+  f final = 64,18
+
+AdaGrad se quedó atascado: su paso se apagó antes
+de llegar al mínimo.
+
+Diferencia única entre ambos:
+  AdaGrad: G += g²             suma que solo crece
+  RMSProp: E = ρE + (1−ρ)g²    media que puede bajar
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 249
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Ajustar ρ sin necesidad en vez de dejar el valor por defecto.
+2. Omitir ε y provocar inestabilidad numérica.
+3. Esperar que RMSProp resuelva un learning rate base mal elegido.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de redes recurrentes, aprendizaje por refuerzo, objetivos no estacionarios y
+componente de segundo momento en Adam.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Hinton, G. *Neural Networks for Machine Learning*, lecture 6e, Coursera, 2012](https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

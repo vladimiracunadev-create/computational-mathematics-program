@@ -1,0 +1,1317 @@
+part: "12"
+titulo: "Optimización matemática y computacional"
+
+resumen_extendido: |
+  Entrenar un modelo es resolver un problema de optimización. No es una analogía: es
+  literalmente lo que ocurre. Se define una función objetivo que mide el error, se calcula su
+  gradiente y se desciende. Todo lo demás —arquitecturas, regularización, planificación del
+  learning rate— son decisiones sobre ese problema. Esta parte trata la optimización como lo
+  que es: el motor de la inteligencia artificial moderna.
+
+  Las clases 241 a 243 fijan el vocabulario y el concepto que decide la dificultad del
+  problema. En un problema **convexo** todo mínimo local es global, y eso convierte la
+  optimización en una tarea con garantías. Fuera de la convexidad no hay ninguna: las redes
+  neuronales son masivamente no convexas y aun así se entrenan bien, un hecho que la teoría
+  todavía no explica del todo. Lo que sí se puede afirmar es que cualquier dirección con
+  `dᵀ∇f < 0` hace descender la función, y que el gradiente negativo es la más empinada
+  localmente, pero no siempre la mejor globalmente.
+
+  Las clases 244 a 251 recorren la familia completa de optimizadores de primer orden, en el
+  orden histórico en que se resolvieron sus problemas. Descenso de gradiente y su tensión con
+  el learning rate: demasiado pequeño no avanza, demasiado grande diverge, y el umbral es
+  `2/L` con `L` el mayor autovalor del Hessiano. SGD cambia exactitud por coste. Momentum
+  amortigua la oscilación en valles estrechos. Nesterov mira adelante antes de decidir.
+  AdaGrad adapta el paso por coordenada, pero su acumulador solo crece y el aprendizaje acaba
+  apagándose; RMSProp lo arregla con olvido exponencial; Adam combina ambos momentos con
+  corrección de sesgo; y AdamW corrige un error sutil de Adam que tardó años en detectarse:
+  el weight decay debe aplicarse **desacoplado** del gradiente adaptativo, no sumado a él.
+
+  Las clases 252 a 254 suben a segundo orden. Newton usa la curvatura y converge en un solo
+  paso en problemas cuadráticos, pero invertir el Hessiano cuesta `O(n³)` y es impensable con
+  millones de parámetros. BFGS aproxima el Hessiano inverso usando solo gradientes, y la
+  búsqueda de línea con la condición de Armijo elimina la necesidad de fijar el paso a mano.
+
+  Las clases 255 a 258 tratan las restricciones. Regularizar es **cambiar el objetivo**, no
+  añadir un truco: sumar `λ‖w‖²` es tan parte del problema como el término de error. Los
+  multiplicadores de Lagrange manejan igualdades, las condiciones KKT los generalizan a
+  desigualdades, y la holgura complementaria formaliza la intuición de que una restricción
+  inactiva no influye en la solución.
+
+  El cierre incorpora lo que no usa gradiente —optimización evolutiva sobre funciones
+  multimodales— y un banco comparativo con presupuesto idéntico. Ese capstone deja una lección
+  incómoda y verdadera: **el mismo learning rate que funciona en una cuadrática hace divergir
+  en Rosenbrock**, y comparar optimizadores sin fijar semilla, punto inicial y presupuesto de
+  iteraciones no compara nada.
+
+mapa: |
+  flowchart TD
+      A["Clases 241-243 · Objetivo, convexidad y direcciones"] --> B["Clases 244-245 · Gradient descent y SGD"]
+      B --> C["Clases 246-247 · Momentum y Nesterov"]
+      B --> D["Clases 248-249 · AdaGrad y RMSProp"]
+      C --> E["Clases 250-251 · Adam y AdamW"]
+      D --> E
+      A --> F["Clases 252-254 · Newton, BFGS y line search"]
+      E --> G["Clases 255-258 · Regularizacion, Lagrange y KKT"]
+      F --> G
+      G --> H["Clases 259-260 · Evolutiva y banco de optimizadores"]
+      E ==> I["Parte 15 · Entrenamiento de redes profundas"]
+      A -.-> J["Gradiente y Hessiano · Parte 08"]
+      G -.-> K["Weight decay y regularizacion · Parte 14"]
+
+glosario:
+  - termino: "Función objetivo"
+    definicion: "Cantidad que se minimiza o maximiza. Define qué significa mejor en el problema."
+    clase: "241"
+  - termino: "Variables de decisión"
+    definicion: "Parámetros libres sobre los que se optimiza."
+    clase: "241"
+  - termino: "Problema irrestricto"
+    definicion: "Aquel sin restricciones sobre las variables. El caso de casi todo entrenamiento de redes."
+    clase: "241"
+  - termino: "Función convexa"
+    definicion: "La que queda por debajo de cualquier cuerda entre dos de sus puntos."
+    clase: "242"
+  - termino: "Convexidad y óptimos"
+    definicion: "En un problema convexo todo mínimo local es global. Fuera de él no hay garantía."
+    clase: "242"
+  - termino: "Hessiano definido positivo"
+    definicion: "Criterio de convexidad estricta: todos los autovalores positivos."
+    clase: "242"
+  - termino: "Dirección de descenso"
+    definicion: "Cualquier d con dᵀ∇f < 0. El gradiente negativo es la más empinada localmente."
+    clase: "243"
+  - termino: "Learning rate"
+    definicion: "Tamaño del paso. El hiperparámetro que más veces explica una divergencia."
+    clase: "244"
+  - termino: "Límite de estabilidad"
+    definicion: "lr < 2/L con L el mayor autovalor del Hessiano. Por encima, el descenso diverge."
+    clase: "244"
+  - termino: "SGD"
+    definicion: "Gradiente estimado sobre un subconjunto de datos. Más barato y más ruidoso."
+    clase: "245"
+  - termino: "Mini-batch"
+    definicion: "Lote de muestras para estimar el gradiente. Compromiso entre ruido y coste."
+    clase: "245"
+  - termino: "Momentum"
+    definicion: "Media móvil de los gradientes. Acelera en direcciones consistentes y amortigua la oscilación."
+    clase: "246"
+  - termino: "Nesterov"
+    definicion: "Momentum que evalúa el gradiente en el punto adelantado x + βv."
+    clase: "247"
+  - termino: "AdaGrad"
+    definicion: "Paso adaptativo por coordenada usando la suma acumulada de gradientes al cuadrado."
+    clase: "248"
+  - termino: "RMSProp"
+    definicion: "AdaGrad con media móvil exponencial en vez de suma. Evita que el paso se apague."
+    clase: "249"
+  - termino: "Adam"
+    definicion: "Momentum de primer y segundo orden con corrección de sesgo inicial."
+    clase: "250"
+  - termino: "Corrección de sesgo"
+    definicion: "División por 1 − βᵗ que compensa que los acumuladores empiezan en cero."
+    clase: "250"
+  - termino: "AdamW"
+    definicion: "Adam con weight decay desacoplado, aplicado al peso y no al gradiente."
+    clase: "251"
+  - termino: "Método de Newton"
+    definicion: "Usa el Hessiano para elegir dirección y paso. Converge en un paso en cuadráticas."
+    clase: "252"
+  - termino: "BFGS"
+    definicion: "Cuasi-Newton que aproxima el Hessiano inverso solo con gradientes sucesivos."
+    clase: "253"
+  - termino: "L-BFGS"
+    definicion: "Variante de memoria limitada que guarda solo los últimos pares de vectores."
+    clase: "253"
+  - termino: "Condición de Armijo"
+    definicion: "Exige que el paso reduzca la función al menos una fracción de lo que predice el gradiente."
+    clase: "254"
+  - termino: "Búsqueda por retroceso"
+    definicion: "Probar α, reducirlo a la mitad y repetir hasta cumplir Armijo."
+    clase: "254"
+  - termino: "Regularización L2"
+    definicion: "Sumar λ‖w‖² al objetivo. Encoge todos los pesos sin anular ninguno."
+    clase: "255"
+  - termino: "Regularización L1"
+    definicion: "Sumar λ‖w‖₁. Produce soluciones dispersas anulando coeficientes."
+    clase: "255"
+  - termino: "Lagrangiano"
+    definicion: "L = f − Σλᵢgᵢ. Convierte un problema con restricciones de igualdad en uno irrestricto."
+    clase: "256"
+  - termino: "Multiplicador de Lagrange"
+    definicion: "λ. Mide cuánto mejoraría el óptimo al relajar la restricción una unidad."
+    clase: "256"
+  - termino: "Condiciones KKT"
+    definicion: "Estacionariedad, factibilidad, no negatividad y holgura complementaria."
+    clase: "257"
+  - termino: "Holgura complementaria"
+    definicion: "μᵢ·gᵢ(x) = 0. Una restricción inactiva tiene multiplicador cero."
+    clase: "257"
+  - termino: "Programa cuadrático"
+    definicion: "Objetivo cuadrático con restricciones lineales. Convexo si Q es definida positiva."
+    clase: "258"
+  - termino: "Algoritmo evolutivo"
+    definicion: "Búsqueda por población con selección, cruce y mutación. No necesita gradiente."
+    clase: "259"
+  - termino: "Elitismo"
+    definicion: "Conservar los mejores individuos entre generaciones para no perder el óptimo hallado."
+    clase: "259"
+  - termino: "Presupuesto de iteraciones"
+    definicion: "Número fijo de pasos concedido a cada método para que la comparación sea justa."
+    clase: "260"
+
+clases:
+  "241":
+    concepto: "Un problema de optimización se define por variables, objetivo, sentido y restricciones."
+    formulas:
+      - "min f(x)  sujeto a  gᵢ(x) ≤ 0,  hⱼ(x) = 0"
+      - "maximizar f  ⟺  minimizar −f"
+      - "óptimo local: f(x*) ≤ f(x) en un entorno"
+    desarrollo: |
+      Todo problema de optimización tiene cuatro componentes que conviene nombrar antes de tocar
+      nada: las **variables de decisión** sobre las que se puede actuar, la **función objetivo**
+      que se quiere mejorar, el **sentido** —minimizar o maximizar— y las **restricciones** que
+      delimitan qué soluciones son admisibles.
+
+      Maximizar y minimizar son el mismo problema: maximizar `f` es minimizar `−f`. Por convenio
+      la literatura se escribe siempre en forma de minimización, y por eso en aprendizaje
+      automático se habla de minimizar la pérdida en vez de maximizar la verosimilitud, aunque
+      sean lo mismo con signo cambiado.
+
+      Un problema sin restricciones se llama **irrestricto**, y es el caso de casi todo el
+      entrenamiento de redes neuronales: los pesos pueden tomar cualquier valor real. Cuando hay
+      restricciones el problema se complica sustancialmente, y las clases 256 a 258 desarrollan
+      la maquinaria correspondiente.
+
+      La distinción entre óptimo **local** y **global** es la que decide la dificultad. Un
+      óptimo local es mejor que todos sus vecinos; uno global es mejor que todos los puntos. Sin
+      convexidad, ningún algoritmo basado en información local puede distinguir uno del otro, y
+      esa es la razón de que la clase siguiente sea la más importante de la parte.
+    ejemplo: |
+      Anatomía de un problema irrestricto de dos variables.
+
+      ```text
+      variables de decisión: x, y
+      función objetivo:      f(x,y) = x² + 20y²
+      sentido:               minimizar
+      restricciones:         ninguna
+
+      punto inicial X₀ = (−2, 3)
+        f(X₀) = 4 + 180 = 184,0
+        ∇f(X₀) = (2x, 40y) = (−4, 120)
+
+      El gradiente es 30 veces mayor en y que en x:
+      la función es muchísimo más sensible en esa dirección.
+
+      Óptimo: (0, 0) con f = 0.
+      Al ser convexo, ese mínimo local es también global.
+      ```
+    errores:
+      - "Optimizar sin haber escrito explícitamente la función objetivo."
+      - "Olvidar las restricciones implícitas del dominio del problema."
+      - "Confundir un óptimo local con la solución del problema."
+    aplicacion: |
+      Formulación de problemas de entrenamiento, diseño de ingeniería, asignación de recursos y
+      planificación logística.
+    referencias:
+      - "[Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 1](https://web.stanford.edu/~boyd/cvxbook/)"
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006](https://doi.org/10.1007/978-0-387-40065-5)"
+
+  "242":
+    concepto: "La convexidad es la frontera entre optimizar con garantías y optimizar con esperanza."
+    formulas:
+      - "f(λa + (1−λ)b) ≤ λf(a) + (1−λ)f(b)"
+      - "convexa ⟺ Hessiano semidefinido positivo"
+      - "convexa ⟹ todo mínimo local es global"
+    desarrollo: |
+      Una función es convexa si el segmento que une dos puntos cualesquiera de su gráfica queda
+      **por encima** de la curva. Esa definición geométrica se traduce en la desigualdad de la
+      cuerda, y en el caso diferenciable equivale a que el Hessiano sea semidefinido positivo:
+      curvatura no negativa en todas las direcciones.
+
+      La consecuencia es la que justifica toda la atención al concepto: **en un problema convexo
+      todo mínimo local es global**. Un algoritmo que solo mira información local —que es lo
+      único que hace el descenso de gradiente— tiene garantía de encontrar la solución óptima.
+      Sin convexidad esa garantía desaparece por completo.
+
+      Hay una jerarquía útil de problemas por dificultad, y no es lineal-versus-no-lineal como
+      suele creerse, sino **convexo-versus-no-convexo**. Un problema convexo de un millón de
+      variables es tratable; uno no convexo de veinte puede ser imposible de resolver con
+      garantías. Programación lineal, mínimos cuadrados, regresión logística y SVM son convexos,
+      y por eso se resuelven de forma fiable.
+
+      Las redes neuronales no son convexas, y masivamente. Sin embargo se entrenan bien, y la
+      explicación que va emergiendo es que en dimensión muy alta los mínimos locales malos son
+      raros: lo abundante son puntos de silla, de los que el ruido de SGD escapa con facilidad.
+      No es un teorema cerrado, y conviene decirlo así.
+    ejemplo: |
+      Test de la cuerda y criterio del Hessiano.
+
+      ```text
+      f(x) = x²  con a = 0,5,  b = 2,0,  λ = 0,7
+
+        f(λa + (1−λ)b) = f(0,95)  = 0,9025
+        λf(a) + (1−λ)f(b)         = 2,9500
+        0,9025 ≤ 2,9500   →   convexa                       ✓
+
+      f(x,y) = x² + 20y²
+
+        Hessiano = [[2,  0],
+                    [0, 40]]
+        autovalores: 40 y 2, ambos positivos
+        → definido positivo → estrictamente convexa         ✓
+
+      Consecuencia: el mínimo (0,0) es global.
+      Cualquier método de descenso lo encontrará.
+      ```
+    errores:
+      - "Suponer convexidad sin comprobar el Hessiano."
+      - "Aplicar garantías de la teoría convexa a redes neuronales."
+      - "Confundir función convexa con función con forma de cuenco en una sola dirección."
+    aplicacion: |
+      Diseño de funciones de pérdida, elección de algoritmos con garantías, SVM y regresión
+      regularizada, y análisis de por qué el entrenamiento profundo es difícil.
+    referencias:
+      - "[Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 3](https://web.stanford.edu/~boyd/cvxbook/)"
+      - "[Dauphin, Y. et al. *Identifying and attacking the saddle point problem*, NeurIPS, 2014](https://arxiv.org/abs/1406.2572)"
+
+  "243":
+    concepto: "El gradiente negativo es la dirección más empinada, pero no la única que sirve."
+    formulas:
+      - "d es de descenso ⟺ dᵀ∇f < 0"
+      - "la más empinada: d = −∇f"
+      - "Newton: d = −H⁻¹∇f  (también de descenso si H es definida positiva)"
+    desarrollo: |
+      El criterio para que una dirección sirva es sencillo: su producto escalar con el gradiente
+      debe ser negativo. Eso significa que forma un ángulo mayor de 90 grados con el gradiente,
+      y que moverse un poco en esa dirección **reduce** la función. Hay infinitas direcciones que
+      lo cumplen, no solo una.
+
+      El gradiente negativo es la de **máximo descenso local**, en el sentido de que maximiza la
+      reducción por unidad de longitud del paso. Pero «localmente óptima» no significa
+      «globalmente eficiente»: en un valle alargado el gradiente apunta hacia las paredes en vez
+      de a lo largo del valle, y el descenso zigzaguea desperdiciando la mayor parte del
+      movimiento.
+
+      Ese defecto es exactamente lo que corrigen los métodos posteriores. Momentum promedia
+      gradientes sucesivos y el zigzag se cancela. Newton usa la curvatura para reescalar cada
+      dirección y apunta directamente al mínimo de la aproximación cuadrática. Los métodos
+      adaptativos escalan por coordenada. Todos siguen siendo direcciones de descenso, solo que
+      mejor elegidas.
+
+      Conviene retener que **cualquier** dirección con producto escalar negativo funciona,
+      incluso una aleatoria. Los métodos de optimización sin gradiente explotan esa libertad
+      probando direcciones al azar y quedándose con las que reducen el objetivo. Son lentos pero
+      aplicables donde no hay derivada, y la clase 259 los desarrolla.
+    ejemplo: |
+      Cuatro direcciones evaluadas desde el mismo punto.
+
+      ```text
+      f(x,y) = x² + 20y²      punto (−2, 3)      f = 184,0
+      ∇f = (−4, 120)
+
+      dirección           dᵀ∇f      ¿descenso?   f tras un paso
+      −gradiente        −14 416         sí         183,8800
+      aleatoria válida     −116         sí         183,9180
+      eje x                 + 4         no         184,0040
+      +gradiente        +14 416         no         184,1201
+
+      La más empinada es −∇f, pero la aleatoria también sirve.
+
+      Nota: el gradiente vale 120 en y y −4 en x. El descenso
+      corregirá sobre todo y, y avanzará muy poco en x: ese
+      desequilibrio es el que produce el zigzag.
+      ```
+    errores:
+      - "Creer que solo el gradiente negativo es dirección válida."
+      - "Usar la dirección más empinada en problemas mal escalados sin corregir."
+      - "Olvidar normalizar la dirección al comparar tamaños de paso."
+    aplicacion: |
+      Diseño de optimizadores, métodos de región de confianza, optimización sin derivadas y
+      análisis de convergencia.
+    referencias:
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://doi.org/10.1007/978-0-387-40065-5)"
+      - "[Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 9](https://web.stanford.edu/~boyd/cvxbook/)"
+
+  "244":
+    concepto: "El learning rate tiene un umbral duro: por encima de 2/L el descenso diverge."
+    formulas:
+      - "xₖ₊₁ = xₖ − lr·∇f(xₖ)"
+      - "estabilidad: lr < 2/L,  L = mayor autovalor del Hessiano"
+      - "velocidad limitada por el número de condición L/μ"
+    desarrollo: |
+      El descenso de gradiente repite un paso elemental: calcular el gradiente y moverse en
+      dirección contraria una cantidad proporcional al learning rate. Es el algoritmo más simple
+      de la optimización continua y la base de todo el entrenamiento moderno.
+
+      Su comportamiento está enteramente gobernado por el **learning rate**, y el umbral no es
+      difuso. Para una función cuadrática con mayor autovalor `L`, el descenso converge si y solo
+      si `lr < 2/L`. Por debajo converge, por encima **diverge** con oscilaciones que crecen
+      geométricamente. No hay zona gris: es una frontera exacta.
+
+      Dentro de la zona estable hay un segundo compromiso. Un `lr` demasiado pequeño converge
+      con seguridad pero necesita un número de iteraciones prohibitivo; uno cercano al umbral es
+      rápido pero frágil. Y la velocidad máxima alcanzable está limitada por el **número de
+      condición** `L/μ`: cuanto más alargado sea el valle, más lento el descenso, por bien
+      elegido que esté el paso.
+
+      En la práctica del aprendizaje profundo, `L` no se conoce y además cambia durante el
+      entrenamiento. De ahí las técnicas habituales: **warmup** para no divergir al principio,
+      planificadores que reducen el `lr` progresivamente, y **gradient clipping** como
+      salvaguarda ante gradientes anómalos. Todas son maneras de mantenerse del lado bueno de
+      un umbral que no se puede calcular.
+    ejemplo: |
+      Doscientas iteraciones sobre x² + 20y² desde (−2, 3).
+
+      ```text
+      Hessiano = diag(2, 40)   →  L = 40  →  lr máximo = 2/40 = 0,05
+
+           lr        f final        comportamiento
+        0,001     1,795891        demasiado lento, no llega
+        0,010     1,7e-09         converge bien
+        0,040     3,4e-31         muy rápido, cerca del umbral
+        0,050        —            oscila sin converger
+        0,060        —            diverge, desborda
+
+      Con lr = 0,001 y 200 iteraciones, x sigue en −1,34:
+      la coordenada lenta apenas se ha movido.
+
+      Número de condición: 40/2 = 20. Ese 20 es el que
+      obliga al zigzag y motiva momentum.
+      ```
+    errores:
+      - "Elegir el learning rate por prueba y error sin entender el umbral."
+      - "Atribuir a la arquitectura una divergencia causada por el paso."
+      - "Usar un learning rate fijo durante todo el entrenamiento."
+    aplicacion: |
+      Entrenamiento de cualquier modelo, ajuste de hiperparámetros, planificadores de learning
+      rate y diagnóstico de divergencias.
+    referencias:
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 3](https://doi.org/10.1007/978-0-387-40065-5)"
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/)"
+
+  "245":
+    concepto: "SGD cambia exactitud del gradiente por número de actualizaciones, y suele salir ganando."
+    formulas:
+      - "∇f ≈ (1/|B|)·Σ_{i∈B} ∇fᵢ"
+      - "E[gradiente de lote] = gradiente completo"
+      - "varianza del estimador ∝ 1/|B|"
+    desarrollo: |
+      El gradiente exacto de una función de pérdida sobre un millón de ejemplos requiere recorrer
+      el millón. El descenso estocástico observa que un subconjunto pequeño ya da una estimación
+      **insesgada** del gradiente, y que con el mismo presupuesto de cómputo se pueden dar
+      muchísimas más actualizaciones aunque cada una sea ruidosa.
+
+      El intercambio es favorable en la práctica. Mil actualizaciones aproximadas avanzan más
+      que una exacta, porque el error de la estimación se promedia a lo largo de las iteraciones
+      mientras que el progreso se acumula. Ese es el resultado empírico que hizo viable el
+      aprendizaje profundo a escala.
+
+      El **ruido tiene además un efecto beneficioso** que no es un accidente. Las fluctuaciones
+      del gradiente estocástico permiten escapar de puntos de silla y de mínimos locales
+      estrechos, y hay evidencia de que sesgan la solución hacia mínimos anchos, que generalizan
+      mejor. Un gradiente perfecto no siempre es lo deseable.
+
+      El **tamaño de lote** es el mando que regula el compromiso. Lotes grandes dan gradientes
+      precisos, aprovechan mejor la GPU y permiten más paralelismo, pero pierden el efecto
+      regularizador del ruido y suelen necesitar ajustar el learning rate al alza. Lotes
+      pequeños son ruidosos y lentos por muestra, pero exploran más. No hay valor universal.
+    ejemplo: |
+      Ajuste de dos parámetros con 100 datos, mismo presupuesto.
+
+      ```text
+      parámetros reales: [2,0 ; 3,0]
+
+      lote completo (200 épocas):
+        estimación = [2,038924 ; 2,996817]
+        MSE = 0,094537
+        gradientes evaluados: 20 000
+
+      SGD con 1 muestra (200 épocas):
+        estimación = [2,142997 ; 2,967811]
+        gradientes evaluados: 20 000
+
+      Con el mismo número de evaluaciones, el lote completo
+      da 200 actualizaciones y SGD da 20 000.
+
+      SGD llega a una solución comparable con actualizaciones
+      mucho más baratas, y su trayectoria es visiblemente ruidosa.
+      ```
+    errores:
+      - "Comparar SGD y lote completo por épocas en vez de por coste de cómputo."
+      - "Subir el tamaño de lote sin reajustar el learning rate."
+      - "Interpretar el ruido de la curva de pérdida como fallo del entrenamiento."
+    aplicacion: |
+      Entrenamiento de redes profundas, aprendizaje en línea, sistemas de recomendación y
+      cualquier ajuste con conjuntos de datos grandes.
+    referencias:
+      - "[Bottou, L.; Curtis, F.; Nocedal, J. *Optimization methods for large-scale machine learning*, SIAM Review, 2018](https://doi.org/10.1137/16M1080173)"
+      - "[Robbins, H.; Monro, S. *A stochastic approximation method*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729586)"
+
+  "246":
+    concepto: "Momentum promedia gradientes: el zigzag se cancela y la componente útil se acumula."
+    formulas:
+      - "vₖ₊₁ = β·vₖ − lr·∇f(xₖ)"
+      - "xₖ₊₁ = xₖ + vₖ₊₁"
+      - "paso efectivo ≈ lr/(1−β):  β = 0,9 multiplica por 10"
+    desarrollo: |
+      Momentum añade memoria al descenso. En vez de moverse según el gradiente actual, mantiene
+      una **velocidad** que es una media móvil exponencial de los gradientes pasados. La analogía
+      física es exacta: una bola que rueda por la superficie acumula inercia en vez de reaccionar
+      solo a la pendiente instantánea.
+
+      El efecto en valles alargados es el que justifica el método. Las componentes del gradiente
+      que apuntan a las paredes cambian de signo en cada iteración y **se cancelan** al
+      promediarse; las que apuntan a lo largo del valle son consistentes y **se acumulan**. El
+      zigzag desaparece y el avance en la dirección útil se multiplica.
+
+      El paso efectivo en una dirección de gradiente constante es `lr/(1−β)`, de modo que `β=0,9`
+      equivale a multiplicar el learning rate por 10 en esas direcciones. Ese factor explica por
+      qué al activar momentum suele haber que **bajar** el learning rate: si no, se cruza el
+      umbral de estabilidad.
+
+      El coste es mínimo: un vector de estado del tamaño de los parámetros y una operación por
+      paso. Con esa inversión, momentum acelera prácticamente siempre en problemas mal
+      condicionados, que son la norma. Por eso el SGD con momentum siguió siendo competitivo con
+      Adam en visión por computador durante años.
+    ejemplo: |
+      Mismo problema y mismo learning rate, con y sin momentum.
+
+      ```text
+      f(x,y) = x² + 20y²      lr = 0,02      β = 0,9
+
+      sin momentum:
+        x final = (−0,00056922 ; 0,0)
+        f final = 3,24e-07
+
+      con momentum:
+        x final = (1,741e-05 ; −6,475e-05)
+        f final = 8,42e-08
+
+      factor de mejora en f: 3,85×
+
+      La diferencia crece con el número de condición:
+      con condición 20 la mejora es de 4×; con condición 1000
+      momentum es la diferencia entre converger y no converger.
+
+      Paso efectivo: lr/(1−β) = 0,02/0,1 = 0,2, diez veces mayor.
+      ```
+    errores:
+      - "Mantener el mismo learning rate al activar momentum."
+      - "Usar β muy cercano a 1 sin controlar la estabilidad."
+      - "Olvidar reiniciar la velocidad al cambiar de fase de entrenamiento."
+    aplicacion: |
+      SGD con momentum en visión, aceleración de convergencia en problemas mal condicionados y
+      base de Adam y sus variantes.
+    referencias:
+      - "[Polyak, B. *Some methods of speeding up the convergence of iteration methods*, 1964](https://doi.org/10.1016/0041-5553(64)90137-5)"
+      - "[Goh, G. *Why momentum really works*, Distill, 2017](https://distill.pub/2017/momentum/)"
+
+  "247":
+    concepto: "Nesterov calcula el gradiente donde va a estar, no donde está."
+    formulas:
+      - "punto adelantado: x̃ = xₖ + β·vₖ"
+      - "vₖ₊₁ = β·vₖ − lr·∇f(x̃)"
+      - "cota O(1/k²) frente a O(1/k) del descenso simple"
+    desarrollo: |
+      El gradiente acelerado de Nesterov introduce un cambio que parece menor y no lo es: evalúa
+      el gradiente en el punto al que el momentum va a llevar, no en el punto actual. Primero se
+      mira hacia dónde empuja la inercia, y allí se calcula la corrección.
+
+      La intuición es la de un conductor que frena antes de la curva en vez de al llegar a ella.
+      Si el punto adelantado ya ha pasado el mínimo, el gradiente en él apunta hacia atrás y
+      **frena** la velocidad antes de que el sobrepaso ocurra. Momentum clásico solo se entera
+      del sobrepaso después de haberlo cometido.
+
+      El resultado no es solo empírico. Para funciones convexas suaves, Nesterov alcanza una tasa
+      de convergencia `O(1/k²)` frente al `O(1/k)` del descenso simple, y esa tasa es
+      **óptima**: ningún método de primer orden puede hacerlo mejor en esa clase de problemas.
+      Es uno de los resultados más elegantes de la optimización convexa.
+
+      En aprendizaje profundo la ventaja es más modesta que en el caso convexo, pero real y
+      gratuita: el coste computacional es idéntico al de momentum. Está disponible como opción
+      en prácticamente todas las bibliotecas —`nesterov=True`— y activarla rara vez perjudica.
+    ejemplo: |
+      Momentum clásico frente a Nesterov, condiciones idénticas.
+
+      ```text
+      f(x,y) = x² + 20y²      lr = 0,02      β = 0,9
+
+      momentum clásico:
+        x final = (1,741e-05 ; −6,475e-05)
+        f final = 8,4165e-08
+
+      Nesterov:
+        x final = (−5,6e-07 ; 0,0)
+        f final = 0,0            (por debajo de la precisión)
+
+      Diferencia de implementación:
+        clásico:  ∇f evaluado en x
+        Nesterov: ∇f evaluado en x + β·v
+
+      Ventaja teórica en convexas suaves:
+        descenso simple  O(1/k)
+        Nesterov         O(1/k²)   y es óptimo
+      ```
+    errores:
+      - "Implementar la fórmula evaluando el gradiente en x en vez del punto adelantado."
+      - "Esperar la ganancia teórica del caso convexo en redes profundas."
+      - "Confundir las dos formulaciones equivalentes de NAG al portar código."
+    aplicacion: |
+      SGD con Nesterov en entrenamiento de redes, optimización convexa acelerada y métodos
+      proximales acelerados.
+    referencias:
+      - "[Nesterov, Y. *A method for solving the convex programming problem with convergence rate O(1/k²)*, 1983](https://cir.nii.ac.jp/crid/1570572699326076416)"
+      - "[Sutskever, I. et al. *On the importance of initialization and momentum in deep learning*, ICML, 2013](https://proceedings.mlr.press/v28/sutskever13.html)"
+
+  "248":
+    concepto: "AdaGrad da pasos grandes a coordenadas poco vistas, pero su acumulador nunca olvida."
+    formulas:
+      - "Gₖ = Gₖ₋₁ + ∇f(xₖ)²   (por coordenada)"
+      - "xₖ₊₁ = xₖ − lr·∇f(xₖ) / (√Gₖ + ε)"
+      - "el paso decrece monótonamente"
+    desarrollo: |
+      AdaGrad abandona la idea de un learning rate único para todas las coordenadas. Acumula
+      para cada una la suma de sus gradientes al cuadrado y divide el paso por su raíz. Las
+      coordenadas con gradientes históricamente grandes reciben pasos pequeños; las que apenas
+      se han movido reciben pasos grandes.
+
+      Esto resuelve un problema real en datos **dispersos**. En procesamiento de lenguaje, unas
+      pocas palabras aparecen constantemente y la mayoría casi nunca. Con learning rate único,
+      los embeddings de las palabras raras apenas se actualizan. AdaGrad les da pasos grandes
+      precisamente porque han acumulado poco, y por eso funcionó tan bien en su momento.
+
+      El defecto es estructural y no tiene arreglo dentro del método: el acumulador es una suma
+      de términos no negativos y por tanto **solo crece**. El paso efectivo decrece
+      monótonamente hacia cero, y en entrenamientos largos el aprendizaje se detiene aunque el
+      modelo esté lejos del óptimo. No es un problema de ajuste; es una consecuencia de la
+      fórmula.
+
+      El diagnóstico de ese defecto llevó directamente a RMSProp, que sustituye la suma por una
+      media móvil exponencial y por tanto **olvida** el pasado lejano. AdaGrad conserva interés
+      histórico y sigue siendo razonable en problemas convexos dispersos con horizontes cortos.
+    ejemplo: |
+      Evolución del tamaño de paso a lo largo de las iteraciones.
+
+      ```text
+      lr base = 0,5
+
+      iteración    tamaño de paso efectivo
+           1            0,7071
+          50            0,1004
+         100            0,0710
+         200            0,0502
+
+      El paso cae como 1/√k y no vuelve a subir nunca.
+
+      Resultado sobre x² + 20y²:
+        x final = (−0,0 ; 2,2e-07)     f final = 1e-12
+
+      Aquí converge porque el problema es fácil y corto.
+      En un entrenamiento de 100 000 pasos, el paso efectivo
+      caería a menos del 1 % del inicial.
+      ```
+    errores:
+      - "Usar AdaGrad en entrenamientos largos de redes profundas."
+      - "Aumentar el learning rate base para compensar el decaimiento, sin resolver la causa."
+      - "Omitir ε y provocar división por cero en coordenadas nunca actualizadas."
+    aplicacion: |
+      Modelos con datos dispersos, embeddings de vocabularios grandes, sistemas de recomendación
+      y problemas convexos con horizonte corto.
+    referencias:
+      - "[Duchi, J.; Hazan, E.; Singer, Y. *Adaptive subgradient methods*, JMLR, 2011](https://jmlr.org/papers/v12/duchi11a.html)"
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/)"
+
+  "249":
+    concepto: "RMSProp sustituye la suma de AdaGrad por una media móvil, y el paso deja de apagarse."
+    formulas:
+      - "Eₖ = ρ·Eₖ₋₁ + (1−ρ)·∇f(xₖ)²"
+      - "xₖ₊₁ = xₖ − lr·∇f(xₖ) / (√Eₖ + ε)"
+      - "ρ = 0,9 equivale a recordar unos 10 pasos"
+    desarrollo: |
+      RMSProp aplica una corrección mínima a AdaGrad con consecuencias grandes: en vez de sumar
+      todos los gradientes al cuadrado, mantiene una **media móvil exponencial**. Los gradientes
+      antiguos se descuentan geométricamente y el acumulador puede bajar además de subir.
+
+      Eso resuelve el apagado. Si una coordenada tuvo gradientes grandes al principio y luego se
+      calmó, AdaGrad la mantiene penalizada para siempre mientras que RMSProp la libera. El
+      método se adapta al **régimen actual** del entrenamiento en vez de a toda su historia, que
+      es lo apropiado en problemas no estacionarios como el aprendizaje profundo.
+
+      El parámetro `ρ` fija la longitud de la memoria: con `ρ = 0,9` la ventana efectiva es de
+      unos 10 pasos, con `0,99` de unos 100. El valor por defecto funciona en la mayoría de los
+      casos y rara vez merece ajustarse. El `ε` en el denominador evita divisiones por cero y
+      típicamente vale `10⁻⁸`.
+
+      RMSProp tiene una peculiaridad histórica: **nunca se publicó como artículo**. Apareció en
+      una diapositiva del curso de Hinton en Coursera en 2012 y se citó así durante años. Su
+      combinación con momentum es lo que da Adam, que es la clase siguiente.
+    ejemplo: |
+      RMSProp y AdaGrad con el mismo learning rate.
+
+      ```text
+      ρ = 0,9      ε = 1e-8      mismo lr para ambos
+
+      RMSProp:
+        x final = (0,02310943 ; 0,01786889)
+        f final = 0,00692
+
+      AdaGrad con el mismo lr:
+        x final = (−0,85543159 ; 1,78114968)
+        f final = 64,18
+
+      AdaGrad se quedó atascado: su paso se apagó antes
+      de llegar al mínimo.
+
+      Diferencia única entre ambos:
+        AdaGrad: G += g²             suma que solo crece
+        RMSProp: E = ρE + (1−ρ)g²    media que puede bajar
+      ```
+    errores:
+      - "Ajustar ρ sin necesidad en vez de dejar el valor por defecto."
+      - "Omitir ε y provocar inestabilidad numérica."
+      - "Esperar que RMSProp resuelva un learning rate base mal elegido."
+    aplicacion: |
+      Entrenamiento de redes recurrentes, aprendizaje por refuerzo, objetivos no estacionarios y
+      componente de segundo momento en Adam.
+    referencias:
+      - "[Hinton, G. *Neural Networks for Machine Learning*, lecture 6e, Coursera, 2012](https://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf)"
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/)"
+
+  "250":
+    concepto: "Adam combina momentum y escalado adaptativo, y corrige el sesgo del arranque."
+    formulas:
+      - "mₖ = β₁·mₖ₋₁ + (1−β₁)·g;   vₖ = β₂·vₖ₋₁ + (1−β₂)·g²"
+      - "m̂ = mₖ/(1−β₁ᵏ);   v̂ = vₖ/(1−β₂ᵏ)"
+      - "xₖ₊₁ = xₖ − lr·m̂ / (√v̂ + ε)"
+    desarrollo: |
+      Adam junta las dos ideas que funcionaban por separado: el **primer momento** `m` es la
+      media móvil del gradiente, que es momentum, y el **segundo momento** `v` es la media móvil
+      del gradiente al cuadrado, que es RMSProp. La actualización divide uno por la raíz del
+      otro.
+
+      La aportación propia es la **corrección de sesgo**, y merece entenderse porque es la parte
+      que más se copia sin comprender. Ambos acumuladores se inicializan a cero, así que en los
+      primeros pasos están fuertemente sesgados hacia cero: con `β₂ = 0,999`, tras un paso `v`
+      vale solo el 0,1 % del valor correcto. Dividir por `1 − βᵏ` compensa exactamente ese
+      arranque, y sin esa corrección los primeros pasos serían enormes.
+
+      Los valores por defecto —`β₁ = 0,9`, `β₂ = 0,999`, `ε = 10⁻⁸`— funcionan sorprendentemente
+      bien en una variedad enorme de problemas, y esa robustez es la razón real de su dominio: se
+      puede empezar a entrenar sin ajustar nada. Es el optimizador por defecto del aprendizaje
+      profundo desde 2015.
+
+      No está libre de críticas. Hay problemas convexos donde Adam no converge, señalados por
+      Reddi y otros en 2018, lo que motivó AMSGrad. Y en visión por computador el SGD con
+      momentum bien ajustado suele generalizar mejor. Adam es el mejor punto de partida, no la
+      respuesta final.
+    ejemplo: |
+      Adam sobre el problema de referencia y la corrección de sesgo.
+
+      ```text
+      β₁ = 0,9    β₂ = 0,999    lr = 0,1    ε = 1e-8
+
+      resultado:
+        x final = (−5,69e-05 ; −5,303e-05)
+        f final = 5,95e-08
+
+      Por qué hace falta la corrección de sesgo:
+
+        paso k    1 − β₂ᵏ      v subestima por factor
+           1      0,001              1000×
+          10      0,00995             100×
+         100      0,0952               10×
+        1000      0,632                1,6×
+
+      Sin corregir, los primeros pasos dividirían por una raíz
+      demasiado pequeña y el paso efectivo sería desmesurado.
+      ```
+    errores:
+      - "Implementar Adam sin la corrección de sesgo."
+      - "Usar el weight decay como término L2 dentro del gradiente en vez de AdamW."
+      - "Suponer que Adam siempre generaliza mejor que SGD con momentum."
+    aplicacion: |
+      Entrenamiento por defecto de redes profundas, ajuste fino de modelos de lenguaje,
+      transformers y prácticamente todo el aprendizaje profundo actual.
+    referencias:
+      - "[Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980)"
+      - "[Reddi, S.; Kale, S.; Kumar, S. *On the convergence of Adam and beyond*, ICLR, 2018](https://arxiv.org/abs/1904.09237)"
+
+  "251":
+    concepto: "En Adam, sumar L2 al gradiente no es lo mismo que decaer el peso: AdamW los separa."
+    formulas:
+      - "Adam + L2:  g ← g + λ·w,  luego se divide por √v̂"
+      - "AdamW:  xₖ₊₁ = xₖ − lr·m̂/(√v̂+ε) − lr·λ·xₖ"
+      - "en SGD ambas formas coinciden; en Adam no"
+    desarrollo: |
+      En el descenso de gradiente clásico, añadir `λ‖w‖²` al objetivo y decaer los pesos
+      multiplicándolos por `(1 − lr·λ)` son operaciones **idénticas**. Esa equivalencia es tan
+      familiar que se dio por válida también en Adam durante años, y era falsa.
+
+      La razón es el escalado adaptativo. En Adam, el término `λ·w` que se suma al gradiente pasa
+      por la división entre `√v̂`, igual que el resto del gradiente. El resultado es que los
+      pesos con gradientes históricamente grandes reciben **menos** regularización, exactamente
+      al revés de lo que se pretendía. La intensidad de la regularización pasa a depender del
+      historial de gradientes de cada coordenada.
+
+      **AdamW** aplica el decaimiento directamente sobre el peso, fuera del mecanismo adaptativo.
+      Cada parámetro recibe la misma proporción de decaimiento independientemente de su
+      gradiente, que es lo que se quería desde el principio. El cambio en el código es de una
+      línea; el efecto en el rendimiento fue lo bastante grande como para convertirlo en el
+      estándar.
+
+      Hoy AdamW es el optimizador por defecto para transformers y modelos de lenguaje. La lección
+      metodológica va más allá del caso: una equivalencia válida en un algoritmo puede romperse
+      en otro, y trasladar intuiciones sin verificarlas cuesta caro. Este error concreto estuvo
+      en producción desde 2015 hasta 2019.
+    ejemplo: |
+      Mismo objetivo y mismo weight decay, dos implementaciones.
+
+      ```text
+      objetivo: (x−3)² + (y−4)²        óptimo sin regularizar: (3, 4)
+      weight decay λ = 0,05
+
+      Adam con L2 dentro del gradiente:
+        solución = (2,926829 ; 3,902440)      norma = 4,87805
+
+      AdamW con decay desacoplado:
+        solución = (2,918662 ; 3,830002)      norma = 4,80800
+
+      AdamW regulariza más y de forma uniforme.
+
+      La diferencia crece con la dispersión de los gradientes:
+      aquí es del 1,4 %, en un transformer real es suficiente
+      para cambiar la calidad del modelo de forma medible.
+      ```
+    errores:
+      - "Usar el argumento weight_decay de Adam creyendo que equivale a AdamW."
+      - "Aplicar decaimiento a los parámetros de normalización y a los sesgos."
+      - "Trasladar equivalencias de SGD a optimizadores adaptativos sin comprobarlas."
+    aplicacion: |
+      Entrenamiento de transformers, ajuste fino de modelos de lenguaje, recetas de
+      regularización moderna y reproducción de resultados publicados.
+    referencias:
+      - "[Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*, ICLR, 2019](https://arxiv.org/abs/1711.05101)"
+      - "[Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980)"
+
+  "252":
+    concepto: "Newton resuelve una cuadrática en un solo paso, y por eso no escala."
+    formulas:
+      - "xₖ₊₁ = xₖ − H⁻¹·∇f(xₖ)"
+      - "convergencia cuadrática cerca del óptimo"
+      - "coste O(n³) por iteración, memoria O(n²)"
+    desarrollo: |
+      El método de Newton aplicado a optimización aproxima la función por su desarrollo de Taylor
+      de segundo orden y salta al mínimo de esa parábola. Usa por tanto la **curvatura**, no solo
+      la pendiente, y eso le permite elegir simultáneamente dirección y tamaño de paso sin
+      learning rate.
+
+      En una función cuadrática, la aproximación de segundo orden **es** la función, y Newton
+      alcanza el mínimo exacto en una única iteración desde cualquier punto de partida. En
+      funciones generales conserva convergencia cuadrática cerca del óptimo: el número de dígitos
+      correctos se duplica en cada paso, igual que en la búsqueda de raíces de la clase 223.
+
+      El obstáculo es el coste. El Hessiano tiene `n²` entradas e invertirlo cuesta `O(n³)`. Con
+      un modelo de mil millones de parámetros, el Hessiano tendría `10¹⁸` entradas: no cabe en
+      ninguna memoria existente. Por eso los métodos de segundo orden puros son inviables en
+      aprendizaje profundo, por muy atractiva que sea su tasa de convergencia.
+
+      Hay un segundo problema, cualitativo: si el Hessiano **no es definido positivo** —lo cual
+      ocurre en puntos de silla, abundantes en dimensión alta— la dirección de Newton puede
+      apuntar cuesta arriba. Las variantes prácticas añaden regularización al Hessiano o usan
+      regiones de confianza para evitarlo.
+    ejemplo: |
+      Newton sobre una cuadrática: un paso y termina.
+
+      ```text
+      f(x,y) = x² + 20y²        punto inicial (−2, 3)
+
+      Hessiano = [[2,  0],        H⁻¹ = [[0,5,   0   ],
+                  [0, 40]]                [0  ,  0,025]]
+
+      Paso 1:  x = (−2,3) − H⁻¹·(−4,120) = (0, 0)
+        f = 0,0                                            ✓
+
+      Paso 2:  ya está en el óptimo, no se mueve.
+
+      Un paso frente a las 200 iteraciones del descenso.
+
+      Coste: invertir H es O(n³). Con n = 10⁹ el Hessiano
+      tendría 10¹⁸ entradas: imposible de almacenar.
+      ```
+    errores:
+      - "Aplicar Newton sin comprobar que el Hessiano es definido positivo."
+      - "Formar e invertir el Hessiano explícitamente en vez de resolver el sistema."
+      - "Considerarlo viable en modelos con millones de parámetros."
+    aplicacion: |
+      Optimización de pocos parámetros, ajuste de modelos estadísticos, IRLS en regresión
+      logística y base conceptual de los métodos cuasi-Newton.
+    referencias:
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 3](https://doi.org/10.1007/978-0-387-40065-5)"
+      - "[Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 9](https://web.stanford.edu/~boyd/cvxbook/)"
+
+  "253":
+    concepto: "BFGS construye una aproximación del Hessiano inverso usando solo gradientes."
+    formulas:
+      - "sₖ = xₖ₊₁ − xₖ;   yₖ = ∇f(xₖ₊₁) − ∇f(xₖ)"
+      - "condición secante: Bₖ₊₁·yₖ = sₖ"
+      - "coste O(n²) frente al O(n³) de Newton"
+    desarrollo: |
+      Los métodos cuasi-Newton buscan la velocidad de Newton sin su coste. La idea es que la
+      diferencia entre dos gradientes consecutivos ya contiene información sobre la curvatura en
+      la dirección recorrida, y acumulando esa información a lo largo de las iteraciones se puede
+      construir una aproximación del Hessiano inverso.
+
+      La **condición secante** `B·y = s` es la formalización: la aproximación debe reproducir la
+      relación observada entre el desplazamiento y el cambio de gradiente. Es la generalización
+      multidimensional exacta del método de la secante de la clase 224, donde la derivada se
+      aproximaba con dos evaluaciones.
+
+      **BFGS** es la fórmula de actualización que mejor funciona en la práctica, y tiene la
+      propiedad valiosa de preservar la definición positiva de la aproximación, con lo que la
+      dirección resultante siempre es de descenso. El coste baja a `O(n²)` y no hace falta
+      calcular ninguna segunda derivada.
+
+      Para dimensiones grandes existe **L-BFGS**, que no almacena la matriz sino los últimos
+      `m` pares `(s, y)` —típicamente 10 o 20— y reconstruye el producto con el gradiente sobre
+      la marcha. Su coste es `O(mn)` y es el algoritmo de referencia para optimización suave a
+      gran escala fuera del aprendizaje profundo. En redes neuronales rinde menos porque el
+      gradiente estocástico rompe las hipótesis de suavidad que necesita.
+    ejemplo: |
+      BFGS reconstruye el Hessiano inverso sin calcularlo.
+
+      ```text
+      f(x,y) = x² + 20y²      BFGS con línea de retroceso
+
+      iter      f          |∇f|
+        1   14,765625    30,2335
+        5    1,3e-03      0,2189
+       10    2,1e-09      9,1e-05
+
+      x final = (−0,0 ; −0,0)                              ✓
+
+      Aproximación construida:      Hessiano inverso real:
+        [[0,501698  0,000276]         [[0,5    0   ]
+         [0,000276  0,025045]]         [0     0,025]]
+
+      Coincide a tres decimales sin haber evaluado
+      ni una sola segunda derivada.
+      ```
+    errores:
+      - "Usar BFGS con gradientes estocásticos ruidosos."
+      - "Almacenar la matriz completa cuando L-BFGS resolvería el problema."
+      - "Omitir la búsqueda de línea, necesaria para que la aproximación se mantenga válida."
+    aplicacion: |
+      Ajuste de modelos estadísticos, optimización en ingeniería, problemas inversos y
+      minimización de energía en química computacional.
+    referencias:
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 6](https://doi.org/10.1007/978-0-387-40065-5)"
+      - "[Liu, D.; Nocedal, J. *On the limited memory BFGS method*, Mathematical Programming, 1989](https://doi.org/10.1007/BF01589116)"
+
+  "254":
+    concepto: "Armijo pide una reducción proporcional a lo que el gradiente prometía, no cualquier reducción."
+    formulas:
+      - "condición de Armijo: f(x + αd) ≤ f(x) + c₁·α·∇fᵀd"
+      - "retroceso: empezar en α = 1 y multiplicar por 0,5 hasta cumplirla"
+      - "c₁ típico: 10⁻⁴"
+    desarrollo: |
+      Elegir el tamaño de paso a mano es frágil: demasiado grande diverge, demasiado pequeño
+      malgasta iteraciones. La búsqueda de línea automatiza esa elección probando valores y
+      quedándose con uno que garantice progreso suficiente.
+
+      El criterio ingenuo —aceptar cualquier `α` que reduzca `f`— no basta. Se pueden construir
+      sucesiones de pasos que reducen la función cada vez y aun así no convergen al mínimo,
+      porque la reducción se hace arbitrariamente pequeña. Hace falta exigir un progreso
+      **proporcional** al prometido por el gradiente.
+
+      Esa exigencia es la **condición de Armijo**: la reducción debe ser al menos una fracción
+      `c₁` de la que predice la aproximación lineal. Con `c₁ = 10⁻⁴` la exigencia es muy laxa —se
+      pide capturar la diezmilésima parte del descenso prometido— y aun así basta para garantizar
+      convergencia.
+
+      La implementación estándar es el **retroceso**: empezar con `α = 1`, y mientras no se
+      cumpla Armijo multiplicar por 0,5. Termina en pocas iteraciones y solo requiere evaluar la
+      función. Las condiciones de Wolfe añaden una segunda desigualdad sobre la curvatura para
+      evitar pasos demasiado cortos, y son las que necesita BFGS para mantener válida su
+      aproximación.
+    ejemplo: |
+      Retroceso desde un punto con gradiente muy desequilibrado.
+
+      ```text
+      punto (−2, 3)      f = 184,0
+      dirección d = −∇f = (4, −120)      c₁ = 1e-4
+
+      α        f(x + αd)      ¿Armijo?
+      1,000    273 784,0         no
+      0,500     64 900,0         no
+      0,250     15 016,0         no
+      0,125      3 271,0         no
+      0,0625       634,0         no
+      0,03125      146,3         sí   ← aceptado
+
+      6 evaluaciones de f y ningún hiperparámetro que ajustar.
+
+      Sin línea de búsqueda, α = 1 habría multiplicado
+      la función por 1 488.
+      ```
+    errores:
+      - "Aceptar cualquier α que reduzca f, sin condición de progreso suficiente."
+      - "Empezar el retroceso desde un α inicial demasiado pequeño."
+      - "Usar solo Armijo con BFGS, donde hacen falta las condiciones de Wolfe."
+    aplicacion: |
+      Métodos cuasi-Newton, optimización sin ajuste manual de paso, entrenamiento con paso
+      adaptativo y solvers de propósito general.
+    referencias:
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 3](https://doi.org/10.1007/978-0-387-40065-5)"
+      - "[Armijo, L. *Minimization of functions having Lipschitz continuous first partial derivatives*, 1966](https://doi.org/10.2140/pjm.1966.16.1)"
+
+  "255":
+    concepto: "Regularizar es cambiar la función objetivo, no modificar el algoritmo."
+    formulas:
+      - "objetivo regularizado: J(w) = L(w) + λ·R(w)"
+      - "L2: R(w) = ‖w‖²  → encoge todos los pesos"
+      - "L1: R(w) = ‖w‖₁  → anula coeficientes"
+    desarrollo: |
+      La regularización se presenta a menudo como un truco para evitar el sobreajuste, y esa
+      descripción oscurece lo que realmente es: **una modificación explícita de la función
+      objetivo**. Se está optimizando un problema distinto, con un término adicional que penaliza
+      la complejidad, y todo el análisis de optimización sigue aplicándose sin cambios.
+
+      El parámetro `λ` fija el precio de la complejidad. Con `λ = 0` se minimiza solo el error de
+      ajuste y los pesos crecen sin límite si eso ayuda. Con `λ` grande domina la penalización y
+      los pesos se encogen hacia cero a costa de un ajuste peor. Es una **frontera de Pareto**
+      entre dos objetivos en conflicto, y elegir `λ` es elegir un punto sobre ella.
+
+      La elección de norma cambia cualitativamente la solución. **L2** encoge todos los
+      coeficientes de forma proporcional pero no anula ninguno, porque su gradiente se hace
+      pequeño cerca de cero. **L1** tiene gradiente constante y empuja los coeficientes
+      exactamente a cero, produciendo soluciones **dispersas** que sirven como selección
+      automática de variables.
+
+      La conexión con la parte 10 es directa y merece recordarse: L2 equivale a un prior
+      gaussiano sobre los pesos y L1 a un prior de Laplace, y minimizar el objetivo regularizado
+      es exactamente la estimación MAP. Regularizar no es un truco de ingeniería sino la
+      formulación de una creencia previa.
+    ejemplo: |
+      Mismo problema con tres valores de λ.
+
+      ```text
+        λ        pesos              MSE       ‖w‖₂
+      0,00   [1,010977 ; 9,927716]  0,0151    9,979
+      0,01   [1,634097 ; 5,663765]  0,2503    5,895
+      0,50   [1,618590 ; 0,480769]  1,8027    1,688
+
+      Al subir λ:
+        la norma de w baja de 9,98 a 1,69
+        el error de ajuste sube de 0,015 a 1,803
+
+      Es un intercambio explícito, no un efecto secundario.
+
+      El segundo peso, que valía 9,93 sin regularizar,
+      queda reducido a 0,48: el modelo decide que no
+      merece la pena pagarlo.
+      ```
+    errores:
+      - "Tratar la regularización como un ajuste del algoritmo y no del objetivo."
+      - "Elegir λ sin validación, por costumbre."
+      - "Regularizar los sesgos y los parámetros de normalización junto con los pesos."
+    aplicacion: |
+      Ridge y Lasso, weight decay en redes, selección de variables, compressed sensing y control
+      del sobreajuste.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x)"
+
+  "256":
+    concepto: "El multiplicador de Lagrange mide cuánto vale relajar la restricción una unidad."
+    formulas:
+      - "L(x,λ) = f(x) − λ·(g(x) − c)"
+      - "en el óptimo: ∇f = λ·∇g"
+      - "λ = ∂f*/∂c  (precio sombra)"
+    desarrollo: |
+      Con una restricción de igualdad, el mínimo ya no está donde el gradiente se anula sino
+      donde el gradiente del objetivo es **paralelo** al de la restricción. La razón geométrica
+      es clara: si tuvieran una componente distinta, se podría avanzar a lo largo de la
+      restricción reduciendo el objetivo.
+
+      El **Lagrangiano** convierte esa condición en un sistema de ecuaciones. Se construye
+      restando la restricción multiplicada por una incógnita nueva `λ`, y se anulan todas las
+      derivadas parciales, incluida la de `λ`, que reproduce la restricción original. El problema
+      restringido se transforma en uno irrestricto con una variable más.
+
+      El multiplicador tiene un significado económico preciso y muy útil: es el **precio sombra**
+      de la restricción, la derivada del óptimo respecto del nivel `c`. Si `λ = 3`, relajar la
+      restricción una unidad mejora el óptimo en 3 unidades. Eso convierte a `λ` en la respuesta
+      cuantitativa a «¿cuánto pagaría por más presupuesto?».
+
+      En aprendizaje automático el Lagrangiano aparece en la formulación dual de las SVM, en la
+      derivación de la distribución de máxima entropía —de donde sale softmax—, y en el
+      entrenamiento con restricciones de equidad o de presupuesto. La versión con desigualdades
+      es la clase siguiente.
+    ejemplo: |
+      Punto de la recta x + y = 4 más cercano al origen.
+
+      ```text
+      minimizar   f(x,y) = x² + y²
+      sujeto a    x + y = 4
+
+      L = x² + y² − λ(x + y − 4)
+
+      ∂L/∂x = 2x − λ = 0    →   2x = λ
+      ∂L/∂y = 2y − λ = 0    →   2y = λ
+      ∂L/∂λ = x + y − 4 = 0
+
+      De las dos primeras: x = y.  Sustituyendo: 2x = 4, x = 2.
+
+      solución = (2, 2)      valor óptimo = 8,0
+      λ = 4
+
+      Interpretación de λ: si la restricción pasara a x+y = 5,
+      el óptimo subiría aproximadamente en 4 unidades.
+      ```
+    errores:
+      - "Olvidar derivar respecto de λ y perder la restricción."
+      - "Confundir el signo del multiplicador según la convención adoptada."
+      - "Aplicar Lagrange directamente a restricciones de desigualdad."
+    aplicacion: |
+      SVM en su forma dual, distribución de máxima entropía, asignación óptima de recursos y
+      entrenamiento con restricciones.
+    referencias:
+      - "[Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)"
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 12](https://doi.org/10.1007/978-0-387-40065-5)"
+
+  "257":
+    concepto: "La holgura complementaria formaliza que una restricción inactiva no influye."
+    formulas:
+      - "estacionariedad: ∇f + Σμᵢ·∇gᵢ = 0"
+      - "factibilidad: gᵢ(x) ≤ 0;   no negatividad: μᵢ ≥ 0"
+      - "holgura complementaria: μᵢ·gᵢ(x) = 0"
+    desarrollo: |
+      Las condiciones de Karush-Kuhn-Tucker extienden Lagrange a restricciones de desigualdad, y
+      son las condiciones necesarias de optimalidad que fundamentan toda la optimización con
+      restricciones. En problemas convexos con cualificación de restricciones son además
+      suficientes.
+
+      La novedad conceptual es que una desigualdad puede estar **activa** —el óptimo está justo
+      sobre la frontera— o **inactiva** —el óptimo cae en el interior y la restricción no
+      estorba—. La **holgura complementaria** `μᵢ·gᵢ(x) = 0` codifica exactamente esa
+      alternativa: o la restricción se cumple con igualdad, o su multiplicador es cero.
+
+      La lectura es directa e intuitiva: una restricción que no aprieta no tiene precio. Si el
+      presupuesto sobra, un euro más no vale nada; si está agotado, su precio sombra es positivo.
+      Esa dicotomía es lo que hace de KKT una herramienta de análisis y no solo de cálculo.
+
+      La condición de **no negatividad** de los multiplicadores es la que distingue las
+      desigualdades de las igualdades: la restricción solo puede empujar en un sentido. Cuando
+      todas las restricciones son de igualdad, KKT se reduce exactamente a Lagrange, y esa
+      reducción confirma que es la generalización correcta.
+    ejemplo: |
+      La misma función con dos restricciones distintas.
+
+      ```text
+      objetivo: minimizar (x − 3)²
+
+      Caso A — restricción activa:   x ≤ 1
+        óptimo sin restricción: x = 3, no factible
+        x* = 1                (sobre la frontera)
+        gradiente del objetivo en x*: −4
+        μ = 4 > 0
+        holgura: μ·g(x*) = 4·(1−1) = 0                     ✓
+
+      Caso B — restricción inactiva: x ≤ 5
+        óptimo sin restricción: x = 3, factible
+        x* = 3                (en el interior)
+        gradiente del objetivo en x*: 0
+        μ = 0
+        holgura: μ·g(x*) = 0·(3−5) = 0                     ✓
+
+      En ambos casos la holgura complementaria se cumple,
+      pero por motivos opuestos.
+      ```
+    errores:
+      - "Permitir multiplicadores negativos en restricciones de desigualdad."
+      - "Olvidar comprobar la holgura complementaria al validar una solución."
+      - "Aplicar KKT como condición suficiente en problemas no convexos."
+    aplicacion: |
+      SVM con margen blando, programación no lineal, optimización de carteras con límites y
+      diseño de ingeniería con especificaciones.
+    referencias:
+      - "[Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)"
+      - "[Karush, W.; Kuhn, H.; Tucker, A. *Nonlinear programming*, 1951](https://doi.org/10.1525/9780520411586-036)"
+
+  "258":
+    concepto: "Un programa cuadrático con Q definida positiva se resuelve por un solo sistema lineal."
+    formulas:
+      - "min (1/2)xᵀQx + cᵀx  sujeto a  Ax = b"
+      - "sistema KKT: [[Q, Aᵀ], [A, 0]]·[x; λ] = [−c; b]"
+      - "convexo si Q es semidefinida positiva"
+    desarrollo: |
+      La programación cuadrática es la clase de problemas con objetivo cuadrático y restricciones
+      lineales. Es la siguiente en complejidad después de la lineal, y sigue siendo tratable: si
+      `Q` es semidefinida positiva el problema es convexo y tiene solución global.
+
+      Con restricciones de **igualdad**, las condiciones KKT son lineales en las incógnitas, y el
+      problema entero se reduce a resolver un único sistema que agrupa variables y
+      multiplicadores. No hace falta iterar: se plantea el sistema aumentado y se resuelve con
+      los métodos de la parte 11.
+
+      Con restricciones de **desigualdad** aparece la dificultad combinatoria de decidir qué
+      restricciones están activas en el óptimo. Los algoritmos de conjunto activo prueban
+      combinaciones sistemáticamente; los de punto interior siguen una trayectoria por el
+      interior de la región factible y son los que mejor escalan.
+
+      Los programas cuadráticos aparecen en sitios importantes: la formulación dual de las **SVM**
+      es exactamente uno, la optimización de carteras de Markowitz es otro, y el control
+      predictivo por modelo resuelve uno en cada instante de muestreo. Reconocer que un problema
+      es un QP es reconocer que se puede resolver de forma fiable y rápida.
+    ejemplo: |
+      QP de dos variables con una restricción de igualdad.
+
+      ```text
+      minimizar  x² + y² − 2x − 5y
+      sujeto a   x + y = 3
+
+      Q = [[2, 0]      c = (−2, −5)      A = [1  1]     b = 3
+           [0, 2]]
+
+      Q definida positiva → problema convexo                ✓
+
+      Sistema KKT:
+        [[2  0  1]   [x]     [ 2]
+         [0  2  1] · [y]  =  [ 5]
+         [1  1  0]]  [λ]     [ 3]
+
+      solución: x = 1,25   y = 1,75   λ = −0,5
+
+      Comprobación: 1,25 + 1,75 = 3                         ✓
+      El óptimo sin restricción sería (1 ; 2,5), que suma 3,5:
+      la restricción sí aprieta.
+      ```
+    errores:
+      - "Aplicar la solución directa cuando hay restricciones de desigualdad."
+      - "No comprobar que Q es semidefinida positiva antes de suponer convexidad."
+      - "Formar el sistema KKT con los signos cambiados."
+    aplicacion: |
+      SVM, optimización de carteras, control predictivo por modelo, ajuste con restricciones y
+      problemas de mínimos cuadrados restringidos.
+    referencias:
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 16](https://doi.org/10.1007/978-0-387-40065-5)"
+      - "[Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 4](https://web.stanford.edu/~boyd/cvxbook/)"
+
+  "259":
+    concepto: "Sin gradiente y sobre funciones con muchos mínimos, una población busca mejor que un punto."
+    formulas:
+      - "población → selección → cruce → mutación → nueva población"
+      - "elitismo: conservar los k mejores intactos"
+      - "coste: sin gradiente, muchas evaluaciones de f"
+    desarrollo: |
+      Los algoritmos evolutivos mantienen una **población** de soluciones candidatas y la hacen
+      evolucionar por selección, recombinación y mutación. No necesitan gradiente ni continuidad,
+      solo poder evaluar la función objetivo, y eso los hace aplicables donde los métodos
+      basados en derivadas no llegan.
+
+      Su ventaja aparece en funciones **multimodales**, con muchos mínimos locales. La función de
+      Rastrigin, con su rejilla de mínimos, atrapa al descenso de gradiente en el primer valle
+      que encuentre. Una población dispersa explora simultáneamente muchas regiones y la
+      selección concentra el esfuerzo donde hay señal.
+
+      El **elitismo** es un detalle de implementación con efecto grande: conservar intactos los
+      mejores individuos garantiza que el óptimo encontrado no se pierda por azar en la siguiente
+      generación. Sin él, el algoritmo puede empeorar entre generaciones y la convergencia deja
+      de ser monótona.
+
+      El precio es el número de evaluaciones. Donde el descenso de gradiente necesita cientos,
+      un evolutivo necesita decenas de miles, porque cada generación evalúa la población entera.
+      La regla práctica es clara: **si hay gradiente fiable, usarlo**. Los evolutivos son para
+      cuando no lo hay —búsqueda de arquitecturas, hiperparámetros discretos, simuladores como
+      caja negra— o cuando la multimodalidad es severa.
+    ejemplo: |
+      Algoritmo evolutivo sobre Rastrigin en dos dimensiones.
+
+      ```text
+      función: Rastrigin 2D, mínimo global en (0,0) con f = 0
+      población 60, generaciones 120, elitismo 12
+
+      generación    mejor f
+           1        2,468792
+          20        0,183441
+          60        0,004127
+         120        0,000062
+
+      mejor solución: (0,001375 ; 0,005583)
+
+      Rastrigin tiene un mínimo local aproximadamente en cada
+      punto de coordenadas enteras. El descenso de gradiente
+      desde un punto aleatorio se queda en el más cercano.
+
+      Coste: 60 × 120 = 7 200 evaluaciones de f
+      para un problema de 2 variables.
+      ```
+    errores:
+      - "Usar un evolutivo donde hay gradiente disponible y fiable."
+      - "Prescindir del elitismo y perder el mejor individuo."
+      - "Comparar con métodos de gradiente sin igualar el número de evaluaciones."
+    aplicacion: |
+      Búsqueda de arquitecturas neuronales, ajuste de hiperparámetros discretos, diseño de
+      ingeniería con simuladores y optimización de funciones no derivables.
+    referencias:
+      - "[Eiben, A.; Smith, J. *Introduction to Evolutionary Computing*, 2ª ed., Springer, 2015](https://doi.org/10.1007/978-3-662-44874-8)"
+      - "[Hansen, N.; Ostermeier, A. *Completely derandomized self-adaptation in evolution strategies*, 2001](https://doi.org/10.1162/106365601750190398)"
+
+  "260":
+    concepto: "El mismo learning rate que converge en una cuadrática diverge en Rosenbrock."
+    formulas:
+      - "protocolo: mismo punto inicial, mismo lr, mismas iteraciones"
+      - "reportar f final, ‖∇f‖ y si divergió"
+      - "no existe un optimizador uniformemente mejor"
+    desarrollo: |
+      El capstone somete a siete optimizadores al mismo presupuesto —300 iteraciones, `lr` común,
+      punto inicial idéntico— sobre dos problemas de dificultad muy distinta: una cuadrática bien
+      condicionada y la función de Rosenbrock, con su valle curvo y estrecho.
+
+      El resultado principal es incómodo y verdadero: **ningún optimizador gana en ambos**.
+      Momentum es el mejor en la cuadrática y **diverge** en Rosenbrock con el mismo paso.
+      RMSProp gana en Rosenbrock precisamente porque su escalado adaptativo reduce el paso
+      efectivo en las direcciones de gradiente grande. El descenso simple también diverge.
+
+      Que la divergencia aparezca en el banco no es un defecto del experimento: es su hallazgo
+      más útil. Un `lr = 0,02` perfectamente razonable en una cuadrática con `L = 40` es
+      suicida en un valle donde la curvatura local supera con creces ese valor. Esa es
+      exactamente la situación de una red neuronal real, donde `L` cambia durante el
+      entrenamiento.
+
+      La lección metodológica es que **comparar optimizadores exige un protocolo**: misma
+      semilla, mismo punto inicial, mismo presupuesto de iteraciones y reporte explícito de los
+      que divergieron. Un banco que oculta las divergencias, o que ajusta el `lr` de cada método
+      por separado sin decirlo, produce rankings que no significan nada.
+    ejemplo: |
+      Banco con presupuesto idéntico sobre dos problemas.
+
+      ```text
+      protocolo: 300 iteraciones, lr = 0,02, punto inicial fijo
+
+      método      cuadrática f      Rosenbrock
+      gd            9,2e-11          divergió
+      momentum      ~1e-14           divergió
+      nesterov      ~1e-14           convergió
+      adagrad       2,3e-04          convergió
+      rmsprop       6,9e-03          mejor
+      adam          5,9e-08          convergió
+      adamw         6,1e-08          convergió
+
+      mejor en cuadrática:  momentum
+      mejor en Rosenbrock:  rmsprop
+      divergieron en Rosenbrock: gd, momentum
+
+      El mismo lr no sirve para ambos problemas.
+      Reportar las divergencias es parte del resultado.
+      ```
+    errores:
+      - "Comparar optimizadores ajustando el lr de cada uno sin declararlo."
+      - "Omitir del informe los métodos que divergieron."
+      - "Generalizar el ganador de un banco a todos los problemas."
+    aplicacion: |
+      Selección de optimizador para un proyecto, benchmarking reproducible, diagnóstico de
+      divergencias en entrenamiento y diseño de experimentos de ablación.
+    referencias:
+      - "[Schmidt, R.; Schneider, F.; Hennig, P. *Descending through a crowded valley*, ICML, 2021](https://arxiv.org/abs/2007.01547)"
+      - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006](https://doi.org/10.1007/978-0-387-40065-5)"

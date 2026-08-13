@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Se implementa a mano para saber cuándo la biblioteca falla, y se usa la biblioteca para producción.**
 
-Esta clase concreta ese objetivo sobre **Computación científica con SciPy**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `scientific_computing`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar tolerancia absoluta cuando la escala del problema es grande.
+
+## 🧩 Fórmulas de la clase
+
+```text
+bisección → scipy.optimize.brentq
+RK4 → scipy.integrate.solve_ivp
+cuadratura → scipy.integrate.quad
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,53 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> El orden de un método de integración predice cómo cae el error con el paso.
+SciPy implementa versiones de todos los métodos de esta parte, y con mejor calidad de la
+que se puede alcanzar en un curso: control adaptativo del paso, detección de rigidez,
+selección automática de algoritmo, estimación de error y décadas de código Fortran probado
+debajo.
+
+La pregunta legítima es entonces por qué implementarlos a mano. La respuesta es que **usar
+un método sin entenderlo impide saber cuándo falla**. `solve_ivp` con opciones por defecto
+puede devolver resultados sin sentido en un problema rígido, y solo quien sabe qué es la
+rigidez interpretará el aviso y cambiará a `method='BDF'`. La biblioteca no protege de la
+ignorancia del usuario.
+
+Hay además una razón de diagnóstico. Cuando un cálculo produce números extraños, saber
+distinguir entre un error de modelado, un problema mal condicionado, una tolerancia mal
+puesta y un fallo real de la biblioteca exige entender el algoritmo. Sin ese conocimiento,
+el único recurso es probar opciones al azar.
+
+La regla práctica es clara: **implementar para aprender, usar la biblioteca para
+producir**. Reescribir un integrador en código de producción es reintroducir errores que
+SciPy resolvió hace veinte años. El motor de esta parte no depende de SciPy precisamente
+para que las implementaciones didácticas sean legibles y ejecutables en cualquier entorno.
+
+## 🧮 Ejemplo trabajado
+
+Correspondencia entre lo implementado y su equivalente en SciPy.
+
+```text
+SciPy 1.17.1 disponible en este entorno
+
+implementación propia        equivalente en SciPy
+---------------------------------------------------------
+bisection                    scipy.optimize.brentq
+newton_raphson               scipy.optimize.newton
+lagrange_interpolation       scipy.interpolate.lagrange
+splines                      scipy.interpolate.CubicSpline
+trapezoid_rule               scipy.integrate.trapezoid
+simpson_rule                 scipy.integrate.simpson
+quadrature                   scipy.integrate.quad
+direct_linear_solvers        scipy.linalg.lu_solve
+jacobi_gauss_seidel          scipy.sparse.linalg.cg
+numerical_least_squares      scipy.linalg.lstsq
+euler_method / runge_kutta   scipy.integrate.solve_ivp
+
+Este motor no requiere SciPy: todas las implementaciones
+son de biblioteca estándar y ejecutables sin dependencias.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +117,16 @@ compmath run 239
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Reescribir integradores propios en código de producción.
+2. Usar solve_ivp con opciones por defecto en problemas rígidos.
+3. Confiar en la salida de una biblioteca sin comprobar su diagnóstico de convergencia.
+
+## 🚀 Dónde se usa de verdad
+
+Elección de herramientas en proyectos científicos, depuración de cálculos numéricos,
+validación cruzada entre implementaciones y decisiones de rendimiento.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Virtanen, P. et al. *SciPy 1.0: fundamental algorithms for scientific computing*, Nature Methods, 2020](https://doi.org/10.1038/s41592-019-0686-2)
+- [Documentación de SciPy](https://docs.scipy.org/doc/scipy/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**El learning rate tiene un umbral duro: por encima de 2/L el descenso diverge.**
 
-Esta clase concreta ese objetivo sobre **Gradient descent**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `gradient_descent`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+xₖ₊₁ = xₖ − lr·∇f(xₖ)
+estabilidad: lr < 2/L,  L = mayor autovalor del Hessiano
+velocidad limitada por el número de condición L/μ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Regularizar es añadir un término al objetivo, no un truco de implementación.
+El descenso de gradiente repite un paso elemental: calcular el gradiente y moverse en
+dirección contraria una cantidad proporcional al learning rate. Es el algoritmo más simple
+de la optimización continua y la base de todo el entrenamiento moderno.
+
+Su comportamiento está enteramente gobernado por el **learning rate**, y el umbral no es
+difuso. Para una función cuadrática con mayor autovalor `L`, el descenso converge si y solo
+si `lr < 2/L`. Por debajo converge, por encima **diverge** con oscilaciones que crecen
+geométricamente. No hay zona gris: es una frontera exacta.
+
+Dentro de la zona estable hay un segundo compromiso. Un `lr` demasiado pequeño converge
+con seguridad pero necesita un número de iteraciones prohibitivo; uno cercano al umbral es
+rápido pero frágil. Y la velocidad máxima alcanzable está limitada por el **número de
+condición** `L/μ`: cuanto más alargado sea el valle, más lento el descenso, por bien
+elegido que esté el paso.
+
+En la práctica del aprendizaje profundo, `L` no se conoce y además cambia durante el
+entrenamiento. De ahí las técnicas habituales: **warmup** para no divergir al principio,
+planificadores que reducen el `lr` progresivamente, y **gradient clipping** como
+salvaguarda ante gradientes anómalos. Todas son maneras de mantenerse del lado bueno de
+un umbral que no se puede calcular.
+
+## 🧮 Ejemplo trabajado
+
+Doscientas iteraciones sobre x² + 20y² desde (−2, 3).
+
+```text
+Hessiano = diag(2, 40)   →  L = 40  →  lr máximo = 2/40 = 0,05
+
+     lr        f final        comportamiento
+  0,001     1,795891        demasiado lento, no llega
+  0,010     1,7e-09         converge bien
+  0,040     3,4e-31         muy rápido, cerca del umbral
+  0,050        —            oscila sin converger
+  0,060        —            diverge, desborda
+
+Con lr = 0,001 y 200 iteraciones, x sigue en −1,34:
+la coordenada lenta apenas se ha movido.
+
+Número de condición: 40/2 = 20. Ese 20 es el que
+obliga al zigzag y motiva momentum.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 244
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Elegir el learning rate por prueba y error sin entender el umbral.
+2. Atribuir a la arquitectura una divergencia causada por el paso.
+3. Usar un learning rate fijo durante todo el entrenamiento.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de cualquier modelo, ajuste de hiperparámetros, planificadores de learning
+rate y diagnóstico de divergencias.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 3](https://doi.org/10.1007/978-0-387-40065-5)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

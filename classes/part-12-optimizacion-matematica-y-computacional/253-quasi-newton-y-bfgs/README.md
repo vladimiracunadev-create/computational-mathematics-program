@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**BFGS construye una aproximación del Hessiano inverso usando solo gradientes.**
 
-Esta clase concreta ese objetivo sobre **Quasi-Newton y BFGS**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `quasi_newton`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+sₖ = xₖ₊₁ − xₖ;   yₖ = ∇f(xₖ₊₁) − ∇f(xₖ)
+condición secante: Bₖ₊₁·yₖ = sₖ
+coste O(n²) frente al O(n³) de Newton
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> Momentum promedia gradientes; Adam además normaliza por su escala.
+Los métodos cuasi-Newton buscan la velocidad de Newton sin su coste. La idea es que la
+diferencia entre dos gradientes consecutivos ya contiene información sobre la curvatura en
+la dirección recorrida, y acumulando esa información a lo largo de las iteraciones se puede
+construir una aproximación del Hessiano inverso.
+
+La **condición secante** `B·y = s` es la formalización: la aproximación debe reproducir la
+relación observada entre el desplazamiento y el cambio de gradiente. Es la generalización
+multidimensional exacta del método de la secante de la clase 224, donde la derivada se
+aproximaba con dos evaluaciones.
+
+**BFGS** es la fórmula de actualización que mejor funciona en la práctica, y tiene la
+propiedad valiosa de preservar la definición positiva de la aproximación, con lo que la
+dirección resultante siempre es de descenso. El coste baja a `O(n²)` y no hace falta
+calcular ninguna segunda derivada.
+
+Para dimensiones grandes existe **L-BFGS**, que no almacena la matriz sino los últimos
+`m` pares `(s, y)` —típicamente 10 o 20— y reconstruye el producto con el gradiente sobre
+la marcha. Su coste es `O(mn)` y es el algoritmo de referencia para optimización suave a
+gran escala fuera del aprendizaje profundo. En redes neuronales rinde menos porque el
+gradiente estocástico rompe las hipótesis de suavidad que necesita.
+
+## 🧮 Ejemplo trabajado
+
+BFGS reconstruye el Hessiano inverso sin calcularlo.
+
+```text
+f(x,y) = x² + 20y²      BFGS con línea de retroceso
+
+iter      f          |∇f|
+  1   14,765625    30,2335
+  5    1,3e-03      0,2189
+ 10    2,1e-09      9,1e-05
+
+x final = (−0,0 ; −0,0)                              ✓
+
+Aproximación construida:      Hessiano inverso real:
+  [[0,501698  0,000276]         [[0,5    0   ]
+   [0,000276  0,025045]]         [0     0,025]]
+
+Coincide a tres decimales sin haber evaluado
+ni una sola segunda derivada.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 253
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Usar BFGS con gradientes estocásticos ruidosos.
+2. Almacenar la matriz completa cuando L-BFGS resolvería el problema.
+3. Omitir la búsqueda de línea, necesaria para que la aproximación se mantenga válida.
+
+## 🚀 Dónde se usa de verdad
+
+Ajuste de modelos estadísticos, optimización en ingeniería, problemas inversos y
+minimización de energía en química computacional.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 6](https://doi.org/10.1007/978-0-387-40065-5)
+- [Liu, D.; Nocedal, J. *On the limited memory BFGS method*, Mathematical Programming, 1989](https://doi.org/10.1007/BF01589116)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

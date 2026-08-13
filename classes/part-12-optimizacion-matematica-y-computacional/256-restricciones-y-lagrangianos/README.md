@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**El multiplicador de Lagrange mide cuánto vale relajar la restricción una unidad.**
 
-Esta clase concreta ese objetivo sobre **Restricciones y Lagrangianos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `constraints_lagrangian`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L(x,λ) = f(x) − λ·(g(x) − c)
+en el óptimo: ∇f = λ·∇g
+λ = ∂f*/∂c  (precio sombra)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> En un problema convexo todo mínimo local es global; fuera de él no hay garantía.
+Con una restricción de igualdad, el mínimo ya no está donde el gradiente se anula sino
+donde el gradiente del objetivo es **paralelo** al de la restricción. La razón geométrica
+es clara: si tuvieran una componente distinta, se podría avanzar a lo largo de la
+restricción reduciendo el objetivo.
+
+El **Lagrangiano** convierte esa condición en un sistema de ecuaciones. Se construye
+restando la restricción multiplicada por una incógnita nueva `λ`, y se anulan todas las
+derivadas parciales, incluida la de `λ`, que reproduce la restricción original. El problema
+restringido se transforma en uno irrestricto con una variable más.
+
+El multiplicador tiene un significado económico preciso y muy útil: es el **precio sombra**
+de la restricción, la derivada del óptimo respecto del nivel `c`. Si `λ = 3`, relajar la
+restricción una unidad mejora el óptimo en 3 unidades. Eso convierte a `λ` en la respuesta
+cuantitativa a «¿cuánto pagaría por más presupuesto?».
+
+En aprendizaje automático el Lagrangiano aparece en la formulación dual de las SVM, en la
+derivación de la distribución de máxima entropía —de donde sale softmax—, y en el
+entrenamiento con restricciones de equidad o de presupuesto. La versión con desigualdades
+es la clase siguiente.
+
+## 🧮 Ejemplo trabajado
+
+Punto de la recta x + y = 4 más cercano al origen.
+
+```text
+minimizar   f(x,y) = x² + y²
+sujeto a    x + y = 4
+
+L = x² + y² − λ(x + y − 4)
+
+∂L/∂x = 2x − λ = 0    →   2x = λ
+∂L/∂y = 2y − λ = 0    →   2y = λ
+∂L/∂λ = x + y − 4 = 0
+
+De las dos primeras: x = y.  Sustituyendo: 2x = 4, x = 2.
+
+solución = (2, 2)      valor óptimo = 8,0
+λ = 4
+
+Interpretación de λ: si la restricción pasara a x+y = 5,
+el óptimo subiría aproximadamente en 4 unidades.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 256
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Olvidar derivar respecto de λ y perder la restricción.
+2. Confundir el signo del multiplicador según la convención adoptada.
+3. Aplicar Lagrange directamente a restricciones de desigualdad.
+
+## 🚀 Dónde se usa de verdad
+
+SVM en su forma dual, distribución de máxima entropía, asignación óptima de recursos y
+entrenamiento con restricciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 12](https://doi.org/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

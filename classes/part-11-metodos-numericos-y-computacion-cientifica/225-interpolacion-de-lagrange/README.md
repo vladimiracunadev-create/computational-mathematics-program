@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**Subir el grado del polinomio interpolador empeora la aproximación en vez de mejorarla.**
 
-Esta clase concreta ese objetivo sobre **Interpolación de Lagrange**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `lagrange_interpolation`.
 4. Interpretar las 5 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: iterar sin límite máximo y colgar el proceso.
+
+## 🧩 Fórmulas de la clase
+
+```text
+P(x) = Σ yᵢ · Πⱼ≠ᵢ (x − xⱼ)/(xᵢ − xⱼ)
+n puntos determinan un único polinomio de grado ≤ n−1
+nodos de Chebyshev: xₖ = cos((2k+1)π / 2n)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> Un solver sin estimación de error es un generador de números plausibles.
+Por `n` puntos con abscisas distintas pasa un **único** polinomio de grado a lo sumo `n−1`.
+La forma de Lagrange lo construye explícitamente como combinación de bases que valen 1 en
+su nodo y 0 en los demás. Es elegante para demostrar la existencia y unicidad, y mala para
+calcular: las formas de Newton o baricéntrica son numéricamente preferibles.
+
+El resultado que hay que retener es negativo y contraintuitivo. Al aumentar el número de
+nodos **equiespaciados**, el polinomio no converge a la función: oscila cada vez más
+violentamente cerca de los extremos del intervalo. Es el **fenómeno de Runge**, y su
+ejemplo canónico es `1/(1+25x²)`, donde el error máximo crece con el grado.
+
+La causa no es el redondeo sino la propia teoría: el término de error de interpolación
+contiene el producto de las distancias a todos los nodos, y con nodos equiespaciados ese
+producto se dispara cerca de los bordes. La consecuencia práctica es que **interpolación
+de grado alto y nodos uniformes no se deben combinar nunca**.
+
+Hay dos salidas. La primera es cambiar los nodos: los de **Chebyshev** se concentran cerca
+de los extremos y controlan el producto, haciendo que el error sí decrezca con el grado. La
+segunda, más usada en la práctica, es renunciar al grado alto y usar trozos de grado bajo,
+que es exactamente lo que hacen los splines de la clase siguiente.
+
+## 🧮 Ejemplo trabajado
+
+Runge sobre 1/(1+25x²): el error crece con el grado.
+
+```text
+Interpolación por 3 puntos (1,1), (2,3), (4,7):
+  el polinomio evaluado da [1,75 ; 4,75] en x = 1,5 y 3
+  pasa exactamente por los nodos: 1, 3, 7                ✓
+
+Función de Runge con nodos equiespaciados:
+
+  grado    error máximo
+    5        0,438177
+    9        1,045174
+   13        3,656710
+
+El error se multiplica por 8 al pasar de grado 5 a 13.
+Más grado, peor aproximación.
+
+Con nodos de Chebyshev el error sí decrece con el grado.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 225
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Interpolar muchos puntos con un solo polinomio de grado alto.
+2. Usar la forma de Lagrange para evaluar en vez de la baricéntrica.
+3. Extrapolar fuera del intervalo de los nodos.
+
+## 🚀 Dónde se usa de verdad
+
+Reconstrucción de curvas a partir de muestras, diseño de esquemas de cuadratura,
+aproximación de funciones costosas y remuestreo de señales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Trefethen, L. N. *Approximation Theory and Approximation Practice*, SIAM, 2019](https://doi.org/10.1137/1.9781611975949)
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://www.cengage.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

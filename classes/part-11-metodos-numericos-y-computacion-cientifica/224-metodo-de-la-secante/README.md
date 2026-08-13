@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
+**La secante alcanza orden 1,618 sin necesitar la derivada.**
 
-Esta clase concreta ese objetivo sobre **Método de la secante**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistemas lineales iterativos, mínimos cuadrados y ecuaciones diferenciales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `secant`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar tolerancia absoluta cuando la escala del problema es grande.
+
+## 🧩 Fórmulas de la clase
+
+```text
+xₙ₊₁ = xₙ − f(xₙ)·(xₙ − xₙ₋₁) / (f(xₙ) − f(xₙ₋₁))
+orden de convergencia φ = (1+√5)/2 ≈ 1,618
+una sola evaluación de f por iteración
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
-## 🧠 Idea rectora de la parte 11
+## 📖 Fundamentos
 
-> El orden de un método de integración predice cómo cae el error con el paso.
+La secante sustituye la derivada de Newton por su aproximación mediante los dos últimos
+iterados. Geométricamente, en vez de la tangente usa la recta que pasa por los dos últimos
+puntos, y toma su corte con el eje. La fórmula es la de Newton con `f'` reemplazado por un
+cociente de diferencias.
+
+El precio es un orden de convergencia menor, exactamente el **número áureo** `φ ≈ 1,618`.
+Que aparezca φ no es casualidad decorativa: la recurrencia que gobierna los exponentes del
+error es la de Fibonacci, y su razón límite es φ. Es uno de los sitios donde ese número
+surge por necesidad matemática y no por misticismo.
+
+A cambio, cada iteración cuesta **una sola evaluación** de `f`, frente a las dos de Newton
+—función y derivada—. Cuando evaluar la derivada cuesta lo mismo que evaluar la función,
+la secante es más eficiente por unidad de trabajo: `φ² ≈ 2,6 > 2`. Y cuando la derivada no
+existe en forma cerrada, es directamente la única opción de las dos.
+
+Sus debilidades son parientes de las de Newton: puede diverger desde puntos malos, y falla
+si los dos últimos valores de la función son casi iguales, porque el denominador se anula.
+La familia de los métodos **cuasi-Newton** —BFGS y L-BFGS en optimización— es esta misma
+idea llevada a varias dimensiones: aproximar la información de segundo orden a partir de
+la historia de evaluaciones.
+
+## 🧮 Ejemplo trabajado
+
+Misma raíz que Newton, ahora sin derivada.
+
+```text
+f(x) = x³ − 2x − 4       puntos iniciales: 1,0 y 3,0
+
+iter        x            error
+  1     1,454545      5,45e-01
+  3     1,876254      1,24e-01
+  5     1,996327      3,67e-03
+  7     1,999999      6,32e-07
+  9     2,000000      0,00e+00
+
+9 iteraciones frente a las 6 de Newton
+pero sin necesitar f' y con una evaluación por paso.
+
+Eficiencia por evaluación:
+  Newton:  orden 2 con 2 evaluaciones  →  √2 ≈ 1,414
+  Secante: orden 1,618 con 1 evaluación →  1,618        mejor
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 224
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar tolerancia absoluta cuando la escala del problema es grande.
-- Iterar sin límite máximo y colgar el proceso.
-- Aplicar Runge-Kutta con paso fijo a un sistema rígido.
+1. Elegir dos puntos iniciales donde f toma valores casi idénticos.
+2. Usarla sin control del denominador y provocar división por casi cero.
+3. Suponer que hereda la garantía de convergencia de la bisección.
+
+## 🚀 Dónde se usa de verdad
+
+Búsqueda de raíces sin derivada analítica, métodos cuasi-Newton, calibración de parámetros
+y ajuste de umbrales en funciones costosas de evaluar.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
-- Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
-- Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+- [Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](http://numerical.recipes/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

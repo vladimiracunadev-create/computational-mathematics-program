@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
+**La holgura complementaria formaliza que una restricción inactiva no influye.**
 
-Esta clase concreta ese objetivo sobre **Condiciones KKT**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Función objetivo, convexidad, descenso de gradiente y su familia completa de optimizadores, métodos de segundo orden, restricciones, KKT y optimización evolutiva.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `kkt_conditions`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar weight decay dentro del gradiente en adam (y no como adamw).
+
+## 🧩 Fórmulas de la clase
+
+```text
+estacionariedad: ∇f + Σμᵢ·∇gᵢ = 0
+factibilidad: gᵢ(x) ≤ 0;   no negatividad: μᵢ ≥ 0
+holgura complementaria: μᵢ·gᵢ(x) = 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
-## 🧠 Idea rectora de la parte 12
+## 📖 Fundamentos
 
-> El learning rate es el hiperparámetro que más veces explica una divergencia.
+Las condiciones de Karush-Kuhn-Tucker extienden Lagrange a restricciones de desigualdad, y
+son las condiciones necesarias de optimalidad que fundamentan toda la optimización con
+restricciones. En problemas convexos con cualificación de restricciones son además
+suficientes.
+
+La novedad conceptual es que una desigualdad puede estar **activa** —el óptimo está justo
+sobre la frontera— o **inactiva** —el óptimo cae en el interior y la restricción no
+estorba—. La **holgura complementaria** `μᵢ·gᵢ(x) = 0` codifica exactamente esa
+alternativa: o la restricción se cumple con igualdad, o su multiplicador es cero.
+
+La lectura es directa e intuitiva: una restricción que no aprieta no tiene precio. Si el
+presupuesto sobra, un euro más no vale nada; si está agotado, su precio sombra es positivo.
+Esa dicotomía es lo que hace de KKT una herramienta de análisis y no solo de cálculo.
+
+La condición de **no negatividad** de los multiplicadores es la que distingue las
+desigualdades de las igualdades: la restricción solo puede empujar en un sentido. Cuando
+todas las restricciones son de igualdad, KKT se reduce exactamente a Lagrange, y esa
+reducción confirma que es la generalización correcta.
+
+## 🧮 Ejemplo trabajado
+
+La misma función con dos restricciones distintas.
+
+```text
+objetivo: minimizar (x − 3)²
+
+Caso A — restricción activa:   x ≤ 1
+  óptimo sin restricción: x = 3, no factible
+  x* = 1                (sobre la frontera)
+  gradiente del objetivo en x*: −4
+  μ = 4 > 0
+  holgura: μ·g(x*) = 4·(1−1) = 0                     ✓
+
+Caso B — restricción inactiva: x ≤ 5
+  óptimo sin restricción: x = 3, factible
+  x* = 3                (en el interior)
+  gradiente del objetivo en x*: 0
+  μ = 0
+  holgura: μ·g(x*) = 0·(3−5) = 0                     ✓
+
+En ambos casos la holgura complementaria se cumple,
+pero por motivos opuestos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 257
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar optimizadores sin fijar semilla ni presupuesto de iteraciones.
-- Aplicar weight decay dentro del gradiente en Adam (y no como AdamW).
-- Declarar convergencia por número de épocas y no por criterio numérico.
+1. Permitir multiplicadores negativos en restricciones de desigualdad.
+2. Olvidar comprobar la holgura complementaria al validar una solución.
+3. Aplicar KKT como condición suficiente en problemas no convexos.
+
+## 🚀 Dónde se usa de verdad
+
+SVM con margen blando, programación no lineal, optimización de carteras con límites y
+diseño de ingeniería con especificaciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
-- Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
-- Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)
+- [Karush, W.; Kuhn, H.; Tucker, A. *Nonlinear programming*, 1951](https://doi.org/10.1525/9780520411586-036)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
