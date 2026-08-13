@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**Resolver una ecuación es aplicar operaciones reversibles hasta aislar la incógnita.**
 
-Esta clase concreta ese objetivo sobre **Ecuaciones lineales de una variable**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_equation`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir función inversa con recíproco.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ax + b = c  ⟹  x = (c − b)/a,  a ≠ 0
+residuo = ax + b − c = 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El discriminante decide la naturaleza de las raíces antes de calcularlas.
+Cada paso de un despeje transforma la ecuación en otra **equivalente**: con el mismo
+conjunto solución. Sumar o restar la misma cantidad a ambos lados siempre preserva la
+equivalencia. Multiplicar o dividir por una cantidad no nula, también. La condición
+«no nula» es la que hay que vigilar: dividir por una expresión que puede anularse
+pierde soluciones sin avisar.
+
+Los casos degenerados no son curiosidades de examen. Si `a = 0`, la ecuación `0·x = 0`
+tiene infinitas soluciones y `0·x = 5` no tiene ninguna. En una implementación, ambos
+casos deben detectarse y reportarse; lanzar una división por cero es peor que devolver
+un diagnóstico. La clase 113 encontrará la versión matricial del mismo fenómeno.
+
+Otras operaciones no son reversibles y hay que declararlo. Elevar al cuadrado ambos
+lados puede **introducir** soluciones falsas: de `x = 2` se pasa a `x² = 4`, que además
+admite `x = −2`. Por eso, tras elevar al cuadrado, hay que comprobar cada solución
+candidata en la ecuación original.
+
+La verificación cierra el proceso y es innegociable: sustituir y comprobar que el
+residuo es cero. Ese hábito —calcular el residuo en lugar de confiar en el
+procedimiento— es el mismo que se usará para sistemas lineales (clase 113), métodos
+iterativos (clase 233) y ajuste por mínimos cuadrados (clase 131).
+
+## 🧮 Ejemplo trabajado
+
+Resolver 7x − 3 = 25 con verificación y casos degenerados.
+
+```text
+7x − 3 = 25
+7x     = 28        (sumar 3, reversible)
+ x     = 4         (dividir por 7 ≠ 0, reversible)
+
+Verificación: 7·4 − 3 = 25    ✓
+Residuo:      7·4 − 3 − 25 = 0 ✓
+
+Casos degenerados (a = 0):
+  0·x = 0  →  infinitas soluciones
+  0·x = 5  →  ninguna solución
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +107,16 @@ compmath run 043
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Dividir por una expresión con variable sin excluir el caso en que se anula.
+2. Elevar al cuadrado y no comprobar las soluciones en la ecuación original.
+3. No reportar el caso degenerado a = 0 en una implementación.
+
+## 🚀 Dónde se usa de verdad
+
+Todo despeje analítico, la condición de primer orden ∇f = 0 en optimización y la
+resolución de sistemas lineales. El residuo es el criterio de aceptación universal.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**0.1 no es representable en binario, igual que 1/3 no lo es en decimal; la desigualdad no es un fallo sino una consecuencia.**
 
-Esta clase concreta ese objetivo sobre **Por qué 0.1 + 0.2 no es exactamente 0.3**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `why_point_one`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar float para dinero en vez de decimal o enteros de centavos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+0.1₁₀ = 0.0001100110011...₂  (periódico infinito)
+comparación correcta: math.isclose(a, b, rel_tol=...)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,48 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> La cancelación catastrófica destruye dígitos significativos sin lanzar excepciones.
+La clase 004 estableció que una fracción tiene desarrollo finito solo si su
+denominador reducido se factoriza en los primos de la base. En base 10 los primos son
+2 y 5, y por eso 1/10 es finito. En base 2 el único primo es 2, así que 1/10 —cuyo
+denominador contiene un 5— tiene desarrollo **binario periódico infinito**.
+
+Como la mantisa tiene 53 bits, ese desarrollo se trunca. El float más cercano a 0.1 es
+en realidad 0.1000000000000000055511151231257827021181583404541015625. Sumar dos
+aproximaciones y compararlas con la aproximación de 0.3 no tiene por qué dar igualdad,
+y de hecho no la da: la diferencia es de unos 5.5·10⁻¹⁷.
+
+La conclusión correcta no es «los floats están rotos». Es que **el operador `==` no es
+la comparación adecuada para resultados de cálculo en punto flotante**. La comparación
+correcta declara una tolerancia: `math.isclose(a, b, rel_tol=1e-12)` pregunta si los
+dos números coinciden dentro de una precisión relativa declarada, que es la pregunta
+que realmente se quiere responder.
+
+Hay una excepción importante: comparar con `==` sí es correcto cuando los valores son
+exactamente representables y no han pasado por operaciones inexactas —enteros
+pequeños, potencias de 2, resultados de asignaciones directas—. La regla práctica es
+preguntarse si el valor viene de un cálculo; si viene, hace falta tolerancia.
+
+## 🧮 Ejemplo trabajado
+
+La desigualdad y su explicación.
+
+```text
+0.1 + 0.2 = 0.30000000000000004
+0.3       = 0.29999999999999998889776975374843...
+¿iguales con ==?           No
+diferencia                 5.55e−17
+
+0.1 con 50 decimales:
+  0.10000000000000000555111512312578270211815834045410
+
+Comparación correcta:
+  math.isclose(0.1 + 0.2, 0.3, rel_tol=1e-12)  →  True
+```
+
+El error es de 5.5·10⁻¹⁷ sobre 0.3: precisión relativa de 1.8·10⁻¹⁶, exactamente el
+epsilon de máquina. El resultado es tan bueno como el formato permite.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 029
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Comparar resultados de cálculo con == en lugar de con una tolerancia declarada.
+2. Concluir que los floats son poco fiables en lugar de que la comparación era incorrecta.
+3. Usar una tolerancia absoluta fija sin considerar la escala de los valores.
+
+## 🚀 Dónde se usa de verdad
+
+Cualquier test numérico, criterio de convergencia o comparación de resultados. Los
+asserts de todo el programa usan tolerancia declarada precisamente por esto.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,11 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Python: `math.isclose` y PEP 485](https://peps.python.org/pep-0485/)
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)
+- [0.30000000000000004.com — el mismo fenómeno en 40 lenguajes](https://0.30000000000000004.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

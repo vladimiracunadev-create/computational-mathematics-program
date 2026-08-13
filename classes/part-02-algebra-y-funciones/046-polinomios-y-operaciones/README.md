@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**El esquema de Horner evalúa un polinomio de grado n con n multiplicaciones en lugar de n(n+1)/2.**
 
-Esta clase concreta ese objetivo sobre **Polinomios y operaciones**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `polynomial_ops`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir función inversa con recíproco.
+
+## 🧩 Fórmulas de la clase
+
+```text
+p(x) = aₙxⁿ + ... + a₁x + a₀
+Horner: p(x) = (...((aₙx + aₙ₋₁)x + aₙ₋₂)x + ...) + a₀
+grado(p·q) = grado(p) + grado(q)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,47 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> Una ecuación restringe; una función asigna. No son lo mismo.
+Los polinomios son las funciones más simples después de las lineales, y su aritmética
+es la de los enteros con otra notación: se suman término a término y se multiplican por
+convolución de coeficientes. Esa operación —multiplicar polinomios es convolucionar sus
+coeficientes— es literalmente la misma que la convolución discreta de la clase 271, y
+es la razón por la que la FFT sirve para multiplicar polinomios grandes.
+
+Evaluar un polinomio de forma ingenua calcula cada potencia por separado: `x²`, `x³`,
+`x⁴`... lo que suma n(n+1)/2 multiplicaciones. El esquema de Horner factoriza
+sucesivamente y necesita solo n multiplicaciones y n sumas. Para grado 100, eso son 100
+operaciones frente a 5050.
+
+Horner no es solo más rápido: es **más estable numéricamente**, porque evita calcular
+potencias grandes que luego se cancelan con coeficientes pequeños. Es el algoritmo que
+usan las bibliotecas para evaluar polinomios, incluidos los que aproximan `sin`, `exp`
+o `log` internamente.
+
+El grado del producto es la suma de los grados, hecho que parece trivial y tiene
+consecuencias: multiplicar dos polinomios de grado 50 da uno de grado 100, y por eso el
+coste de las operaciones simbólicas crece rápido. Es la razón por la que el álgebra
+computacional es cara.
+
+## 🧮 Ejemplo trabajado
+
+Producto y evaluación de p(x) = x² − 3x + 2.
+
+```text
+p = x² − 3x + 2       (grado 2)
+q = 2x + 1            (grado 1)
+
+p·q: convolución de [1,−3,2] con [2,1]
+     = 2x³ − 5x² + x + 2      (grado 3 = 2 + 1)  ✓
+
+Evaluar p(3):
+  directo: 3² − 3·3 + 2 = 9 − 9 + 2 = 2
+  Horner:  ((1)·3 + (−3))·3 + 2 = (0)·3 + 2 = 2   ✓
+
+  multiplicaciones directas: 3   (x², y dos productos)
+  multiplicaciones Horner:   2
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,17 @@ compmath run 046
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Evaluar potencias por separado en polinomios de grado alto.
+2. Confundir el producto de polinomios con el producto término a término.
+3. Olvidar los coeficientes nulos al escribir el vector de coeficientes.
+
+## 🚀 Dónde se usa de verdad
+
+Evaluación de funciones especiales en bibliotecas matemáticas, interpolación
+(clase 225), ajuste polinómico y aritmética de precisión arbitraria. La convolución
+de coeficientes es la misma operación que en señales.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.6](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)
+- [NumPy: `polyval` y el esquema de Horner](https://numpy.org/doc/stable/reference/generated/numpy.polyval.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**En complemento a dos, el negativo de x es 2ⁿ − x, y por eso la resta se implementa con el mismo sumador que la suma.**
 
-Esta clase concreta ese objetivo sobre **Enteros con signo y complemento a dos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `twos_complement`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que la suma de floats es asociativa.
+
+## 🧩 Fórmulas de la clase
+
+```text
+representación de −x en n bits = 2ⁿ − x
+rango: [−2ⁿ⁻¹, 2ⁿ⁻¹ − 1]
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,49 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Reproducibilidad numérica exige fijar orden de operaciones, no solo semillas.
+La razón por la que existe el complemento a dos es de ingeniería, no de matemáticas:
+permite que un único circuito sumador maneje positivos y negativos sin casos
+especiales. Si `−x` se representa como `2ⁿ − x`, entonces `a + (−b)` calculado módulo
+2ⁿ da exactamente `a − b` cuando el resultado está en rango. La resta desaparece como
+operación separada.
+
+Las alternativas históricas —signo-magnitud y complemento a uno— tenían dos
+representaciones para el cero (`+0` y `−0`), lo que obliga a casos especiales en las
+comparaciones. El complemento a dos tiene un único cero, y como contrapartida un
+**rango asimétrico**: en 8 bits va de −128 a +127, un negativo más que positivos.
+
+Esa asimetría no es una curiosidad. `abs(-128)` en un `int8` no es representable, así
+que desborda; en NumPy, `np.abs(np.int8(-128))` devuelve −128 sin avisar. El mismo
+fenómeno afecta a `-x` y a la división `x // -1`. Es una fuente real de errores en
+código que procesa datos de sensores o audio en enteros.
+
+El bit más significativo actúa como bit de signo, pero no es «un bit de signo» en el
+sentido de signo-magnitud: su peso es `−2ⁿ⁻¹`. Interpretar `11111011` como número
+requiere `−128 + 64 + 32 + 16 + 8 + 2 + 1 = −5`, no «signo negativo y magnitud 123».
+
+## 🧮 Ejemplo trabajado
+
+Representación en 8 bits y suma con signos opuestos.
+
+```text
++5  = 00000101
+−5  = 2⁸ − 5 = 251 = 11111011
+
+Suma 5 + (−5):
+  00000101
++ 11111011
+-----------
+ 100000000   → se descarta el noveno bit (módulo 2⁸)
+  00000000   = 0   ✓
+
+Decodificar 11111011:
+  −128 + 64 + 32 + 16 + 8 + 0 + 2 + 1 = −5   ✓
+
+Rango:  mínimo −128,  máximo +127
+Asimetría: |−128| = 128 NO es representable en int8
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,17 @@ compmath run 025
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Interpretar el bit más significativo como signo y el resto como magnitud.
+2. Suponer que abs(x) siempre es representable: abs(−128) desborda en int8.
+3. Olvidar el módulo 2ⁿ al sumar: el bit que se sale no es un error, es la definición.
+
+## 🚀 Dónde se usa de verdad
+
+Todo entero con signo en C, Rust, Java, NumPy y bases de datos. Los errores de
+desbordamiento por complemento a dos son una categoría reconocida de vulnerabilidad
+(CWE-190).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020, cap. 3](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)
+- [CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

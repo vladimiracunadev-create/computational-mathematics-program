@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**Multiplicar o dividir una desigualdad por un número negativo invierte su sentido.**
 
-Esta clase concreta ese objetivo sobre **Desigualdades lineales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_inequality`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: dividir por una expresión que puede anularse y perder soluciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+a < b  y  k > 0  ⟹  ka < kb
+a < b  y  k < 0  ⟹  ka > kb
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,43 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El logaritmo convierte producto en suma: por eso aparece en toda función de pérdida.
+Una desigualdad describe un conjunto, no un punto. La solución de `−3x + 4 > 10` no es
+un número: es el intervalo `(−∞, −2)`. Esa diferencia de naturaleza explica por qué el
+resultado se expresa como intervalo o como condición, y por qué conviene comprobarlo
+con un valor de prueba dentro y otro fuera.
+
+La regla del signo tiene una justificación geométrica clara. Multiplicar por un
+negativo refleja la recta numérica respecto al origen, y una reflexión invierte el
+orden: lo que estaba a la izquierda queda a la derecha. Es la misma «media vuelta» que
+la clase 002 usó para explicar el producto de signos.
+
+Al resolver, el hábito seguro es despejar sin dividir por negativos: pasar los términos
+de modo que el coeficiente de la incógnita quede positivo. Si no se puede evitar, hay
+que invertir el símbolo y **marcarlo explícitamente**, porque es el error más frecuente
+y el más silencioso: produce el intervalo complementario, que suele parecer razonable.
+
+Las desigualdades son el lenguaje de las restricciones en optimización. La parte 12
+escribe `g(x) ≤ 0` para cada restricción, y las condiciones KKT (clase 257) tratan por
+separado las restricciones activas —donde se cumple la igualdad— de las inactivas.
+
+## 🧮 Ejemplo trabajado
+
+Resolver −3x + 4 > 10 y comprobar con dos valores.
+
+```text
+−3x + 4 > 10
+−3x     > 6          (restar 4)
+  x     < −2         (dividir por −3: SE INVIERTE)
+
+Frontera: x = −2
+
+Prueba dentro  (x = −5):  −3(−5) + 4 = 19 > 10   ✓
+Prueba fuera   (x =  0):  −3(0)  + 4 =  4 > 10   ✗
+
+Solución: (−∞, −2)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +105,16 @@ compmath run 044
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Olvidar invertir el símbolo al dividir por un negativo.
+2. Dar la solución como un punto en lugar de como un intervalo.
+3. No comprobar con un valor dentro y otro fuera del intervalo obtenido.
+
+## 🚀 Dónde se usa de verdad
+
+Restricciones en optimización (parte 12), rangos de validez de un modelo, umbrales de
+decisión de un clasificador y condiciones de estabilidad numérica (h < 2/|λ|).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
+- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 2](https://web.stanford.edu/~boyd/cvxbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

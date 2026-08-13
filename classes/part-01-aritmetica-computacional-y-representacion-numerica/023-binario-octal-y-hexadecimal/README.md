@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Hexadecimal y octal son taquigrafías de binario porque 16 y 8 son potencias de 2.**
 
-Esta clase concreta ese objetivo sobre **Binario, octal y hexadecimal**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bases`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar float para dinero en vez de decimal o enteros de centavos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+1 dígito hexadecimal = 4 bits
+1 dígito octal = 3 bits
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Condicionamiento es del problema; estabilidad es del algoritmo.
+Los programadores usan hexadecimal por una razón puramente práctica: cada dígito
+hexadecimal corresponde exactamente a 4 bits, así que convertir entre binario y hex se
+hace por grupos, sin dividir nada. `1101 0110` es `D6` porque `1101` es 13 (D) y `0110`
+es 6. En octal ocurre lo mismo con grupos de 3 bits.
+
+Esta correspondencia solo funciona porque 16 = 2⁴ y 8 = 2³. Con base 10 no hay
+agrupación posible, y por eso convertir decimal ↔ binario requiere el algoritmo de
+divisiones de la clase 022 mientras que hex ↔ binario es una tabla de 16 entradas.
+
+El hexadecimal es además compacto: un byte se escribe con dos dígitos en lugar de
+ocho, y una dirección de 32 bits con ocho en lugar de treinta y dos. Por eso aparece
+en direcciones de memoria, colores CSS (`#7c5cff` son tres bytes), UUID, hashes y
+volcados de memoria.
+
+Al leer código conviene reconocer los prefijos: `0b` para binario, `0o` para octal,
+`0x` para hexadecimal. Python los acepta todos y `int(s, base)` convierte desde
+cualquier base entre 2 y 36. Los permisos de Unix (`chmod 755`) son octal precisamente
+porque cada dígito codifica tres bits de permiso: lectura, escritura y ejecución.
+
+## 🧮 Ejemplo trabajado
+
+El mismo número en cuatro bases.
+
+```text
+decimal      3 735 928 559
+hexadecimal  deadbeef
+octal        33653337357
+binario      11011110101011011011111011101111
+
+Agrupación hex ← binario (grupos de 4, desde la derecha):
+  1101 1110 1010 1101 1011 1110 1110 1111
+     d    e    a    d    b    e    e    f     ✓
+
+Bits necesarios: 32
+```
+
+`deadbeef` es un valor centinela clásico en depuración: es hexadecimal legible y
+difícilmente aparece por accidente en memoria.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,16 @@ compmath run 023
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Agrupar los bits desde la izquierda en lugar de desde la derecha.
+2. Confundir el prefijo 0o (octal) con un cero seguido de la letra o.
+3. Suponer que la agrupación por dígitos funciona con base 10.
+
+## 🚀 Dónde se usa de verdad
+
+Direcciones de memoria, colores, hashes, UUID, permisos Unix y protocolos binarios.
+Leer un volcado hexadecimal es una habilidad de depuración básica.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Python: literales numéricos](https://docs.python.org/3/reference/lexical_analysis.html#integer-literals)
+- [Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

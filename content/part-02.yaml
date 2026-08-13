@@ -1,0 +1,1182 @@
+part: "02"
+titulo: "Álgebra y funciones"
+
+resumen_extendido: |
+  El álgebra tiene mala fama porque se enseña como manipulación de símbolos sin objeto.
+  Esta parte invierte el orden: primero el **objeto** —la función—, después las reglas para
+  manipularlo. Una función no es una fórmula: es una asignación que a cada elemento de un
+  dominio le hace corresponder exactamente uno de un codominio. La fórmula es solo una de
+  las formas de describirla, y el dominio forma parte de su identidad.
+
+  Las clases 041 a 051 construyen la maquinaria simbólica: términos semejantes,
+  propiedades, ecuaciones, sistemas, polinomios, factorización, cuadráticas, exponentes y
+  logaritmos. El énfasis no está en resolver rápido sino en saber **qué operación es
+  reversible**. Dividir por una expresión que puede anularse pierde soluciones; elevar al
+  cuadrado introduce soluciones falsas. Cada paso de un despeje es un compromiso, y hay que
+  saber cuál.
+
+  Las clases 052 a 059 son el corazón de la parte. Dominio y rango, familias lineal,
+  cuadrática, exponencial y logarítmica, composición, inversa y funciones por tramos. Estas
+  cinco familias cubren casi todo el modelado elemental, y saber reconocer cuál describe un
+  conjunto de datos es una competencia directamente evaluable: el capstone 060 lo hace con
+  residuos.
+
+  Dos ideas de esta parte reaparecen literalmente en deep learning. La primera es la
+  **composición**: una red neuronal es `f_n(...f_2(f_1(x)))`, una composición de funciones
+  parametrizadas, y la regla de la cadena de la parte 07 es la derivada de esa composición.
+  La segunda es que el **logaritmo convierte productos en sumas**, que es exactamente por
+  qué toda función de pérdida probabilística se escribe en escala logarítmica: multiplicar
+  diez mil probabilidades produce underflow, sumar diez mil logaritmos no.
+
+  La función por tramos de la clase 059 merece atención especial: ReLU, la activación más
+  usada en deep learning, es literalmente una función por tramos, y su comportamiento
+  —derivada 1 en un lado, 0 en el otro— se entiende aquí antes de que aparezca con nombre
+  técnico.
+
+  Al terminar la parte deberías poder mirar una curva y decir qué familia la describe, mirar
+  una fórmula y decir cuál es su dominio, y mirar una composición y decir en qué orden se
+  aplican sus piezas.
+
+mapa: |
+  flowchart TD
+      A["041-045<br/>Manipulación simbólica<br/>términos · propiedades · ecuaciones · sistemas"] --> B["046-049<br/>Polinomios<br/>operaciones · factorización · cuadráticas"]
+      A --> C["050-051<br/>Exponentes y logaritmos<br/>leyes · cambio de base"]
+      B --> D["052-056<br/>Familias de funciones<br/>lineal · cuadrática · exponencial · logarítmica"]
+      C --> D
+      D --> E["057-059<br/>Operaciones con funciones<br/>composición · inversa · por tramos"]
+      E --> F["060<br/>Capstone<br/>elegir modelo por residuos"]
+      E ==> G["Parte 07<br/>Cálculo: derivada de la composición"]
+      E -.-> H["Red neuronal = composición<br/>Parte 15"]
+      C -.-> I["Log-verosimilitud y cross-entropy<br/>Partes 10 y 13"]
+      E -.-> J["ReLU es una función por tramos<br/>Parte 15"]
+
+glosario:
+  - termino: "Término semejante"
+    definicion: "Términos con la misma parte literal y los mismos exponentes. Solo ellos pueden sumarse entre sí."
+    clase: "041"
+  - termino: "Propiedad distributiva"
+    definicion: "a(b+c) = ab + ac. Es la propiedad que conecta suma y producto y la que justifica la regla de los signos."
+    clase: "042"
+  - termino: "Ecuación equivalente"
+    definicion: "Ecuación con el mismo conjunto solución. Se obtiene aplicando operaciones reversibles a ambos lados."
+    clase: "043"
+  - termino: "Desigualdad"
+    definicion: "Relación de orden entre expresiones. Multiplicar por un negativo invierte su sentido."
+    clase: "044"
+  - termino: "Sistema compatible determinado"
+    definicion: "Sistema con solución única. En 2×2 equivale a determinante no nulo."
+    clase: "045"
+  - termino: "Grado de un polinomio"
+    definicion: "Mayor exponente con coeficiente no nulo. El grado del producto es la suma de los grados."
+    clase: "046"
+  - termino: "Regla de Horner"
+    definicion: "Esquema de evaluación de polinomios que usa n multiplicaciones en lugar de n(n+1)/2."
+    clase: "046"
+  - termino: "Factorización"
+    definicion: "Escritura de un polinomio como producto. Sus raíces se leen directamente de los factores."
+    clase: "047"
+  - termino: "Discriminante"
+    definicion: "b² − 4ac. Su signo determina la naturaleza de las raíces antes de calcularlas."
+    clase: "049"
+  - termino: "Logaritmo"
+    definicion: "Exponente al que hay que elevar la base para obtener el argumento. Convierte productos en sumas."
+    clase: "051"
+  - termino: "Dominio"
+    definicion: "Conjunto de entradas válidas de una función. Forma parte de su definición, no es un detalle."
+    clase: "052"
+  - termino: "Imagen (rango)"
+    definicion: "Conjunto de valores que la función realmente alcanza."
+    clase: "052"
+  - termino: "Pendiente"
+    definicion: "Razón de cambio constante de una función lineal: cuánto cambia y por cada unidad de x."
+    clase: "053"
+  - termino: "Vértice"
+    definicion: "Punto extremo de una parábola, situado en x = −b/2a. Es el punto medio de las raíces."
+    clase: "054"
+  - termino: "Tiempo de duplicación"
+    definicion: "Tiempo que tarda una cantidad con crecimiento exponencial en duplicarse: ln 2 / ln(base)."
+    clase: "055"
+  - termino: "Escala logarítmica"
+    definicion: "Eje donde distancias iguales representan factores iguales. Convierte exponenciales en rectas."
+    clase: "056"
+  - termino: "Composición"
+    definicion: "(g∘f)(x) = g(f(x)). No es conmutativa. Es la estructura de una red neuronal."
+    clase: "057"
+  - termino: "Función inversa"
+    definicion: "Función que deshace a otra. Existe solo si la original es inyectiva. Distinta del recíproco 1/f."
+    clase: "058"
+  - termino: "Función por tramos"
+    definicion: "Función definida por reglas distintas en subconjuntos del dominio. ReLU es el caso más usado en IA."
+    clase: "059"
+  - termino: "Suma de residuos al cuadrado (SSE)"
+    definicion: "Σ(observado − predicho)². Criterio para comparar modelos ajustados a los mismos datos."
+    clase: "060"
+
+clases:
+  "041":
+    concepto: "Solo se suman términos con la misma parte literal; simplificar reduce operaciones sin cambiar el valor."
+    formulas:
+      - "3x²y + 5x²y = 8x²y"
+      - "términos semejantes ⟺ misma parte literal con los mismos exponentes"
+    desarrollo: |
+      Una expresión algebraica es una receta de cálculo escrita con símbolos. Simplificarla
+      no cambia lo que calcula: cambia **cuántas operaciones** necesita para calcularlo. Esa
+      es la utilidad concreta de reducir términos semejantes, y es la misma idea que la
+      clase 001 introdujo comparando la suma iterativa con la fórmula cerrada.
+
+      Dos términos son semejantes si tienen idéntica parte literal: mismas variables con los
+      mismos exponentes. `3x²y` y `5x²y` lo son; `3x²y` y `3xy²` no, aunque usen las mismas
+      letras. La razón es la propiedad distributiva: `3x²y + 5x²y = (3+5)x²y` solo porque el
+      factor común existe.
+
+      La verificación es inmediata y conviene hacerla siempre: evaluar la expresión original
+      y la simplificada en un punto arbitrario y comprobar que coinciden. Si difieren, la
+      simplificación introdujo un error. Un solo punto no demuestra equivalencia —eso lo
+      recuerda la clase 019— pero detecta la mayoría de los errores de manipulación.
+
+      El hábito que instala esta clase es de lectura: antes de operar, identificar qué
+      términos pueden combinarse. En expresiones grandes, agrupar por parte literal antes de
+      sumar reduce errores más que cualquier técnica de cálculo.
+    ejemplo: |
+      Reducir una expresión de cuatro términos a dos.
+
+      ```text
+      original:     3x²y − 2xy + 5x²y + 7xy
+      agrupar:      (3x²y + 5x²y) + (−2xy + 7xy)
+      simplificada: 8x²y + 5xy
+
+      Verificación con x = 2, y = 3:
+        original:     3·4·3 − 2·2·3 + 5·4·3 + 7·2·3 = 36 − 12 + 60 + 42 = 126
+        simplificada: 8·4·3 + 5·2·3 = 96 + 30 = 126     ✓
+
+      Operaciones: 4 términos → 2 términos
+      ```
+    errores:
+      - "Sumar términos con la misma variable pero distinto exponente: 3x² y 3x no son semejantes."
+      - "Perder un signo al reagrupar términos negativos."
+      - "Simplificar sin verificar numéricamente en al menos un punto."
+    aplicacion: |
+      Simplificar una expresión antes de implementarla reduce operaciones y errores de
+      redondeo. Es la versión manual de lo que hace un compilador al optimizar y de lo que
+      hacen los frameworks al fusionar operaciones en un grafo de cómputo.
+    referencias:
+      - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
+      - "[SymPy: simplificación simbólica](https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html)"
+
+  "042":
+    concepto: "Conmutativa, asociativa y distributiva son válidas en ℝ, pero la asociatividad falla en punto flotante."
+    formulas:
+      - "conmutativa: a + b = b + a,  ab = ba"
+      - "asociativa: (a+b)+c = a+(b+c)"
+      - "distributiva: a(b+c) = ab + ac"
+    desarrollo: |
+      Las tres propiedades definen la estructura de cuerpo de los números reales, y de ellas
+      se deduce todo el álgebra elemental. La distributiva es la más productiva: conecta la
+      suma con el producto y es la que justifica factorizar, desarrollar y —como vio la
+      clase 002— la regla de los signos.
+
+      Conviene notar qué **no** cumplen ciertas operaciones. La resta no es conmutativa ni
+      asociativa. La división tampoco. La potenciación no es conmutativa (`2³ ≠ 3²`) ni
+      asociativa (asocia por la derecha, clase 010). Y en la parte 05 aparecerá que el
+      producto de matrices es asociativo pero **no conmutativo**, lo que cambia por completo
+      cómo se manipulan las expresiones.
+
+      El hallazgo incómodo de esta clase es que la asociatividad de la suma **falla en punto
+      flotante**. `(1e16 + 1.0) − 1e16` da 0.0, mientras que `1e16 + (1.0 − 1e16)` da 1.0.
+      No es un bug: es la consecuencia directa de que cada suma parcial se redondea, tal como
+      explicó la clase 039.
+
+      La conclusión práctica es que las identidades algebraicas son ciertas en ℝ y solo
+      aproximadamente ciertas en float. Reordenar una expresión para simplificarla puede
+      cambiar su resultado numérico, y en cálculo sensible ese reordenamiento debe hacerse
+      con criterio, no automáticamente.
+    ejemplo: |
+      Las tres propiedades y su límite en flotante.
+
+      ```text
+      a = 2.5,  b = −4.0,  c = 7.25
+
+      conmutativa suma      a + b == b + a          True
+      conmutativa producto  a·b == b·a              True
+      asociativa en ℝ       (a+b)+c == a+(b+c)      True
+      distributiva          a(b+c) == ab + ac       True (isclose)
+
+      resta no conmutativa  a − b == b − a          False
+
+      Asociatividad en float64:
+        (1e16 + 1.0) − 1e16  =  0.0
+        1e16 + (1.0 − 1e16)  =  1.0
+        ¿iguales?  No
+      ```
+    errores:
+      - "Suponer que la resta o la división heredan la conmutatividad de la suma y el producto."
+      - "Reordenar sumas en código numérico sensible sin comprobar el efecto."
+      - "Aplicar la conmutatividad al producto de matrices (parte 05)."
+    aplicacion: |
+      Justifica toda manipulación algebraica y explica por qué un compilador con
+      optimizaciones agresivas de coma flotante (`-ffast-math`) puede cambiar resultados.
+    referencias:
+      - "[Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)"
+      - "[Artin, M. *Algebra*, 2ª ed., Pearson, 2011, cap. 1](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131)"
+
+  "043":
+    concepto: "Resolver una ecuación es aplicar operaciones reversibles hasta aislar la incógnita."
+    formulas:
+      - "ax + b = c  ⟹  x = (c − b)/a,  a ≠ 0"
+      - "residuo = ax + b − c = 0"
+    desarrollo: |
+      Cada paso de un despeje transforma la ecuación en otra **equivalente**: con el mismo
+      conjunto solución. Sumar o restar la misma cantidad a ambos lados siempre preserva la
+      equivalencia. Multiplicar o dividir por una cantidad no nula, también. La condición
+      «no nula» es la que hay que vigilar: dividir por una expresión que puede anularse
+      pierde soluciones sin avisar.
+
+      Los casos degenerados no son curiosidades de examen. Si `a = 0`, la ecuación `0·x = 0`
+      tiene infinitas soluciones y `0·x = 5` no tiene ninguna. En una implementación, ambos
+      casos deben detectarse y reportarse; lanzar una división por cero es peor que devolver
+      un diagnóstico. La clase 113 encontrará la versión matricial del mismo fenómeno.
+
+      Otras operaciones no son reversibles y hay que declararlo. Elevar al cuadrado ambos
+      lados puede **introducir** soluciones falsas: de `x = 2` se pasa a `x² = 4`, que además
+      admite `x = −2`. Por eso, tras elevar al cuadrado, hay que comprobar cada solución
+      candidata en la ecuación original.
+
+      La verificación cierra el proceso y es innegociable: sustituir y comprobar que el
+      residuo es cero. Ese hábito —calcular el residuo en lugar de confiar en el
+      procedimiento— es el mismo que se usará para sistemas lineales (clase 113), métodos
+      iterativos (clase 233) y ajuste por mínimos cuadrados (clase 131).
+    ejemplo: |
+      Resolver 7x − 3 = 25 con verificación y casos degenerados.
+
+      ```text
+      7x − 3 = 25
+      7x     = 28        (sumar 3, reversible)
+       x     = 4         (dividir por 7 ≠ 0, reversible)
+
+      Verificación: 7·4 − 3 = 25    ✓
+      Residuo:      7·4 − 3 − 25 = 0 ✓
+
+      Casos degenerados (a = 0):
+        0·x = 0  →  infinitas soluciones
+        0·x = 5  →  ninguna solución
+      ```
+    errores:
+      - "Dividir por una expresión con variable sin excluir el caso en que se anula."
+      - "Elevar al cuadrado y no comprobar las soluciones en la ecuación original."
+      - "No reportar el caso degenerado a = 0 en una implementación."
+    aplicacion: |
+      Todo despeje analítico, la condición de primer orden ∇f = 0 en optimización y la
+      resolución de sistemas lineales. El residuo es el criterio de aceptación universal.
+    referencias:
+      - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+
+  "044":
+    concepto: "Multiplicar o dividir una desigualdad por un número negativo invierte su sentido."
+    formulas:
+      - "a < b  y  k > 0  ⟹  ka < kb"
+      - "a < b  y  k < 0  ⟹  ka > kb"
+    desarrollo: |
+      Una desigualdad describe un conjunto, no un punto. La solución de `−3x + 4 > 10` no es
+      un número: es el intervalo `(−∞, −2)`. Esa diferencia de naturaleza explica por qué el
+      resultado se expresa como intervalo o como condición, y por qué conviene comprobarlo
+      con un valor de prueba dentro y otro fuera.
+
+      La regla del signo tiene una justificación geométrica clara. Multiplicar por un
+      negativo refleja la recta numérica respecto al origen, y una reflexión invierte el
+      orden: lo que estaba a la izquierda queda a la derecha. Es la misma «media vuelta» que
+      la clase 002 usó para explicar el producto de signos.
+
+      Al resolver, el hábito seguro es despejar sin dividir por negativos: pasar los términos
+      de modo que el coeficiente de la incógnita quede positivo. Si no se puede evitar, hay
+      que invertir el símbolo y **marcarlo explícitamente**, porque es el error más frecuente
+      y el más silencioso: produce el intervalo complementario, que suele parecer razonable.
+
+      Las desigualdades son el lenguaje de las restricciones en optimización. La parte 12
+      escribe `g(x) ≤ 0` para cada restricción, y las condiciones KKT (clase 257) tratan por
+      separado las restricciones activas —donde se cumple la igualdad— de las inactivas.
+    ejemplo: |
+      Resolver −3x + 4 > 10 y comprobar con dos valores.
+
+      ```text
+      −3x + 4 > 10
+      −3x     > 6          (restar 4)
+        x     < −2         (dividir por −3: SE INVIERTE)
+
+      Frontera: x = −2
+
+      Prueba dentro  (x = −5):  −3(−5) + 4 = 19 > 10   ✓
+      Prueba fuera   (x =  0):  −3(0)  + 4 =  4 > 10   ✗
+
+      Solución: (−∞, −2)
+      ```
+    errores:
+      - "Olvidar invertir el símbolo al dividir por un negativo."
+      - "Dar la solución como un punto en lugar de como un intervalo."
+      - "No comprobar con un valor dentro y otro fuera del intervalo obtenido."
+    aplicacion: |
+      Restricciones en optimización (parte 12), rangos de validez de un modelo, umbrales de
+      decisión de un clasificador y condiciones de estabilidad numérica (h < 2/|λ|).
+    referencias:
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+      - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 2](https://web.stanford.edu/~boyd/cvxbook/)"
+
+  "045":
+    concepto: "Un sistema 2×2 tiene solución única si y solo si su determinante es no nulo."
+    formulas:
+      - "det = a₁b₂ − a₂b₁"
+      - "x = (c₁b₂ − c₂b₁)/det,   y = (a₁c₂ − a₂c₁)/det"
+    desarrollo: |
+      Un sistema de dos ecuaciones lineales con dos incógnitas admite tres lecturas
+      geométricas: dos rectas que se cortan en un punto (solución única), dos rectas
+      paralelas (sin solución) o dos rectas coincidentes (infinitas soluciones). El
+      determinante distingue los casos: si es no nulo, las rectas tienen pendientes
+      distintas y se cortan.
+
+      La regla de Cramer da las soluciones como cocientes de determinantes. Es elegante y
+      útil para 2×2, pero **no escala**: para n×n requiere calcular n+1 determinantes, con un
+      coste factorial si se hace por la definición. La parte 05 introduce la eliminación de
+      Gauss, que resuelve el mismo problema en O(n³) y es lo que usan las bibliotecas reales.
+
+      El determinante no solo dice si hay solución: dice cuán bien condicionado está el
+      problema. Un determinante muy cercano a cero significa rectas casi paralelas, y
+      entonces una perturbación mínima de los coeficientes mueve mucho el punto de corte. Es
+      el número de condición de la clase 035 aplicado a sistemas, y en la parte 06 se medirá
+      correctamente con los valores singulares.
+
+      La verificación sigue siendo la misma: sustituir la solución en **ambas** ecuaciones y
+      comprobar los residuos. Con dos ecuaciones es barato; con doscientas es la única forma
+      de saber si el solver hizo su trabajo.
+    ejemplo: |
+      Resolver el sistema 2x + 3y = 12, 4x − y = 10.
+
+      ```text
+      det = 2·(−1) − 4·3 = −2 − 12 = −14 ≠ 0   → solución única
+
+      x = (12·(−1) − 10·3) / (−14) = (−12 − 30)/(−14) = 3
+      y = (2·10 − 4·12)   / (−14) = (20 − 48)/(−14)   = 2
+
+      Verificación:
+        2·3 + 3·2 = 6 + 6 = 12    ✓
+        4·3 − 1·2 = 12 − 2 = 10   ✓
+      ```
+
+      Si el determinante hubiera sido 0, habría que distinguir entre sistema incompatible
+      (rectas paralelas) y compatible indeterminado (rectas coincidentes).
+    errores:
+      - "Aplicar Cramer sin comprobar antes que el determinante es no nulo."
+      - "No distinguir entre sistema sin solución y sistema con infinitas soluciones."
+      - "Verificar la solución en una sola de las dos ecuaciones."
+    aplicacion: |
+      Es el caso 2×2 del problema central de la parte 05. Cualquier ajuste lineal, sistema
+      de equilibrio o intersección geométrica se reduce a esto en dimensión baja.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+
+  "046":
+    concepto: "El esquema de Horner evalúa un polinomio de grado n con n multiplicaciones en lugar de n(n+1)/2."
+    formulas:
+      - "p(x) = aₙxⁿ + ... + a₁x + a₀"
+      - "Horner: p(x) = (...((aₙx + aₙ₋₁)x + aₙ₋₂)x + ...) + a₀"
+      - "grado(p·q) = grado(p) + grado(q)"
+    desarrollo: |
+      Los polinomios son las funciones más simples después de las lineales, y su aritmética
+      es la de los enteros con otra notación: se suman término a término y se multiplican por
+      convolución de coeficientes. Esa operación —multiplicar polinomios es convolucionar sus
+      coeficientes— es literalmente la misma que la convolución discreta de la clase 271, y
+      es la razón por la que la FFT sirve para multiplicar polinomios grandes.
+
+      Evaluar un polinomio de forma ingenua calcula cada potencia por separado: `x²`, `x³`,
+      `x⁴`... lo que suma n(n+1)/2 multiplicaciones. El esquema de Horner factoriza
+      sucesivamente y necesita solo n multiplicaciones y n sumas. Para grado 100, eso son 100
+      operaciones frente a 5050.
+
+      Horner no es solo más rápido: es **más estable numéricamente**, porque evita calcular
+      potencias grandes que luego se cancelan con coeficientes pequeños. Es el algoritmo que
+      usan las bibliotecas para evaluar polinomios, incluidos los que aproximan `sin`, `exp`
+      o `log` internamente.
+
+      El grado del producto es la suma de los grados, hecho que parece trivial y tiene
+      consecuencias: multiplicar dos polinomios de grado 50 da uno de grado 100, y por eso el
+      coste de las operaciones simbólicas crece rápido. Es la razón por la que el álgebra
+      computacional es cara.
+    ejemplo: |
+      Producto y evaluación de p(x) = x² − 3x + 2.
+
+      ```text
+      p = x² − 3x + 2       (grado 2)
+      q = 2x + 1            (grado 1)
+
+      p·q: convolución de [1,−3,2] con [2,1]
+           = 2x³ − 5x² + x + 2      (grado 3 = 2 + 1)  ✓
+
+      Evaluar p(3):
+        directo: 3² − 3·3 + 2 = 9 − 9 + 2 = 2
+        Horner:  ((1)·3 + (−3))·3 + 2 = (0)·3 + 2 = 2   ✓
+
+        multiplicaciones directas: 3   (x², y dos productos)
+        multiplicaciones Horner:   2
+      ```
+    errores:
+      - "Evaluar potencias por separado en polinomios de grado alto."
+      - "Confundir el producto de polinomios con el producto término a término."
+      - "Olvidar los coeficientes nulos al escribir el vector de coeficientes."
+    aplicacion: |
+      Evaluación de funciones especiales en bibliotecas matemáticas, interpolación
+      (clase 225), ajuste polinómico y aritmética de precisión arbitraria. La convolución
+      de coeficientes es la misma operación que en señales.
+    referencias:
+      - "[Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.6](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)"
+      - "[NumPy: `polyval` y el esquema de Horner](https://numpy.org/doc/stable/reference/generated/numpy.polyval.html)"
+
+  "047":
+    concepto: "Factorizar expone las raíces; las relaciones de Vieta las conectan con los coeficientes."
+    formulas:
+      - "x² + bx + c = (x − r₁)(x − r₂)"
+      - "r₁ + r₂ = −b,   r₁·r₂ = c"
+    desarrollo: |
+      Factorizar un polinomio es escribirlo como producto de factores más simples. Su valor
+      práctico es que las raíces se leen directamente: si `p(x) = (x−1)(x−2)`, las raíces son
+      1 y 2 sin resolver nada. Esa es la razón por la que factorizar es útil, y no un
+      ejercicio de manipulación.
+
+      Las relaciones de Vieta conectan las raíces con los coeficientes sin calcularlas: para
+      `x² + bx + c`, la suma de las raíces es `−b` y su producto es `c`. Esto sirve para dos
+      cosas. Primero, para **adivinar** factorizaciones con coeficientes enteros: hay que
+      buscar dos números que sumen `−b` y multipliquen `c`. Segundo, y más importante en este
+      programa, para **verificar**: si las raíces calculadas no satisfacen las relaciones,
+      hay un error.
+
+      Esa verificación es exactamente la que la clase 036 usó para detectar la inestabilidad
+      de la fórmula cuadrática. El producto de las raíces debe ser `c/a`; cuando la fórmula
+      ingenua sufre cancelación, la relación de Vieta lo delata de inmediato.
+
+      No todo polinomio factoriza sobre los racionales. `x² + 1` no tiene raíces reales y
+      `x² − 2` las tiene irracionales. El teorema fundamental del álgebra garantiza que sobre
+      los complejos todo polinomio de grado n tiene exactamente n raíces contando
+      multiplicidad, y ese es el marco en el que la factorización siempre existe.
+    ejemplo: |
+      Factorizar x² − 3x + 2 y verificar con Vieta.
+
+      ```text
+      Buscar r₁, r₂ con  r₁ + r₂ = 3  y  r₁·r₂ = 2
+      Candidatos enteros: 1 y 2
+
+      x² − 3x + 2 = (x − 1)(x − 2)
+
+      Verificación desarrollando:
+        (x−1)(x−2) = x² − 2x − x + 2 = x² − 3x + 2   ✓
+
+      Vieta:
+        suma:     1 + 2 = 3 = −b   ✓   (b = −3)
+        producto: 1 · 2 = 2 =  c   ✓
+      ```
+    errores:
+      - "Buscar solo factorizaciones con enteros: muchos polinomios no las tienen."
+      - "Equivocar el signo al aplicar Vieta: la suma es −b, no b."
+      - "Factorizar sin verificar desarrollando el producto."
+    aplicacion: |
+      Simplificación de expresiones racionales, análisis de estabilidad por raíces del
+      polinomio característico y verificación de solvers de raíces (clase 036).
+    referencias:
+      - "[Artin, M. *Algebra*, 2ª ed., Pearson, 2011](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131)"
+      - "[Vieta's formulas — Wolfram MathWorld](https://mathworld.wolfram.com/VietasFormulas.html)"
+
+  "048":
+    concepto: "El vértice de una parábola está en x = −b/2a y es el punto medio de las raíces."
+    formulas:
+      - "raíces: x = (−b ± √(b²−4ac)) / 2a"
+      - "vértice: xᵥ = −b/2a,  yᵥ = a·xᵥ² + b·xᵥ + c"
+    desarrollo: |
+      La ecuación cuadrática es el primer caso en que la solución exige una fórmula y no solo
+      despejar. Su deducción —completar el cuadrado— es instructiva porque es la misma
+      técnica que aparece en la parte 06 al diagonalizar formas cuadráticas y en la parte 09
+      al normalizar la densidad de una gaussiana.
+
+      El vértice está en `x = −b/2a`, que es exactamente el punto medio entre las dos raíces.
+      Eso no es coincidencia: la parábola es simétrica respecto a la recta vertical que pasa
+      por su vértice, y las raíces son simétricas respecto a ella. De ahí que el vértice se
+      pueda calcular sin conocer las raíces, y viceversa.
+
+      La forma de vértice, `a(x − xᵥ)² + yᵥ`, hace evidente lo que la forma estándar oculta:
+      el signo de `a` decide si el vértice es mínimo o máximo, y `yᵥ` es el valor extremo. En
+      optimización esto es el caso más simple posible de la condición de segundo orden que la
+      parte 08 generaliza con el Hessiano.
+
+      La minimización de una cuadrática es el problema modelo de toda la parte 12: la función
+      objetivo `x² + 20y²` que usan los optimizadores es una cuadrática multivariable, y su
+      mínimo se conoce analíticamente, lo que permite medir cuánto se acerca cada algoritmo.
+    ejemplo: |
+      Analizar 2x² − 8x + 6 = 0.
+
+      ```text
+      a = 2, b = −8, c = 6
+      discriminante = 64 − 48 = 16 > 0  → dos raíces reales
+
+      raíces: (8 ± 4)/4  →  r₁ = 3,  r₂ = 1
+
+      vértice: xᵥ = −(−8)/(2·2) = 2
+               yᵥ = 2·4 − 8·2 + 6 = −2
+
+      Comprobación de simetría:
+        punto medio de las raíces = (3 + 1)/2 = 2 = xᵥ   ✓
+
+      Como a = 2 > 0, la parábola abre hacia arriba y el vértice es un MÍNIMO.
+      ```
+    errores:
+      - "Olvidar dividir por 2a en la fórmula de las raíces."
+      - "Confundir el signo del vértice: xᵥ = −b/2a, no b/2a."
+      - "Suponer que el vértice es siempre un mínimo sin mirar el signo de a."
+    aplicacion: |
+      Optimización cuadrática (clase 258), ajuste por mínimos cuadrados —cuyo objetivo es una
+      cuadrática— y análisis de trayectorias parabólicas en física y videojuegos.
+    referencias:
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+      - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004](https://web.stanford.edu/~boyd/cvxbook/)"
+
+  "049":
+    concepto: "El discriminante clasifica las raíces antes de calcularlas."
+    formulas:
+      - "Δ = b² − 4ac"
+      - "Δ > 0: dos raíces reales · Δ = 0: una doble · Δ < 0: dos complejas conjugadas"
+    desarrollo: |
+      El discriminante es un ejemplo de una idea muy general: obtener información cualitativa
+      sobre la solución sin resolver. Su signo determina la naturaleza de las raíces, y
+      calcularlo cuesta tres operaciones frente a las siete de la fórmula completa. En una
+      implementación, comprobar el discriminante antes de llamar a `sqrt` evita una excepción
+      o un `NaN`.
+
+      Los tres casos tienen lectura geométrica: `Δ > 0` significa que la parábola corta el eje
+      x en dos puntos; `Δ = 0`, que lo toca en uno (el vértice está sobre el eje); `Δ < 0`,
+      que no lo corta. Las raíces complejas no son un artefacto: describen oscilaciones, y en
+      la parte 13 aparecerán como las frecuencias de una señal.
+
+      El caso `Δ = 0` es delicado numéricamente. Comprobar `Δ == 0` con floats casi nunca es
+      correcto: el discriminante calculado rara vez da exactamente cero aunque la raíz sea
+      doble. Hay que usar una tolerancia relativa a la escala de los coeficientes, decisión
+      que debe documentarse.
+
+      La misma idea —un indicador que clasifica antes de resolver— reaparece en el
+      determinante para sistemas (clase 045), en el signo de los autovalores del Hessiano
+      para puntos críticos (clase 169) y en el signo del producto `f(a)·f(b)` para la
+      bisección (clase 222).
+    ejemplo: |
+      Los tres casos con sus coeficientes.
+
+      ```text
+      Caso              (a, b, c)      Δ = b²−4ac    naturaleza
+      dos reales        (1, −5,  6)    25 − 24 = 1   2 raíces: 3 y 2
+      una doble         (1, −4,  4)    16 − 16 = 0   1 raíz doble: 2
+      complejas         (1,  1,  1)     1 −  4 = −3  2 conjugadas
+
+      Complejas explícitas: (−1 ± i√3)/2
+
+      Precaución numérica:
+        comprobar Δ == 0 con floats es casi siempre incorrecto;
+        usar |Δ| < tol · max(|b²|, |4ac|)
+      ```
+    errores:
+      - "Comparar el discriminante con cero usando == en aritmética de punto flotante."
+      - "Llamar a sqrt sin comprobar antes el signo del discriminante."
+      - "Tratar las raíces complejas como un error en lugar de como información."
+    aplicacion: |
+      Estabilidad de sistemas dinámicos (raíces del polinomio característico), clasificación
+      de cónicas y decisión previa en cualquier solver de raíces.
+    referencias:
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+
+  "050":
+    concepto: "Los exponentes fraccionarios extienden las leyes de potencias y definen las raíces."
+    formulas:
+      - "a^(m/n) = ⁿ√(aᵐ)"
+      - "a^(1/3) · a^(2/3) = a"
+      - "dominio de a^(1/2): a ≥ 0 en ℝ"
+    desarrollo: |
+      La extensión de los exponentes a números fraccionarios sigue el mismo principio que la
+      clase 008 aplicó a los negativos: se elige la definición que **conserva las leyes**. Si
+      `a^(1/n)` debe cumplir `(a^(1/n))ⁿ = a^(n/n) = a`, entonces `a^(1/n)` es la raíz
+      n-ésima. La notación de exponente no es una alternativa a la de radical: es la que
+      permite operar sin casos especiales.
+
+      Con esa definición, el álgebra funciona: `a^(1/3) · a^(2/3) = a^(1/3+2/3) = a¹ = a`. El
+      laboratorio comprueba precisamente esa identidad, y en punto flotante se cumple solo
+      dentro de una tolerancia, porque cada potencia fraccionaria introduce redondeo.
+
+      El dominio sigue las reglas de la clase 009: con denominador par, la base debe ser no
+      negativa en los reales. Y hay una trampa de implementación que conviene conocer:
+      `(-8) ** (1/3)` en Python devuelve un complejo o `nan` según el tipo, porque `1/3` es un
+      float que no es exactamente un tercio. Para raíces cúbicas de negativos hay que
+      calcular `-(8 ** (1/3))` explícitamente, como hace el motor.
+
+      Extender aún más —a exponentes reales arbitrarios— exige definir `a^x = e^(x ln a)`,
+      que es la ruta que toma el análisis y la que usa la implementación de `pow`. Ese es el
+      puente hacia las funciones exponencial y logarítmica de las clases 055 y 056.
+    ejemplo: |
+      Exponentes fraccionarios con base 8.
+
+      ```text
+      8^(1/3)  = 2.0            (raíz cúbica)
+      8^(2/3)  = 4.0            (raíz cúbica al cuadrado)
+      8^(−1)   = 0.125
+      8^(−1/3) = 0.5
+
+      Ley del producto:
+        8^(1/3) · 8^(2/3) = 2.0 · 4.0 = 8.0 = 8¹   ✓
+
+      Dominio:
+        (−8)^(1/3) en ℝ  →  −2   (raíz impar, existe)
+        (−8)^(1/2) en ℝ  →  no existe
+        En Python: (-8) ** (1/3) NO devuelve −2; hay que escribir −(8 ** (1/3))
+      ```
+    errores:
+      - "Escribir (-8) ** (1/3) esperando −2."
+      - "Aplicar exponentes fraccionarios a bases negativas sin comprobar la paridad del denominador."
+      - "Comparar identidades de exponentes con == en lugar de con tolerancia."
+    aplicacion: |
+      Normas Lp con p no entero (clase 104), transformaciones de potencia en estadística
+      (Box-Cox) y escalado de leyes de potencia en las leyes de escala (clase 359).
+    referencias:
+      - "[Python: `math.pow` y el operador `**`](https://docs.python.org/3/library/math.html#math.pow)"
+      - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
+
+  "051":
+    concepto: "El logaritmo convierte productos en sumas, y por eso toda verosimilitud se calcula en escala logarítmica."
+    formulas:
+      - "log(ab) = log a + log b"
+      - "log(a/b) = log a − log b"
+      - "log(aⁿ) = n log a"
+      - "log_b(a) = ln a / ln b"
+    desarrollo: |
+      El logaritmo se inventó, literalmente, para convertir multiplicaciones en sumas. Napier
+      publicó sus tablas en 1614 con ese propósito explícito: antes de las calculadoras,
+      multiplicar dos números de seis cifras era costoso y sumar sus logaritmos no. Esa misma
+      propiedad, cuatro siglos después, es la razón por la que el logaritmo está en el centro
+      de la estadística y del machine learning.
+
+      El motivo es de precisión, no de velocidad. Multiplicar diez mil probabilidades —cada
+      una menor que 1— produce un número tan pequeño que hace underflow a cero en float64
+      (clase 033). Sumar diez mil logaritmos no tiene ese problema. Por eso la verosimilitud
+      se maximiza siempre como **log-verosimilitud** (clase 215) y por eso la pérdida de un
+      clasificador es cross-entropy, que es una suma de logaritmos (clase 263).
+
+      Las tres leyes se deducen directamente de las de exponentes, porque el logaritmo es su
+      función inversa. `log(ab) = log a + log b` es exactamente `aᵐ·aⁿ = aᵐ⁺ⁿ` leído al revés.
+      El cambio de base, `log_b(a) = ln a / ln b`, permite calcular cualquier logaritmo con
+      uno solo implementado.
+
+      Numéricamente hay dos precauciones. El dominio es `x > 0`, y `log(0)` es `−inf`: por eso
+      toda implementación de cross-entropy añade un epsilon. Y `log(1 + x)` para x pequeño
+      sufre cancelación, de ahí que exista `log1p` (clase 040).
+    ejemplo: |
+      Las tres leyes verificadas con a = 12, b = 5.
+
+      ```text
+      log(12·5) = log(60) = 4.094345
+      log 12 + log 5 = 2.484907 + 1.609438 = 4.094345    ✓
+
+      log(12/5) = log(2.4) = 0.875469
+      log 12 − log 5 = 2.484907 − 1.609438 = 0.875469    ✓
+
+      log(12³) = log(1728) = 7.454720
+      3·log 12 = 3 · 2.484907 = 7.454720                 ✓
+
+      Cambio de base:
+        log₂(12) = ln 12 / ln 2 = 2.484907/0.693147 = 3.584963
+        math.log2(12) = 3.584963                          ✓
+      ```
+    errores:
+      - "Aplicar log a valores no positivos sin proteger el dominio."
+      - "Escribir log(a + b) = log a + log b: la ley es para el producto, no para la suma."
+      - "Multiplicar muchas probabilidades en lugar de sumar sus logaritmos."
+    aplicacion: |
+      Log-verosimilitud, cross-entropy, entropía, escalas logarítmicas (decibelios, pH,
+      magnitud sísmica), perplejidad de un modelo de lenguaje y leyes de escala.
+    referencias:
+      - "[Napier, J. *Mirifici Logarithmorum Canonis Descriptio*, 1614 — contexto histórico](https://mathshistory.st-andrews.ac.uk/Biographies/Napier/)"
+      - "[Python: `math.log`, `math.log1p`, `math.log2`](https://docs.python.org/3/library/math.html#math.log)"
+
+  "052":
+    concepto: "El dominio forma parte de la definición de una función: cambiarlo cambia la función."
+    formulas:
+      - "f(x) = 1/(x−2),  dominio ℝ \\ {2},  imagen ℝ \\ {0}"
+      - "asíntota vertical en x = 2, horizontal en y = 0"
+    desarrollo: |
+      Una función es una terna: dominio, codominio y regla de asignación. Dos funciones con
+      la misma fórmula y distinto dominio son funciones **distintas**. Esa precisión, que
+      parece pedante, es la que evita evaluar una expresión fuera de donde tiene sentido —el
+      error de modelado más común— y la que hace que preguntas como «¿es invertible?» tengan
+      respuesta.
+
+      Determinar el dominio consiste en excluir lo que no está definido: denominadores nulos,
+      raíces pares de negativos, logaritmos de valores no positivos. La imagen es más
+      difícil: exige razonar sobre qué valores alcanza realmente la función, no solo cuáles
+      son plausibles.
+
+      Las asíntotas describen el comportamiento en las fronteras del dominio y en el
+      infinito. `1/(x−2)` tiene una asíntota vertical en 2 —donde el dominio se rompe— y una
+      horizontal en 0 —el valor al que tiende cuando x crece—. Ambas son, en el fondo,
+      límites, y la parte 07 las formalizará.
+
+      En implementación esto se traduce en una regla simple: **toda función debe declarar y
+      validar su dominio**. Un modelo que recibe una entrada fuera de su rango de validez no
+      falla ruidosamente: devuelve un número, y ese número no significa nada. La validación
+      de entradas es el equivalente en ingeniería de declarar el dominio.
+    ejemplo: |
+      Analizar f(x) = 1/(x−2).
+
+      ```text
+      Dominio: ℝ \ {2}         (el denominador se anula en x = 2)
+      Imagen:  ℝ \ {0}         (nunca vale 0: 1/algo ≠ 0)
+
+      valores:
+        f(0)   = −0.5
+        f(1.9) = −10.0         se dispara al acercarse por la izquierda
+        f(2.1) =  10.0         y por la derecha, con signo opuesto
+        f(5)   =  0.333
+
+      asíntota vertical:   x = 2
+      asíntota horizontal: y = 0
+      ¿f(2) definido?      No
+      ```
+    errores:
+      - "Evaluar una función fuera de su dominio y aceptar el resultado."
+      - "Confundir codominio (donde puede caer) con imagen (donde realmente cae)."
+      - "Suponer que una función continua en su dominio no tiene asíntotas."
+    aplicacion: |
+      Validación de entradas, rango de validez de un modelo, dominio de una activación y
+      detección de valores fuera de distribución en inferencia.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 3](https://www.mathpop.com/calculus)"
+      - "[Gelfand, Glagoleva & Shnol. *Functions and Graphs*. Dover, 2002](https://store.doverpublications.com/products/9780486425641)"
+
+  "053":
+    concepto: "Una función lineal tiene razón de cambio constante; la pendiente es esa razón."
+    formulas:
+      - "y = mx + b"
+      - "m = (y₂ − y₁)/(x₂ − x₁)"
+    desarrollo: |
+      La función lineal es el modelo más simple que no es constante, y por eso es la primera
+      hipótesis razonable ante cualquier conjunto de datos. Su propiedad definitoria es que
+      la razón de cambio es constante: aumentar x en una unidad siempre cambia y en `m`,
+      independientemente de dónde se esté.
+
+      Comprobar linealidad es directo: calcular la pendiente con dos puntos y verificar que
+      predice correctamente un tercero. Si no lo hace, la relación no es lineal, y conviene
+      saberlo antes de ajustar una recta. Esa comprobación es la versión elemental del
+      análisis de residuos que la parte 10 formaliza.
+
+      La pendiente es un **peso** en el sentido del machine learning: dice cuánto contribuye
+      la entrada a la salida. La generalización a varias entradas, `y = w₁x₁ + ... + wₙxₙ + b`,
+      es exactamente una capa lineal, y cada `wᵢ` es la pendiente parcial respecto a `xᵢ` —lo
+      que la parte 08 llamará derivada parcial—.
+
+      Una advertencia que el programa repetirá: casi ninguna relación real es lineal en todo
+      su rango. La linealidad es una **aproximación local**, y la parte 07 explicará por qué:
+      la derivada es precisamente la pendiente de la mejor recta que aproxima la función
+      cerca de un punto.
+    ejemplo: |
+      Comprobar linealidad con tres puntos.
+
+      ```text
+      puntos: (1, 5), (3, 11), (7, 23)
+
+      pendiente con los dos primeros:
+        m = (11 − 5)/(3 − 1) = 6/2 = 3
+
+      intercepto:
+        b = 5 − 3·1 = 2
+
+      modelo: y = 3x + 2
+
+      predicción del tercer punto:
+        3·7 + 2 = 23     observado: 23     ✓  es lineal
+      ```
+
+      Si el tercer punto hubiera sido (7, 30), el modelo lineal quedaría descartado con una
+      sola comprobación.
+    errores:
+      - "Ajustar una recta sin comprobar antes que la relación es aproximadamente lineal."
+      - "Confundir pendiente con correlación: la pendiente tiene unidades, la correlación no."
+      - "Extrapolar un modelo lineal fuera del rango de los datos observados."
+    aplicacion: |
+      Regresión lineal (clase 282), capas densas (clase 110), tasas de cambio y cualquier
+      aproximación de primer orden. La derivada es la pendiente de la recta tangente.
+    referencias:
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "054":
+    concepto: "El signo del coeficiente principal decide la concavidad, y el vértice es el extremo."
+    formulas:
+      - "f(x) = ax² + bx + c"
+      - "xᵥ = −b/2a;  a > 0 ⟹ mínimo,  a < 0 ⟹ máximo"
+    desarrollo: |
+      La función cuadrática es el primer modelo con un extremo, y por eso es el ejemplo
+      canónico de optimización. Todo lo que la parte 12 hace con funciones complicadas se
+      puede visualizar aquí: hay un punto donde la derivada se anula, y el signo de la
+      curvatura decide si es mínimo o máximo.
+
+      La concavidad la determina `a`: positivo abre hacia arriba y el vértice es un mínimo;
+      negativo abre hacia abajo y es un máximo. En la parte 08 ese `a` se convertirá en el
+      Hessiano, y «positivo» en «definido positivo», pero la lógica es idéntica.
+
+      La simetría respecto al eje vertical `x = xᵥ` es una propiedad estructural: `f(xᵥ − h)`
+      y `f(xᵥ + h)` valen lo mismo para cualquier h. Comprobarlo numéricamente es una
+      verificación barata de que el vértice se calculó bien.
+
+      Las cuadráticas son además el problema modelo de la optimización numérica porque su
+      mínimo se conoce en forma cerrada. Toda la parte 12 usa `f(x,y) = x² + 20y²` como banco
+      de pruebas precisamente por eso: se puede medir exactamente cuánto se aleja cada
+      optimizador del óptimo conocido.
+    ejemplo: |
+      Analizar f(x) = −x² + 6x − 5.
+
+      ```text
+      a = −1 < 0  →  abre hacia abajo, el vértice es un MÁXIMO
+
+      xᵥ = −6/(2·(−1)) = 3
+      yᵥ = −9 + 18 − 5 = 4
+
+      Simetría (h = 2):
+        f(1) = −1 + 6 − 5 = 0
+        f(5) = −25 + 30 − 5 = 0     ✓  iguales
+
+      raíces: −x² + 6x − 5 = 0 → x = 1, x = 5
+      punto medio: (1+5)/2 = 3 = xᵥ   ✓
+      ```
+    errores:
+      - "Suponer que el vértice es siempre un mínimo."
+      - "Calcular xᵥ como b/2a en lugar de −b/2a."
+      - "Confundir el vértice (punto) con el valor extremo (ordenada del vértice)."
+    aplicacion: |
+      Optimización cuadrática, ajuste por mínimos cuadrados, trayectorias balísticas y
+      aproximación de segundo orden de cualquier función suave (Taylor, clase 151).
+    referencias:
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+
+  "055":
+    concepto: "El crecimiento exponencial tiene razón constante, no diferencia constante."
+    formulas:
+      - "P(t) = P₀·bᵗ"
+      - "tiempo de duplicación = ln 2 / ln b"
+      - "regla del 72: t ≈ 72 / (porcentaje anual)"
+    desarrollo: |
+      La diferencia entre crecimiento lineal y exponencial es la diferencia entre sumar y
+      multiplicar una cantidad fija en cada periodo. Es fácil de enunciar y difícil de
+      intuir: la intuición humana es lineal, y por eso las predicciones sobre procesos
+      exponenciales —epidemias, interés compuesto, capacidad de cómputo— fallan
+      sistemáticamente por defecto.
+
+      El indicador más útil es el **tiempo de duplicación**: cuánto tarda la cantidad en
+      multiplicarse por dos. Se obtiene de `ln 2 / ln b` y no depende del valor inicial, lo
+      que lo convierte en una propiedad del proceso. La «regla del 72» es su aproximación
+      mental: dividir 72 entre el porcentaje anual da los años aproximados.
+
+      Todo crecimiento exponencial real termina saturándose, porque los recursos son finitos.
+      El modelo exponencial es válido en la fase inicial y deja de serlo después; el modelo
+      logístico describe la transición. Aplicar un exponencial fuera de su fase de validez
+      produce predicciones absurdas, y ese es el error de modelado más citado en divulgación
+      científica.
+
+      En machine learning el crecimiento exponencial aparece en el decaimiento del learning
+      rate, en las medias móviles exponenciales de Adam (clase 250) y en el término `e^z` de
+      la softmax, cuyo desbordamiento obliga a restar el máximo (clase 321).
+    ejemplo: |
+      Población que crece un 8 % anual desde un millón.
+
+      ```text
+      P(t) = 10⁶ · 1.08ᵗ
+
+      t = 0     1 000 000
+      t = 5     1 469 328
+      t = 10    2 158 925
+      t = 20    4 660 957
+
+      razón entre años consecutivos: P(6)/P(5) = 1.08   (constante) ✓
+
+      tiempo de duplicación: ln 2 / ln 1.08 = 0.6931/0.07696 = 9.006 años
+      regla del 72:          72/8 = 9 años                      ✓ aproximación
+      ```
+    errores:
+      - "Modelar como lineal un proceso con razón constante."
+      - "Extrapolar un exponencial más allá de su fase de validez."
+      - "Confundir la razón (multiplicativa) con la diferencia (aditiva) entre periodos."
+    aplicacion: |
+      Interés compuesto, crecimiento de usuarios, propagación epidémica, decaimiento del
+      learning rate y medias móviles exponenciales de los optimizadores.
+    referencias:
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+      - "[Bartlett, A. *Arithmetic, Population and Energy* (conferencia sobre crecimiento exponencial)](https://www.albartlett.org/presentations/arithmetic_population_energy.html)"
+
+  "056":
+    concepto: "El logaritmo es la inversa de la exponencial y convierte factores en distancias iguales."
+    formulas:
+      - "y = log_b(x)  ⟺  x = bʸ"
+      - "escala logarítmica: distancias iguales ⟹ factores iguales"
+    desarrollo: |
+      La función logarítmica deshace la exponencial, y esa relación de inversa es lo que la
+      hace útil: convierte una pregunta sobre crecimiento («¿cuánto tarda en multiplicarse
+      por 10?») en una pregunta sobre suma. Su crecimiento es extraordinariamente lento —de
+      10³ a 10⁶ el logaritmo decimal solo sube 3— y por eso comprime rangos enormes.
+
+      La escala logarítmica es la aplicación práctica más visible. En un eje logarítmico, una
+      exponencial se ve como una recta, lo que permite identificar el modelo a simple vista y
+      leer la tasa como pendiente. Los decibelios, el pH, la escala de magnitud sísmica y las
+      curvas de aprendizaje de los modelos usan esa propiedad.
+
+      El dominio es `x > 0`, sin excepciones: no hay ningún exponente al que elevar una base
+      positiva para obtener un número negativo. `log(0)` tiende a `−inf`, y ese es el motivo
+      técnico por el que toda implementación de entropía o cross-entropy protege el argumento
+      con un epsilon (clase 263).
+
+      En las leyes de escala de los modelos de lenguaje (clase 359), la relación entre
+      pérdida y número de parámetros es una ley de potencia, que en escala log-log es una
+      recta cuya pendiente es el exponente. Leer esas gráficas exige entender esta clase.
+    ejemplo: |
+      Logaritmo como inversa y como escala.
+
+      ```text
+      log₁₀(1000) = 3       porque 10³ = 1000
+      10^log₁₀(1000) = 1000                    ✓ inversa verificada
+
+      Escala: de 10³ a 10⁶ hay un factor 1000
+        log₁₀(10⁶) − log₁₀(10³) = 6 − 3 = 3
+        tres unidades en el eje = tres órdenes de magnitud
+
+      Decibelios: 10·log₁₀(10⁻³) = −30 dB
+
+      Dominio: x > 0.  log(0) → −inf,  log(−1) no existe en ℝ
+      ```
+    errores:
+      - "Aplicar logaritmo a cero o a valores negativos sin protección."
+      - "Leer una gráfica logarítmica como si fuera lineal."
+      - "Confundir log natural, log₁₀ y log₂ al comparar resultados (entropía en nats vs bits)."
+    aplicacion: |
+      Escalas de medida, visualización de rangos amplios, log-verosimilitud, entropía,
+      perplejidad y lectura de leyes de escala en log-log.
+    referencias:
+      - "[Python: `math.log` y variantes](https://docs.python.org/3/library/math.html#math.log)"
+      - "[Cover & Thomas. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X)"
+
+  "057":
+    concepto: "La composición aplica funciones en cadena y no es conmutativa: (g∘f) ≠ (f∘g)."
+    formulas:
+      - "(g∘f)(x) = g(f(x))"
+      - "dominio de g∘f: {x ∈ dom f : f(x) ∈ dom g}"
+    desarrollo: |
+      Componer es encadenar: la salida de una función entra en la siguiente. El orden importa
+      y casi nunca conmuta, hecho que se comprueba con un solo ejemplo numérico. Leer
+      `(g∘f)(x)` correctamente —primero f, luego g, aunque g esté escrita a la izquierda— es
+      una de las causas frecuentes de error al trasladar fórmulas.
+
+      El dominio de la composición no es el dominio de f: hay que exigir además que `f(x)`
+      caiga dentro del dominio de g. Si `g` es un logaritmo, hay que garantizar que `f(x) > 0`.
+      Este detalle es la fuente de los `NaN` que aparecen cuando una activación produce
+      valores fuera del dominio de la siguiente capa.
+
+      Y aquí está la idea que conecta esta parte con todo el resto del programa: **una red
+      neuronal es una composición de funciones parametrizadas**. `f(x) = f_L(...f_2(f_1(x)))`,
+      donde cada `f_i` es «transformación lineal seguida de no linealidad». Nada más. La
+      profundidad de una red es la longitud de esa cadena.
+
+      La consecuencia inmediata, que la clase 302 hará explícita: si todas las `f_i` fueran
+      lineales, su composición sería lineal, y apilar capas no aportaría nada. La no
+      linealidad entre capas es lo que hace que la composición sea más expresiva que sus
+      partes. Y derivar una composición es exactamente la regla de la cadena (clase 147).
+    ejemplo: |
+      Componer f(x) = 2x + 1 con g(x) = x².
+
+      ```text
+      (g∘f)(3) = g(f(3)) = g(7)  = 49
+      (f∘g)(3) = f(g(3)) = f(9)  = 19
+      ¿conmutan?  No     49 ≠ 19
+
+      Cadena de tres:
+        f(g(f(3))) = f(g(7)) = f(49) = 99
+
+      Analogía directa:
+        red neuronal = f_L(...f_2(f_1(x)))
+        cada f_i = no_linealidad(W_i · entrada + b_i)
+      ```
+    errores:
+      - "Leer (g∘f) como «primero g»: se aplica f primero."
+      - "Olvidar restringir el dominio para que f(x) caiga en el dominio de g."
+      - "Suponer que la composición conmuta."
+    aplicacion: |
+      Arquitectura de redes neuronales, pipelines de transformación de datos, cambio de
+      variable en integración (clase 157) y la regla de la cadena.
+    referencias:
+      - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)"
+
+  "058":
+    concepto: "La inversa deshace la función y existe solo si es inyectiva; no es el recíproco 1/f."
+    formulas:
+      - "f⁻¹(f(x)) = x  para todo x del dominio"
+      - "f inyectiva ⟺ f(a) = f(b) ⟹ a = b"
+    desarrollo: |
+      La función inversa deshace lo que la original hizo. Para que exista, la función debe
+      ser **inyectiva**: dos entradas distintas no pueden dar la misma salida, porque de lo
+      contrario la inversa no sabría a cuál volver. `f(x) = x²` no es invertible en todo ℝ
+      —2 y −2 dan lo mismo— pero sí lo es restringida a `x ≥ 0`, y esa restricción es la que
+      define la raíz cuadrada.
+
+      La notación `f⁻¹` es desafortunada porque se parece a `f⁻¹ = 1/f`, y **no lo es**. Para
+      `f(x) = 3x − 4`, la inversa es `(y+4)/3` y el recíproco es `1/(3x−4)`. Son funciones
+      completamente distintas y confundirlas es un error clásico.
+
+      Gráficamente, la inversa es la reflexión respecto a la recta `y = x`, lo que da una
+      forma visual de comprobar si existe: si alguna recta horizontal corta la gráfica más de
+      una vez, la función no es inyectiva y no tiene inversa global.
+
+      En machine learning las inversas aparecen en los *normalizing flows*, que exigen
+      transformaciones invertibles con jacobiano calculable, y en toda transformación de
+      datos que deba deshacerse para interpretar una predicción en las unidades originales
+      (desestandarizar).
+    ejemplo: |
+      Inversa de f(x) = 3x − 4 y contraste con el recíproco.
+
+      ```text
+      Despejar:  y = 3x − 4  →  x = (y + 4)/3
+      f⁻¹(y) = (y + 4)/3
+
+      Comprobación en x = 5:
+        f(5) = 11
+        f⁻¹(11) = (11 + 4)/3 = 5      ✓ roundtrip
+
+      Recíproco (COSA DISTINTA):
+        1/f(5) = 1/11 = 0.0909
+
+      ¿f⁻¹ = 1/f?   No.
+
+      Condición: f debe ser inyectiva. 3x − 4 lo es en todo ℝ.
+      ```
+    errores:
+      - "Confundir la inversa f⁻¹ con el recíproco 1/f."
+      - "Invertir una función sin comprobar que es inyectiva."
+      - "Olvidar restringir el dominio para que la inversa exista (raíz cuadrada)."
+    aplicacion: |
+      Desestandarizar predicciones, normalizing flows, cambio de variable en probabilidad
+      (con su jacobiano) y la relación entre exponencial y logaritmo.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 12](https://www.mathpop.com/calculus)"
+      - "[Papamakarios, G. et al. *Normalizing Flows for Probabilistic Modeling and Inference*. JMLR, 2021](https://jmlr.org/papers/v22/19-1028.html)"
+
+  "059":
+    concepto: "Una función por tramos se define con reglas distintas en subconjuntos del dominio; ReLU es el ejemplo dominante en IA."
+    formulas:
+      - "ReLU(x) = max(0, x)"
+      - "continuidad en el corte: límite por la izquierda = límite por la derecha = valor"
+    desarrollo: |
+      Definir una función por tramos es lo natural cuando el fenómeno cambia de régimen: una
+      tarifa con tramos, un impuesto progresivo, una penalización que solo actúa por encima
+      de un umbral. La única pregunta técnica es qué ocurre en los puntos de corte, y ahí hay
+      que comprobar dos cosas: si la función es **continua** (los límites laterales coinciden
+      con el valor) y si es **derivable** (las pendientes laterales coinciden).
+
+      Continua y derivable no son lo mismo. ReLU es continua en 0 —ambos lados tienden a 0—
+      pero no derivable, porque la pendiente salta de 0 a 1. En la práctica, los frameworks
+      definen la derivada en 0 por convenio (habitualmente 0), y eso funciona porque el punto
+      exacto tiene medida nula.
+
+      ReLU es la activación más usada en deep learning y es literalmente una función por
+      tramos. Su éxito frente a la sigmoide tiene una explicación directa que la clase 303
+      desarrolla: su derivada vale exactamente 1 en el semieje positivo, así que el gradiente
+      no se atenúa al propagarse por muchas capas. La sigmoide, cuya derivada máxima es 0.25,
+      hace que el gradiente se desvanezca (clase 314).
+
+      La contrapartida también es visible aquí: para `x < 0` la derivada de ReLU es 0, así que
+      una neurona que caiga en esa región deja de recibir gradiente y «muere». Leaky ReLU
+      —otro tramo, con pendiente pequeña en lugar de nula— existe para evitarlo.
+    ejemplo: |
+      Analizar una función de tres tramos.
+
+      ```text
+      f(x) = |x|    si x < 0
+             x²     si 0 ≤ x < 2
+             4      si x ≥ 2
+
+      f(−3)    = 3
+      f(0)     = 0
+      f(1.999) = 3.996
+      f(2)     = 4
+
+      Continuidad en x = 0:  lím⁻ = 0,  lím⁺ = 0,  f(0) = 0     ✓
+      Continuidad en x = 2:  lím⁻ = 4,  lím⁺ = 4,  f(2) = 4     ✓
+
+      Derivabilidad en x = 0:
+        pendiente por la izquierda: −1
+        pendiente por la derecha:    0        ✗ no derivable
+      ```
+    errores:
+      - "Comprobar continuidad y dar por hecha la derivabilidad."
+      - "Olvidar definir el valor en el punto de corte."
+      - "Suponer que ReLU es derivable en 0: no lo es; su derivada allí es un convenio."
+    aplicacion: |
+      Activaciones ReLU y Leaky ReLU, funciones de pérdida robustas como Huber (clase 304),
+      tarifas por tramos e impuestos progresivos.
+    referencias:
+      - "[Glorot, Bordes & Bengio. *Deep Sparse Rectifier Neural Networks*. AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html)"
+      - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
+
+  "060":
+    concepto: "Elegir modelo es comparar residuos sobre los mismos datos, no elegir la familia que parece más elegante."
+    formulas:
+      - "SSE = Σ(yᵢ − ŷᵢ)²"
+      - "linealizar exponencial: ln y = ln a + b·x"
+    desarrollo: |
+      El capstone plantea la pregunta que cierra la parte: dados unos datos, ¿qué familia de
+      funciones los describe? La respuesta no se decide mirando la gráfica ni por preferencia
+      estética: se decide comparando el error de cada candidato sobre **los mismos** datos,
+      con la misma métrica.
+
+      La suma de residuos al cuadrado (SSE) es el criterio más simple. Penaliza más los
+      errores grandes que los pequeños, lo que la hace sensible a valores atípicos —tema de
+      la clase 304— pero la convierte en el objetivo de mínimos cuadrados, que tiene solución
+      cerrada (clase 131).
+
+      El truco central para ajustar un exponencial es **linealizarlo**: tomando logaritmos,
+      `y = a·e^(bx)` se convierte en `ln y = ln a + b·x`, que es una recta. Ajustar por
+      mínimos cuadrados en el espacio logarítmico y volver da los parámetros. Conviene saber
+      que esto minimiza el error relativo, no el absoluto, lo que a veces es preferible y a
+      veces no.
+
+      La honestidad del procedimiento exige dos advertencias. Primera: un SSE menor no
+      demuestra que el modelo sea correcto, solo que ajusta mejor **esos** datos; un
+      polinomio de grado suficiente ajusta cualquier cosa (clase 298). Segunda: la
+      comparación solo es válida si ambos modelos se evalúan en la misma escala; comparar
+      un SSE calculado en escala logarítmica con otro en escala lineal no significa nada.
+    ejemplo: |
+      Decidir entre lineal y exponencial con seis puntos.
+
+      ```text
+      x:  1     2     3      4      5      6
+      y:  2.1   4.4   8.9   17.5   35.2   70.8
+
+      Pista: cada y es aproximadamente el doble del anterior
+             → razón ≈ 2 constante → exponencial
+
+      Linealización: ln y contra x
+        ln y:  0.74  1.48  2.19  2.86  3.56  4.26
+        diferencias: ~0.70 constantes → recta ✓
+
+      Ajuste:  y = 1.055 · e^(0.702x)
+               razón de crecimiento: e^0.702 = 2.018
+
+      SSE lineal:      ~1010
+      SSE exponencial: ~1.5
+      Modelo elegido: exponencial
+      ```
+    errores:
+      - "Elegir modelo por inspección visual sin medir residuos."
+      - "Comparar SSE calculados en escalas distintas (lineal frente a logarítmica)."
+      - "Concluir que el modelo con menor SSE es «el correcto» en lugar de «el que mejor ajusta estos datos»."
+    aplicacion: |
+      Selección de modelos, ajuste de curvas de crecimiento, análisis de escalabilidad y la
+      lectura de leyes de escala. Es el precursor directo de la regresión de la parte 14.
+    referencias:
+      - "[Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"

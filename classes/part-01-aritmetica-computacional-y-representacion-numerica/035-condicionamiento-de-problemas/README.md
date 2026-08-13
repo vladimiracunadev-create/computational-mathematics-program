@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**El número de condición mide cuánto amplifica el problema el error de la entrada, con independencia del algoritmo.**
 
-Esta clase concreta ese objetivo sobre **Condicionamiento de problemas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `conditioning`.
 4. Interpretar las 4 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar float para dinero en vez de decimal o enteros de centavos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+κ(f, x) = |x·f′(x) / f(x)|
+error relativo de salida ≈ κ · error relativo de entrada
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Reproducibilidad numérica exige fijar orden de operaciones, no solo semillas.
+El condicionamiento es una propiedad **del problema**, no de cómo se resuelva. Formaliza
+la pregunta: si perturbo la entrada un 0.001 %, ¿cuánto cambia la salida? El número de
+condición es el factor de amplificación. Si vale 1, el problema conserva la precisión;
+si vale 10⁸, un error de entrada en el dígito 16 se convierte en un error en el dígito
+8 de la salida.
+
+Para una función de una variable, `κ = |x·f′(x)/f(x)|`. La fórmula dice algo intuitivo:
+el problema está mal condicionado donde la función es muy sensible en relación a su
+propio valor, típicamente cerca de sus ceros. `f(x) = 1 − x` cerca de x = 1 tiene
+condición enorme: es la versión analítica de la cancelación catastrófica.
+
+La consecuencia práctica es dura y conviene aceptarla pronto: **ningún algoritmo puede
+resolver con precisión un problema mal condicionado**. Si la entrada tiene 16 dígitos y
+la condición es 10⁸, la salida tiene como mucho 8 dígitos correctos, use uno el método
+que use. Buscar un algoritmo mejor es buscar en el sitio equivocado; hay que reformular
+el problema.
+
+En álgebra lineal el mismo concepto aparece como el número de condición de una matriz
+—cociente entre el mayor y el menor valor singular (clase 132)—, y en machine learning
+como la razón entre el mayor y el menor autovalor del Hessiano, que determina lo lento
+que converge el descenso de gradiente (clase 244).
+
+## 🧮 Ejemplo trabajado
+
+Condición de f(x) = 1 − x en tres puntos.
+
+```text
+κ(x) = |x · f′(x) / f(x)| = |x / (1 − x)|
+
+x = 0.5     f(x) = 0.5        κ = 1.0        bien condicionado
+x = 0.99    f(x) = 0.01       κ = 99         empieza a amplificar
+x = 1e−8    f(x) ≈ 1.0        κ = 1e−8       muy bien condicionado
+
+x = 0.9999  f(x) = 1e−4       κ = 9999
+  un error de entrada de 1e−16 → error de salida de 1e−12
+```
+
+La condición no depende de cómo se calcule `1 − x`: depende del problema.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,17 @@ compmath run 035
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Buscar un algoritmo mejor para un problema mal condicionado.
+2. Confundir condicionamiento (del problema) con estabilidad (del algoritmo).
+3. Evaluar la condición en un punto y extrapolarla a todo el dominio.
+
+## 🚀 Dónde se usa de verdad
+
+Diagnóstico de sistemas lineales (parte 05), regularización (ridge mejora el
+condicionamiento, clase 283) y análisis de convergencia de optimizadores. Es la
+pregunta previa a elegir método.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 12](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

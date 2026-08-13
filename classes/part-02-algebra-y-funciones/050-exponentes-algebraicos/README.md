@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**Los exponentes fraccionarios extienden las leyes de potencias y definen las raíces.**
 
-Esta clase concreta ese objetivo sobre **Exponentes algebraicos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `algebraic_exponents`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: dividir por una expresión que puede anularse y perder soluciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+a^(m/n) = ⁿ√(aᵐ)
+a^(1/3) · a^(2/3) = a
+dominio de a^(1/2): a ≥ 0 en ℝ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> Componer funciones es la operación que después llamaremos «capa» en una red neuronal.
+La extensión de los exponentes a números fraccionarios sigue el mismo principio que la
+clase 008 aplicó a los negativos: se elige la definición que **conserva las leyes**. Si
+`a^(1/n)` debe cumplir `(a^(1/n))ⁿ = a^(n/n) = a`, entonces `a^(1/n)` es la raíz
+n-ésima. La notación de exponente no es una alternativa a la de radical: es la que
+permite operar sin casos especiales.
+
+Con esa definición, el álgebra funciona: `a^(1/3) · a^(2/3) = a^(1/3+2/3) = a¹ = a`. El
+laboratorio comprueba precisamente esa identidad, y en punto flotante se cumple solo
+dentro de una tolerancia, porque cada potencia fraccionaria introduce redondeo.
+
+El dominio sigue las reglas de la clase 009: con denominador par, la base debe ser no
+negativa en los reales. Y hay una trampa de implementación que conviene conocer:
+`(-8) ** (1/3)` en Python devuelve un complejo o `nan` según el tipo, porque `1/3` es un
+float que no es exactamente un tercio. Para raíces cúbicas de negativos hay que
+calcular `-(8 ** (1/3))` explícitamente, como hace el motor.
+
+Extender aún más —a exponentes reales arbitrarios— exige definir `a^x = e^(x ln a)`,
+que es la ruta que toma el análisis y la que usa la implementación de `pow`. Ese es el
+puente hacia las funciones exponencial y logarítmica de las clases 055 y 056.
+
+## 🧮 Ejemplo trabajado
+
+Exponentes fraccionarios con base 8.
+
+```text
+8^(1/3)  = 2.0            (raíz cúbica)
+8^(2/3)  = 4.0            (raíz cúbica al cuadrado)
+8^(−1)   = 0.125
+8^(−1/3) = 0.5
+
+Ley del producto:
+  8^(1/3) · 8^(2/3) = 2.0 · 4.0 = 8.0 = 8¹   ✓
+
+Dominio:
+  (−8)^(1/3) en ℝ  →  −2   (raíz impar, existe)
+  (−8)^(1/2) en ℝ  →  no existe
+  En Python: (-8) ** (1/3) NO devuelve −2; hay que escribir −(8 ** (1/3))
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 050
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Escribir (-8) ** (1/3) esperando −2.
+2. Aplicar exponentes fraccionarios a bases negativas sin comprobar la paridad del denominador.
+3. Comparar identidades de exponentes con == en lugar de con tolerancia.
+
+## 🚀 Dónde se usa de verdad
+
+Normas Lp con p no entero (clase 104), transformaciones de potencia en estadística
+(Box-Cox) y escalado de leyes de potencia en las leyes de escala (clase 359).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Python: `math.pow` y el operador `**`](https://docs.python.org/3/library/math.html#math.pow)
+- [Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

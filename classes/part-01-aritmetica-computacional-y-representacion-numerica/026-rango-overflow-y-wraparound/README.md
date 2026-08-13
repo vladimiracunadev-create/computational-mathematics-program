@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**En ancho fijo, superar el máximo no lanza excepción: el valor da la vuelta al rango.**
 
-Esta clase concreta ese objetivo sobre **Rango, overflow y wraparound**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `overflow_wraparound`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar float para dinero en vez de decimal o enteros de centavos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+resultado = (a + b) mod 2ⁿ, reinterpretado con signo
+int8: 127 + 1 = −128
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,44 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Un float es un racional binario de precisión finita, no un número real.
+El desbordamiento en enteros de ancho fijo es silencioso por diseño: el hardware
+calcula módulo 2ⁿ y descarta los bits que sobran. No hay excepción, no hay aviso, y el
+programa continúa con un valor que puede tener el signo contrario al esperado. Es una
+de las pocas situaciones en computación donde un error grave no produce ninguna señal.
+
+Python es la excepción cómoda: sus enteros crecen indefinidamente, limitados solo por
+la memoria. Esa comodidad esconde el problema hasta que el mismo cálculo pasa a NumPy
+(donde `int32` sí desborda), a una base de datos, a un servicio en otro lenguaje o a
+un modelo cuantizado. La lección de esta clase es que **la ausencia de desbordamiento
+en Python no es una propiedad del algoritmo**: es una propiedad del intérprete.
+
+Los casos históricos abundan. El vuelo inaugural del Ariane 5 en 1996 se destruyó por
+una conversión de un flotante de 64 bits a un entero con signo de 16 bits cuyo valor
+no cabía. El «problema del año 2038» es el desbordamiento de un `time_t` de 32 bits
+contando segundos desde 1970.
+
+La defensa práctica tiene tres capas: elegir el ancho con margen sobre el rango real,
+validar los límites en las fronteras del sistema, y usar tipos con detección de
+desbordamiento donde el lenguaje los ofrezca (`checked_add` en Rust, `-ftrapv` en C).
+
+## 🧮 Ejemplo trabajado
+
+Wraparound en int8 simulado sobre Python.
+
+```text
+máximo int8            127
+127 + 1  →  wraparound  −128       (no 128)
+127 + 2  →  wraparound  −127
+
+En Python nativo:
+127 + 1 = 128                       (int ilimitado)
+sys.maxsize = 9223372036854775807   (tamaño del puntero, no un límite del int)
+
+Lección: Python no desborda, C y NumPy sí.
+El algoritmo es el mismo; el resultado, no.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +106,17 @@ compmath run 026
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Probar un algoritmo solo en Python y asumir que no desborda en otro lenguaje.
+2. Confiar en que un valor «nunca será tan grande» sin validarlo en la frontera del sistema.
+3. Confundir sys.maxsize con un límite del tipo int de Python: es el tamaño del puntero.
+
+## 🚀 Dónde se usa de verdad
+
+Contadores, marcas de tiempo, identificadores, acumuladores de métricas y cualquier
+dato que cruza la frontera entre Python y un sistema de ancho fijo. Es una categoría
+reconocida de vulnerabilidad de seguridad.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [ESA. *Ariane 5 Flight 501 Failure — Report by the Inquiry Board*, 1996](https://esamultimedia.esa.int/docs/esa-x-1819eng.pdf)
+- [CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

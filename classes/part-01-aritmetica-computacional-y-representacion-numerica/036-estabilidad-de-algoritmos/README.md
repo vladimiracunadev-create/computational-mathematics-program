@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Un algoritmo es estable si no amplifica el error más allá de lo que el condicionamiento del problema exige.**
 
-Esta clase concreta ese objetivo sobre **Estabilidad de algoritmos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `stability`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar floats con `==` en lugar de una tolerancia razonada.
+
+## 🧩 Fórmulas de la clase
+
+```text
+raíz pequeña ingenua:  (−b + √(b²−4ac)) / 2a
+raíz pequeña estable:  2c / (−b − √(b²−4ac))
+invariante: r₁·r₂ = c/a
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,50 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Un float es un racional binario de precisión finita, no un número real.
+Estabilidad y condicionamiento son propiedades distintas que se confunden
+constantemente. El condicionamiento dice cuánta precisión permite el **problema**; la
+estabilidad dice cuánta precisión conserva el **algoritmo**. Un algoritmo estable
+aplicado a un problema mal condicionado dará un resultado impreciso, y eso no es culpa
+del algoritmo. Un algoritmo inestable aplicado a un problema bien condicionado dará un
+resultado impreciso, y eso sí lo es.
+
+La fórmula cuadrática es el ejemplo canónico. Cuando `b² ≫ 4ac`, la raíz cuadrada del
+discriminante es casi igual a `|b|`, así que una de las dos raíces se obtiene restando
+dos números casi iguales: cancelación catastrófica. El problema —encontrar las raíces—
+está perfectamente bien condicionado; el algoritmo estándar es inestable para una de
+ellas.
+
+La solución usa una identidad elemental: el producto de las raíces es `c/a`. Calculada
+la raíz grande de forma estable (la que no sufre cancelación), la pequeña se obtiene
+dividiendo. El invariante que se usa para calcularla sirve además como verificación:
+si `r₁·r₂` no da `c/a`, hay un error.
+
+Este patrón —usar un invariante conocido tanto para calcular como para verificar— es
+uno de los hábitos más transferibles del programa. Aparece en la ortogonalidad de QR
+(clase 130), en la conservación de la masa de un plan de transporte (clase 346) y en la
+suma de probabilidades de una softmax (clase 321).
+
+## 🧮 Ejemplo trabajado
+
+Raíces de x² + 10⁸x + 1 = 0.
+
+```text
+a = 1,  b = 1e8,  c = 1
+√(b² − 4ac) = 99999999.99999999
+
+Raíz grande (estable en ambos métodos):
+  r₂ = (−b − √Δ)/2a = −1e8
+
+Raíz pequeña:
+  ingenua:  (−b + √Δ)/2a = −7.45e−09    ← cancelación
+  estable:  2c/(−b − √Δ) = −1.0e−08     ← correcta
+
+Verificación con el invariante r₁·r₂ = c/a = 1:
+  ingenua:  −7.45e−09 × −1e8 = 0.745    ✗
+  estable:  −1.0e−08  × −1e8 = 1.0      ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +113,17 @@ compmath run 036
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Culpar al condicionamiento del problema cuando el inestable es el algoritmo.
+2. Aceptar un resultado numérico sin comprobar ningún invariante.
+3. Usar la fórmula cuadrática estándar sin considerar el caso b² ≫ 4ac.
+
+## 🚀 Dónde se usa de verdad
+
+Selección de algoritmos numéricos, implementación de fórmulas cerradas y verificación
+de resultados. Es la razón por la que se prefiere QR frente a las ecuaciones normales
+en mínimos cuadrados (clase 234).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
+- [Forsythe, G. E. *Pitfalls in Computation, or Why a Math Book Isn't Enough*, 1970](https://www.jstor.org/stable/2317081)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

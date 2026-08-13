@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Fraction guarda dos enteros y da aritmética racional exacta, útil como patrón de referencia.**
 
-Esta clase concreta ese objetivo sobre **Racional exacto y Fraction**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `exact_rationals`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar float para dinero en vez de decimal o enteros de centavos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Fraction(1,3) + Fraction(1,6) == Fraction(1,2)  → exacto
+H_n = Σ 1/k  (número armónico)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,49 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Condicionamiento es del problema; estabilidad es del algoritmo.
+`Fraction` representa un racional como un par de enteros de precisión arbitraria en
+forma reducida. Toda operación —suma, producto, comparación— es exacta, sin
+excepciones y sin necesidad de declarar precisión. Es la aritmética más fiel que ofrece
+la biblioteca estándar.
+
+Su papel en este programa no es sustituir al float en cálculo real: es servir de
+**patrón de referencia**. Para medir cuánto error comete un cálculo en punto flotante
+hace falta conocer el valor exacto, y `Fraction` lo proporciona en cualquier expresión
+que solo use operaciones racionales. El laboratorio calcula el número armónico H₁₀ por
+ambos caminos y compara.
+
+El coste es de crecimiento: los denominadores se multiplican y crecen muy rápido. H₁₀
+ya tiene denominador 2520, y H₁₀₀ tiene cientos de dígitos. Para cálculos largos, la
+aritmética exacta deja de ser viable no por lentitud de cada operación sino por el
+tamaño de los números.
+
+Una utilidad práctica: `Fraction(0.1)` muestra el racional exacto que guarda un float,
+y `Fraction(x).limit_denominator(n)` encuentra la mejor aproximación racional con
+denominador acotado. Esto último es la base de la aproximación por fracciones continuas
+y explica por qué 22/7 y 355/113 son buenas aproximaciones de π.
+
+## 🧮 Ejemplo trabajado
+
+Número armónico H₁₀ exacto frente a flotante.
+
+```text
+H₁₀ = 1 + 1/2 + 1/3 + ... + 1/10
+
+Exacto (Fraction):  7381/2520
+Como float:         2.9289682539682538
+Suma en float:      2.9289682539682538
+Diferencia:         0.0  (en este caso coinciden)
+
+Denominador: 2520 = mcm(1..10)
+
+Fraction(0.1) == Fraction(1, 10)  →  False
+  porque el float 0.1 no es exactamente 1/10
+```
+
+Que coincidan con diez términos no significa que coincidan con un millón: el error
+crece con n (clase 034).
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 038
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Usar Fraction en cálculos largos sin considerar el crecimiento del denominador.
+2. Suponer que Fraction(0.1) es 1/10: hereda el valor real del float.
+3. Confundir aritmética exacta con precisión infinita en el resultado final convertido a float.
+
+## 🚀 Dónde se usa de verdad
+
+Verificación de implementaciones numéricas, cálculo simbólico ligero, probabilidades
+exactas en combinatoria y generación de casos de prueba con valor esperado conocido.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Python: módulo `fractions`](https://docs.python.org/3/library/fractions.html)
+- [Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

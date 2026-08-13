@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Convertir a binario es dividir sucesivamente por 2 y leer los restos en orden inverso.**
 
-Esta clase concreta ese objetivo sobre **Conversión decimal a binario**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `decimal_to_binary`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que la suma de floats es asociativa.
+
+## 🧩 Fórmulas de la clase
+
+```text
+n = Σ bᵢ·2ⁱ  con bᵢ ∈ {0,1}
+restos de n/2 leídos de abajo arriba = representación binaria
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,47 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> El error relativo, no el absoluto, es la magnitud que se propaga.
+El algoritmo de divisiones sucesivas no es un truco: es la construcción directa de la
+representación posicional. Al dividir n entre 2, el resto es el bit menos significativo
+—dice si n es par o impar— y el cociente es el número «desplazado un bit a la derecha».
+Repetir hasta llegar a cero produce todos los bits, del menos al más significativo, y
+por eso se leen al revés.
+
+La representación es **única**: todo entero positivo tiene exactamente una escritura en
+base 2. Esa unicidad es la que permite que dos máquinas distintas interpreten los
+mismos bits como el mismo número, y es la que se pierde en punto flotante, donde
+varios reales distintos comparten representación.
+
+El mismo algoritmo funciona en cualquier base cambiando el divisor. En base 16 los
+restos van de 0 a 15 y se escriben con dígitos hexadecimales; en base 8, de 0 a 7. La
+clase 023 explota que 16 y 8 son potencias de 2 para convertir sin dividir.
+
+Un detalle práctico: Python trae la conversión en `format(n, "b")` y `int(s, 2)`, pero
+implementarla a mano una vez deja claro por qué el bit menos significativo es la
+paridad, hecho que se usará constantemente en la parte 04 (aritmética modular) y en
+cualquier manipulación de bits.
+
+## 🧮 Ejemplo trabajado
+
+Convertir 156 a binario por divisiones sucesivas.
+
+```text
+156 / 2 = 78  resto 0    ← bit menos significativo
+ 78 / 2 = 39  resto 0
+ 39 / 2 = 19  resto 1
+ 19 / 2 =  9  resto 1
+  9 / 2 =  4  resto 1
+  4 / 2 =  2  resto 0
+  2 / 2 =  1  resto 0
+  1 / 2 =  0  resto 1    ← bit más significativo
+
+Leídos de abajo arriba: 10011100
+
+Verificación: 128 + 16 + 8 + 4 = 156   ✓
+              (2⁷ + 2⁴ + 2³ + 2²)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,17 @@ compmath run 022
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Leer los restos en el orden en que salen en lugar de invertirlos.
+2. Olvidar que el último resto (el del cociente 1) también forma parte del número.
+3. No verificar reconstruyendo con las potencias de 2.
+
+## 🚀 Dónde se usa de verdad
+
+Máscaras de bits, permisos de sistema de archivos, banderas de configuración,
+direcciones de red y cualquier serialización binaria. Es el prerrequisito de la
+representación IEEE 754.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Python: funciones `bin`, `int` y `format`](https://docs.python.org/3/library/functions.html#bin)
+- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.1](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

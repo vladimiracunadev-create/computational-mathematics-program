@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**Conmutativa, asociativa y distributiva son válidas en ℝ, pero la asociatividad falla en punto flotante.**
 
-Esta clase concreta ese objetivo sobre **Propiedades distributiva, asociativa y conmutativa**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `algebra_properties`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar log a valores no positivos sin declarar el dominio.
+
+## 🧩 Fórmulas de la clase
+
+```text
+conmutativa: a + b = b + a,  ab = ba
+asociativa: (a+b)+c = a+(b+c)
+distributiva: a(b+c) = ab + ac
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,48 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El dominio forma parte de la definición: cambiarlo cambia la función.
+Las tres propiedades definen la estructura de cuerpo de los números reales, y de ellas
+se deduce todo el álgebra elemental. La distributiva es la más productiva: conecta la
+suma con el producto y es la que justifica factorizar, desarrollar y —como vio la
+clase 002— la regla de los signos.
+
+Conviene notar qué **no** cumplen ciertas operaciones. La resta no es conmutativa ni
+asociativa. La división tampoco. La potenciación no es conmutativa (`2³ ≠ 3²`) ni
+asociativa (asocia por la derecha, clase 010). Y en la parte 05 aparecerá que el
+producto de matrices es asociativo pero **no conmutativo**, lo que cambia por completo
+cómo se manipulan las expresiones.
+
+El hallazgo incómodo de esta clase es que la asociatividad de la suma **falla en punto
+flotante**. `(1e16 + 1.0) − 1e16` da 0.0, mientras que `1e16 + (1.0 − 1e16)` da 1.0.
+No es un bug: es la consecuencia directa de que cada suma parcial se redondea, tal como
+explicó la clase 039.
+
+La conclusión práctica es que las identidades algebraicas son ciertas en ℝ y solo
+aproximadamente ciertas en float. Reordenar una expresión para simplificarla puede
+cambiar su resultado numérico, y en cálculo sensible ese reordenamiento debe hacerse
+con criterio, no automáticamente.
+
+## 🧮 Ejemplo trabajado
+
+Las tres propiedades y su límite en flotante.
+
+```text
+a = 2.5,  b = −4.0,  c = 7.25
+
+conmutativa suma      a + b == b + a          True
+conmutativa producto  a·b == b·a              True
+asociativa en ℝ       (a+b)+c == a+(b+c)      True
+distributiva          a(b+c) == ab + ac       True (isclose)
+
+resta no conmutativa  a − b == b − a          False
+
+Asociatividad en float64:
+  (1e16 + 1.0) − 1e16  =  0.0
+  1e16 + (1.0 − 1e16)  =  1.0
+  ¿iguales?  No
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 042
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Suponer que la resta o la división heredan la conmutatividad de la suma y el producto.
+2. Reordenar sumas en código numérico sensible sin comprobar el efecto.
+3. Aplicar la conmutatividad al producto de matrices (parte 05).
+
+## 🚀 Dónde se usa de verdad
+
+Justifica toda manipulación algebraica y explica por qué un compilador con
+optimizaciones agresivas de coma flotante (`-ffast-math`) puede cambiar resultados.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)
+- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011, cap. 1](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

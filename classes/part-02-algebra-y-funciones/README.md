@@ -10,6 +10,57 @@
 
 Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
+El álgebra tiene mala fama porque se enseña como manipulación de símbolos sin objeto.
+Esta parte invierte el orden: primero el **objeto** —la función—, después las reglas para
+manipularlo. Una función no es una fórmula: es una asignación que a cada elemento de un
+dominio le hace corresponder exactamente uno de un codominio. La fórmula es solo una de
+las formas de describirla, y el dominio forma parte de su identidad.
+
+Las clases 041 a 051 construyen la maquinaria simbólica: términos semejantes,
+propiedades, ecuaciones, sistemas, polinomios, factorización, cuadráticas, exponentes y
+logaritmos. El énfasis no está en resolver rápido sino en saber **qué operación es
+reversible**. Dividir por una expresión que puede anularse pierde soluciones; elevar al
+cuadrado introduce soluciones falsas. Cada paso de un despeje es un compromiso, y hay que
+saber cuál.
+
+Las clases 052 a 059 son el corazón de la parte. Dominio y rango, familias lineal,
+cuadrática, exponencial y logarítmica, composición, inversa y funciones por tramos. Estas
+cinco familias cubren casi todo el modelado elemental, y saber reconocer cuál describe un
+conjunto de datos es una competencia directamente evaluable: el capstone 060 lo hace con
+residuos.
+
+Dos ideas de esta parte reaparecen literalmente en deep learning. La primera es la
+**composición**: una red neuronal es `f_n(...f_2(f_1(x)))`, una composición de funciones
+parametrizadas, y la regla de la cadena de la parte 07 es la derivada de esa composición.
+La segunda es que el **logaritmo convierte productos en sumas**, que es exactamente por
+qué toda función de pérdida probabilística se escribe en escala logarítmica: multiplicar
+diez mil probabilidades produce underflow, sumar diez mil logaritmos no.
+
+La función por tramos de la clase 059 merece atención especial: ReLU, la activación más
+usada en deep learning, es literalmente una función por tramos, y su comportamiento
+—derivada 1 en un lado, 0 en el otro— se entiende aquí antes de que aparezca con nombre
+técnico.
+
+Al terminar la parte deberías poder mirar una curva y decir qué familia la describe, mirar
+una fórmula y decir cuál es su dominio, y mirar una composición y decir en qué orden se
+aplican sus piezas.
+
+## 🗺️ Mapa conceptual
+
+```mermaid
+flowchart TD
+    A["041-045<br/>Manipulación simbólica<br/>términos · propiedades · ecuaciones · sistemas"] --> B["046-049<br/>Polinomios<br/>operaciones · factorización · cuadráticas"]
+    A --> C["050-051<br/>Exponentes y logaritmos<br/>leyes · cambio de base"]
+    B --> D["052-056<br/>Familias de funciones<br/>lineal · cuadrática · exponencial · logarítmica"]
+    C --> D
+    D --> E["057-059<br/>Operaciones con funciones<br/>composición · inversa · por tramos"]
+    E --> F["060<br/>Capstone<br/>elegir modelo por residuos"]
+    E ==> G["Parte 07<br/>Cálculo: derivada de la composición"]
+    E -.-> H["Red neuronal = composición<br/>Parte 15"]
+    C -.-> I["Log-verosimilitud y cross-entropy<br/>Partes 10 y 13"]
+    E -.-> J["ReLU es una función por tramos<br/>Parte 15"]
+```
+
 ## 🧠 Ideas centrales
 
 - Una ecuación restringe; una función asigna. No son lo mismo.
@@ -90,26 +141,30 @@ flowchart LR
 
 | # | Clase | Demostración | Idea central |
 |---|---|---|---|
-| `041` | [Expresiones algebraicas y términos](041-expresiones-algebraicas-y-terminos/README.md) | `algebraic_terms` | Términos semejantes y evaluación de una expresión. |
-| `042` | [Propiedades distributiva, asociativa y conmutativa](042-propiedades-distributiva-asociativa-y-conmutativa/README.md) | `algebra_properties` | Conmutativa, asociativa y distributiva: válidas en ℝ, no siempre en float. |
-| `043` | [Ecuaciones lineales de una variable](043-ecuaciones-lineales-de-una-variable/README.md) | `linear_equation` | Resolver ax + b = c y verificar el residuo. |
-| `044` | [Desigualdades lineales](044-desigualdades-lineales/README.md) | `linear_inequality` | Multiplicar por un negativo invierte el sentido de la desigualdad. |
-| `045` | [Sistemas de ecuaciones 2x2](045-sistemas-de-ecuaciones-2x2/README.md) | `system_2x2` | Sistema 2x2 por determinantes (regla de Cramer) y verificación. |
-| `046` | [Polinomios y operaciones](046-polinomios-y-operaciones/README.md) | `polynomial_ops` | Suma, producto y evaluación de polinomios por Horner. |
-| `047` | [Factorización elemental](047-factorizacion-elemental/README.md) | `factoring` | Factorizar x² - 3x + 2 y comprobar las raíces. |
-| `048` | [Ecuaciones cuadráticas](048-ecuaciones-cuadraticas/README.md) | `quadratic_equation` | Resolver una cuadrática y contrastar con la forma de vértice. |
+| `041` | [Expresiones algebraicas y términos](041-expresiones-algebraicas-y-terminos/README.md) | `algebraic_terms` | Solo se suman términos con la misma parte literal; simplificar reduce operaciones sin cambiar el valor. |
+| `042` | [Propiedades distributiva, asociativa y conmutativa](042-propiedades-distributiva-asociativa-y-conmutativa/README.md) | `algebra_properties` | Conmutativa, asociativa y distributiva son válidas en ℝ, pero la asociatividad falla en punto flotante. |
+| `043` | [Ecuaciones lineales de una variable](043-ecuaciones-lineales-de-una-variable/README.md) | `linear_equation` | Resolver una ecuación es aplicar operaciones reversibles hasta aislar la incógnita. |
+| `044` | [Desigualdades lineales](044-desigualdades-lineales/README.md) | `linear_inequality` | Multiplicar o dividir una desigualdad por un número negativo invierte su sentido. |
+| `045` | [Sistemas de ecuaciones 2x2](045-sistemas-de-ecuaciones-2x2/README.md) | `system_2x2` | Un sistema 2×2 tiene solución única si y solo si su determinante es no nulo. |
+| `046` | [Polinomios y operaciones](046-polinomios-y-operaciones/README.md) | `polynomial_ops` | El esquema de Horner evalúa un polinomio de grado n con n multiplicaciones en lugar de n(n+1)/2. |
+| `047` | [Factorización elemental](047-factorizacion-elemental/README.md) | `factoring` | Factorizar expone las raíces; las relaciones de Vieta las conectan con los coeficientes. |
+| `048` | [Ecuaciones cuadráticas](048-ecuaciones-cuadraticas/README.md) | `quadratic_equation` | El vértice de una parábola está en x = −b/2a y es el punto medio de las raíces. |
 | `049` | [Fórmula cuadrática y discriminante](049-formula-cuadratica-y-discriminante/README.md) | `discriminant` | El discriminante clasifica las raíces antes de calcularlas. |
-| `050` | [Exponentes algebraicos](050-exponentes-algebraicos/README.md) | `algebraic_exponents` | Exponentes negativos, fraccionarios y su dominio. |
-| `051` | [Logaritmos y sus propiedades](051-logaritmos-y-sus-propiedades/README.md) | `logarithm_laws` | Las tres leyes del logaritmo verificadas numéricamente. |
-| `052` | [Funciones: dominio y rango](052-funciones-dominio-y-rango/README.md) | `domain_range` | El dominio forma parte de la definición de la función. |
-| `053` | [Funciones lineales y pendiente](053-funciones-lineales-y-pendiente/README.md) | `linear_function` | Pendiente como razón de cambio constante. |
-| `054` | [Funciones cuadráticas y parábolas](054-funciones-cuadraticas-y-parabolas/README.md) | `quadratic_function` | Vértice, eje de simetría y concavidad. |
-| `055` | [Funciones exponenciales](055-funciones-exponenciales/README.md) | `exponential_function` | Crecimiento exponencial: razón constante, no diferencia constante. |
-| `056` | [Funciones logarítmicas](056-funciones-logaritmicas/README.md) | `logarithmic_function` | El logaritmo como inversa de la exponencial y como escala. |
-| `057` | [Composición de funciones](057-composicion-de-funciones/README.md) | `function_composition` | (g∘f) no es (f∘g): la composición no conmuta. |
-| `058` | [Funciones inversas](058-funciones-inversas/README.md) | `inverse_function` | Inversa frente a recíproco: dos objetos distintos. |
-| `059` | [Funciones por tramos](059-funciones-por-tramos/README.md) | `piecewise_function` | Una función por tramos y su continuidad en el punto de corte. |
-| `060` | [Capstone: construir y comparar modelos funcionales](060-capstone-construir-y-comparar-modelos-funcionales/README.md) | `capstone_model_fitting` | Capstone: ¿lineal, cuadrático o exponencial? Decidir con residuos. |
+| `050` | [Exponentes algebraicos](050-exponentes-algebraicos/README.md) | `algebraic_exponents` | Los exponentes fraccionarios extienden las leyes de potencias y definen las raíces. |
+| `051` | [Logaritmos y sus propiedades](051-logaritmos-y-sus-propiedades/README.md) | `logarithm_laws` | El logaritmo convierte productos en sumas, y por eso toda verosimilitud se calcula en escala logarítmica. |
+| `052` | [Funciones: dominio y rango](052-funciones-dominio-y-rango/README.md) | `domain_range` | El dominio forma parte de la definición de una función: cambiarlo cambia la función. |
+| `053` | [Funciones lineales y pendiente](053-funciones-lineales-y-pendiente/README.md) | `linear_function` | Una función lineal tiene razón de cambio constante; la pendiente es esa razón. |
+| `054` | [Funciones cuadráticas y parábolas](054-funciones-cuadraticas-y-parabolas/README.md) | `quadratic_function` | El signo del coeficiente principal decide la concavidad, y el vértice es el extremo. |
+| `055` | [Funciones exponenciales](055-funciones-exponenciales/README.md) | `exponential_function` | El crecimiento exponencial tiene razón constante, no diferencia constante. |
+| `056` | [Funciones logarítmicas](056-funciones-logaritmicas/README.md) | `logarithmic_function` | El logaritmo es la inversa de la exponencial y convierte factores en distancias iguales. |
+| `057` | [Composición de funciones](057-composicion-de-funciones/README.md) | `function_composition` | La composición aplica funciones en cadena y no es conmutativa: (g∘f) ≠ (f∘g). |
+| `058` | [Funciones inversas](058-funciones-inversas/README.md) | `inverse_function` | La inversa deshace la función y existe solo si es inyectiva; no es el recíproco 1/f. |
+| `059` | [Funciones por tramos](059-funciones-por-tramos/README.md) | `piecewise_function` | Una función por tramos se define con reglas distintas en subconjuntos del dominio; ReLU es el ejemplo dominante en IA. |
+| `060` | [Capstone: construir y comparar modelos funcionales](060-capstone-construir-y-comparar-modelos-funcionales/README.md) | `capstone_model_fitting` | Elegir modelo es comparar residuos sobre los mismos datos, no elegir la familia que parece más elegante. |
+
+## 📖 Glosario de la parte (20 términos)
+
+Definiciones precisas en [`GLOSARIO.md`](GLOSARIO.md).
 
 ## 🧰 Stack de referencia
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Los subnormales extienden el rango hacia el cero a costa de precisión; el overflow produce infinito y no error.**
 
-Esta clase concreta ese objetivo sobre **Overflow y underflow flotante**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `float_overflow_underflow`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar floats con `==` en lugar de una tolerancia razonada.
+
+## 🧩 Fórmulas de la clase
+
+```text
+float64: max ≈ 1.797e308,  min normal ≈ 2.225e−308,  min subnormal = 5e−324
+inf − inf = NaN,  0/0 = NaN,  NaN != NaN
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,51 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Condicionamiento es del problema; estabilidad es del algoritmo.
+El rango de float64 tiene tres zonas. Los **normales** van de 2.2·10⁻³⁰⁸ a
+1.8·10³⁰⁸ con la precisión completa de 53 bits. Por debajo del mínimo normal están los
+**subnormales**, que renuncian al bit implícito para poder acercarse más al cero: llegan
+hasta 5·10⁻³²⁴ pero con precisión progresivamente menor. Por encima del máximo está el
+**infinito**.
+
+Los subnormales existen para que la resta de dos números cercanos nunca dé cero cuando
+los números son distintos, propiedad conocida como *gradual underflow*. Sin ellos,
+`a − b == 0` podría ser cierto con `a != b`, lo que rompe algoritmos que dividen por esa
+diferencia. La contrapartida es de rendimiento: en muchas CPU las operaciones con
+subnormales son órdenes de magnitud más lentas, y por eso los frameworks de deep
+learning ofrecen el modo *flush-to-zero*.
+
+El desbordamiento no lanza excepción: produce `inf`, y el cálculo continúa. Esto es
+deliberado —permite terminar una operación vectorizada y detectar el problema al
+final— pero exige comprobar los resultados. El `NaN` aparece en las operaciones
+indeterminadas (`inf − inf`, `0/0`, `√(−1)`) y tiene una propiedad que sorprende:
+**no es igual a sí mismo**. `nan == nan` es `False`, y por eso hay que usar
+`math.isnan`.
+
+En entrenamiento de redes, la secuencia típica es: un gradiente crece, produce `inf`,
+el `inf` participa en una resta y produce `NaN`, y el `NaN` contamina todos los pesos
+en una sola actualización. Detectarlo exige comprobar explícitamente; el programa no
+avisa.
+
+## 🧮 Ejemplo trabajado
+
+Los tres límites y la propiedad del NaN.
+
+```text
+max float64        1.7976931348623157e+308
+max × 2            inf                      ← sin excepción
+
+min normal         2.2250738585072014e−308
+min subnormal      5e−324
+min subnormal / 2  0.0                      ← underflow a cero
+
+inf − inf          nan
+nan == nan         False                    ← usar math.isnan
+```
+
+Un `inf` en un cálculo no detiene nada. Se propaga en silencio hasta que alguien
+comprueba.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +113,17 @@ compmath run 033
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Comparar con == para detectar NaN en lugar de usar math.isnan.
+2. Suponer que el desbordamiento lanza una excepción.
+3. Ignorar el coste de rendimiento de los subnormales en bucles numéricos intensivos.
+
+## 🚀 Dónde se usa de verdad
+
+Depuración de entrenamientos que producen NaN, control de estabilidad en softmax y
+logaritmos, y validación de pipelines numéricos. La estabilización de softmax
+(clase 321) existe para evitar exactamente este overflow.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)
+- [Python: `sys.float_info`](https://docs.python.org/3/library/sys.html#sys.float_info)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

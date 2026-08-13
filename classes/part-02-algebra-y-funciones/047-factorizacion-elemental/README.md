@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**Factorizar expone las raíces; las relaciones de Vieta las conectan con los coeficientes.**
 
-Esta clase concreta ese objetivo sobre **Factorización elemental**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `factoring`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: dividir por una expresión que puede anularse y perder soluciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x² + bx + c = (x − r₁)(x − r₂)
+r₁ + r₂ = −b,   r₁·r₂ = c
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El dominio forma parte de la definición: cambiarlo cambia la función.
+Factorizar un polinomio es escribirlo como producto de factores más simples. Su valor
+práctico es que las raíces se leen directamente: si `p(x) = (x−1)(x−2)`, las raíces son
+1 y 2 sin resolver nada. Esa es la razón por la que factorizar es útil, y no un
+ejercicio de manipulación.
+
+Las relaciones de Vieta conectan las raíces con los coeficientes sin calcularlas: para
+`x² + bx + c`, la suma de las raíces es `−b` y su producto es `c`. Esto sirve para dos
+cosas. Primero, para **adivinar** factorizaciones con coeficientes enteros: hay que
+buscar dos números que sumen `−b` y multipliquen `c`. Segundo, y más importante en este
+programa, para **verificar**: si las raíces calculadas no satisfacen las relaciones,
+hay un error.
+
+Esa verificación es exactamente la que la clase 036 usó para detectar la inestabilidad
+de la fórmula cuadrática. El producto de las raíces debe ser `c/a`; cuando la fórmula
+ingenua sufre cancelación, la relación de Vieta lo delata de inmediato.
+
+No todo polinomio factoriza sobre los racionales. `x² + 1` no tiene raíces reales y
+`x² − 2` las tiene irracionales. El teorema fundamental del álgebra garantiza que sobre
+los complejos todo polinomio de grado n tiene exactamente n raíces contando
+multiplicidad, y ese es el marco en el que la factorización siempre existe.
+
+## 🧮 Ejemplo trabajado
+
+Factorizar x² − 3x + 2 y verificar con Vieta.
+
+```text
+Buscar r₁, r₂ con  r₁ + r₂ = 3  y  r₁·r₂ = 2
+Candidatos enteros: 1 y 2
+
+x² − 3x + 2 = (x − 1)(x − 2)
+
+Verificación desarrollando:
+  (x−1)(x−2) = x² − 2x − x + 2 = x² − 3x + 2   ✓
+
+Vieta:
+  suma:     1 + 2 = 3 = −b   ✓   (b = −3)
+  producto: 1 · 2 = 2 =  c   ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,16 @@ compmath run 047
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Buscar solo factorizaciones con enteros: muchos polinomios no las tienen.
+2. Equivocar el signo al aplicar Vieta: la suma es −b, no b.
+3. Factorizar sin verificar desarrollando el producto.
+
+## 🚀 Dónde se usa de verdad
+
+Simplificación de expresiones racionales, análisis de estabilidad por raíces del
+polinomio característico y verificación de solvers de raíces (clase 036).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131)
+- [Vieta's formulas — Wolfram MathWorld](https://mathworld.wolfram.com/VietasFormulas.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

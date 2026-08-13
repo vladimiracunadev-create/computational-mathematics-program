@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**La composición aplica funciones en cadena y no es conmutativa: (g∘f) ≠ (f∘g).**
 
-Esta clase concreta ese objetivo sobre **Composición de funciones**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `function_composition`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar log a valores no positivos sin declarar el dominio.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(g∘f)(x) = g(f(x))
+dominio de g∘f: {x ∈ dom f : f(x) ∈ dom g}
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,44 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El dominio forma parte de la definición: cambiarlo cambia la función.
+Componer es encadenar: la salida de una función entra en la siguiente. El orden importa
+y casi nunca conmuta, hecho que se comprueba con un solo ejemplo numérico. Leer
+`(g∘f)(x)` correctamente —primero f, luego g, aunque g esté escrita a la izquierda— es
+una de las causas frecuentes de error al trasladar fórmulas.
+
+El dominio de la composición no es el dominio de f: hay que exigir además que `f(x)`
+caiga dentro del dominio de g. Si `g` es un logaritmo, hay que garantizar que `f(x) > 0`.
+Este detalle es la fuente de los `NaN` que aparecen cuando una activación produce
+valores fuera del dominio de la siguiente capa.
+
+Y aquí está la idea que conecta esta parte con todo el resto del programa: **una red
+neuronal es una composición de funciones parametrizadas**. `f(x) = f_L(...f_2(f_1(x)))`,
+donde cada `f_i` es «transformación lineal seguida de no linealidad». Nada más. La
+profundidad de una red es la longitud de esa cadena.
+
+La consecuencia inmediata, que la clase 302 hará explícita: si todas las `f_i` fueran
+lineales, su composición sería lineal, y apilar capas no aportaría nada. La no
+linealidad entre capas es lo que hace que la composición sea más expresiva que sus
+partes. Y derivar una composición es exactamente la regla de la cadena (clase 147).
+
+## 🧮 Ejemplo trabajado
+
+Componer f(x) = 2x + 1 con g(x) = x².
+
+```text
+(g∘f)(3) = g(f(3)) = g(7)  = 49
+(f∘g)(3) = f(g(3)) = f(9)  = 19
+¿conmutan?  No     49 ≠ 19
+
+Cadena de tres:
+  f(g(f(3))) = f(g(7)) = f(49) = 99
+
+Analogía directa:
+  red neuronal = f_L(...f_2(f_1(x)))
+  cada f_i = no_linealidad(W_i · entrada + b_i)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +106,16 @@ compmath run 057
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Leer (g∘f) como «primero g»: se aplica f primero.
+2. Olvidar restringir el dominio para que f(x) caiga en el dominio de g.
+3. Suponer que la composición conmuta.
+
+## 🚀 Dónde se usa de verdad
+
+Arquitectura de redes neuronales, pipelines de transformación de datos, cambio de
+variable en integración (clase 157) y la regla de la cadena.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)
+- [Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

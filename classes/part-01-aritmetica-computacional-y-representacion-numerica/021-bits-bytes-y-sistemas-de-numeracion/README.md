@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Con n bits se codifican exactamente 2ⁿ valores distintos; el ancho de palabra fija el rango, no la precisión.**
 
-Esta clase concreta ese objetivo sobre **Bits, bytes y sistemas de numeración**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bits_and_bytes`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar floats con `==` en lugar de una tolerancia razonada.
+
+## 🧩 Fórmulas de la clase
+
+```text
+valores representables con n bits = 2ⁿ
+bits necesarios para k valores = ⌈log₂ k⌉
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,49 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Un float es un racional binario de precisión finita, no un número real.
+Un bit distingue dos estados. Dos bits distinguen cuatro, porque cada estado del
+primero se combina con cada estado del segundo. La regla del producto —que la clase
+087 formalizará como combinatoria— da directamente 2ⁿ para n bits, y esa cuenta es la
+base de todo dimensionamiento en computación.
+
+La relación inversa importa igual: para representar k valores distintos hacen falta
+`⌈log₂ k⌉` bits. Un millón de valores necesita 20 bits; mil millones, 30. El
+logaritmo convierte una multiplicación de posibilidades en una suma de bits, y por eso
+la información se mide en bits (clase 262): es la unidad natural en la que las
+posibilidades se suman.
+
+Los anchos habituales no son arbitrarios: 8, 16, 32 y 64 bits corresponden a las
+unidades que el hardware manipula de una vez. Elegir el ancho es elegir un compromiso
+entre rango y memoria. En deep learning esa elección es un tema activo: pasar de
+`float32` a `bfloat16` reduce a la mitad la memoria de activaciones y permite lotes
+mayores, a costa de precisión.
+
+Conviene separar desde ya dos cosas que el ancho de palabra confunde: **cuántos
+valores distintos** caben (rango) y **cuán juntos** están (precisión). Un `int32` y un
+`float32` ocupan lo mismo y representan cosas radicalmente distintas: el entero cubre
+un rango pequeño con espaciado uniforme de 1; el flotante cubre un rango enorme con
+espaciado variable.
+
+## 🧮 Ejemplo trabajado
+
+Cuántos bits hacen falta y cuántos valores caben.
+
+```text
+ancho    valores representables
+1 bit                       2
+1 byte                    256
+16 bits                65 536
+32 bits         4 294 967 296
+64 bits    1.8446744e19
+
+Para 1000 valores:      ⌈log₂ 1000⌉  = 10 bits   (2¹⁰ = 1024 ≥ 1000)
+Para 1 000 000 valores: ⌈log₂ 10⁶⌉   = 20 bits   (2²⁰ = 1 048 576)
+```
+
+Observa el salto: duplicar los bits no duplica los valores, los eleva al cuadrado.
+De 32 a 64 bits no hay «el doble de números»: hay 4·10⁹ veces más.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,17 @@ compmath run 021
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Confundir rango (cuántos valores caben) con precisión (cuán juntos están).
+2. Suponer que 2ⁿ bits representan 2n valores en lugar de 2^(2n).
+3. Elegir el ancho por costumbre en lugar de por el rango real que necesita el dato.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de esquemas de base de datos, formatos binarios, cuantización de modelos y
+dimensionamiento de índices. La elección `float32` frente a `bfloat16` en
+entrenamiento es exactamente esta decisión.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)
+- [Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., Morgan Kaufmann, 2020, cap. 3](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

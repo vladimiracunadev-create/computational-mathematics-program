@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**El logaritmo es la inversa de la exponencial y convierte factores en distancias iguales.**
 
-Esta clase concreta ese objetivo sobre **Funciones logarítmicas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `logarithmic_function`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: dividir por una expresión que puede anularse y perder soluciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+y = log_b(x)  ⟺  x = bʸ
+escala logarítmica: distancias iguales ⟹ factores iguales
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,43 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> Una ecuación restringe; una función asigna. No son lo mismo.
+La función logarítmica deshace la exponencial, y esa relación de inversa es lo que la
+hace útil: convierte una pregunta sobre crecimiento («¿cuánto tarda en multiplicarse
+por 10?») en una pregunta sobre suma. Su crecimiento es extraordinariamente lento —de
+10³ a 10⁶ el logaritmo decimal solo sube 3— y por eso comprime rangos enormes.
+
+La escala logarítmica es la aplicación práctica más visible. En un eje logarítmico, una
+exponencial se ve como una recta, lo que permite identificar el modelo a simple vista y
+leer la tasa como pendiente. Los decibelios, el pH, la escala de magnitud sísmica y las
+curvas de aprendizaje de los modelos usan esa propiedad.
+
+El dominio es `x > 0`, sin excepciones: no hay ningún exponente al que elevar una base
+positiva para obtener un número negativo. `log(0)` tiende a `−inf`, y ese es el motivo
+técnico por el que toda implementación de entropía o cross-entropy protege el argumento
+con un epsilon (clase 263).
+
+En las leyes de escala de los modelos de lenguaje (clase 359), la relación entre
+pérdida y número de parámetros es una ley de potencia, que en escala log-log es una
+recta cuya pendiente es el exponente. Leer esas gráficas exige entender esta clase.
+
+## 🧮 Ejemplo trabajado
+
+Logaritmo como inversa y como escala.
+
+```text
+log₁₀(1000) = 3       porque 10³ = 1000
+10^log₁₀(1000) = 1000                    ✓ inversa verificada
+
+Escala: de 10³ a 10⁶ hay un factor 1000
+  log₁₀(10⁶) − log₁₀(10³) = 6 − 3 = 3
+  tres unidades en el eje = tres órdenes de magnitud
+
+Decibelios: 10·log₁₀(10⁻³) = −30 dB
+
+Dominio: x > 0.  log(0) → −inf,  log(−1) no existe en ℝ
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +105,16 @@ compmath run 056
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Aplicar logaritmo a cero o a valores negativos sin protección.
+2. Leer una gráfica logarítmica como si fuera lineal.
+3. Confundir log natural, log₁₀ y log₂ al comparar resultados (entropía en nats vs bits).
+
+## 🚀 Dónde se usa de verdad
+
+Escalas de medida, visualización de rangos amplios, log-verosimilitud, entropía,
+perplejidad y lectura de leyes de escala en log-log.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Python: `math.log` y variantes](https://docs.python.org/3/library/math.html#math.log)
+- [Cover & Thomas. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

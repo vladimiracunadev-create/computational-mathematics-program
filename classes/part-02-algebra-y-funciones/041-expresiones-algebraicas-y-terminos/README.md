@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**Solo se suman términos con la misma parte literal; simplificar reduce operaciones sin cambiar el valor.**
 
-Esta clase concreta ese objetivo sobre **Expresiones algebraicas y términos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `algebraic_terms`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: dividir por una expresión que puede anularse y perder soluciones.
+
+## 🧩 Fórmulas de la clase
+
+```text
+3x²y + 5x²y = 8x²y
+términos semejantes ⟺ misma parte literal con los mismos exponentes
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,42 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> Una ecuación restringe; una función asigna. No son lo mismo.
+Una expresión algebraica es una receta de cálculo escrita con símbolos. Simplificarla
+no cambia lo que calcula: cambia **cuántas operaciones** necesita para calcularlo. Esa
+es la utilidad concreta de reducir términos semejantes, y es la misma idea que la
+clase 001 introdujo comparando la suma iterativa con la fórmula cerrada.
+
+Dos términos son semejantes si tienen idéntica parte literal: mismas variables con los
+mismos exponentes. `3x²y` y `5x²y` lo son; `3x²y` y `3xy²` no, aunque usen las mismas
+letras. La razón es la propiedad distributiva: `3x²y + 5x²y = (3+5)x²y` solo porque el
+factor común existe.
+
+La verificación es inmediata y conviene hacerla siempre: evaluar la expresión original
+y la simplificada en un punto arbitrario y comprobar que coinciden. Si difieren, la
+simplificación introdujo un error. Un solo punto no demuestra equivalencia —eso lo
+recuerda la clase 019— pero detecta la mayoría de los errores de manipulación.
+
+El hábito que instala esta clase es de lectura: antes de operar, identificar qué
+términos pueden combinarse. En expresiones grandes, agrupar por parte literal antes de
+sumar reduce errores más que cualquier técnica de cálculo.
+
+## 🧮 Ejemplo trabajado
+
+Reducir una expresión de cuatro términos a dos.
+
+```text
+original:     3x²y − 2xy + 5x²y + 7xy
+agrupar:      (3x²y + 5x²y) + (−2xy + 7xy)
+simplificada: 8x²y + 5xy
+
+Verificación con x = 2, y = 3:
+  original:     3·4·3 − 2·2·3 + 5·4·3 + 7·2·3 = 36 − 12 + 60 + 42 = 126
+  simplificada: 8·4·3 + 5·2·3 = 96 + 30 = 126     ✓
+
+Operaciones: 4 términos → 2 términos
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +104,17 @@ compmath run 041
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Sumar términos con la misma variable pero distinto exponente: 3x² y 3x no son semejantes.
+2. Perder un signo al reagrupar términos negativos.
+3. Simplificar sin verificar numéricamente en al menos un punto.
+
+## 🚀 Dónde se usa de verdad
+
+Simplificar una expresión antes de implementarla reduce operaciones y errores de
+redondeo. Es la versión manual de lo que hace un compilador al optimizar y de lo que
+hacen los frameworks al fusionar operaciones en un grafo de cómputo.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)
+- [SymPy: simplificación simbólica](https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

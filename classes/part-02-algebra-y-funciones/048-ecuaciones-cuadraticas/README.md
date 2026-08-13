@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**El vértice de una parábola está en x = −b/2a y es el punto medio de las raíces.**
 
-Esta clase concreta ese objetivo sobre **Ecuaciones cuadráticas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `quadratic_equation`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar log a valores no positivos sin declarar el dominio.
+
+## 🧩 Fórmulas de la clase
+
+```text
+raíces: x = (−b ± √(b²−4ac)) / 2a
+vértice: xᵥ = −b/2a,  yᵥ = a·xᵥ² + b·xᵥ + c
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El discriminante decide la naturaleza de las raíces antes de calcularlas.
+La ecuación cuadrática es el primer caso en que la solución exige una fórmula y no solo
+despejar. Su deducción —completar el cuadrado— es instructiva porque es la misma
+técnica que aparece en la parte 06 al diagonalizar formas cuadráticas y en la parte 09
+al normalizar la densidad de una gaussiana.
+
+El vértice está en `x = −b/2a`, que es exactamente el punto medio entre las dos raíces.
+Eso no es coincidencia: la parábola es simétrica respecto a la recta vertical que pasa
+por su vértice, y las raíces son simétricas respecto a ella. De ahí que el vértice se
+pueda calcular sin conocer las raíces, y viceversa.
+
+La forma de vértice, `a(x − xᵥ)² + yᵥ`, hace evidente lo que la forma estándar oculta:
+el signo de `a` decide si el vértice es mínimo o máximo, y `yᵥ` es el valor extremo. En
+optimización esto es el caso más simple posible de la condición de segundo orden que la
+parte 08 generaliza con el Hessiano.
+
+La minimización de una cuadrática es el problema modelo de toda la parte 12: la función
+objetivo `x² + 20y²` que usan los optimizadores es una cuadrática multivariable, y su
+mínimo se conoce analíticamente, lo que permite medir cuánto se acerca cada algoritmo.
+
+## 🧮 Ejemplo trabajado
+
+Analizar 2x² − 8x + 6 = 0.
+
+```text
+a = 2, b = −8, c = 6
+discriminante = 64 − 48 = 16 > 0  → dos raíces reales
+
+raíces: (8 ± 4)/4  →  r₁ = 3,  r₂ = 1
+
+vértice: xᵥ = −(−8)/(2·2) = 2
+         yᵥ = 2·4 − 8·2 + 6 = −2
+
+Comprobación de simetría:
+  punto medio de las raíces = (3 + 1)/2 = 2 = xᵥ   ✓
+
+Como a = 2 > 0, la parábola abre hacia arriba y el vértice es un MÍNIMO.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +107,16 @@ compmath run 048
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Olvidar dividir por 2a en la fórmula de las raíces.
+2. Confundir el signo del vértice: xᵥ = −b/2a, no b/2a.
+3. Suponer que el vértice es siempre un mínimo sin mirar el signo de a.
+
+## 🚀 Dónde se usa de verdad
+
+Optimización cuadrática (clase 258), ajuste por mínimos cuadrados —cuyo objetivo es una
+cuadrática— y análisis de trayectorias parabólicas en física y videojuegos.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
+- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004](https://web.stanford.edu/~boyd/cvxbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

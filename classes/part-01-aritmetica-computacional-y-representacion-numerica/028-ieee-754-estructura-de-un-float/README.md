@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Un float64 es signo, exponente sesgado de 11 bits y mantisa de 52 bits con un 1 implícito.**
 
-Esta clase concreta ese objetivo sobre **IEEE 754: estructura de un float**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `ieee754_layout`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que la suma de floats es asociativa.
+
+## 🧩 Fórmulas de la clase
+
+```text
+valor = (−1)^s · (1 + m/2⁵²) · 2^(e − 1023)
+float64: 1 bit de signo + 11 de exponente + 52 de mantisa = 64
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,50 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Condicionamiento es del problema; estabilidad es del algoritmo.
+El estándar IEEE 754, publicado en 1985 y revisado en 2019, unificó lo que antes era
+un caos de formatos incompatibles entre fabricantes. Su diseño responde a una idea:
+guardar un número en notación científica **binaria**, con la mantisa normalizada al
+intervalo [1, 2) para que el primer bit sea siempre 1 y no haga falta almacenarlo. Ese
+«bit implícito» regala un bit de precisión gratis.
+
+Los tres campos tienen papeles distintos. El **signo** es un bit. El **exponente** se
+guarda sesgado (sumándole 1023 en float64) para poder representar exponentes negativos
+sin necesitar un signo propio; con 11 bits cubre de 2⁻¹⁰²² a 2¹⁰²³, es decir de
+10⁻³⁰⁸ a 10³⁰⁸ aproximadamente. La **mantisa** de 52 bits (más el implícito, 53
+efectivos) determina la precisión: log₁₀(2⁵³) ≈ 15.95 dígitos decimales.
+
+Los valores extremos del exponente están reservados: todo ceros indica cero o
+subnormal, todo unos indica infinito o `NaN`. Por eso existen `+inf`, `-inf` y `NaN`
+como valores de primera clase en lugar de como errores, lo que permite que un cálculo
+continúe y el problema se detecte al final.
+
+Reconstruir un float a mano desde sus bits, como hace el laboratorio, deja claro que
+no hay nada mágico: es notación científica en base 2 con un formato de empaquetado
+acordado. Y explica de inmediato por qué la precisión es relativa: los 53 bits de
+mantisa siempre representan los mismos dígitos significativos, sea cual sea el
+exponente.
+
+## 🧮 Ejemplo trabajado
+
+Descomponer −6.25 en float64.
+
+```text
+−6.25 en binario = −110.01₂ = −1.1001₂ × 2²
+
+signo    s = 1                        (negativo)
+exponente e = 2 + 1023 = 1025 = 10000000001₂
+mantisa   m = 1001000...0   (el 1 inicial es implícito)
+
+Reconstrucción:
+  (−1)¹ · (1 + m/2⁵²) · 2^(1025−1023)
+= −1 · 1.5625 · 4
+= −6.25   ✓
+
+Precisión: 53 bits ⇒ log₁₀(2⁵³) ≈ 15.95 dígitos decimales
+Rango:     exponente de −1022 a 1023 ⇒ ~1e−308 a ~1e308
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +112,17 @@ compmath run 028
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Confundir precisión (mantisa, ~16 dígitos) con rango (exponente, ~1e±308).
+2. Olvidar el sesgo del exponente al leer los bits.
+3. Suponer que más bits de exponente dan más precisión: dan más rango.
+
+## 🚀 Dónde se usa de verdad
+
+Es el formato de casi todo cálculo científico. Entenderlo explica float32 (24 bits de
+mantisa), bfloat16 (8 bits de mantisa pero el mismo rango que float32, por eso se usa
+en entrenamiento) y float16 (10 bits, rango reducido).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +165,11 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)
+- [Kahan, W. *Lecture Notes on the Status of IEEE 754*, UC Berkeley, 1997](https://people.eecs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

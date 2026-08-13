@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**El discriminante clasifica las raíces antes de calcularlas.**
 
-Esta clase concreta ese objetivo sobre **Fórmula cuadrática y discriminante**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `discriminant`.
 4. Interpretar las 3 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir función inversa con recíproco.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Δ = b² − 4ac
+Δ > 0: dos raíces reales · Δ = 0: una doble · Δ < 0: dos complejas conjugadas
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,45 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El logaritmo convierte producto en suma: por eso aparece en toda función de pérdida.
+El discriminante es un ejemplo de una idea muy general: obtener información cualitativa
+sobre la solución sin resolver. Su signo determina la naturaleza de las raíces, y
+calcularlo cuesta tres operaciones frente a las siete de la fórmula completa. En una
+implementación, comprobar el discriminante antes de llamar a `sqrt` evita una excepción
+o un `NaN`.
+
+Los tres casos tienen lectura geométrica: `Δ > 0` significa que la parábola corta el eje
+x en dos puntos; `Δ = 0`, que lo toca en uno (el vértice está sobre el eje); `Δ < 0`,
+que no lo corta. Las raíces complejas no son un artefacto: describen oscilaciones, y en
+la parte 13 aparecerán como las frecuencias de una señal.
+
+El caso `Δ = 0` es delicado numéricamente. Comprobar `Δ == 0` con floats casi nunca es
+correcto: el discriminante calculado rara vez da exactamente cero aunque la raíz sea
+doble. Hay que usar una tolerancia relativa a la escala de los coeficientes, decisión
+que debe documentarse.
+
+La misma idea —un indicador que clasifica antes de resolver— reaparece en el
+determinante para sistemas (clase 045), en el signo de los autovalores del Hessiano
+para puntos críticos (clase 169) y en el signo del producto `f(a)·f(b)` para la
+bisección (clase 222).
+
+## 🧮 Ejemplo trabajado
+
+Los tres casos con sus coeficientes.
+
+```text
+Caso              (a, b, c)      Δ = b²−4ac    naturaleza
+dos reales        (1, −5,  6)    25 − 24 = 1   2 raíces: 3 y 2
+una doble         (1, −4,  4)    16 − 16 = 0   1 raíz doble: 2
+complejas         (1,  1,  1)     1 −  4 = −3  2 conjugadas
+
+Complejas explícitas: (−1 ± i√3)/2
+
+Precaución numérica:
+  comprobar Δ == 0 con floats es casi siempre incorrecto;
+  usar |Δ| < tol · max(|b²|, |4ac|)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +107,16 @@ compmath run 049
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Comparar el discriminante con cero usando == en aritmética de punto flotante.
+2. Llamar a sqrt sin comprobar antes el signo del discriminante.
+3. Tratar las raíces complejas como un error en lugar de como información.
+
+## 🚀 Dónde se usa de verdad
+
+Estabilidad de sistemas dinámicos (raíces del polinomio característico), clasificación
+de cónicas y decisión previa en cualquier solver de raíces.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

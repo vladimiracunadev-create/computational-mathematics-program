@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Restar dos números casi iguales destruye dígitos significativos sin producir ningún error visible.**
 
-Esta clase concreta ese objetivo sobre **Cancelación catastrófica**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `catastrophic_cancellation`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar float para dinero en vez de decimal o enteros de centavos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+forma ingenua:  √(x²+1) − x
+forma estable:  1 / (√(x²+1) + x)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,48 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> El error relativo, no el absoluto, es la magnitud que se propaga.
+La cancelación catastrófica es el fenómeno más peligroso de la aritmética de punto
+flotante porque **no produce ninguna señal**. Al restar dos números que coinciden en
+sus primeros k dígitos, esos dígitos se anulan y el resultado queda formado por los
+dígitos de menor peso, que son precisamente los contaminados por el redondeo previo.
+El error absoluto se mantiene; el resultado se hace pequeño; el error relativo explota.
+
+El caso canónico es `√(x²+1) − x` para x grande. Con x = 10⁸, ambos términos valen
+aproximadamente 10⁸ y coinciden en unos 16 dígitos, que son todos los que hay. El
+resultado de la resta es esencialmente ruido. La forma algebraicamente equivalente
+`1/(√(x²+1) + x)` —obtenida multiplicando y dividiendo por el conjugado— no tiene resta
+y da el resultado correcto.
+
+El patrón se repite en toda la matemática computacional: `exp(x) − 1` para x pequeño
+(por eso existe `expm1`), `log(1 + x)` para x pequeño (`log1p`), la fórmula cuadrática
+cuando `b² ≫ 4ac` (clase 036), y la varianza calculada como `E[X²] − E[X]²` en lugar
+de con la fórmula de dos pasos.
+
+La regla práctica es reconocible: **cada vez que una fórmula reste dos cantidades que
+pueden ser casi iguales, hay que buscar una forma alternativa**. Casi siempre existe, y
+obtenerla es álgebra elemental —racionalizar, factorizar, usar una identidad—, no
+análisis numérico avanzado.
+
+## 🧮 Ejemplo trabajado
+
+La misma expresión por dos caminos con x = 10⁸.
+
+```text
+Ingenua:  √(10¹⁶ + 1) − 10⁸
+          = 100000000.00000001 − 100000000
+          = 7.45e−09          ← casi todo ruido
+
+Estable:  1 / (√(10¹⁶+1) + 10⁸)
+          = 1 / 200000000.00000001
+          = 5.0e−09           ← correcto
+
+Diferencia relativa entre ambas: ~49 %
+Dígitos significativos de la ingenua: ~0
+```
+
+Las dos expresiones son idénticas en ℝ. En float64 una es útil y la otra no.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 032
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Trasladar una fórmula del papel al código sin comprobar si contiene una resta peligrosa.
+2. Interpretar el resultado incorrecto como un problema del lenguaje o de la biblioteca.
+3. Aumentar la precisión (float128) en lugar de reformular: retrasa el problema, no lo resuelve.
+
+## 🚀 Dónde se usa de verdad
+
+Fórmula cuadrática, cálculo de varianza, diferencias finitas, funciones especiales y
+cualquier resta de magnitudes cercanas. `expm1` y `log1p` existen exactamente por esto.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
+- [Python: `math.expm1` y `math.log1p`](https://docs.python.org/3/library/math.html#math.expm1)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

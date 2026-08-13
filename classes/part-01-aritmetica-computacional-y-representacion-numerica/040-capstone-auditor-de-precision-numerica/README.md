@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Auditar una expresión es medir cuántos dígitos significativos pierde cada forma de escribirla.**
 
-Esta clase concreta ese objetivo sobre **Capstone: auditor de precisión numérica**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_precision_auditor`.
 4. Interpretar las 3 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que la suma de floats es asociativa.
+
+## 🧩 Fórmulas de la clase
+
+```text
+dígitos perdidos ≈ −log₁₀(|ingenua − estable| / |estable|)
+formas estables: expm1, log1p, conjugado
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,43 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> Reproducibilidad numérica exige fijar orden de operaciones, no solo semillas.
+El capstone convierte en herramienta todo lo anterior. Un auditor de precisión toma
+una expresión, la evalúa por su forma directa y por una forma algebraicamente
+equivalente pero numéricamente estable, y reporta cuántos dígitos significativos separa
+a ambas. Ese número es la medida honesta de cuánta confianza merece la primera forma.
+
+Las tres expresiones auditadas son las que más aparecen en la práctica.
+`exp(x) − 1` para x pequeño pierde precisión porque `exp(x)` se acerca a 1 y la resta
+cancela; `expm1` la calcula directamente. `log(1 + x)` sufre lo mismo cuando `1 + x`
+redondea a 1; `log1p` lo evita. Y `√(x²+1) − x` es el caso de la clase 032.
+
+Que estas funciones existan en la biblioteca estándar de todos los lenguajes serios no
+es casualidad: son la respuesta institucionalizada a problemas de cancelación
+conocidos desde los años sesenta. Reconocer cuándo usarlas es parte del oficio.
+
+La regla que cierra la parte: **toda diferencia de magnitudes cercanas necesita una
+forma alternativa**, y toda implementación numérica publicada debería declarar cuántos
+dígitos garantiza. El programa aplica esa regla a sí mismo: cada demostración devuelve
+claves de verificación en lugar de pedir confianza.
+
+## 🧮 Ejemplo trabajado
+
+Auditoría de tres expresiones.
+
+```text
+expresión         x        ingenua        estable       dígitos perdidos
+exp(x)−1        1e−10   1.000000e−10   1.000000e−10          ~6
+log(1+x)        1e−12   1.000089e−12   1.000000e−12          ~4
+√(x²+1)−x       1e7     5.000000e−08   5.000000e−08          ~9
+
+Regla operativa:
+  si la expresión contiene una resta de cantidades que pueden
+  acercarse, buscar la forma alternativa ANTES de implementarla.
+```
+
+Los números concretos dependen del valor de x: el auditor los mide, no los supone.
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +105,16 @@ compmath run 040
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Publicar un resultado numérico sin declarar cuántos dígitos son fiables.
+2. Auditar solo con un valor de x: el número de dígitos perdidos depende del punto.
+3. Sustituir la forma ingenua por la estable sin comprobar que son equivalentes en ℝ.
+
+## 🚀 Dónde se usa de verdad
+
+Revisión de código numérico, elección de biblioteca, validación de una reimplementación
+y documentación de precisión en una API científica.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
+- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

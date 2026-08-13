@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**El logaritmo convierte productos en sumas, y por eso toda verosimilitud se calcula en escala logarítmica.**
 
-Esta clase concreta ese objetivo sobre **Logaritmos y sus propiedades**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,15 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `logarithm_laws`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar log a valores no positivos sin declarar el dominio.
+
+## 🧩 Fórmulas de la clase
+
+```text
+log(ab) = log a + log b
+log(a/b) = log a − log b
+log(aⁿ) = n log a
+log_b(a) = ln a / ln b
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +47,47 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> Una ecuación restringe; una función asigna. No son lo mismo.
+El logaritmo se inventó, literalmente, para convertir multiplicaciones en sumas. Napier
+publicó sus tablas en 1614 con ese propósito explícito: antes de las calculadoras,
+multiplicar dos números de seis cifras era costoso y sumar sus logaritmos no. Esa misma
+propiedad, cuatro siglos después, es la razón por la que el logaritmo está en el centro
+de la estadística y del machine learning.
+
+El motivo es de precisión, no de velocidad. Multiplicar diez mil probabilidades —cada
+una menor que 1— produce un número tan pequeño que hace underflow a cero en float64
+(clase 033). Sumar diez mil logaritmos no tiene ese problema. Por eso la verosimilitud
+se maximiza siempre como **log-verosimilitud** (clase 215) y por eso la pérdida de un
+clasificador es cross-entropy, que es una suma de logaritmos (clase 263).
+
+Las tres leyes se deducen directamente de las de exponentes, porque el logaritmo es su
+función inversa. `log(ab) = log a + log b` es exactamente `aᵐ·aⁿ = aᵐ⁺ⁿ` leído al revés.
+El cambio de base, `log_b(a) = ln a / ln b`, permite calcular cualquier logaritmo con
+uno solo implementado.
+
+Numéricamente hay dos precauciones. El dominio es `x > 0`, y `log(0)` es `−inf`: por eso
+toda implementación de cross-entropy añade un epsilon. Y `log(1 + x)` para x pequeño
+sufre cancelación, de ahí que exista `log1p` (clase 040).
+
+## 🧮 Ejemplo trabajado
+
+Las tres leyes verificadas con a = 12, b = 5.
+
+```text
+log(12·5) = log(60) = 4.094345
+log 12 + log 5 = 2.484907 + 1.609438 = 4.094345    ✓
+
+log(12/5) = log(2.4) = 0.875469
+log 12 − log 5 = 2.484907 − 1.609438 = 0.875469    ✓
+
+log(12³) = log(1728) = 7.454720
+3·log 12 = 3 · 2.484907 = 7.454720                 ✓
+
+Cambio de base:
+  log₂(12) = ln 12 / ln 2 = 2.484907/0.693147 = 3.584963
+  math.log2(12) = 3.584963                          ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 051
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Aplicar log a valores no positivos sin proteger el dominio.
+2. Escribir log(a + b) = log a + log b: la ley es para el producto, no para la suma.
+3. Multiplicar muchas probabilidades en lugar de sumar sus logaritmos.
+
+## 🚀 Dónde se usa de verdad
+
+Log-verosimilitud, cross-entropy, entropía, escalas logarítmicas (decibelios, pH,
+magnitud sísmica), perplejidad de un modelo de lenguaje y leyes de escala.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Napier, J. *Mirifici Logarithmorum Canonis Descriptio*, 1614 — contexto histórico](https://mathshistory.st-andrews.ac.uk/Biographies/Napier/)
+- [Python: `math.log`, `math.log1p`, `math.log2`](https://docs.python.org/3/library/math.html#math.log)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

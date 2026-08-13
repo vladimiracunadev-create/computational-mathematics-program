@@ -1,0 +1,1213 @@
+part: "01"
+titulo: "Aritmética computacional y representación numérica"
+
+resumen_extendido: |
+  Esta es la parte que más cambia la forma de programar de quien la estudia, y la que casi
+  ningún curso de matemáticas incluye. La pregunta central es incómoda: **¿qué es realmente
+  un número dentro de una máquina?** La respuesta —una cadena finita de bits con una
+  interpretación acordada— tiene consecuencias que aparecen en producción a las tres de la
+  mañana.
+
+  El recorrido va de lo discreto a lo continuo. Las clases 021 a 026 tratan los enteros:
+  cuántos valores caben en un ancho de palabra, cómo se representan los negativos con
+  complemento a dos y qué ocurre cuando una suma se sale del rango. Python oculta este
+  problema porque sus enteros son de precisión arbitraria, pero NumPy, C, Rust y cualquier
+  base de datos no lo hacen, y el desbordamiento silencioso es un error de seguridad
+  clásico.
+
+  Las clases 027 a 033 son el núcleo: **IEEE 754**. Un `float64` no es un número real: es
+  un racional binario con 53 bits de mantisa. De ahí se derivan, con necesidad lógica, los
+  fenómenos que parecen fallos y no lo son: `0.1 + 0.2 != 0.3`, la suma que deja de ser
+  asociativa, el `epsilon` de máquina, los subnormales y el `NaN`. Goldberg escribió en
+  1991 el artículo que sigue siendo la referencia; esta parte es su versión ejecutable.
+
+  Las clases 034 a 036 introducen la distinción que separa a quien depura numéricamente de
+  quien adivina: **condicionamiento** es una propiedad del problema, **estabilidad** es una
+  propiedad del algoritmo. Un problema mal condicionado no tiene algoritmo estable que lo
+  salve; un algoritmo inestable estropea un problema bien condicionado. Confundirlos lleva
+  a buscar el error en el sitio equivocado.
+
+  El cierre (037 a 039) da las salidas: `Decimal` cuando hace falta exactitud decimal,
+  `Fraction` cuando hace falta exactitud racional, y las condiciones bajo las que un
+  resultado numérico es reproducible entre máquinas. El capstone construye un auditor que
+  mide cuántos dígitos significativos pierde cada forma de escribir una expresión.
+
+  En IA esta parte es cotidiana aunque nadie la nombre: `float32`, `bfloat16`, la
+  cuantización a `int8`, los `NaN` que aparecen en la época 3, el `epsilon` dentro de cada
+  `LayerNorm` y el motivo por el que dos entrenamientos con la misma semilla dan resultados
+  distintos en GPU. Todo eso es esta parte.
+
+mapa: |
+  flowchart TD
+      A["021-026<br/>Enteros<br/>bits · bases · complemento a dos · overflow"] --> B["027-033<br/>Punto flotante IEEE 754<br/>mantisa · exponente · ULP · cancelación"]
+      B --> C["034-036<br/>Error y su propagación<br/>condicionamiento vs estabilidad"]
+      C --> D["037-039<br/>Salidas exactas<br/>Decimal · Fraction · reproducibilidad"]
+      D --> E["040<br/>Capstone<br/>auditor de precisión"]
+      E ==> F["Parte 11<br/>Métodos numéricos"]
+      B -.-> G["float32 · bfloat16 · int8<br/>Parte 15"]
+      C -.-> H["Número de condición<br/>Parte 06"]
+      B -.-> I["NaN en el entrenamiento<br/>Parte 15"]
+
+glosario:
+  - termino: "Bit"
+    definicion: "Unidad mínima de información: dos estados posibles. n bits codifican 2ⁿ valores distintos."
+    clase: "021"
+  - termino: "Base posicional"
+    definicion: "Sistema en el que el valor de un dígito depende de su posición. Cambiar de base no cambia la cantidad, solo su escritura."
+    clase: "023"
+  - termino: "Complemento a dos"
+    definicion: "Codificación de enteros con signo en la que el negativo de x es 2ⁿ − x. Permite sumar positivos y negativos con el mismo circuito."
+    clase: "025"
+  - termino: "Overflow"
+    definicion: "Resultado que excede el rango representable. En ancho fijo produce wraparound silencioso, no una excepción."
+    clase: "026"
+  - termino: "Punto fijo"
+    definicion: "Representación con número fijo de decimales, típicamente enteros de la unidad mínima (centavos). Exacta dentro de su rango."
+    clase: "027"
+  - termino: "Mantisa"
+    definicion: "Parte significativa de un número en punto flotante. Determina la precisión relativa, no el rango."
+    clase: "028"
+  - termino: "Exponente sesgado"
+    definicion: "Exponente almacenado con un desplazamiento (1023 en float64) para poder representarlo sin signo."
+    clase: "028"
+  - termino: "Error absoluto"
+    definicion: "Diferencia |aproximado − exacto|. Depende de la escala y no es comparable entre magnitudes distintas."
+    clase: "030"
+  - termino: "Error relativo"
+    definicion: "Error absoluto dividido por el valor exacto. Es la magnitud que se propaga y la que define la precisión."
+    clase: "030"
+  - termino: "ULP"
+    definicion: "Unit in the Last Place: distancia entre un float y su vecino. Depende de la magnitud del número."
+    clase: "031"
+  - termino: "Epsilon de máquina"
+    definicion: "Menor ε tal que 1 + ε ≠ 1. En float64 vale 2⁻⁵² ≈ 2.22e−16."
+    clase: "031"
+  - termino: "Cancelación catastrófica"
+    definicion: "Pérdida masiva de dígitos significativos al restar dos números casi iguales. No lanza excepción."
+    clase: "032"
+  - termino: "Subnormal"
+    definicion: "Número flotante menor que el mínimo normal, representado con mantisa desnormalizada y precisión reducida."
+    clase: "033"
+  - termino: "Suma compensada"
+    definicion: "Técnica (Kahan, o math.fsum) que arrastra el error de redondeo para que la suma de muchos términos conserve precisión."
+    clase: "034"
+  - termino: "Número de condición"
+    definicion: "Factor por el que un problema amplifica el error relativo de la entrada. Es propiedad del problema."
+    clase: "035"
+  - termino: "Estabilidad numérica"
+    definicion: "Propiedad de un algoritmo que no amplifica los errores de redondeo más allá de lo que el problema exige."
+    clase: "036"
+  - termino: "Precisión arbitraria"
+    definicion: "Aritmética cuya precisión se declara y no está limitada por el hardware, a cambio de velocidad."
+    clase: "037"
+  - termino: "Reproducibilidad numérica"
+    definicion: "Propiedad de un cálculo que devuelve bit a bit el mismo resultado. Exige fijar el orden de las operaciones, no solo la semilla."
+    clase: "039"
+
+clases:
+  "021":
+    concepto: "Con n bits se codifican exactamente 2ⁿ valores distintos; el ancho de palabra fija el rango, no la precisión."
+    formulas:
+      - "valores representables con n bits = 2ⁿ"
+      - "bits necesarios para k valores = ⌈log₂ k⌉"
+    desarrollo: |
+      Un bit distingue dos estados. Dos bits distinguen cuatro, porque cada estado del
+      primero se combina con cada estado del segundo. La regla del producto —que la clase
+      087 formalizará como combinatoria— da directamente 2ⁿ para n bits, y esa cuenta es la
+      base de todo dimensionamiento en computación.
+
+      La relación inversa importa igual: para representar k valores distintos hacen falta
+      `⌈log₂ k⌉` bits. Un millón de valores necesita 20 bits; mil millones, 30. El
+      logaritmo convierte una multiplicación de posibilidades en una suma de bits, y por eso
+      la información se mide en bits (clase 262): es la unidad natural en la que las
+      posibilidades se suman.
+
+      Los anchos habituales no son arbitrarios: 8, 16, 32 y 64 bits corresponden a las
+      unidades que el hardware manipula de una vez. Elegir el ancho es elegir un compromiso
+      entre rango y memoria. En deep learning esa elección es un tema activo: pasar de
+      `float32` a `bfloat16` reduce a la mitad la memoria de activaciones y permite lotes
+      mayores, a costa de precisión.
+
+      Conviene separar desde ya dos cosas que el ancho de palabra confunde: **cuántos
+      valores distintos** caben (rango) y **cuán juntos** están (precisión). Un `int32` y un
+      `float32` ocupan lo mismo y representan cosas radicalmente distintas: el entero cubre
+      un rango pequeño con espaciado uniforme de 1; el flotante cubre un rango enorme con
+      espaciado variable.
+    ejemplo: |
+      Cuántos bits hacen falta y cuántos valores caben.
+
+      ```text
+      ancho    valores representables
+      1 bit                       2
+      1 byte                    256
+      16 bits                65 536
+      32 bits         4 294 967 296
+      64 bits    1.8446744e19
+
+      Para 1000 valores:      ⌈log₂ 1000⌉  = 10 bits   (2¹⁰ = 1024 ≥ 1000)
+      Para 1 000 000 valores: ⌈log₂ 10⁶⌉   = 20 bits   (2²⁰ = 1 048 576)
+      ```
+
+      Observa el salto: duplicar los bits no duplica los valores, los eleva al cuadrado.
+      De 32 a 64 bits no hay «el doble de números»: hay 4·10⁹ veces más.
+    errores:
+      - "Confundir rango (cuántos valores caben) con precisión (cuán juntos están)."
+      - "Suponer que 2ⁿ bits representan 2n valores en lugar de 2^(2n)."
+      - "Elegir el ancho por costumbre en lugar de por el rango real que necesita el dato."
+    aplicacion: |
+      Diseño de esquemas de base de datos, formatos binarios, cuantización de modelos y
+      dimensionamiento de índices. La elección `float32` frente a `bfloat16` en
+      entrenamiento es exactamente esta decisión.
+    referencias:
+      - "[IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)"
+      - "[Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., Morgan Kaufmann, 2020, cap. 3](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)"
+
+  "022":
+    concepto: "Convertir a binario es dividir sucesivamente por 2 y leer los restos en orden inverso."
+    formulas:
+      - "n = Σ bᵢ·2ⁱ  con bᵢ ∈ {0,1}"
+      - "restos de n/2 leídos de abajo arriba = representación binaria"
+    desarrollo: |
+      El algoritmo de divisiones sucesivas no es un truco: es la construcción directa de la
+      representación posicional. Al dividir n entre 2, el resto es el bit menos significativo
+      —dice si n es par o impar— y el cociente es el número «desplazado un bit a la derecha».
+      Repetir hasta llegar a cero produce todos los bits, del menos al más significativo, y
+      por eso se leen al revés.
+
+      La representación es **única**: todo entero positivo tiene exactamente una escritura en
+      base 2. Esa unicidad es la que permite que dos máquinas distintas interpreten los
+      mismos bits como el mismo número, y es la que se pierde en punto flotante, donde
+      varios reales distintos comparten representación.
+
+      El mismo algoritmo funciona en cualquier base cambiando el divisor. En base 16 los
+      restos van de 0 a 15 y se escriben con dígitos hexadecimales; en base 8, de 0 a 7. La
+      clase 023 explota que 16 y 8 son potencias de 2 para convertir sin dividir.
+
+      Un detalle práctico: Python trae la conversión en `format(n, "b")` y `int(s, 2)`, pero
+      implementarla a mano una vez deja claro por qué el bit menos significativo es la
+      paridad, hecho que se usará constantemente en la parte 04 (aritmética modular) y en
+      cualquier manipulación de bits.
+    ejemplo: |
+      Convertir 156 a binario por divisiones sucesivas.
+
+      ```text
+      156 / 2 = 78  resto 0    ← bit menos significativo
+       78 / 2 = 39  resto 0
+       39 / 2 = 19  resto 1
+       19 / 2 =  9  resto 1
+        9 / 2 =  4  resto 1
+        4 / 2 =  2  resto 0
+        2 / 2 =  1  resto 0
+        1 / 2 =  0  resto 1    ← bit más significativo
+
+      Leídos de abajo arriba: 10011100
+
+      Verificación: 128 + 16 + 8 + 4 = 156   ✓
+                    (2⁷ + 2⁴ + 2³ + 2²)
+      ```
+    errores:
+      - "Leer los restos en el orden en que salen en lugar de invertirlos."
+      - "Olvidar que el último resto (el del cociente 1) también forma parte del número."
+      - "No verificar reconstruyendo con las potencias de 2."
+    aplicacion: |
+      Máscaras de bits, permisos de sistema de archivos, banderas de configuración,
+      direcciones de red y cualquier serialización binaria. Es el prerrequisito de la
+      representación IEEE 754.
+    referencias:
+      - "[Python: funciones `bin`, `int` y `format`](https://docs.python.org/3/library/functions.html#bin)"
+      - "[Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.1](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)"
+
+  "023":
+    concepto: "Hexadecimal y octal son taquigrafías de binario porque 16 y 8 son potencias de 2."
+    formulas:
+      - "1 dígito hexadecimal = 4 bits"
+      - "1 dígito octal = 3 bits"
+    desarrollo: |
+      Los programadores usan hexadecimal por una razón puramente práctica: cada dígito
+      hexadecimal corresponde exactamente a 4 bits, así que convertir entre binario y hex se
+      hace por grupos, sin dividir nada. `1101 0110` es `D6` porque `1101` es 13 (D) y `0110`
+      es 6. En octal ocurre lo mismo con grupos de 3 bits.
+
+      Esta correspondencia solo funciona porque 16 = 2⁴ y 8 = 2³. Con base 10 no hay
+      agrupación posible, y por eso convertir decimal ↔ binario requiere el algoritmo de
+      divisiones de la clase 022 mientras que hex ↔ binario es una tabla de 16 entradas.
+
+      El hexadecimal es además compacto: un byte se escribe con dos dígitos en lugar de
+      ocho, y una dirección de 32 bits con ocho en lugar de treinta y dos. Por eso aparece
+      en direcciones de memoria, colores CSS (`#7c5cff` son tres bytes), UUID, hashes y
+      volcados de memoria.
+
+      Al leer código conviene reconocer los prefijos: `0b` para binario, `0o` para octal,
+      `0x` para hexadecimal. Python los acepta todos y `int(s, base)` convierte desde
+      cualquier base entre 2 y 36. Los permisos de Unix (`chmod 755`) son octal precisamente
+      porque cada dígito codifica tres bits de permiso: lectura, escritura y ejecución.
+    ejemplo: |
+      El mismo número en cuatro bases.
+
+      ```text
+      decimal      3 735 928 559
+      hexadecimal  deadbeef
+      octal        33653337357
+      binario      11011110101011011011111011101111
+
+      Agrupación hex ← binario (grupos de 4, desde la derecha):
+        1101 1110 1010 1101 1011 1110 1110 1111
+           d    e    a    d    b    e    e    f     ✓
+
+      Bits necesarios: 32
+      ```
+
+      `deadbeef` es un valor centinela clásico en depuración: es hexadecimal legible y
+      difícilmente aparece por accidente en memoria.
+    errores:
+      - "Agrupar los bits desde la izquierda en lugar de desde la derecha."
+      - "Confundir el prefijo 0o (octal) con un cero seguido de la letra o."
+      - "Suponer que la agrupación por dígitos funciona con base 10."
+    aplicacion: |
+      Direcciones de memoria, colores, hashes, UUID, permisos Unix y protocolos binarios.
+      Leer un volcado hexadecimal es una habilidad de depuración básica.
+    referencias:
+      - "[Python: literales numéricos](https://docs.python.org/3/reference/lexical_analysis.html#integer-literals)"
+      - "[Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)"
+
+  "024":
+    concepto: "La aritmética binaria es la decimal con acarreo en base 2; los desplazamientos multiplican y dividen por potencias de 2."
+    formulas:
+      - "x << k = x · 2ᵏ"
+      - "x >> k = ⌊x / 2ᵏ⌋  (para x ≥ 0)"
+      - "x & (x−1) apaga el bit menos significativo encendido"
+    desarrollo: |
+      Sumar en binario funciona igual que en decimal: se suma columna a columna y se
+      arrastra el acarreo. La única diferencia es que el acarreo salta cuando la suma llega
+      a 2 en lugar de a 10. Esta simplicidad es la razón por la que el hardware usa base 2:
+      un sumador completo de un bit cabe en unas pocas puertas lógicas.
+
+      Los desplazamientos son la operación más barata de un procesador y equivalen a
+      multiplicar o dividir por potencias de 2. `x << 3` es `x · 8`, y `x >> 1` es la
+      división entera por 2. Los compiladores hacen esta sustitución automáticamente, pero
+      reconocerla ayuda a leer código de bajo nivel y algoritmos de hashing.
+
+      Las operaciones bit a bit —AND, OR, XOR— actúan sobre cada posición de forma
+      independiente, sin acarreo. AND enmascara (deja pasar solo los bits marcados), OR
+      activa, XOR conmuta. XOR tiene una propiedad que se usa constantemente en
+      criptografía: es su propia inversa, `(a ^ b) ^ b = a`.
+
+      Un idiom que conviene conocer: `x & (x−1)` apaga el bit encendido más a la derecha,
+      porque restar 1 invierte ese bit y todos los ceros a su derecha. Contar cuántas veces
+      se puede aplicar antes de llegar a cero cuenta los bits encendidos (`popcount`), y esa
+      cuenta aparece en distancias de Hamming y en índices de bases de datos.
+    ejemplo: |
+      Operaciones sobre a = 1011₂ (11) y b = 0110₂ (6).
+
+      ```text
+      a      = 1011   (11)
+      b      = 0110   (6)
+
+      a + b  = 10001  (17)     acarreo hasta el quinto bit
+      a & b  = 0010   (2)      solo donde ambos tienen 1
+      a | b  = 1111   (15)     donde alguno tiene 1
+      a ^ b  = 1101   (13)     donde difieren
+
+      a << 2 = 101100 (44)     = 11 · 4    ✓
+      a >> 1 = 101    (5)      = ⌊11/2⌋    ✓
+
+      Verificación XOR:  (a ^ b) ^ b = 1101 ^ 0110 = 1011 = a   ✓
+      ```
+    errores:
+      - "Usar >> con enteros negativos esperando división truncada hacia cero: en Python trunca hacia −∞."
+      - "Confundir & (bit a bit) con and (lógico) o | con or."
+      - "Suponer que << nunca desborda: en ancho fijo los bits que salen se pierden."
+    aplicacion: |
+      Hashing, compresión, criptografía, banderas de configuración, índices de bitmap y
+      optimización de bucles. La distancia de Hamming entre dos cadenas de bits es el
+      popcount de su XOR.
+    referencias:
+      - "[Warren, H. *Hacker's Delight*, 2ª ed., Addison-Wesley, 2012](https://www.oreilly.com/library/view/hackers-delight-second/9780133084993/)"
+      - "[Python: operaciones bit a bit](https://docs.python.org/3/library/stdtypes.html#bitwise-operations-on-integer-types)"
+
+  "025":
+    concepto: "En complemento a dos, el negativo de x es 2ⁿ − x, y por eso la resta se implementa con el mismo sumador que la suma."
+    formulas:
+      - "representación de −x en n bits = 2ⁿ − x"
+      - "rango: [−2ⁿ⁻¹, 2ⁿ⁻¹ − 1]"
+    desarrollo: |
+      La razón por la que existe el complemento a dos es de ingeniería, no de matemáticas:
+      permite que un único circuito sumador maneje positivos y negativos sin casos
+      especiales. Si `−x` se representa como `2ⁿ − x`, entonces `a + (−b)` calculado módulo
+      2ⁿ da exactamente `a − b` cuando el resultado está en rango. La resta desaparece como
+      operación separada.
+
+      Las alternativas históricas —signo-magnitud y complemento a uno— tenían dos
+      representaciones para el cero (`+0` y `−0`), lo que obliga a casos especiales en las
+      comparaciones. El complemento a dos tiene un único cero, y como contrapartida un
+      **rango asimétrico**: en 8 bits va de −128 a +127, un negativo más que positivos.
+
+      Esa asimetría no es una curiosidad. `abs(-128)` en un `int8` no es representable, así
+      que desborda; en NumPy, `np.abs(np.int8(-128))` devuelve −128 sin avisar. El mismo
+      fenómeno afecta a `-x` y a la división `x // -1`. Es una fuente real de errores en
+      código que procesa datos de sensores o audio en enteros.
+
+      El bit más significativo actúa como bit de signo, pero no es «un bit de signo» en el
+      sentido de signo-magnitud: su peso es `−2ⁿ⁻¹`. Interpretar `11111011` como número
+      requiere `−128 + 64 + 32 + 16 + 8 + 2 + 1 = −5`, no «signo negativo y magnitud 123».
+    ejemplo: |
+      Representación en 8 bits y suma con signos opuestos.
+
+      ```text
+      +5  = 00000101
+      −5  = 2⁸ − 5 = 251 = 11111011
+
+      Suma 5 + (−5):
+        00000101
+      + 11111011
+      -----------
+       100000000   → se descarta el noveno bit (módulo 2⁸)
+        00000000   = 0   ✓
+
+      Decodificar 11111011:
+        −128 + 64 + 32 + 16 + 8 + 0 + 2 + 1 = −5   ✓
+
+      Rango:  mínimo −128,  máximo +127
+      Asimetría: |−128| = 128 NO es representable en int8
+      ```
+    errores:
+      - "Interpretar el bit más significativo como signo y el resto como magnitud."
+      - "Suponer que abs(x) siempre es representable: abs(−128) desborda en int8."
+      - "Olvidar el módulo 2ⁿ al sumar: el bit que se sale no es un error, es la definición."
+    aplicacion: |
+      Todo entero con signo en C, Rust, Java, NumPy y bases de datos. Los errores de
+      desbordamiento por complemento a dos son una categoría reconocida de vulnerabilidad
+      (CWE-190).
+    referencias:
+      - "[Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020, cap. 3](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)"
+      - "[CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html)"
+
+  "026":
+    concepto: "En ancho fijo, superar el máximo no lanza excepción: el valor da la vuelta al rango."
+    formulas:
+      - "resultado = (a + b) mod 2ⁿ, reinterpretado con signo"
+      - "int8: 127 + 1 = −128"
+    desarrollo: |
+      El desbordamiento en enteros de ancho fijo es silencioso por diseño: el hardware
+      calcula módulo 2ⁿ y descarta los bits que sobran. No hay excepción, no hay aviso, y el
+      programa continúa con un valor que puede tener el signo contrario al esperado. Es una
+      de las pocas situaciones en computación donde un error grave no produce ninguna señal.
+
+      Python es la excepción cómoda: sus enteros crecen indefinidamente, limitados solo por
+      la memoria. Esa comodidad esconde el problema hasta que el mismo cálculo pasa a NumPy
+      (donde `int32` sí desborda), a una base de datos, a un servicio en otro lenguaje o a
+      un modelo cuantizado. La lección de esta clase es que **la ausencia de desbordamiento
+      en Python no es una propiedad del algoritmo**: es una propiedad del intérprete.
+
+      Los casos históricos abundan. El vuelo inaugural del Ariane 5 en 1996 se destruyó por
+      una conversión de un flotante de 64 bits a un entero con signo de 16 bits cuyo valor
+      no cabía. El «problema del año 2038» es el desbordamiento de un `time_t` de 32 bits
+      contando segundos desde 1970.
+
+      La defensa práctica tiene tres capas: elegir el ancho con margen sobre el rango real,
+      validar los límites en las fronteras del sistema, y usar tipos con detección de
+      desbordamiento donde el lenguaje los ofrezca (`checked_add` en Rust, `-ftrapv` en C).
+    ejemplo: |
+      Wraparound en int8 simulado sobre Python.
+
+      ```text
+      máximo int8            127
+      127 + 1  →  wraparound  −128       (no 128)
+      127 + 2  →  wraparound  −127
+
+      En Python nativo:
+      127 + 1 = 128                       (int ilimitado)
+      sys.maxsize = 9223372036854775807   (tamaño del puntero, no un límite del int)
+
+      Lección: Python no desborda, C y NumPy sí.
+      El algoritmo es el mismo; el resultado, no.
+      ```
+    errores:
+      - "Probar un algoritmo solo en Python y asumir que no desborda en otro lenguaje."
+      - "Confiar en que un valor «nunca será tan grande» sin validarlo en la frontera del sistema."
+      - "Confundir sys.maxsize con un límite del tipo int de Python: es el tamaño del puntero."
+    aplicacion: |
+      Contadores, marcas de tiempo, identificadores, acumuladores de métricas y cualquier
+      dato que cruza la frontera entre Python y un sistema de ancho fijo. Es una categoría
+      reconocida de vulnerabilidad de seguridad.
+    referencias:
+      - "[ESA. *Ariane 5 Flight 501 Failure — Report by the Inquiry Board*, 1996](https://esamultimedia.esa.int/docs/esa-x-1819eng.pdf)"
+      - "[CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html)"
+
+  "027":
+    concepto: "El punto fijo reparte la precisión de forma uniforme; el flotante la reparte proporcionalmente a la magnitud."
+    formulas:
+      - "punto fijo: valor = entero · 10⁻ᵏ (exacto en su rango)"
+      - "punto flotante: valor = mantisa · 2^exponente (precisión relativa constante)"
+    desarrollo: |
+      Las dos representaciones responden a necesidades distintas. En **punto fijo** se guarda
+      un entero y se acuerda dónde está la coma: el dinero se guarda en centavos, y todas las
+      operaciones son aritmética entera exacta. El espaciado entre valores representables es
+      constante —un centavo— en todo el rango.
+
+      En **punto flotante** se guarda una mantisa y un exponente, y el espaciado crece con la
+      magnitud: cerca de 1 los floats están separados por unos 2⁻⁵², y cerca de 10⁶ por unos
+      2⁻³². Eso significa **precisión relativa constante**: siempre unos 16 dígitos
+      significativos, independientemente de la escala. Es la elección correcta para
+      magnitudes físicas que abarcan muchos órdenes de magnitud.
+
+      La consecuencia para dinero es directa y conocida: sumar `0.1` diez veces en float no
+      da exactamente `1.0`, porque `0.1` no es representable en binario. Sumar 10 veces el
+      entero 10 (centavos) da exactamente 100. Por eso todo sistema contable serio trabaja
+      en punto fijo o con `Decimal`.
+
+      El criterio para elegir: si los valores tienen una unidad mínima natural y las
+      comparaciones exactas importan (dinero, contadores, índices), punto fijo. Si los
+      valores abarcan varios órdenes de magnitud y lo que importa es la precisión relativa
+      (física, estadística, gradientes), punto flotante.
+    ejemplo: |
+      Sumar diez veces una décima por los dos caminos.
+
+      ```text
+      Punto flotante:
+        0.0 + 0.1 repetido 10 veces = 0.9999999999999999
+        ¿es exactamente 1.0?  No
+        error = 1.11e−16
+
+      Punto fijo (centavos como enteros):
+        0 + 10 repetido 10 veces = 100
+        100 / 100 = 1.0
+        exacto: sí, porque toda la aritmética fue entera
+      ```
+
+      El error del flotante es minúsculo. El problema no es su tamaño: es que rompe la
+      comparación `total == 1.0`, que es exactamente la que hace un sistema de facturación.
+    errores:
+      - "Usar float para dinero y comparar totales con ==."
+      - "Suponer que el punto fijo es siempre mejor: pierde rango y no sirve para magnitudes físicas."
+      - "Redondear a dos decimales al final y creer que eso corrige el error acumulado."
+    aplicacion: |
+      Contabilidad, facturación e inventario en punto fijo; física, estadística y deep
+      learning en punto flotante. La cuantización de modelos a int8 es una vuelta al punto
+      fijo por razones de memoria.
+    referencias:
+      - "[Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)"
+      - "[Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)"
+
+  "028":
+    concepto: "Un float64 es signo, exponente sesgado de 11 bits y mantisa de 52 bits con un 1 implícito."
+    formulas:
+      - "valor = (−1)^s · (1 + m/2⁵²) · 2^(e − 1023)"
+      - "float64: 1 bit de signo + 11 de exponente + 52 de mantisa = 64"
+    desarrollo: |
+      El estándar IEEE 754, publicado en 1985 y revisado en 2019, unificó lo que antes era
+      un caos de formatos incompatibles entre fabricantes. Su diseño responde a una idea:
+      guardar un número en notación científica **binaria**, con la mantisa normalizada al
+      intervalo [1, 2) para que el primer bit sea siempre 1 y no haga falta almacenarlo. Ese
+      «bit implícito» regala un bit de precisión gratis.
+
+      Los tres campos tienen papeles distintos. El **signo** es un bit. El **exponente** se
+      guarda sesgado (sumándole 1023 en float64) para poder representar exponentes negativos
+      sin necesitar un signo propio; con 11 bits cubre de 2⁻¹⁰²² a 2¹⁰²³, es decir de
+      10⁻³⁰⁸ a 10³⁰⁸ aproximadamente. La **mantisa** de 52 bits (más el implícito, 53
+      efectivos) determina la precisión: log₁₀(2⁵³) ≈ 15.95 dígitos decimales.
+
+      Los valores extremos del exponente están reservados: todo ceros indica cero o
+      subnormal, todo unos indica infinito o `NaN`. Por eso existen `+inf`, `-inf` y `NaN`
+      como valores de primera clase en lugar de como errores, lo que permite que un cálculo
+      continúe y el problema se detecte al final.
+
+      Reconstruir un float a mano desde sus bits, como hace el laboratorio, deja claro que
+      no hay nada mágico: es notación científica en base 2 con un formato de empaquetado
+      acordado. Y explica de inmediato por qué la precisión es relativa: los 53 bits de
+      mantisa siempre representan los mismos dígitos significativos, sea cual sea el
+      exponente.
+    ejemplo: |
+      Descomponer −6.25 en float64.
+
+      ```text
+      −6.25 en binario = −110.01₂ = −1.1001₂ × 2²
+
+      signo    s = 1                        (negativo)
+      exponente e = 2 + 1023 = 1025 = 10000000001₂
+      mantisa   m = 1001000...0   (el 1 inicial es implícito)
+
+      Reconstrucción:
+        (−1)¹ · (1 + m/2⁵²) · 2^(1025−1023)
+      = −1 · 1.5625 · 4
+      = −6.25   ✓
+
+      Precisión: 53 bits ⇒ log₁₀(2⁵³) ≈ 15.95 dígitos decimales
+      Rango:     exponente de −1022 a 1023 ⇒ ~1e−308 a ~1e308
+      ```
+    errores:
+      - "Confundir precisión (mantisa, ~16 dígitos) con rango (exponente, ~1e±308)."
+      - "Olvidar el sesgo del exponente al leer los bits."
+      - "Suponer que más bits de exponente dan más precisión: dan más rango."
+    aplicacion: |
+      Es el formato de casi todo cálculo científico. Entenderlo explica float32 (24 bits de
+      mantisa), bfloat16 (8 bits de mantisa pero el mismo rango que float32, por eso se usa
+      en entrenamiento) y float16 (10 bits, rango reducido).
+    referencias:
+      - "[IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)"
+      - "[Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)"
+      - "[Kahan, W. *Lecture Notes on the Status of IEEE 754*, UC Berkeley, 1997](https://people.eecs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF)"
+
+  "029":
+    concepto: "0.1 no es representable en binario, igual que 1/3 no lo es en decimal; la desigualdad no es un fallo sino una consecuencia."
+    formulas:
+      - "0.1₁₀ = 0.0001100110011...₂  (periódico infinito)"
+      - "comparación correcta: math.isclose(a, b, rel_tol=...)"
+    desarrollo: |
+      La clase 004 estableció que una fracción tiene desarrollo finito solo si su
+      denominador reducido se factoriza en los primos de la base. En base 10 los primos son
+      2 y 5, y por eso 1/10 es finito. En base 2 el único primo es 2, así que 1/10 —cuyo
+      denominador contiene un 5— tiene desarrollo **binario periódico infinito**.
+
+      Como la mantisa tiene 53 bits, ese desarrollo se trunca. El float más cercano a 0.1 es
+      en realidad 0.1000000000000000055511151231257827021181583404541015625. Sumar dos
+      aproximaciones y compararlas con la aproximación de 0.3 no tiene por qué dar igualdad,
+      y de hecho no la da: la diferencia es de unos 5.5·10⁻¹⁷.
+
+      La conclusión correcta no es «los floats están rotos». Es que **el operador `==` no es
+      la comparación adecuada para resultados de cálculo en punto flotante**. La comparación
+      correcta declara una tolerancia: `math.isclose(a, b, rel_tol=1e-12)` pregunta si los
+      dos números coinciden dentro de una precisión relativa declarada, que es la pregunta
+      que realmente se quiere responder.
+
+      Hay una excepción importante: comparar con `==` sí es correcto cuando los valores son
+      exactamente representables y no han pasado por operaciones inexactas —enteros
+      pequeños, potencias de 2, resultados de asignaciones directas—. La regla práctica es
+      preguntarse si el valor viene de un cálculo; si viene, hace falta tolerancia.
+    ejemplo: |
+      La desigualdad y su explicación.
+
+      ```text
+      0.1 + 0.2 = 0.30000000000000004
+      0.3       = 0.29999999999999998889776975374843...
+      ¿iguales con ==?           No
+      diferencia                 5.55e−17
+
+      0.1 con 50 decimales:
+        0.10000000000000000555111512312578270211815834045410
+
+      Comparación correcta:
+        math.isclose(0.1 + 0.2, 0.3, rel_tol=1e-12)  →  True
+      ```
+
+      El error es de 5.5·10⁻¹⁷ sobre 0.3: precisión relativa de 1.8·10⁻¹⁶, exactamente el
+      epsilon de máquina. El resultado es tan bueno como el formato permite.
+    errores:
+      - "Comparar resultados de cálculo con == en lugar de con una tolerancia declarada."
+      - "Concluir que los floats son poco fiables en lugar de que la comparación era incorrecta."
+      - "Usar una tolerancia absoluta fija sin considerar la escala de los valores."
+    aplicacion: |
+      Cualquier test numérico, criterio de convergencia o comparación de resultados. Los
+      asserts de todo el programa usan tolerancia declarada precisamente por esto.
+    referencias:
+      - "[Python: `math.isclose` y PEP 485](https://peps.python.org/pep-0485/)"
+      - "[Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)"
+      - "[0.30000000000000004.com — el mismo fenómeno en 40 lenguajes](https://0.30000000000000004.com/)"
+
+  "030":
+    concepto: "El error relativo es la magnitud que se propaga; el absoluto solo tiene sentido con la escala declarada."
+    formulas:
+      - "error absoluto = |aprox − exacto|"
+      - "error relativo = |aprox − exacto| / |exacto|"
+      - "dígitos significativos correctos ≈ −log₁₀(error relativo)"
+    desarrollo: |
+      Un error absoluto sin escala es una cifra sin significado. Diez unidades de error son
+      catastróficas si el valor exacto es 1 e irrelevantes si es un millón. El error
+      relativo normaliza esa comparación y por eso es la magnitud que se usa para hablar de
+      precisión.
+
+      La relación con los dígitos significativos es directa y muy útil: un error relativo de
+      10⁻⁶ significa aproximadamente 6 dígitos correctos. Como el epsilon de máquina de
+      float64 es ≈2.2·10⁻¹⁶, ningún cálculo en doble precisión puede prometer más de unos
+      16 dígitos, y prometer más es exagerar la certeza.
+
+      Los dos errores se comportan de forma distinta al operar. Al multiplicar o dividir,
+      los errores **relativos** se suman aproximadamente. Al sumar o restar, los errores
+      **absolutos** se suman. Esa asimetría explica por qué la resta de números parecidos es
+      peligrosa —el error absoluto se mantiene pero el resultado se hace pequeño, así que el
+      relativo explota— y es el contenido de la clase 032.
+
+      La consecuencia práctica: al reportar un resultado numérico hay que decir cuál de los
+      dos errores se está acotando y con respecto a qué. Un criterio de parada basado solo
+      en el error absoluto falla si la escala del problema es muy grande o muy pequeña
+      (clase 233).
+    ejemplo: |
+      Dos aproximaciones con errores absolutos muy distintos.
+
+      ```text
+      Caso A:  exacto = 1.0            aprox = 1.01
+               error absoluto = 0.01
+               error relativo = 0.01   → 1 %      ~2 dígitos correctos
+
+      Caso B:  exacto = 1 000 000.0    aprox = 1 000 010.0
+               error absoluto = 10.0   (1000× mayor que en A)
+               error relativo = 1e−5   → 0.001 %  ~5 dígitos correctos
+
+      Conclusión: B es 1000 veces más preciso pese a tener
+                  un error absoluto 1000 veces mayor.
+      ```
+    errores:
+      - "Comparar errores absolutos entre magnitudes de escalas distintas."
+      - "Reportar más dígitos significativos de los que el error relativo justifica."
+      - "Usar solo tolerancia absoluta como criterio de parada de un método iterativo."
+    aplicacion: |
+      Criterios de parada (parte 11), tolerancias de test, informes de precisión y
+      comparación de implementaciones. La clase 040 construye un auditor basado en esta
+      métrica.
+    referencias:
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002, cap. 1](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+      - "[Python: `math.isclose`](https://docs.python.org/3/library/math.html#math.isclose)"
+
+  "031":
+    concepto: "El epsilon de máquina mide la precisión relativa; el ULP mide la distancia absoluta entre floats vecinos."
+    formulas:
+      - "ε = 2⁻⁵² ≈ 2.22e−16  (float64)"
+      - "ulp(x) ≈ ε · 2^⌊log₂|x|⌋"
+    desarrollo: |
+      El epsilon de máquina se define como el menor ε tal que `1 + ε ≠ 1` en la aritmética
+      del formato. En float64 vale exactamente 2⁻⁵², porque la mantisa tiene 52 bits
+      almacenados: sumar algo menor que el último bit de la mantisa no cambia el número. El
+      laboratorio comprueba justamente eso: `1.0 + ε` difiere de 1.0, pero `1.0 + ε/2` no.
+
+      El ULP —*unit in the last place*— es el concepto relacionado pero distinto: la
+      distancia entre un float concreto y su vecino inmediato. No es constante: cerca de 1
+      vale unos 2.2·10⁻¹⁶, cerca de 10⁶ vale unos 1.2·10⁻¹⁰, y cerca de 10⁻⁶ vale unos
+      2.1·10⁻²². Los floats no están repartidos uniformemente en la recta: se concentran
+      cerca del cero y se espacian al alejarse.
+
+      Esta no uniformidad explica un fenómeno cotidiano: sumar un número muy pequeño a uno
+      muy grande no cambia nada. `1e16 + 1.0` devuelve `1e16` porque 1.0 es menor que el ULP
+      en esa escala. No es un redondeo agresivo: es que el resultado exacto no tiene
+      representación y el más cercano es el propio `1e16`.
+
+      Medir un error en ULP en lugar de en unidades absolutas es la forma correcta de
+      evaluar la calidad de una función numérica. Una implementación de `sin` «correctamente
+      redondeada» tiene un error menor a 0.5 ULP; una aceptable, menor a 1 ULP. Esa es la
+      unidad en la que las bibliotecas matemáticas declaran su precisión.
+    ejemplo: |
+      Epsilon, ULP y el límite de la suma.
+
+      ```text
+      ε = sys.float_info.epsilon = 2.220446049250313e−16 = 2⁻⁵²
+
+      1.0 + ε      ≠ 1.0        ✓ (por definición de ε)
+      1.0 + ε/2    == 1.0       ✓ (por debajo del último bit)
+
+      ULP según la magnitud:
+        ulp(1.0)   = 2.22e−16
+        ulp(1e6)   = 1.16e−10       500 000 veces mayor
+        ulp(1e−6)  = 2.12e−22
+
+      Siguiente float tras 1.0: 1.0000000000000002
+      ```
+
+      Los floats no son un retículo uniforme: son casi logarítmicos.
+    errores:
+      - "Confundir el epsilon de máquina con el menor float positivo (5e−324)."
+      - "Suponer que el ULP es constante en toda la recta real."
+      - "Usar una tolerancia absoluta de 1e−16 para valores de magnitud 1e6, donde el ULP ya es 1e−10."
+    aplicacion: |
+      Elegir tolerancias, evaluar la calidad de una biblioteca matemática y entender por qué
+      un acumulador pierde términos pequeños. Es el prerrequisito de las clases 032 y 034.
+    referencias:
+      - "[Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., Birkhäuser, 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6)"
+      - "[Python: `math.ulp` y `math.nextafter`](https://docs.python.org/3/library/math.html#math.ulp)"
+
+  "032":
+    concepto: "Restar dos números casi iguales destruye dígitos significativos sin producir ningún error visible."
+    formulas:
+      - "forma ingenua:  √(x²+1) − x"
+      - "forma estable:  1 / (√(x²+1) + x)"
+    desarrollo: |
+      La cancelación catastrófica es el fenómeno más peligroso de la aritmética de punto
+      flotante porque **no produce ninguna señal**. Al restar dos números que coinciden en
+      sus primeros k dígitos, esos dígitos se anulan y el resultado queda formado por los
+      dígitos de menor peso, que son precisamente los contaminados por el redondeo previo.
+      El error absoluto se mantiene; el resultado se hace pequeño; el error relativo explota.
+
+      El caso canónico es `√(x²+1) − x` para x grande. Con x = 10⁸, ambos términos valen
+      aproximadamente 10⁸ y coinciden en unos 16 dígitos, que son todos los que hay. El
+      resultado de la resta es esencialmente ruido. La forma algebraicamente equivalente
+      `1/(√(x²+1) + x)` —obtenida multiplicando y dividiendo por el conjugado— no tiene resta
+      y da el resultado correcto.
+
+      El patrón se repite en toda la matemática computacional: `exp(x) − 1` para x pequeño
+      (por eso existe `expm1`), `log(1 + x)` para x pequeño (`log1p`), la fórmula cuadrática
+      cuando `b² ≫ 4ac` (clase 036), y la varianza calculada como `E[X²] − E[X]²` en lugar
+      de con la fórmula de dos pasos.
+
+      La regla práctica es reconocible: **cada vez que una fórmula reste dos cantidades que
+      pueden ser casi iguales, hay que buscar una forma alternativa**. Casi siempre existe, y
+      obtenerla es álgebra elemental —racionalizar, factorizar, usar una identidad—, no
+      análisis numérico avanzado.
+    ejemplo: |
+      La misma expresión por dos caminos con x = 10⁸.
+
+      ```text
+      Ingenua:  √(10¹⁶ + 1) − 10⁸
+                = 100000000.00000001 − 100000000
+                = 7.45e−09          ← casi todo ruido
+
+      Estable:  1 / (√(10¹⁶+1) + 10⁸)
+                = 1 / 200000000.00000001
+                = 5.0e−09           ← correcto
+
+      Diferencia relativa entre ambas: ~49 %
+      Dígitos significativos de la ingenua: ~0
+      ```
+
+      Las dos expresiones son idénticas en ℝ. En float64 una es útil y la otra no.
+    errores:
+      - "Trasladar una fórmula del papel al código sin comprobar si contiene una resta peligrosa."
+      - "Interpretar el resultado incorrecto como un problema del lenguaje o de la biblioteca."
+      - "Aumentar la precisión (float128) en lugar de reformular: retrasa el problema, no lo resuelve."
+    aplicacion: |
+      Fórmula cuadrática, cálculo de varianza, diferencias finitas, funciones especiales y
+      cualquier resta de magnitudes cercanas. `expm1` y `log1p` existen exactamente por esto.
+    referencias:
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+      - "[Python: `math.expm1` y `math.log1p`](https://docs.python.org/3/library/math.html#math.expm1)"
+
+  "033":
+    concepto: "Los subnormales extienden el rango hacia el cero a costa de precisión; el overflow produce infinito y no error."
+    formulas:
+      - "float64: max ≈ 1.797e308,  min normal ≈ 2.225e−308,  min subnormal = 5e−324"
+      - "inf − inf = NaN,  0/0 = NaN,  NaN != NaN"
+    desarrollo: |
+      El rango de float64 tiene tres zonas. Los **normales** van de 2.2·10⁻³⁰⁸ a
+      1.8·10³⁰⁸ con la precisión completa de 53 bits. Por debajo del mínimo normal están los
+      **subnormales**, que renuncian al bit implícito para poder acercarse más al cero: llegan
+      hasta 5·10⁻³²⁴ pero con precisión progresivamente menor. Por encima del máximo está el
+      **infinito**.
+
+      Los subnormales existen para que la resta de dos números cercanos nunca dé cero cuando
+      los números son distintos, propiedad conocida como *gradual underflow*. Sin ellos,
+      `a − b == 0` podría ser cierto con `a != b`, lo que rompe algoritmos que dividen por esa
+      diferencia. La contrapartida es de rendimiento: en muchas CPU las operaciones con
+      subnormales son órdenes de magnitud más lentas, y por eso los frameworks de deep
+      learning ofrecen el modo *flush-to-zero*.
+
+      El desbordamiento no lanza excepción: produce `inf`, y el cálculo continúa. Esto es
+      deliberado —permite terminar una operación vectorizada y detectar el problema al
+      final— pero exige comprobar los resultados. El `NaN` aparece en las operaciones
+      indeterminadas (`inf − inf`, `0/0`, `√(−1)`) y tiene una propiedad que sorprende:
+      **no es igual a sí mismo**. `nan == nan` es `False`, y por eso hay que usar
+      `math.isnan`.
+
+      En entrenamiento de redes, la secuencia típica es: un gradiente crece, produce `inf`,
+      el `inf` participa en una resta y produce `NaN`, y el `NaN` contamina todos los pesos
+      en una sola actualización. Detectarlo exige comprobar explícitamente; el programa no
+      avisa.
+    ejemplo: |
+      Los tres límites y la propiedad del NaN.
+
+      ```text
+      max float64        1.7976931348623157e+308
+      max × 2            inf                      ← sin excepción
+
+      min normal         2.2250738585072014e−308
+      min subnormal      5e−324
+      min subnormal / 2  0.0                      ← underflow a cero
+
+      inf − inf          nan
+      nan == nan         False                    ← usar math.isnan
+      ```
+
+      Un `inf` en un cálculo no detiene nada. Se propaga en silencio hasta que alguien
+      comprueba.
+    errores:
+      - "Comparar con == para detectar NaN en lugar de usar math.isnan."
+      - "Suponer que el desbordamiento lanza una excepción."
+      - "Ignorar el coste de rendimiento de los subnormales en bucles numéricos intensivos."
+    aplicacion: |
+      Depuración de entrenamientos que producen NaN, control de estabilidad en softmax y
+      logaritmos, y validación de pipelines numéricos. La estabilización de softmax
+      (clase 321) existe para evitar exactamente este overflow.
+    referencias:
+      - "[IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)"
+      - "[Python: `sys.float_info`](https://docs.python.org/3/library/sys.html#sys.float_info)"
+
+  "034":
+    concepto: "Los errores de redondeo se acumulan al sumar muchos términos; la suma compensada los recupera."
+    formulas:
+      - "error de la suma ingenua: O(n·ε)"
+      - "error de la suma compensada (Kahan): O(ε)"
+    desarrollo: |
+      Cada operación en punto flotante introduce un error de a lo sumo medio ULP. Al sumar n
+      términos, esos errores se acumulan, y en el peor caso el error total crece
+      proporcionalmente a `n·ε`. Con un millón de sumandos y ε ≈ 2·10⁻¹⁶, el error relativo
+      puede llegar a 2·10⁻¹⁰: se han perdido seis dígitos por el simple hecho de sumar
+      muchas veces.
+
+      La suma compensada de Kahan (1965) resuelve el problema arrastrando explícitamente el
+      error de cada paso: guarda en una variable auxiliar lo que se perdió al redondear y lo
+      reinyecta en la siguiente suma. El coste es cuatro operaciones en lugar de una, y el
+      error pasa a ser independiente de n. Python ofrece `math.fsum`, que usa un algoritmo
+      aún más preciso y devuelve la suma **correctamente redondeada**.
+
+      El orden de la suma también importa. Sumar de menor a mayor magnitud reduce el error,
+      porque evita que los términos pequeños caigan por debajo del ULP del acumulado. Es el
+      motivo por el que algunas bibliotecas ordenan antes de sumar en cálculos críticos.
+
+      En deep learning esto aparece al acumular la pérdida sobre un lote grande o al reducir
+      gradientes entre dispositivos. Los frameworks acumulan en float32 aunque el cálculo sea
+      en float16 precisamente para que el acumulador tenga más precisión que los sumandos.
+    ejemplo: |
+      Acumular un millón de veces 0.1.
+
+      ```text
+      Suma ingenua de 1e6 términos de 0.1:
+        resultado    99999.99999808663
+        exacto       100000.0
+        error abs    1.91e−03
+        error rel    1.91e−08         ← se perdieron ~8 dígitos
+
+      math.fsum([0.1]*1000) − 100.0 = 0.0
+        (correctamente redondeada)
+
+      Coste: fsum es más lento, pero el error no crece con n.
+      ```
+    errores:
+      - "Acumular millones de términos con += y no medir el error resultante."
+      - "Acumular en la misma precisión que los sumandos cuando esta es baja (float16)."
+      - "Suponer que el error de redondeo se cancela estadísticamente: en general se acumula."
+    aplicacion: |
+      Sumas de grandes conjuntos de datos, integración numérica, acumulación de pérdida y
+      reducción de gradientes. `math.fsum`, `numpy.sum` con `dtype` ampliado y la
+      acumulación en float32 responden a este problema.
+    referencias:
+      - "[Kahan, W. *Further remarks on reducing truncation errors*. CACM, 1965](https://dl.acm.org/doi/10.1145/363707.363723)"
+      - "[Python: `math.fsum`](https://docs.python.org/3/library/math.html#math.fsum)"
+
+  "035":
+    concepto: "El número de condición mide cuánto amplifica el problema el error de la entrada, con independencia del algoritmo."
+    formulas:
+      - "κ(f, x) = |x·f′(x) / f(x)|"
+      - "error relativo de salida ≈ κ · error relativo de entrada"
+    desarrollo: |
+      El condicionamiento es una propiedad **del problema**, no de cómo se resuelva. Formaliza
+      la pregunta: si perturbo la entrada un 0.001 %, ¿cuánto cambia la salida? El número de
+      condición es el factor de amplificación. Si vale 1, el problema conserva la precisión;
+      si vale 10⁸, un error de entrada en el dígito 16 se convierte en un error en el dígito
+      8 de la salida.
+
+      Para una función de una variable, `κ = |x·f′(x)/f(x)|`. La fórmula dice algo intuitivo:
+      el problema está mal condicionado donde la función es muy sensible en relación a su
+      propio valor, típicamente cerca de sus ceros. `f(x) = 1 − x` cerca de x = 1 tiene
+      condición enorme: es la versión analítica de la cancelación catastrófica.
+
+      La consecuencia práctica es dura y conviene aceptarla pronto: **ningún algoritmo puede
+      resolver con precisión un problema mal condicionado**. Si la entrada tiene 16 dígitos y
+      la condición es 10⁸, la salida tiene como mucho 8 dígitos correctos, use uno el método
+      que use. Buscar un algoritmo mejor es buscar en el sitio equivocado; hay que reformular
+      el problema.
+
+      En álgebra lineal el mismo concepto aparece como el número de condición de una matriz
+      —cociente entre el mayor y el menor valor singular (clase 132)—, y en machine learning
+      como la razón entre el mayor y el menor autovalor del Hessiano, que determina lo lento
+      que converge el descenso de gradiente (clase 244).
+    ejemplo: |
+      Condición de f(x) = 1 − x en tres puntos.
+
+      ```text
+      κ(x) = |x · f′(x) / f(x)| = |x / (1 − x)|
+
+      x = 0.5     f(x) = 0.5        κ = 1.0        bien condicionado
+      x = 0.99    f(x) = 0.01       κ = 99         empieza a amplificar
+      x = 1e−8    f(x) ≈ 1.0        κ = 1e−8       muy bien condicionado
+
+      x = 0.9999  f(x) = 1e−4       κ = 9999
+        un error de entrada de 1e−16 → error de salida de 1e−12
+      ```
+
+      La condición no depende de cómo se calcule `1 − x`: depende del problema.
+    errores:
+      - "Buscar un algoritmo mejor para un problema mal condicionado."
+      - "Confundir condicionamiento (del problema) con estabilidad (del algoritmo)."
+      - "Evaluar la condición en un punto y extrapolarla a todo el dominio."
+    aplicacion: |
+      Diagnóstico de sistemas lineales (parte 05), regularización (ridge mejora el
+      condicionamiento, clase 283) y análisis de convergencia de optimizadores. Es la
+      pregunta previa a elegir método.
+    referencias:
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 12](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+
+  "036":
+    concepto: "Un algoritmo es estable si no amplifica el error más allá de lo que el condicionamiento del problema exige."
+    formulas:
+      - "raíz pequeña ingenua:  (−b + √(b²−4ac)) / 2a"
+      - "raíz pequeña estable:  2c / (−b − √(b²−4ac))"
+      - "invariante: r₁·r₂ = c/a"
+    desarrollo: |
+      Estabilidad y condicionamiento son propiedades distintas que se confunden
+      constantemente. El condicionamiento dice cuánta precisión permite el **problema**; la
+      estabilidad dice cuánta precisión conserva el **algoritmo**. Un algoritmo estable
+      aplicado a un problema mal condicionado dará un resultado impreciso, y eso no es culpa
+      del algoritmo. Un algoritmo inestable aplicado a un problema bien condicionado dará un
+      resultado impreciso, y eso sí lo es.
+
+      La fórmula cuadrática es el ejemplo canónico. Cuando `b² ≫ 4ac`, la raíz cuadrada del
+      discriminante es casi igual a `|b|`, así que una de las dos raíces se obtiene restando
+      dos números casi iguales: cancelación catastrófica. El problema —encontrar las raíces—
+      está perfectamente bien condicionado; el algoritmo estándar es inestable para una de
+      ellas.
+
+      La solución usa una identidad elemental: el producto de las raíces es `c/a`. Calculada
+      la raíz grande de forma estable (la que no sufre cancelación), la pequeña se obtiene
+      dividiendo. El invariante que se usa para calcularla sirve además como verificación:
+      si `r₁·r₂` no da `c/a`, hay un error.
+
+      Este patrón —usar un invariante conocido tanto para calcular como para verificar— es
+      uno de los hábitos más transferibles del programa. Aparece en la ortogonalidad de QR
+      (clase 130), en la conservación de la masa de un plan de transporte (clase 346) y en la
+      suma de probabilidades de una softmax (clase 321).
+    ejemplo: |
+      Raíces de x² + 10⁸x + 1 = 0.
+
+      ```text
+      a = 1,  b = 1e8,  c = 1
+      √(b² − 4ac) = 99999999.99999999
+
+      Raíz grande (estable en ambos métodos):
+        r₂ = (−b − √Δ)/2a = −1e8
+
+      Raíz pequeña:
+        ingenua:  (−b + √Δ)/2a = −7.45e−09    ← cancelación
+        estable:  2c/(−b − √Δ) = −1.0e−08     ← correcta
+
+      Verificación con el invariante r₁·r₂ = c/a = 1:
+        ingenua:  −7.45e−09 × −1e8 = 0.745    ✗
+        estable:  −1.0e−08  × −1e8 = 1.0      ✓
+      ```
+    errores:
+      - "Culpar al condicionamiento del problema cuando el inestable es el algoritmo."
+      - "Aceptar un resultado numérico sin comprobar ningún invariante."
+      - "Usar la fórmula cuadrática estándar sin considerar el caso b² ≫ 4ac."
+    aplicacion: |
+      Selección de algoritmos numéricos, implementación de fórmulas cerradas y verificación
+      de resultados. Es la razón por la que se prefiere QR frente a las ecuaciones normales
+      en mínimos cuadrados (clase 234).
+    referencias:
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+      - "[Forsythe, G. E. *Pitfalls in Computation, or Why a Math Book Isn't Enough*, 1970](https://www.jstor.org/stable/2317081)"
+
+  "037":
+    concepto: "Decimal ofrece precisión decimal declarada y exacta a cambio de velocidad."
+    formulas:
+      - "Decimal('0.1') · 3 == Decimal('0.3')  → True"
+      - "0.1 * 3 == 0.3  → False"
+    desarrollo: |
+      El módulo `decimal` implementa aritmética de punto flotante **en base 10** con
+      precisión configurable. Su ventaja no es tener más dígitos: es que las fracciones
+      decimales que escribimos —0.1, 0.05, 19.99— son exactamente representables, porque la
+      base coincide con la de nuestra notación.
+
+      Eso resuelve de raíz el problema del dinero. `Decimal('0.1') * 3` da exactamente
+      `Decimal('0.3')`, mientras que `0.1 * 3` en float da `0.30000000000000004`. Además,
+      `Decimal` permite declarar la precisión (`getcontext().prec`) y el modo de redondeo,
+      de modo que el comportamiento queda documentado en el código en lugar de depender del
+      hardware.
+
+      El coste es real: `Decimal` es entre 50 y 100 veces más lento que `float` porque no se
+      apoya en la FPU. Para un cálculo científico con millones de operaciones es
+      inaceptable; para calcular el total de una factura es irrelevante.
+
+      Un detalle que atrapa a muchos: `Decimal(0.1)` —con un float como argumento— hereda el
+      error del float y da 0.1000000000000000055511151231257827. Hay que construirlo desde
+      **cadena**: `Decimal('0.1')`. La firma acepta ambos precisamente para poder inspeccionar
+      qué guarda realmente un float, que es lo que hace el laboratorio de la clase 029.
+    ejemplo: |
+      Exactitud decimal frente a binaria.
+
+      ```text
+      getcontext().prec = 50
+
+      Decimal(1)/Decimal(3) =
+        0.33333333333333333333333333333333333333333333333333   (50 dígitos)
+      1/3 (float) = 0.3333333333333333                          (16 dígitos)
+
+      Decimal('0.1') * 3 == Decimal('0.3')   →  True   ✓
+      0.1 * 3 == 0.3                          →  False  ✗
+
+      Trampa:
+        Decimal(0.1)   → 0.1000000000000000055511151231257827...
+        Decimal('0.1') → 0.1                                    ✓
+      ```
+    errores:
+      - "Construir Decimal desde un float en lugar de desde una cadena."
+      - "Usar Decimal en bucles numéricos intensivos donde el coste es prohibitivo."
+      - "Suponer que Decimal elimina todos los errores: sigue siendo precisión finita, solo que en base 10."
+    aplicacion: |
+      Contabilidad, facturación, impuestos, cálculo de intereses y cualquier dominio con
+      reglas de redondeo normativas. Es el estándar en sistemas financieros.
+    referencias:
+      - "[Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)"
+      - "[IEEE 754-2019: formatos decimales](https://standards.ieee.org/ieee/754/6210/)"
+
+  "038":
+    concepto: "Fraction guarda dos enteros y da aritmética racional exacta, útil como patrón de referencia."
+    formulas:
+      - "Fraction(1,3) + Fraction(1,6) == Fraction(1,2)  → exacto"
+      - "H_n = Σ 1/k  (número armónico)"
+    desarrollo: |
+      `Fraction` representa un racional como un par de enteros de precisión arbitraria en
+      forma reducida. Toda operación —suma, producto, comparación— es exacta, sin
+      excepciones y sin necesidad de declarar precisión. Es la aritmética más fiel que ofrece
+      la biblioteca estándar.
+
+      Su papel en este programa no es sustituir al float en cálculo real: es servir de
+      **patrón de referencia**. Para medir cuánto error comete un cálculo en punto flotante
+      hace falta conocer el valor exacto, y `Fraction` lo proporciona en cualquier expresión
+      que solo use operaciones racionales. El laboratorio calcula el número armónico H₁₀ por
+      ambos caminos y compara.
+
+      El coste es de crecimiento: los denominadores se multiplican y crecen muy rápido. H₁₀
+      ya tiene denominador 2520, y H₁₀₀ tiene cientos de dígitos. Para cálculos largos, la
+      aritmética exacta deja de ser viable no por lentitud de cada operación sino por el
+      tamaño de los números.
+
+      Una utilidad práctica: `Fraction(0.1)` muestra el racional exacto que guarda un float,
+      y `Fraction(x).limit_denominator(n)` encuentra la mejor aproximación racional con
+      denominador acotado. Esto último es la base de la aproximación por fracciones continuas
+      y explica por qué 22/7 y 355/113 son buenas aproximaciones de π.
+    ejemplo: |
+      Número armónico H₁₀ exacto frente a flotante.
+
+      ```text
+      H₁₀ = 1 + 1/2 + 1/3 + ... + 1/10
+
+      Exacto (Fraction):  7381/2520
+      Como float:         2.9289682539682538
+      Suma en float:      2.9289682539682538
+      Diferencia:         0.0  (en este caso coinciden)
+
+      Denominador: 2520 = mcm(1..10)
+
+      Fraction(0.1) == Fraction(1, 10)  →  False
+        porque el float 0.1 no es exactamente 1/10
+      ```
+
+      Que coincidan con diez términos no significa que coincidan con un millón: el error
+      crece con n (clase 034).
+    errores:
+      - "Usar Fraction en cálculos largos sin considerar el crecimiento del denominador."
+      - "Suponer que Fraction(0.1) es 1/10: hereda el valor real del float."
+      - "Confundir aritmética exacta con precisión infinita en el resultado final convertido a float."
+    aplicacion: |
+      Verificación de implementaciones numéricas, cálculo simbólico ligero, probabilidades
+      exactas en combinatoria y generación de casos de prueba con valor esperado conocido.
+    referencias:
+      - "[Python: módulo `fractions`](https://docs.python.org/3/library/fractions.html)"
+      - "[Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)"
+
+  "039":
+    concepto: "La suma en punto flotante no es asociativa; reproducir un resultado exige fijar el orden de las operaciones."
+    formulas:
+      - "(a + b) + c ≠ a + (b + c)  en float64"
+      - "la suma es conmutativa pero no asociativa"
+    desarrollo: |
+      En los reales, la suma es asociativa: agrupar de una forma u otra da el mismo
+      resultado. En punto flotante **no lo es**, porque cada suma parcial se redondea y el
+      redondeo depende de las magnitudes involucradas. El ejemplo clásico usa `1e16`, `1.0` y
+      `−1e16`: sumando de izquierda a derecha, el `1.0` se pierde por estar bajo el ULP de
+      `1e16`; sumando en otro orden, sobrevive.
+
+      Esto tiene una consecuencia incómoda para la reproducibilidad: fijar la semilla
+      aleatoria **no basta**. Dos ejecuciones del mismo código pueden dar resultados
+      distintos si el orden de las sumas cambia, y el orden cambia con el número de hilos, la
+      arquitectura de la GPU, la versión de la biblioteca BLAS o incluso la disponibilidad de
+      instrucciones vectoriales.
+
+      Por eso los frameworks de deep learning ofrecen modos deterministas explícitos
+      (`torch.use_deterministic_algorithms(True)`), que fuerzan implementaciones con orden
+      fijo a costa de rendimiento. Sin ese modo, el mismo entrenamiento con la misma semilla
+      puede divergir tras unos miles de pasos —no porque haya aleatoriedad extra, sino porque
+      las diferencias de redondeo se amplifican.
+
+      El programa adopta la consecuencia como norma: todas las demostraciones son
+      deterministas en un solo hilo y con orden de operaciones fijo, y un test comprueba que
+      dos ejecuciones devuelven exactamente el mismo diccionario. Esa comprobación sería
+      imposible de garantizar en cálculo paralelo sin medidas adicionales.
+    ejemplo: |
+      El mismo conjunto de sumandos en dos órdenes.
+
+      ```text
+      valores = [1e16, 1.0, −1e16, 1.0]
+
+      De izquierda a derecha:
+        1e16 + 1.0    = 1e16        ← el 1.0 cae bajo el ULP
+        1e16 − 1e16   = 0.0
+        0.0 + 1.0     = 1.0         resultado: 1.0
+
+      De derecha a izquierda:
+        1.0 − 1e16    = −1e16
+        −1e16 + 1.0   = −1e16
+        −1e16 + 1e16  = 0.0         resultado: 0.0
+
+      math.fsum(valores) = 2.0      ← el valor exacto
+
+      ¿Asociativa en ℝ?      Sí
+      ¿Asociativa en float64? No
+      ```
+    errores:
+      - "Creer que fijar la semilla garantiza reproducibilidad numérica."
+      - "Comparar resultados entre CPU y GPU esperando igualdad bit a bit."
+      - "Paralelizar una reducción sin declarar que el resultado deja de ser determinista."
+    aplicacion: |
+      Reproducibilidad de experimentos, comparación de implementaciones, depuración de
+      divergencias entre entornos y publicación de resultados verificables. Es la razón por
+      la que los papers serios publican semilla, versión y hardware.
+    referencias:
+      - "[Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)"
+      - "[PyTorch: reproducibilidad](https://pytorch.org/docs/stable/notes/randomness.html)"
+
+  "040":
+    concepto: "Auditar una expresión es medir cuántos dígitos significativos pierde cada forma de escribirla."
+    formulas:
+      - "dígitos perdidos ≈ −log₁₀(|ingenua − estable| / |estable|)"
+      - "formas estables: expm1, log1p, conjugado"
+    desarrollo: |
+      El capstone convierte en herramienta todo lo anterior. Un auditor de precisión toma
+      una expresión, la evalúa por su forma directa y por una forma algebraicamente
+      equivalente pero numéricamente estable, y reporta cuántos dígitos significativos separa
+      a ambas. Ese número es la medida honesta de cuánta confianza merece la primera forma.
+
+      Las tres expresiones auditadas son las que más aparecen en la práctica.
+      `exp(x) − 1` para x pequeño pierde precisión porque `exp(x)` se acerca a 1 y la resta
+      cancela; `expm1` la calcula directamente. `log(1 + x)` sufre lo mismo cuando `1 + x`
+      redondea a 1; `log1p` lo evita. Y `√(x²+1) − x` es el caso de la clase 032.
+
+      Que estas funciones existan en la biblioteca estándar de todos los lenguajes serios no
+      es casualidad: son la respuesta institucionalizada a problemas de cancelación
+      conocidos desde los años sesenta. Reconocer cuándo usarlas es parte del oficio.
+
+      La regla que cierra la parte: **toda diferencia de magnitudes cercanas necesita una
+      forma alternativa**, y toda implementación numérica publicada debería declarar cuántos
+      dígitos garantiza. El programa aplica esa regla a sí mismo: cada demostración devuelve
+      claves de verificación en lugar de pedir confianza.
+    ejemplo: |
+      Auditoría de tres expresiones.
+
+      ```text
+      expresión         x        ingenua        estable       dígitos perdidos
+      exp(x)−1        1e−10   1.000000e−10   1.000000e−10          ~6
+      log(1+x)        1e−12   1.000089e−12   1.000000e−12          ~4
+      √(x²+1)−x       1e7     5.000000e−08   5.000000e−08          ~9
+
+      Regla operativa:
+        si la expresión contiene una resta de cantidades que pueden
+        acercarse, buscar la forma alternativa ANTES de implementarla.
+      ```
+
+      Los números concretos dependen del valor de x: el auditor los mide, no los supone.
+    errores:
+      - "Publicar un resultado numérico sin declarar cuántos dígitos son fiables."
+      - "Auditar solo con un valor de x: el número de dígitos perdidos depende del punto."
+      - "Sustituir la forma ingenua por la estable sin comprobar que son equivalentes en ℝ."
+    aplicacion: |
+      Revisión de código numérico, elección de biblioteca, validación de una reimplementación
+      y documentación de precisión en una API científica.
+    referencias:
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+      - "[Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6)"

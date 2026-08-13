@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**Los errores de redondeo se acumulan al sumar muchos términos; la suma compensada los recupera.**
 
-Esta clase concreta ese objetivo sobre **Propagación de errores**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `error_propagation`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que la suma de floats es asociativa.
+
+## 🧩 Fórmulas de la clase
+
+```text
+error de la suma ingenua: O(n·ε)
+error de la suma compensada (Kahan): O(ε)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,44 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> La cancelación catastrófica destruye dígitos significativos sin lanzar excepciones.
+Cada operación en punto flotante introduce un error de a lo sumo medio ULP. Al sumar n
+términos, esos errores se acumulan, y en el peor caso el error total crece
+proporcionalmente a `n·ε`. Con un millón de sumandos y ε ≈ 2·10⁻¹⁶, el error relativo
+puede llegar a 2·10⁻¹⁰: se han perdido seis dígitos por el simple hecho de sumar
+muchas veces.
+
+La suma compensada de Kahan (1965) resuelve el problema arrastrando explícitamente el
+error de cada paso: guarda en una variable auxiliar lo que se perdió al redondear y lo
+reinyecta en la siguiente suma. El coste es cuatro operaciones en lugar de una, y el
+error pasa a ser independiente de n. Python ofrece `math.fsum`, que usa un algoritmo
+aún más preciso y devuelve la suma **correctamente redondeada**.
+
+El orden de la suma también importa. Sumar de menor a mayor magnitud reduce el error,
+porque evita que los términos pequeños caigan por debajo del ULP del acumulado. Es el
+motivo por el que algunas bibliotecas ordenan antes de sumar en cálculos críticos.
+
+En deep learning esto aparece al acumular la pérdida sobre un lote grande o al reducir
+gradientes entre dispositivos. Los frameworks acumulan en float32 aunque el cálculo sea
+en float16 precisamente para que el acumulador tenga más precisión que los sumandos.
+
+## 🧮 Ejemplo trabajado
+
+Acumular un millón de veces 0.1.
+
+```text
+Suma ingenua de 1e6 términos de 0.1:
+  resultado    99999.99999808663
+  exacto       100000.0
+  error abs    1.91e−03
+  error rel    1.91e−08         ← se perdieron ~8 dígitos
+
+math.fsum([0.1]*1000) − 100.0 = 0.0
+  (correctamente redondeada)
+
+Coste: fsum es más lento, pero el error no crece con n.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +106,17 @@ compmath run 034
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Acumular millones de términos con += y no medir el error resultante.
+2. Acumular en la misma precisión que los sumandos cuando esta es baja (float16).
+3. Suponer que el error de redondeo se cancela estadísticamente: en general se acumula.
+
+## 🚀 Dónde se usa de verdad
+
+Sumas de grandes conjuntos de datos, integración numérica, acumulación de pérdida y
+reducción de gradientes. `math.fsum`, `numpy.sum` con `dtype` ampliado y la
+acumulación en float32 responden a este problema.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Kahan, W. *Further remarks on reducing truncation errors*. CACM, 1965](https://dl.acm.org/doi/10.1145/363707.363723)
+- [Python: `math.fsum`](https://docs.python.org/3/library/math.html#math.fsum)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

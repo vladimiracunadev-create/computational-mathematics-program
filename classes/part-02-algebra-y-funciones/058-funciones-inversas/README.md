@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**La inversa deshace la función y existe solo si es inyectiva; no es el recíproco 1/f.**
 
-Esta clase concreta ese objetivo sobre **Funciones inversas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `inverse_function`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir función inversa con recíproco.
+
+## 🧩 Fórmulas de la clase
+
+```text
+f⁻¹(f(x)) = x  para todo x del dominio
+f inyectiva ⟺ f(a) = f(b) ⟹ a = b
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El discriminante decide la naturaleza de las raíces antes de calcularlas.
+La función inversa deshace lo que la original hizo. Para que exista, la función debe
+ser **inyectiva**: dos entradas distintas no pueden dar la misma salida, porque de lo
+contrario la inversa no sabría a cuál volver. `f(x) = x²` no es invertible en todo ℝ
+—2 y −2 dan lo mismo— pero sí lo es restringida a `x ≥ 0`, y esa restricción es la que
+define la raíz cuadrada.
+
+La notación `f⁻¹` es desafortunada porque se parece a `f⁻¹ = 1/f`, y **no lo es**. Para
+`f(x) = 3x − 4`, la inversa es `(y+4)/3` y el recíproco es `1/(3x−4)`. Son funciones
+completamente distintas y confundirlas es un error clásico.
+
+Gráficamente, la inversa es la reflexión respecto a la recta `y = x`, lo que da una
+forma visual de comprobar si existe: si alguna recta horizontal corta la gráfica más de
+una vez, la función no es inyectiva y no tiene inversa global.
+
+En machine learning las inversas aparecen en los *normalizing flows*, que exigen
+transformaciones invertibles con jacobiano calculable, y en toda transformación de
+datos que deba deshacerse para interpretar una predicción en las unidades originales
+(desestandarizar).
+
+## 🧮 Ejemplo trabajado
+
+Inversa de f(x) = 3x − 4 y contraste con el recíproco.
+
+```text
+Despejar:  y = 3x − 4  →  x = (y + 4)/3
+f⁻¹(y) = (y + 4)/3
+
+Comprobación en x = 5:
+  f(5) = 11
+  f⁻¹(11) = (11 + 4)/3 = 5      ✓ roundtrip
+
+Recíproco (COSA DISTINTA):
+  1/f(5) = 1/11 = 0.0909
+
+¿f⁻¹ = 1/f?   No.
+
+Condición: f debe ser inyectiva. 3x − 4 lo es en todo ℝ.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,16 @@ compmath run 058
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Confundir la inversa f⁻¹ con el recíproco 1/f.
+2. Invertir una función sin comprobar que es inyectiva.
+3. Olvidar restringir el dominio para que la inversa exista (raíz cuadrada).
+
+## 🚀 Dónde se usa de verdad
+
+Desestandarizar predicciones, normalizing flows, cambio de variable en probabilidad
+(con su jacobiano) y la relación entre exponencial y logaritmo.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 12](https://www.mathpop.com/calculus)
+- [Papamakarios, G. et al. *Normalizing Flows for Probabilistic Modeling and Inference*. JMLR, 2021](https://jmlr.org/papers/v22/19-1028.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

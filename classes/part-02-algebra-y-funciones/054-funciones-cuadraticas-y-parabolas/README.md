@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
+**El signo del coeficiente principal decide la concavidad, y el vértice es el extremo.**
 
-Esta clase concreta ese objetivo sobre **Funciones cuadráticas y parábolas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Manipulación simbólica con criterio y la función como objeto central: dominio, imagen, composición, inversa y familias lineal, cuadrática, exponencial y logarítmica.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `quadratic_function`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar log a valores no positivos sin declarar el dominio.
+
+## 🧩 Fórmulas de la clase
+
+```text
+f(x) = ax² + bx + c
+xᵥ = −b/2a;  a > 0 ⟹ mínimo,  a < 0 ⟹ máximo
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,43 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 02"]
 ```
 
-## 🧠 Idea rectora de la parte 02
+## 📖 Fundamentos
 
-> El logaritmo convierte producto en suma: por eso aparece en toda función de pérdida.
+La función cuadrática es el primer modelo con un extremo, y por eso es el ejemplo
+canónico de optimización. Todo lo que la parte 12 hace con funciones complicadas se
+puede visualizar aquí: hay un punto donde la derivada se anula, y el signo de la
+curvatura decide si es mínimo o máximo.
+
+La concavidad la determina `a`: positivo abre hacia arriba y el vértice es un mínimo;
+negativo abre hacia abajo y es un máximo. En la parte 08 ese `a` se convertirá en el
+Hessiano, y «positivo» en «definido positivo», pero la lógica es idéntica.
+
+La simetría respecto al eje vertical `x = xᵥ` es una propiedad estructural: `f(xᵥ − h)`
+y `f(xᵥ + h)` valen lo mismo para cualquier h. Comprobarlo numéricamente es una
+verificación barata de que el vértice se calculó bien.
+
+Las cuadráticas son además el problema modelo de la optimización numérica porque su
+mínimo se conoce en forma cerrada. Toda la parte 12 usa `f(x,y) = x² + 20y²` como banco
+de pruebas precisamente por eso: se puede medir exactamente cuánto se aleja cada
+optimizador del óptimo conocido.
+
+## 🧮 Ejemplo trabajado
+
+Analizar f(x) = −x² + 6x − 5.
+
+```text
+a = −1 < 0  →  abre hacia abajo, el vértice es un MÁXIMO
+
+xᵥ = −6/(2·(−1)) = 3
+yᵥ = −9 + 18 − 5 = 4
+
+Simetría (h = 2):
+  f(1) = −1 + 6 − 5 = 0
+  f(5) = −25 + 30 − 5 = 0     ✓  iguales
+
+raíces: −x² + 6x − 5 = 0 → x = 1, x = 5
+punto medio: (1+5)/2 = 3 = xᵥ   ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +105,16 @@ compmath run 054
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Dividir por una expresión que puede anularse y perder soluciones.
-- Aplicar log a valores no positivos sin declarar el dominio.
-- Confundir función inversa con recíproco.
+1. Suponer que el vértice es siempre un mínimo.
+2. Calcular xᵥ como b/2a en lugar de −b/2a.
+3. Confundir el vértice (punto) con el valor extremo (ordenada del vértice).
+
+## 🚀 Dónde se usa de verdad
+
+Optimización cuadrática, ajuste por mínimos cuadrados, trayectorias balísticas y
+aproximación de segundo orden de cualquier función suave (Taylor, clase 151).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
-- Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
-- Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

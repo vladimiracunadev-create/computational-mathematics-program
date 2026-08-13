@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**La aritmética binaria es la decimal con acarreo en base 2; los desplazamientos multiplican y dividen por potencias de 2.**
 
-Esta clase concreta ese objetivo sobre **Aritmética binaria**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `binary_arithmetic`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar floats con `==` en lugar de una tolerancia razonada.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x << k = x · 2ᵏ
+x >> k = ⌊x / 2ᵏ⌋  (para x ≥ 0)
+x & (x−1) apaga el bit menos significativo encendido
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +46,46 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> La cancelación catastrófica destruye dígitos significativos sin lanzar excepciones.
+Sumar en binario funciona igual que en decimal: se suma columna a columna y se
+arrastra el acarreo. La única diferencia es que el acarreo salta cuando la suma llega
+a 2 en lugar de a 10. Esta simplicidad es la razón por la que el hardware usa base 2:
+un sumador completo de un bit cabe en unas pocas puertas lógicas.
+
+Los desplazamientos son la operación más barata de un procesador y equivalen a
+multiplicar o dividir por potencias de 2. `x << 3` es `x · 8`, y `x >> 1` es la
+división entera por 2. Los compiladores hacen esta sustitución automáticamente, pero
+reconocerla ayuda a leer código de bajo nivel y algoritmos de hashing.
+
+Las operaciones bit a bit —AND, OR, XOR— actúan sobre cada posición de forma
+independiente, sin acarreo. AND enmascara (deja pasar solo los bits marcados), OR
+activa, XOR conmuta. XOR tiene una propiedad que se usa constantemente en
+criptografía: es su propia inversa, `(a ^ b) ^ b = a`.
+
+Un idiom que conviene conocer: `x & (x−1)` apaga el bit encendido más a la derecha,
+porque restar 1 invierte ese bit y todos los ceros a su derecha. Contar cuántas veces
+se puede aplicar antes de llegar a cero cuenta los bits encendidos (`popcount`), y esa
+cuenta aparece en distancias de Hamming y en índices de bases de datos.
+
+## 🧮 Ejemplo trabajado
+
+Operaciones sobre a = 1011₂ (11) y b = 0110₂ (6).
+
+```text
+a      = 1011   (11)
+b      = 0110   (6)
+
+a + b  = 10001  (17)     acarreo hasta el quinto bit
+a & b  = 0010   (2)      solo donde ambos tienen 1
+a | b  = 1111   (15)     donde alguno tiene 1
+a ^ b  = 1101   (13)     donde difieren
+
+a << 2 = 101100 (44)     = 11 · 4    ✓
+a >> 1 = 101    (5)      = ⌊11/2⌋    ✓
+
+Verificación XOR:  (a ^ b) ^ b = 1101 ^ 0110 = 1011 = a   ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,17 @@ compmath run 024
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Usar >> con enteros negativos esperando división truncada hacia cero: en Python trunca hacia −∞.
+2. Confundir & (bit a bit) con and (lógico) o | con or.
+3. Suponer que << nunca desborda: en ancho fijo los bits que salen se pierden.
+
+## 🚀 Dónde se usa de verdad
+
+Hashing, compresión, criptografía, banderas de configuración, índices de bitmap y
+optimización de bucles. La distancia de Hamming entre dos cadenas de bits es el
+popcount de su XOR.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Warren, H. *Hacker's Delight*, 2ª ed., Addison-Wesley, 2012](https://www.oreilly.com/library/view/hackers-delight-second/9780133084993/)
+- [Python: operaciones bit a bit](https://docs.python.org/3/library/stdtypes.html#bitwise-operations-on-integer-types)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

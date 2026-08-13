@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
+**La suma en punto flotante no es asociativa; reproducir un resultado exige fijar el orden de las operaciones.**
 
-Esta clase concreta ese objetivo sobre **Reproducibilidad numérica entre plataformas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Qué es realmente un número dentro de una máquina: bits, complemento a dos, IEEE 754, error, condicionamiento y estabilidad.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `reproducibility`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar floats con `==` en lugar de una tolerancia razonada.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(a + b) + c ≠ a + (b + c)  en float64
+la suma es conmutativa pero no asociativa
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -40,9 +45,53 @@ flowchart LR
     C -.-> IA["Uso en IA<br/>parte 01"]
 ```
 
-## 🧠 Idea rectora de la parte 01
+## 📖 Fundamentos
 
-> La cancelación catastrófica destruye dígitos significativos sin lanzar excepciones.
+En los reales, la suma es asociativa: agrupar de una forma u otra da el mismo
+resultado. En punto flotante **no lo es**, porque cada suma parcial se redondea y el
+redondeo depende de las magnitudes involucradas. El ejemplo clásico usa `1e16`, `1.0` y
+`−1e16`: sumando de izquierda a derecha, el `1.0` se pierde por estar bajo el ULP de
+`1e16`; sumando en otro orden, sobrevive.
+
+Esto tiene una consecuencia incómoda para la reproducibilidad: fijar la semilla
+aleatoria **no basta**. Dos ejecuciones del mismo código pueden dar resultados
+distintos si el orden de las sumas cambia, y el orden cambia con el número de hilos, la
+arquitectura de la GPU, la versión de la biblioteca BLAS o incluso la disponibilidad de
+instrucciones vectoriales.
+
+Por eso los frameworks de deep learning ofrecen modos deterministas explícitos
+(`torch.use_deterministic_algorithms(True)`), que fuerzan implementaciones con orden
+fijo a costa de rendimiento. Sin ese modo, el mismo entrenamiento con la misma semilla
+puede divergir tras unos miles de pasos —no porque haya aleatoriedad extra, sino porque
+las diferencias de redondeo se amplifican.
+
+El programa adopta la consecuencia como norma: todas las demostraciones son
+deterministas en un solo hilo y con orden de operaciones fijo, y un test comprueba que
+dos ejecuciones devuelven exactamente el mismo diccionario. Esa comprobación sería
+imposible de garantizar en cálculo paralelo sin medidas adicionales.
+
+## 🧮 Ejemplo trabajado
+
+El mismo conjunto de sumandos en dos órdenes.
+
+```text
+valores = [1e16, 1.0, −1e16, 1.0]
+
+De izquierda a derecha:
+  1e16 + 1.0    = 1e16        ← el 1.0 cae bajo el ULP
+  1e16 − 1e16   = 0.0
+  0.0 + 1.0     = 1.0         resultado: 1.0
+
+De derecha a izquierda:
+  1.0 − 1e16    = −1e16
+  −1e16 + 1.0   = −1e16
+  −1e16 + 1e16  = 0.0         resultado: 0.0
+
+math.fsum(valores) = 2.0      ← el valor exacto
+
+¿Asociativa en ℝ?      Sí
+¿Asociativa en float64? No
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +115,17 @@ compmath run 039
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Comparar floats con `==` en lugar de una tolerancia razonada.
-- Suponer que la suma de floats es asociativa.
-- Usar float para dinero en vez de Decimal o enteros de centavos.
+1. Creer que fijar la semilla garantiza reproducibilidad numérica.
+2. Comparar resultados entre CPU y GPU esperando igualdad bit a bit.
+3. Paralelizar una reducción sin declarar que el resultado deja de ser determinista.
+
+## 🚀 Dónde se usa de verdad
+
+Reproducibilidad de experimentos, comparación de implementaciones, depuración de
+divergencias entre entornos y publicación de resultados verificables. Es la razón por
+la que los papers serios publican semilla, versión y hardware.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
-- Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
-- IEEE 754-2019 Standard for Floating-Point Arithmetic.
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)
+- [PyTorch: reproducibilidad](https://pytorch.org/docs/stable/notes/randomness.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
