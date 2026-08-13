@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**El kernel calcula el producto escalar en el espacio expandido sin construirlo nunca.**
 
-Esta clase concreta ese objetivo sobre **Kernel trick**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `kernel_trick`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: no estandarizar antes de aplicar regularización o k-nn.
+
+## 🧩 Fórmulas de la clase
+
+```text
+K(a,b) = φ(a)ᵀφ(b)
+kernel polinómico: K(a,b) = (aᵀb + c)^d
+kernel RBF: K(a,b) = exp(−γ‖a−b‖²)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El leakage produce métricas excelentes y modelos inútiles.
+Cuando los datos no son linealmente separables, una salida es transformarlos a un espacio
+de mayor dimensión donde sí lo sean. El problema es que ese espacio crece muy rápido: un
+polinomio de grado 3 sobre 100 características genera del orden de 170 000 términos, y
+calcularlos explícitamente es inviable.
+
+El **kernel trick** observa que muchos algoritmos —SVM, PCA, regresión ridge— solo usan los
+datos a través de **productos escalares**. Si existe una función `K(a,b)` que devuelve
+directamente el producto escalar en el espacio expandido, nunca hace falta construir ese
+espacio. Se sustituyen los productos escalares por llamadas al kernel y todo funciona.
+
+El ejemplo mínimo lo hace evidente: para el kernel polinómico de grado 2, calcular
+`(aᵀb)²` cuesta una multiplicación y una potencia, mientras que expandir a `φ` y hacer el
+producto en el espacio expandido cuesta bastante más y da exactamente el mismo número.
+
+El caso extremo es el **kernel RBF**, que corresponde a un espacio de características de
+dimensión **infinita** y aun así se evalúa con una exponencial. El teorema de Mercer
+caracteriza qué funciones son kernels válidos: aquellas cuya matriz de Gram es siempre
+semidefinida positiva. Toda la maquinaria de los procesos gaussianos se apoya en esta misma
+idea.
+
+## 🧮 Ejemplo trabajado
+
+Kernel polinómico de grado 2 frente al espacio expandido.
+
+```text
+a = (1, 2)       b = (3, 4)
+
+Expansión explícita:
+  φ(x) = (x₁², √2·x₁x₂, x₂²)
+  φ(a) = (1,0 ; 2,828427 ; 4,0)
+  φ(b) = (9,0 ; 16,970563 ; 16,0)
+
+producto en el espacio expandido:
+  1·9 + 2,828427·16,970563 + 4·16 = 121,0
+
+Kernel directo:
+  (aᵀb)² = (1·3 + 2·4)² = 11² = 121,0
+
+Coinciden                                            ✓
+
+Con d = 3 y 100 características, la expansión tendría
+unos 170 000 términos; el kernel sigue costando lo mismo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 290
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Construir explícitamente el espacio de características cuando hay kernel.
+2. Usar RBF sin estandarizar ni ajustar γ.
+3. Aplicar como kernel una función que no es semidefinida positiva.
+
+## 🚀 Dónde se usa de verdad
+
+SVM no lineales, procesos gaussianos, PCA con kernel, métodos espectrales y análisis de
+similitud entre estructuras complejas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Schölkopf, B.; Smola, A. *Learning with Kernels*, MIT Press, 2002](https://mitpress.mit.edu/9780262536578/learning-with-kernels/)
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 6](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

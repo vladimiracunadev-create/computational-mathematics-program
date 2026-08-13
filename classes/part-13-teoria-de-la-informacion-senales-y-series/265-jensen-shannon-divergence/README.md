@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Jensen-Shannon simetriza la KL midiendo ambas contra la mezcla.**
 
-Esta clase concreta ese objetivo sobre **Jensen-Shannon divergence**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `js_divergence`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar entropías calculadas en bases logarítmicas distintas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+M = (p + q)/2
+JS(p,q) = ½·KL(p‖M) + ½·KL(q‖M)
+0 ≤ JS ≤ 1 bit;  √JS es una métrica
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Convolución en el tiempo es multiplicación en frecuencia.
+La divergencia de Jensen-Shannon arregla los dos defectos de la KL con una idea simple:
+construir la mezcla de ambas distribuciones y medir la divergencia de cada una a esa
+mezcla, promediando. El resultado es simétrico por construcción.
+
+Además está **acotada**: nunca supera 1 bit, sea cual sea el par de distribuciones. La KL
+puede ser infinita cuando `q` asigna cero donde `p` no lo hace; JS no tiene ese problema
+porque la mezcla siempre cubre el soporte de ambas. Eso la hace numéricamente mucho más
+estable como medida de comparación.
+
+Y su raíz cuadrada **sí es una métrica**: cumple simetría, desigualdad triangular y se
+anula solo en la identidad. Eso permite usarla como distancia genuina para agrupar,
+indexar o comparar distribuciones, cosa que con KL no es legítima.
+
+Su papel histórico en aprendizaje automático es notable: el artículo original de las GAN
+demostró que el discriminador óptimo hace que el generador minimice la divergencia JS
+entre la distribución real y la generada. Que esa divergencia sature cuando los soportes no
+se solapan es parte de la explicación de la inestabilidad de las GAN, y la razón de que
+WGAN cambiara a la distancia de Wasserstein.
+
+## 🧮 Ejemplo trabajado
+
+JS sobre el mismo par que la clase anterior.
+
+```text
+p = [0,5 ; 0,3 ; 0,2]
+q = [0,3 ; 0,4 ; 0,3]
+
+mezcla M = [0,4 ; 0,35 ; 0,25]
+
+JS(p,q) = 0,0306589 bits
+JS(q,p) = 0,0306589 bits
+simétrica                                            ✓
+
+Comparación con KL:
+  KL(p‖q) = 0,0880      KL(q‖p) = 0,0835
+  JS      = 0,0307      menor y única
+
+Cota: JS ≤ 1 bit siempre.
+Para distribuciones con soportes disjuntos, JS = 1 exacto,
+mientras que KL sería infinita.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 265
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Usar JS donde la asimetría de KL era justamente lo que se quería.
+2. Confundir JS con su raíz cuadrada al hablar de métrica.
+3. Olvidar que JS satura cuando los soportes no se solapan.
+
+## 🚀 Dónde se usa de verdad
+
+Análisis de GAN, comparación de distribuciones de datos, agrupamiento de documentos y
+medida de similitud entre modelos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Lin, J. *Divergence measures based on the Shannon entropy*, IEEE Trans. Information Theory, 1991](https://doi.org/10.1109/18.61115)
+- [Goodfellow, I. et al. *Generative Adversarial Networks*, NeurIPS, 2014](https://arxiv.org/abs/1406.2661)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

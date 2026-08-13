@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Casi todo el análisis clásico de series supone estacionariedad, y diferenciar la consigue.**
 
-Esta clase concreta ese objetivo sobre **Procesos estacionarios**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `stationarity`.
 4. Interpretar las 5 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: calcular log(0) sin epsilon de estabilidad.
+
+## 🧩 Fórmulas de la clase
+
+```text
+estacionaria: media, varianza y autocovarianza constantes en el tiempo
+diferenciación: y[t] = x[t] − x[t−1]
+una diferencia elimina tendencia lineal; dos, cuadrática
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> La entropía es el límite inferior de compresión sin pérdida.
+Una serie es **estacionaria** cuando sus propiedades estadísticas no cambian con el tiempo:
+la media, la varianza y la relación entre valores separados por un retardo dado son las
+mismas al principio y al final. Intuitivamente, la serie no va a ninguna parte.
+
+El supuesto importa porque casi toda la teoría clásica lo necesita. Ajustar un modelo ARMA,
+interpretar una autocorrelación o estimar un espectro presuponen que hay algo estable que
+estimar. Aplicar esas herramientas a una serie con tendencia produce resultados que parecen
+significativos y no lo son: la **regresión espuria** entre dos series con tendencia da
+correlaciones altísimas sin ninguna relación real.
+
+El diagnóstico más simple es partir la serie en dos y comparar medias y varianzas. Si
+difieren claramente, hay no estacionariedad. Las pruebas formales —Dickey-Fuller aumentada,
+KPSS— formalizan ese contraste.
+
+El remedio habitual es **diferenciar**: sustituir cada valor por su diferencia con el
+anterior. Una diferencia elimina una tendencia lineal, dos eliminan una cuadrática. Es la
+«I» de ARIMA. Para varianza no constante se aplica antes una transformación logarítmica o
+de Box-Cox. Diferenciar de más introduce estructura artificial, así que conviene quedarse
+con el mínimo necesario.
+
+## 🧮 Ejemplo trabajado
+
+Tres series: estacionaria, con tendencia, y diferenciada.
+
+```text
+serie estacionaria:
+  media 1ª mitad = 0,0574    varianza 1ª = 1,12
+  media 2ª mitad = 0,0223    varianza 2ª ≈ 1,10
+  estables → estacionaria                            ✓
+
+serie con tendencia:
+  media 1ª mitad = 1,9728    varianza 1ª = 2,40
+  media 2ª mitad = 5,9658    varianza 2ª ≈ 2,45
+  la media se triplica → no estacionaria             ✗
+
+tras diferenciar la serie con tendencia:
+  media 1ª mitad = 0,0204    varianza 1ª = 2,05
+  media 2ª mitad = 0,0140    varianza 2ª ≈ 2,03
+  estable de nuevo                                   ✓
+
+Una sola diferencia bastó para una tendencia lineal.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 276
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Ajustar modelos clásicos sin comprobar estacionariedad.
+2. Diferenciar más veces de las necesarias.
+3. Interpretar una correlación entre dos series con tendencia como relación real.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos ARIMA, predicción de demanda, análisis financiero y preprocesamiento de series
+para modelos de aprendizaje automático.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/)
+- [Box, G.; Jenkins, G.; Reinsel, G. *Time Series Analysis*, 5ª ed., Wiley, 2015](https://doi.org/10.1002/9781118619193)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Filtrar es decidir qué frecuencias sobreviven, y una media móvil ya es un filtro.**
 
-Esta clase concreta ese objetivo sobre **Filtros y respuesta en frecuencia**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `filters`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: muestrear por debajo de nyquist y culpar al modelo del ruido resultante.
+
+## 🧩 Fórmulas de la clase
+
+```text
+media móvil de ventana k: núcleo de k valores 1/k
+paso-bajo conserva bajas, paso-alto conserva altas
+compromiso: más suavizado, menos detalle
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Convolución en el tiempo es multiplicación en frecuencia.
+Un filtro atenúa unas frecuencias y deja pasar otras. Su descripción completa es la
+**respuesta en frecuencia**: qué factor aplica a cada componente. Diseñar un filtro es
+elegir esa curva y encontrar los coeficientes que la producen.
+
+Los tipos básicos se nombran por lo que dejan pasar. **Paso-bajo** conserva las
+frecuencias bajas y elimina las altas, que es lo que se necesita para quitar ruido.
+**Paso-alto** hace lo contrario y sirve para eliminar tendencias o el nivel continuo.
+**Paso-banda** conserva una franja, y es lo que hace un ecualizador.
+
+La **media móvil** es el filtro paso-bajo más simple, y ya ilustra el compromiso central:
+una ventana más ancha suaviza más ruido pero también borra más detalle real. No hay ajuste
+óptimo universal; depende de qué frecuencias son señal y cuáles son ruido en el problema
+concreto.
+
+Hay una tensión inevitable entre el dominio del tiempo y el de la frecuencia. Un filtro con
+corte muy abrupto en frecuencia necesita una respuesta muy larga en el tiempo, lo que
+introduce retardo y oscilaciones en los bordes. Es una manifestación del principio de
+incertidumbre aplicado al análisis de señales, y explica por qué los filtros reales siempre
+son un compromiso.
+
+## 🧮 Ejemplo trabajado
+
+Media móvil sobre una señal con ruido de alta frecuencia.
+
+```text
+128 muestras, ventana del filtro = 7
+
+RMSE antes del filtro:  0,282735
+RMSE después:           0,066077
+mejora: 76,6 %
+
+El ruido de alta frecuencia se promedia a casi cero;
+la señal de baja frecuencia sobrevive casi intacta.
+
+Compromiso de la ventana:
+  ventana 3   → poco suavizado, poco retardo
+  ventana 7   → buen equilibrio aquí
+  ventana 31  → suaviza mucho, borra los picos reales
+
+Una media móvil es un filtro FIR paso-bajo con
+todos los coeficientes iguales.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 275
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Elegir la ventana sin conocer qué frecuencias son señal y cuáles ruido.
+2. Ignorar el retardo que introduce un filtro causal.
+3. Filtrar antes de comprobar si el problema real era aliasing.
+
+## 🚀 Dónde se usa de verdad
+
+Eliminación de ruido en sensores, ecualización de audio, suavizado de series financieras y
+preprocesamiento de señales biomédicas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 7](https://www.pearson.com/)
+- [Smith, S. *The Scientist and Engineer's Guide to Digital Signal Processing*, 1997](https://www.dspguide.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

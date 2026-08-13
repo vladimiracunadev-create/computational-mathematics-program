@@ -1,0 +1,1306 @@
+part: "13"
+titulo: "Teoría de la información, señales y series"
+
+resumen_extendido: |
+  Esta parte contesta dos preguntas que parecen inconexas y resultan ser la misma. La primera:
+  ¿cuánta información hay en un mensaje, y cuánto se puede comprimir sin perder nada? La
+  segunda: ¿qué hay dentro de una señal, y cómo se extrae? Shannon respondió la primera en
+  1948 y Fourier la segunda en 1822, y ambas convergen en el aprendizaje automático moderno,
+  donde la función de pérdida es una divergencia entre distribuciones y las capas son
+  convoluciones.
+
+  Las clases 261 a 268 construyen la teoría de la información desde su ladrillo: la
+  **sorpresa** `−log p`. Un evento seguro no sorprende, uno improbable sorprende mucho, y el
+  logaritmo garantiza que la sorpresa de dos eventos independientes sea la suma de las suyas.
+  La **entropía** es la sorpresa esperada, y el teorema de codificación de Shannon le da un
+  significado operativo que no es metafórico: es el límite inferior exacto de bits por símbolo
+  de cualquier compresión sin pérdida.
+
+  De ahí salen las medidas que usa el aprendizaje automático a diario. La **entropía cruzada**
+  es el coste de codificar la distribución real con un código diseñado para otra, y minimizarla
+  es exactamente maximizar la verosimilitud: la función de pérdida de casi todo clasificador
+  no es una elección de diseño, es una consecuencia. La **divergencia KL** mide el exceso sobre
+  el óptimo, y su asimetría no es un defecto sino información: `KL(p‖q)` y `KL(q‖p)` penalizan
+  errores distintos, y esa diferencia decide el comportamiento de un VAE frente a una GAN. La
+  **información mutua** cuantifica cuánto dice una variable sobre otra, y vale cero si y solo si
+  son independientes, que es más de lo que la correlación puede garantizar.
+
+  Las clases 269 a 275 pasan a las señales. El **teorema de Nyquist** impone una frontera dura:
+  hay que muestrear a más del doble de la frecuencia máxima presente, y por debajo de ese
+  límite el **aliasing** es irreversible —no hay procesamiento posterior que recupere lo que se
+  perdió—. La **convolución** aparece como el operador central, primero como filtrado y luego
+  como el núcleo de las CNN, y **Fourier** revela que toda señal es una suma de sinusoides y
+  que convolucionar en el tiempo es multiplicar en frecuencia. La **FFT** hace ese cambio de
+  dominio computable: `O(n log n)` en vez de `O(n²)`, lo que para un millón de muestras es la
+  diferencia entre milisegundos y semanas.
+
+  El cierre (276 a 280) trata las series temporales: estacionariedad como supuesto que casi
+  todo el análisis clásico necesita, autocorrelación para descubrir periodicidad oculta,
+  ventaneo y la fuga espectral que provoca analizar un trozo finito, y densidad espectral. El
+  capstone recorre el camino completo: de una señal cruda a un vector de características
+  temporales y espectrales listo para alimentar un modelo.
+
+  El puente con la inteligencia artificial es explícito en cada bloque. La entropía cruzada es
+  la pérdida de todo clasificador; el VAE optimiza un ELBO con un término KL; las GAN se
+  analizaron originalmente en términos de divergencia de Jensen-Shannon; las CNN son
+  convoluciones con núcleos aprendidos; la atención es una correlación normalizada; y la
+  codificación posicional de un Transformer son senos y cosenos de frecuencias distintas.
+
+mapa: |
+  flowchart TD
+      A["Clases 261-262 · Sorpresa y entropia"] --> B["Clases 263-265 · Entropia cruzada, KL y JS"]
+      B --> C["Clases 266-268 · Informacion mutua, maxima entropia y codificacion"]
+      A --> D["Clases 269-272 · Señales, muestreo y convolucion"]
+      D --> E["Clases 273-275 · Fourier, FFT y filtros"]
+      E --> F["Clases 276-279 · Estacionariedad, autocorrelacion y espectro"]
+      C --> G["Clase 280 · Capstone features de señal"]
+      F --> G
+      B ==> H["Parte 14 · Perdidas de clasificacion"]
+      D ==> I["Parte 15 · Redes convolucionales"]
+      B -.-> J["ELBO del VAE · Parte 17"]
+      E -.-> K["Codificacion posicional · Parte 16"]
+
+glosario:
+  - termino: "Sorpresa"
+    definicion: "−log p(x). Información que aporta observar un evento. Cero si era seguro."
+    clase: "261"
+  - termino: "Bit y nat"
+    definicion: "Unidades de información según se use log₂ o logaritmo natural. 1 nat ≈ 1,4427 bits."
+    clase: "261"
+  - termino: "Entropía de Shannon"
+    definicion: "H(p) = −Σ p·log p. Sorpresa esperada y límite inferior de compresión sin pérdida."
+    clase: "262"
+  - termino: "Distribución uniforme y entropía"
+    definicion: "Entre distribuciones sobre n símbolos, la uniforme es la de máxima entropía: log n."
+    clase: "262"
+  - termino: "Entropía cruzada"
+    definicion: "H(p,q) = −Σ p·log q. Coste de codificar p con un código óptimo para q."
+    clase: "263"
+  - termino: "Epsilon de estabilidad"
+    definicion: "Constante minúscula que evita log(0) al calcular pérdidas logarítmicas."
+    clase: "263"
+  - termino: "Divergencia KL"
+    definicion: "KL(p‖q) = H(p,q) − H(p). No negativa, cero solo si p = q, y no simétrica."
+    clase: "264"
+  - termino: "Asimetría de KL"
+    definicion: "KL(p‖q) ≠ KL(q‖p). Cada dirección penaliza un tipo distinto de error."
+    clase: "264"
+  - termino: "Divergencia de Jensen-Shannon"
+    definicion: "Media de las KL a la mezcla. Simétrica, acotada y su raíz es una métrica."
+    clase: "265"
+  - termino: "Información mutua"
+    definicion: "I(X;Y) = H(X) − H(X|Y). Reducción de incertidumbre sobre X al conocer Y."
+    clase: "266"
+  - termino: "Independencia e información"
+    definicion: "I(X;Y) = 0 si y solo si X e Y son independientes. Detecta relaciones no lineales."
+    clase: "266"
+  - termino: "Principio de máxima entropía"
+    definicion: "Entre las distribuciones compatibles con lo conocido, elegir la de mayor entropía."
+    clase: "267"
+  - termino: "Código de Huffman"
+    definicion: "Código de longitud variable óptimo entre los de prefijo, con símbolos frecuentes más cortos."
+    clase: "268"
+  - termino: "Código de prefijo"
+    definicion: "Ningún código es prefijo de otro, lo que permite decodificar sin separadores."
+    clase: "268"
+  - termino: "Frecuencia de muestreo"
+    definicion: "Número de muestras por segundo tomadas de una señal continua."
+    clase: "269"
+  - termino: "Teorema de Nyquist"
+    definicion: "Hay que muestrear a más del doble de la frecuencia máxima presente en la señal."
+    clase: "270"
+  - termino: "Aliasing"
+    definicion: "Frecuencias altas que aparecen como bajas al muestrear demasiado lento. Es irreversible."
+    clase: "270"
+  - termino: "Convolución"
+    definicion: "Deslizar un núcleo invertido sobre una señal y sumar productos. Base del filtrado y de las CNN."
+    clase: "271"
+  - termino: "Núcleo o kernel"
+    definicion: "Vector o matriz pequeña que define la operación local de una convolución."
+    clase: "271"
+  - termino: "Correlación cruzada"
+    definicion: "Como la convolución pero sin invertir el núcleo. Es lo que implementan las CNN."
+    clase: "272"
+  - termino: "Transformada de Fourier"
+    definicion: "Descompone una señal en sus componentes de frecuencia. Cambio de base a senos y cosenos."
+    clase: "273"
+  - termino: "Teorema de Parseval"
+    definicion: "La energía en el dominio del tiempo es igual a la energía en el dominio de la frecuencia."
+    clase: "273"
+  - termino: "FFT"
+    definicion: "Algoritmo que calcula la DFT en O(n log n) en vez de O(n²)."
+    clase: "274"
+  - termino: "Teorema de convolución"
+    definicion: "Convolucionar en el tiempo equivale a multiplicar en frecuencia."
+    clase: "274"
+  - termino: "Filtro paso-bajo"
+    definicion: "Atenúa las frecuencias altas y conserva las bajas. Una media móvil es el caso más simple."
+    clase: "275"
+  - termino: "Respuesta en frecuencia"
+    definicion: "Cuánto atenúa o amplifica un filtro cada frecuencia."
+    clase: "275"
+  - termino: "Estacionariedad"
+    definicion: "Media, varianza y autocovarianza que no cambian con el tiempo."
+    clase: "276"
+  - termino: "Diferenciación"
+    definicion: "Restar el valor anterior a cada término. Elimina tendencias polinómicas."
+    clase: "276"
+  - termino: "Autocorrelación"
+    definicion: "Correlación de la serie consigo misma desplazada. Revela periodicidad oculta."
+    clase: "277"
+  - termino: "Retardo o lag"
+    definicion: "Desplazamiento temporal aplicado a la serie al calcular la autocorrelación."
+    clase: "277"
+  - termino: "Ventaneo"
+    definicion: "Multiplicar por una función que decae en los bordes antes de transformar."
+    clase: "278"
+  - termino: "Fuga espectral"
+    definicion: "Energía que se dispersa a frecuencias vecinas al analizar un trozo finito de señal."
+    clase: "278"
+  - termino: "Densidad espectral de potencia"
+    definicion: "Reparto de la energía de la señal entre sus frecuencias."
+    clase: "279"
+  - termino: "Centroide espectral"
+    definicion: "Frecuencia media ponderada por potencia. Descriptor del brillo de una señal."
+    clase: "280"
+
+clases:
+  "261":
+    concepto: "La información de un evento es su sorpresa, y el logaritmo la hace aditiva."
+    formulas:
+      - "I(x) = −log₂ p(x)   en bits"
+      - "p = 1  ⟹  I = 0;   p → 0  ⟹  I → ∞"
+      - "eventos independientes: I(x,y) = I(x) + I(y)"
+    desarrollo: |
+      Antes de definir entropía hay que definir cuánta información aporta un solo evento. La
+      respuesta de Shannon es que la información es **sorpresa**: enterarse de algo que ya se
+      daba por seguro no aporta nada, y enterarse de algo improbable aporta mucho.
+
+      La función que cumple eso es `−log p`. Vale cero cuando `p = 1` y tiende a infinito cuando
+      `p` tiende a cero, con la forma correcta. Y no es una elección arbitraria: es la **única**
+      función continua que satisface la propiedad de aditividad, salvo un factor de escala.
+
+      La **aditividad** es la exigencia clave. Si dos eventos son independientes, la información
+      de observar ambos debe ser la suma de las informaciones individuales. Como las
+      probabilidades se multiplican y los logaritmos convierten productos en sumas, el logaritmo
+      es la única vía. Es la misma razón por la que se trabaja con log-verosimilitud.
+
+      La **base** del logaritmo fija la unidad. Con base 2 la información se mide en **bits**, y
+      un bit es exactamente la información de un lanzamiento de moneda justa. Con logaritmo
+      natural se mide en **nats**, y es lo habitual en aprendizaje automático porque su derivada
+      es más limpia. Comparar entropías calculadas en bases distintas sin convertir es un error
+      frecuente: el factor es 1,4427.
+    ejemplo: |
+      Sorpresa de cuatro eventos con probabilidades muy distintas.
+
+      ```text
+      evento          p          I = −log₂ p
+      casi seguro    0,99          0,0145 bits
+      frecuente      0,50          1,0000 bits
+      raro           0,01          6,6439 bits
+      rarísimo       0,001         9,9658 bits
+
+      Un evento de p = 1 aporta exactamente 0 bits.
+
+      Aditividad: dos lanzamientos independientes de moneda
+        I(cara, cara) = −log₂(0,25) = 2,0 bits
+        I(cara) + I(cara) = 1,0 + 1,0 = 2,0 bits            ✓
+
+      Conversión de unidades:
+        1 nat = 1,4427 bits        1 bit = 0,6931 nats
+      ```
+    errores:
+      - "Comparar informaciones calculadas en bases logarítmicas distintas."
+      - "Calcular −log p con p = 0 sin epsilon de estabilidad."
+      - "Confundir información con utilidad o relevancia del evento."
+    aplicacion: |
+      Diseño de códigos, medida de sorpresa de un modelo ante datos nuevos, detección de
+      anomalías y cuantificación de la incertidumbre de una predicción.
+    referencias:
+      - "[Shannon, C. *A Mathematical Theory of Communication*, Bell System Technical Journal, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x)"
+      - "[MacKay, D. *Information Theory, Inference, and Learning Algorithms*, Cambridge, 2003](https://www.inference.org.uk/mackay/itila/)"
+
+  "262":
+    concepto: "La entropía es el número mínimo de bits por símbolo que cualquier compresor puede lograr."
+    formulas:
+      - "H(p) = −Σ p(x)·log₂ p(x)"
+      - "0 ≤ H(p) ≤ log₂ n"
+      - "H = 0 si es determinista;  H = log₂ n si es uniforme"
+    desarrollo: |
+      La entropía es la sorpresa **esperada**: la media de `−log p` ponderada por las propias
+      probabilidades. Mide la incertidumbre media de una fuente antes de observar su salida, y
+      es el concepto central de toda la teoría.
+
+      Su interpretación operativa es la que le da fuerza. El **teorema de codificación de
+      fuente** de Shannon dice que ningún código sin pérdida puede usar menos de `H` bits por
+      símbolo en promedio, y que existen códigos que se acercan arbitrariamente a ese límite. No
+      es una cota heurística: es una imposibilidad demostrada.
+
+      Los dos extremos son informativos. Una fuente **determinista** tiene entropía cero: no hace
+      falta transmitir nada porque el receptor ya sabe qué viene. Una fuente **uniforme** sobre
+      `n` símbolos tiene entropía `log₂ n`, la máxima posible: no hay estructura que explotar y
+      no se puede comprimir por debajo de la codificación de longitud fija.
+
+      Toda compresión vive entre esos extremos, y explota que las distribuciones reales no son
+      uniformes. En aprendizaje automático la entropía aparece además como medida de
+      incertidumbre de una predicción: una salida softmax casi uniforme tiene entropía alta y el
+      modelo está dudando, lo que sirve como señal para aprendizaje activo o para rechazar la
+      predicción.
+    ejemplo: |
+      Entropía de cuatro distribuciones sobre el mismo alfabeto.
+
+      ```text
+      distribución                        H (bits)
+      uniforme sobre 4 símbolos            2,0000    ← máxima
+      sesgada [0,7 ; 0,15 ; 0,1 ; 0,05]    1,2568
+      moneda justa (2 símbolos)            1,0000
+      determinista                         0,0000    ← mínima
+
+      Máximo teórico para 4 símbolos: log₂ 4 = 2,0     ✓
+
+      La misma uniforme en nats: ln 4 = 1,3863 nats
+      Conversión: 1,3863 × 1,4427 = 2,0 bits           ✓
+
+      Lectura: la fuente sesgada necesita 1,26 bits por símbolo
+      en el mejor código posible, frente a los 2 de la uniforme.
+      ```
+    errores:
+      - "Interpretar la entropía como cantidad de datos y no como bits por símbolo."
+      - "Comparar entropías de alfabetos de tamaños distintos sin normalizar."
+      - "Olvidar que el límite de Shannon supone símbolos independientes."
+    aplicacion: |
+      Compresión de datos, medida de incertidumbre en predicciones, criterio de división en
+      árboles de decisión y aprendizaje activo.
+    referencias:
+      - "[Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 2](https://doi.org/10.1002/047174882X)"
+      - "[Shannon, C. *A Mathematical Theory of Communication*, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x)"
+
+  "263":
+    concepto: "Minimizar entropía cruzada es exactamente maximizar la verosimilitud."
+    formulas:
+      - "H(p,q) = −Σ p(x)·log q(x)"
+      - "H(p,q) = H(p) + KL(p‖q) ≥ H(p)"
+      - "con p one-hot: H(p,q) = −log q(clase correcta)"
+    desarrollo: |
+      La entropía cruzada mide el coste medio de codificar mensajes que vienen de `p` usando un
+      código diseñado para `q`. Si `q = p` el coste es el óptimo `H(p)`; si `q` se aleja, el
+      coste sube. Nunca puede bajar del óptimo, y esa desigualdad es la que garantiza que
+      minimizarla lleve en la dirección correcta.
+
+      Su descomposición `H(p,q) = H(p) + KL(p‖q)` es la clave para entender qué se está
+      optimizando. La entropía `H(p)` es una propiedad de los datos y no depende del modelo, así
+      que **minimizar entropía cruzada es minimizar la divergencia KL** entre la distribución
+      real y la predicha. Son el mismo problema.
+
+      En clasificación, la distribución real es one-hot —toda la masa en la clase correcta— y la
+      fórmula colapsa a `−log q(clase correcta)`. La pérdida solo depende de la probabilidad
+      asignada a la respuesta correcta, y crece sin límite cuando esa probabilidad tiende a cero.
+      De ahí que un modelo muy seguro y equivocado reciba un castigo enorme.
+
+      La consecuencia teórica es que la pérdida de casi todo clasificador **no se elige**: se
+      deduce. Suponer un modelo categórico y maximizar verosimilitud da entropía cruzada; suponer
+      ruido gaussiano da error cuadrático medio. Y la consecuencia práctica es el epsilon: sin él
+      un `log(0)` produce infinito y destruye el entrenamiento en un paso.
+    ejemplo: |
+      Pérdida de tres predicciones ante la misma etiqueta real.
+
+      ```text
+      etiqueta real: [1, 0, 0]        H(p) = 0
+
+      predicción              pérdida
+      [0,90 ; 0,05 ; 0,05]    0,105361     muy buena
+      [0,50 ; 0,30 ; 0,20]    0,693147     mediocre
+      [0,05 ; 0,60 ; 0,35]    2,995732     mala y segura
+
+      predicción perfecta [1,0,0]: pérdida = 0,0
+
+      Como H(p) = 0, aquí la entropía cruzada ES la KL.
+
+      Sin epsilon:
+        predicción 0,0 para la clase correcta → log(0) = −∞
+        el gradiente se vuelve NaN y el entrenamiento muere.
+      ```
+    errores:
+      - "Calcular log(0) sin epsilon de estabilidad."
+      - "Aplicar entropía cruzada a salidas que no suman 1."
+      - "Duplicar el softmax cuando la función de pérdida ya lo incluye."
+    aplicacion: |
+      Pérdida de clasificación en cualquier red, modelos de lenguaje, calibración de
+      probabilidades y evaluación de modelos probabilísticos.
+    referencias:
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 3](https://www.deeplearningbook.org/)"
+      - "[Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://doi.org/10.1002/047174882X)"
+
+  "264":
+    concepto: "KL no es simétrica, y cada dirección castiga un error distinto."
+    formulas:
+      - "KL(p‖q) = Σ p·log(p/q) ≥ 0"
+      - "KL(p‖q) = 0 ⟺ p = q"
+      - "KL(p‖q) ≠ KL(q‖p);  no cumple la desigualdad triangular"
+    desarrollo: |
+      La divergencia de Kullback-Leibler mide cuánta información se pierde al usar `q` en lugar
+      de `p`. Es el exceso de entropía cruzada sobre la entropía: los bits desperdiciados por
+      usar el código equivocado. Es no negativa y vale cero solo si las distribuciones coinciden.
+
+      Pese a llamarse divergencia y comportarse en parte como una distancia, **no lo es**. Le
+      fallan dos propiedades: no es simétrica y no cumple la desigualdad triangular. Escribir
+      «la distancia KL» es un error de vocabulario que arrastra errores de razonamiento.
+
+      La asimetría no es un defecto: es información. `KL(p‖q)` penaliza mucho que `q` asigne casi
+      cero donde `p` tiene masa, así que fuerza a `q` a **cubrir** todo el soporte de `p`. Al
+      revés, `KL(q‖p)` penaliza que `q` ponga masa donde `p` no la tiene, y produce soluciones
+      que se **concentran** en un modo. Se conocen como comportamiento de cobertura y de
+      búsqueda de modo.
+
+      Esa diferencia tiene consecuencias visibles. La inferencia variacional minimiza
+      `KL(q‖p)` y por eso los VAE tienden a producir muestras borrosas concentradas en el modo
+      dominante. Elegir la dirección de la KL no es un detalle técnico: determina el
+      comportamiento cualitativo del modelo resultante.
+    ejemplo: |
+      Las dos direcciones sobre las mismas distribuciones.
+
+      ```text
+      p = [0,5 ; 0,3 ; 0,2]
+      q = [0,3 ; 0,4 ; 0,3]
+
+      KL(p‖q) = 0,08801517
+      KL(q‖p) = 0,08346467
+
+      No coinciden → no es simétrica                       ✓
+      KL(p‖p) = 0,0                                        ✓
+
+      Asimetría extrema: si q asignara 0,001 donde p tiene 0,5,
+        KL(p‖q) se dispara      (castiga no cubrir)
+        KL(q‖p) apenas cambia   (no le importa)
+
+      Por eso KL(p‖q) fuerza cobertura y KL(q‖p) busca modo.
+      ```
+    errores:
+      - "Llamarla distancia y aplicarle propiedades métricas."
+      - "Elegir la dirección de la KL sin pensar en qué error se quiere penalizar."
+      - "Calcularla con q nula en algún punto donde p es positiva."
+    aplicacion: |
+      Regularización de VAE, inferencia variacional, destilación de conocimiento, detección de
+      desplazamiento de distribución y PPO en aprendizaje por refuerzo.
+    referencias:
+      - "[Kullback, S.; Leibler, R. *On information and sufficiency*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729694)"
+      - "[MacKay, D. *Information Theory, Inference, and Learning Algorithms*, Cambridge, 2003](https://www.inference.org.uk/mackay/itila/)"
+
+  "265":
+    concepto: "Jensen-Shannon simetriza la KL midiendo ambas contra la mezcla."
+    formulas:
+      - "M = (p + q)/2"
+      - "JS(p,q) = ½·KL(p‖M) + ½·KL(q‖M)"
+      - "0 ≤ JS ≤ 1 bit;  √JS es una métrica"
+    desarrollo: |
+      La divergencia de Jensen-Shannon arregla los dos defectos de la KL con una idea simple:
+      construir la mezcla de ambas distribuciones y medir la divergencia de cada una a esa
+      mezcla, promediando. El resultado es simétrico por construcción.
+
+      Además está **acotada**: nunca supera 1 bit, sea cual sea el par de distribuciones. La KL
+      puede ser infinita cuando `q` asigna cero donde `p` no lo hace; JS no tiene ese problema
+      porque la mezcla siempre cubre el soporte de ambas. Eso la hace numéricamente mucho más
+      estable como medida de comparación.
+
+      Y su raíz cuadrada **sí es una métrica**: cumple simetría, desigualdad triangular y se
+      anula solo en la identidad. Eso permite usarla como distancia genuina para agrupar,
+      indexar o comparar distribuciones, cosa que con KL no es legítima.
+
+      Su papel histórico en aprendizaje automático es notable: el artículo original de las GAN
+      demostró que el discriminador óptimo hace que el generador minimice la divergencia JS
+      entre la distribución real y la generada. Que esa divergencia sature cuando los soportes no
+      se solapan es parte de la explicación de la inestabilidad de las GAN, y la razón de que
+      WGAN cambiara a la distancia de Wasserstein.
+    ejemplo: |
+      JS sobre el mismo par que la clase anterior.
+
+      ```text
+      p = [0,5 ; 0,3 ; 0,2]
+      q = [0,3 ; 0,4 ; 0,3]
+
+      mezcla M = [0,4 ; 0,35 ; 0,25]
+
+      JS(p,q) = 0,0306589 bits
+      JS(q,p) = 0,0306589 bits
+      simétrica                                            ✓
+
+      Comparación con KL:
+        KL(p‖q) = 0,0880      KL(q‖p) = 0,0835
+        JS      = 0,0307      menor y única
+
+      Cota: JS ≤ 1 bit siempre.
+      Para distribuciones con soportes disjuntos, JS = 1 exacto,
+      mientras que KL sería infinita.
+      ```
+    errores:
+      - "Usar JS donde la asimetría de KL era justamente lo que se quería."
+      - "Confundir JS con su raíz cuadrada al hablar de métrica."
+      - "Olvidar que JS satura cuando los soportes no se solapan."
+    aplicacion: |
+      Análisis de GAN, comparación de distribuciones de datos, agrupamiento de documentos y
+      medida de similitud entre modelos.
+    referencias:
+      - "[Lin, J. *Divergence measures based on the Shannon entropy*, IEEE Trans. Information Theory, 1991](https://doi.org/10.1109/18.61115)"
+      - "[Goodfellow, I. et al. *Generative Adversarial Networks*, NeurIPS, 2014](https://arxiv.org/abs/1406.2661)"
+
+  "266":
+    concepto: "La información mutua vale cero solo si hay independencia, y detecta lo que la correlación no ve."
+    formulas:
+      - "I(X;Y) = H(X) − H(X|Y) = H(Y) − H(Y|X)"
+      - "I(X;Y) = KL(p(x,y) ‖ p(x)·p(y))"
+      - "I(X;Y) = 0  ⟺  X ⫫ Y"
+    desarrollo: |
+      La información mutua mide cuánto se reduce la incertidumbre sobre una variable al conocer
+      la otra. Es simétrica —saber `Y` informa sobre `X` tanto como al revés— y se expresa como
+      la diferencia entre la entropía y la entropía condicional.
+
+      Su lectura más profunda es la tercera fórmula: es la **divergencia KL entre la
+      distribución conjunta y el producto de las marginales**. Como la KL vale cero solo si las
+      distribuciones coinciden, y coincidir con el producto de marginales es la definición de
+      independencia, la información mutua es **cero si y solo si las variables son
+      independientes**.
+
+      Esa equivalencia es lo que la hace superior a la correlación como medida de dependencia. La
+      correlación de la clase 191 solo detecta relaciones lineales, y vale cero para una
+      dependencia cuadrática perfecta. La información mutua detecta **cualquier** dependencia,
+      lineal o no, monótona o no.
+
+      El precio es la estimación. Con variables discretas y datos suficientes se calcula
+      directamente contando; con variables continuas hay que estimar densidades, y eso es difícil
+      en dimensión alta. Los estimadores neuronales como MINE son un área activa, precisamente
+      porque la información mutua aparece en el objetivo del aprendizaje autosupervisado
+      contrastivo.
+    ejemplo: |
+      Dos conjuntas con las mismas marginales y dependencia distinta.
+
+      ```text
+      Caso dependiente:
+        p(0,0)=0,4   p(0,1)=0,1
+        p(1,0)=0,1   p(1,1)=0,4
+
+        H(X) = 1,0 bits      H(Y) = 1,0 bits
+        I(X;Y) = 0,278072 bits
+
+      Caso independiente (mismas marginales):
+        p(x,y) = p(x)·p(y) = 0,25 en las cuatro celdas
+        I(X;Y) = 0,0                                       ✓
+
+      Ventaja sobre la correlación:
+        con Y = X² y X simétrica, corr = 0 pero I > 0.
+        La información mutua ve la dependencia; la correlación no.
+      ```
+    errores:
+      - "Estimarla en variables continuas sin cuidar la discretización."
+      - "Interpretarla como medida de causalidad."
+      - "Compararla entre problemas con alfabetos de tamaños distintos sin normalizar."
+    aplicacion: |
+      Selección de características, aprendizaje autosupervisado contrastivo, análisis del cuello
+      de botella de información y registro de imágenes médicas.
+    referencias:
+      - "[Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 2](https://doi.org/10.1002/047174882X)"
+      - "[Belghazi, M. et al. *MINE: Mutual Information Neural Estimation*, ICML, 2018](https://arxiv.org/abs/1801.04062)"
+
+  "267":
+    concepto: "Entre todas las distribuciones compatibles con lo que se sabe, elegir la que menos añade."
+    formulas:
+      - "maximizar H(p) sujeto a las restricciones conocidas"
+      - "sin restricciones ⟹ uniforme"
+      - "media y varianza fijadas ⟹ normal"
+    desarrollo: |
+      El principio de máxima entropía responde a una pregunta de modelado: si solo se conocen
+      algunas propiedades de una distribución, ¿cuál elegir entre todas las compatibles? La
+      respuesta es la de **máxima entropía**, porque es la que menos supuestos añade a lo que
+      realmente se sabe.
+
+      Cualquier otra elección introduce estructura que los datos no respaldan. Elegir una
+      distribución de entropía menor equivale a afirmar que se sabe más de lo que se sabe, y esa
+      información inventada puede sesgar todas las conclusiones posteriores. Es el principio de
+      honestidad epistémica traducido a matemáticas.
+
+      Las soluciones bajo distintas restricciones son notablemente reconocibles, y no por
+      casualidad. Sin restricciones sale la **uniforme**. Fijando media y varianza sale la
+      **normal**. Fijando solo la media en el semieje positivo sale la **exponencial**. Las
+      distribuciones «naturales» de la estadística son las de máxima entropía bajo las
+      restricciones más simples.
+
+      El resultado más relevante para la inteligencia artificial es que la distribución de máxima
+      entropía sujeta a restricciones lineales tiene forma exponencial, y de ahí sale
+      **softmax**. La capa de salida de todo clasificador es la distribución de máxima entropía
+      compatible con los logits. Softmax no es una normalización conveniente: es la respuesta a
+      un problema de optimización con restricciones.
+    ejemplo: |
+      Tres distribuciones sobre un dado y sus entropías.
+
+      ```text
+      candidata               H (bits)     media
+      uniforme                 2,584963     3,5
+      sesgada al 6             2,160964     4,5
+      casi determinista        0,xxx        1,3
+
+      Máximo teórico para 6 símbolos: log₂ 6 = 2,584963      ✓
+
+      Sin restricciones, gana la uniforme.
+
+      Si se supiera que la media es 4,5, la uniforme dejaría de
+      ser admisible y la de máxima entropía sería una exponencial
+      truncada, no la sesgada arbitraria.
+
+      Con media y varianza fijadas sobre la recta real:
+        la distribución de máxima entropía es la normal.
+      ```
+    errores:
+      - "Elegir una distribución cómoda en vez de la de máxima entropía compatible."
+      - "Imponer restricciones que los datos no respaldan."
+      - "Confundir máxima entropía con ausencia total de supuestos."
+    aplicacion: |
+      Justificación de softmax, modelos de máxima entropía en procesamiento de lenguaje,
+      elección de priores no informativos y física estadística.
+    referencias:
+      - "[Jaynes, E. T. *Information theory and statistical mechanics*, Physical Review, 1957](https://doi.org/10.1103/PhysRev.106.620)"
+      - "[Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 12](https://doi.org/10.1002/047174882X)"
+
+  "268":
+    concepto: "Huffman da códigos cortos a lo frecuente y se acerca al límite de Shannon."
+    formulas:
+      - "longitud media = Σ p(x)·len(código(x))"
+      - "H(p) ≤ longitud media < H(p) + 1"
+      - "código de prefijo: ninguno es prefijo de otro"
+    desarrollo: |
+      La compresión sin pérdida explota que los símbolos no son equiprobables. Un código de
+      **longitud fija** gasta `⌈log₂ n⌉` bits por símbolo sea cual sea su frecuencia; uno de
+      longitud variable puede gastar menos en los frecuentes y más en los raros, reduciendo el
+      promedio.
+
+      La condición para que eso funcione sin separadores es que sea un **código de prefijo**:
+      ningún código puede ser el comienzo de otro. Así el decodificador sabe dónde termina cada
+      símbolo sin marcadores adicionales. La construcción de Huffman garantiza esa propiedad por
+      diseño, fusionando repetidamente los dos símbolos menos probables en un árbol binario.
+
+      Huffman es **óptimo** entre los códigos de prefijo de símbolo a símbolo, y su longitud
+      media queda siempre a menos de un bit por encima de la entropía. Esa cota es ajustada: la
+      pérdida viene de que las longitudes deben ser enteras, y las probabilidades rara vez son
+      potencias de dos.
+
+      Para acercarse más al límite hay que codificar bloques de símbolos o abandonar la
+      restricción de longitudes enteras, que es lo que hace la **codificación aritmética**. Los
+      compresores modernos combinan modelado estadístico con codificación aritmética, y los
+      modelos de lenguaje son, vistos desde aquí, modelos de compresión: minimizar la pérdida es
+      minimizar los bits necesarios para transmitir el texto.
+    ejemplo: |
+      Código de Huffman para cinco símbolos con frecuencias dispares.
+
+      ```text
+      símbolo   p        código Huffman   longitud
+        a      0,45          0                1
+        b      0,25          10               2
+        c      0,15          110              3
+        d      0,10          1111             4
+        e      0,05          1110             4
+
+      longitud media = 0,45·1 + 0,25·2 + 0,15·3 + 0,10·4 + 0,05·4
+                     = 2,0 bits/símbolo
+
+      entropía = 1,977235 bits/símbolo
+      cota: 1,9772 ≤ 2,0 < 2,9772                          ✓
+
+      longitud fija necesaria: ⌈log₂ 5⌉ = 3 bits
+      ahorro: 33,3 %
+
+      Prefijo: ningún código empieza por otro → decodificable.
+      ```
+    errores:
+      - "Construir un código de longitud variable que no sea de prefijo."
+      - "Esperar alcanzar exactamente la entropía con longitudes enteras."
+      - "Aplicar Huffman a fuentes con fuerte dependencia entre símbolos sin modelarla."
+    aplicacion: |
+      Compresión de archivos y de imágenes, tokenización BPE, codificación de entropía en vídeo
+      y evaluación de modelos de lenguaje por bits por carácter.
+    referencias:
+      - "[Huffman, D. *A method for the construction of minimum-redundancy codes*, Proceedings of the IRE, 1952](https://doi.org/10.1109/JRPROC.1952.273898)"
+      - "[Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 5](https://doi.org/10.1002/047174882X)"
+
+  "269":
+    concepto: "Muestrear convierte una función continua en una lista de números con la que se puede calcular."
+    formulas:
+      - "x(t) = A·sin(2πft + φ)"
+      - "x[n] = x(n/fs),  n = 0,1,…,N−1"
+      - "duración = N / fs"
+    desarrollo: |
+      Una señal es una magnitud que varía con el tiempo o el espacio. En el mundo físico es
+      **continua**: definida para todo instante y con precisión infinita. Un ordenador solo puede
+      manejar señales **discretas**: una secuencia finita de números.
+
+      El paso de una a otra tiene dos etapas independientes. El **muestreo** discretiza el
+      tiempo, tomando valores a intervalos regulares. La **cuantización** discretiza la amplitud,
+      redondeando cada valor a un número finito de niveles. El muestreo tiene una teoría exacta
+      —Nyquist—; la cuantización introduce un ruido que se caracteriza estadísticamente.
+
+      Tres parámetros describen una sinusoide y merecen distinguirse bien. La **amplitud** es la
+      altura del pico, la **frecuencia** es cuántos ciclos ocurren por segundo, y la **fase** es
+      el desplazamiento horizontal. La transformada de Fourier de la clase 273 devuelve amplitud
+      y fase para cada frecuencia, y la fase es la parte que casi siempre se ignora al graficar
+      y que resulta ser esencial para reconstruir la señal.
+
+      La **frecuencia de muestreo** es la decisión de diseño más importante y la que no se puede
+      corregir después. Muestrear de más gasta memoria y cómputo; muestrear de menos destruye
+      información de forma irreversible, y la clase siguiente explica por qué.
+    ejemplo: |
+      Una sinusoide muestreada durante un segundo.
+
+      ```text
+      señal:  x(t) = 2,0 · sin(2π · 5,0 · t + 0,785398)
+
+        amplitud   A = 2,0
+        frecuencia f = 5,0 Hz    → 5 ciclos en 1 segundo
+        fase       φ = 0,785398 rad = π/4 = 45°
+
+      muestreo:
+        fs = 100,0 Hz        duración = 1,0 s
+        muestras = 100
+
+      muestras por ciclo: 100 / 5 = 20        holgado
+
+      Frecuencia de Nyquist: 100/2 = 50 Hz
+      La señal de 5 Hz está muy por debajo: sin aliasing.
+      ```
+    errores:
+      - "Confundir frecuencia de la señal con frecuencia de muestreo."
+      - "Ignorar la fase al analizar o reconstruir una señal."
+      - "Fijar la frecuencia de muestreo sin conocer el contenido espectral esperado."
+    aplicacion: |
+      Audio digital, sensores e IoT, adquisición de datos biomédicos y preprocesamiento de
+      series para modelos.
+    referencias:
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 1](https://www.pearson.com/)"
+      - "[Smith, S. *The Scientist and Engineer's Guide to Digital Signal Processing*, 1997](https://www.dspguide.com/)"
+
+  "270":
+    concepto: "Por debajo de Nyquist la información se pierde y ningún procesamiento la recupera."
+    formulas:
+      - "fs > 2·f_max   (criterio de Nyquist)"
+      - "frecuencia de Nyquist = fs / 2"
+      - "f aparente = |f − k·fs| para el k que la lleve bajo fs/2"
+    desarrollo: |
+      El teorema de muestreo de Nyquist-Shannon establece que una señal cuyo contenido no supera
+      `f_max` puede reconstruirse **exactamente** a partir de muestras tomadas a más de `2·f_max`
+      por segundo. Es un resultado sorprendentemente fuerte: no una aproximación, sino
+      reconstrucción perfecta desde datos discretos.
+
+      Por debajo de ese umbral aparece el **aliasing**: las frecuencias altas se hacen pasar por
+      bajas. Una señal de 11 Hz muestreada a 20 Hz produce exactamente las mismas muestras que
+      una de 9 Hz, y ninguna operación posterior puede distinguirlas porque los datos son
+      idénticos. La información no está degradada: está ausente.
+
+      El efecto es visible en la vida cotidiana. Las ruedas que parecen girar hacia atrás en el
+      cine son aliasing temporal a 24 fotogramas por segundo. Los patrones de muaré en fotos de
+      tejidos o pantallas son aliasing espacial. En todos los casos el sistema muestrea más lento
+      que la frecuencia del patrón observado.
+
+      La única defensa es un **filtro antialiasing analógico antes de muestrear**, que elimine
+      físicamente las frecuencias por encima de `fs/2`. Es imprescindible que sea antes: una vez
+      tomadas las muestras, el daño está hecho. En redes convolucionales, hacer submuestreo sin
+      suavizado previo produce exactamente el mismo problema, y es una de las causas conocidas de
+      falta de invariancia a traslaciones.
+    ejemplo: |
+      Muestreo a 20 Hz de señales de distintas frecuencias.
+
+      ```text
+      fs = 20 Hz      frecuencia de Nyquist = 10 Hz
+
+      señal      ¿cumple Nyquist?    frecuencia aparente
+      3 Hz             sí                  3 Hz
+      9 Hz             sí                  9 Hz
+      11 Hz            no                  9 Hz    ← alias
+      19 Hz            no                  1 Hz    ← alias
+      21 Hz            no                  1 Hz    ← alias
+
+      11 Hz y 9 Hz producen muestras idénticas: son
+      indistinguibles a partir de los datos.
+
+      El aliasing es irreversible.
+      Solución: filtro paso-bajo analógico antes del conversor.
+      ```
+    errores:
+      - "Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante."
+      - "Aplicar el filtro antialiasing después del muestreo."
+      - "Submuestrear en una CNN sin suavizado previo."
+    aplicacion: |
+      Diseño de sistemas de adquisición, audio y vídeo digital, submuestreo en redes
+      convolucionales y remuestreo de series temporales.
+    referencias:
+      - "[Shannon, C. *Communication in the presence of noise*, Proceedings of the IRE, 1949](https://doi.org/10.1109/JRPROC.1949.232969)"
+      - "[Zhang, R. *Making convolutional networks shift-invariant again*, ICML, 2019](https://arxiv.org/abs/1904.11486)"
+
+  "271":
+    concepto: "Convolucionar es deslizar un núcleo y sumar productos: filtrar y detectar son lo mismo."
+    formulas:
+      - "(f * g)[n] = Σₖ f[k]·g[n−k]"
+      - "media móvil: núcleo [1/3, 1/3, 1/3]"
+      - "detector de bordes: núcleo [−1, 0, 1]"
+    desarrollo: |
+      La convolución desliza un núcleo sobre una señal y en cada posición calcula una suma
+      ponderada de los valores vecinos. Es la operación fundamental del procesamiento de señales
+      y, desde 2012, la operación fundamental de la visión por computador.
+
+      Lo notable es cuánto cambia el comportamiento con el núcleo, siendo la operación idéntica.
+      Un núcleo de valores iguales y positivos **promedia** y por tanto suaviza, eliminando ruido
+      de alta frecuencia. Un núcleo antisimétrico como `[−1, 0, 1]` **resta** vecinos y por tanto
+      detecta cambios: es una derivada discreta y responde a los bordes.
+
+      La diferencia entre convolución y correlación cruzada es que la primera **invierte** el
+      núcleo antes de deslizarlo. Esa inversión importa en teoría de sistemas, donde garantiza
+      propiedades como la conmutatividad. En aprendizaje profundo no importa: como el núcleo se
+      aprende, aprender el invertido es equivalente, y por eso lo que las bibliotecas llaman
+      convolución es técnicamente correlación cruzada.
+
+      La razón de que las CNN funcionen está en dos propiedades de la convolución. Los
+      **parámetros se comparten**: el mismo núcleo se aplica en toda la señal, así que un
+      detector de bordes aprendido sirve en cualquier posición. Y la **conectividad es local**:
+      cada salida depende solo de un vecindario. Ambas cosas reducen drásticamente el número de
+      parámetros e incorporan la invariancia a traslaciones como sesgo inductivo.
+    ejemplo: |
+      Dos núcleos sobre la misma señal triangular.
+
+      ```text
+      señal: [0, 1, 2, 3, 2, 1, 0]
+
+      núcleo media móvil [1/3, 1/3, 1/3]:
+        resultado: [1,0 ; 2,0 ; 2,333 ; 2,0 ; 1,0]
+        la señal se suaviza, los picos se rebajan
+
+      núcleo detector de bordes [−1, 0, 1]:
+        resultado: [−2, −2, 0, 2, 2]
+        responde donde la señal cambia, y cero en el pico
+
+      longitud de salida en modo válido: 7 − 3 + 1 = 5
+
+      Misma operación, comportamientos opuestos:
+      todo depende de los coeficientes del núcleo.
+      ```
+    errores:
+      - "Confundir convolución con correlación cruzada al portar fórmulas."
+      - "Ignorar el tratamiento de los bordes y su efecto en la longitud de salida."
+      - "Usar un núcleo que no suma 1 cuando se pretendía promediar."
+    aplicacion: |
+      Redes convolucionales, filtrado de imágenes, procesamiento de audio, suavizado de series y
+      detección de patrones.
+    referencias:
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+
+  "272":
+    concepto: "La correlación cruzada localiza dónde aparece un patrón dentro de una señal."
+    formulas:
+      - "(f ⋆ g)[n] = Σₖ f[k]·g[n+k]"
+      - "sin inversión del núcleo"
+      - "el máximo indica la posición de mejor coincidencia"
+    desarrollo: |
+      La correlación cruzada mide el parecido entre una señal y un patrón desplazado. Es
+      idéntica a la convolución salvo que no invierte el núcleo, y su interpretación es directa:
+      en cada posición calcula el producto escalar entre el patrón y el trozo de señal que hay
+      allí.
+
+      Ese producto escalar es exactamente la medida de alineación de la parte 05: grande cuando
+      los vectores apuntan en la misma dirección. Por eso el **máximo de la correlación indica
+      dónde está el patrón**, y su valor mide cuán buena es la coincidencia. Es la base del
+      emparejamiento de plantillas.
+
+      Hay una precaución importante: la correlación sin normalizar favorece las zonas de mayor
+      energía. Un tramo de señal con valores grandes puede dar más correlación que una
+      coincidencia perfecta con valores pequeños. Por eso en la práctica se usa la **correlación
+      normalizada**, que divide por las normas y es invariante a la escala.
+
+      La conexión con la inteligencia artificial actual es directa: el mecanismo de **atención**
+      calcula productos escalares entre consultas y claves, los normaliza y los pasa por softmax.
+      Es una correlación entre representaciones, con el mismo principio de que el producto
+      escalar mide alineación. Reconocerlo hace mucho más legible la fórmula de la atención.
+    ejemplo: |
+      Localización de un patrón dentro de una señal más larga.
+
+      ```text
+      patrón buscado: [1, 2, 1]
+      señal: [0, 0, 1, 2, 1, 0, 0,5, 1, 0,5, 0]
+
+      correlación: [1,0 ; 4,0 ; 6,0 ; 4,0 ; 1,5 ; 2,0 ; 3,0 ; 2,0]
+
+      pico en la posición 2, con valor 6,0
+
+      Comprobación: en la posición 2 la señal vale [1,2,1],
+      exactamente el patrón. Producto escalar = 1+4+1 = 6.     ✓
+
+      En la posición 6 hay el mismo patrón a mitad de escala:
+      correlación 3,0, la mitad. Sin normalizar, una copia
+      atenuada puntúa menos que la original.
+      ```
+    errores:
+      - "Usar correlación sin normalizar y dejar que gane la zona de más energía."
+      - "Confundir el signo del desplazamiento al interpretar la posición del pico."
+      - "Aplicarla a señales de escalas muy distintas sin estandarizar."
+    aplicacion: |
+      Emparejamiento de plantillas, sincronización de señales, radar y sonar, alineación de
+      series y mecanismo de atención.
+    referencias:
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+
+  "273":
+    concepto: "Toda señal es una suma de sinusoides, y Fourier dice cuáles y con qué peso."
+    formulas:
+      - "X[k] = Σₙ x[n]·e^(−2πikn/N)"
+      - "magnitud = |X[k]|,  fase = arg(X[k])"
+      - "Parseval: Σ|x[n]|² = (1/N)·Σ|X[k]|²"
+    desarrollo: |
+      La transformada de Fourier descompone una señal en sinusoides de distintas frecuencias,
+      cada una con su amplitud y su fase. Es un **cambio de base** en el sentido exacto de la
+      parte 06: la señal no cambia, cambia el sistema de coordenadas desde el que se describe.
+
+      Ese cambio de perspectiva es útil porque muchas propiedades que están escondidas en el
+      dominio del tiempo son evidentes en el de la frecuencia. Una señal que parece ruido puede
+      revelar dos picos limpios; el ruido de red eléctrica aparece como una línea en 50 o 60 Hz;
+      y un filtro que en el tiempo es una convolución compleja se convierte en una simple
+      multiplicación.
+
+      El **teorema de Parseval** garantiza que la energía se conserva: la suma de los cuadrados en
+      el tiempo es igual a la suma en frecuencia, salvo normalización. Comprobarlo
+      numéricamente es la mejor prueba unitaria de una implementación de la transformada.
+
+      La **fase** es la parte que sistemáticamente se ignora. Casi todas las visualizaciones
+      muestran solo la magnitud, pero la fase contiene la información sobre **dónde** ocurren las
+      cosas. Un experimento clásico: intercambiar las magnitudes de dos imágenes conservando sus
+      fases produce imágenes reconocibles como las originales de la fase. La estructura está en
+      la fase.
+    ejemplo: |
+      Señal con dos componentes conocidas, analizada por Fourier.
+
+      ```text
+      64 muestras, señal construida con:
+        componente de 4 Hz con amplitud 3,0
+        componente de 9 Hz con amplitud 1,5
+
+      picos detectados: 4 Hz y 9 Hz                        ✓
+      magnitudes:       3,0  y  1,5                        ✓
+
+      Parseval:
+        energía en el tiempo      = 360,0
+        energía en frecuencia     = 360,0                  ✓
+
+      La transformada recuperó exactamente las amplitudes
+      y las frecuencias que se usaron para construir la señal.
+      ```
+    errores:
+      - "Analizar solo la magnitud y descartar la fase."
+      - "Olvidar que el espectro de una señal real es simétrico y contar los picos dos veces."
+      - "Aplicar la transformada a una señal no estacionaria sin ventanear."
+    aplicacion: |
+      Análisis de audio y vibraciones, compresión JPEG y MP3, filtrado en frecuencia y
+      codificación posicional en Transformers.
+    referencias:
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 8](https://www.pearson.com/)"
+      - "[Bracewell, R. *The Fourier Transform and Its Applications*, 3ª ed., McGraw-Hill, 2000](https://www.mheducation.com/)"
+
+  "274":
+    concepto: "La FFT da el mismo resultado que la DFT y convierte n² en n log n."
+    formulas:
+      - "coste DFT: O(n²)   coste FFT: O(n log n)"
+      - "n = 10⁶:  10¹² frente a 2·10⁷ operaciones"
+      - "teorema de convolución: f * g = IFFT(FFT(f)·FFT(g))"
+    desarrollo: |
+      La transformada discreta de Fourier calculada de forma directa necesita `n²` operaciones
+      complejas. Para un millón de muestras eso son `10¹²` operaciones: horas o días. La
+      **FFT** obtiene exactamente el mismo resultado en `O(n log n)`, unas `2·10⁷` operaciones:
+      una fracción de segundo.
+
+      El algoritmo, publicado por Cooley y Tukey en 1965 —aunque Gauss ya lo conocía en 1805—,
+      explota que la transformada de una señal se puede construir a partir de las transformadas
+      de sus muestras pares e impares. Aplicar esa descomposición recursivamente da el
+      logaritmo. Es un divide y vencerás de manual.
+
+      Su impacto es difícil de exagerar. La FFT es lo que hace posible el audio digital, las
+      telecomunicaciones modernas, la resonancia magnética, el análisis sísmico y la
+      multiplicación rápida de polinomios y de enteros grandes. Está en la lista habitual de
+      algoritmos más influyentes del siglo XX.
+
+      El **teorema de convolución** convierte esa velocidad en una herramienta general:
+      convolucionar en el tiempo es multiplicar en frecuencia, así que para núcleos grandes es
+      más rápido transformar, multiplicar punto a punto y volver, que convolucionar
+      directamente. El punto de cruce está alrededor de núcleos de 50 a 100 elementos, y por eso
+      las CNN con núcleos de 3×3 no usan FFT.
+    ejemplo: |
+      FFT y DFT sobre la misma señal de 256 muestras.
+
+      ```text
+      256 muestras con componentes en 10 Hz y 40 Hz
+
+      picos detectados:  [10, 40]
+      frecuencias reales: [10, 40]        coinciden        ✓
+      FFT y DFT dan resultados idénticos                   ✓
+
+      Coste:
+        DFT: 256² = 65 536 operaciones
+        FFT: 256 · log₂ 256 = 256 · 8 = 2 048 operaciones
+        ganancia: 32×
+
+      Para n = 10⁶ la ganancia sería de 50 000×:
+      la diferencia entre imposible y instantáneo.
+      ```
+    errores:
+      - "Implementar la DFT directa cuando existe FFT."
+      - "Usar FFT para convolucionar con núcleos pequeños, donde es más lenta."
+      - "Olvidar que la FFT clásica es más eficiente con longitudes potencia de dos."
+    aplicacion: |
+      Procesamiento de audio en tiempo real, telecomunicaciones, imagen médica, convoluciones
+      rápidas y multiplicación de enteros grandes.
+    referencias:
+      - "[Cooley, J.; Tukey, J. *An algorithm for the machine calculation of complex Fourier series*, 1965](https://doi.org/10.1090/S0025-5718-1965-0178586-1)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 12](http://numerical.recipes/)"
+
+  "275":
+    concepto: "Filtrar es decidir qué frecuencias sobreviven, y una media móvil ya es un filtro."
+    formulas:
+      - "media móvil de ventana k: núcleo de k valores 1/k"
+      - "paso-bajo conserva bajas, paso-alto conserva altas"
+      - "compromiso: más suavizado, menos detalle"
+    desarrollo: |
+      Un filtro atenúa unas frecuencias y deja pasar otras. Su descripción completa es la
+      **respuesta en frecuencia**: qué factor aplica a cada componente. Diseñar un filtro es
+      elegir esa curva y encontrar los coeficientes que la producen.
+
+      Los tipos básicos se nombran por lo que dejan pasar. **Paso-bajo** conserva las
+      frecuencias bajas y elimina las altas, que es lo que se necesita para quitar ruido.
+      **Paso-alto** hace lo contrario y sirve para eliminar tendencias o el nivel continuo.
+      **Paso-banda** conserva una franja, y es lo que hace un ecualizador.
+
+      La **media móvil** es el filtro paso-bajo más simple, y ya ilustra el compromiso central:
+      una ventana más ancha suaviza más ruido pero también borra más detalle real. No hay ajuste
+      óptimo universal; depende de qué frecuencias son señal y cuáles son ruido en el problema
+      concreto.
+
+      Hay una tensión inevitable entre el dominio del tiempo y el de la frecuencia. Un filtro con
+      corte muy abrupto en frecuencia necesita una respuesta muy larga en el tiempo, lo que
+      introduce retardo y oscilaciones en los bordes. Es una manifestación del principio de
+      incertidumbre aplicado al análisis de señales, y explica por qué los filtros reales siempre
+      son un compromiso.
+    ejemplo: |
+      Media móvil sobre una señal con ruido de alta frecuencia.
+
+      ```text
+      128 muestras, ventana del filtro = 7
+
+      RMSE antes del filtro:  0,282735
+      RMSE después:           0,066077
+      mejora: 76,6 %
+
+      El ruido de alta frecuencia se promedia a casi cero;
+      la señal de baja frecuencia sobrevive casi intacta.
+
+      Compromiso de la ventana:
+        ventana 3   → poco suavizado, poco retardo
+        ventana 7   → buen equilibrio aquí
+        ventana 31  → suaviza mucho, borra los picos reales
+
+      Una media móvil es un filtro FIR paso-bajo con
+      todos los coeficientes iguales.
+      ```
+    errores:
+      - "Elegir la ventana sin conocer qué frecuencias son señal y cuáles ruido."
+      - "Ignorar el retardo que introduce un filtro causal."
+      - "Filtrar antes de comprobar si el problema real era aliasing."
+    aplicacion: |
+      Eliminación de ruido en sensores, ecualización de audio, suavizado de series financieras y
+      preprocesamiento de señales biomédicas.
+    referencias:
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 7](https://www.pearson.com/)"
+      - "[Smith, S. *The Scientist and Engineer's Guide to Digital Signal Processing*, 1997](https://www.dspguide.com/)"
+
+  "276":
+    concepto: "Casi todo el análisis clásico de series supone estacionariedad, y diferenciar la consigue."
+    formulas:
+      - "estacionaria: media, varianza y autocovarianza constantes en el tiempo"
+      - "diferenciación: y[t] = x[t] − x[t−1]"
+      - "una diferencia elimina tendencia lineal; dos, cuadrática"
+    desarrollo: |
+      Una serie es **estacionaria** cuando sus propiedades estadísticas no cambian con el tiempo:
+      la media, la varianza y la relación entre valores separados por un retardo dado son las
+      mismas al principio y al final. Intuitivamente, la serie no va a ninguna parte.
+
+      El supuesto importa porque casi toda la teoría clásica lo necesita. Ajustar un modelo ARMA,
+      interpretar una autocorrelación o estimar un espectro presuponen que hay algo estable que
+      estimar. Aplicar esas herramientas a una serie con tendencia produce resultados que parecen
+      significativos y no lo son: la **regresión espuria** entre dos series con tendencia da
+      correlaciones altísimas sin ninguna relación real.
+
+      El diagnóstico más simple es partir la serie en dos y comparar medias y varianzas. Si
+      difieren claramente, hay no estacionariedad. Las pruebas formales —Dickey-Fuller aumentada,
+      KPSS— formalizan ese contraste.
+
+      El remedio habitual es **diferenciar**: sustituir cada valor por su diferencia con el
+      anterior. Una diferencia elimina una tendencia lineal, dos eliminan una cuadrática. Es la
+      «I» de ARIMA. Para varianza no constante se aplica antes una transformación logarítmica o
+      de Box-Cox. Diferenciar de más introduce estructura artificial, así que conviene quedarse
+      con el mínimo necesario.
+    ejemplo: |
+      Tres series: estacionaria, con tendencia, y diferenciada.
+
+      ```text
+      serie estacionaria:
+        media 1ª mitad = 0,0574    varianza 1ª = 1,12
+        media 2ª mitad = 0,0223    varianza 2ª ≈ 1,10
+        estables → estacionaria                            ✓
+
+      serie con tendencia:
+        media 1ª mitad = 1,9728    varianza 1ª = 2,40
+        media 2ª mitad = 5,9658    varianza 2ª ≈ 2,45
+        la media se triplica → no estacionaria             ✗
+
+      tras diferenciar la serie con tendencia:
+        media 1ª mitad = 0,0204    varianza 1ª = 2,05
+        media 2ª mitad = 0,0140    varianza 2ª ≈ 2,03
+        estable de nuevo                                   ✓
+
+      Una sola diferencia bastó para una tendencia lineal.
+      ```
+    errores:
+      - "Ajustar modelos clásicos sin comprobar estacionariedad."
+      - "Diferenciar más veces de las necesarias."
+      - "Interpretar una correlación entre dos series con tendencia como relación real."
+    aplicacion: |
+      Modelos ARIMA, predicción de demanda, análisis financiero y preprocesamiento de series
+      para modelos de aprendizaje automático.
+    referencias:
+      - "[Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/)"
+      - "[Box, G.; Jenkins, G.; Reinsel, G. *Time Series Analysis*, 5ª ed., Wiley, 2015](https://doi.org/10.1002/9781118619193)"
+
+  "277":
+    concepto: "Un pico en la autocorrelación en el retardo k delata un periodo de k muestras."
+    formulas:
+      - "ACF(k) = corr(x[t], x[t−k])"
+      - "ACF(0) = 1 siempre"
+      - "pico positivo en k ⟹ periodicidad de periodo k"
+    desarrollo: |
+      La autocorrelación es la correlación de una serie consigo misma desplazada un retardo `k`.
+      Responde a la pregunta de cuánto se parece la serie a su propio pasado, y su gráfico
+      —el correlograma— es la herramienta de diagnóstico más informativa de las series
+      temporales.
+
+      Su lectura es sistemática. En el retardo 0 vale siempre 1, porque toda serie es idéntica a
+      sí misma. Un decaimiento rápido indica poca memoria. Un decaimiento lento indica tendencia
+      o no estacionariedad. Y un **pico en un retardo concreto** indica periodicidad con ese
+      periodo, que es lo que la hace tan útil.
+
+      La periodicidad detectada así puede ser invisible a simple vista. Con ruido fuerte, una
+      señal periódica se pierde en el gráfico temporal, pero el ruido se descorrelaciona a
+      cualquier retardo mientras que la componente periódica no. La autocorrelación separa una de
+      otra sin necesidad de transformar al dominio de la frecuencia.
+
+      Es también el instrumento estándar para elegir el orden de un modelo autorregresivo, junto
+      con la autocorrelación parcial, y para validarlo: si los **residuos** de un modelo ajustado
+      conservan autocorrelación significativa, queda estructura sin explicar y el modelo es
+      mejorable.
+    ejemplo: |
+      Serie con periodo 20 oculto bajo ruido.
+
+      ```text
+      200 muestras, periodo real = 20
+
+      retardo    ACF
+         0      1,000000     siempre 1
+         5      0,014817     casi nula (cuarto de ciclo)
+        10     −0,879342     fuerte negativa (medio ciclo)
+        20      0,835547     fuerte positiva (ciclo completo)
+
+      Lectura:
+        pico positivo en 20 → periodo de 20 muestras       ✓
+        pico negativo en 10 → medio periodo, en antifase   ✓
+        nula en 5           → cuadratura, sin correlación  ✓
+
+      El periodo se detecta sin haber transformado a frecuencia.
+      ```
+    errores:
+      - "Calcular la ACF sobre una serie no estacionaria y leerla como periodicidad."
+      - "Interpretar picos en retardos grandes con pocos datos de apoyo."
+      - "Olvidar comprobar la autocorrelación de los residuos del modelo."
+    aplicacion: |
+      Detección de estacionalidad, selección de orden en modelos ARIMA, validación de residuos y
+      análisis de señales biomédicas.
+    referencias:
+      - "[Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/)"
+      - "[Shumway, R.; Stoffer, D. *Time Series Analysis and Its Applications*, 4ª ed., Springer, 2017](https://doi.org/10.1007/978-3-319-52452-8)"
+
+  "278":
+    concepto: "Analizar un trozo finito de señal esparce su energía a frecuencias vecinas."
+    formulas:
+      - "ventana rectangular: cortar sin más"
+      - "ventana de Hann: w[n] = 0,5·(1 − cos(2πn/N))"
+      - "compromiso: menos fuga, peor resolución"
+    desarrollo: |
+      La transformada de Fourier supone señales infinitas. En la práctica solo se dispone de un
+      trozo, y cortarlo equivale a multiplicar la señal por una **ventana rectangular**. Esa
+      multiplicación en el tiempo se convierte en convolución en frecuencia, y ahí está el
+      problema.
+
+      El resultado es la **fuga espectral**: la energía de una componente se dispersa hacia las
+      frecuencias vecinas. El efecto es máximo cuando la frecuencia real no cae exactamente en
+      uno de los bins del análisis, porque entonces el corte introduce discontinuidades en los
+      extremos que la transformada interpreta como contenido de alta frecuencia.
+
+      Las **ventanas suaves** —Hann, Hamming, Blackman— multiplican la señal por una función que
+      decae a cero en los bordes, eliminando la discontinuidad. La fuga se reduce
+      sustancialmente, y el pico principal queda mucho más limpio.
+
+      El precio es la resolución. Suavizar los bordes ensancha el pico principal, así que dos
+      frecuencias muy próximas pueden dejar de distinguirse. La elección de ventana es un
+      compromiso entre **resolución** —distinguir frecuencias cercanas— y **rango dinámico**
+      —ver componentes débiles junto a fuertes—. Hann es el compromiso razonable por defecto.
+    ejemplo: |
+      Señal de 8,5 Hz analizada con 64 muestras: el peor caso.
+
+      ```text
+      frecuencia real: 8,5 Hz, justo entre dos bins
+
+      ventana rectangular:
+        pico detectado en el bin 8
+        fuga espectral: 50,02 %
+
+      ventana de Hann:
+        pico detectado en el bin 9
+        fuga espectral: 12,45 %
+
+      La fuga se reduce a la cuarta parte.
+
+      Ninguna de las dos acierta exactamente 8,5:
+      la resolución del análisis es de 1 bin, y la frecuencia
+      real cae en medio. Para resolverla haría falta
+      más duración de señal, no más muestras por segundo.
+      ```
+    errores:
+      - "Analizar sin ventanear y atribuir la fuga a contenido real de la señal."
+      - "Elegir una ventana muy suave y perder resolución necesaria."
+      - "Confundir resolución en frecuencia con frecuencia de muestreo."
+    aplicacion: |
+      Espectrogramas de audio, análisis de vibraciones, detección de tonos y preprocesamiento
+      para modelos de reconocimiento de voz.
+    referencias:
+      - "[Harris, F. J. *On the use of windows for harmonic analysis with the DFT*, Proceedings of the IEEE, 1978](https://doi.org/10.1109/PROC.1978.10837)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+
+  "279":
+    concepto: "La potencia va con el cuadrado de la amplitud: doble amplitud es cuádruple potencia."
+    formulas:
+      - "PSD[k] = |X[k]|² / N"
+      - "potencia relativa = PSD[k] / Σ PSD"
+      - "amplitud ×2  ⟹  potencia ×4"
+    desarrollo: |
+      La densidad espectral de potencia describe cómo se reparte la energía de una señal entre
+      sus frecuencias. Se obtiene del cuadrado de la magnitud de la transformada, y a diferencia
+      del espectro de amplitud **descarta la fase**, quedándose solo con cuánta energía hay en
+      cada banda.
+
+      La relación cuadrática entre amplitud y potencia tiene consecuencias que sorprenden al
+      leer un espectro. Una componente con el doble de amplitud aporta **cuatro veces** más
+      potencia, y por tanto domina el reparto mucho más de lo que sugiere el espectro de
+      amplitud. Las componentes pequeñas quedan aplastadas, y por eso la PSD suele graficarse en
+      decibelios, que es escala logarítmica.
+
+      La PSD es la herramienta habitual para caracterizar ruido y para diagnosticar sistemas. El
+      ruido blanco tiene potencia uniforme en todas las frecuencias, el ruido rosa decae como
+      `1/f`, y muchos procesos naturales exhiben ese comportamiento. Comparar la PSD medida con
+      la esperada revela componentes anómalas: un pico a 50 Hz delata acoplamiento con la red
+      eléctrica.
+
+      En aprendizaje automático, la PSD por bandas es un descriptor clásico. En señales
+      biomédicas las bandas alfa, beta y theta del EEG se definen así; en audio, el reparto de
+      potencia por bandas es la base de los coeficientes MFCC que alimentaron el reconocimiento
+      de voz durante décadas.
+    ejemplo: |
+      Dos componentes con amplitudes 2 y 1, y su reparto de potencia.
+
+      ```text
+      128 muestras
+        componente de 5 Hz  con amplitud 2,0
+        componente de 20 Hz con amplitud 1,0
+
+      bins dominantes: [5, 20]                             ✓
+
+      potencia relativa 5 Hz:   80,0 %
+      potencia relativa 20 Hz:  20,0 %
+      razón de potencias: 4,0
+
+      Las amplitudes están en razón 2:1
+      Las potencias están en razón 4:1                     ✓
+
+      Aunque la segunda componente tiene la mitad de amplitud,
+      solo aporta la cuarta parte de la energía.
+      ```
+    errores:
+      - "Interpretar la PSD como si fuera espectro de amplitud."
+      - "Graficar en escala lineal y no ver las componentes débiles."
+      - "Comparar PSD de señales de distinta duración sin normalizar."
+    aplicacion: |
+      Caracterización de ruido, análisis de EEG por bandas, MFCC en reconocimiento de voz y
+      diagnóstico de maquinaria por vibraciones.
+    referencias:
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 10](https://www.pearson.com/)"
+      - "[Welch, P. *The use of FFT for the estimation of power spectra*, IEEE Trans. Audio, 1967](https://doi.org/10.1109/TAU.1967.1161901)"
+
+  "280":
+    concepto: "Un vector de características resume la señal en números que un modelo puede usar."
+    formulas:
+      - "temporales: media, varianza, RMS, cruces por cero"
+      - "espectrales: frecuencia dominante, centroide, entropía espectral"
+      - "centroide = Σ f·P(f) / Σ P(f)"
+    desarrollo: |
+      Alimentar un modelo con una señal cruda de miles de muestras rara vez es la mejor opción:
+      la dimensión es enorme, la información está diluida y el modelo tiene que aprender de cero
+      lo que el procesamiento de señales ya sabe. La extracción de características condensa la
+      señal en pocos números interpretables.
+
+      Las características **temporales** son baratas y describen la forma de la onda. La media
+      detecta desplazamientos del nivel base, la varianza y el RMS miden la energía, y los
+      **cruces por cero** son un estimador rudimentario pero muy usado del contenido de
+      frecuencia: cuantos más cruces, más rápida es la señal.
+
+      Las características **espectrales** describen el contenido de frecuencia. La frecuencia
+      dominante identifica la componente principal; el **centroide espectral** es la frecuencia
+      media ponderada por potencia y se corresponde con la percepción de brillo en audio; la
+      **entropía espectral** distingue una señal tonal —energía concentrada, entropía baja— de
+      una ruidosa —energía repartida, entropía alta—. Esa última reutiliza la entropía de la
+      clase 262 aplicada al espectro normalizado.
+
+      La disyuntiva frente al aprendizaje profundo es real y no tiene respuesta única. Las
+      características diseñadas a mano son interpretables, baratas y funcionan con pocos datos;
+      las aprendidas por una red superan a las manuales cuando hay datos abundantes. En la
+      práctica se combinan, y entender las manuales sigue siendo necesario para diagnosticar qué
+      está capturando el modelo.
+    ejemplo: |
+      Vector de características extraído de una señal de 256 muestras.
+
+      ```text
+      256 muestras a 256 Hz, componentes reales en 7 Hz y 23 Hz
+
+      características temporales:
+        media           = −0,000308
+        varianza        =  1,316705
+        RMS             =  1,147478
+        cruces por cero =  (proporcional al contenido rápido)
+
+      características espectrales:
+        frecuencia dominante = 7 Hz          ✓ correcta
+        centroide espectral  = 10,287014
+        entropía espectral   = (concentración de la energía)
+
+      El centroide cae entre 7 y 23, más cerca de 7 porque
+      esa componente aporta más potencia.
+
+      De 256 números a un vector de 7: eso es lo que
+      recibe el modelo.
+      ```
+    errores:
+      - "Extraer características sin normalizar entre señales de escalas distintas."
+      - "Calcular características espectrales sobre señales no estacionarias sin segmentar."
+      - "Descartar el aprendizaje de representaciones cuando hay datos abundantes."
+    aplicacion: |
+      Clasificación de audio, reconocimiento de actividad con acelerómetros, diagnóstico de
+      maquinaria, análisis de EEG y detección de anomalías en sensores.
+    referencias:
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+      - "[Peeters, G. *A large set of audio features for sound description*, IRCAM, 2004](https://recherche.ircam.fr/anasyn/peeters/ARTICLES/Peeters_2003_cuidadoaudiofeatures.pdf)"

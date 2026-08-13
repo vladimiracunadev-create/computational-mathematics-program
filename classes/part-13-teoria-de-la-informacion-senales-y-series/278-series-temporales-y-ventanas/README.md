@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Analizar un trozo finito de señal esparce su energía a frecuencias vecinas.**
 
-Esta clase concreta ese objetivo sobre **Series temporales y ventanas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `windowing`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: muestrear por debajo de nyquist y culpar al modelo del ruido resultante.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ventana rectangular: cortar sin más
+ventana de Hann: w[n] = 0,5·(1 − cos(2πn/N))
+compromiso: menos fuga, peor resolución
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> KL no es simétrica ni es una distancia; JS sí es simétrica.
+La transformada de Fourier supone señales infinitas. En la práctica solo se dispone de un
+trozo, y cortarlo equivale a multiplicar la señal por una **ventana rectangular**. Esa
+multiplicación en el tiempo se convierte en convolución en frecuencia, y ahí está el
+problema.
+
+El resultado es la **fuga espectral**: la energía de una componente se dispersa hacia las
+frecuencias vecinas. El efecto es máximo cuando la frecuencia real no cae exactamente en
+uno de los bins del análisis, porque entonces el corte introduce discontinuidades en los
+extremos que la transformada interpreta como contenido de alta frecuencia.
+
+Las **ventanas suaves** —Hann, Hamming, Blackman— multiplican la señal por una función que
+decae a cero en los bordes, eliminando la discontinuidad. La fuga se reduce
+sustancialmente, y el pico principal queda mucho más limpio.
+
+El precio es la resolución. Suavizar los bordes ensancha el pico principal, así que dos
+frecuencias muy próximas pueden dejar de distinguirse. La elección de ventana es un
+compromiso entre **resolución** —distinguir frecuencias cercanas— y **rango dinámico**
+—ver componentes débiles junto a fuertes—. Hann es el compromiso razonable por defecto.
+
+## 🧮 Ejemplo trabajado
+
+Señal de 8,5 Hz analizada con 64 muestras: el peor caso.
+
+```text
+frecuencia real: 8,5 Hz, justo entre dos bins
+
+ventana rectangular:
+  pico detectado en el bin 8
+  fuga espectral: 50,02 %
+
+ventana de Hann:
+  pico detectado en el bin 9
+  fuga espectral: 12,45 %
+
+La fuga se reduce a la cuarta parte.
+
+Ninguna de las dos acierta exactamente 8,5:
+la resolución del análisis es de 1 bin, y la frecuencia
+real cae en medio. Para resolverla haría falta
+más duración de señal, no más muestras por segundo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 278
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Analizar sin ventanear y atribuir la fuga a contenido real de la señal.
+2. Elegir una ventana muy suave y perder resolución necesaria.
+3. Confundir resolución en frecuencia con frecuencia de muestreo.
+
+## 🚀 Dónde se usa de verdad
+
+Espectrogramas de audio, análisis de vibraciones, detección de tonos y preprocesamiento
+para modelos de reconocimiento de voz.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Harris, F. J. *On the use of windows for harmonic analysis with the DFT*, Proceedings of the IEEE, 1978](https://doi.org/10.1109/PROC.1978.10837)
+- [Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

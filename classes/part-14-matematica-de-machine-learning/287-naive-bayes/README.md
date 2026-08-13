@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Naive Bayes supone algo falso y clasifica bien, porque solo necesita el orden.**
 
-Esta clase concreta ese objetivo sobre **Naive Bayes**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `naive_bayes`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: no estandarizar antes de aplicar regularización o k-nn.
+
+## 🧩 Fórmulas de la clase
+
+```text
+P(c|x) ∝ P(c)·Π P(xᵢ|c)
+supuesto: independencia condicional dada la clase
+se trabaja en logaritmos para evitar subdesbordamiento
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Ridge y Lasso resuelven el mismo problema con normas distintas y geometría distinta.
+Naive Bayes aplica el teorema de Bayes de la clase 186 a la clasificación, y para hacer el
+cálculo tratable supone que las características son **independientes dada la clase**. Ese
+supuesto permite factorizar la verosimilitud conjunta en un producto de términos
+unidimensionales, que sí se pueden estimar con pocos datos.
+
+El supuesto casi nunca es cierto. En un texto, la aparición de una palabra está claramente
+correlacionada con la de otras; en datos médicos, los síntomas se agrupan. Y sin embargo el
+clasificador funciona sorprendentemente bien, hecho comprobado durante décadas en filtrado
+de spam.
+
+La explicación es que **la clasificación solo necesita el orden**, no el valor. Aunque las
+probabilidades estimadas estén mal calibradas —y con el supuesto ingenuo lo están, tienden
+a valores extremos—, la clase con mayor probabilidad suele seguir siendo la correcta.
+Naive Bayes es mal estimador de probabilidad y buen clasificador, y conviene no usarlo
+cuando lo que se necesita es el valor de la probabilidad.
+
+Dos detalles de implementación son obligatorios. Trabajar en **logaritmos**, porque
+multiplicar cientos de densidades produce subdesbordamiento a cero. Y aplicar
+**suavizado de Laplace**, sumando un pseudo-conteo, para que una categoría nunca vista no
+anule toda la probabilidad de la clase con un cero multiplicativo.
+
+## 🧮 Ejemplo trabajado
+
+Naive Bayes gaussiano sobre dos clases y dos características.
+
+```text
+clase 0: prior 0,5   medias (−1,1503 ; −1,0020)
+                      varianzas (0,5396 ; …)
+clase 1: prior 0,5   medias ( 2,1592 ;  1,8087)
+
+accuracy = 1,0
+
+Supuesto: P(x₁,x₂|c) = P(x₁|c)·P(x₂|c)
+Aquí se cumple aproximadamente porque las características
+se generaron independientes.
+
+Cálculo en logaritmos:
+  log P(c|x) = log P(c) + Σ log P(xᵢ|c) + constante
+Sin logaritmos, con 100 características el producto
+sería del orden de 1e-200 y se redondearía a cero.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 287
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Multiplicar probabilidades en vez de sumar logaritmos.
+2. Omitir el suavizado y dejar que un conteo cero anule la clase.
+3. Usar sus probabilidades como estimaciones calibradas.
+
+## 🚀 Dónde se usa de verdad
+
+Filtrado de spam, clasificación de texto, diagnóstico rápido con muchas variables y línea
+base con pocos datos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 6](https://hastie.su.domains/ElemStatLearn/)
+- [Domingos, P.; Pazzani, M. *On the optimality of the simple Bayesian classifier*, Machine Learning, 1997](https://doi.org/10.1023/A:1007413511361)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

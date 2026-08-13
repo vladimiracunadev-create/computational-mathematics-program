@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Con datos sin ninguna relación real se puede obtener un 70 % de acierto si se evalúa mal.**
 
-Esta clase concreta ese objetivo sobre **Generalización, validación y leakage**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `generalization`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: no estandarizar antes de aplicar regularización o k-nn.
+
+## 🧩 Fórmulas de la clase
+
+```text
+separar train, validación y test antes de mirar nada
+leakage: información del test que llega al entrenamiento
+validación cruzada anidada para hiperparámetros
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El error de generalización se descompone en sesgo, varianza y ruido irreducible.
+Un modelo solo vale por lo que hace con datos que no ha visto. Medir eso correctamente es
+más difícil de lo que parece, y el **leakage** —cualquier filtración de información del
+conjunto de evaluación al de entrenamiento— es el error que más veces produce resultados
+brillantes y modelos inútiles en producción.
+
+Sus formas son variadas y a menudo sutiles. Estandarizar usando la media de todo el
+conjunto antes de separar. Seleccionar características mirando su correlación con la
+etiqueta en todos los datos. Elegir hiperparámetros con el conjunto de test. Imputar
+valores faltantes globalmente. Y en series temporales, mezclar pasado y futuro al hacer
+validación cruzada aleatoria.
+
+La demostración de esta clase es la más contundente posible: se generan datos donde `X` e
+`y` **no tienen ninguna relación**, puro ruido, y evaluando sobre los mismos datos con los
+que se entrenó se obtiene un 70 % de acierto. Con separación honesta la cifra cae al 60 %,
+todavía por encima del 50 % esperado por el azar, porque con 12 características y 60
+observaciones queda margen para memorizar.
+
+La disciplina que lo evita es sencilla de enunciar: separar el test **al principio**, no
+tocarlo hasta el final, hacer todo el preprocesamiento dentro de la validación cruzada, y
+usar **validación anidada** cuando hay hiperparámetros. Con series temporales, separar
+siempre por tiempo. Cuesta poco y es lo que distingue un resultado de una ilusión.
+
+## 🧮 Ejemplo trabajado
+
+Datos sin relación real entre X e y.
+
+```text
+60 observaciones, 12 características
+relación real entre X e y: NINGUNA
+
+accuracy entrenando y evaluando en todo: 0,70
+accuracy en train:                       0,65
+accuracy en test:                        0,60
+
+línea base por azar: 0,50
+
+Un 70 % de acierto sobre ruido puro, obtenido
+simplemente por evaluar donde se entrenó.
+
+Incluso el 60 % del test está inflado: con 12
+características y 60 datos, hay margen de memorización.
+Solo la validación repetida daría una cifra fiable.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 299
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Estandarizar o imputar antes de separar train y test.
+2. Elegir hiperparámetros con el conjunto de test.
+3. Usar validación cruzada aleatoria en series temporales.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de experimentos de aprendizaje automático, auditoría de resultados, competiciones de
+ciencia de datos y validación de modelos antes de producción.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Kaufman, S. et al. *Leakage in data mining*, ACM TKDD, 2012](https://doi.org/10.1145/2382577.2382579)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 7](https://hastie.su.domains/ElemStatLearn/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

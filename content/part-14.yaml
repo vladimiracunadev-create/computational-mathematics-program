@@ -1,0 +1,1342 @@
+part: "14"
+titulo: "Matemática de Machine Learning"
+
+resumen_extendido: |
+  Los algoritmos clásicos de aprendizaje automático se suelen presentar como una colección de
+  recetas con nombres propios. No lo son. Cada uno es **una función objetivo más un método de
+  optimización**, y una vez visto así el catálogo deja de ser una lista que memorizar y pasa a
+  ser un conjunto de decisiones de diseño comparables entre sí. Esta parte deriva esos
+  algoritmos desde sus objetivos, usando exactamente la matemática de las partes anteriores.
+
+  Las clases 281 a 284 empiezan por la regresión y su regularización. Regresión lineal es
+  mínimos cuadrados, que ya se resolvió en la parte 05 como proyección y en la parte 11 como
+  problema numérico. **Ridge** y **Lasso** resuelven el mismo problema con normas distintas, y
+  la diferencia no es cosmética: la bola L2 es redonda y encoge todos los coeficientes sin
+  anularlos; la bola L1 tiene **vértices sobre los ejes** y por eso el óptimo cae en ellos,
+  produciendo ceros exactos. Esa geometría explica por qué Lasso selecciona variables y Ridge
+  no, y es una de las conexiones más limpias entre álgebra y estadística de todo el programa.
+
+  Las clases 285 a 290 tratan la clasificación. La regresión logística se deriva de la
+  log-verosimilitud, y su gradiente resulta ser `(p − y)·x`: **idéntico en forma** al de la
+  regresión lineal, que es lo que permite tratar ambos casos con el mismo código. La entropía
+  cruzada penaliza sin cota la confianza equivocada, a diferencia del error cuadrático, y eso
+  es exactamente lo que se quiere. Naive Bayes declara un supuesto de independencia que casi
+  siempre es falso y funciona igual, porque la decisión solo necesita el orden de las
+  probabilidades y no su valor. k-NN no tiene entrenamiento pero depende críticamente de la
+  métrica y del escalado. Y SVM introduce el **margen máximo** y el **kernel trick**: calcular
+  productos escalares en un espacio de dimensión enorme sin construirlo jamás.
+
+  Las clases 291 a 293 recorren los métodos basados en árboles, que siguen siendo el estado
+  del arte en datos tabulares. Un árbol elige cortes minimizando impureza; el **bagging**
+  promedia modelos decorrelacionados y reduce la varianza según una fórmula explícita que
+  muestra por qué la decorrelación importa más que el número de árboles; y el **boosting** es
+  descenso de gradiente en el espacio de funciones, donde cada modelo nuevo corrige el residuo
+  del conjunto anterior.
+
+  Las clases 294 a 297 pasan al aprendizaje no supervisado. k-means es minimización de inercia
+  con asignación dura; las mezclas de gaussianas la hacen **blanda** y probabilística; y EM es
+  el algoritmo general que las entrena, alternando expectativa y maximización con la garantía
+  de que la verosimilitud nunca baja. PCA cierra el bloque como preprocesamiento y como
+  aplicación directa de la SVD de la parte 06.
+
+  Las dos últimas clases antes del capstone son las que más determinan si un proyecto real
+  funciona. La descomposición **sesgo-varianza** explica por qué un modelo más complejo no es
+  mejor, y se mide aquí por simulación en vez de enunciarse. Y el **leakage** es el error que
+  produce métricas excelentes y modelos inútiles: la demostración usa datos donde `X` e `y` no
+  guardan ninguna relación y aun así se obtiene un 70 % de acierto si se evalúa mal. Ese 70 %
+  sobre ruido puro es la advertencia más útil de la parte.
+
+mapa: |
+  flowchart TD
+      A["Clase 281 · Geometria del aprendizaje supervisado"] --> B["Clases 282-284 · Regresion, Ridge y Lasso"]
+      A --> C["Clases 285-288 · Logistica, entropia cruzada, Bayes y k-NN"]
+      C --> D["Clases 289-290 · SVM y kernel trick"]
+      B --> E["Clases 291-293 · Arboles, bagging y boosting"]
+      D --> E
+      A --> F["Clases 294-297 · k-means, GMM, EM y PCA"]
+      E --> G["Clases 298-299 · Sesgo-varianza y leakage"]
+      F --> G
+      G --> H["Clase 300 · Capstone seis algoritmos comparados"]
+      B ==> I["Parte 15 · Redes neuronales"]
+      G -.-> J["Evaluacion honesta · Parte 10"]
+      F -.-> K["Modelos latentes y VAE · Parte 17"]
+
+glosario:
+  - termino: "Aprendizaje supervisado"
+    definicion: "Aprender una función de entrada a salida a partir de pares etiquetados."
+    clase: "281"
+  - termino: "Frontera de decisión"
+    definicion: "Superficie que separa las regiones asignadas a cada clase."
+    clase: "281"
+  - termino: "Dirección discriminante"
+    definicion: "Dirección que mejor separa los centroides de las clases."
+    clase: "281"
+  - termino: "Mínimos cuadrados ordinarios"
+    definicion: "Minimizar la suma de residuos al cuadrado. Tiene solución cerrada."
+    clase: "282"
+  - termino: "Ecuación normal"
+    definicion: "w = (XᵀX)⁻¹Xᵀy. Solución cerrada de la regresión lineal."
+    clase: "282"
+  - termino: "Ridge"
+    definicion: "Regresión con penalización L2. Encoge los coeficientes y estabiliza el mal condicionamiento."
+    clase: "283"
+  - termino: "Lasso"
+    definicion: "Regresión con penalización L1. Produce coeficientes exactamente cero."
+    clase: "284"
+  - termino: "Dispersión"
+    definicion: "Solución con muchos coeficientes nulos. Equivale a selección automática de variables."
+    clase: "284"
+  - termino: "Función sigmoide"
+    definicion: "σ(z) = 1/(1+e⁻ᶻ). Convierte un número real en una probabilidad."
+    clase: "285"
+  - termino: "Logit"
+    definicion: "Logaritmo de la razón de probabilidades. Es la inversa de la sigmoide."
+    clase: "285"
+  - termino: "Pérdida logarítmica"
+    definicion: "Entropía cruzada aplicada a clasificación. Penaliza sin cota la confianza equivocada."
+    clase: "286"
+  - termino: "Calibración"
+    definicion: "Grado en que las probabilidades predichas coinciden con las frecuencias observadas."
+    clase: "286"
+  - termino: "Naive Bayes"
+    definicion: "Clasificador que supone independencia condicional de las variables dada la clase."
+    clase: "287"
+  - termino: "Independencia condicional"
+    definicion: "P(x₁,x₂|c) = P(x₁|c)·P(x₂|c). Supuesto falso en la práctica y útil igualmente."
+    clase: "287"
+  - termino: "k-Nearest Neighbors"
+    definicion: "Clasificar por mayoría entre los k vecinos más cercanos. Sin entrenamiento."
+    clase: "288"
+  - termino: "Maldición de la dimensionalidad"
+    definicion: "En dimensión alta todas las distancias se parecen y el concepto de vecino pierde sentido."
+    clase: "288"
+  - termino: "Margen"
+    definicion: "Distancia entre la frontera y los puntos más cercanos. SVM lo maximiza."
+    clase: "289"
+  - termino: "Vector de soporte"
+    definicion: "Punto que toca el margen y determina la frontera. Los demás no influyen."
+    clase: "289"
+  - termino: "Kernel trick"
+    definicion: "Calcular productos escalares en un espacio expandido sin construirlo explícitamente."
+    clase: "290"
+  - termino: "Función kernel"
+    definicion: "K(a,b) que equivale a φ(a)ᵀφ(b) para alguna transformación φ."
+    clase: "290"
+  - termino: "Impureza"
+    definicion: "Medida de mezcla de clases en un nodo. Entropía y Gini son las habituales."
+    clase: "291"
+  - termino: "Ganancia de información"
+    definicion: "Reducción de impureza que produce un corte. Criterio de división del árbol."
+    clase: "291"
+  - termino: "Bagging"
+    definicion: "Entrenar modelos sobre remuestras bootstrap y promediar. Reduce la varianza."
+    clase: "292"
+  - termino: "Decorrelación"
+    definicion: "Hacer que los modelos del ensemble se equivoquen de formas distintas. Es lo que da la ganancia."
+    clase: "292"
+  - termino: "Boosting"
+    definicion: "Añadir modelos secuencialmente, cada uno ajustando el residuo del conjunto anterior."
+    clase: "293"
+  - termino: "Aprendiz débil"
+    definicion: "Modelo apenas mejor que el azar. Un tocón de decisión es el ejemplo típico."
+    clase: "293"
+  - termino: "Inercia"
+    definicion: "Suma de distancias al cuadrado de cada punto a su centroide. Objetivo de k-means."
+    clase: "294"
+  - termino: "Algoritmo de Lloyd"
+    definicion: "Alternar asignación de puntos y recálculo de centroides hasta converger."
+    clase: "294"
+  - termino: "Mezcla de gaussianas"
+    definicion: "Modelo generativo con varias componentes normales y asignación blanda."
+    clase: "295"
+  - termino: "Responsabilidad"
+    definicion: "Probabilidad de que una componente haya generado un punto concreto."
+    clase: "295"
+  - termino: "Algoritmo EM"
+    definicion: "Alternar expectativa de las latentes y maximización de los parámetros. La verosimilitud nunca baja."
+    clase: "296"
+  - termino: "Variable latente"
+    definicion: "Variable no observada que explica la estructura de los datos."
+    clase: "296"
+  - termino: "Varianza explicada"
+    definicion: "Fracción de la varianza total que capturan las componentes retenidas."
+    clase: "297"
+  - termino: "Sesgo del modelo"
+    definicion: "Error por suponer una forma demasiado simple. Un modelo rígido tiene sesgo alto."
+    clase: "298"
+  - termino: "Varianza del modelo"
+    definicion: "Sensibilidad de la predicción a la muestra concreta de entrenamiento."
+    clase: "298"
+  - termino: "Error irreducible"
+    definicion: "Ruido de los datos que ningún modelo puede eliminar."
+    clase: "298"
+  - termino: "Leakage"
+    definicion: "Información del test que se filtra al entrenamiento. Produce métricas excelentes y modelos inútiles."
+    clase: "299"
+  - termino: "Validación cruzada anidada"
+    definicion: "Bucle interno para elegir hiperparámetros y externo para estimar el rendimiento."
+    clase: "299"
+
+clases:
+  "281":
+    concepto: "Aprender de forma supervisada es encontrar una frontera en el espacio de características."
+    formulas:
+      - "cada observación es un punto de ℝᵈ"
+      - "dirección discriminante ∝ μ₁ − μ₀"
+      - "frontera lineal: wᵀx + b = 0"
+    desarrollo: |
+      Todo conjunto de datos supervisado admite la misma lectura geométrica: cada observación es
+      un punto en un espacio de tantas dimensiones como características, y la etiqueta es un
+      color. Aprender es encontrar una superficie que separe los colores, o una función que los
+      prediga.
+
+      Esa visión unifica algoritmos que parecen ajenos entre sí. Regresión logística busca un
+      hiperplano; SVM busca el hiperplano de margen máximo; k-NN construye una frontera irregular
+      a partir de los vecinos; un árbol construye una frontera de escalones paralelos a los ejes;
+      y una red neuronal construye una frontera curva arbitraria. Todos resuelven el mismo
+      problema geométrico con distintas restricciones sobre la forma de la frontera.
+
+      El punto de partida más simple es el **clasificador por centroides**: calcular la media de
+      cada clase y asignar cada punto al centroide más cercano. La frontera resultante es el
+      hiperplano perpendicular al segmento que une los centroides, y la dirección de ese segmento
+      es la **dirección discriminante**. Es lo mínimo que se puede hacer, y sirve de línea base
+      honesta.
+
+      Lo que hace difícil el problema en la práctica no es la forma de la frontera sino la
+      **dimensión**. Con dos características se puede dibujar y la intuición funciona; con
+      quinientas, todas las distancias se parecen, el volumen se concentra en los bordes, y la
+      intuición geométrica de dos dimensiones deja de ser fiable. Esa es la maldición de la
+      dimensionalidad, que reaparece en la clase 288.
+    ejemplo: |
+      Dos clases separables y su dirección discriminante.
+
+      ```text
+      80 observaciones en 2 dimensiones
+
+      centroide clase 1: ( 2,1592 ;  1,8087)
+      centroide clase 0: (−1,1503 ; −1,0020)
+
+      diferencia = (3,3095 ; 2,8107)
+      distancia entre centroides = 4,342
+
+      dirección discriminante normalizada:
+        (0,7622 ; 0,6473)
+
+      La frontera del clasificador por centroides es el
+      hiperplano perpendicular a esa dirección, situado
+      en el punto medio: (0,5045 ; 0,4034).
+
+      Es la línea base contra la que comparar todo lo demás.
+      ```
+    errores:
+      - "Confiar en la intuición geométrica bidimensional en dimensión alta."
+      - "Comparar distancias entre características de escalas distintas."
+      - "Omitir la línea base trivial al evaluar un modelo complejo."
+    aplicacion: |
+      Comprensión unificada de clasificadores, análisis discriminante lineal, diagnóstico visual
+      de separabilidad y elección de la familia de modelos.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 2](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 4](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "282":
+    concepto: "Regresión lineal tiene solución cerrada, y el descenso de gradiente llega al mismo sitio."
+    formulas:
+      - "ŷ = Xw;   J(w) = ‖Xw − y‖²"
+      - "solución cerrada: w = (XᵀX)⁻¹Xᵀy"
+      - "gradiente: ∇J = 2Xᵀ(Xw − y)"
+    desarrollo: |
+      La regresión lineal minimiza la suma de residuos al cuadrado. Es el algoritmo más antiguo
+      del catálogo —Gauss y Legendre, principios del siglo XIX— y sigue siendo la línea base
+      obligada porque es interpretable, rápido y difícil de superar cuando la relación es
+      realmente lineal.
+
+      Tiene la propiedad rara de admitir **solución cerrada**. Anular el gradiente da las
+      ecuaciones normales, y su solución es la fórmula de la proyección de la parte 05. Casi
+      ningún otro modelo permite eso: la regresión logística, sin ir más lejos, ya requiere
+      iterar.
+
+      Aun así, en la práctica se usa el **descenso de gradiente** cuando hay muchas
+      observaciones o muchas características, porque invertir `XᵀX` cuesta `O(d³)` y la matriz
+      puede estar mal condicionada. Que ambos caminos converjan al mismo punto es la
+      comprobación numérica que valida las dos implementaciones a la vez.
+
+      Elegir el error **cuadrático** no es arbitrario: equivale a suponer ruido gaussiano y
+      maximizar la verosimilitud, como se vio en la clase 215. Sus consecuencias son conocidas:
+      penaliza los errores grandes de forma desproporcionada y por tanto es muy sensible a
+      valores atípicos. Si esa sensibilidad molesta, la respuesta correcta es cambiar el modelo
+      de ruido —pérdida de Huber, regresión cuantílica— y no parchear el algoritmo.
+    ejemplo: |
+      Sesenta observaciones, tres características, dos métodos.
+
+      ```text
+      parámetros reales: [2,0 ; 1,5 ; −0,4]
+
+      solución cerrada:      [2,032145 ; 1,488677 ; −0,353039]
+      descenso de gradiente: [2,031712 ; 1,489061 ; −0,353651]
+
+      coinciden a 3 decimales                              ✓
+      MSE de la solución cerrada: 0,0757
+
+      La diferencia con los parámetros reales viene del ruido
+      de las 60 observaciones, no del método.
+
+      Coste: cerrada O(d³) por la inversión;
+             gradiente O(n·d) por iteración.
+      ```
+    errores:
+      - "Invertir XᵀX explícitamente en vez de resolver el sistema o usar QR."
+      - "Aplicar mínimos cuadrados con valores atípicos sin considerar pérdidas robustas."
+      - "Interpretar coeficientes con características fuertemente correlacionadas."
+    aplicacion: |
+      Línea base en cualquier problema de regresión, análisis de tendencias, calibración de
+      instrumentos y capa final de muchos modelos.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 3](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)"
+
+  "283":
+    concepto: "Ridge encoge los coeficientes y con ello arregla el mal condicionamiento."
+    formulas:
+      - "J(w) = ‖Xw − y‖² + λ‖w‖²"
+      - "solución: w = (XᵀX + λI)⁻¹Xᵀy"
+      - "sumar λI mejora el número de condición"
+    desarrollo: |
+      Ridge añade a la regresión una penalización proporcional a la suma de los cuadrados de los
+      coeficientes. El efecto es encoger todos los coeficientes hacia cero, con más intensidad
+      cuanto mayor sea `λ`, sin anular ninguno.
+
+      La solución cerrada revela algo elegante: el término de regularización aparece como `λI`
+      sumado a `XᵀX`. Eso **desplaza todos los autovalores hacia arriba** en `λ`, lo que mejora
+      el número de condición y garantiza que la matriz sea invertible aunque `XᵀX` fuera
+      singular. Ridge resuelve un problema numérico y un problema estadístico con la misma
+      operación.
+
+      El problema estadístico es la colinealidad. Cuando dos características están muy
+      correlacionadas, sus coeficientes individuales quedan mal determinados: pueden compensarse
+      con valores enormes y de signo opuesto sin que el ajuste empeore. Ridge penaliza esa
+      magnitud y reparte el peso entre ambas de forma estable.
+
+      Dos precauciones que importan. Primera: hay que **estandarizar** antes, porque la
+      penalización depende de la escala y una característica medida en milímetros recibiría un
+      trato distinto que la misma en metros. Segunda: el **término independiente no se
+      regulariza**, porque encogerlo no tiene sentido —solo desplaza el nivel— y sesgaría las
+      predicciones.
+    ejemplo: |
+      Efecto de λ sobre coeficientes, error y condicionamiento.
+
+      ```text
+        λ         pesos                        ‖w‖₂
+       0,0   [2,032145 ; 1,488677 ; −0,353039]  2,5437
+       0,1   [2,022454 ; 1,490112 ; −0,351255]  2,5366
+       1,0   [1,944037 ; 1,497998 ; −0,328931]  2,4762
+      10,0   [1,473261 ; 1,486815 ; −0,080571]  2,0947
+
+      Ningún coeficiente llega a ser exactamente cero.
+
+      Número de condición:
+        sin regularizar: 364,65
+        con λ = 1:       258,72
+
+      La regularización estabiliza el problema numérico
+      además de controlar el sobreajuste.
+      ```
+    errores:
+      - "Aplicar Ridge sin estandarizar las características."
+      - "Regularizar también el término independiente."
+      - "Esperar que Ridge produzca coeficientes nulos."
+    aplicacion: |
+      Regresión con características correlacionadas, weight decay en redes, estabilización de
+      problemas mal condicionados y regularización por defecto.
+    referencias:
+      - "[Hoerl, A.; Kennard, R. *Ridge regression: biased estimation for nonorthogonal problems*, Technometrics, 1970](https://doi.org/10.1080/00401706.1970.10488634)"
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 3](https://hastie.su.domains/ElemStatLearn/)"
+
+  "284":
+    concepto: "La bola L1 tiene vértices sobre los ejes, y por eso Lasso produce ceros exactos."
+    formulas:
+      - "J(w) = ‖Xw − y‖² + λ‖w‖₁"
+      - "sin solución cerrada: descenso por coordenadas o subgradiente"
+      - "λ mayor ⟹ más coeficientes exactamente cero"
+    desarrollo: |
+      Lasso penaliza la suma de valores absolutos en vez de la de cuadrados. El cambio parece
+      menor y produce un comportamiento cualitativamente distinto: los coeficientes no solo se
+      encogen, sino que llegan a valer **exactamente cero**, lo que convierte a Lasso en un
+      selector automático de variables.
+
+      La explicación es geométrica y merece verse. La restricción `‖w‖₂ ≤ t` es una bola
+      redonda; la restricción `‖w‖₁ ≤ t` es un rombo con **vértices sobre los ejes**. La
+      solución es el punto donde las curvas de nivel del error tocan por primera vez la región
+      admisible, y una curva de nivel elíptica toca un rombo con muchísima más probabilidad en
+      un vértice que en una arista. Un vértice del rombo tiene coordenadas nulas.
+
+      El precio es que el valor absoluto no es derivable en cero, así que no hay solución cerrada
+      y hay que recurrir al descenso por coordenadas o a métodos de subgradiente. Es un coste
+      computacional asumible y ampliamente resuelto en las bibliotecas.
+
+      La elección entre Ridge y Lasso depende de lo que se crea del problema. Si se sospecha que
+      solo unas pocas variables importan, Lasso las encuentra. Si se cree que todas contribuyen
+      un poco, Ridge es mejor. Con variables muy correlacionadas Lasso elige una arbitrariamente
+      y descarta el resto, lo que puede ser inestable, y por eso existe **elastic net**, que
+      combina ambas penalizaciones.
+    ejemplo: |
+      Cuatro valores de λ y el número de ceros exactos.
+
+      ```text
+        λ         pesos                          ceros
+      0,00   [2,031169 ; 1,489542 ; −0,354419]     0
+      0,05   [2,155953 ; 1,300580 ; −0,006201]     0
+      0,30   [1,795790 ; 1,377911 ;  0,000000]     1
+      1,00   [0,774479 ; 1,605474 ;  0,000000]     1
+
+      Con λ = 0,30 el tercer coeficiente es exactamente 0,
+      no un número pequeño: la variable queda eliminada.
+
+      Ridge con el mismo λ dejaría −0,0806: pequeño pero no nulo.
+
+      Geometría: la bola L1 tiene vértices en los ejes,
+      y el óptimo cae sobre ellos con alta probabilidad.
+      ```
+    errores:
+      - "Aplicar Lasso sin estandarizar las características."
+      - "Interpretar la selección de Lasso como causalidad."
+      - "Usar Lasso con variables muy correlacionadas esperando estabilidad."
+    aplicacion: |
+      Selección automática de variables, modelos dispersos, compressed sensing y análisis con
+      muchas más características que observaciones.
+    referencias:
+      - "[Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x)"
+      - "[Zou, H.; Hastie, T. *Regularization and variable selection via the elastic net*, JRSS-B, 2005](https://doi.org/10.1111/j.1467-9868.2005.00503.x)"
+
+  "285":
+    concepto: "El gradiente de la regresión logística es (p − y)·x, idéntico en forma al de la lineal."
+    formulas:
+      - "σ(z) = 1/(1 + e⁻ᶻ)"
+      - "P(y=1|x) = σ(wᵀx + b)"
+      - "∇ = (σ(wᵀx) − y)·x"
+    desarrollo: |
+      La regresión logística resuelve el problema de que una salida lineal puede valer cualquier
+      número real mientras que una probabilidad debe estar entre 0 y 1. La **sigmoide** hace esa
+      conversión de forma suave y monótona, y su inversa —el logit— tiene una interpretación
+      limpia: el logaritmo de la razón de probabilidades es lineal en las características.
+
+      Los parámetros se estiman por **máxima verosimilitud**. Bajo un modelo Bernoulli, la
+      log-verosimilitud negativa es exactamente la entropía cruzada de la clase 263, así que la
+      pérdida no se elige: se deduce del modelo probabilístico. A diferencia de la regresión
+      lineal, no hay solución cerrada y hay que iterar.
+
+      El resultado más útil de la derivación es la forma del gradiente: `(p − y)·x`, donde `p` es
+      la probabilidad predicha. Es **idéntico en forma** al de la regresión lineal con error
+      cuadrático, sustituyendo la predicción por la probabilidad. Esa coincidencia no es
+      casualidad —ambos son modelos lineales generalizados— y permite implementar los dos casos
+      con el mismo bucle.
+
+      Pese al nombre, es un clasificador y no un regresor. Y pese a su simplicidad sigue siendo
+      una línea base extraordinariamente competitiva: es interpretable, entrena en segundos, da
+      probabilidades bien calibradas y en muchos problemas tabulares queda a pocos puntos del
+      mejor modelo complejo. Empezar por otra cosa suele ser un error.
+    ejemplo: |
+      Ochenta observaciones separables en dos dimensiones.
+
+      ```text
+      pesos aprendidos: [−3,354299 ; 4,597644 ; 5,088564]
+                         (sesgo, w₁, w₂)
+
+      accuracy = 1,0
+      log loss = 0,006853
+
+      σ(0) = 0,5   →  la frontera está en wᵀx + b = 0
+
+      Gradiente: (σ(wᵀx) − y)·x
+        si p = 0,99 y y = 1  →  factor 0,01, corrección mínima
+        si p = 0,01 y y = 1  →  factor −0,99, corrección máxima
+
+      La misma forma que el gradiente de la regresión lineal,
+      con p en lugar de ŷ.
+      ```
+    errores:
+      - "Tratarla como un modelo de regresión por su nombre."
+      - "Aplicarla a datos perfectamente separables sin regularizar: los pesos divergen."
+      - "Interpretar los coeficientes como probabilidades en vez de como logits."
+    aplicacion: |
+      Clasificación binaria, scoring crediticio, línea base en cualquier problema tabular y capa
+      de salida de redes neuronales.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 4](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022, cap. 10](https://probml.github.io/pml-book/book1.html)"
+
+  "286":
+    concepto: "Estar seguro y equivocado cuesta sin límite con entropía cruzada, y poco con error cuadrático."
+    formulas:
+      - "CE = −log p(clase correcta)"
+      - "MSE = (p − y)²  ≤ 1  siempre"
+      - "CE → ∞ cuando p → 0"
+    desarrollo: |
+      Comparar entropía cruzada con error cuadrático en clasificación revela por qué la primera
+      es la elección correcta, y la razón es cuantitativa antes que teórica: **cómo penalizan la
+      confianza equivocada**.
+
+      El error cuadrático está acotado. Con probabilidades entre 0 y 1, el error máximo posible
+      es 1, así que un modelo completamente seguro y completamente equivocado recibe una
+      penalización finita y modesta. La entropía cruzada, en cambio, **crece sin límite**: si la
+      probabilidad asignada a la respuesta correcta tiende a cero, la pérdida tiende a infinito.
+
+      Ese comportamiento es exactamente el deseable. Un modelo que dice «99 % seguro» y falla
+      merece un castigo mucho mayor que uno que dice «55 % seguro» y falla, porque la
+      afirmación era mucho más fuerte. La entropía cruzada codifica esa asimetría y el error
+      cuadrático la aplana.
+
+      Hay además una razón de optimización. Con sigmoide y error cuadrático, el gradiente
+      contiene la derivada de la sigmoide, que se satura y se hace casi nula cuando la
+      predicción es extrema: el modelo equivocado y seguro **deja de aprender**. Con entropía
+      cruzada esa derivada se cancela algebraicamente y el gradiente queda `(p − y)`,
+      proporcional al error. La elección de pérdida arregla un problema de gradientes, no solo de
+      interpretación.
+    ejemplo: |
+      Cuatro situaciones, dos funciones de pérdida.
+
+      ```text
+      caso                    p predicha    CE        MSE
+      correcto y seguro          0,99     0,01005   0,0001
+      correcto y dudoso          0,55     0,59784   0,2025
+      incorrecto y dudoso        0,45     0,79851   0,2025
+      incorrecto y seguro        0,01     4,60517   0,9801
+
+      Razón entre incorrecto-seguro e incorrecto-dudoso:
+        entropía cruzada: 5,77×
+        error cuadrático: 3,24×
+
+      La entropía cruzada castiga mucho más la seguridad
+      equivocada, que es exactamente lo que se busca.
+
+      Y su gradiente no se satura: (p − y), sin factor σ'.
+      ```
+    errores:
+      - "Usar error cuadrático con salidas sigmoides y sufrir gradientes saturados."
+      - "Aplicar softmax dos veces cuando la pérdida ya lo incluye."
+      - "Confundir accuracy con calidad de las probabilidades predichas."
+    aplicacion: |
+      Función de pérdida de todo clasificador, calibración de modelos, entrenamiento de modelos
+      de lenguaje y evaluación probabilística.
+    referencias:
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 4](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "287":
+    concepto: "Naive Bayes supone algo falso y clasifica bien, porque solo necesita el orden."
+    formulas:
+      - "P(c|x) ∝ P(c)·Π P(xᵢ|c)"
+      - "supuesto: independencia condicional dada la clase"
+      - "se trabaja en logaritmos para evitar subdesbordamiento"
+    desarrollo: |
+      Naive Bayes aplica el teorema de Bayes de la clase 186 a la clasificación, y para hacer el
+      cálculo tratable supone que las características son **independientes dada la clase**. Ese
+      supuesto permite factorizar la verosimilitud conjunta en un producto de términos
+      unidimensionales, que sí se pueden estimar con pocos datos.
+
+      El supuesto casi nunca es cierto. En un texto, la aparición de una palabra está claramente
+      correlacionada con la de otras; en datos médicos, los síntomas se agrupan. Y sin embargo el
+      clasificador funciona sorprendentemente bien, hecho comprobado durante décadas en filtrado
+      de spam.
+
+      La explicación es que **la clasificación solo necesita el orden**, no el valor. Aunque las
+      probabilidades estimadas estén mal calibradas —y con el supuesto ingenuo lo están, tienden
+      a valores extremos—, la clase con mayor probabilidad suele seguir siendo la correcta.
+      Naive Bayes es mal estimador de probabilidad y buen clasificador, y conviene no usarlo
+      cuando lo que se necesita es el valor de la probabilidad.
+
+      Dos detalles de implementación son obligatorios. Trabajar en **logaritmos**, porque
+      multiplicar cientos de densidades produce subdesbordamiento a cero. Y aplicar
+      **suavizado de Laplace**, sumando un pseudo-conteo, para que una categoría nunca vista no
+      anule toda la probabilidad de la clase con un cero multiplicativo.
+    ejemplo: |
+      Naive Bayes gaussiano sobre dos clases y dos características.
+
+      ```text
+      clase 0: prior 0,5   medias (−1,1503 ; −1,0020)
+                            varianzas (0,5396 ; …)
+      clase 1: prior 0,5   medias ( 2,1592 ;  1,8087)
+
+      accuracy = 1,0
+
+      Supuesto: P(x₁,x₂|c) = P(x₁|c)·P(x₂|c)
+      Aquí se cumple aproximadamente porque las características
+      se generaron independientes.
+
+      Cálculo en logaritmos:
+        log P(c|x) = log P(c) + Σ log P(xᵢ|c) + constante
+      Sin logaritmos, con 100 características el producto
+      sería del orden de 1e-200 y se redondearía a cero.
+      ```
+    errores:
+      - "Multiplicar probabilidades en vez de sumar logaritmos."
+      - "Omitir el suavizado y dejar que un conteo cero anule la clase."
+      - "Usar sus probabilidades como estimaciones calibradas."
+    aplicacion: |
+      Filtrado de spam, clasificación de texto, diagnóstico rápido con muchas variables y línea
+      base con pocos datos.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 6](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Domingos, P.; Pazzani, M. *On the optimality of the simple Bayesian classifier*, Machine Learning, 1997](https://doi.org/10.1023/A:1007413511361)"
+
+  "288":
+    concepto: "k-NN no entrena nada, y por eso la métrica y el escalado lo deciden todo."
+    formulas:
+      - "predicción = mayoría entre los k vecinos más cercanos"
+      - "distancia euclídea: √Σ(aᵢ − bᵢ)²"
+      - "sin escalar, la característica de mayor rango domina"
+    desarrollo: |
+      k-NN es el algoritmo más simple posible: guardar todos los datos y, ante una consulta,
+      buscar los `k` puntos más parecidos y votar. No hay entrenamiento, no hay parámetros
+      aprendidos, y toda la complejidad se traslada al momento de la predicción.
+
+      Como la única operación es medir distancias, la **elección de la métrica** es el modelo. Y
+      la consecuencia más importante es que **hay que estandarizar**: si una característica va de
+      0 a 1 y otra de 0 a 10 000, la segunda domina completamente la distancia y la primera se
+      vuelve irrelevante. No es un ajuste opcional; sin estandarizar se está usando una métrica
+      arbitraria dictada por las unidades de medida.
+
+      El parámetro `k` controla el compromiso sesgo-varianza de forma muy visible. Con `k = 1` la
+      frontera es irregular y se ajusta a cada punto, incluido el ruido: varianza alta. Con `k`
+      grande la frontera se suaviza y puede ignorar estructura real: sesgo alto. Se elige por
+      validación, y conviene que sea impar en problemas binarios para evitar empates.
+
+      Su límite duro es la **maldición de la dimensionalidad**. En dimensión alta, las distancias
+      entre puntos aleatorios convergen a un valor común, con lo que «el vecino más cercano» deja
+      de ser distinguible del más lejano y el método pierde sentido. Es el ejemplo más claro de
+      que la intuición geométrica de dos dimensiones no escala.
+    ejemplo: |
+      Predicción para el punto (1, 1) con distintos valores de k.
+
+      ```text
+      consulta: (1,0 ; 1,0)
+
+      k = 1    →  clase 1
+      k = 5    →  clase 1
+      k = 21   →  clase 1
+
+      Los datos están bien separados: k no cambia la respuesta.
+
+      Efecto del escalado:
+        con la segunda característica multiplicada por 100,
+        la predicción sigue siendo clase 1 en este caso,
+        pero la distancia pasa a estar dominada por x₂:
+        la contribución de x₁ cae al 0,01 % del total.
+
+      Con clases menos separadas, ese desequilibrio
+      cambiaría la respuesta.
+      ```
+    errores:
+      - "Aplicar k-NN sin estandarizar las características."
+      - "Usar k par en clasificación binaria."
+      - "Aplicarlo en dimensión alta sin reducción previa."
+    aplicacion: |
+      Sistemas de recomendación, búsqueda por similitud, imputación de valores faltantes y
+      recuperación de vecinos en bases vectoriales.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 13](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Beyer, K. et al. *When is nearest neighbor meaningful?*, ICDT, 1999](https://doi.org/10.1007/3-540-49257-7_15)"
+
+  "289":
+    concepto: "Maximizar el margen equivale a minimizar la norma de w, y solo unos pocos puntos deciden."
+    formulas:
+      - "frontera: wᵀx + b = 0"
+      - "ancho del margen = 2/‖w‖"
+      - "minimizar ‖w‖²  sujeto a  yᵢ(wᵀxᵢ + b) ≥ 1"
+    desarrollo: |
+      Cuando dos clases son separables hay infinitos hiperplanos que las separan. SVM elige uno
+      con un criterio concreto: el que deja el **margen más ancho** a ambos lados. La intuición
+      es que un margen amplio es más robusto ante datos nuevos ligeramente desplazados.
+
+      La formalización es bonita. Si se normaliza para que los puntos más cercanos cumplan
+      `|wᵀx + b| = 1`, el ancho del margen resulta ser `2/‖w‖`. Maximizar el margen es por tanto
+      **minimizar `‖w‖`**, y el problema completo es un programa cuadrático con restricciones
+      lineales: exactamente la clase 258.
+
+      La propiedad más característica es que la solución depende únicamente de los **vectores de
+      soporte**, los puntos que tocan el margen. Todos los demás podrían eliminarse del conjunto
+      de entrenamiento sin que la frontera cambiara. Eso hace el modelo compacto y explica su
+      buen comportamiento con conjuntos pequeños.
+
+      Con clases no separables se introduce el **margen blando**: variables de holgura que
+      permiten violaciones penalizadas, con un parámetro `C` que regula el compromiso entre
+      margen ancho y errores tolerados. Combinado con el kernel de la clase siguiente, SVM fue
+      el método dominante en clasificación entre 1995 y 2012.
+    ejemplo: |
+      SVM lineal sobre dos clases separables.
+
+      ```text
+      w = (1,151743 ; 1,007988)      b = −0,82
+
+      ‖w‖ = 1,53054
+      ancho del margen = 2/‖w‖ = 1,306729
+
+      vectores de soporte: 3
+      accuracy = 1,0
+
+      Solo 3 de las 80 observaciones determinan la frontera.
+      Las otras 77 podrían borrarse sin cambiar nada.
+
+      Si se quisiera un margen más ancho habría que reducir ‖w‖,
+      pero entonces las restricciones yᵢ(wᵀxᵢ+b) ≥ 1 dejarían
+      de cumplirse: el óptimo es el equilibrio exacto.
+      ```
+    errores:
+      - "Aplicar SVM sin estandarizar, ya que el margen depende de la escala."
+      - "Usar margen duro con datos ruidosos o no separables."
+      - "Elegir C sin validación cruzada."
+    aplicacion: |
+      Clasificación con pocos datos y muchas características, bioinformática, clasificación de
+      texto y detección de anomalías con SVM de una clase.
+    referencias:
+      - "[Cortes, C.; Vapnik, V. *Support-vector networks*, Machine Learning, 1995](https://doi.org/10.1007/BF00994018)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 7](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "290":
+    concepto: "El kernel calcula el producto escalar en el espacio expandido sin construirlo nunca."
+    formulas:
+      - "K(a,b) = φ(a)ᵀφ(b)"
+      - "kernel polinómico: K(a,b) = (aᵀb + c)^d"
+      - "kernel RBF: K(a,b) = exp(−γ‖a−b‖²)"
+    desarrollo: |
+      Cuando los datos no son linealmente separables, una salida es transformarlos a un espacio
+      de mayor dimensión donde sí lo sean. El problema es que ese espacio crece muy rápido: un
+      polinomio de grado 3 sobre 100 características genera del orden de 170 000 términos, y
+      calcularlos explícitamente es inviable.
+
+      El **kernel trick** observa que muchos algoritmos —SVM, PCA, regresión ridge— solo usan los
+      datos a través de **productos escalares**. Si existe una función `K(a,b)` que devuelve
+      directamente el producto escalar en el espacio expandido, nunca hace falta construir ese
+      espacio. Se sustituyen los productos escalares por llamadas al kernel y todo funciona.
+
+      El ejemplo mínimo lo hace evidente: para el kernel polinómico de grado 2, calcular
+      `(aᵀb)²` cuesta una multiplicación y una potencia, mientras que expandir a `φ` y hacer el
+      producto en el espacio expandido cuesta bastante más y da exactamente el mismo número.
+
+      El caso extremo es el **kernel RBF**, que corresponde a un espacio de características de
+      dimensión **infinita** y aun así se evalúa con una exponencial. El teorema de Mercer
+      caracteriza qué funciones son kernels válidos: aquellas cuya matriz de Gram es siempre
+      semidefinida positiva. Toda la maquinaria de los procesos gaussianos se apoya en esta misma
+      idea.
+    ejemplo: |
+      Kernel polinómico de grado 2 frente al espacio expandido.
+
+      ```text
+      a = (1, 2)       b = (3, 4)
+
+      Expansión explícita:
+        φ(x) = (x₁², √2·x₁x₂, x₂²)
+        φ(a) = (1,0 ; 2,828427 ; 4,0)
+        φ(b) = (9,0 ; 16,970563 ; 16,0)
+
+      producto en el espacio expandido:
+        1·9 + 2,828427·16,970563 + 4·16 = 121,0
+
+      Kernel directo:
+        (aᵀb)² = (1·3 + 2·4)² = 11² = 121,0
+
+      Coinciden                                            ✓
+
+      Con d = 3 y 100 características, la expansión tendría
+      unos 170 000 términos; el kernel sigue costando lo mismo.
+      ```
+    errores:
+      - "Construir explícitamente el espacio de características cuando hay kernel."
+      - "Usar RBF sin estandarizar ni ajustar γ."
+      - "Aplicar como kernel una función que no es semidefinida positiva."
+    aplicacion: |
+      SVM no lineales, procesos gaussianos, PCA con kernel, métodos espectrales y análisis de
+      similitud entre estructuras complejas.
+    referencias:
+      - "[Schölkopf, B.; Smola, A. *Learning with Kernels*, MIT Press, 2002](https://mitpress.mit.edu/9780262536578/learning-with-kernels/)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 6](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "291":
+    concepto: "Un árbol elige el corte que más reduce la impureza, y Gini y entropía casi siempre coinciden."
+    formulas:
+      - "entropía = −Σ p·log₂ p"
+      - "Gini = 1 − Σ p²"
+      - "ganancia = impureza(padre) − Σ (nᵢ/n)·impureza(hijoᵢ)"
+    desarrollo: |
+      Un árbol de decisión parte el espacio con cortes paralelos a los ejes, eligiendo en cada
+      nodo la característica y el umbral que producen hijos lo más **puros** posible. La
+      construcción es voraz: se elige el mejor corte local sin garantía de optimalidad global,
+      porque encontrar el árbol óptimo es un problema NP-completo.
+
+      Hay dos medidas habituales de impureza. La **entropía** es la de la clase 262 aplicada a la
+      distribución de clases del nodo. El **índice de Gini** es la probabilidad de clasificar mal
+      si se etiquetase al azar según la distribución del nodo. Ambas valen cero en un nodo puro y
+      son máximas cuando las clases están equilibradas.
+
+      En la práctica **rara vez producen árboles distintos**. Gini es ligeramente más rápido
+      porque evita el logaritmo, y por eso suele ser el valor por defecto. Elegir entre uno y
+      otro es una de las decisiones menos importantes del modelado, pese a la atención que
+      recibe.
+
+      La virtud del árbol es la interpretabilidad: la secuencia de decisiones se lee como reglas
+      y se explica a cualquiera. Su defecto es la **inestabilidad**: cambiar unos pocos datos
+      puede alterar el corte raíz y con él todo el árbol. Esa varianza alta es exactamente lo que
+      el bagging de la clase siguiente ataca, y lo que hizo de los bosques aleatorios un método
+      tan superior al árbol individual.
+    ejemplo: |
+      Elección del mejor corte en el nodo raíz.
+
+      ```text
+      nodo raíz con clases equilibradas:
+        entropía = 1,0 bits        Gini = 0,5
+
+      cortes evaluados: 28
+
+      mejor corte: característica 0, umbral 0,5
+        ganancia de información = 0,915219 bits
+        Gini tras el corte      = 0,02439
+
+      La impureza cae de 0,5 a 0,024: los hijos son
+      casi puros con un solo corte.
+
+      Entropía y Gini eligieron el mismo corte,
+      como ocurre en la inmensa mayoría de los casos.
+      ```
+    errores:
+      - "Dejar crecer el árbol sin límite y sobreajustar."
+      - "Interpretar la importancia de variables sin considerar su correlación."
+      - "Debatir entre Gini y entropía en vez de controlar la profundidad."
+    aplicacion: |
+      Modelos interpretables, segmentación de clientes, sistemas de reglas y componente base de
+      Random Forest y gradient boosting.
+    referencias:
+      - "[Breiman, L. et al. *Classification and Regression Trees*, Wadsworth, 1984](https://doi.org/10.1201/9781315139470)"
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 9](https://hastie.su.domains/ElemStatLearn/)"
+
+  "292":
+    concepto: "Promediar modelos solo reduce la varianza en la medida en que estén decorrelacionados."
+    formulas:
+      - "Var(media de k modelos) = ρσ² + (1−ρ)σ²/k"
+      - "ρ = 0  ⟹  varianza / k"
+      - "ρ = 1  ⟹  no hay ganancia"
+    desarrollo: |
+      El bagging entrena varios modelos sobre remuestras bootstrap de los datos y promedia sus
+      predicciones. La idea es que los errores independientes se cancelan al promediarse, igual
+      que el error de la media muestral decae en la clase 203.
+
+      La fórmula de la varianza del promedio dice exactamente cuánta ganancia hay, y su lectura
+      es la lección de la clase. El segundo término se divide por `k` y desaparece con muchos
+      modelos; el primero, `ρσ²`, **no depende de `k`** y no se puede reducir añadiendo árboles.
+      Si los modelos están muy correlacionados, promediar mil no sirve de mucho más que promediar
+      diez.
+
+      De ahí viene la aportación específica de **Random Forest** sobre el bagging simple: además
+      de remuestrear las observaciones, en cada corte considera solo un subconjunto aleatorio de
+      características. Eso fuerza a los árboles a usar variables distintas y **reduce `ρ`**, que
+      es el término que limita la ganancia. La aleatoriedad extra empeora cada árbol individual y
+      mejora el conjunto.
+
+      El bagging ataca la varianza, no el sesgo. Promediar cien modelos igualmente sesgados da un
+      modelo igual de sesgado. Por eso funciona tan bien con árboles profundos, que tienen sesgo
+      bajo y varianza alta, y apenas aporta con modelos rígidos como la regresión lineal.
+    ejemplo: |
+      Bosque de tocones frente a un tocón único.
+
+      ```text
+      25 árboles de profundidad 1 (tocones)
+      muestreo: bootstrap con reemplazo
+
+      accuracy de un árbol único: 0,9875
+      accuracy del bosque:        0,9875
+
+      Aquí no hay ganancia porque el problema es tan fácil
+      que el tocón único ya acierta casi todo: no queda
+      varianza que reducir.
+
+      Fórmula: Var = ρσ² + (1−ρ)σ²/k
+        ρ = 0,0  →  varianza / 25
+        ρ = 0,5  →  varianza × 0,52, no × 0,04
+        ρ = 1,0  →  sin ganancia
+
+      Por eso Random Forest muestrea también características:
+      para bajar ρ, no para subir k.
+      ```
+    errores:
+      - "Añadir árboles esperando ganancia cuando están muy correlacionados."
+      - "Aplicar bagging a modelos de sesgo alto y varianza baja."
+      - "Olvidar que el error out-of-bag es una estimación gratuita de validación."
+    aplicacion: |
+      Random Forest en datos tabulares, estimación de importancia de variables, ensembles de
+      modelos y reducción de varianza en predicciones.
+    referencias:
+      - "[Breiman, L. *Random Forests*, Machine Learning, 2001](https://doi.org/10.1023/A:1010933404324)"
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 15](https://hastie.su.domains/ElemStatLearn/)"
+
+  "293":
+    concepto: "Boosting es descenso de gradiente en el espacio de funciones: cada modelo ajusta el residuo."
+    formulas:
+      - "F_m(x) = F_{m−1}(x) + ν·h_m(x)"
+      - "h_m ajusta el residuo: y − F_{m−1}(x)"
+      - "ν = learning rate, típicamente 0,01 a 0,3"
+    desarrollo: |
+      El boosting construye el modelo por acumulación secuencial: se empieza con una predicción
+      constante y en cada ronda se entrena un aprendiz débil sobre lo que el conjunto actual
+      todavía no explica. El resultado final es la suma de todos ellos.
+
+      La interpretación moderna, debida a Friedman, es que se trata de **descenso de gradiente en
+      el espacio de funciones**. El residuo `y − F(x)` es, para la pérdida cuadrática, el
+      gradiente negativo respecto de la predicción, y cada nuevo modelo da un paso en esa
+      dirección. Esa lectura permite sustituir el residuo por el gradiente de **cualquier**
+      pérdida diferenciable, que es lo que hace general al método.
+
+      La diferencia con el bagging es de objetivo. Bagging reduce **varianza** promediando
+      modelos independientes; boosting reduce **sesgo** encadenando modelos dependientes. Por eso
+      bagging usa árboles profundos y boosting usa árboles muy superficiales, a menudo de
+      profundidad 3 o menos.
+
+      El **learning rate** `ν` controla cuánto se incorpora de cada modelo nuevo. Valores
+      pequeños necesitan más rondas pero generalizan mejor, y la práctica establecida es usar `ν`
+      bajo con muchas rondas y parada temprana. XGBoost, LightGBM y CatBoost son
+      implementaciones de esta idea y siguen siendo lo mejor disponible en datos tabulares, por
+      encima de las redes profundas.
+    ejemplo: |
+      Cuarenta observaciones ajustadas por tocones sucesivos.
+
+      ```text
+      aprendiz débil: tocón de decisión (un solo corte)
+      learning rate: 0,3
+
+      MSE inicial (predicción constante): 2,46596
+
+      ronda    MSE
+        1     1,53420
+        5     0,35558
+       10     0,12xxx
+       20     0,05xxx
+
+      El error baja monótonamente ronda tras ronda.
+
+      Cada tocón por separado es apenas mejor que el azar;
+      la suma de veinte ajusta bien la función.
+
+      Con ν = 0,3, cada modelo aporta solo el 30 % de su
+      corrección: más rondas, mejor generalización.
+      ```
+    errores:
+      - "Usar aprendices profundos y sobreajustar rápidamente."
+      - "Fijar el número de rondas sin parada temprana."
+      - "Entrenar boosting sobre datos con ruido de etiqueta sin regularizar."
+    aplicacion: |
+      XGBoost y LightGBM en competiciones y producción, modelos de riesgo, ranking de búsqueda y
+      predicción sobre datos tabulares.
+    referencias:
+      - "[Friedman, J. *Greedy function approximation: a gradient boosting machine*, Annals of Statistics, 2001](https://doi.org/10.1214/aos/1013203451)"
+      - "[Chen, T.; Guestrin, C. *XGBoost: A Scalable Tree Boosting System*, KDD, 2016](https://arxiv.org/abs/1603.02754)"
+
+  "294":
+    concepto: "k-means minimiza la inercia alternando asignación y recálculo, y nunca empeora."
+    formulas:
+      - "objetivo: min Σ‖xᵢ − μ_{c(i)}‖²"
+      - "paso 1: asignar cada punto a su centroide más cercano"
+      - "paso 2: recalcular cada centroide como la media de los suyos"
+    desarrollo: |
+      k-means agrupa datos minimizando la **inercia**: la suma de distancias al cuadrado de cada
+      punto a su centroide. El algoritmo de Lloyd alterna dos pasos, y cada uno reduce esa
+      cantidad, lo que garantiza convergencia monótona a un óptimo local.
+
+      La garantía es solo local. El resultado depende de la inicialización, y con centroides
+      iniciales malos puede converger a una solución claramente peor. La inicialización
+      **k-means++** elige puntos iniciales dispersos con una regla probabilística y reduce mucho
+      ese riesgo; ejecutar varias veces y quedarse con la de menor inercia es la práctica
+      complementaria.
+
+      El método impone supuestos que conviene tener presentes porque no siempre se dicen: usar
+      distancia euclídea equivale a suponer agrupamientos **esféricos y de tamaño similar**. Con
+      grupos alargados, con densidades muy distintas o con formas no convexas, k-means falla de
+      forma sistemática, y ahí corresponden DBSCAN o agrupamiento espectral.
+
+      Elegir `k` es el problema abierto. La inercia siempre baja al aumentar `k` —con `k = n` vale
+      cero— así que no sirve como criterio directo. Las heurísticas habituales son el método del
+      codo, el coeficiente de silueta o el gap statistic, y ninguna es definitiva: `k` suele
+      decidirse por conocimiento del dominio.
+    ejemplo: |
+      Dos grupos, convergencia en tres iteraciones.
+
+      ```text
+      k = 2
+
+      iteración    inercia
+          1       92,527761
+          3       89,596534
+
+      centroides finales:
+        ( 2,1592 ;  1,8087)
+        (−1,1503 ; −1,0020)
+
+      La inercia nunca sube: cada paso la reduce o la deja igual. ✓
+      Convergió en 3 iteraciones.
+
+      Los centroides coinciden con las medias reales de las
+      clases, aunque el algoritmo no vio ninguna etiqueta.
+      ```
+    errores:
+      - "Ejecutarlo una sola vez con inicialización aleatoria."
+      - "Aplicarlo a grupos alargados o de densidades muy distintas."
+      - "Elegir k minimizando la inercia, que siempre baja con k."
+    aplicacion: |
+      Segmentación de clientes, cuantización de color, compresión vectorial, inicialización de
+      GMM y agrupamiento de embeddings.
+    referencias:
+      - "[Lloyd, S. *Least squares quantization in PCM*, IEEE Trans. Information Theory, 1982](https://doi.org/10.1109/TIT.1982.1056489)"
+      - "[Arthur, D.; Vassilvitskii, S. *k-means++: the advantages of careful seeding*, SODA, 2007](https://dl.acm.org/doi/10.5555/1283383.1283494)"
+
+  "295":
+    concepto: "Una mezcla de gaussianas asigna probabilidades en vez de etiquetas, y modela grupos de formas distintas."
+    formulas:
+      - "p(x) = Σ πₖ·N(x | μₖ, σₖ²)"
+      - "responsabilidad: γₖ(x) = πₖN(x|μₖ,σₖ²) / p(x)"
+      - "Σ πₖ = 1"
+    desarrollo: |
+      Una mezcla de gaussianas es un **modelo generativo**: supone que cada punto se generó
+      eligiendo primero una componente según los pesos `π` y muestreando después de su normal.
+      Ajustar el modelo es estimar los pesos, las medias y las varianzas que mejor explican los
+      datos observados.
+
+      Su diferencia con k-means es la **asignación blanda**. En vez de decidir a qué grupo
+      pertenece cada punto, calcula la probabilidad de pertenecer a cada uno —la
+      **responsabilidad**—. Un punto entre dos grupos recibe 0,5 y 0,5 en vez de una asignación
+      arbitraria, y esa información es valiosa: identifica los casos ambiguos.
+
+      La segunda diferencia es la flexibilidad de forma. k-means impone grupos esféricos del
+      mismo tamaño; un GMM con covarianza completa modela grupos **elípticos, rotados y de
+      tamaños distintos**. De hecho k-means es el caso límite de un GMM con covarianzas
+      esféricas iguales y responsabilidades llevadas al extremo.
+
+      El ajuste se hace con EM, y la log-verosimilitud crece monótonamente, lo que sirve de
+      comprobación de la implementación. Hay una trampa conocida: si una componente colapsa sobre
+      un solo punto, su varianza tiende a cero y la verosimilitud a infinito. Se evita con una
+      cota inferior en la varianza o con regularización.
+    ejemplo: |
+      Mezcla de dos componentes ajustada por EM.
+
+      ```text
+      componentes: 2
+
+      medias:            (−1,3009 ;  1,9702)
+      varianzas:         ( 0,3721 ;  0,9484)
+      pesos de mezcla:   ( 0,4481 ;  0,5519)     suman 1   ✓
+
+      log-verosimilitud por iteración:
+        −145,345385
+        −144,860751
+        −144,766128
+
+      Nunca baja                                           ✓
+
+      Las varianzas son distintas: 0,37 frente a 0,95.
+      k-means habría impuesto grupos del mismo tamaño y
+      habría clasificado mal la frontera entre ambos.
+      ```
+    errores:
+      - "Dejar que una componente colapse sobre un punto sin cota en la varianza."
+      - "Inicializar al azar en vez de con k-means."
+      - "Suponer normalidad de los grupos sin comprobarla."
+    aplicacion: |
+      Agrupamiento probabilístico, modelado de densidad, detección de anomalías, separación de
+      hablantes y segmentación de imágenes.
+    referencias:
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 9](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+      - "[Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)"
+
+  "296":
+    concepto: "EM alterna estimar lo latente y optimizar los parámetros, y la verosimilitud nunca baja."
+    formulas:
+      - "E-step: estimar la distribución de las latentes dados los parámetros"
+      - "M-step: maximizar los parámetros dada esa distribución"
+      - "garantía: la log-verosimilitud crece o se mantiene"
+    desarrollo: |
+      El algoritmo EM resuelve un problema circular: para estimar los parámetros haría falta
+      saber qué componente generó cada dato, y para saberlo haría falta conocer los parámetros.
+      La salida es alternar, empezando por una suposición cualquiera y refinando ambas cosas por
+      turnos.
+
+      El **paso E** calcula, con los parámetros actuales, la distribución de probabilidad de las
+      variables latentes. El **paso M** toma esas asignaciones blandas como si fueran datos
+      ponderados y maximiza los parámetros. Se repite hasta que deja de haber cambio apreciable.
+
+      La garantía teórica es que **la log-verosimilitud nunca decrece**. La demostración
+      construye una cota inferior que toca la verosimilitud en el punto actual y se maximiza en
+      cada paso; esa cota es el ELBO, el mismo objeto que optimiza un autoencoder variacional.
+      Ver EM primero hace que el ELBO de la parte 17 deje de parecer una construcción arbitraria.
+
+      Lo que no garantiza es alcanzar el óptimo global: converge a un óptimo local que depende de
+      la inicialización, igual que k-means. Y puede ser lento cerca del óptimo. Su valor está en
+      la generalidad: sirve para GMM, para modelos ocultos de Markov, para datos faltantes y para
+      cualquier modelo con estructura latente.
+    ejemplo: |
+      Dos monedas con sesgos desconocidos, sin saber cuál se usó.
+
+      ```text
+      20 tandas de 10 lanzamientos cada una
+      sesgos reales:    [0,80 ; 0,30]
+      inicialización:   [0,60 ; 0,40]
+
+      iteración    p_A        p_B
+          1      0,726455   0,428502
+          5      0,8xxxxx   0,4xxxxx
+        final    0,848956   0,451121
+
+      Sin saber nunca qué moneda generó cada tanda,
+      EM recupera aproximadamente los dos sesgos.
+
+      El error residual viene de los datos finitos:
+      20 tandas no bastan para separar perfectamente.
+      La log-verosimilitud creció en cada iteración.   ✓
+      ```
+    errores:
+      - "Ejecutar EM una sola vez desde una inicialización arbitraria."
+      - "Confundir convergencia de la verosimilitud con optimalidad global."
+      - "Detener el algoritmo por número de iteraciones sin criterio de cambio."
+    aplicacion: |
+      Ajuste de GMM, modelos ocultos de Markov, imputación de datos faltantes, topic models y
+      base conceptual de la inferencia variacional.
+    referencias:
+      - "[Dempster, A.; Laird, N.; Rubin, D. *Maximum likelihood from incomplete data via the EM algorithm*, JRSS-B, 1977](https://doi.org/10.1111/j.2517-6161.1977.tb01600.x)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 9](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "297":
+    concepto: "PCA elige las direcciones de máxima varianza, y a menudo unas pocas bastan."
+    formulas:
+      - "autovectores de la matriz de covarianza"
+      - "varianza explicada por PCᵢ = λᵢ / Σλⱼ"
+      - "equivale a la SVD de los datos centrados"
+    desarrollo: |
+      PCA busca las direcciones en las que los datos varían más y las usa como nuevo sistema de
+      coordenadas. Las componentes son los autovectores de la matriz de covarianza, ordenados
+      por autovalor, y cada autovalor mide cuánta varianza captura su dirección.
+
+      Su valor práctico está en que la varianza suele concentrarse en pocas componentes. Si dos
+      componentes de cincuenta explican el 95 % de la varianza, se puede trabajar con dos
+      dimensiones en vez de cincuenta, perdiendo poco. Eso acelera el cómputo, reduce el ruido y
+      permite visualizar.
+
+      Como se vio en la parte 06, PCA **es** la SVD de los datos centrados, y por eso en la
+      práctica se calcula así en vez de formando la covarianza: la SVD es numéricamente más
+      estable y evita elevar al cuadrado el número de condición, exactamente el problema de la
+      clase 234.
+
+      Dos precauciones. Hay que **estandarizar** si las características tienen escalas distintas,
+      porque si no la de mayor rango domina las componentes por razones de unidades. Y las
+      componentes son combinaciones lineales de todas las variables originales, lo que las hace
+      difíciles de interpretar: PCA sacrifica interpretabilidad a cambio de compresión, y para
+      selección de variables interpretable es mejor Lasso.
+    ejemplo: |
+      PCA sobre datos bidimensionales correlacionados.
+
+      ```text
+      matriz de covarianza:
+        [[3,3785  2,4463]
+         [2,4463  2,5285]]
+
+      autovalores: [5,436476 ; 0,470507]
+
+      varianza explicada por PC1: 92,03 %
+      PC1 = (0,765237 ; 0,643749)
+
+      Reduciendo de 2 dimensiones a 1:
+        accuracy usando solo PC1 = 1,0                     ✓
+
+      Se descartó el 8 % de la varianza y no se perdió
+      nada de capacidad discriminante.
+
+      Advertencia: la varianza no siempre coincide con
+      la información útil para clasificar.
+      ```
+    errores:
+      - "Aplicar PCA sin centrar ni estandarizar."
+      - "Suponer que las direcciones de máxima varianza son las más discriminantes."
+      - "Ajustar PCA sobre todo el conjunto antes de separar train y test."
+    aplicacion: |
+      Reducción de dimensión, visualización de datos, compresión, eliminación de ruido y
+      preprocesamiento antes de modelos sensibles a la dimensión.
+    referencias:
+      - "[Jolliffe, I. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://doi.org/10.1007/b98835)"
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 14](https://hastie.su.domains/ElemStatLearn/)"
+
+  "298":
+    concepto: "El error se descompone en sesgo, varianza y ruido, y solo los dos primeros se pueden tocar."
+    formulas:
+      - "E[(y − ŷ)²] = sesgo² + varianza + ruido"
+      - "modelo simple: sesgo alto, varianza baja"
+      - "modelo complejo: sesgo bajo, varianza alta"
+    desarrollo: |
+      El error esperado de predicción se descompone exactamente en tres términos. El **sesgo**
+      mide el error sistemático por suponer una forma demasiado simple; la **varianza** mide
+      cuánto cambia la predicción según qué muestra concreta se haya usado para entrenar; y el
+      **ruido irreducible** es la aleatoriedad de los propios datos, que ningún modelo puede
+      eliminar.
+
+      La descomposición explica por qué más complejidad no es siempre mejor. Al aumentar la
+      capacidad del modelo, el sesgo baja pero la varianza sube, y el error total tiene un mínimo
+      en algún punto intermedio. Ese punto es lo que la validación busca, y por eso la curva de
+      error de test tiene forma de U mientras la de entrenamiento solo baja.
+
+      Ambos extremos son diagnosticables. Sesgo alto se manifiesta como error alto tanto en
+      entrenamiento como en test: el modelo no puede ni ajustar lo que ve. Varianza alta se
+      manifiesta como error bajo en entrenamiento y alto en test: memoriza en vez de generalizar.
+      Los remedios son opuestos, y confundir el diagnóstico lleva a empeorar el modelo.
+
+      Conviene añadir un matiz honesto. En redes muy sobreparametrizadas se observa el fenómeno
+      del **doble descenso**: pasado el punto de interpolación, el error de test vuelve a bajar,
+      contradiciendo la forma de U clásica. La descomposición sigue siendo válida y es la mejor
+      guía disponible en el régimen habitual, pero no describe todo lo que ocurre en el
+      aprendizaje profundo moderno.
+    ejemplo: |
+      Polinomios de distinto grado ajustados a sin(2x).
+
+      ```text
+      función real: sin(2x)     punto de prueba: x = 1,0
+      valor real: 0,909297      120 réplicas de entrenamiento
+
+      grado 1:
+        predicción media = 0,364146
+        sesgo²           = 0,29719     alto
+        varianza         = baja
+        → subajuste: ni siquiera puede curvarse
+
+      grados intermedios:
+        sesgo² baja, varianza sube, error total mínimo
+
+      grado alto:
+        sesgo² ≈ 0
+        varianza elevada
+        → sobreajuste: cada muestra da una curva distinta
+
+      El error total tiene forma de U en el grado.
+      ```
+    errores:
+      - "Aumentar la complejidad ante un problema de varianza."
+      - "Añadir datos esperando reducir el sesgo, que no depende de n."
+      - "Ignorar que el ruido irreducible pone un suelo al error alcanzable."
+    aplicacion: |
+      Diagnóstico de modelos, elección de capacidad, decisión entre recoger más datos o cambiar
+      de modelo y diseño de curvas de aprendizaje.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 7](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Belkin, M. et al. *Reconciling modern machine-learning practice and the classical bias-variance trade-off*, PNAS, 2019](https://doi.org/10.1073/pnas.1903070116)"
+
+  "299":
+    concepto: "Con datos sin ninguna relación real se puede obtener un 70 % de acierto si se evalúa mal."
+    formulas:
+      - "separar train, validación y test antes de mirar nada"
+      - "leakage: información del test que llega al entrenamiento"
+      - "validación cruzada anidada para hiperparámetros"
+    desarrollo: |
+      Un modelo solo vale por lo que hace con datos que no ha visto. Medir eso correctamente es
+      más difícil de lo que parece, y el **leakage** —cualquier filtración de información del
+      conjunto de evaluación al de entrenamiento— es el error que más veces produce resultados
+      brillantes y modelos inútiles en producción.
+
+      Sus formas son variadas y a menudo sutiles. Estandarizar usando la media de todo el
+      conjunto antes de separar. Seleccionar características mirando su correlación con la
+      etiqueta en todos los datos. Elegir hiperparámetros con el conjunto de test. Imputar
+      valores faltantes globalmente. Y en series temporales, mezclar pasado y futuro al hacer
+      validación cruzada aleatoria.
+
+      La demostración de esta clase es la más contundente posible: se generan datos donde `X` e
+      `y` **no tienen ninguna relación**, puro ruido, y evaluando sobre los mismos datos con los
+      que se entrenó se obtiene un 70 % de acierto. Con separación honesta la cifra cae al 60 %,
+      todavía por encima del 50 % esperado por el azar, porque con 12 características y 60
+      observaciones queda margen para memorizar.
+
+      La disciplina que lo evita es sencilla de enunciar: separar el test **al principio**, no
+      tocarlo hasta el final, hacer todo el preprocesamiento dentro de la validación cruzada, y
+      usar **validación anidada** cuando hay hiperparámetros. Con series temporales, separar
+      siempre por tiempo. Cuesta poco y es lo que distingue un resultado de una ilusión.
+    ejemplo: |
+      Datos sin relación real entre X e y.
+
+      ```text
+      60 observaciones, 12 características
+      relación real entre X e y: NINGUNA
+
+      accuracy entrenando y evaluando en todo: 0,70
+      accuracy en train:                       0,65
+      accuracy en test:                        0,60
+
+      línea base por azar: 0,50
+
+      Un 70 % de acierto sobre ruido puro, obtenido
+      simplemente por evaluar donde se entrenó.
+
+      Incluso el 60 % del test está inflado: con 12
+      características y 60 datos, hay margen de memorización.
+      Solo la validación repetida daría una cifra fiable.
+      ```
+    errores:
+      - "Estandarizar o imputar antes de separar train y test."
+      - "Elegir hiperparámetros con el conjunto de test."
+      - "Usar validación cruzada aleatoria en series temporales."
+    aplicacion: |
+      Diseño de experimentos de aprendizaje automático, auditoría de resultados, competiciones de
+      ciencia de datos y validación de modelos antes de producción.
+    referencias:
+      - "[Kaufman, S. et al. *Leakage in data mining*, ACM TKDD, 2012](https://doi.org/10.1145/2382577.2382579)"
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 7](https://hastie.su.domains/ElemStatLearn/)"
+
+  "300":
+    concepto: "Seis algoritmos, un mismo protocolo: lo que cambia es el objetivo que cada uno optimiza."
+    formulas:
+      - "mismo split, misma semilla, mismas características"
+      - "línea base por azar: 0,5 en binario equilibrado"
+      - "empate en accuracy ⟹ decidir por otros criterios"
+    desarrollo: |
+      El capstone entrena seis algoritmos sobre los mismos datos con el mismo protocolo:
+      idéntica partición, idéntica semilla, idénticas características. Solo así la comparación
+      mide el algoritmo y no las condiciones del experimento, que es la lección de la clase 260
+      aplicada aquí.
+
+      El resultado es que **todos aciertan el 100 %**, y eso es informativo en sí mismo: cuando
+      el problema es fácil, la elección de algoritmo no importa. Comparar modelos sobre datos
+      separables no distingue nada, y muchas comparaciones publicadas adolecen de ese defecto.
+      Un problema que no discrimina entre métodos no sirve para elegir método.
+
+      Lo que sí distingue a los seis es **qué objetivo optimiza cada uno**: la regresión logística
+      maximiza la log-verosimilitud, el clasificador por centroides minimiza distancia a la
+      media, k-NN no optimiza nada porque no entrena, Naive Bayes maximiza la posterior bajo
+      independencia, el árbol minimiza impureza y la SVM maximiza el margen. Seis objetivos
+      distintos, seis fronteras distintas, la misma respuesta en este conjunto.
+
+      Cuando el accuracy empata, la decisión debe tomarse con otros criterios, y conviene tenerlos
+      listos: interpretabilidad, coste de inferencia, calidad de las probabilidades, robustez
+      ante datos desplazados y facilidad de mantenimiento. Elegir el modelo con 0,3 puntos más de
+      accuracy ignorando que cuesta cien veces más en inferencia es una mala decisión de
+      ingeniería.
+    ejemplo: |
+      Seis algoritmos bajo el mismo protocolo.
+
+      ```text
+      protocolo: 80 observaciones, 56 train / 24 test
+                 semilla 20260821, mismas características
+
+      algoritmo                accuracy test    objetivo optimizado
+      regresión logística          1,00       log-verosimilitud
+      centroides                   1,00       distancia a la media
+      k-NN (k=5)                   1,00       ninguno, sin entrenar
+      Naive Bayes                  1,00       posterior con independencia
+      árbol de decisión            1,00       impureza
+      SVM lineal                   1,00       margen máximo
+
+      línea base por azar: 0,50
+
+      Empate total: el problema es demasiado fácil para
+      discriminar entre métodos.
+
+      Criterios de desempate: interpretabilidad, coste de
+      inferencia, calibración y robustez.
+      ```
+    errores:
+      - "Comparar algoritmos sin fijar semilla ni partición."
+      - "Sacar conclusiones de un problema donde todos empatan."
+      - "Elegir modelo solo por accuracy, ignorando coste y calibración."
+    aplicacion: |
+      Selección de modelo en proyectos reales, informes de evaluación, decisiones de arquitectura
+      y establecimiento de líneas base antes de probar modelos profundos.
+    referencias:
+      - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/)"
+      - "[Demšar, J. *Statistical comparisons of classifiers over multiple data sets*, JMLR, 2006](https://jmlr.org/papers/v7/demsar06a.html)"

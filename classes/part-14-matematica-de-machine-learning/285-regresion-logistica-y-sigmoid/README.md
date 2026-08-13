@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**El gradiente de la regresión logística es (p − y)·x, idéntico en forma al de la lineal.**
 
-Esta clase concreta ese objetivo sobre **Regresión logística y sigmoid**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `logistic_regression`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: elegir hiperparámetros con el conjunto de test.
+
+## 🧩 Fórmulas de la clase
+
+```text
+σ(z) = 1/(1 + e⁻ᶻ)
+P(y=1|x) = σ(wᵀx + b)
+∇ = (σ(wᵀx) − y)·x
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El leakage produce métricas excelentes y modelos inútiles.
+La regresión logística resuelve el problema de que una salida lineal puede valer cualquier
+número real mientras que una probabilidad debe estar entre 0 y 1. La **sigmoide** hace esa
+conversión de forma suave y monótona, y su inversa —el logit— tiene una interpretación
+limpia: el logaritmo de la razón de probabilidades es lineal en las características.
+
+Los parámetros se estiman por **máxima verosimilitud**. Bajo un modelo Bernoulli, la
+log-verosimilitud negativa es exactamente la entropía cruzada de la clase 263, así que la
+pérdida no se elige: se deduce del modelo probabilístico. A diferencia de la regresión
+lineal, no hay solución cerrada y hay que iterar.
+
+El resultado más útil de la derivación es la forma del gradiente: `(p − y)·x`, donde `p` es
+la probabilidad predicha. Es **idéntico en forma** al de la regresión lineal con error
+cuadrático, sustituyendo la predicción por la probabilidad. Esa coincidencia no es
+casualidad —ambos son modelos lineales generalizados— y permite implementar los dos casos
+con el mismo bucle.
+
+Pese al nombre, es un clasificador y no un regresor. Y pese a su simplicidad sigue siendo
+una línea base extraordinariamente competitiva: es interpretable, entrena en segundos, da
+probabilidades bien calibradas y en muchos problemas tabulares queda a pocos puntos del
+mejor modelo complejo. Empezar por otra cosa suele ser un error.
+
+## 🧮 Ejemplo trabajado
+
+Ochenta observaciones separables en dos dimensiones.
+
+```text
+pesos aprendidos: [−3,354299 ; 4,597644 ; 5,088564]
+                   (sesgo, w₁, w₂)
+
+accuracy = 1,0
+log loss = 0,006853
+
+σ(0) = 0,5   →  la frontera está en wᵀx + b = 0
+
+Gradiente: (σ(wᵀx) − y)·x
+  si p = 0,99 y y = 1  →  factor 0,01, corrección mínima
+  si p = 0,01 y y = 1  →  factor −0,99, corrección máxima
+
+La misma forma que el gradiente de la regresión lineal,
+con p en lugar de ŷ.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 285
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Tratarla como un modelo de regresión por su nombre.
+2. Aplicarla a datos perfectamente separables sin regularizar: los pesos divergen.
+3. Interpretar los coeficientes como probabilidades en vez de como logits.
+
+## 🚀 Dónde se usa de verdad
+
+Clasificación binaria, scoring crediticio, línea base en cualquier problema tabular y capa
+de salida de redes neuronales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 4](https://hastie.su.domains/ElemStatLearn/)
+- [Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022, cap. 10](https://probml.github.io/pml-book/book1.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Seis algoritmos, un mismo protocolo: lo que cambia es el objetivo que cada uno optimiza.**
 
-Esta clase concreta ese objetivo sobre **Capstone: derivar y comparar 6 algoritmos ML**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_six_algorithms`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: elegir hiperparámetros con el conjunto de test.
+
+## 🧩 Fórmulas de la clase
+
+```text
+mismo split, misma semilla, mismas características
+línea base por azar: 0,5 en binario equilibrado
+empate en accuracy ⟹ decidir por otros criterios
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El leakage produce métricas excelentes y modelos inútiles.
+El capstone entrena seis algoritmos sobre los mismos datos con el mismo protocolo:
+idéntica partición, idéntica semilla, idénticas características. Solo así la comparación
+mide el algoritmo y no las condiciones del experimento, que es la lección de la clase 260
+aplicada aquí.
+
+El resultado es que **todos aciertan el 100 %**, y eso es informativo en sí mismo: cuando
+el problema es fácil, la elección de algoritmo no importa. Comparar modelos sobre datos
+separables no distingue nada, y muchas comparaciones publicadas adolecen de ese defecto.
+Un problema que no discrimina entre métodos no sirve para elegir método.
+
+Lo que sí distingue a los seis es **qué objetivo optimiza cada uno**: la regresión logística
+maximiza la log-verosimilitud, el clasificador por centroides minimiza distancia a la
+media, k-NN no optimiza nada porque no entrena, Naive Bayes maximiza la posterior bajo
+independencia, el árbol minimiza impureza y la SVM maximiza el margen. Seis objetivos
+distintos, seis fronteras distintas, la misma respuesta en este conjunto.
+
+Cuando el accuracy empata, la decisión debe tomarse con otros criterios, y conviene tenerlos
+listos: interpretabilidad, coste de inferencia, calidad de las probabilidades, robustez
+ante datos desplazados y facilidad de mantenimiento. Elegir el modelo con 0,3 puntos más de
+accuracy ignorando que cuesta cien veces más en inferencia es una mala decisión de
+ingeniería.
+
+## 🧮 Ejemplo trabajado
+
+Seis algoritmos bajo el mismo protocolo.
+
+```text
+protocolo: 80 observaciones, 56 train / 24 test
+           semilla 20260821, mismas características
+
+algoritmo                accuracy test    objetivo optimizado
+regresión logística          1,00       log-verosimilitud
+centroides                   1,00       distancia a la media
+k-NN (k=5)                   1,00       ninguno, sin entrenar
+Naive Bayes                  1,00       posterior con independencia
+árbol de decisión            1,00       impureza
+SVM lineal                   1,00       margen máximo
+
+línea base por azar: 0,50
+
+Empate total: el problema es demasiado fácil para
+discriminar entre métodos.
+
+Criterios de desempate: interpretabilidad, coste de
+inferencia, calibración y robustez.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 300
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Comparar algoritmos sin fijar semilla ni partición.
+2. Sacar conclusiones de un problema donde todos empatan.
+3. Elegir modelo solo por accuracy, ignorando coste y calibración.
+
+## 🚀 Dónde se usa de verdad
+
+Selección de modelo en proyectos reales, informes de evaluación, decisiones de arquitectura
+y establecimiento de líneas base antes de probar modelos profundos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/)
+- [Demšar, J. *Statistical comparisons of classifiers over multiple data sets*, JMLR, 2006](https://jmlr.org/papers/v7/demsar06a.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

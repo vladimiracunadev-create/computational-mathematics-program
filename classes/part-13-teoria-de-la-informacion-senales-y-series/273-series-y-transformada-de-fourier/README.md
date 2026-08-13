@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Toda señal es una suma de sinusoides, y Fourier dice cuáles y con qué peso.**
 
-Esta clase concreta ese objetivo sobre **Series y transformada de Fourier**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `fourier_series`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: calcular log(0) sin epsilon de estabilidad.
+
+## 🧩 Fórmulas de la clase
+
+```text
+X[k] = Σₙ x[n]·e^(−2πikn/N)
+magnitud = |X[k]|,  fase = arg(X[k])
+Parseval: Σ|x[n]|² = (1/N)·Σ|X[k]|²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> KL no es simétrica ni es una distancia; JS sí es simétrica.
+La transformada de Fourier descompone una señal en sinusoides de distintas frecuencias,
+cada una con su amplitud y su fase. Es un **cambio de base** en el sentido exacto de la
+parte 06: la señal no cambia, cambia el sistema de coordenadas desde el que se describe.
+
+Ese cambio de perspectiva es útil porque muchas propiedades que están escondidas en el
+dominio del tiempo son evidentes en el de la frecuencia. Una señal que parece ruido puede
+revelar dos picos limpios; el ruido de red eléctrica aparece como una línea en 50 o 60 Hz;
+y un filtro que en el tiempo es una convolución compleja se convierte en una simple
+multiplicación.
+
+El **teorema de Parseval** garantiza que la energía se conserva: la suma de los cuadrados en
+el tiempo es igual a la suma en frecuencia, salvo normalización. Comprobarlo
+numéricamente es la mejor prueba unitaria de una implementación de la transformada.
+
+La **fase** es la parte que sistemáticamente se ignora. Casi todas las visualizaciones
+muestran solo la magnitud, pero la fase contiene la información sobre **dónde** ocurren las
+cosas. Un experimento clásico: intercambiar las magnitudes de dos imágenes conservando sus
+fases produce imágenes reconocibles como las originales de la fase. La estructura está en
+la fase.
+
+## 🧮 Ejemplo trabajado
+
+Señal con dos componentes conocidas, analizada por Fourier.
+
+```text
+64 muestras, señal construida con:
+  componente de 4 Hz con amplitud 3,0
+  componente de 9 Hz con amplitud 1,5
+
+picos detectados: 4 Hz y 9 Hz                        ✓
+magnitudes:       3,0  y  1,5                        ✓
+
+Parseval:
+  energía en el tiempo      = 360,0
+  energía en frecuencia     = 360,0                  ✓
+
+La transformada recuperó exactamente las amplitudes
+y las frecuencias que se usaron para construir la señal.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 273
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Analizar solo la magnitud y descartar la fase.
+2. Olvidar que el espectro de una señal real es simétrico y contar los picos dos veces.
+3. Aplicar la transformada a una señal no estacionaria sin ventanear.
+
+## 🚀 Dónde se usa de verdad
+
+Análisis de audio y vibraciones, compresión JPEG y MP3, filtrado en frecuencia y
+codificación posicional en Transformers.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 8](https://www.pearson.com/)
+- [Bracewell, R. *The Fourier Transform and Its Applications*, 3ª ed., McGraw-Hill, 2000](https://www.mheducation.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

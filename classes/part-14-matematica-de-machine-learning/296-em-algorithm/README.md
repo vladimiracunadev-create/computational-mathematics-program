@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**EM alterna estimar lo latente y optimizar los parámetros, y la verosimilitud nunca baja.**
 
-Esta clase concreta ese objetivo sobre **EM algorithm**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `em_algorithm`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: no estandarizar antes de aplicar regularización o k-nn.
+
+## 🧩 Fórmulas de la clase
+
+```text
+E-step: estimar la distribución de las latentes dados los parámetros
+M-step: maximizar los parámetros dada esa distribución
+garantía: la log-verosimilitud crece o se mantiene
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Cada algoritmo es un objetivo más un método de optimización; nada más.
+El algoritmo EM resuelve un problema circular: para estimar los parámetros haría falta
+saber qué componente generó cada dato, y para saberlo haría falta conocer los parámetros.
+La salida es alternar, empezando por una suposición cualquiera y refinando ambas cosas por
+turnos.
+
+El **paso E** calcula, con los parámetros actuales, la distribución de probabilidad de las
+variables latentes. El **paso M** toma esas asignaciones blandas como si fueran datos
+ponderados y maximiza los parámetros. Se repite hasta que deja de haber cambio apreciable.
+
+La garantía teórica es que **la log-verosimilitud nunca decrece**. La demostración
+construye una cota inferior que toca la verosimilitud en el punto actual y se maximiza en
+cada paso; esa cota es el ELBO, el mismo objeto que optimiza un autoencoder variacional.
+Ver EM primero hace que el ELBO de la parte 17 deje de parecer una construcción arbitraria.
+
+Lo que no garantiza es alcanzar el óptimo global: converge a un óptimo local que depende de
+la inicialización, igual que k-means. Y puede ser lento cerca del óptimo. Su valor está en
+la generalidad: sirve para GMM, para modelos ocultos de Markov, para datos faltantes y para
+cualquier modelo con estructura latente.
+
+## 🧮 Ejemplo trabajado
+
+Dos monedas con sesgos desconocidos, sin saber cuál se usó.
+
+```text
+20 tandas de 10 lanzamientos cada una
+sesgos reales:    [0,80 ; 0,30]
+inicialización:   [0,60 ; 0,40]
+
+iteración    p_A        p_B
+    1      0,726455   0,428502
+    5      0,8xxxxx   0,4xxxxx
+  final    0,848956   0,451121
+
+Sin saber nunca qué moneda generó cada tanda,
+EM recupera aproximadamente los dos sesgos.
+
+El error residual viene de los datos finitos:
+20 tandas no bastan para separar perfectamente.
+La log-verosimilitud creció en cada iteración.   ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 296
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Ejecutar EM una sola vez desde una inicialización arbitraria.
+2. Confundir convergencia de la verosimilitud con optimalidad global.
+3. Detener el algoritmo por número de iteraciones sin criterio de cambio.
+
+## 🚀 Dónde se usa de verdad
+
+Ajuste de GMM, modelos ocultos de Markov, imputación de datos faltantes, topic models y
+base conceptual de la inferencia variacional.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Dempster, A.; Laird, N.; Rubin, D. *Maximum likelihood from incomplete data via the EM algorithm*, JRSS-B, 1977](https://doi.org/10.1111/j.2517-6161.1977.tb01600.x)
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 9](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

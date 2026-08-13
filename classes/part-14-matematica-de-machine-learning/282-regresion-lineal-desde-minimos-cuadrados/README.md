@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Regresión lineal tiene solución cerrada, y el descenso de gradiente llega al mismo sitio.**
 
-Esta clase concreta ese objetivo sobre **Regresión lineal desde mínimos cuadrados**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_regression`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: elegir hiperparámetros con el conjunto de test.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ŷ = Xw;   J(w) = ‖Xw − y‖²
+solución cerrada: w = (XᵀX)⁻¹Xᵀy
+gradiente: ∇J = 2Xᵀ(Xw − y)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Ridge y Lasso resuelven el mismo problema con normas distintas y geometría distinta.
+La regresión lineal minimiza la suma de residuos al cuadrado. Es el algoritmo más antiguo
+del catálogo —Gauss y Legendre, principios del siglo XIX— y sigue siendo la línea base
+obligada porque es interpretable, rápido y difícil de superar cuando la relación es
+realmente lineal.
+
+Tiene la propiedad rara de admitir **solución cerrada**. Anular el gradiente da las
+ecuaciones normales, y su solución es la fórmula de la proyección de la parte 05. Casi
+ningún otro modelo permite eso: la regresión logística, sin ir más lejos, ya requiere
+iterar.
+
+Aun así, en la práctica se usa el **descenso de gradiente** cuando hay muchas
+observaciones o muchas características, porque invertir `XᵀX` cuesta `O(d³)` y la matriz
+puede estar mal condicionada. Que ambos caminos converjan al mismo punto es la
+comprobación numérica que valida las dos implementaciones a la vez.
+
+Elegir el error **cuadrático** no es arbitrario: equivale a suponer ruido gaussiano y
+maximizar la verosimilitud, como se vio en la clase 215. Sus consecuencias son conocidas:
+penaliza los errores grandes de forma desproporcionada y por tanto es muy sensible a
+valores atípicos. Si esa sensibilidad molesta, la respuesta correcta es cambiar el modelo
+de ruido —pérdida de Huber, regresión cuantílica— y no parchear el algoritmo.
+
+## 🧮 Ejemplo trabajado
+
+Sesenta observaciones, tres características, dos métodos.
+
+```text
+parámetros reales: [2,0 ; 1,5 ; −0,4]
+
+solución cerrada:      [2,032145 ; 1,488677 ; −0,353039]
+descenso de gradiente: [2,031712 ; 1,489061 ; −0,353651]
+
+coinciden a 3 decimales                              ✓
+MSE de la solución cerrada: 0,0757
+
+La diferencia con los parámetros reales viene del ruido
+de las 60 observaciones, no del método.
+
+Coste: cerrada O(d³) por la inversión;
+       gradiente O(n·d) por iteración.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 282
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Invertir XᵀX explícitamente en vez de resolver el sistema o usar QR.
+2. Aplicar mínimos cuadrados con valores atípicos sin considerar pérdidas robustas.
+3. Interpretar coeficientes con características fuertemente correlacionadas.
+
+## 🚀 Dónde se usa de verdad
+
+Línea base en cualquier problema de regresión, análisis de tendencias, calibración de
+instrumentos y capa final de muchos modelos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 3](https://hastie.su.domains/ElemStatLearn/)
+- [Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

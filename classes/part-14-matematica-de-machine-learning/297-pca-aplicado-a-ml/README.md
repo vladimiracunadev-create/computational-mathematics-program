@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**PCA elige las direcciones de máxima varianza, y a menudo unas pocas bastan.**
 
-Esta clase concreta ese objetivo sobre **PCA aplicado a ML**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `pca_ml`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: elegir hiperparámetros con el conjunto de test.
+
+## 🧩 Fórmulas de la clase
+
+```text
+autovectores de la matriz de covarianza
+varianza explicada por PCᵢ = λᵢ / Σλⱼ
+equivale a la SVD de los datos centrados
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Ridge y Lasso resuelven el mismo problema con normas distintas y geometría distinta.
+PCA busca las direcciones en las que los datos varían más y las usa como nuevo sistema de
+coordenadas. Las componentes son los autovectores de la matriz de covarianza, ordenados
+por autovalor, y cada autovalor mide cuánta varianza captura su dirección.
+
+Su valor práctico está en que la varianza suele concentrarse en pocas componentes. Si dos
+componentes de cincuenta explican el 95 % de la varianza, se puede trabajar con dos
+dimensiones en vez de cincuenta, perdiendo poco. Eso acelera el cómputo, reduce el ruido y
+permite visualizar.
+
+Como se vio en la parte 06, PCA **es** la SVD de los datos centrados, y por eso en la
+práctica se calcula así en vez de formando la covarianza: la SVD es numéricamente más
+estable y evita elevar al cuadrado el número de condición, exactamente el problema de la
+clase 234.
+
+Dos precauciones. Hay que **estandarizar** si las características tienen escalas distintas,
+porque si no la de mayor rango domina las componentes por razones de unidades. Y las
+componentes son combinaciones lineales de todas las variables originales, lo que las hace
+difíciles de interpretar: PCA sacrifica interpretabilidad a cambio de compresión, y para
+selección de variables interpretable es mejor Lasso.
+
+## 🧮 Ejemplo trabajado
+
+PCA sobre datos bidimensionales correlacionados.
+
+```text
+matriz de covarianza:
+  [[3,3785  2,4463]
+   [2,4463  2,5285]]
+
+autovalores: [5,436476 ; 0,470507]
+
+varianza explicada por PC1: 92,03 %
+PC1 = (0,765237 ; 0,643749)
+
+Reduciendo de 2 dimensiones a 1:
+  accuracy usando solo PC1 = 1,0                     ✓
+
+Se descartó el 8 % de la varianza y no se perdió
+nada de capacidad discriminante.
+
+Advertencia: la varianza no siempre coincide con
+la información útil para clasificar.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 297
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Aplicar PCA sin centrar ni estandarizar.
+2. Suponer que las direcciones de máxima varianza son las más discriminantes.
+3. Ajustar PCA sobre todo el conjunto antes de separar train y test.
+
+## 🚀 Dónde se usa de verdad
+
+Reducción de dimensión, visualización de datos, compresión, eliminación de ruido y
+preprocesamiento antes de modelos sensibles a la dimensión.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Jolliffe, I. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://doi.org/10.1007/b98835)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 14](https://hastie.su.domains/ElemStatLearn/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

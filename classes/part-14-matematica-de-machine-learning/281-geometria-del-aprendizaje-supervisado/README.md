@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Aprender de forma supervisada es encontrar una frontera en el espacio de características.**
 
-Esta clase concreta ese objetivo sobre **Geometría del aprendizaje supervisado**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `supervised_geometry`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: no estandarizar antes de aplicar regularización o k-nn.
+
+## 🧩 Fórmulas de la clase
+
+```text
+cada observación es un punto de ℝᵈ
+dirección discriminante ∝ μ₁ − μ₀
+frontera lineal: wᵀx + b = 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,53 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Cada algoritmo es un objetivo más un método de optimización; nada más.
+Todo conjunto de datos supervisado admite la misma lectura geométrica: cada observación es
+un punto en un espacio de tantas dimensiones como características, y la etiqueta es un
+color. Aprender es encontrar una superficie que separe los colores, o una función que los
+prediga.
+
+Esa visión unifica algoritmos que parecen ajenos entre sí. Regresión logística busca un
+hiperplano; SVM busca el hiperplano de margen máximo; k-NN construye una frontera irregular
+a partir de los vecinos; un árbol construye una frontera de escalones paralelos a los ejes;
+y una red neuronal construye una frontera curva arbitraria. Todos resuelven el mismo
+problema geométrico con distintas restricciones sobre la forma de la frontera.
+
+El punto de partida más simple es el **clasificador por centroides**: calcular la media de
+cada clase y asignar cada punto al centroide más cercano. La frontera resultante es el
+hiperplano perpendicular al segmento que une los centroides, y la dirección de ese segmento
+es la **dirección discriminante**. Es lo mínimo que se puede hacer, y sirve de línea base
+honesta.
+
+Lo que hace difícil el problema en la práctica no es la forma de la frontera sino la
+**dimensión**. Con dos características se puede dibujar y la intuición funciona; con
+quinientas, todas las distancias se parecen, el volumen se concentra en los bordes, y la
+intuición geométrica de dos dimensiones deja de ser fiable. Esa es la maldición de la
+dimensionalidad, que reaparece en la clase 288.
+
+## 🧮 Ejemplo trabajado
+
+Dos clases separables y su dirección discriminante.
+
+```text
+80 observaciones en 2 dimensiones
+
+centroide clase 1: ( 2,1592 ;  1,8087)
+centroide clase 0: (−1,1503 ; −1,0020)
+
+diferencia = (3,3095 ; 2,8107)
+distancia entre centroides = 4,342
+
+dirección discriminante normalizada:
+  (0,7622 ; 0,6473)
+
+La frontera del clasificador por centroides es el
+hiperplano perpendicular a esa dirección, situado
+en el punto medio: (0,5045 ; 0,4034).
+
+Es la línea base contra la que comparar todo lo demás.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +117,16 @@ compmath run 281
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Confiar en la intuición geométrica bidimensional en dimensión alta.
+2. Comparar distancias entre características de escalas distintas.
+3. Omitir la línea base trivial al evaluar un modelo complejo.
+
+## 🚀 Dónde se usa de verdad
+
+Comprensión unificada de clasificadores, análisis discriminante lineal, diagnóstico visual
+de separabilidad y elección de la familia de modelos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 2](https://hastie.su.domains/ElemStatLearn/)
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 4](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

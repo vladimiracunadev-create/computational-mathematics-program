@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Ridge encoge los coeficientes y con ello arregla el mal condicionamiento.**
 
-Esta clase concreta ese objetivo sobre **Ridge y regularización L2**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `ridge`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar coeficientes de un modelo con features correlacionadas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+J(w) = ‖Xw − y‖² + λ‖w‖²
+solución: w = (XᵀX + λI)⁻¹Xᵀy
+sumar λI mejora el número de condición
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El kernel trick evita construir el espacio de características explícitamente.
+Ridge añade a la regresión una penalización proporcional a la suma de los cuadrados de los
+coeficientes. El efecto es encoger todos los coeficientes hacia cero, con más intensidad
+cuanto mayor sea `λ`, sin anular ninguno.
+
+La solución cerrada revela algo elegante: el término de regularización aparece como `λI`
+sumado a `XᵀX`. Eso **desplaza todos los autovalores hacia arriba** en `λ`, lo que mejora
+el número de condición y garantiza que la matriz sea invertible aunque `XᵀX` fuera
+singular. Ridge resuelve un problema numérico y un problema estadístico con la misma
+operación.
+
+El problema estadístico es la colinealidad. Cuando dos características están muy
+correlacionadas, sus coeficientes individuales quedan mal determinados: pueden compensarse
+con valores enormes y de signo opuesto sin que el ajuste empeore. Ridge penaliza esa
+magnitud y reparte el peso entre ambas de forma estable.
+
+Dos precauciones que importan. Primera: hay que **estandarizar** antes, porque la
+penalización depende de la escala y una característica medida en milímetros recibiría un
+trato distinto que la misma en metros. Segunda: el **término independiente no se
+regulariza**, porque encogerlo no tiene sentido —solo desplaza el nivel— y sesgaría las
+predicciones.
+
+## 🧮 Ejemplo trabajado
+
+Efecto de λ sobre coeficientes, error y condicionamiento.
+
+```text
+  λ         pesos                        ‖w‖₂
+ 0,0   [2,032145 ; 1,488677 ; −0,353039]  2,5437
+ 0,1   [2,022454 ; 1,490112 ; −0,351255]  2,5366
+ 1,0   [1,944037 ; 1,497998 ; −0,328931]  2,4762
+10,0   [1,473261 ; 1,486815 ; −0,080571]  2,0947
+
+Ningún coeficiente llega a ser exactamente cero.
+
+Número de condición:
+  sin regularizar: 364,65
+  con λ = 1:       258,72
+
+La regularización estabiliza el problema numérico
+además de controlar el sobreajuste.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 283
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Aplicar Ridge sin estandarizar las características.
+2. Regularizar también el término independiente.
+3. Esperar que Ridge produzca coeficientes nulos.
+
+## 🚀 Dónde se usa de verdad
+
+Regresión con características correlacionadas, weight decay en redes, estabilización de
+problemas mal condicionados y regularización por defecto.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hoerl, A.; Kennard, R. *Ridge regression: biased estimation for nonorthogonal problems*, Technometrics, 1970](https://doi.org/10.1080/00401706.1970.10488634)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 3](https://hastie.su.domains/ElemStatLearn/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

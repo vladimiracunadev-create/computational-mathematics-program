@@ -10,6 +10,68 @@
 
 Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
+Los algoritmos clásicos de aprendizaje automático se suelen presentar como una colección de
+recetas con nombres propios. No lo son. Cada uno es **una función objetivo más un método de
+optimización**, y una vez visto así el catálogo deja de ser una lista que memorizar y pasa a
+ser un conjunto de decisiones de diseño comparables entre sí. Esta parte deriva esos
+algoritmos desde sus objetivos, usando exactamente la matemática de las partes anteriores.
+
+Las clases 281 a 284 empiezan por la regresión y su regularización. Regresión lineal es
+mínimos cuadrados, que ya se resolvió en la parte 05 como proyección y en la parte 11 como
+problema numérico. **Ridge** y **Lasso** resuelven el mismo problema con normas distintas, y
+la diferencia no es cosmética: la bola L2 es redonda y encoge todos los coeficientes sin
+anularlos; la bola L1 tiene **vértices sobre los ejes** y por eso el óptimo cae en ellos,
+produciendo ceros exactos. Esa geometría explica por qué Lasso selecciona variables y Ridge
+no, y es una de las conexiones más limpias entre álgebra y estadística de todo el programa.
+
+Las clases 285 a 290 tratan la clasificación. La regresión logística se deriva de la
+log-verosimilitud, y su gradiente resulta ser `(p − y)·x`: **idéntico en forma** al de la
+regresión lineal, que es lo que permite tratar ambos casos con el mismo código. La entropía
+cruzada penaliza sin cota la confianza equivocada, a diferencia del error cuadrático, y eso
+es exactamente lo que se quiere. Naive Bayes declara un supuesto de independencia que casi
+siempre es falso y funciona igual, porque la decisión solo necesita el orden de las
+probabilidades y no su valor. k-NN no tiene entrenamiento pero depende críticamente de la
+métrica y del escalado. Y SVM introduce el **margen máximo** y el **kernel trick**: calcular
+productos escalares en un espacio de dimensión enorme sin construirlo jamás.
+
+Las clases 291 a 293 recorren los métodos basados en árboles, que siguen siendo el estado
+del arte en datos tabulares. Un árbol elige cortes minimizando impureza; el **bagging**
+promedia modelos decorrelacionados y reduce la varianza según una fórmula explícita que
+muestra por qué la decorrelación importa más que el número de árboles; y el **boosting** es
+descenso de gradiente en el espacio de funciones, donde cada modelo nuevo corrige el residuo
+del conjunto anterior.
+
+Las clases 294 a 297 pasan al aprendizaje no supervisado. k-means es minimización de inercia
+con asignación dura; las mezclas de gaussianas la hacen **blanda** y probabilística; y EM es
+el algoritmo general que las entrena, alternando expectativa y maximización con la garantía
+de que la verosimilitud nunca baja. PCA cierra el bloque como preprocesamiento y como
+aplicación directa de la SVD de la parte 06.
+
+Las dos últimas clases antes del capstone son las que más determinan si un proyecto real
+funciona. La descomposición **sesgo-varianza** explica por qué un modelo más complejo no es
+mejor, y se mide aquí por simulación en vez de enunciarse. Y el **leakage** es el error que
+produce métricas excelentes y modelos inútiles: la demostración usa datos donde `X` e `y` no
+guardan ninguna relación y aun así se obtiene un 70 % de acierto si se evalúa mal. Ese 70 %
+sobre ruido puro es la advertencia más útil de la parte.
+
+## 🗺️ Mapa conceptual
+
+```mermaid
+flowchart TD
+    A["Clase 281 · Geometria del aprendizaje supervisado"] --> B["Clases 282-284 · Regresion, Ridge y Lasso"]
+    A --> C["Clases 285-288 · Logistica, entropia cruzada, Bayes y k-NN"]
+    C --> D["Clases 289-290 · SVM y kernel trick"]
+    B --> E["Clases 291-293 · Arboles, bagging y boosting"]
+    D --> E
+    A --> F["Clases 294-297 · k-means, GMM, EM y PCA"]
+    E --> G["Clases 298-299 · Sesgo-varianza y leakage"]
+    F --> G
+    G --> H["Clase 300 · Capstone seis algoritmos comparados"]
+    B ==> I["Parte 15 · Redes neuronales"]
+    G -.-> J["Evaluacion honesta · Parte 10"]
+    F -.-> K["Modelos latentes y VAE · Parte 17"]
+```
+
 ## 🧠 Ideas centrales
 
 - Cada algoritmo es un objetivo más un método de optimización; nada más.
@@ -90,26 +152,30 @@ flowchart LR
 
 | # | Clase | Demostración | Idea central |
 |---|---|---|---|
-| `281` | [Geometría del aprendizaje supervisado](281-geometria-del-aprendizaje-supervisado/README.md) | `supervised_geometry` | Aprendizaje supervisado como búsqueda de una frontera en el espacio. |
-| `282` | [Regresión lineal desde mínimos cuadrados](282-regresion-lineal-desde-minimos-cuadrados/README.md) | `linear_regression` | Regresión lineal: solución cerrada y descenso de gradiente. |
-| `283` | [Ridge y regularización L2](283-ridge-y-regularizacion-l2/README.md) | `ridge` | Ridge: L2 encoge los coeficientes y estabiliza el mal condicionamiento. |
-| `284` | [Lasso y regularización L1](284-lasso-y-regularizacion-l1/README.md) | `lasso` | Lasso: L1 produce ceros exactos gracias a su geometría. |
-| `285` | [Regresión logística y sigmoid](285-regresion-logistica-y-sigmoid/README.md) | `logistic_regression` | Regresión logística derivada desde la log-verosimilitud. |
-| `286` | [Cross-entropy en clasificación](286-cross-entropy-en-clasificacion/README.md) | `classification_loss` | Cross-entropy penaliza la confianza equivocada de forma no acotada. |
-| `287` | [Naive Bayes](287-naive-bayes/README.md) | `naive_bayes` | Naive Bayes gaussiano: independencia condicional como supuesto explícito. |
-| `288` | [k-Nearest Neighbors y métricas](288-k-nearest-neighbors-y-metricas/README.md) | `knn` | k-NN: la métrica y el escalado deciden el resultado. |
-| `289` | [SVM y margen máximo](289-svm-y-margen-maximo/README.md) | `svm_margin` | SVM: maximizar el margen equivale a minimizar ‖w‖. |
-| `290` | [Kernel trick](290-kernel-trick/README.md) | `kernel_trick` | El kernel calcula el producto punto sin construir el espacio. |
-| `291` | [Árboles: entropía y Gini](291-arboles-entropia-y-gini/README.md) | `tree_impurity` | Entropía y Gini: dos medidas de impureza para elegir el corte. |
-| `292` | [Random Forest desde probabilidad](292-random-forest-desde-probabilidad/README.md) | `random_forest` | Bagging: promediar modelos decorrelacionados reduce la varianza. |
-| `293` | [Boosting y descenso funcional](293-boosting-y-descenso-funcional/README.md) | `boosting` | Boosting: cada modelo corrige el residuo del anterior (descenso funcional). |
-| `294` | [k-means como optimización](294-k-means-como-optimizacion/README.md) | `kmeans` | k-means como minimización de la inercia (Lloyd). |
-| `295` | [Gaussian Mixture Models](295-gaussian-mixture-models/README.md) | `gmm` | Mezcla de gaussianas: asignación blanda en lugar de dura. |
-| `296` | [EM algorithm](296-em-algorithm/README.md) | `em_algorithm` | EM: E-step y M-step sobre datos con una variable latente. |
-| `297` | [PCA aplicado a ML](297-pca-aplicado-a-ml/README.md) | `pca_ml` | PCA como preprocesamiento: cuánta varianza se conserva. |
-| `298` | [Bias-variance tradeoff](298-bias-variance-tradeoff/README.md) | `bias_variance` | Descomposición sesgo-varianza medida por simulación. |
-| `299` | [Generalización, validación y leakage](299-generalizacion-validacion-y-leakage/README.md) | `generalization` | Validación honesta frente a leakage: la misma métrica, dos verdades. |
-| `300` | [Capstone: derivar y comparar 6 algoritmos ML](300-capstone-derivar-y-comparar-6-algoritmos-ml/README.md) | `capstone_six_algorithms` | Capstone: seis algoritmos derivados y comparados sobre los mismos datos. |
+| `281` | [Geometría del aprendizaje supervisado](281-geometria-del-aprendizaje-supervisado/README.md) | `supervised_geometry` | Aprender de forma supervisada es encontrar una frontera en el espacio de características. |
+| `282` | [Regresión lineal desde mínimos cuadrados](282-regresion-lineal-desde-minimos-cuadrados/README.md) | `linear_regression` | Regresión lineal tiene solución cerrada, y el descenso de gradiente llega al mismo sitio. |
+| `283` | [Ridge y regularización L2](283-ridge-y-regularizacion-l2/README.md) | `ridge` | Ridge encoge los coeficientes y con ello arregla el mal condicionamiento. |
+| `284` | [Lasso y regularización L1](284-lasso-y-regularizacion-l1/README.md) | `lasso` | La bola L1 tiene vértices sobre los ejes, y por eso Lasso produce ceros exactos. |
+| `285` | [Regresión logística y sigmoid](285-regresion-logistica-y-sigmoid/README.md) | `logistic_regression` | El gradiente de la regresión logística es (p − y)·x, idéntico en forma al de la lineal. |
+| `286` | [Cross-entropy en clasificación](286-cross-entropy-en-clasificacion/README.md) | `classification_loss` | Estar seguro y equivocado cuesta sin límite con entropía cruzada, y poco con error cuadrático. |
+| `287` | [Naive Bayes](287-naive-bayes/README.md) | `naive_bayes` | Naive Bayes supone algo falso y clasifica bien, porque solo necesita el orden. |
+| `288` | [k-Nearest Neighbors y métricas](288-k-nearest-neighbors-y-metricas/README.md) | `knn` | k-NN no entrena nada, y por eso la métrica y el escalado lo deciden todo. |
+| `289` | [SVM y margen máximo](289-svm-y-margen-maximo/README.md) | `svm_margin` | Maximizar el margen equivale a minimizar la norma de w, y solo unos pocos puntos deciden. |
+| `290` | [Kernel trick](290-kernel-trick/README.md) | `kernel_trick` | El kernel calcula el producto escalar en el espacio expandido sin construirlo nunca. |
+| `291` | [Árboles: entropía y Gini](291-arboles-entropia-y-gini/README.md) | `tree_impurity` | Un árbol elige el corte que más reduce la impureza, y Gini y entropía casi siempre coinciden. |
+| `292` | [Random Forest desde probabilidad](292-random-forest-desde-probabilidad/README.md) | `random_forest` | Promediar modelos solo reduce la varianza en la medida en que estén decorrelacionados. |
+| `293` | [Boosting y descenso funcional](293-boosting-y-descenso-funcional/README.md) | `boosting` | Boosting es descenso de gradiente en el espacio de funciones: cada modelo ajusta el residuo. |
+| `294` | [k-means como optimización](294-k-means-como-optimizacion/README.md) | `kmeans` | k-means minimiza la inercia alternando asignación y recálculo, y nunca empeora. |
+| `295` | [Gaussian Mixture Models](295-gaussian-mixture-models/README.md) | `gmm` | Una mezcla de gaussianas asigna probabilidades en vez de etiquetas, y modela grupos de formas distintas. |
+| `296` | [EM algorithm](296-em-algorithm/README.md) | `em_algorithm` | EM alterna estimar lo latente y optimizar los parámetros, y la verosimilitud nunca baja. |
+| `297` | [PCA aplicado a ML](297-pca-aplicado-a-ml/README.md) | `pca_ml` | PCA elige las direcciones de máxima varianza, y a menudo unas pocas bastan. |
+| `298` | [Bias-variance tradeoff](298-bias-variance-tradeoff/README.md) | `bias_variance` | El error se descompone en sesgo, varianza y ruido, y solo los dos primeros se pueden tocar. |
+| `299` | [Generalización, validación y leakage](299-generalizacion-validacion-y-leakage/README.md) | `generalization` | Con datos sin ninguna relación real se puede obtener un 70 % de acierto si se evalúa mal. |
+| `300` | [Capstone: derivar y comparar 6 algoritmos ML](300-capstone-derivar-y-comparar-6-algoritmos-ml/README.md) | `capstone_six_algorithms` | Seis algoritmos, un mismo protocolo: lo que cambia es el objetivo que cada uno optimiza. |
+
+## 📖 Glosario de la parte (38 términos)
+
+Definiciones precisas en [`GLOSARIO.md`](GLOSARIO.md).
 
 ## 🧰 Stack de referencia
 

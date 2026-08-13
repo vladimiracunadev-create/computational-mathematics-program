@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Convolucionar es deslizar un núcleo y sumar productos: filtrar y detectar son lo mismo.**
 
-Esta clase concreta ese objetivo sobre **Convolución**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `convolution`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar entropías calculadas en bases logarítmicas distintas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(f * g)[n] = Σₖ f[k]·g[n−k]
+media móvil: núcleo [1/3, 1/3, 1/3]
+detector de bordes: núcleo [−1, 0, 1]
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> La entropía es el límite inferior de compresión sin pérdida.
+La convolución desliza un núcleo sobre una señal y en cada posición calcula una suma
+ponderada de los valores vecinos. Es la operación fundamental del procesamiento de señales
+y, desde 2012, la operación fundamental de la visión por computador.
+
+Lo notable es cuánto cambia el comportamiento con el núcleo, siendo la operación idéntica.
+Un núcleo de valores iguales y positivos **promedia** y por tanto suaviza, eliminando ruido
+de alta frecuencia. Un núcleo antisimétrico como `[−1, 0, 1]` **resta** vecinos y por tanto
+detecta cambios: es una derivada discreta y responde a los bordes.
+
+La diferencia entre convolución y correlación cruzada es que la primera **invierte** el
+núcleo antes de deslizarlo. Esa inversión importa en teoría de sistemas, donde garantiza
+propiedades como la conmutatividad. En aprendizaje profundo no importa: como el núcleo se
+aprende, aprender el invertido es equivalente, y por eso lo que las bibliotecas llaman
+convolución es técnicamente correlación cruzada.
+
+La razón de que las CNN funcionen está en dos propiedades de la convolución. Los
+**parámetros se comparten**: el mismo núcleo se aplica en toda la señal, así que un
+detector de bordes aprendido sirve en cualquier posición. Y la **conectividad es local**:
+cada salida depende solo de un vecindario. Ambas cosas reducen drásticamente el número de
+parámetros e incorporan la invariancia a traslaciones como sesgo inductivo.
+
+## 🧮 Ejemplo trabajado
+
+Dos núcleos sobre la misma señal triangular.
+
+```text
+señal: [0, 1, 2, 3, 2, 1, 0]
+
+núcleo media móvil [1/3, 1/3, 1/3]:
+  resultado: [1,0 ; 2,0 ; 2,333 ; 2,0 ; 1,0]
+  la señal se suaviza, los picos se rebajan
+
+núcleo detector de bordes [−1, 0, 1]:
+  resultado: [−2, −2, 0, 2, 2]
+  responde donde la señal cambia, y cero en el pico
+
+longitud de salida en modo válido: 7 − 3 + 1 = 5
+
+Misma operación, comportamientos opuestos:
+todo depende de los coeficientes del núcleo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 271
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Confundir convolución con correlación cruzada al portar fórmulas.
+2. Ignorar el tratamiento de los bordes y su efecto en la longitud de salida.
+3. Usar un núcleo que no suma 1 cuando se pretendía promediar.
+
+## 🚀 Dónde se usa de verdad
+
+Redes convolucionales, filtrado de imágenes, procesamiento de audio, suavizado de series y
+detección de patrones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)
+- [Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

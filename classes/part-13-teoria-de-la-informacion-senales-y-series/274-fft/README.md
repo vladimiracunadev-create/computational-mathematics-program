@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**La FFT da el mismo resultado que la DFT y convierte n² en n log n.**
 
-Esta clase concreta ese objetivo sobre **FFT**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `fft`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar entropías calculadas en bases logarítmicas distintas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+coste DFT: O(n²)   coste FFT: O(n log n)
+n = 10⁶:  10¹² frente a 2·10⁷ operaciones
+teorema de convolución: f * g = IFFT(FFT(f)·FFT(g))
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Nyquist fija la frecuencia mínima de muestreo; por debajo hay aliasing irreversible.
+La transformada discreta de Fourier calculada de forma directa necesita `n²` operaciones
+complejas. Para un millón de muestras eso son `10¹²` operaciones: horas o días. La
+**FFT** obtiene exactamente el mismo resultado en `O(n log n)`, unas `2·10⁷` operaciones:
+una fracción de segundo.
+
+El algoritmo, publicado por Cooley y Tukey en 1965 —aunque Gauss ya lo conocía en 1805—,
+explota que la transformada de una señal se puede construir a partir de las transformadas
+de sus muestras pares e impares. Aplicar esa descomposición recursivamente da el
+logaritmo. Es un divide y vencerás de manual.
+
+Su impacto es difícil de exagerar. La FFT es lo que hace posible el audio digital, las
+telecomunicaciones modernas, la resonancia magnética, el análisis sísmico y la
+multiplicación rápida de polinomios y de enteros grandes. Está en la lista habitual de
+algoritmos más influyentes del siglo XX.
+
+El **teorema de convolución** convierte esa velocidad en una herramienta general:
+convolucionar en el tiempo es multiplicar en frecuencia, así que para núcleos grandes es
+más rápido transformar, multiplicar punto a punto y volver, que convolucionar
+directamente. El punto de cruce está alrededor de núcleos de 50 a 100 elementos, y por eso
+las CNN con núcleos de 3×3 no usan FFT.
+
+## 🧮 Ejemplo trabajado
+
+FFT y DFT sobre la misma señal de 256 muestras.
+
+```text
+256 muestras con componentes en 10 Hz y 40 Hz
+
+picos detectados:  [10, 40]
+frecuencias reales: [10, 40]        coinciden        ✓
+FFT y DFT dan resultados idénticos                   ✓
+
+Coste:
+  DFT: 256² = 65 536 operaciones
+  FFT: 256 · log₂ 256 = 256 · 8 = 2 048 operaciones
+  ganancia: 32×
+
+Para n = 10⁶ la ganancia sería de 50 000×:
+la diferencia entre imposible y instantáneo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 274
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Implementar la DFT directa cuando existe FFT.
+2. Usar FFT para convolucionar con núcleos pequeños, donde es más lenta.
+3. Olvidar que la FFT clásica es más eficiente con longitudes potencia de dos.
+
+## 🚀 Dónde se usa de verdad
+
+Procesamiento de audio en tiempo real, telecomunicaciones, imagen médica, convoluciones
+rápidas y multiplicación de enteros grandes.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Cooley, J.; Tukey, J. *An algorithm for the machine calculation of complex Fourier series*, 1965](https://doi.org/10.1090/S0025-5718-1965-0178586-1)
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 12](http://numerical.recipes/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

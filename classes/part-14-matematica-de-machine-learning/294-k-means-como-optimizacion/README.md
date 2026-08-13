@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**k-means minimiza la inercia alternando asignación y recálculo, y nunca empeora.**
 
-Esta clase concreta ese objetivo sobre **k-means como optimización**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `kmeans`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: elegir hiperparámetros con el conjunto de test.
+
+## 🧩 Fórmulas de la clase
+
+```text
+objetivo: min Σ‖xᵢ − μ_{c(i)}‖²
+paso 1: asignar cada punto a su centroide más cercano
+paso 2: recalcular cada centroide como la media de los suyos
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El error de generalización se descompone en sesgo, varianza y ruido irreducible.
+k-means agrupa datos minimizando la **inercia**: la suma de distancias al cuadrado de cada
+punto a su centroide. El algoritmo de Lloyd alterna dos pasos, y cada uno reduce esa
+cantidad, lo que garantiza convergencia monótona a un óptimo local.
+
+La garantía es solo local. El resultado depende de la inicialización, y con centroides
+iniciales malos puede converger a una solución claramente peor. La inicialización
+**k-means++** elige puntos iniciales dispersos con una regla probabilística y reduce mucho
+ese riesgo; ejecutar varias veces y quedarse con la de menor inercia es la práctica
+complementaria.
+
+El método impone supuestos que conviene tener presentes porque no siempre se dicen: usar
+distancia euclídea equivale a suponer agrupamientos **esféricos y de tamaño similar**. Con
+grupos alargados, con densidades muy distintas o con formas no convexas, k-means falla de
+forma sistemática, y ahí corresponden DBSCAN o agrupamiento espectral.
+
+Elegir `k` es el problema abierto. La inercia siempre baja al aumentar `k` —con `k = n` vale
+cero— así que no sirve como criterio directo. Las heurísticas habituales son el método del
+codo, el coeficiente de silueta o el gap statistic, y ninguna es definitiva: `k` suele
+decidirse por conocimiento del dominio.
+
+## 🧮 Ejemplo trabajado
+
+Dos grupos, convergencia en tres iteraciones.
+
+```text
+k = 2
+
+iteración    inercia
+    1       92,527761
+    3       89,596534
+
+centroides finales:
+  ( 2,1592 ;  1,8087)
+  (−1,1503 ; −1,0020)
+
+La inercia nunca sube: cada paso la reduce o la deja igual. ✓
+Convergió en 3 iteraciones.
+
+Los centroides coinciden con las medias reales de las
+clases, aunque el algoritmo no vio ninguna etiqueta.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 294
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Ejecutarlo una sola vez con inicialización aleatoria.
+2. Aplicarlo a grupos alargados o de densidades muy distintas.
+3. Elegir k minimizando la inercia, que siempre baja con k.
+
+## 🚀 Dónde se usa de verdad
+
+Segmentación de clientes, cuantización de color, compresión vectorial, inicialización de
+GMM y agrupamiento de embeddings.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Lloyd, S. *Least squares quantization in PCM*, IEEE Trans. Information Theory, 1982](https://doi.org/10.1109/TIT.1982.1056489)
+- [Arthur, D.; Vassilvitskii, S. *k-means++: the advantages of careful seeding*, SODA, 2007](https://dl.acm.org/doi/10.5555/1283383.1283494)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

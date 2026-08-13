@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Una mezcla de gaussianas asigna probabilidades en vez de etiquetas, y modela grupos de formas distintas.**
 
-Esta clase concreta ese objetivo sobre **Gaussian Mixture Models**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `gmm`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar coeficientes de un modelo con features correlacionadas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+p(x) = Σ πₖ·N(x | μₖ, σₖ²)
+responsabilidad: γₖ(x) = πₖN(x|μₖ,σₖ²) / p(x)
+Σ πₖ = 1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El leakage produce métricas excelentes y modelos inútiles.
+Una mezcla de gaussianas es un **modelo generativo**: supone que cada punto se generó
+eligiendo primero una componente según los pesos `π` y muestreando después de su normal.
+Ajustar el modelo es estimar los pesos, las medias y las varianzas que mejor explican los
+datos observados.
+
+Su diferencia con k-means es la **asignación blanda**. En vez de decidir a qué grupo
+pertenece cada punto, calcula la probabilidad de pertenecer a cada uno —la
+**responsabilidad**—. Un punto entre dos grupos recibe 0,5 y 0,5 en vez de una asignación
+arbitraria, y esa información es valiosa: identifica los casos ambiguos.
+
+La segunda diferencia es la flexibilidad de forma. k-means impone grupos esféricos del
+mismo tamaño; un GMM con covarianza completa modela grupos **elípticos, rotados y de
+tamaños distintos**. De hecho k-means es el caso límite de un GMM con covarianzas
+esféricas iguales y responsabilidades llevadas al extremo.
+
+El ajuste se hace con EM, y la log-verosimilitud crece monótonamente, lo que sirve de
+comprobación de la implementación. Hay una trampa conocida: si una componente colapsa sobre
+un solo punto, su varianza tiende a cero y la verosimilitud a infinito. Se evita con una
+cota inferior en la varianza o con regularización.
+
+## 🧮 Ejemplo trabajado
+
+Mezcla de dos componentes ajustada por EM.
+
+```text
+componentes: 2
+
+medias:            (−1,3009 ;  1,9702)
+varianzas:         ( 0,3721 ;  0,9484)
+pesos de mezcla:   ( 0,4481 ;  0,5519)     suman 1   ✓
+
+log-verosimilitud por iteración:
+  −145,345385
+  −144,860751
+  −144,766128
+
+Nunca baja                                           ✓
+
+Las varianzas son distintas: 0,37 frente a 0,95.
+k-means habría impuesto grupos del mismo tamaño y
+habría clasificado mal la frontera entre ambos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 295
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Dejar que una componente colapse sobre un punto sin cota en la varianza.
+2. Inicializar al azar en vez de con k-means.
+3. Suponer normalidad de los grupos sin comprobarla.
+
+## 🚀 Dónde se usa de verdad
+
+Agrupamiento probabilístico, modelado de densidad, detección de anomalías, separación de
+hablantes y segmentación de imágenes.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 9](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+- [Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

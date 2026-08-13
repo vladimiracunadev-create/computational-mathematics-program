@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Un pico en la autocorrelación en el retardo k delata un periodo de k muestras.**
 
-Esta clase concreta ese objetivo sobre **Autocorrelación**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `autocorrelation`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar entropías calculadas en bases logarítmicas distintas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ACF(k) = corr(x[t], x[t−k])
+ACF(0) = 1 siempre
+pico positivo en k ⟹ periodicidad de periodo k
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Minimizar cross-entropy equivale a maximizar verosimilitud.
+La autocorrelación es la correlación de una serie consigo misma desplazada un retardo `k`.
+Responde a la pregunta de cuánto se parece la serie a su propio pasado, y su gráfico
+—el correlograma— es la herramienta de diagnóstico más informativa de las series
+temporales.
+
+Su lectura es sistemática. En el retardo 0 vale siempre 1, porque toda serie es idéntica a
+sí misma. Un decaimiento rápido indica poca memoria. Un decaimiento lento indica tendencia
+o no estacionariedad. Y un **pico en un retardo concreto** indica periodicidad con ese
+periodo, que es lo que la hace tan útil.
+
+La periodicidad detectada así puede ser invisible a simple vista. Con ruido fuerte, una
+señal periódica se pierde en el gráfico temporal, pero el ruido se descorrelaciona a
+cualquier retardo mientras que la componente periódica no. La autocorrelación separa una de
+otra sin necesidad de transformar al dominio de la frecuencia.
+
+Es también el instrumento estándar para elegir el orden de un modelo autorregresivo, junto
+con la autocorrelación parcial, y para validarlo: si los **residuos** de un modelo ajustado
+conservan autocorrelación significativa, queda estructura sin explicar y el modelo es
+mejorable.
+
+## 🧮 Ejemplo trabajado
+
+Serie con periodo 20 oculto bajo ruido.
+
+```text
+200 muestras, periodo real = 20
+
+retardo    ACF
+   0      1,000000     siempre 1
+   5      0,014817     casi nula (cuarto de ciclo)
+  10     −0,879342     fuerte negativa (medio ciclo)
+  20      0,835547     fuerte positiva (ciclo completo)
+
+Lectura:
+  pico positivo en 20 → periodo de 20 muestras       ✓
+  pico negativo en 10 → medio periodo, en antifase   ✓
+  nula en 5           → cuadratura, sin correlación  ✓
+
+El periodo se detecta sin haber transformado a frecuencia.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 277
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Calcular la ACF sobre una serie no estacionaria y leerla como periodicidad.
+2. Interpretar picos en retardos grandes con pocos datos de apoyo.
+3. Olvidar comprobar la autocorrelación de los residuos del modelo.
+
+## 🚀 Dónde se usa de verdad
+
+Detección de estacionalidad, selección de orden en modelos ARIMA, validación de residuos y
+análisis de señales biomédicas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/)
+- [Shumway, R.; Stoffer, D. *Time Series Analysis and Its Applications*, 4ª ed., Springer, 2017](https://doi.org/10.1007/978-3-319-52452-8)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

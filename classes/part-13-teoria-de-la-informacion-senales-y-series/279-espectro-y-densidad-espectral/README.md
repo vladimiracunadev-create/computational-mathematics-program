@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**La potencia va con el cuadrado de la amplitud: doble amplitud es cuádruple potencia.**
 
-Esta clase concreta ese objetivo sobre **Espectro y densidad espectral**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `power_spectrum`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: calcular log(0) sin epsilon de estabilidad.
+
+## 🧩 Fórmulas de la clase
+
+```text
+PSD[k] = |X[k]|² / N
+potencia relativa = PSD[k] / Σ PSD
+amplitud ×2  ⟹  potencia ×4
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Nyquist fija la frecuencia mínima de muestreo; por debajo hay aliasing irreversible.
+La densidad espectral de potencia describe cómo se reparte la energía de una señal entre
+sus frecuencias. Se obtiene del cuadrado de la magnitud de la transformada, y a diferencia
+del espectro de amplitud **descarta la fase**, quedándose solo con cuánta energía hay en
+cada banda.
+
+La relación cuadrática entre amplitud y potencia tiene consecuencias que sorprenden al
+leer un espectro. Una componente con el doble de amplitud aporta **cuatro veces** más
+potencia, y por tanto domina el reparto mucho más de lo que sugiere el espectro de
+amplitud. Las componentes pequeñas quedan aplastadas, y por eso la PSD suele graficarse en
+decibelios, que es escala logarítmica.
+
+La PSD es la herramienta habitual para caracterizar ruido y para diagnosticar sistemas. El
+ruido blanco tiene potencia uniforme en todas las frecuencias, el ruido rosa decae como
+`1/f`, y muchos procesos naturales exhiben ese comportamiento. Comparar la PSD medida con
+la esperada revela componentes anómalas: un pico a 50 Hz delata acoplamiento con la red
+eléctrica.
+
+En aprendizaje automático, la PSD por bandas es un descriptor clásico. En señales
+biomédicas las bandas alfa, beta y theta del EEG se definen así; en audio, el reparto de
+potencia por bandas es la base de los coeficientes MFCC que alimentaron el reconocimiento
+de voz durante décadas.
+
+## 🧮 Ejemplo trabajado
+
+Dos componentes con amplitudes 2 y 1, y su reparto de potencia.
+
+```text
+128 muestras
+  componente de 5 Hz  con amplitud 2,0
+  componente de 20 Hz con amplitud 1,0
+
+bins dominantes: [5, 20]                             ✓
+
+potencia relativa 5 Hz:   80,0 %
+potencia relativa 20 Hz:  20,0 %
+razón de potencias: 4,0
+
+Las amplitudes están en razón 2:1
+Las potencias están en razón 4:1                     ✓
+
+Aunque la segunda componente tiene la mitad de amplitud,
+solo aporta la cuarta parte de la energía.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 279
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Interpretar la PSD como si fuera espectro de amplitud.
+2. Graficar en escala lineal y no ver las componentes débiles.
+3. Comparar PSD de señales de distinta duración sin normalizar.
+
+## 🚀 Dónde se usa de verdad
+
+Caracterización de ruido, análisis de EEG por bandas, MFCC en reconocimiento de voz y
+diagnóstico de maquinaria por vibraciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 10](https://www.pearson.com/)
+- [Welch, P. *The use of FFT for the estimation of power spectra*, IEEE Trans. Audio, 1967](https://doi.org/10.1109/TAU.1967.1161901)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

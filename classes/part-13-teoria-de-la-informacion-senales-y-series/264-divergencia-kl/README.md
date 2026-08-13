@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**KL no es simétrica, y cada dirección castiga un error distinto.**
 
-Esta clase concreta ese objetivo sobre **Divergencia KL**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `kl_divergence`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: calcular log(0) sin epsilon de estabilidad.
+
+## 🧩 Fórmulas de la clase
+
+```text
+KL(p‖q) = Σ p·log(p/q) ≥ 0
+KL(p‖q) = 0 ⟺ p = q
+KL(p‖q) ≠ KL(q‖p);  no cumple la desigualdad triangular
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Nyquist fija la frecuencia mínima de muestreo; por debajo hay aliasing irreversible.
+La divergencia de Kullback-Leibler mide cuánta información se pierde al usar `q` en lugar
+de `p`. Es el exceso de entropía cruzada sobre la entropía: los bits desperdiciados por
+usar el código equivocado. Es no negativa y vale cero solo si las distribuciones coinciden.
+
+Pese a llamarse divergencia y comportarse en parte como una distancia, **no lo es**. Le
+fallan dos propiedades: no es simétrica y no cumple la desigualdad triangular. Escribir
+«la distancia KL» es un error de vocabulario que arrastra errores de razonamiento.
+
+La asimetría no es un defecto: es información. `KL(p‖q)` penaliza mucho que `q` asigne casi
+cero donde `p` tiene masa, así que fuerza a `q` a **cubrir** todo el soporte de `p`. Al
+revés, `KL(q‖p)` penaliza que `q` ponga masa donde `p` no la tiene, y produce soluciones
+que se **concentran** en un modo. Se conocen como comportamiento de cobertura y de
+búsqueda de modo.
+
+Esa diferencia tiene consecuencias visibles. La inferencia variacional minimiza
+`KL(q‖p)` y por eso los VAE tienden a producir muestras borrosas concentradas en el modo
+dominante. Elegir la dirección de la KL no es un detalle técnico: determina el
+comportamiento cualitativo del modelo resultante.
+
+## 🧮 Ejemplo trabajado
+
+Las dos direcciones sobre las mismas distribuciones.
+
+```text
+p = [0,5 ; 0,3 ; 0,2]
+q = [0,3 ; 0,4 ; 0,3]
+
+KL(p‖q) = 0,08801517
+KL(q‖p) = 0,08346467
+
+No coinciden → no es simétrica                       ✓
+KL(p‖p) = 0,0                                        ✓
+
+Asimetría extrema: si q asignara 0,001 donde p tiene 0,5,
+  KL(p‖q) se dispara      (castiga no cubrir)
+  KL(q‖p) apenas cambia   (no le importa)
+
+Por eso KL(p‖q) fuerza cobertura y KL(q‖p) busca modo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 264
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Llamarla distancia y aplicarle propiedades métricas.
+2. Elegir la dirección de la KL sin pensar en qué error se quiere penalizar.
+3. Calcularla con q nula en algún punto donde p es positiva.
+
+## 🚀 Dónde se usa de verdad
+
+Regularización de VAE, inferencia variacional, destilación de conocimiento, detección de
+desplazamiento de distribución y PPO en aprendizaje por refuerzo.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Kullback, S.; Leibler, R. *On information and sufficiency*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729694)
+- [MacKay, D. *Information Theory, Inference, and Learning Algorithms*, Cambridge, 2003](https://www.inference.org.uk/mackay/itila/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

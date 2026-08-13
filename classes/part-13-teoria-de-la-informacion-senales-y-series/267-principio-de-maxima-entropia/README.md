@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Entre todas las distribuciones compatibles con lo que se sabe, elegir la que menos añade.**
 
-Esta clase concreta ese objetivo sobre **Principio de máxima entropía**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `max_entropy`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: calcular log(0) sin epsilon de estabilidad.
+
+## 🧩 Fórmulas de la clase
+
+```text
+maximizar H(p) sujeto a las restricciones conocidas
+sin restricciones ⟹ uniforme
+media y varianza fijadas ⟹ normal
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Minimizar cross-entropy equivale a maximizar verosimilitud.
+El principio de máxima entropía responde a una pregunta de modelado: si solo se conocen
+algunas propiedades de una distribución, ¿cuál elegir entre todas las compatibles? La
+respuesta es la de **máxima entropía**, porque es la que menos supuestos añade a lo que
+realmente se sabe.
+
+Cualquier otra elección introduce estructura que los datos no respaldan. Elegir una
+distribución de entropía menor equivale a afirmar que se sabe más de lo que se sabe, y esa
+información inventada puede sesgar todas las conclusiones posteriores. Es el principio de
+honestidad epistémica traducido a matemáticas.
+
+Las soluciones bajo distintas restricciones son notablemente reconocibles, y no por
+casualidad. Sin restricciones sale la **uniforme**. Fijando media y varianza sale la
+**normal**. Fijando solo la media en el semieje positivo sale la **exponencial**. Las
+distribuciones «naturales» de la estadística son las de máxima entropía bajo las
+restricciones más simples.
+
+El resultado más relevante para la inteligencia artificial es que la distribución de máxima
+entropía sujeta a restricciones lineales tiene forma exponencial, y de ahí sale
+**softmax**. La capa de salida de todo clasificador es la distribución de máxima entropía
+compatible con los logits. Softmax no es una normalización conveniente: es la respuesta a
+un problema de optimización con restricciones.
+
+## 🧮 Ejemplo trabajado
+
+Tres distribuciones sobre un dado y sus entropías.
+
+```text
+candidata               H (bits)     media
+uniforme                 2,584963     3,5
+sesgada al 6             2,160964     4,5
+casi determinista        0,xxx        1,3
+
+Máximo teórico para 6 símbolos: log₂ 6 = 2,584963      ✓
+
+Sin restricciones, gana la uniforme.
+
+Si se supiera que la media es 4,5, la uniforme dejaría de
+ser admisible y la de máxima entropía sería una exponencial
+truncada, no la sesgada arbitraria.
+
+Con media y varianza fijadas sobre la recta real:
+  la distribución de máxima entropía es la normal.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 267
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Elegir una distribución cómoda en vez de la de máxima entropía compatible.
+2. Imponer restricciones que los datos no respaldan.
+3. Confundir máxima entropía con ausencia total de supuestos.
+
+## 🚀 Dónde se usa de verdad
+
+Justificación de softmax, modelos de máxima entropía en procesamiento de lenguaje,
+elección de priores no informativos y física estadística.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Jaynes, E. T. *Information theory and statistical mechanics*, Physical Review, 1957](https://doi.org/10.1103/PhysRev.106.620)
+- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 12](https://doi.org/10.1002/047174882X)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

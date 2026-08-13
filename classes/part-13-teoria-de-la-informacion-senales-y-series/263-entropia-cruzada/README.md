@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Minimizar entropía cruzada es exactamente maximizar la verosimilitud.**
 
-Esta clase concreta ese objetivo sobre **Entropía cruzada**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `cross_entropy`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: muestrear por debajo de nyquist y culpar al modelo del ruido resultante.
+
+## 🧩 Fórmulas de la clase
+
+```text
+H(p,q) = −Σ p(x)·log q(x)
+H(p,q) = H(p) + KL(p‖q) ≥ H(p)
+con p one-hot: H(p,q) = −log q(clase correcta)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> KL no es simétrica ni es una distancia; JS sí es simétrica.
+La entropía cruzada mide el coste medio de codificar mensajes que vienen de `p` usando un
+código diseñado para `q`. Si `q = p` el coste es el óptimo `H(p)`; si `q` se aleja, el
+coste sube. Nunca puede bajar del óptimo, y esa desigualdad es la que garantiza que
+minimizarla lleve en la dirección correcta.
+
+Su descomposición `H(p,q) = H(p) + KL(p‖q)` es la clave para entender qué se está
+optimizando. La entropía `H(p)` es una propiedad de los datos y no depende del modelo, así
+que **minimizar entropía cruzada es minimizar la divergencia KL** entre la distribución
+real y la predicha. Son el mismo problema.
+
+En clasificación, la distribución real es one-hot —toda la masa en la clase correcta— y la
+fórmula colapsa a `−log q(clase correcta)`. La pérdida solo depende de la probabilidad
+asignada a la respuesta correcta, y crece sin límite cuando esa probabilidad tiende a cero.
+De ahí que un modelo muy seguro y equivocado reciba un castigo enorme.
+
+La consecuencia teórica es que la pérdida de casi todo clasificador **no se elige**: se
+deduce. Suponer un modelo categórico y maximizar verosimilitud da entropía cruzada; suponer
+ruido gaussiano da error cuadrático medio. Y la consecuencia práctica es el epsilon: sin él
+un `log(0)` produce infinito y destruye el entrenamiento en un paso.
+
+## 🧮 Ejemplo trabajado
+
+Pérdida de tres predicciones ante la misma etiqueta real.
+
+```text
+etiqueta real: [1, 0, 0]        H(p) = 0
+
+predicción              pérdida
+[0,90 ; 0,05 ; 0,05]    0,105361     muy buena
+[0,50 ; 0,30 ; 0,20]    0,693147     mediocre
+[0,05 ; 0,60 ; 0,35]    2,995732     mala y segura
+
+predicción perfecta [1,0,0]: pérdida = 0,0
+
+Como H(p) = 0, aquí la entropía cruzada ES la KL.
+
+Sin epsilon:
+  predicción 0,0 para la clase correcta → log(0) = −∞
+  el gradiente se vuelve NaN y el entrenamiento muere.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 263
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Calcular log(0) sin epsilon de estabilidad.
+2. Aplicar entropía cruzada a salidas que no suman 1.
+3. Duplicar el softmax cuando la función de pérdida ya lo incluye.
+
+## 🚀 Dónde se usa de verdad
+
+Pérdida de clasificación en cualquier red, modelos de lenguaje, calibración de
+probabilidades y evaluación de modelos probabilísticos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 3](https://www.deeplearningbook.org/)
+- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://doi.org/10.1002/047174882X)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

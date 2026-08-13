@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**El error se descompone en sesgo, varianza y ruido, y solo los dos primeros se pueden tocar.**
 
-Esta clase concreta ese objetivo sobre **Bias-variance tradeoff**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bias_variance`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar coeficientes de un modelo con features correlacionadas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+E[(y − ŷ)²] = sesgo² + varianza + ruido
+modelo simple: sesgo alto, varianza baja
+modelo complejo: sesgo bajo, varianza alta
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El kernel trick evita construir el espacio de características explícitamente.
+El error esperado de predicción se descompone exactamente en tres términos. El **sesgo**
+mide el error sistemático por suponer una forma demasiado simple; la **varianza** mide
+cuánto cambia la predicción según qué muestra concreta se haya usado para entrenar; y el
+**ruido irreducible** es la aleatoriedad de los propios datos, que ningún modelo puede
+eliminar.
+
+La descomposición explica por qué más complejidad no es siempre mejor. Al aumentar la
+capacidad del modelo, el sesgo baja pero la varianza sube, y el error total tiene un mínimo
+en algún punto intermedio. Ese punto es lo que la validación busca, y por eso la curva de
+error de test tiene forma de U mientras la de entrenamiento solo baja.
+
+Ambos extremos son diagnosticables. Sesgo alto se manifiesta como error alto tanto en
+entrenamiento como en test: el modelo no puede ni ajustar lo que ve. Varianza alta se
+manifiesta como error bajo en entrenamiento y alto en test: memoriza en vez de generalizar.
+Los remedios son opuestos, y confundir el diagnóstico lleva a empeorar el modelo.
+
+Conviene añadir un matiz honesto. En redes muy sobreparametrizadas se observa el fenómeno
+del **doble descenso**: pasado el punto de interpolación, el error de test vuelve a bajar,
+contradiciendo la forma de U clásica. La descomposición sigue siendo válida y es la mejor
+guía disponible en el régimen habitual, pero no describe todo lo que ocurre en el
+aprendizaje profundo moderno.
+
+## 🧮 Ejemplo trabajado
+
+Polinomios de distinto grado ajustados a sin(2x).
+
+```text
+función real: sin(2x)     punto de prueba: x = 1,0
+valor real: 0,909297      120 réplicas de entrenamiento
+
+grado 1:
+  predicción media = 0,364146
+  sesgo²           = 0,29719     alto
+  varianza         = baja
+  → subajuste: ni siquiera puede curvarse
+
+grados intermedios:
+  sesgo² baja, varianza sube, error total mínimo
+
+grado alto:
+  sesgo² ≈ 0
+  varianza elevada
+  → sobreajuste: cada muestra da una curva distinta
+
+El error total tiene forma de U en el grado.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 298
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Aumentar la complejidad ante un problema de varianza.
+2. Añadir datos esperando reducir el sesgo, que no depende de n.
+3. Ignorar que el ruido irreducible pone un suelo al error alcanzable.
+
+## 🚀 Dónde se usa de verdad
+
+Diagnóstico de modelos, elección de capacidad, decisión entre recoger más datos o cambiar
+de modelo y diseño de curvas de aprendizaje.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 7](https://hastie.su.domains/ElemStatLearn/)
+- [Belkin, M. et al. *Reconciling modern machine-learning practice and the classical bias-variance trade-off*, PNAS, 2019](https://doi.org/10.1073/pnas.1903070116)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

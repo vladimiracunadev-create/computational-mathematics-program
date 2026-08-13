@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Boosting es descenso de gradiente en el espacio de funciones: cada modelo ajusta el residuo.**
 
-Esta clase concreta ese objetivo sobre **Boosting y descenso funcional**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `boosting`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: no estandarizar antes de aplicar regularización o k-nn.
+
+## 🧩 Fórmulas de la clase
+
+```text
+F_m(x) = F_{m−1}(x) + ν·h_m(x)
+h_m ajusta el residuo: y − F_{m−1}(x)
+ν = learning rate, típicamente 0,01 a 0,3
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,53 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El kernel trick evita construir el espacio de características explícitamente.
+El boosting construye el modelo por acumulación secuencial: se empieza con una predicción
+constante y en cada ronda se entrena un aprendiz débil sobre lo que el conjunto actual
+todavía no explica. El resultado final es la suma de todos ellos.
+
+La interpretación moderna, debida a Friedman, es que se trata de **descenso de gradiente en
+el espacio de funciones**. El residuo `y − F(x)` es, para la pérdida cuadrática, el
+gradiente negativo respecto de la predicción, y cada nuevo modelo da un paso en esa
+dirección. Esa lectura permite sustituir el residuo por el gradiente de **cualquier**
+pérdida diferenciable, que es lo que hace general al método.
+
+La diferencia con el bagging es de objetivo. Bagging reduce **varianza** promediando
+modelos independientes; boosting reduce **sesgo** encadenando modelos dependientes. Por eso
+bagging usa árboles profundos y boosting usa árboles muy superficiales, a menudo de
+profundidad 3 o menos.
+
+El **learning rate** `ν` controla cuánto se incorpora de cada modelo nuevo. Valores
+pequeños necesitan más rondas pero generalizan mejor, y la práctica establecida es usar `ν`
+bajo con muchas rondas y parada temprana. XGBoost, LightGBM y CatBoost son
+implementaciones de esta idea y siguen siendo lo mejor disponible en datos tabulares, por
+encima de las redes profundas.
+
+## 🧮 Ejemplo trabajado
+
+Cuarenta observaciones ajustadas por tocones sucesivos.
+
+```text
+aprendiz débil: tocón de decisión (un solo corte)
+learning rate: 0,3
+
+MSE inicial (predicción constante): 2,46596
+
+ronda    MSE
+  1     1,53420
+  5     0,35558
+ 10     0,12xxx
+ 20     0,05xxx
+
+El error baja monótonamente ronda tras ronda.
+
+Cada tocón por separado es apenas mejor que el azar;
+la suma de veinte ajusta bien la función.
+
+Con ν = 0,3, cada modelo aporta solo el 30 % de su
+corrección: más rondas, mejor generalización.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +117,16 @@ compmath run 293
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Usar aprendices profundos y sobreajustar rápidamente.
+2. Fijar el número de rondas sin parada temprana.
+3. Entrenar boosting sobre datos con ruido de etiqueta sin regularizar.
+
+## 🚀 Dónde se usa de verdad
+
+XGBoost y LightGBM en competiciones y producción, modelos de riesgo, ranking de búsqueda y
+predicción sobre datos tabulares.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Friedman, J. *Greedy function approximation: a gradient boosting machine*, Annals of Statistics, 2001](https://doi.org/10.1214/aos/1013203451)
+- [Chen, T.; Guestrin, C. *XGBoost: A Scalable Tree Boosting System*, KDD, 2016](https://arxiv.org/abs/1603.02754)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**La información de un evento es su sorpresa, y el logaritmo la hace aditiva.**
 
-Esta clase concreta ese objetivo sobre **Información y sorpresa**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `surprise`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: calcular log(0) sin epsilon de estabilidad.
+
+## 🧩 Fórmulas de la clase
+
+```text
+I(x) = −log₂ p(x)   en bits
+p = 1  ⟹  I = 0;   p → 0  ⟹  I → ∞
+eventos independientes: I(x,y) = I(x) + I(y)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> La entropía es el límite inferior de compresión sin pérdida.
+Antes de definir entropía hay que definir cuánta información aporta un solo evento. La
+respuesta de Shannon es que la información es **sorpresa**: enterarse de algo que ya se
+daba por seguro no aporta nada, y enterarse de algo improbable aporta mucho.
+
+La función que cumple eso es `−log p`. Vale cero cuando `p = 1` y tiende a infinito cuando
+`p` tiende a cero, con la forma correcta. Y no es una elección arbitraria: es la **única**
+función continua que satisface la propiedad de aditividad, salvo un factor de escala.
+
+La **aditividad** es la exigencia clave. Si dos eventos son independientes, la información
+de observar ambos debe ser la suma de las informaciones individuales. Como las
+probabilidades se multiplican y los logaritmos convierten productos en sumas, el logaritmo
+es la única vía. Es la misma razón por la que se trabaja con log-verosimilitud.
+
+La **base** del logaritmo fija la unidad. Con base 2 la información se mide en **bits**, y
+un bit es exactamente la información de un lanzamiento de moneda justa. Con logaritmo
+natural se mide en **nats**, y es lo habitual en aprendizaje automático porque su derivada
+es más limpia. Comparar entropías calculadas en bases distintas sin convertir es un error
+frecuente: el factor es 1,4427.
+
+## 🧮 Ejemplo trabajado
+
+Sorpresa de cuatro eventos con probabilidades muy distintas.
+
+```text
+evento          p          I = −log₂ p
+casi seguro    0,99          0,0145 bits
+frecuente      0,50          1,0000 bits
+raro           0,01          6,6439 bits
+rarísimo       0,001         9,9658 bits
+
+Un evento de p = 1 aporta exactamente 0 bits.
+
+Aditividad: dos lanzamientos independientes de moneda
+  I(cara, cara) = −log₂(0,25) = 2,0 bits
+  I(cara) + I(cara) = 1,0 + 1,0 = 2,0 bits            ✓
+
+Conversión de unidades:
+  1 nat = 1,4427 bits        1 bit = 0,6931 nats
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 261
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Comparar informaciones calculadas en bases logarítmicas distintas.
+2. Calcular −log p con p = 0 sin epsilon de estabilidad.
+3. Confundir información con utilidad o relevancia del evento.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de códigos, medida de sorpresa de un modelo ante datos nuevos, detección de
+anomalías y cuantificación de la incertidumbre de una predicción.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Shannon, C. *A Mathematical Theory of Communication*, Bell System Technical Journal, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x)
+- [MacKay, D. *Information Theory, Inference, and Learning Algorithms*, Cambridge, 2003](https://www.inference.org.uk/mackay/itila/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Maximizar el margen equivale a minimizar la norma de w, y solo unos pocos puntos deciden.**
 
-Esta clase concreta ese objetivo sobre **SVM y margen máximo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `svm_margin`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar coeficientes de un modelo con features correlacionadas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+frontera: wᵀx + b = 0
+ancho del margen = 2/‖w‖
+minimizar ‖w‖²  sujeto a  yᵢ(wᵀxᵢ + b) ≥ 1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El error de generalización se descompone en sesgo, varianza y ruido irreducible.
+Cuando dos clases son separables hay infinitos hiperplanos que las separan. SVM elige uno
+con un criterio concreto: el que deja el **margen más ancho** a ambos lados. La intuición
+es que un margen amplio es más robusto ante datos nuevos ligeramente desplazados.
+
+La formalización es bonita. Si se normaliza para que los puntos más cercanos cumplan
+`|wᵀx + b| = 1`, el ancho del margen resulta ser `2/‖w‖`. Maximizar el margen es por tanto
+**minimizar `‖w‖`**, y el problema completo es un programa cuadrático con restricciones
+lineales: exactamente la clase 258.
+
+La propiedad más característica es que la solución depende únicamente de los **vectores de
+soporte**, los puntos que tocan el margen. Todos los demás podrían eliminarse del conjunto
+de entrenamiento sin que la frontera cambiara. Eso hace el modelo compacto y explica su
+buen comportamiento con conjuntos pequeños.
+
+Con clases no separables se introduce el **margen blando**: variables de holgura que
+permiten violaciones penalizadas, con un parámetro `C` que regula el compromiso entre
+margen ancho y errores tolerados. Combinado con el kernel de la clase siguiente, SVM fue
+el método dominante en clasificación entre 1995 y 2012.
+
+## 🧮 Ejemplo trabajado
+
+SVM lineal sobre dos clases separables.
+
+```text
+w = (1,151743 ; 1,007988)      b = −0,82
+
+‖w‖ = 1,53054
+ancho del margen = 2/‖w‖ = 1,306729
+
+vectores de soporte: 3
+accuracy = 1,0
+
+Solo 3 de las 80 observaciones determinan la frontera.
+Las otras 77 podrían borrarse sin cambiar nada.
+
+Si se quisiera un margen más ancho habría que reducir ‖w‖,
+pero entonces las restricciones yᵢ(wᵀxᵢ+b) ≥ 1 dejarían
+de cumplirse: el óptimo es el equilibrio exacto.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 289
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Aplicar SVM sin estandarizar, ya que el margen depende de la escala.
+2. Usar margen duro con datos ruidosos o no separables.
+3. Elegir C sin validación cruzada.
+
+## 🚀 Dónde se usa de verdad
+
+Clasificación con pocos datos y muchas características, bioinformática, clasificación de
+texto y detección de anomalías con SVM de una clase.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Cortes, C.; Vapnik, V. *Support-vector networks*, Machine Learning, 1995](https://doi.org/10.1007/BF00994018)
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 7](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

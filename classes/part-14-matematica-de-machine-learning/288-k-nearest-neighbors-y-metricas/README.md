@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**k-NN no entrena nada, y por eso la métrica y el escalado lo deciden todo.**
 
-Esta clase concreta ese objetivo sobre **k-Nearest Neighbors y métricas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `knn`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: elegir hiperparámetros con el conjunto de test.
+
+## 🧩 Fórmulas de la clase
+
+```text
+predicción = mayoría entre los k vecinos más cercanos
+distancia euclídea: √Σ(aᵢ − bᵢ)²
+sin escalar, la característica de mayor rango domina
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El kernel trick evita construir el espacio de características explícitamente.
+k-NN es el algoritmo más simple posible: guardar todos los datos y, ante una consulta,
+buscar los `k` puntos más parecidos y votar. No hay entrenamiento, no hay parámetros
+aprendidos, y toda la complejidad se traslada al momento de la predicción.
+
+Como la única operación es medir distancias, la **elección de la métrica** es el modelo. Y
+la consecuencia más importante es que **hay que estandarizar**: si una característica va de
+0 a 1 y otra de 0 a 10 000, la segunda domina completamente la distancia y la primera se
+vuelve irrelevante. No es un ajuste opcional; sin estandarizar se está usando una métrica
+arbitraria dictada por las unidades de medida.
+
+El parámetro `k` controla el compromiso sesgo-varianza de forma muy visible. Con `k = 1` la
+frontera es irregular y se ajusta a cada punto, incluido el ruido: varianza alta. Con `k`
+grande la frontera se suaviza y puede ignorar estructura real: sesgo alto. Se elige por
+validación, y conviene que sea impar en problemas binarios para evitar empates.
+
+Su límite duro es la **maldición de la dimensionalidad**. En dimensión alta, las distancias
+entre puntos aleatorios convergen a un valor común, con lo que «el vecino más cercano» deja
+de ser distinguible del más lejano y el método pierde sentido. Es el ejemplo más claro de
+que la intuición geométrica de dos dimensiones no escala.
+
+## 🧮 Ejemplo trabajado
+
+Predicción para el punto (1, 1) con distintos valores de k.
+
+```text
+consulta: (1,0 ; 1,0)
+
+k = 1    →  clase 1
+k = 5    →  clase 1
+k = 21   →  clase 1
+
+Los datos están bien separados: k no cambia la respuesta.
+
+Efecto del escalado:
+  con la segunda característica multiplicada por 100,
+  la predicción sigue siendo clase 1 en este caso,
+  pero la distancia pasa a estar dominada por x₂:
+  la contribución de x₁ cae al 0,01 % del total.
+
+Con clases menos separadas, ese desequilibrio
+cambiaría la respuesta.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 288
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Aplicar k-NN sin estandarizar las características.
+2. Usar k par en clasificación binaria.
+3. Aplicarlo en dimensión alta sin reducción previa.
+
+## 🚀 Dónde se usa de verdad
+
+Sistemas de recomendación, búsqueda por similitud, imputación de valores faltantes y
+recuperación de vecinos en bases vectoriales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 13](https://hastie.su.domains/ElemStatLearn/)
+- [Beyer, K. et al. *When is nearest neighbor meaningful?*, ICDT, 1999](https://doi.org/10.1007/3-540-49257-7_15)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

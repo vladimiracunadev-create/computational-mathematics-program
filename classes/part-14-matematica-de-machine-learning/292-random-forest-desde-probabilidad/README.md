@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Promediar modelos solo reduce la varianza en la medida en que estén decorrelacionados.**
 
-Esta clase concreta ese objetivo sobre **Random Forest desde probabilidad**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `random_forest`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar coeficientes de un modelo con features correlacionadas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Var(media de k modelos) = ρσ² + (1−ρ)σ²/k
+ρ = 0  ⟹  varianza / k
+ρ = 1  ⟹  no hay ganancia
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Ridge y Lasso resuelven el mismo problema con normas distintas y geometría distinta.
+El bagging entrena varios modelos sobre remuestras bootstrap de los datos y promedia sus
+predicciones. La idea es que los errores independientes se cancelan al promediarse, igual
+que el error de la media muestral decae en la clase 203.
+
+La fórmula de la varianza del promedio dice exactamente cuánta ganancia hay, y su lectura
+es la lección de la clase. El segundo término se divide por `k` y desaparece con muchos
+modelos; el primero, `ρσ²`, **no depende de `k`** y no se puede reducir añadiendo árboles.
+Si los modelos están muy correlacionados, promediar mil no sirve de mucho más que promediar
+diez.
+
+De ahí viene la aportación específica de **Random Forest** sobre el bagging simple: además
+de remuestrear las observaciones, en cada corte considera solo un subconjunto aleatorio de
+características. Eso fuerza a los árboles a usar variables distintas y **reduce `ρ`**, que
+es el término que limita la ganancia. La aleatoriedad extra empeora cada árbol individual y
+mejora el conjunto.
+
+El bagging ataca la varianza, no el sesgo. Promediar cien modelos igualmente sesgados da un
+modelo igual de sesgado. Por eso funciona tan bien con árboles profundos, que tienen sesgo
+bajo y varianza alta, y apenas aporta con modelos rígidos como la regresión lineal.
+
+## 🧮 Ejemplo trabajado
+
+Bosque de tocones frente a un tocón único.
+
+```text
+25 árboles de profundidad 1 (tocones)
+muestreo: bootstrap con reemplazo
+
+accuracy de un árbol único: 0,9875
+accuracy del bosque:        0,9875
+
+Aquí no hay ganancia porque el problema es tan fácil
+que el tocón único ya acierta casi todo: no queda
+varianza que reducir.
+
+Fórmula: Var = ρσ² + (1−ρ)σ²/k
+  ρ = 0,0  →  varianza / 25
+  ρ = 0,5  →  varianza × 0,52, no × 0,04
+  ρ = 1,0  →  sin ganancia
+
+Por eso Random Forest muestrea también características:
+para bajar ρ, no para subir k.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 292
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Añadir árboles esperando ganancia cuando están muy correlacionados.
+2. Aplicar bagging a modelos de sesgo alto y varianza baja.
+3. Olvidar que el error out-of-bag es una estimación gratuita de validación.
+
+## 🚀 Dónde se usa de verdad
+
+Random Forest en datos tabulares, estimación de importancia de variables, ensembles de
+modelos y reducción de varianza en predicciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Breiman, L. *Random Forests*, Machine Learning, 2001](https://doi.org/10.1023/A:1010933404324)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 15](https://hastie.su.domains/ElemStatLearn/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

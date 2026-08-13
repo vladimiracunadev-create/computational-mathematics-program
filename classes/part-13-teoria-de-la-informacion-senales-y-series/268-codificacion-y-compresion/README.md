@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Huffman da códigos cortos a lo frecuente y se acerca al límite de Shannon.**
 
-Esta clase concreta ese objetivo sobre **Codificación y compresión**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `coding_compression`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar entropías calculadas en bases logarítmicas distintas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+longitud media = Σ p(x)·len(código(x))
+H(p) ≤ longitud media < H(p) + 1
+código de prefijo: ninguno es prefijo de otro
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> KL no es simétrica ni es una distancia; JS sí es simétrica.
+La compresión sin pérdida explota que los símbolos no son equiprobables. Un código de
+**longitud fija** gasta `⌈log₂ n⌉` bits por símbolo sea cual sea su frecuencia; uno de
+longitud variable puede gastar menos en los frecuentes y más en los raros, reduciendo el
+promedio.
+
+La condición para que eso funcione sin separadores es que sea un **código de prefijo**:
+ningún código puede ser el comienzo de otro. Así el decodificador sabe dónde termina cada
+símbolo sin marcadores adicionales. La construcción de Huffman garantiza esa propiedad por
+diseño, fusionando repetidamente los dos símbolos menos probables en un árbol binario.
+
+Huffman es **óptimo** entre los códigos de prefijo de símbolo a símbolo, y su longitud
+media queda siempre a menos de un bit por encima de la entropía. Esa cota es ajustada: la
+pérdida viene de que las longitudes deben ser enteras, y las probabilidades rara vez son
+potencias de dos.
+
+Para acercarse más al límite hay que codificar bloques de símbolos o abandonar la
+restricción de longitudes enteras, que es lo que hace la **codificación aritmética**. Los
+compresores modernos combinan modelado estadístico con codificación aritmética, y los
+modelos de lenguaje son, vistos desde aquí, modelos de compresión: minimizar la pérdida es
+minimizar los bits necesarios para transmitir el texto.
+
+## 🧮 Ejemplo trabajado
+
+Código de Huffman para cinco símbolos con frecuencias dispares.
+
+```text
+símbolo   p        código Huffman   longitud
+  a      0,45          0                1
+  b      0,25          10               2
+  c      0,15          110              3
+  d      0,10          1111             4
+  e      0,05          1110             4
+
+longitud media = 0,45·1 + 0,25·2 + 0,15·3 + 0,10·4 + 0,05·4
+               = 2,0 bits/símbolo
+
+entropía = 1,977235 bits/símbolo
+cota: 1,9772 ≤ 2,0 < 2,9772                          ✓
+
+longitud fija necesaria: ⌈log₂ 5⌉ = 3 bits
+ahorro: 33,3 %
+
+Prefijo: ningún código empieza por otro → decodificable.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 268
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Construir un código de longitud variable que no sea de prefijo.
+2. Esperar alcanzar exactamente la entropía con longitudes enteras.
+3. Aplicar Huffman a fuentes con fuerte dependencia entre símbolos sin modelarla.
+
+## 🚀 Dónde se usa de verdad
+
+Compresión de archivos y de imágenes, tokenización BPE, codificación de entropía en vídeo
+y evaluación de modelos de lenguaje por bits por carácter.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Huffman, D. *A method for the construction of minimum-redundancy codes*, Proceedings of the IRE, 1952](https://doi.org/10.1109/JRPROC.1952.273898)
+- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 5](https://doi.org/10.1002/047174882X)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Por debajo de Nyquist la información se pierde y ningún procesamiento la recupera.**
 
-Esta clase concreta ese objetivo sobre **Muestreo y aliasing**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `sampling_aliasing`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: calcular log(0) sin epsilon de estabilidad.
+
+## 🧩 Fórmulas de la clase
+
+```text
+fs > 2·f_max   (criterio de Nyquist)
+frecuencia de Nyquist = fs / 2
+f aparente = |f − k·fs| para el k que la lleve bajo fs/2
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Convolución en el tiempo es multiplicación en frecuencia.
+El teorema de muestreo de Nyquist-Shannon establece que una señal cuyo contenido no supera
+`f_max` puede reconstruirse **exactamente** a partir de muestras tomadas a más de `2·f_max`
+por segundo. Es un resultado sorprendentemente fuerte: no una aproximación, sino
+reconstrucción perfecta desde datos discretos.
+
+Por debajo de ese umbral aparece el **aliasing**: las frecuencias altas se hacen pasar por
+bajas. Una señal de 11 Hz muestreada a 20 Hz produce exactamente las mismas muestras que
+una de 9 Hz, y ninguna operación posterior puede distinguirlas porque los datos son
+idénticos. La información no está degradada: está ausente.
+
+El efecto es visible en la vida cotidiana. Las ruedas que parecen girar hacia atrás en el
+cine son aliasing temporal a 24 fotogramas por segundo. Los patrones de muaré en fotos de
+tejidos o pantallas son aliasing espacial. En todos los casos el sistema muestrea más lento
+que la frecuencia del patrón observado.
+
+La única defensa es un **filtro antialiasing analógico antes de muestrear**, que elimine
+físicamente las frecuencias por encima de `fs/2`. Es imprescindible que sea antes: una vez
+tomadas las muestras, el daño está hecho. En redes convolucionales, hacer submuestreo sin
+suavizado previo produce exactamente el mismo problema, y es una de las causas conocidas de
+falta de invariancia a traslaciones.
+
+## 🧮 Ejemplo trabajado
+
+Muestreo a 20 Hz de señales de distintas frecuencias.
+
+```text
+fs = 20 Hz      frecuencia de Nyquist = 10 Hz
+
+señal      ¿cumple Nyquist?    frecuencia aparente
+3 Hz             sí                  3 Hz
+9 Hz             sí                  9 Hz
+11 Hz            no                  9 Hz    ← alias
+19 Hz            no                  1 Hz    ← alias
+21 Hz            no                  1 Hz    ← alias
+
+11 Hz y 9 Hz producen muestras idénticas: son
+indistinguibles a partir de los datos.
+
+El aliasing es irreversible.
+Solución: filtro paso-bajo analógico antes del conversor.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 270
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+2. Aplicar el filtro antialiasing después del muestreo.
+3. Submuestrear en una CNN sin suavizado previo.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de sistemas de adquisición, audio y vídeo digital, submuestreo en redes
+convolucionales y remuestreo de series temporales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Shannon, C. *Communication in the presence of noise*, Proceedings of the IRE, 1949](https://doi.org/10.1109/JRPROC.1949.232969)
+- [Zhang, R. *Making convolutional networks shift-invariant again*, ICML, 2019](https://arxiv.org/abs/1904.11486)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

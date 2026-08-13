@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Un árbol elige el corte que más reduce la impureza, y Gini y entropía casi siempre coinciden.**
 
-Esta clase concreta ese objetivo sobre **Árboles: entropía y Gini**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `tree_impurity`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: elegir hiperparámetros con el conjunto de test.
+
+## 🧩 Fórmulas de la clase
+
+```text
+entropía = −Σ p·log₂ p
+Gini = 1 − Σ p²
+ganancia = impureza(padre) − Σ (nᵢ/n)·impureza(hijoᵢ)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Cada algoritmo es un objetivo más un método de optimización; nada más.
+Un árbol de decisión parte el espacio con cortes paralelos a los ejes, eligiendo en cada
+nodo la característica y el umbral que producen hijos lo más **puros** posible. La
+construcción es voraz: se elige el mejor corte local sin garantía de optimalidad global,
+porque encontrar el árbol óptimo es un problema NP-completo.
+
+Hay dos medidas habituales de impureza. La **entropía** es la de la clase 262 aplicada a la
+distribución de clases del nodo. El **índice de Gini** es la probabilidad de clasificar mal
+si se etiquetase al azar según la distribución del nodo. Ambas valen cero en un nodo puro y
+son máximas cuando las clases están equilibradas.
+
+En la práctica **rara vez producen árboles distintos**. Gini es ligeramente más rápido
+porque evita el logaritmo, y por eso suele ser el valor por defecto. Elegir entre uno y
+otro es una de las decisiones menos importantes del modelado, pese a la atención que
+recibe.
+
+La virtud del árbol es la interpretabilidad: la secuencia de decisiones se lee como reglas
+y se explica a cualquiera. Su defecto es la **inestabilidad**: cambiar unos pocos datos
+puede alterar el corte raíz y con él todo el árbol. Esa varianza alta es exactamente lo que
+el bagging de la clase siguiente ataca, y lo que hizo de los bosques aleatorios un método
+tan superior al árbol individual.
+
+## 🧮 Ejemplo trabajado
+
+Elección del mejor corte en el nodo raíz.
+
+```text
+nodo raíz con clases equilibradas:
+  entropía = 1,0 bits        Gini = 0,5
+
+cortes evaluados: 28
+
+mejor corte: característica 0, umbral 0,5
+  ganancia de información = 0,915219 bits
+  Gini tras el corte      = 0,02439
+
+La impureza cae de 0,5 a 0,024: los hijos son
+casi puros con un solo corte.
+
+Entropía y Gini eligieron el mismo corte,
+como ocurre en la inmensa mayoría de los casos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 291
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Dejar crecer el árbol sin límite y sobreajustar.
+2. Interpretar la importancia de variables sin considerar su correlación.
+3. Debatir entre Gini y entropía en vez de controlar la profundidad.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos interpretables, segmentación de clientes, sistemas de reglas y componente base de
+Random Forest y gradient boosting.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Breiman, L. et al. *Classification and Regression Trees*, Wadsworth, 1984](https://doi.org/10.1201/9781315139470)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 9](https://hastie.su.domains/ElemStatLearn/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

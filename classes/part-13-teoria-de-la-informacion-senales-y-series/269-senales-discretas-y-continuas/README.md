@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**Muestrear convierte una función continua en una lista de números con la que se puede calcular.**
 
-Esta clase concreta ese objetivo sobre **Señales discretas y continuas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `signals`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: muestrear por debajo de nyquist y culpar al modelo del ruido resultante.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x(t) = A·sin(2πft + φ)
+x[n] = x(n/fs),  n = 0,1,…,N−1
+duración = N / fs
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Nyquist fija la frecuencia mínima de muestreo; por debajo hay aliasing irreversible.
+Una señal es una magnitud que varía con el tiempo o el espacio. En el mundo físico es
+**continua**: definida para todo instante y con precisión infinita. Un ordenador solo puede
+manejar señales **discretas**: una secuencia finita de números.
+
+El paso de una a otra tiene dos etapas independientes. El **muestreo** discretiza el
+tiempo, tomando valores a intervalos regulares. La **cuantización** discretiza la amplitud,
+redondeando cada valor a un número finito de niveles. El muestreo tiene una teoría exacta
+—Nyquist—; la cuantización introduce un ruido que se caracteriza estadísticamente.
+
+Tres parámetros describen una sinusoide y merecen distinguirse bien. La **amplitud** es la
+altura del pico, la **frecuencia** es cuántos ciclos ocurren por segundo, y la **fase** es
+el desplazamiento horizontal. La transformada de Fourier de la clase 273 devuelve amplitud
+y fase para cada frecuencia, y la fase es la parte que casi siempre se ignora al graficar
+y que resulta ser esencial para reconstruir la señal.
+
+La **frecuencia de muestreo** es la decisión de diseño más importante y la que no se puede
+corregir después. Muestrear de más gasta memoria y cómputo; muestrear de menos destruye
+información de forma irreversible, y la clase siguiente explica por qué.
+
+## 🧮 Ejemplo trabajado
+
+Una sinusoide muestreada durante un segundo.
+
+```text
+señal:  x(t) = 2,0 · sin(2π · 5,0 · t + 0,785398)
+
+  amplitud   A = 2,0
+  frecuencia f = 5,0 Hz    → 5 ciclos en 1 segundo
+  fase       φ = 0,785398 rad = π/4 = 45°
+
+muestreo:
+  fs = 100,0 Hz        duración = 1,0 s
+  muestras = 100
+
+muestras por ciclo: 100 / 5 = 20        holgado
+
+Frecuencia de Nyquist: 100/2 = 50 Hz
+La señal de 5 Hz está muy por debajo: sin aliasing.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 269
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Confundir frecuencia de la señal con frecuencia de muestreo.
+2. Ignorar la fase al analizar o reconstruir una señal.
+3. Fijar la frecuencia de muestreo sin conocer el contenido espectral esperado.
+
+## 🚀 Dónde se usa de verdad
+
+Audio digital, sensores e IoT, adquisición de datos biomédicos y preprocesamiento de
+series para modelos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 1](https://www.pearson.com/)
+- [Smith, S. *The Scientist and Engineer's Guide to Digital Signal Processing*, 1997](https://www.dspguide.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

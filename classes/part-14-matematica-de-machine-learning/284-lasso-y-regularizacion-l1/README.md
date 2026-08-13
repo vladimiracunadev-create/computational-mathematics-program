@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**La bola L1 tiene vértices sobre los ejes, y por eso Lasso produce ceros exactos.**
 
-Esta clase concreta ese objetivo sobre **Lasso y regularización L1**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `lasso`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: no estandarizar antes de aplicar regularización o k-nn.
+
+## 🧩 Fórmulas de la clase
+
+```text
+J(w) = ‖Xw − y‖² + λ‖w‖₁
+sin solución cerrada: descenso por coordenadas o subgradiente
+λ mayor ⟹ más coeficientes exactamente cero
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> El error de generalización se descompone en sesgo, varianza y ruido irreducible.
+Lasso penaliza la suma de valores absolutos en vez de la de cuadrados. El cambio parece
+menor y produce un comportamiento cualitativamente distinto: los coeficientes no solo se
+encogen, sino que llegan a valer **exactamente cero**, lo que convierte a Lasso en un
+selector automático de variables.
+
+La explicación es geométrica y merece verse. La restricción `‖w‖₂ ≤ t` es una bola
+redonda; la restricción `‖w‖₁ ≤ t` es un rombo con **vértices sobre los ejes**. La
+solución es el punto donde las curvas de nivel del error tocan por primera vez la región
+admisible, y una curva de nivel elíptica toca un rombo con muchísima más probabilidad en
+un vértice que en una arista. Un vértice del rombo tiene coordenadas nulas.
+
+El precio es que el valor absoluto no es derivable en cero, así que no hay solución cerrada
+y hay que recurrir al descenso por coordenadas o a métodos de subgradiente. Es un coste
+computacional asumible y ampliamente resuelto en las bibliotecas.
+
+La elección entre Ridge y Lasso depende de lo que se crea del problema. Si se sospecha que
+solo unas pocas variables importan, Lasso las encuentra. Si se cree que todas contribuyen
+un poco, Ridge es mejor. Con variables muy correlacionadas Lasso elige una arbitrariamente
+y descarta el resto, lo que puede ser inestable, y por eso existe **elastic net**, que
+combina ambas penalizaciones.
+
+## 🧮 Ejemplo trabajado
+
+Cuatro valores de λ y el número de ceros exactos.
+
+```text
+  λ         pesos                          ceros
+0,00   [2,031169 ; 1,489542 ; −0,354419]     0
+0,05   [2,155953 ; 1,300580 ; −0,006201]     0
+0,30   [1,795790 ; 1,377911 ;  0,000000]     1
+1,00   [0,774479 ; 1,605474 ;  0,000000]     1
+
+Con λ = 0,30 el tercer coeficiente es exactamente 0,
+no un número pequeño: la variable queda eliminada.
+
+Ridge con el mismo λ dejaría −0,0806: pequeño pero no nulo.
+
+Geometría: la bola L1 tiene vértices en los ejes,
+y el óptimo cae sobre ellos con alta probabilidad.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 284
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Aplicar Lasso sin estandarizar las características.
+2. Interpretar la selección de Lasso como causalidad.
+3. Usar Lasso con variables muy correlacionadas esperando estabilidad.
+
+## 🚀 Dónde se usa de verdad
+
+Selección automática de variables, modelos dispersos, compressed sensing y análisis con
+muchas más características que observaciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x)
+- [Zou, H.; Hastie, T. *Regularization and variable selection via the elastic net*, JRSS-B, 2005](https://doi.org/10.1111/j.1467-9868.2005.00503.x)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

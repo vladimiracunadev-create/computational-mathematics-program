@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**La información mutua vale cero solo si hay independencia, y detecta lo que la correlación no ve.**
 
-Esta clase concreta ese objetivo sobre **Información mutua**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `mutual_information`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: muestrear por debajo de nyquist y culpar al modelo del ruido resultante.
+
+## 🧩 Fórmulas de la clase
+
+```text
+I(X;Y) = H(X) − H(X|Y) = H(Y) − H(Y|X)
+I(X;Y) = KL(p(x,y) ‖ p(x)·p(y))
+I(X;Y) = 0  ⟺  X ⫫ Y
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> La entropía es el límite inferior de compresión sin pérdida.
+La información mutua mide cuánto se reduce la incertidumbre sobre una variable al conocer
+la otra. Es simétrica —saber `Y` informa sobre `X` tanto como al revés— y se expresa como
+la diferencia entre la entropía y la entropía condicional.
+
+Su lectura más profunda es la tercera fórmula: es la **divergencia KL entre la
+distribución conjunta y el producto de las marginales**. Como la KL vale cero solo si las
+distribuciones coinciden, y coincidir con el producto de marginales es la definición de
+independencia, la información mutua es **cero si y solo si las variables son
+independientes**.
+
+Esa equivalencia es lo que la hace superior a la correlación como medida de dependencia. La
+correlación de la clase 191 solo detecta relaciones lineales, y vale cero para una
+dependencia cuadrática perfecta. La información mutua detecta **cualquier** dependencia,
+lineal o no, monótona o no.
+
+El precio es la estimación. Con variables discretas y datos suficientes se calcula
+directamente contando; con variables continuas hay que estimar densidades, y eso es difícil
+en dimensión alta. Los estimadores neuronales como MINE son un área activa, precisamente
+porque la información mutua aparece en el objetivo del aprendizaje autosupervisado
+contrastivo.
+
+## 🧮 Ejemplo trabajado
+
+Dos conjuntas con las mismas marginales y dependencia distinta.
+
+```text
+Caso dependiente:
+  p(0,0)=0,4   p(0,1)=0,1
+  p(1,0)=0,1   p(1,1)=0,4
+
+  H(X) = 1,0 bits      H(Y) = 1,0 bits
+  I(X;Y) = 0,278072 bits
+
+Caso independiente (mismas marginales):
+  p(x,y) = p(x)·p(y) = 0,25 en las cuatro celdas
+  I(X;Y) = 0,0                                       ✓
+
+Ventaja sobre la correlación:
+  con Y = X² y X simétrica, corr = 0 pero I > 0.
+  La información mutua ve la dependencia; la correlación no.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 266
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Estimarla en variables continuas sin cuidar la discretización.
+2. Interpretarla como medida de causalidad.
+3. Compararla entre problemas con alfabetos de tamaños distintos sin normalizar.
+
+## 🚀 Dónde se usa de verdad
+
+Selección de características, aprendizaje autosupervisado contrastivo, análisis del cuello
+de botella de información y registro de imágenes médicas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 2](https://doi.org/10.1002/047174882X)
+- [Belghazi, M. et al. *MINE: Mutual Information Neural Estimation*, ICML, 2018](https://arxiv.org/abs/1801.04062)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

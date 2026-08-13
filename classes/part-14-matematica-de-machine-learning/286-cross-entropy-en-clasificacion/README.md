@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
+**Estar seguro y equivocado cuesta sin límite con entropía cruzada, y poco con error cuadrático.**
 
-Esta clase concreta ese objetivo sobre **Cross-entropy en clasificación**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `classification_loss`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar coeficientes de un modelo con features correlacionadas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+CE = −log p(clase correcta)
+MSE = (p − y)²  ≤ 1  siempre
+CE → ∞ cuando p → 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
-## 🧠 Idea rectora de la parte 14
+## 📖 Fundamentos
 
-> Cada algoritmo es un objetivo más un método de optimización; nada más.
+Comparar entropía cruzada con error cuadrático en clasificación revela por qué la primera
+es la elección correcta, y la razón es cuantitativa antes que teórica: **cómo penalizan la
+confianza equivocada**.
+
+El error cuadrático está acotado. Con probabilidades entre 0 y 1, el error máximo posible
+es 1, así que un modelo completamente seguro y completamente equivocado recibe una
+penalización finita y modesta. La entropía cruzada, en cambio, **crece sin límite**: si la
+probabilidad asignada a la respuesta correcta tiende a cero, la pérdida tiende a infinito.
+
+Ese comportamiento es exactamente el deseable. Un modelo que dice «99 % seguro» y falla
+merece un castigo mucho mayor que uno que dice «55 % seguro» y falla, porque la
+afirmación era mucho más fuerte. La entropía cruzada codifica esa asimetría y el error
+cuadrático la aplana.
+
+Hay además una razón de optimización. Con sigmoide y error cuadrático, el gradiente
+contiene la derivada de la sigmoide, que se satura y se hace casi nula cuando la
+predicción es extrema: el modelo equivocado y seguro **deja de aprender**. Con entropía
+cruzada esa derivada se cancela algebraicamente y el gradiente queda `(p − y)`,
+proporcional al error. La elección de pérdida arregla un problema de gradientes, no solo de
+interpretación.
+
+## 🧮 Ejemplo trabajado
+
+Cuatro situaciones, dos funciones de pérdida.
+
+```text
+caso                    p predicha    CE        MSE
+correcto y seguro          0,99     0,01005   0,0001
+correcto y dudoso          0,55     0,59784   0,2025
+incorrecto y dudoso        0,45     0,79851   0,2025
+incorrecto y seguro        0,01     4,60517   0,9801
+
+Razón entre incorrecto-seguro e incorrecto-dudoso:
+  entropía cruzada: 5,77×
+  error cuadrático: 3,24×
+
+La entropía cruzada castiga mucho más la seguridad
+equivocada, que es exactamente lo que se busca.
+
+Y su gradiente no se satura: (p − y), sin factor σ'.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 286
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- No estandarizar antes de aplicar regularización o k-NN.
-- Elegir hiperparámetros con el conjunto de test.
-- Interpretar coeficientes de un modelo con features correlacionadas.
+1. Usar error cuadrático con salidas sigmoides y sufrir gradientes saturados.
+2. Aplicar softmax dos veces cuando la pérdida ya lo incluye.
+3. Confundir accuracy con calidad de las probabilidades predichas.
+
+## 🚀 Dónde se usa de verdad
+
+Función de pérdida de todo clasificador, calibración de modelos, entrenamiento de modelos
+de lenguaje y evaluación probabilística.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
-- Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
-- Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 4](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

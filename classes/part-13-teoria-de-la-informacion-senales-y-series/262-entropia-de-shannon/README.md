@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
+**La entropía es el número mínimo de bits por símbolo que cualquier compresor puede lograr.**
 
-Esta clase concreta ese objetivo sobre **Entropía de Shannon**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Entropía, entropía cruzada, divergencias, información mutua, codificación, muestreo, convolución, Fourier, FFT, filtros y series temporales.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `shannon_entropy`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar entropías calculadas en bases logarítmicas distintas.
+
+## 🧩 Fórmulas de la clase
+
+```text
+H(p) = −Σ p(x)·log₂ p(x)
+0 ≤ H(p) ≤ log₂ n
+H = 0 si es determinista;  H = log₂ n si es uniforme
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
-## 🧠 Idea rectora de la parte 13
+## 📖 Fundamentos
 
-> Minimizar cross-entropy equivale a maximizar verosimilitud.
+La entropía es la sorpresa **esperada**: la media de `−log p` ponderada por las propias
+probabilidades. Mide la incertidumbre media de una fuente antes de observar su salida, y
+es el concepto central de toda la teoría.
+
+Su interpretación operativa es la que le da fuerza. El **teorema de codificación de
+fuente** de Shannon dice que ningún código sin pérdida puede usar menos de `H` bits por
+símbolo en promedio, y que existen códigos que se acercan arbitrariamente a ese límite. No
+es una cota heurística: es una imposibilidad demostrada.
+
+Los dos extremos son informativos. Una fuente **determinista** tiene entropía cero: no hace
+falta transmitir nada porque el receptor ya sabe qué viene. Una fuente **uniforme** sobre
+`n` símbolos tiene entropía `log₂ n`, la máxima posible: no hay estructura que explotar y
+no se puede comprimir por debajo de la codificación de longitud fija.
+
+Toda compresión vive entre esos extremos, y explota que las distribuciones reales no son
+uniformes. En aprendizaje automático la entropía aparece además como medida de
+incertidumbre de una predicción: una salida softmax casi uniforme tiene entropía alta y el
+modelo está dudando, lo que sirve como señal para aprendizaje activo o para rechazar la
+predicción.
+
+## 🧮 Ejemplo trabajado
+
+Entropía de cuatro distribuciones sobre el mismo alfabeto.
+
+```text
+distribución                        H (bits)
+uniforme sobre 4 símbolos            2,0000    ← máxima
+sesgada [0,7 ; 0,15 ; 0,1 ; 0,05]    1,2568
+moneda justa (2 símbolos)            1,0000
+determinista                         0,0000    ← mínima
+
+Máximo teórico para 4 símbolos: log₂ 4 = 2,0     ✓
+
+La misma uniforme en nats: ln 4 = 1,3863 nats
+Conversión: 1,3863 × 1,4427 = 2,0 bits           ✓
+
+Lectura: la fuente sesgada necesita 1,26 bits por símbolo
+en el mejor código posible, frente a los 2 de la uniforme.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 262
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Calcular log(0) sin epsilon de estabilidad.
-- Comparar entropías calculadas en bases logarítmicas distintas.
-- Muestrear por debajo de Nyquist y culpar al modelo del ruido resultante.
+1. Interpretar la entropía como cantidad de datos y no como bits por símbolo.
+2. Comparar entropías de alfabetos de tamaños distintos sin normalizar.
+3. Olvidar que el límite de Shannon supone símbolos independientes.
+
+## 🚀 Dónde se usa de verdad
+
+Compresión de datos, medida de incertidumbre en predicciones, criterio de división en
+árboles de decisión y aprendizaje activo.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
-- MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
-- Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 2](https://doi.org/10.1002/047174882X)
+- [Shannon, C. *A Mathematical Theory of Communication*, 1948](https://doi.org/10.1002/j.1538-7305.1948.tb01338.x)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
