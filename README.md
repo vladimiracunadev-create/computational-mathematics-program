@@ -52,7 +52,7 @@ Deep Learning, Transformers, modelos generativos, GNN y Reinforcement Learning.*
 | Motores ejecutables | ✅ 18 motores en Python estándar, 360 demostraciones deterministas |
 | Laboratorios | ✅ 360 `lab.py` que ejecutan la demostración de su clase |
 | CLI | ✅ `compmath catalog`, `show`, `run`, `validate`, `progress`, `stats` |
-| Sitio | ✅ portal estático HTML/PWA con buscador y progreso local |
+| Sitio | ✅ portal estático HTML/PWA con buscador, progreso local y el contenido de las 360 clases |
 | Manual | ✅ documento completo en HTML y PDF, generado ejecutando las 360 demostraciones |
 | Contenido pedagógico | ✅ 360/360 clases con desarrollo, ejemplo trabajado, errores y fuentes |
 | Glosarios y diagramas | ✅ 489 términos en 18 glosarios y un mapa mermaid por parte |

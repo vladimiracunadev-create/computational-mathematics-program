@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -19,7 +20,7 @@ from typing import Any, Dict, List
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from computational_math import __version__, curriculum, engines  # noqa: E402
+from computational_math import __version__, content, curriculum, engines  # noqa: E402
 
 SITE = ROOT / "site"
 REPO = "vladimiracunadev-create/computational-mathematics-program"
@@ -144,6 +145,16 @@ h1.page { font-size: clamp(24px, 4vw, 34px); margin: 4px 0 10px; letter-spacing:
 }
 .callout.warn { border-left-color: #fb923c; }
 .callout.ok { border-left-color: var(--accent-2); }
+ul.clean.warn-list li { padding-left: 20px; position: relative; }
+ul.clean.warn-list li::before { content: "⚠"; position: absolute; left: 0; color: #fb923c; }
+ul.flow { list-style: none; padding: 0; margin: 18px 0; display: grid; gap: 8px; }
+ul.flow li {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: var(--bg-soft); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 14px;
+}
+ul.flow .node { font-size: 14px; }
+ul.flow .arrow { color: var(--accent); font-weight: 700; }
 .progress-bar { height: 6px; background: var(--bg-soft); border-radius: 99px; overflow: hidden; margin-top: 8px; }
 .progress-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
 .nav-classes { display: flex; justify-content: space-between; gap: 12px; margin: 32px 0; flex-wrap: wrap; }
@@ -338,6 +349,113 @@ def _nivel_tag(nivel: str) -> str:
     return f'<span class="tag" style="color:{color}">{esc(nivel)}</span>'
 
 
+ENFASIS = re.compile(r"\*\*(.+?)\*\*")
+CURSIVA = re.compile(r"\*([^*\n]+)\*")
+CODIGO = re.compile(r"`([^`]+)`")
+ENLACE_MD = re.compile(r"\[([^\]]+)\]\((https?://[^)\s]+)\)")
+VALLA = re.compile(r"```[a-z]*\n(.*?)```", re.DOTALL)
+ARISTA = re.compile(
+    r'^\s*(\w+)(?:\["([^"]*)"\])?\s*(-->|==>|-\.->)\s*(\w+)(?:\["([^"]*)"\])?\s*$'
+)
+FLECHA_TEXTO = {"-->": "→", "==>": "⇒", "-.->": "⇢"}
+
+
+def _inline(texto: str) -> str:
+    """Convierte el subconjunto de Markdown que usa `content/` a HTML seguro.
+
+    Se escapa primero y se aplican los patrones después, de modo que ningún
+    contenido del YAML pueda inyectar etiquetas.
+    """
+    salida = esc(texto)
+    salida = ENLACE_MD.sub(
+        lambda m: f'<a href="{m.group(2)}" rel="noopener">{m.group(1)}</a>', salida
+    )
+    salida = CODIGO.sub(lambda m: f"<code>{m.group(1)}</code>", salida)
+    salida = ENFASIS.sub(lambda m: f"<strong>{m.group(1)}</strong>", salida)
+    salida = CURSIVA.sub(lambda m: f"<em>{m.group(1)}</em>", salida)
+    return salida
+
+
+def _parrafos(texto: str) -> str:
+    """Bloques separados por línea en blanco: vallas a <pre>, resto a <p>."""
+    if not texto:
+        return ""
+    piezas: List[str] = []
+    resto = texto
+    for valla in VALLA.finditer(texto):
+        previo = resto[: resto.index(valla.group(0))]
+        for bloque in previo.split("\n\n"):
+            if bloque.strip():
+                piezas.append(f"<p>{_inline(' '.join(bloque.split()))}</p>")
+        piezas.append(f"<pre><code>{esc(valla.group(1).rstrip())}</code></pre>")
+        resto = resto[resto.index(valla.group(0)) + len(valla.group(0)):]
+    for bloque in resto.split("\n\n"):
+        if bloque.strip():
+            piezas.append(f"<p>{_inline(' '.join(bloque.split()))}</p>")
+    return "\n".join(piezas)
+
+
+def _lista(items: List[str], clase: str = "clean") -> str:
+    if not items:
+        return ""
+    cuerpo = "\n".join(f"      <li>{_inline(i)}</li>" for i in items)
+    return f'  <ul class="{clase}">\n{cuerpo}\n  </ul>'
+
+
+def _mapa_a_flujo(mapa: str) -> str:
+    """Traduce el flowchart Mermaid a una lista de aristas legible sin JavaScript.
+
+    El sitio no carga bibliotecas externas, así que en vez de incrustar Mermaid
+    se extraen las aristas y se muestran como recorrido.
+    """
+    etiquetas: Dict[str, str] = {}
+    aristas: List[tuple] = []
+    for linea in mapa.splitlines():
+        m = ARISTA.match(linea)
+        if not m:
+            continue
+        origen, eti_o, flecha, destino, eti_d = m.groups()
+        if eti_o:
+            etiquetas[origen] = eti_o
+        if eti_d:
+            etiquetas[destino] = eti_d
+        aristas.append((origen, flecha, destino))
+    if not aristas:
+        return ""
+    filas = "\n".join(
+        f'      <li><span class="node">{esc(etiquetas.get(o, o))}</span>'
+        f'<span class="arrow">{FLECHA_TEXTO.get(f, "→")}</span>'
+        f'<span class="node">{esc(etiquetas.get(d, d))}</span></li>'
+        for o, f, d in aristas
+    )
+    return f'  <ul class="flow">\n{filas}\n  </ul>'
+
+
+def _glosario_parte(part_id: str) -> str:
+    terminos = content.glossary(part_id)
+    if not terminos:
+        return ""
+    filas = "\n".join(
+        f"""        <tr>
+          <td><strong>{esc(t['termino'])}</strong></td>
+          <td>{_inline(t['definicion'])}</td>
+          <td><a href="../classes/{esc(t['clase'])}.html">{esc(t['clase'])}</a></td>
+        </tr>"""
+        for t in terminos
+    )
+    return f"""
+  <h2>Glosario de la parte ({len(terminos)} términos)</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Término</th><th>Definición</th><th>Clase</th></tr></thead>
+      <tbody>
+{filas}
+      </tbody>
+    </table>
+  </div>
+"""
+
+
 def _index(partes: List[Dict[str, Any]], catalogo: List[Dict[str, Any]],
            descargas: List[str]) -> str:
     totales = curriculum.totals()
@@ -510,6 +628,13 @@ def _part_page(parte: Dict[str, Any]) -> str:
     anterior = partes[idx - 1] if idx > 0 else None
     siguiente = partes[idx + 1] if idx < len(partes) - 1 else None
 
+    pedagogico = content.part_content(parte["id"])
+    resumen = pedagogico.get("resumen_extendido", "")
+    panorama = f"\n  <h2>Panorama de la parte</h2>\n{_parrafos(resumen)}" if resumen else ""
+    flujo = _mapa_a_flujo(pedagogico.get("mapa", ""))
+    mapa = f"\n  <h2>Recorrido de la parte</h2>\n{flujo}" if flujo else ""
+    glosario = _glosario_parte(parte["id"])
+
     contenido = f"""
 <div class="wrap">
   <p class="crumb"><a href="../index.html">Inicio</a> · Parte {esc(parte['id'])}</p>
@@ -521,6 +646,8 @@ def _part_page(parte: Dict[str, Any]) -> str:
     <span>motor <code>{esc(parte['engine'])}</code></span>
   </div>
   <p>{esc(parte['summary'])}</p>
+{panorama}
+{mapa}
 
   <h2>Ideas centrales</h2>
   <ul class="clean">
@@ -547,7 +674,7 @@ def _part_page(parte: Dict[str, Any]) -> str:
 
   <h2>Ejecutar la parte completa</h2>
   <pre><code>compmath run --part {esc(parte['id'])}</code></pre>
-
+{glosario}
   <h2>Bibliografía</h2>
   <ul class="clean">
 {refs}
@@ -587,6 +714,37 @@ def _class_page(clase: Dict[str, Any], parte: Dict[str, Any], indice: List[Dict[
         indent=2, ensure_ascii=False, default=str,
     )
 
+    ped = content.class_content(clase["id"])
+    concepto = (
+        f'\n  <div class="callout">{_inline(ped["concepto"])}</div>'
+        if ped.get("concepto") else ""
+    )
+    formulas = (
+        "\n  <h2>Fórmulas</h2>\n  <pre><code>"
+        + esc("\n".join(ped["formulas"])) + "</code></pre>"
+        if ped.get("formulas") else ""
+    )
+    desarrollo = (
+        f'\n  <h2>Desarrollo</h2>\n{_parrafos(ped["desarrollo"])}'
+        if ped.get("desarrollo") else ""
+    )
+    ejemplo = (
+        f'\n  <h2>Ejemplo trabajado</h2>\n{_parrafos(ped["ejemplo"])}'
+        if ped.get("ejemplo") else ""
+    )
+    errores_clase = (
+        f'\n  <h2>Errores comunes</h2>\n{_lista(ped["errores"], "clean warn-list")}'
+        if ped.get("errores") else ""
+    )
+    aplicacion = (
+        f'\n  <h2>Dónde se usa</h2>\n{_parrafos(ped["aplicacion"])}'
+        if ped.get("aplicacion") else ""
+    )
+    referencias = (
+        f'\n  <h2>Fuentes</h2>\n{_lista(ped["referencias"])}'
+        if ped.get("referencias") else ""
+    )
+
     contenido = f"""
 <div class="wrap">
   <p class="crumb"><a href="../index.html">Inicio</a> ·
@@ -599,6 +757,7 @@ def _class_page(clase: Dict[str, Any], parte: Dict[str, Any], indice: List[Dict[
     <span>demostración <code>{esc(nombre)}</code></span>
   </div>
   <p><button class="done-toggle" id="done" data-class="{esc(clase['id'])}" aria-pressed="false">Marcar como completada</button></p>
+{concepto}{formulas}{desarrollo}{ejemplo}
 
   <h2>Qué calcula el laboratorio</h2>
   <p>{esc(resumen)}</p>
@@ -612,6 +771,7 @@ compmath run {esc(clase['id'])}</code></pre>
 
   <h2>Muestra de la ejecución real</h2>
   <pre><code>{esc(muestra)}</code></pre>
+{errores_clase}{aplicacion}
 
   <h2>Idea rectora de la parte</h2>
   <div class="callout">{esc(idea)}</div>
@@ -621,6 +781,7 @@ compmath run {esc(clase['id'])}</code></pre>
 
   <h2>Conexión con IA</h2>
   <p>{esc(parte['ai_link'])}</p>
+{referencias}
 
   <h2>Archivos de la clase</h2>
   <ul class="clean">

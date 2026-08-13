@@ -121,6 +121,18 @@ que una edición manual sobreviva.
 360 páginas de clase, hoja de estilo, JavaScript, manifest, service worker, `robots.txt`
 y `sitemap.xml`. Sin CDN, sin fuentes remotas y sin analítica.
 
+El portal publica también la capa de `content/`: cada página de parte lleva su panorama,
+su recorrido y su glosario, y cada página de clase su concepto, fórmulas, desarrollo,
+ejemplo trabajado, errores y fuentes. El mapa Mermaid **no se incrusta** —eso exigiría
+cargar una biblioteca externa y el sitio no carga ninguna—: sus aristas se extraen y se
+publican como recorrido en HTML plano.
+
+Los enlaces a las fuentes sí salen del dominio, y esa es la única excepción permitida:
+`validate_site.py` distingue un **recurso** (`src`, o el `href` de un `<link>`, que el
+navegador descarga al abrir la página) de un **enlace de navegación** (`href` de `<a>`,
+que no se descarga). Los recursos externos siguen prohibidos; las citas pueden apuntar a
+su origen.
+
 ## Contrato de clase
 
 Los 12 archivos de cada clase, y qué garantiza cada uno:

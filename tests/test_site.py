@@ -60,10 +60,17 @@ class TestSitio(unittest.TestCase):
         return [p for p in SITE.rglob("*.html") if "downloads" not in p.parts]
 
     def test_no_hay_recursos_de_hosts_externos(self):
+        """Ningún `src` ni `<link>` apunta fuera: el portal se renderiza sin red.
+
+        Los `href` de `<a>` sí pueden salir: son las fuentes citadas por las
+        clases, y un enlace no se descarga al abrir la página.
+        """
         permitidos = ("github.com", "github.io", "www.sitemaps.org", "www.w3.org")
+        recurso = re.compile(r'src="(https?://[^"]+)"|<link\b[^>]*href="(https?://[^"]+)"')
         for pagina in self._paginas():
             texto = pagina.read_text(encoding="utf-8")
-            for url in re.findall(r'(?:href|src)="(https?://[^"]+)"', texto):
+            for src, link_href in recurso.findall(texto):
+                url = src or link_href
                 with self.subTest(pagina=pagina.name, url=url):
                     self.assertTrue(any(h in url for h in permitidos), url)
 
@@ -88,6 +95,54 @@ class TestSitio(unittest.TestCase):
     def test_sitemap_cubre_todas_las_paginas(self):
         sitemap = (SITE / "sitemap.xml").read_text(encoding="utf-8")
         self.assertEqual(sitemap.count("<loc>"), 1 + 18 + 360)
+
+
+class TestSitioReflejaElContenido(unittest.TestCase):
+    """El portal publica la capa pedagógica, no solo `curriculum.yaml`.
+
+    Sin estas pruebas el sitio puede quedarse atrás sin que nada avise: se
+    genera igual de bien con el contenido y sin él.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        _generar_si_falta()
+
+    def test_cada_parte_publica_panorama_recorrido_y_glosario(self):
+        for parte in curriculum.parts():
+            texto = (SITE / "parts" / f"part-{parte['id']}.html").read_text(encoding="utf-8")
+            with self.subTest(parte=parte["id"]):
+                self.assertIn("Panorama de la parte", texto)
+                self.assertIn("Recorrido de la parte", texto)
+                self.assertIn("Glosario de la parte", texto)
+
+    def test_cada_clase_publica_desarrollo_ejemplo_y_fuentes(self):
+        for clase in curriculum.classes():
+            texto = (SITE / "classes" / f"{clase['id']}.html").read_text(encoding="utf-8")
+            with self.subTest(clase=clase["id"]):
+                self.assertIn("<h2>Desarrollo</h2>", texto)
+                self.assertIn("<h2>Ejemplo trabajado</h2>", texto)
+                self.assertIn("<h2>Errores comunes</h2>", texto)
+                self.assertIn("<h2>Fuentes</h2>", texto)
+
+    def test_el_glosario_del_sitio_enlaza_a_clases_que_existen(self):
+        enlace = re.compile(r'<a href="\.\./classes/(\d{3})\.html">\1</a>')
+        ids = {c["id"] for c in curriculum.classes()}
+        total = 0
+        for parte in curriculum.parts():
+            texto = (SITE / "parts" / f"part-{parte['id']}.html").read_text(encoding="utf-8")
+            for cid in enlace.findall(texto):
+                total += 1
+                self.assertIn(cid, ids)
+        self.assertGreaterEqual(total, 400, "faltan términos de glosario en el sitio")
+
+    def test_el_contenido_no_deja_marcado_markdown_sin_convertir(self):
+        for clase in list(curriculum.classes())[::17]:
+            texto = (SITE / "classes" / f"{clase['id']}.html").read_text(encoding="utf-8")
+            cuerpo = re.sub(r"<pre>.*?</pre>", "", texto, flags=re.DOTALL)
+            with self.subTest(clase=clase["id"]):
+                self.assertNotIn("**", cuerpo)
+                self.assertNotIn("](http", cuerpo)
 
 
 if __name__ == "__main__":

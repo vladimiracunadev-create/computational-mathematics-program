@@ -32,7 +32,12 @@ OBLIGATORIOS = (
 HOSTS_PERMITIDOS = ("github.com", "vladimiracunadev-create.github.io", "www.sitemaps.org",
                     "www.w3.org", "http://www.w3.org/2000/svg")
 ENLACE = re.compile(r'(?:href|src)="([^"#]+)"')
-EXTERNO = re.compile(r'(?:href|src)="(https?://[^"]+)"')
+# Un recurso se carga al renderizar la página y crea una dependencia de terceros:
+# cualquier `src`, y el `href` de <link>. Un `href` de <a> es solo navegación y
+# no rompe el funcionamiento sin conexión, así que las fuentes citadas sí pueden
+# enlazarse a su origen.
+RECURSO = re.compile(r'src="(https?://[^"]+)"|<link\b[^>]*href="(https?://[^"]+)"')
+ANCLA_EXTERNA = re.compile(r'<a\b[^>]*href="(https?://[^"]+)"')
 
 
 def main() -> int:
@@ -74,7 +79,8 @@ def main() -> int:
             errores.append(f"index.html no declara el conteo {afirmacion}")
 
     rotos = 0
-    externos_no_permitidos = set()
+    recursos_externos = set()
+    citas_externas = set()
     # El manual de site/downloads es un documento independiente: cita fuentes
     # externas legítimamente y no forma parte de la navegación del portal.
     paginas = [p for p in SITE.rglob("*.html") if "downloads" not in p.parts]
@@ -91,12 +97,16 @@ def main() -> int:
                 rotos += 1
                 if rotos <= 10:
                     errores.append(f"enlace roto en {pagina.relative_to(SITE)}: {destino}")
-        for url in EXTERNO.findall(texto):
+        for src, link_href in RECURSO.findall(texto):
+            url = src or link_href
+            if url and not any(host in url for host in HOSTS_PERMITIDOS):
+                recursos_externos.add(url)
+        for url in ANCLA_EXTERNA.findall(texto):
             if not any(host in url for host in HOSTS_PERMITIDOS):
-                externos_no_permitidos.add(url)
+                citas_externas.add(url)
 
-    if externos_no_permitidos:
-        errores.append(f"recursos externos no permitidos: {sorted(externos_no_permitidos)[:5]}")
+    if recursos_externos:
+        errores.append(f"recursos externos no permitidos: {sorted(recursos_externos)[:5]}")
 
     descargas = SITE / "downloads"
     manual_html = descargas / "computational-mathematics-program-manual.html"
@@ -125,7 +135,8 @@ def main() -> int:
     print(
         f"OK: sitio válido — {archivos} archivos ({tamano:.1f} MB), "
         f"{len(partes)} páginas de parte, {len(clases)} páginas de clase, "
-        f"{urls} URLs en el sitemap, 0 enlaces internos rotos, 0 recursos externos."
+        f"{urls} URLs en el sitemap, 0 enlaces internos rotos, 0 recursos externos "
+        f"y {len(citas_externas)} fuentes citadas con enlace a su origen."
     )
     return 0
 
