@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Un solo valor atípico multiplica el MSE por cien mil; Huber lo absorbe.**
 
-Esta clase concreta ese objetivo sobre **Funciones de pérdida**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `loss_functions`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: inicializar todos los pesos iguales y romper la simetría nunca.
+
+## 🧩 Fórmulas de la clase
+
+```text
+MSE = media de (y − ŷ)²
+MAE = media de |y − ŷ|
+Huber: cuadrática si |e| ≤ δ, lineal si no
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Normalizar estabiliza la escala interna y permite tasas de aprendizaje mayores.
+La función de pérdida define qué significa equivocarse, y esa definición cambia por
+completo el modelo resultante. No es un parámetro secundario: es la especificación del
+problema.
+
+El **error cuadrático medio** penaliza el cuadrado del error, así que un error diez veces
+mayor pesa cien veces más. Eso lo hace extremadamente sensible a los valores atípicos: una
+sola observación anómala puede dominar la suma y arrastrar el ajuste entero. El **error
+absoluto medio** penaliza linealmente y es mucho más robusto, a cambio de no ser derivable
+en cero y de converger más lentamente.
+
+La **pérdida de Huber** combina lo mejor de ambas: se comporta como cuadrática para
+errores pequeños —donde interesa la sensibilidad y la derivabilidad— y como lineal para
+errores grandes —donde interesa la robustez—. El parámetro `δ` marca la transición, y es
+la opción por defecto razonable cuando se sospecha que hay ruido de medición.
+
+Detrás de cada elección hay un modelo probabilístico implícito, como se vio en la clase
+215: MSE supone ruido gaussiano, MAE supone ruido de Laplace con colas más pesadas, y
+entropía cruzada supone un modelo categórico. Elegir pérdida es declarar qué se cree del
+ruido, y hacerlo explícitamente evita elegir por costumbre.
+
+## 🧮 Ejemplo trabajado
+
+Cinco observaciones, una de ellas claramente anómala.
+
+```text
+objetivos:    [1,0 ; 2,0 ; 3,0 ; 4,0 ; 100,0]
+predicciones: [1,1 ; 2,1 ; 2,9 ; 4,2 ;   5,0]
+
+MSE            = 1805,014
+MAE            =   19,100
+Huber (δ = 1)  =   18,907
+
+MSE sin el atípico = 0,0175
+
+El atípico multiplica el MSE por 103 000.
+MAE y Huber apenas se descolocan.
+
+Si ese 100,0 es un error de medición, MSE arruina
+el ajuste entero por una sola observación.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 304
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Usar MSE con datos que contienen errores de medición.
+2. Elegir la pérdida por costumbre sin considerar el modelo de ruido.
+3. Comparar valores de pérdidas distintas como si fueran la misma escala.
+
+## 🚀 Dónde se usa de verdad
+
+Regresión robusta, detección de objetos con pérdida Huber, entrenamiento con datos
+ruidosos y diseño de objetivos personalizados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Huber, P. *Robust estimation of a location parameter*, Annals of Mathematical Statistics, 1964](https://doi.org/10.1214/aoms/1177703732)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**En el equilibrio de una GAN el discriminador acierta el 50 %: no distingue nada.**
 
-Esta clase concreta ese objetivo sobre **GAN y juegos minimax**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `gan_minimax`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar la máscara causal en el modelado autoregresivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+min_G max_D  E[log D(x)] + E[log(1 − D(G(z)))]
+D*(x) = p_datos(x) / (p_datos(x) + p_G(x))
+en el equilibrio D = 0,5 y la pérdida vale log 2
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Temperatura, top-k y top-p reescriben la distribución antes de muestrear.
+Una GAN enfrenta dos redes con objetivos opuestos. El **generador** produce muestras
+falsas intentando parecer real; el **discriminador** intenta distinguir reales de falsas. El
+entrenamiento es un juego minimax, y el objetivo del generador es hacer fracasar al
+discriminador.
+
+El resultado teórico central es que el discriminador óptimo tiene **forma cerrada**: la
+proporción de densidad real sobre densidad total. Sustituyendo ese óptimo en el objetivo, se
+obtiene que el generador está minimizando `2·JS(p_datos ‖ p_G) − log 4`, es decir, la
+divergencia de Jensen-Shannon de la clase 265. El objetivo de las GAN no se inventó como
+divergencia: resulta serlo.
+
+En el equilibrio ideal, generador y datos tienen la misma distribución, el discriminador
+óptimo vale 0,5 en todas partes y la pérdida vale `log 2 ≈ 0,693`. Ese número es el
+diagnóstico: una pérdida de discriminador que se estabiliza cerca de 0,693 indica
+equilibrio; una que se va a cero indica que el discriminador ha ganado y el generador ya no
+recibe señal útil.
+
+La inestabilidad práctica tiene una causa identificable en esa misma teoría: si los
+soportes de ambas distribuciones no se solapan, la JS es constante y su gradiente es cero.
+Esa observación motivó **WGAN**, que sustituye JS por la distancia de Wasserstein,
+precisamente porque esta sí da gradiente útil cuando los soportes están separados.
+
+## 🧮 Ejemplo trabajado
+
+Tres escenarios del juego y el punto de equilibrio.
+
+```text
+objetivo: min_G max_D E[log D(x)] + E[log(1 − D(G(z)))]
+
+escenario "D gana":
+  D(real) = 0,99    D(falso) = 0,01
+  pérdida de D = 0,01005      muy baja
+  el generador recibe gradiente casi nulo
+
+escenario de equilibrio:
+  D(real) = 0,50    D(falso) = 0,50
+  pérdida teórica = log 2 = 0,693147                 ✓
+
+D óptimo: D*(x) = p_datos / (p_datos + p_G)
+  si p_G = p_datos  →  D* = 0,5 en todas partes
+
+El objetivo original equivale a minimizar
+2·JS(p_datos ‖ p_G) − log 4.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 333
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Entrenar el discriminador hasta la perfección y dejar al generador sin gradiente.
+2. Interpretar una pérdida de discriminador cercana a cero como buena señal.
+3. Ignorar el colapso de modos mirando solo las pérdidas.
+
+## 🚀 Dónde se usa de verdad
+
+Generación de imágenes, superresolución, traducción entre dominios, aumento de datos y
+generación de datos sintéticos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Goodfellow, I. et al. *Generative Adversarial Networks*, NeurIPS, 2014](https://arxiv.org/abs/1406.2661)
+- [Arjovsky, M.; Chintala, S.; Bottou, L. *Wasserstein GAN*, ICML, 2017](https://arxiv.org/abs/1701.07875)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

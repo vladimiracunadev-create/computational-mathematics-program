@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**El bloque es atención más feed-forward, cada uno envuelto en residual y normalización.**
 
-Esta clase concreta ese objetivo sobre **Transformer completo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `transformer_block`.
 4. Interpretar las 12 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir temperatura alta con mayor calidad en lugar de mayor entropía.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x ← LayerNorm(x + MultiHead(x))
+x ← LayerNorm(x + FFN(x))
+FFN con expansión ×4: d_ff = 4·d_model
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,55 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Temperatura, top-k y top-p reescriben la distribución antes de muestrear.
+El bloque Transformer combina dos subcapas con la misma envoltura. Primero atención
+multi-cabeza, que mezcla información **entre** posiciones; después una red feed-forward
+aplicada a cada posición **por separado**, que procesa cada representación
+individualmente. Ambas van rodeadas de conexión residual y normalización.
+
+La **conexión residual** es la que hace entrenables las pilas profundas. Sumar la entrada a
+la salida crea un camino por el que el gradiente pasa sin multiplicarse, exactamente la
+misma solución que la LSTM de la clase 315 y que ResNet. Sin ella, apilar 96 bloques sería
+inviable.
+
+La **normalización** estabiliza la escala. Se usa layer norm y no batch norm porque las
+secuencias tienen longitud variable y el tamaño de lote efectivo cambia, como se explicó en
+la clase 308. Su colocación importa: la variante **pre-norm** —normalizar antes de la
+subcapa— es más estable en modelos muy profundos y es la que usan los modelos actuales,
+aunque el artículo original usaba post-norm.
+
+La **expansión ×4** en la red feed-forward es una constante empírica notablemente estable a
+lo largo de los años. Ahí reside la mayor parte de los parámetros del modelo, y hay
+evidencia de que esas capas funcionan como una memoria asociativa de conocimiento
+factual, más que como un simple procesador local.
+
+## 🧮 Ejemplo trabajado
+
+Estructura y dimensiones de un bloque.
+
+```text
+arquitectura:
+  multi-head attention
+  + residual
+  layer norm
+  feed-forward
+  + residual
+  layer norm
+
+d_model = 8      d_ff = 32      razón = 4
+tokens = 4
+
+norma media de entrada: 3,214373
+
+Reparto de parámetros en un modelo real:
+  atención:      4·d²   = 4·d_model²
+  feed-forward:  8·d²   = 2·(d_model·4·d_model)
+  el feed-forward tiene el doble de parámetros
+
+Pre-norm frente a post-norm: pre-norm es más estable
+con muchas capas y es lo estándar hoy.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +119,16 @@ compmath run 328
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Omitir las conexiones residuales en pilas profundas.
+2. Usar batch norm en vez de layer norm con secuencias de longitud variable.
+3. Mezclar pre-norm y post-norm al reproducir una arquitectura publicada.
+
+## 🚀 Dónde se usa de verdad
+
+GPT, BERT, Vision Transformers, modelos de audio y prácticamente toda la arquitectura
+moderna de gran escala.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +171,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
+- [Xiong, R. et al. *On Layer Normalization in the Transformer Architecture*, ICML, 2020](https://arxiv.org/abs/2002.04745)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

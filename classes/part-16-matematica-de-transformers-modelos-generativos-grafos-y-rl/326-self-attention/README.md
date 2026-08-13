@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**Sin máscara causal el modelo ve el futuro, entrena perfecto y genera basura.**
 
-Esta clase concreta ese objetivo sobre **Self-attention**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `self_attention`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: normalizar el laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Q, K, V provienen todos de la misma secuencia
+máscara causal: puntuación = −∞ para j > i
+cada fila de la matriz de atención suma 1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La atención es un promedio ponderado por similitud, normalizado con softmax.
+En self-attention, consultas, claves y valores se calculan todos a partir de la misma
+secuencia. Cada token puede atender a todos los demás y actualizar su representación con la
+información que le resulte relevante, en **una sola operación** y sin importar la
+distancia.
+
+Esa es la ventaja decisiva sobre las RNN de la parte 15. En una recurrente, conectar el
+token 1 con el 100 requiere que la información atraviese 99 pasos, con el gradiente
+multiplicándose 99 veces. En self-attention hay un camino directo. El precio es el coste
+cuadrático en la longitud de la secuencia, que es el cuello de botella de los contextos
+largos.
+
+Para generación autorregresiva hace falta la **máscara causal**: poner las puntuaciones de
+las posiciones futuras a menos infinito antes del softmax, de modo que sus pesos sean
+exactamente cero. La matriz de atención queda triangular inferior, y el primer token solo
+puede atenderse a sí mismo.
+
+Olvidarla produce un fallo especialmente traicionero porque **no da ningún error**. El
+modelo entrena con métricas excelentes, porque para predecir el token siguiente puede
+simplemente mirarlo, y al generar —cuando el futuro no existe— produce basura. Es un error
+silencioso que solo se detecta al probar la generación.
+
+## 🧮 Ejemplo trabajado
+
+Atención bidireccional y causal sobre cuatro tokens.
+
+```text
+tokens: ["el", "gato", "come", "pescado"]
+
+matriz de atención bidireccional:
+  [0,2982  0,2239  0,4516  0,0263]
+  [0,3251  0,3369  0,2829  0,0550]
+  [ ...                          ]
+cada fila suma 1                                     ✓
+
+matriz causal:
+  [1,0000  0,0000  0,0000  0,0000]
+  [0,4911  0,5089  0,0000  0,0000]
+  [0,0051  0,0022  0,99xx  0,0000]
+  [ ...                          ]
+
+El token 0 solo se ve a sí mismo                     ✓
+Triangular inferior: nadie ve el futuro.
+
+Sin la máscara, predecir el token 2 podría hacerse
+simplemente mirándolo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 326
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Olvidar la máscara causal en modelos generativos.
+2. Usar máscara causal en modelos de comprensión tipo BERT, donde estorba.
+3. Poner las posiciones futuras a cero después del softmax en vez de a −∞ antes.
+
+## 🚀 Dónde se usa de verdad
+
+GPT y todos los modelos de lenguaje generativos, BERT sin máscara, Vision Transformers y
+modelos de audio.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
+- [Radford, A. et al. *Improving Language Understanding by Generative Pre-Training*, 2018](https://openai.com/research/language-unsupervised)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

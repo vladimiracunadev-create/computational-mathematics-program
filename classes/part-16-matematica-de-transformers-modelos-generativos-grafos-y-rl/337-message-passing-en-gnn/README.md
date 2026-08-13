@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**Una capa de paso de mensajes ve un salto; k capas ven un vecindario de radio k.**
 
-Esta clase concreta ese objetivo sobre **Message passing en GNN**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `message_passing`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir temperatura alta con mayor calidad en lugar de mayor entropía.
+
+## 🧩 Fórmulas de la clase
+
+```text
+h_v^{(k+1)} = σ(Σ_{u∈N(v)∪{v}} w_{vu}·W·h_u^{(k)})
+normalización GCN: D^{−1/2}(A+I)D^{−1/2}
+campo receptivo tras k capas: radio k
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La escala 1/√d evita que el producto punto sature la softmax en alta dimensión.
+El paso de mensajes es el mecanismo central de las redes sobre grafos. En cada capa, cada
+nodo recoge las representaciones de sus vecinos, las agrega y las combina con la suya para
+producir una representación nueva. Repetir la operación propaga información cada vez más
+lejos.
+
+El paralelismo con las convoluciones de la parte 15 es exacto: **una capa equivale a un
+salto**, y `k` capas dan un campo receptivo de radio `k`. La diferencia es que en una imagen
+el vecindario es una rejilla regular y en un grafo es arbitrario, con nodos de grado 1 y de
+grado 1000 en la misma red.
+
+Esa irregularidad obliga a **normalizar**. Sin ella, un nodo con mil vecinos acumularía una
+suma con escala completamente distinta a la de un nodo con dos, y las activaciones
+quedarían descontroladas. La normalización simétrica `D^{−1/2}(A+I)D^{−1/2}` de las GCN
+resuelve eso y además añade auto-lazos para que cada nodo conserve su propia información.
+
+La limitación característica es el **sobresuavizado**: con muchas capas, las
+representaciones de todos los nodos convergen a algo indistinguible, porque cada una acaba
+siendo un promedio de casi todo el grafo. Por eso las GNN son típicamente poco profundas
+—dos o tres capas— al contrario que las CNN, y por eso hay líneas de trabajo enteras
+dedicadas a permitir GNN profundas.
+
+## 🧮 Ejemplo trabajado
+
+Dos capas de paso de mensajes sobre cinco nodos.
+
+```text
+características iniciales:
+  [1,0  0,0]  [0,0  1,0]  [1,0  1,0]  [0,5  0,5]  [2,0  −1,0]
+
+tras 1 capa:
+  [0,625  0,663675]
+  [0,577  0,622008]
+  [0,625  0,663675]
+  [1,332107  ...]
+
+tras 2 capas:
+  [0,812193  0,516758]
+  [0,553294  0,590509]
+  [0,812193  0,516758]
+
+Los nodos 0 y 2 convergen a lo mismo: tienen
+vecindarios equivalentes.
+
+Campo receptivo tras k capas: vecindario de radio k.
+Normalización: D^{−1/2}(A+I)D^{−1/2}, como en GCN.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 337
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Apilar muchas capas y provocar sobresuavizado.
+2. Omitir la normalización por grado con grafos muy heterogéneos.
+3. Olvidar los auto-lazos y perder la información propia del nodo.
+
+## 🚀 Dónde se usa de verdad
+
+Predicción molecular, sistemas de recomendación sobre grafos, análisis de redes sociales,
+detección de fraude y simulación física con partículas.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Kipf, T.; Welling, M. *Semi-Supervised Classification with Graph Convolutional Networks*, ICLR, 2017](https://arxiv.org/abs/1609.02907)
+- [Gilmer, J. et al. *Neural Message Passing for Quantum Chemistry*, ICML, 2017](https://arxiv.org/abs/1704.01212)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**La atención no tiene noción de orden, así que la posición hay que inyectarla.**
 
-Esta clase concreta ese objetivo sobre **Positional encoding**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `positional_encoding`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: normalizar el laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+
+## 🧩 Fórmulas de la clase
+
+```text
+PE(pos, 2i)   = sin(pos / 10000^{2i/d})
+PE(pos, 2i+1) = cos(pos / 10000^{2i/d})
+sin parámetros aprendidos
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,53 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Temperatura, top-k y top-p reescriben la distribución antes de muestrear.
+El mecanismo de atención es **invariante a permutaciones**: si se barajan los tokens de
+entrada, las salidas se barajan igual pero nada más cambia. Para el modelo, «el gato come
+pescado» y «pescado come gato el» serían indistinguibles. Hay que añadir la posición
+explícitamente.
+
+La codificación sinusoidal del artículo original usa senos y cosenos de frecuencias que
+decrecen geométricamente a lo largo de las dimensiones. Las primeras dimensiones varían
+rápido y distinguen posiciones cercanas; las últimas varían lento y codifican posición
+global. Es exactamente una descomposición en frecuencias, la parte 13 aplicada al índice de
+posición.
+
+Tiene dos propiedades atractivas. **No tiene parámetros**, así que funciona con longitudes
+de secuencia nunca vistas en entrenamiento, al menos en principio. Y la similitud entre
+codificaciones **decae con la distancia**, lo que da al modelo una noción utilizable de
+proximidad. Además, `PE(pos+k)` es una transformación lineal de `PE(pos)`, lo que facilita
+aprender desplazamientos relativos.
+
+La práctica ha evolucionado. Las posiciones **aprendidas** funcionaron igual de bien y
+dominaron durante años; hoy lo estándar es **RoPE**, que codifica posición rotando los
+vectores de consulta y clave, lo que hace que el producto escalar dependa naturalmente de
+la posición **relativa**. Es la solución que mejor extrapola a contextos largos.
+
+## 🧮 Ejemplo trabajado
+
+Codificación sinusoidal en dimensión 8.
+
+```text
+dimensión: 8
+
+pos 0: [0,000000 ; 1,0 ; 0,000000 ; 1,0 ; 0,0 ; 1,0 ; 0,0 ; 1,0]
+pos 1: [0,841471 ; 0,5xxx ; ...]
+pos 2: [0,909297 ; ...]
+
+normas: todas valen 2,0                             ✓
+(la norma es constante por construcción)
+
+producto escalar con pos 0:
+  pos 1  →  3,535256
+  pos 5  →  3,159983
+
+La similitud decae con la distancia                  ✓
+
+Sin esta codificación, la atención vería la secuencia
+como un conjunto sin orden.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +117,16 @@ compmath run 323
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Omitir la codificación posicional y entrenar un modelo ciego al orden.
+2. Suponer que la codificación sinusoidal extrapola bien a contextos mucho más largos.
+3. Sumar la codificación después de la primera capa en vez de al embedding.
+
+## 🚀 Dónde se usa de verdad
+
+Todos los Transformers, modelos de visión con parches, modelos de audio y cualquier
+arquitectura con atención sobre secuencias.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
+- [Su, J. et al. *RoFormer: Enhanced Transformer with Rotary Position Embedding*, 2021](https://arxiv.org/abs/2104.09864)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

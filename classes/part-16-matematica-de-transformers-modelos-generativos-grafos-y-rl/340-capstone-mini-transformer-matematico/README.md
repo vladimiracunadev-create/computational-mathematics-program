@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**Un Transformer de 101 parámetros aprende a mirar exactamente una posición atrás.**
 
-Esta clase concreta ese objetivo sobre **Capstone: mini-Transformer matemático**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_mini_transformer`.
 4. Interpretar las 20 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir temperatura alta con mayor calidad en lugar de mayor entropía.
+
+## 🧩 Fórmulas de la clase
+
+```text
+embedding + positional encoding → self-attention causal → salida
+tarea: predecir el token anterior
+verificación: la atención debe concentrarse en la posición i−1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,53 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Bellman expresa el valor como recompensa inmediata más valor futuro descontado.
+El capstone construye un Transformer causal completo con todos los componentes de la parte:
+embedding aprendido, codificación posicional sinusoidal, self-attention con máscara causal
+y proyección de salida. Son 101 parámetros y funciona.
+
+La tarea elegida —predecir el token anterior— es deliberadamente trivial, y esa trivialidad
+es lo valioso. Permite verificar el mecanismo de forma **directa**: si la atención funciona
+como se ha descrito, la matriz de atención aprendida debe concentrar su masa en la posición
+`i−1`. No hace falta confiar en una métrica agregada; se puede mirar la matriz.
+
+El papel de la codificación posicional se vuelve evidente aquí. Sin ella el modelo no
+podría resolver la tarea en absoluto, porque «el token anterior» es una noción puramente
+posicional y la atención por sí sola es ciega al orden. Quitarla y ver el fallo es el
+experimento de ablación más instructivo posible.
+
+La distancia con un modelo real es de escala, no de concepto: los mismos componentes,
+repetidos decenas de veces y con dimensiones mil veces mayores. Entender qué hace cada
+pieza en 101 parámetros es lo que permite razonar sobre qué ocurre en 100 000 millones, y
+cierra el recorrido que empezó contando con los dedos en la parte 00.
+
+## 🧮 Ejemplo trabajado
+
+Configuración del mini-Transformer.
+
+```text
+tarea: predecir el token anterior (copia desplazada)
+
+vocabulario: 6
+d_model: 8
+longitud de secuencia: 5
+
+componentes:
+  embedding aprendido
+  positional encoding sinusoidal
+  self-attention causal
+  proyección de salida
+
+parámetros entrenados: 101
+
+Verificación esperada:
+  la matriz de atención debe concentrarse
+  en la posición i−1 para cada token i
+
+Ablación: sin positional encoding la tarea
+es irresoluble, porque "anterior" es posicional.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +117,16 @@ compmath run 340
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Evaluar solo la pérdida sin inspeccionar la matriz de atención.
+2. Omitir la codificación posicional en tareas que dependen del orden.
+3. Extrapolar conclusiones de un modelo de juguete a modelos de gran escala.
+
+## 🚀 Dónde se usa de verdad
+
+Comprensión profunda de los Transformers, interpretabilidad mecanicista, docencia,
+entrevistas técnicas y depuración de implementaciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
+- [Elhage, N. et al. *A Mathematical Framework for Transformer Circuits*, Anthropic, 2021](https://transformer-circuits.pub/2021/framework/index.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

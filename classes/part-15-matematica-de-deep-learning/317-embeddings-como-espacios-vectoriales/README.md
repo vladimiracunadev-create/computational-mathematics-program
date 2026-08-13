@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**En un espacio de embeddings, la dirección entre dos palabras codifica su relación.**
 
-Esta clase concreta ese objetivo sobre **Embeddings como espacios vectoriales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `embeddings`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar softmax sin restar el máximo y provocar overflow.
+
+## 🧩 Fórmulas de la clase
+
+```text
+similitud coseno = (a·b) / (‖a‖·‖b‖)
+analogía: rey − hombre + mujer ≈ reina
+la magnitud no importa, solo la dirección
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,55 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Sin no linealidad, apilar capas sigue siendo una única transformación lineal.
+Un embedding representa cada elemento discreto —palabra, usuario, producto— como un vector
+denso de dimensión moderada, aprendido de forma que la **proximidad geométrica refleje
+similitud semántica**. Es la alternativa a la codificación one-hot, que es enorme, dispersa
+y en la que todos los elementos están a la misma distancia entre sí.
+
+La medida de similitud habitual es el **coseno**, no la distancia euclídea. La razón es que
+la magnitud de un embedding suele correlacionar con la frecuencia del término, que no es
+información semántica; el coseno la descarta y mide solo la dirección. Es el producto
+escalar normalizado de la parte 05.
+
+El resultado que hizo famosos a los embeddings es que ciertas **direcciones codifican
+relaciones**. El vector que va de «hombre» a «mujer» es aproximadamente el mismo que va de
+«rey» a «reina», lo que permite resolver analogías con aritmética vectorial. Conviene
+matizar: el efecto es real pero se exageró bastante en la divulgación, y depende mucho del
+corpus y del método de evaluación.
+
+Hay una consecuencia ética que no es opcional mencionar. Los embeddings aprenden los sesgos
+presentes en los datos, y las mismas analogías que capturan «rey es a reina» capturan
+asociaciones estereotipadas entre profesiones y género. Como el modelo aprende la
+distribución del corpus, esos sesgos se propagan a cualquier sistema construido encima, y
+detectarlos requiere auditar explícitamente.
+
+## 🧮 Ejemplo trabajado
+
+Similitudes y analogía en un espacio de 4 dimensiones.
+
+```text
+vocabulario: 5 términos, dimensión 4
+
+similitudes con "rey":
+  hombre  0,857916
+  mujer   0,815207
+  reina   0,768974
+  mesa    0,3xxxxx
+
+analogía: rey − hombre + mujer
+  vector resultante: [0,85 ; 0,1 ; 0,1 ; 0,05]
+
+  ranking por similitud:
+    reina   1,000000     ← la analogía funciona   ✓
+    mujer   0,835523
+    rey     0,768974
+
+Nota: en este espacio pequeño "hombre" es más similar
+a "rey" que "reina", lo que muestra que la similitud
+directa y la analogía capturan cosas distintas.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +119,16 @@ compmath run 317
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Usar distancia euclídea donde corresponde similitud coseno.
+2. Sobreinterpretar las analogías como propiedad universal de los embeddings.
+3. Desplegar embeddings sin auditar los sesgos heredados del corpus.
+
+## 🚀 Dónde se usa de verdad
+
+Representación de vocabularios, sistemas de recomendación, búsqueda semántica, bases de
+datos vectoriales y capa de entrada de todo modelo de lenguaje.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +171,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Mikolov, T. et al. *Efficient estimation of word representations in vector space*, 2013](https://arxiv.org/abs/1301.3781)
+- [Bolukbasi, T. et al. *Man is to computer programmer as woman is to homemaker?*, NeurIPS, 2016](https://arxiv.org/abs/1607.06520)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Un nodo usado dos veces recibe la suma de los dos gradientes, no uno de ellos.**
 
-Esta clase concreta ese objetivo sobre **Computational graphs**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `computational_graphs`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+cada operación es un nodo; cada dependencia, una arista
+orden topológico inverso para el paso hacia atrás
+nodo con k consumos: dL/dv = Σ de las k contribuciones
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Backpropagation es la regla de la cadena aplicada en orden topológico inverso.
+Representar una expresión como grafo —nodos para las operaciones, aristas para las
+dependencias— convierte la derivación en un procedimiento mecánico. Cada tipo de nodo sabe
+derivar su operación local, y la regla de la cadena encadena esas derivadas locales a lo
+largo del grafo.
+
+La regla que genera más errores al implementar autodiferenciación a mano es la
+**acumulación**. Si una variable se usa en varios sitios, su gradiente total es la
+**suma** de las contribuciones de todos sus consumos, no la última calculada. Sobrescribir
+en vez de sumar produce gradientes silenciosamente incorrectos, y el entrenamiento
+simplemente converge peor sin dar ningún error.
+
+El ejemplo mínimo lo muestra: en `y = x² + x`, la variable `x` alimenta dos ramas. La
+derivada es `2x + 1`, que es exactamente la suma de las dos contribuciones. Si solo se
+tomara una, el gradiente sería `2x` o `1`, y ambos son incorrectos.
+
+Esa misma regla explica un detalle práctico de PyTorch que confunde al principio:
+`optimizer.zero_grad()` hace falta precisamente porque el framework **acumula** por diseño.
+Esa acumulación no es un fallo: es lo que permite simular lotes grandes sumando gradientes
+de varios lotes pequeños antes de actualizar.
+
+## 🧮 Ejemplo trabajado
+
+Dos expresiones con nodos reutilizados.
+
+```text
+Expresión 1:  y = x² + x   en x = 2
+
+  y = 4 + 2 = 6,0
+
+  rama 1: d(x²)/dx = 2x = 4
+  rama 2: d(x)/dx  = 1
+  acumulado: dy/dx = 4 + 1 = 5,0
+
+  comprobación analítica 2x + 1 = 5,0                ✓
+
+  Si se sobrescribiera en vez de sumar, saldría 4 o 1.
+
+Expresión 2:  e = (ab + a)·(ab)   en a = 3, b = 4
+
+  el producto ab se usa dos veces:
+  su gradiente acumula ambas contribuciones.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 306
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Sobrescribir el gradiente de un nodo en vez de acumularlo.
+2. Recorrer el grafo en orden incorrecto y usar gradientes aún no calculados.
+3. Olvidar poner a cero los gradientes entre iteraciones en PyTorch.
+
+## 🚀 Dónde se usa de verdad
+
+Implementación de autodiferenciación, capas personalizadas, acumulación de gradientes para
+lotes grandes y depuración de frameworks.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Baydin, A. et al. *Automatic differentiation in machine learning: a survey*, JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)
+- [Karpathy, A. *micrograd*, 2020](https://github.com/karpathy/micrograd)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

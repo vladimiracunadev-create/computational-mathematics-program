@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**Con d = 256 y sin escalar, la softmax se satura y el gradiente desaparece.**
 
-Esta clase concreta ese objetivo sobre **Scaled dot-product attention**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `scaled_dot_product_attention`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir temperatura alta con mayor calidad en lugar de mayor entropía.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Attention(Q,K,V) = softmax(QKᵀ/√d_k)·V
+Var(q·k) ≈ d·σ⁴ con entradas iid
+dividir por √d_k devuelve la varianza a escala 1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Bellman expresa el valor como recompensa inmediata más valor futuro descontado.
+La atención escalada calcula la similitud entre cada consulta y cada clave mediante
+producto escalar, normaliza con softmax y usa los pesos resultantes para promediar los
+valores. Es un promedio ponderado por similitud, y toda la fórmula cabe en esa frase.
+
+La única parte que no es evidente es el factor `1/√d_k`, y su justificación es
+estadística. Si las componentes de `q` y `k` son independientes con varianza `σ²`, el
+producto escalar de `d` términos tiene varianza proporcional a `d`, y por tanto desviación
+proporcional a `√d`. Con `d = 256` eso son 16 veces más dispersión que con `d = 1`.
+
+El efecto sobre la softmax es destructivo. Con puntuaciones muy dispersas, la exponencial
+concentra casi toda la masa en el máximo: la distribución se vuelve prácticamente one-hot,
+la atención deja de ser un promedio y se convierte en una selección dura. Peor aún, en esa
+región la softmax tiene gradiente casi nulo y el mecanismo **deja de aprender**.
+
+Dividir por `√d_k` cancela exactamente el crecimiento. La comparación numérica lo muestra:
+con `d = 256` sin escalar, un peso se lleva prácticamente todo y otro cae a `8e-06`; con la
+escala, los pesos quedan repartidos y el gradiente fluye. Un solo factor en el denominador
+es lo que hace entrenable la arquitectura.
+
+## 🧮 Ejemplo trabajado
+
+Puntuaciones y pesos con y sin escala, en dos dimensiones.
+
+```text
+d = 8, sin escalar:
+  puntuaciones: [ 0,4204 ; −1,9767 ;  1,3619 ;  1,2219]
+  pesos:        [0,169955 ; ... ]        repartidos
+
+d = 8, escalado:
+  puntuaciones: [ 0,3541 ; −0,3729 ;  2,3033 ;  0,8469]
+  pesos:        [0,098585 ; ... ]        repartidos
+
+d = 256, sin escalar:
+  puntuaciones: [−9,7106 ; −2,6027 ; 1,9724 ; −15,9423]
+  pesos:        [8e-06 ; ...]           ← saturado    ✗
+
+d = 256, escalado:
+  puntuaciones: [−0,7502 ; 1,9863 ; 0,3221 ; 0,5716]
+  pesos:        [0,043279 ; ...]        repartidos    ✓
+
+Var(q·k) ≈ d·σ⁴ : por eso se divide por √d.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 325
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Omitir el factor 1/√d y saturar la softmax en dimensión alta.
+2. Escalar por d en vez de por √d.
+3. Atribuir la saturación a la inicialización cuando es un problema de escala.
+
+## 🚀 Dónde se usa de verdad
+
+Todos los Transformers, atención en visión y audio, mecanismos de recuperación y modelos
+de secuencias modernos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
+- [Phuong, M.; Hutter, M. *Formal Algorithms for Transformers*, 2022](https://arxiv.org/abs/2207.09238)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

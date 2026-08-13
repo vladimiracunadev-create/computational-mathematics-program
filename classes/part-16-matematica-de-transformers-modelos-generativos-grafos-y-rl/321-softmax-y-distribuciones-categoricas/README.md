@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**Restar el máximo antes de exponenciar no cambia el resultado y evita el desbordamiento.**
 
-Esta clase concreta ese objetivo sobre **Softmax y distribuciones categóricas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `softmax_distributions`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar la máscara causal en el modelado autoregresivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+softmax(z)ᵢ = e^{zᵢ} / Σⱼ e^{zⱼ}
+softmax(z + c) = softmax(z)  para todo c
+implementación: restar max(z) antes de exponenciar
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La atención es un promedio ponderado por similitud, normalizado con softmax.
+Softmax convierte un vector de números reales cualesquiera en una distribución de
+probabilidad: todos positivos y sumando 1. Es la capa de salida de todo clasificador y la
+pieza que normaliza los pesos de atención, así que aparece dos veces en cada bloque
+Transformer.
+
+Su propiedad estructural es la **invariancia frente a desplazamientos**: sumar la misma
+constante a todos los logits no cambia la salida, porque el factor común se cancela entre
+numerador y denominador. Solo importan las **diferencias** entre logits, no sus valores
+absolutos.
+
+Esa invariancia tiene una consecuencia práctica que no es opcional. Si un logit vale 1000,
+`exp(1000)` desborda a infinito y el resultado es NaN. Como restar el máximo no altera la
+salida, toda implementación seria lo hace: los exponentes quedan entre `exp(−algo)` y
+`exp(0) = 1`, siempre representables. Es el truco de estabilidad numérica más rentable de
+todo el aprendizaje profundo, y viene directamente de la parte 01.
+
+Conviene además recordar su origen: softmax es la distribución de **máxima entropía**
+compatible con los logits, como se vio en la clase 267. No es una normalización elegida por
+comodidad sino la solución de un problema de optimización con restricciones, y esa es la
+razón de su forma exponencial.
+
+## 🧮 Ejemplo trabajado
+
+Invariancia y estabilidad numérica.
+
+```text
+logits: [2,0 ; 1,0 ; 0,1 ; −1,0]
+
+probabilidades: [0,638066 ; 0,234731 ; 0,095435 ; 0,031767]
+suman 1,0                                            ✓
+
+Sumando 1000 a todos los logits:
+  [0,638066 ; 0,234731 ; 0,095435 ; 0,031767]
+  idéntico resultado                                 ✓
+
+Sin restar el máximo:
+  exp(1002) = inf  →  inf/inf = NaN                  ✗
+
+Restando el máximo (2,0 o 1002,0, da igual):
+  exponentes en [exp(−3), exp(0)]                    ✓
+
+Solo importan las diferencias entre logits.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 321
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Aplicar softmax sin restar el máximo.
+2. Aplicar softmax dos veces cuando la pérdida ya lo incluye.
+3. Interpretar los valores absolutos de los logits en vez de sus diferencias.
+
+## 🚀 Dónde se usa de verdad
+
+Capa de salida de clasificadores, normalización de pesos de atención, muestreo de tokens y
+políticas estocásticas en aprendizaje por refuerzo.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)
+- [Bridle, J. *Probabilistic interpretation of feedforward classification network outputs*, 1990](https://doi.org/10.1007/978-3-642-76153-9_28)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

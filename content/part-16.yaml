@@ -1,0 +1,1337 @@
+part: "16"
+titulo: "Matemática de Transformers, modelos generativos, grafos y RL"
+
+resumen_extendido: |
+  Esta parte traduce a matemática los artículos que definen el estado del arte. No hay conceptos
+  nuevos: la atención es un promedio ponderado por productos escalares, el ELBO es la cota de
+  Jensen sobre una log-verosimilitud, la difusión es un proceso estocástico con reverso
+  aprendido y Bellman es una recursión sobre esperanzas. Todo lo necesario está en las quince
+  partes anteriores, y lo que se hace aquí es reconocerlo.
+
+  Las clases 321 a 328 construyen el Transformer pieza a pieza. **Softmax** convierte logits
+  arbitrarios en una distribución categórica, y su invariancia frente a desplazamientos es
+  exactamente lo que permite restar el máximo para evitar el desbordamiento: sin ese truco,
+  `exp(1000)` es infinito y la implementación falla. **Q, K y V** son tres proyecciones
+  distintas del mismo token, con papeles distintos: qué busco, qué ofrezco y qué aporto.
+
+  El detalle más citado y menos entendido es el `1/√d`. Con dimensión 256, los productos
+  escalares de vectores aleatorios tienen desviación proporcional a `√d`, y la softmax de
+  valores tan dispersos se satura: un peso se lleva casi toda la masa y los gradientes
+  desaparecen. Dividir por `√d` devuelve las puntuaciones a una escala manejable, y la
+  demostración numérica de la clase 325 lo hace evidente comparando `d = 8` con `d = 256`.
+
+  Las clases 329 y 330 tratan la generación. Un modelo autorregresivo factoriza la probabilidad
+  de una secuencia mediante la regla de la cadena de la clase 183, y **la máscara causal** es lo
+  que impide que un token vea el futuro: olvidarla produce un modelo con métricas excelentes
+  durante el entrenamiento e inútil al generar. Temperatura, top-k y top-p **reescriben la
+  distribución antes de muestrear**, y conviene tener claro que temperatura alta no significa
+  mayor calidad sino mayor entropía.
+
+  Las clases 331 a 335 recorren los modelos generativos. El **VAE** necesita el truco de
+  reparametrización para que el gradiente atraviese una operación de muestreo, y su objetivo es
+  el **ELBO**: reconstrucción menos KL, con una brecha respecto de la log-verosimilitud que es
+  exactamente otra KL, siempre no negativa. Las **GAN** se formulan como un juego minimax cuyo
+  discriminador óptimo tiene forma cerrada y cuyo equilibrio ocurre en `D = 0,5`. La **difusión**
+  añade ruido con un horario fijo —y una propiedad muy práctica: se puede saltar a cualquier
+  paso sin simular los anteriores— y aprende a invertir el proceso prediciendo el ruido añadido.
+
+  El cierre incorpora dos áreas más. Los **grafos**, donde el Laplaciano codifica la estructura y
+  la multiplicidad del autovalor cero cuenta las componentes conexas, y donde el paso de
+  mensajes hace crecer el campo receptivo un salto por capa, exactamente igual que las
+  convoluciones de la parte 15. Y el **aprendizaje por refuerzo**, donde la ecuación de Bellman
+  expresa el valor como recompensa inmediata más valor futuro descontado, y REINFORCE convierte
+  eso en un gradiente sobre la política.
+
+  El capstone entrena un mini-Transformer causal completo con 101 parámetros que aprende a
+  copiar el token anterior. Es una tarea trivial y elegida a propósito: permite comprobar que la
+  matriz de atención aprende a mirar exactamente una posición atrás, que es la verificación más
+  directa posible de que el mecanismo funciona como se ha descrito.
+
+mapa: |
+  flowchart TD
+      A["Clases 321-323 · Softmax, embeddings y posicion"] --> B["Clases 324-325 · Q K V y atencion escalada"]
+      B --> C["Clases 326-328 · Self-attention, multi-head y bloque completo"]
+      C --> D["Clases 329-330 · Autoregresivo y muestreo"]
+      A --> E["Clases 331-333 · VAE, ELBO y GAN"]
+      E --> F["Clases 334-335 · Difusion directa e inversa"]
+      A --> G["Clases 336-337 · Laplaciano y message passing"]
+      D --> H["Clases 338-339 · Bellman y policy gradients"]
+      D --> I["Clase 340 · Capstone mini-Transformer"]
+      E -.-> J["Divergencia KL · Parte 13"]
+      B -.-> K["Producto escalar y proyeccion · Parte 05"]
+      F ==> L["Parte 17 · Frontera y metodos avanzados"]
+
+glosario:
+  - termino: "Softmax"
+    definicion: "Convierte logits reales en una distribución categórica. Es la de máxima entropía dados los logits."
+    clase: "321"
+  - termino: "Estabilidad numérica del softmax"
+    definicion: "Restar el máximo antes de exponenciar. La salida no cambia y se evita el desbordamiento."
+    clase: "321"
+  - termino: "Similitud coseno"
+    definicion: "Producto escalar normalizado. Mide dirección e ignora magnitud."
+    clase: "322"
+  - termino: "Positional encoding"
+    definicion: "Información de posición añadida al embedding. La versión sinusoidal no tiene parámetros."
+    clase: "323"
+  - termino: "Query, Key, Value"
+    definicion: "Tres proyecciones del mismo token: qué busco, qué ofrezco y qué aporto."
+    clase: "324"
+  - termino: "Atención escalada"
+    definicion: "softmax(QKᵀ/√d)·V. La escala evita que la softmax se sature en alta dimensión."
+    clase: "325"
+  - termino: "Factor 1/√d"
+    definicion: "Corrige que la varianza del producto escalar crece con la dimensión."
+    clase: "325"
+  - termino: "Self-attention"
+    definicion: "Atención donde consultas, claves y valores vienen de la misma secuencia."
+    clase: "326"
+  - termino: "Máscara causal"
+    definicion: "Impide que un token atienda a posiciones futuras. Imprescindible en generación."
+    clase: "326"
+  - termino: "Multi-head attention"
+    definicion: "Varias atenciones en subespacios distintos, concatenadas y proyectadas."
+    clase: "327"
+  - termino: "Conexión residual"
+    definicion: "Sumar la entrada a la salida del bloque. Crea un camino directo para el gradiente."
+    clase: "328"
+  - termino: "Feed-forward por posición"
+    definicion: "MLP aplicado independientemente a cada token, típicamente con expansión ×4."
+    clase: "328"
+  - termino: "Modelado autorregresivo"
+    definicion: "Factorizar la probabilidad de una secuencia como producto de condicionales."
+    clase: "329"
+  - termino: "Perplejidad"
+    definicion: "Exponencial de la entropía cruzada. Número efectivo de opciones equiprobables."
+    clase: "329"
+  - termino: "Temperatura"
+    definicion: "Divide los logits antes del softmax. Menor concentra la distribución, mayor la aplana."
+    clase: "330"
+  - termino: "Top-k y top-p"
+    definicion: "Truncar el vocabulario a los k mejores o a la masa acumulada p antes de muestrear."
+    clase: "330"
+  - termino: "Autoencoder variacional"
+    definicion: "Codificador que produce una distribución latente y decodificador que reconstruye."
+    clase: "331"
+  - termino: "Truco de reparametrización"
+    definicion: "z = μ + σ·ε con ε fijo, para que el gradiente atraviese el muestreo."
+    clase: "331"
+  - termino: "ELBO"
+    definicion: "Cota inferior de la log-verosimilitud: reconstrucción menos KL al prior."
+    clase: "332"
+  - termino: "Brecha del ELBO"
+    definicion: "KL entre la posterior aproximada y la verdadera. Siempre no negativa."
+    clase: "332"
+  - termino: "Juego minimax"
+    definicion: "Dos jugadores con objetivos opuestos. Base del entrenamiento de las GAN."
+    clase: "333"
+  - termino: "Discriminador óptimo"
+    definicion: "D*(x) = p_datos/(p_datos + p_G). En el equilibrio vale 0,5 en todas partes."
+    clase: "333"
+  - termino: "Proceso directo de difusión"
+    definicion: "Añadir ruido gaussiano según un horario fijo hasta destruir la señal."
+    clase: "334"
+  - termino: "Horario de ruido"
+    definicion: "Secuencia de β que determina cuánto ruido se añade en cada paso."
+    clase: "334"
+  - termino: "Proceso inverso"
+    definicion: "Red que predice el ruido añadido y permite reconstruir el dato original."
+    clase: "335"
+  - termino: "Laplaciano del grafo"
+    definicion: "L = D − A. Sus autovalores describen la conectividad de la estructura."
+    clase: "336"
+  - termino: "Multiplicidad del autovalor cero"
+    definicion: "Número de componentes conexas del grafo."
+    clase: "336"
+  - termino: "Paso de mensajes"
+    definicion: "Cada nodo agrega información de sus vecinos. Una capa equivale a un salto."
+    clase: "337"
+  - termino: "Sobresuavizado"
+    definicion: "Con muchas capas, todos los nodos convergen a representaciones indistinguibles."
+    clase: "337"
+  - termino: "Ecuación de Bellman"
+    definicion: "V(s) = max_a [R + γ·V(s')]. Valor como recompensa inmediata más futuro descontado."
+    clase: "338"
+  - termino: "Factor de descuento"
+    definicion: "γ entre 0 y 1. Pondera cuánto valen las recompensas futuras."
+    clase: "338"
+  - termino: "REINFORCE"
+    definicion: "Gradiente de política que sube la probabilidad de acciones con recompensa alta."
+    clase: "339"
+  - termino: "Línea base"
+    definicion: "Valor restado a la recompensa para reducir la varianza sin sesgar el gradiente."
+    clase: "339"
+
+clases:
+  "321":
+    concepto: "Restar el máximo antes de exponenciar no cambia el resultado y evita el desbordamiento."
+    formulas:
+      - "softmax(z)ᵢ = e^{zᵢ} / Σⱼ e^{zⱼ}"
+      - "softmax(z + c) = softmax(z)  para todo c"
+      - "implementación: restar max(z) antes de exponenciar"
+    desarrollo: |
+      Softmax convierte un vector de números reales cualesquiera en una distribución de
+      probabilidad: todos positivos y sumando 1. Es la capa de salida de todo clasificador y la
+      pieza que normaliza los pesos de atención, así que aparece dos veces en cada bloque
+      Transformer.
+
+      Su propiedad estructural es la **invariancia frente a desplazamientos**: sumar la misma
+      constante a todos los logits no cambia la salida, porque el factor común se cancela entre
+      numerador y denominador. Solo importan las **diferencias** entre logits, no sus valores
+      absolutos.
+
+      Esa invariancia tiene una consecuencia práctica que no es opcional. Si un logit vale 1000,
+      `exp(1000)` desborda a infinito y el resultado es NaN. Como restar el máximo no altera la
+      salida, toda implementación seria lo hace: los exponentes quedan entre `exp(−algo)` y
+      `exp(0) = 1`, siempre representables. Es el truco de estabilidad numérica más rentable de
+      todo el aprendizaje profundo, y viene directamente de la parte 01.
+
+      Conviene además recordar su origen: softmax es la distribución de **máxima entropía**
+      compatible con los logits, como se vio en la clase 267. No es una normalización elegida por
+      comodidad sino la solución de un problema de optimización con restricciones, y esa es la
+      razón de su forma exponencial.
+    ejemplo: |
+      Invariancia y estabilidad numérica.
+
+      ```text
+      logits: [2,0 ; 1,0 ; 0,1 ; −1,0]
+
+      probabilidades: [0,638066 ; 0,234731 ; 0,095435 ; 0,031767]
+      suman 1,0                                            ✓
+
+      Sumando 1000 a todos los logits:
+        [0,638066 ; 0,234731 ; 0,095435 ; 0,031767]
+        idéntico resultado                                 ✓
+
+      Sin restar el máximo:
+        exp(1002) = inf  →  inf/inf = NaN                  ✗
+
+      Restando el máximo (2,0 o 1002,0, da igual):
+        exponentes en [exp(−3), exp(0)]                    ✓
+
+      Solo importan las diferencias entre logits.
+      ```
+    errores:
+      - "Aplicar softmax sin restar el máximo."
+      - "Aplicar softmax dos veces cuando la pérdida ya lo incluye."
+      - "Interpretar los valores absolutos de los logits en vez de sus diferencias."
+    aplicacion: |
+      Capa de salida de clasificadores, normalización de pesos de atención, muestreo de tokens y
+      políticas estocásticas en aprendizaje por refuerzo.
+    referencias:
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
+      - "[Bridle, J. *Probabilistic interpretation of feedforward classification network outputs*, 1990](https://doi.org/10.1007/978-3-642-76153-9_28)"
+
+  "322":
+    concepto: "El coseno ignora la magnitud, y en embeddings la magnitud suele ser frecuencia, no significado."
+    formulas:
+      - "cos(a,b) = (a·b) / (‖a‖·‖b‖)"
+      - "rango [−1, 1]"
+      - "invariante al escalado de cualquiera de los dos vectores"
+    desarrollo: |
+      La similitud coseno mide el ángulo entre dos vectores, descartando sus longitudes. En
+      espacios de embeddings es la medida estándar, y la razón es concreta: la norma de un
+      embedding tiende a correlacionar con la frecuencia del término en el corpus, que no es
+      información semántica.
+
+      La diferencia con la distancia euclídea se ve mejor con un caso extremo. Un vector y su
+      doble apuntan exactamente en la misma dirección, así que su coseno es 1 —máxima
+      similitud—, mientras que su distancia euclídea puede ser enorme. Para «¿hablan de lo
+      mismo?» el coseno acierta y la distancia no.
+
+      El **producto escalar sin normalizar** es lo que usa la atención, y ahí la magnitud sí
+      influye deliberadamente: un token puede aprender a tener clave de norma grande para
+      atraer más atención. Es una decisión de diseño distinta, no un descuido, y por eso la
+      atención necesita el factor `1/√d` mientras que la búsqueda por similitud usa coseno.
+
+      La consecuencia de ingeniería es que si los vectores se **normalizan previamente**, el
+      producto escalar **es** el coseno. Las bases de datos vectoriales explotan esto: normalizan
+      al indexar y luego usan producto escalar, que es más rápido y está mejor optimizado que
+      calcular normas en cada consulta.
+    ejemplo: |
+      Coseno frente a distancia euclídea sobre la misma consulta.
+
+      ```text
+      consulta: (0,8 ; 0,5 ; 0,2 ; 0,1)
+
+      candidato          coseno     distancia euclídea
+      muy relacionado   0,994667        0,100000
+      relacionado       0,787527        0,608276
+      ortogonal         0,0xxxxx        1,352770
+
+      Efecto del escalado:
+        multiplicar un candidato por 10
+          coseno:    no cambia                            ✓
+          distancia: se multiplica por ~10                ✗
+
+      En embeddings la norma suele reflejar frecuencia,
+      no significado: por eso se usa coseno.
+      ```
+    errores:
+      - "Usar distancia euclídea sin normalizar sobre embeddings."
+      - "Normalizar los vectores de atención y perder la información de magnitud."
+      - "Comparar cosenos entre espacios de embeddings distintos."
+    aplicacion: |
+      Búsqueda semántica, bases de datos vectoriales, RAG, sistemas de recomendación y
+      deduplicación de documentos.
+    referencias:
+      - "[Mikolov, T. et al. *Distributed representations of words and phrases*, NeurIPS, 2013](https://arxiv.org/abs/1310.4546)"
+      - "[Reimers, N.; Gurevych, I. *Sentence-BERT*, EMNLP, 2019](https://arxiv.org/abs/1908.10084)"
+
+  "323":
+    concepto: "La atención no tiene noción de orden, así que la posición hay que inyectarla."
+    formulas:
+      - "PE(pos, 2i)   = sin(pos / 10000^{2i/d})"
+      - "PE(pos, 2i+1) = cos(pos / 10000^{2i/d})"
+      - "sin parámetros aprendidos"
+    desarrollo: |
+      El mecanismo de atención es **invariante a permutaciones**: si se barajan los tokens de
+      entrada, las salidas se barajan igual pero nada más cambia. Para el modelo, «el gato come
+      pescado» y «pescado come gato el» serían indistinguibles. Hay que añadir la posición
+      explícitamente.
+
+      La codificación sinusoidal del artículo original usa senos y cosenos de frecuencias que
+      decrecen geométricamente a lo largo de las dimensiones. Las primeras dimensiones varían
+      rápido y distinguen posiciones cercanas; las últimas varían lento y codifican posición
+      global. Es exactamente una descomposición en frecuencias, la parte 13 aplicada al índice de
+      posición.
+
+      Tiene dos propiedades atractivas. **No tiene parámetros**, así que funciona con longitudes
+      de secuencia nunca vistas en entrenamiento, al menos en principio. Y la similitud entre
+      codificaciones **decae con la distancia**, lo que da al modelo una noción utilizable de
+      proximidad. Además, `PE(pos+k)` es una transformación lineal de `PE(pos)`, lo que facilita
+      aprender desplazamientos relativos.
+
+      La práctica ha evolucionado. Las posiciones **aprendidas** funcionaron igual de bien y
+      dominaron durante años; hoy lo estándar es **RoPE**, que codifica posición rotando los
+      vectores de consulta y clave, lo que hace que el producto escalar dependa naturalmente de
+      la posición **relativa**. Es la solución que mejor extrapola a contextos largos.
+    ejemplo: |
+      Codificación sinusoidal en dimensión 8.
+
+      ```text
+      dimensión: 8
+
+      pos 0: [0,000000 ; 1,0 ; 0,000000 ; 1,0 ; 0,0 ; 1,0 ; 0,0 ; 1,0]
+      pos 1: [0,841471 ; 0,5xxx ; ...]
+      pos 2: [0,909297 ; ...]
+
+      normas: todas valen 2,0                             ✓
+      (la norma es constante por construcción)
+
+      producto escalar con pos 0:
+        pos 1  →  3,535256
+        pos 5  →  3,159983
+
+      La similitud decae con la distancia                  ✓
+
+      Sin esta codificación, la atención vería la secuencia
+      como un conjunto sin orden.
+      ```
+    errores:
+      - "Omitir la codificación posicional y entrenar un modelo ciego al orden."
+      - "Suponer que la codificación sinusoidal extrapola bien a contextos mucho más largos."
+      - "Sumar la codificación después de la primera capa en vez de al embedding."
+    aplicacion: |
+      Todos los Transformers, modelos de visión con parches, modelos de audio y cualquier
+      arquitectura con atención sobre secuencias.
+    referencias:
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+      - "[Su, J. et al. *RoFormer: Enhanced Transformer with Rotary Position Embedding*, 2021](https://arxiv.org/abs/2104.09864)"
+
+  "324":
+    concepto: "Q, K y V son tres proyecciones del mismo token con tres papeles distintos."
+    formulas:
+      - "Q = W_Q·x   (qué busco)"
+      - "K = W_K·x   (qué ofrezco)"
+      - "V = W_V·x   (qué aporto)"
+    desarrollo: |
+      La atención se explica bien con la metáfora de una búsqueda. Cada token emite una
+      **consulta** que describe qué información necesita, expone una **clave** que describe qué
+      información contiene, y guarda un **valor** que es lo que efectivamente entregará si
+      alguien lo selecciona.
+
+      Que los tres vengan del mismo vector de entrada mediante tres matrices distintas es lo
+      esencial. Separar los papeles permite que un token busque una cosa y ofrezca otra: un
+      adjetivo puede buscar el sustantivo al que modifica mientras ofrece su propia información
+      semántica. Con una sola proyección esa asimetría sería imposible.
+
+      Las dimensiones no tienen por qué coincidir con la del modelo. Es habitual proyectar a una
+      dimensión menor `d_k`, lo que reduce el coste y, en multi-head, permite repartir la
+      capacidad entre varias cabezas sin multiplicar los parámetros.
+
+      La generalización que esta separación permite es la **atención cruzada**: si las consultas
+      vienen de una secuencia y las claves y valores de otra, un decodificador puede atender al
+      codificador. Ese es el mecanismo de la traducción automática, y el mismo que permite a un
+      modelo multimodal atender desde texto a una imagen.
+    ejemplo: |
+      Las tres proyecciones de un mismo token.
+
+      ```text
+      token de entrada: (1,0 ; 0,5 ; −0,3 ; 0,8)
+      d_model = 4      d_k = 3
+
+      query = (−0,011555 ; −0,203105 ;  1,236170)
+      key   = (−0,372490 ;  0,857526 ; −0,242572)
+      value = ( 1,518768 ; −0,211168 ; −0,655401)
+
+      Los tres vectores son muy distintos entre sí
+      aunque provienen del mismo token.
+
+      Parámetros: 3 matrices de 4×3 = 36 valores.
+
+      Atención cruzada: Q de una secuencia,
+      K y V de otra. Mismo mecanismo.
+      ```
+    errores:
+      - "Usar la misma proyección para consulta y clave."
+      - "Confundir qué secuencia aporta Q y cuál aporta K y V en atención cruzada."
+      - "Suponer que d_k debe coincidir con d_model."
+    aplicacion: |
+      Todos los Transformers, atención cruzada en traducción, modelos multimodales y mecanismos
+      de recuperación diferenciables.
+    referencias:
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+      - "[Alammar, J. *The Illustrated Transformer*, 2018](https://jalammar.github.io/illustrated-transformer/)"
+
+  "325":
+    concepto: "Con d = 256 y sin escalar, la softmax se satura y el gradiente desaparece."
+    formulas:
+      - "Attention(Q,K,V) = softmax(QKᵀ/√d_k)·V"
+      - "Var(q·k) ≈ d·σ⁴ con entradas iid"
+      - "dividir por √d_k devuelve la varianza a escala 1"
+    desarrollo: |
+      La atención escalada calcula la similitud entre cada consulta y cada clave mediante
+      producto escalar, normaliza con softmax y usa los pesos resultantes para promediar los
+      valores. Es un promedio ponderado por similitud, y toda la fórmula cabe en esa frase.
+
+      La única parte que no es evidente es el factor `1/√d_k`, y su justificación es
+      estadística. Si las componentes de `q` y `k` son independientes con varianza `σ²`, el
+      producto escalar de `d` términos tiene varianza proporcional a `d`, y por tanto desviación
+      proporcional a `√d`. Con `d = 256` eso son 16 veces más dispersión que con `d = 1`.
+
+      El efecto sobre la softmax es destructivo. Con puntuaciones muy dispersas, la exponencial
+      concentra casi toda la masa en el máximo: la distribución se vuelve prácticamente one-hot,
+      la atención deja de ser un promedio y se convierte en una selección dura. Peor aún, en esa
+      región la softmax tiene gradiente casi nulo y el mecanismo **deja de aprender**.
+
+      Dividir por `√d_k` cancela exactamente el crecimiento. La comparación numérica lo muestra:
+      con `d = 256` sin escalar, un peso se lleva prácticamente todo y otro cae a `8e-06`; con la
+      escala, los pesos quedan repartidos y el gradiente fluye. Un solo factor en el denominador
+      es lo que hace entrenable la arquitectura.
+    ejemplo: |
+      Puntuaciones y pesos con y sin escala, en dos dimensiones.
+
+      ```text
+      d = 8, sin escalar:
+        puntuaciones: [ 0,4204 ; −1,9767 ;  1,3619 ;  1,2219]
+        pesos:        [0,169955 ; ... ]        repartidos
+
+      d = 8, escalado:
+        puntuaciones: [ 0,3541 ; −0,3729 ;  2,3033 ;  0,8469]
+        pesos:        [0,098585 ; ... ]        repartidos
+
+      d = 256, sin escalar:
+        puntuaciones: [−9,7106 ; −2,6027 ; 1,9724 ; −15,9423]
+        pesos:        [8e-06 ; ...]           ← saturado    ✗
+
+      d = 256, escalado:
+        puntuaciones: [−0,7502 ; 1,9863 ; 0,3221 ; 0,5716]
+        pesos:        [0,043279 ; ...]        repartidos    ✓
+
+      Var(q·k) ≈ d·σ⁴ : por eso se divide por √d.
+      ```
+    errores:
+      - "Omitir el factor 1/√d y saturar la softmax en dimensión alta."
+      - "Escalar por d en vez de por √d."
+      - "Atribuir la saturación a la inicialización cuando es un problema de escala."
+    aplicacion: |
+      Todos los Transformers, atención en visión y audio, mecanismos de recuperación y modelos
+      de secuencias modernos.
+    referencias:
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+      - "[Phuong, M.; Hutter, M. *Formal Algorithms for Transformers*, 2022](https://arxiv.org/abs/2207.09238)"
+
+  "326":
+    concepto: "Sin máscara causal el modelo ve el futuro, entrena perfecto y genera basura."
+    formulas:
+      - "Q, K, V provienen todos de la misma secuencia"
+      - "máscara causal: puntuación = −∞ para j > i"
+      - "cada fila de la matriz de atención suma 1"
+    desarrollo: |
+      En self-attention, consultas, claves y valores se calculan todos a partir de la misma
+      secuencia. Cada token puede atender a todos los demás y actualizar su representación con la
+      información que le resulte relevante, en **una sola operación** y sin importar la
+      distancia.
+
+      Esa es la ventaja decisiva sobre las RNN de la parte 15. En una recurrente, conectar el
+      token 1 con el 100 requiere que la información atraviese 99 pasos, con el gradiente
+      multiplicándose 99 veces. En self-attention hay un camino directo. El precio es el coste
+      cuadrático en la longitud de la secuencia, que es el cuello de botella de los contextos
+      largos.
+
+      Para generación autorregresiva hace falta la **máscara causal**: poner las puntuaciones de
+      las posiciones futuras a menos infinito antes del softmax, de modo que sus pesos sean
+      exactamente cero. La matriz de atención queda triangular inferior, y el primer token solo
+      puede atenderse a sí mismo.
+
+      Olvidarla produce un fallo especialmente traicionero porque **no da ningún error**. El
+      modelo entrena con métricas excelentes, porque para predecir el token siguiente puede
+      simplemente mirarlo, y al generar —cuando el futuro no existe— produce basura. Es un error
+      silencioso que solo se detecta al probar la generación.
+    ejemplo: |
+      Atención bidireccional y causal sobre cuatro tokens.
+
+      ```text
+      tokens: ["el", "gato", "come", "pescado"]
+
+      matriz de atención bidireccional:
+        [0,2982  0,2239  0,4516  0,0263]
+        [0,3251  0,3369  0,2829  0,0550]
+        [ ...                          ]
+      cada fila suma 1                                     ✓
+
+      matriz causal:
+        [1,0000  0,0000  0,0000  0,0000]
+        [0,4911  0,5089  0,0000  0,0000]
+        [0,0051  0,0022  0,99xx  0,0000]
+        [ ...                          ]
+
+      El token 0 solo se ve a sí mismo                     ✓
+      Triangular inferior: nadie ve el futuro.
+
+      Sin la máscara, predecir el token 2 podría hacerse
+      simplemente mirándolo.
+      ```
+    errores:
+      - "Olvidar la máscara causal en modelos generativos."
+      - "Usar máscara causal en modelos de comprensión tipo BERT, donde estorba."
+      - "Poner las posiciones futuras a cero después del softmax en vez de a −∞ antes."
+    aplicacion: |
+      GPT y todos los modelos de lenguaje generativos, BERT sin máscara, Vision Transformers y
+      modelos de audio.
+    referencias:
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+      - "[Radford, A. et al. *Improving Language Understanding by Generative Pre-Training*, 2018](https://openai.com/research/language-unsupervised)"
+
+  "327":
+    concepto: "Varias cabezas atienden a cosas distintas en subespacios distintos, al mismo coste."
+    formulas:
+      - "d_por_cabeza = d_model / n_cabezas"
+      - "concatenar las salidas y proyectar con W_O"
+      - "coste total similar al de una sola cabeza de dimensión completa"
+    desarrollo: |
+      Una sola cabeza de atención produce una única distribución de pesos por token, y eso obliga
+      a comprometer: no puede atender a la vez a la concordancia sintáctica y a la relación
+      semántica. Multi-head resuelve el conflicto ejecutando varias atenciones en paralelo sobre
+      **subespacios distintos**.
+
+      La aritmética está diseñada para que no cueste más. Con `d_model = 512` y 8 cabezas, cada
+      una trabaja en dimensión 64, y el total de parámetros es aproximadamente el mismo que el de
+      una única atención de dimensión 512. Se gana diversidad sin pagar capacidad.
+
+      Los patrones aprendidos son efectivamente distintos, y eso se puede comprobar
+      inspeccionando las matrices. El análisis de modelos entrenados encuentra cabezas
+      especializadas de forma reconocible: unas siguen dependencias sintácticas, otras enlazan
+      referencias, otras miran sistemáticamente al token anterior. También encuentra que muchas
+      cabezas son redundantes y se pueden podar sin pérdida apreciable.
+
+      La concatenación de las salidas se proyecta con una matriz `W_O` que mezcla la información
+      de todas las cabezas. Sin ese paso final, las cabezas quedarían en subespacios estancos y
+      no podrían combinarse.
+    ejemplo: |
+      Cuatro cabezas sobre un modelo de dimensión 8.
+
+      ```text
+      d_model = 8      cabezas = 4      d por cabeza = 2
+
+      patrones de atención (primera fila de cada cabeza):
+        cabeza 1: [0,1657  0,7332  0,1010]
+        cabeza 2: [0,0010  0,9989  0,0000]
+        cabeza 3: [0,0423  0,0099  0,9478]
+        cabeza 4: [ ... ]
+
+      Las cabezas atienden a posiciones distintas          ✓
+      La cabeza 2 está muy concentrada; la 1, repartida.
+
+      parámetros totales: 256
+      Una sola cabeza de dimensión 8 costaría lo mismo.
+      ```
+    errores:
+      - "Elegir un número de cabezas que no divide la dimensión del modelo."
+      - "Omitir la proyección final W_O tras la concatenación."
+      - "Suponer que todas las cabezas aportan información útil."
+    aplicacion: |
+      Todos los Transformers, interpretabilidad mecanicista, poda de cabezas redundantes y
+      diseño de arquitecturas eficientes.
+    referencias:
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+      - "[Michel, P.; Levy, O.; Neubig, G. *Are sixteen heads really better than one?*, NeurIPS, 2019](https://arxiv.org/abs/1905.10650)"
+
+  "328":
+    concepto: "El bloque es atención más feed-forward, cada uno envuelto en residual y normalización."
+    formulas:
+      - "x ← LayerNorm(x + MultiHead(x))"
+      - "x ← LayerNorm(x + FFN(x))"
+      - "FFN con expansión ×4: d_ff = 4·d_model"
+    desarrollo: |
+      El bloque Transformer combina dos subcapas con la misma envoltura. Primero atención
+      multi-cabeza, que mezcla información **entre** posiciones; después una red feed-forward
+      aplicada a cada posición **por separado**, que procesa cada representación
+      individualmente. Ambas van rodeadas de conexión residual y normalización.
+
+      La **conexión residual** es la que hace entrenables las pilas profundas. Sumar la entrada a
+      la salida crea un camino por el que el gradiente pasa sin multiplicarse, exactamente la
+      misma solución que la LSTM de la clase 315 y que ResNet. Sin ella, apilar 96 bloques sería
+      inviable.
+
+      La **normalización** estabiliza la escala. Se usa layer norm y no batch norm porque las
+      secuencias tienen longitud variable y el tamaño de lote efectivo cambia, como se explicó en
+      la clase 308. Su colocación importa: la variante **pre-norm** —normalizar antes de la
+      subcapa— es más estable en modelos muy profundos y es la que usan los modelos actuales,
+      aunque el artículo original usaba post-norm.
+
+      La **expansión ×4** en la red feed-forward es una constante empírica notablemente estable a
+      lo largo de los años. Ahí reside la mayor parte de los parámetros del modelo, y hay
+      evidencia de que esas capas funcionan como una memoria asociativa de conocimiento
+      factual, más que como un simple procesador local.
+    ejemplo: |
+      Estructura y dimensiones de un bloque.
+
+      ```text
+      arquitectura:
+        multi-head attention
+        + residual
+        layer norm
+        feed-forward
+        + residual
+        layer norm
+
+      d_model = 8      d_ff = 32      razón = 4
+      tokens = 4
+
+      norma media de entrada: 3,214373
+
+      Reparto de parámetros en un modelo real:
+        atención:      4·d²   = 4·d_model²
+        feed-forward:  8·d²   = 2·(d_model·4·d_model)
+        el feed-forward tiene el doble de parámetros
+
+      Pre-norm frente a post-norm: pre-norm es más estable
+      con muchas capas y es lo estándar hoy.
+      ```
+    errores:
+      - "Omitir las conexiones residuales en pilas profundas."
+      - "Usar batch norm en vez de layer norm con secuencias de longitud variable."
+      - "Mezclar pre-norm y post-norm al reproducir una arquitectura publicada."
+    aplicacion: |
+      GPT, BERT, Vision Transformers, modelos de audio y prácticamente toda la arquitectura
+      moderna de gran escala.
+    referencias:
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+      - "[Xiong, R. et al. *On Layer Normalization in the Transformer Architecture*, ICML, 2020](https://arxiv.org/abs/2002.04745)"
+
+  "329":
+    concepto: "Un modelo de lenguaje es la regla de la cadena de la probabilidad, entrenada por verosimilitud."
+    formulas:
+      - "P(x₁…xₙ) = Π P(xᵢ | x₁…xᵢ₋₁)"
+      - "log P = Σ log P(xᵢ | contexto)"
+      - "perplejidad = exp(−(1/n)·Σ log P)"
+    desarrollo: |
+      Un modelo autorregresivo descompone la probabilidad de una secuencia en un producto de
+      condicionales, cada uno prediciendo el siguiente elemento a partir de los anteriores. Es
+      exactamente la regla de la cadena de la clase 183 aplicada a secuencias, sin ninguna
+      aproximación: la factorización es exacta.
+
+      El entrenamiento es máxima verosimilitud, y por tanto la pérdida es entropía cruzada, como
+      se dedujo en la clase 263. Se trabaja con **logaritmos** por dos razones: convierte el
+      producto en suma y evita el subdesbordamiento, que con secuencias de miles de tokens sería
+      inevitable.
+
+      La **perplejidad** es la exponencial de la entropía cruzada media, y su interpretación es
+      útil: el número efectivo de opciones equiprobables entre las que el modelo duda. Una
+      perplejidad de 2,55 significa que el modelo está tan indeciso como si eligiera entre 2,55
+      alternativas igualmente probables. Es la métrica estándar y permite comparar modelos, con
+      la precaución de que depende del tokenizador.
+
+      La consecuencia arquitectónica es la máscara causal de la clase 326: para que la
+      factorización sea legítima, la predicción del token `i` solo puede depender de los
+      anteriores. Y la consecuencia práctica es que el mismo modelo sirve para evaluar la
+      probabilidad de un texto dado y para generar texto nuevo muestreando de las condicionales.
+    ejemplo: |
+      Descomposición de una secuencia de tres tokens.
+
+      ```text
+      secuencia: ["el", "gato", "duerme"]
+
+      paso  token     contexto              P(token|contexto)
+        1   "el"      [<inicio>]                  0,40
+        2   "gato"    [<inicio>, el]              0,30
+        3   "duerme"  [<inicio>, el, gato]        0,50
+
+      probabilidad conjunta: 0,40 × 0,30 × 0,50 = 0,06
+      log probabilidad: −2,813411
+      perplejidad: exp(2,813411/3) = 2,554365
+
+      Lectura: el modelo duda como si eligiera entre
+      2,55 opciones equiprobables por token.
+
+      Con logaritmos: −0,916 − 1,204 − 0,693 = −2,813
+      Sin logaritmos, 1000 tokens darían un producto
+      del orden de 1e-500: cero en punto flotante.
+      ```
+    errores:
+      - "Multiplicar probabilidades en vez de sumar logaritmos."
+      - "Comparar perplejidades entre modelos con tokenizadores distintos."
+      - "Entrenar sin máscara causal e invalidar la factorización."
+    aplicacion: |
+      Modelos de lenguaje, generación de código, síntesis de audio, modelos de series temporales
+      y evaluación de modelos generativos.
+    referencias:
+      - "[Bengio, Y. et al. *A neural probabilistic language model*, JMLR, 2003](https://jmlr.org/papers/v3/bengio03a.html)"
+      - "[Radford, A. et al. *Language Models are Unsupervised Multitask Learners*, 2019](https://openai.com/research/better-language-models)"
+
+  "330":
+    concepto: "Temperatura alta no es más creatividad: es más entropía, y también más error."
+    formulas:
+      - "temperatura: softmax(z/T)"
+      - "top-k: conservar los k logits mayores"
+      - "top-p: conservar la masa acumulada hasta p"
+    desarrollo: |
+      Un modelo autorregresivo produce una distribución sobre el vocabulario; la estrategia de
+      muestreo decide qué hacer con ella. Tomar siempre el máximo —**greedy**— es determinista y
+      produce texto repetitivo; muestrear de la distribución cruda produce texto diverso pero
+      con errores frecuentes de la cola.
+
+      La **temperatura** divide los logits antes del softmax. Con `T < 1` las diferencias se
+      amplifican y la distribución se concentra: más determinista y más conservador. Con `T > 1`
+      las diferencias se comprimen y la distribución se aplana: más variedad y más riesgo. En el
+      límite `T → 0` se recupera greedy y con `T → ∞` se obtiene la uniforme.
+
+      Conviene decirlo sin eufemismos: temperatura alta **no es más creatividad, es más
+      entropía**. Aumenta la probabilidad de tokens raros, y algunos de esos tokens son
+      sorprendentes de forma interesante mientras que otros son simplemente incorrectos. El
+      modelo no distingue entre ambos casos.
+
+      **Top-k** y **top-p** atacan el problema desde otro ángulo: en vez de reescalar toda la
+      distribución, truncan la cola. Top-k conserva los `k` candidatos más probables; top-p —o
+      muestreo por núcleo— conserva los que acumulan una masa `p`, lo que **adapta el número de
+      candidatos** a lo segura que esté la distribución. Cuando el modelo tiene clara la
+      respuesta, top-p deja pocos; cuando duda, deja muchos. Es la razón de que sea preferible a
+      top-k, y en la práctica se combina con temperatura moderada.
+    ejemplo: |
+      La misma distribución bajo cinco estrategias.
+
+      ```text
+      logits: [3,0 ; 2,5 ; 2,0 ; 1,0 ; 0,5 ; −1,0 ; −2,0]
+
+      greedy (argmax): token 0
+
+      T = 1,0:  [0,45108 ; 0,27360 ; 0,16594 ; 0,06105 ; ...]
+      T = 0,5:  [0,65417 ; 0,24066 ; 0,08853 ; 0,01198 ; ...]
+                 más determinista
+      T = 2,0:  [0,30702 ; 0,23911 ; 0,18622 ; 0,11295 ; ...]
+                 más diverso
+
+      top-k = 3:
+        [0,50648 ; 0,30720 ; 0,18632 ; 0 ; 0 ; 0 ; 0]
+        la cola se elimina y se renormaliza
+
+      Con T = 0,5 el token menos probable pasa de 3e-3 a 3e-5:
+      queda prácticamente descartado.
+      ```
+    errores:
+      - "Interpretar temperatura alta como mayor calidad."
+      - "Combinar temperatura muy alta con top-p amplio y generar incoherencias."
+      - "Usar greedy y luego quejarse de la repetición."
+    aplicacion: |
+      Generación con modelos de lenguaje, síntesis de imágenes, generación de código y control
+      del compromiso entre diversidad y fiabilidad.
+    referencias:
+      - "[Holtzman, A. et al. *The Curious Case of Neural Text Degeneration*, ICLR, 2020](https://arxiv.org/abs/1904.09751)"
+      - "[Fan, A.; Lewis, M.; Dauphin, Y. *Hierarchical Neural Story Generation*, ACL, 2018](https://arxiv.org/abs/1805.04833)"
+
+  "331":
+    concepto: "No se puede derivar a través de un muestreo, y reparametrizar es la salida."
+    formulas:
+      - "codificador: x → (μ, log σ²)"
+      - "reparametrización: z = μ + σ·ε,  ε ~ N(0,1)"
+      - "KL en forma cerrada: ½·Σ(σ² + μ² − 1 − log σ²)"
+    desarrollo: |
+      Un autoencoder variacional codifica cada entrada no en un punto sino en una
+      **distribución** del espacio latente, muestrea de ella y decodifica. Esa aleatoriedad es
+      lo que hace del espacio latente algo continuo y muestreable, y lo que permite generar datos
+      nuevos en vez de solo reconstruir.
+
+      El problema técnico es que muestrear no es diferenciable: no hay forma de propagar el
+      gradiente a través de una operación aleatoria. El **truco de reparametrización** lo
+      resuelve moviendo la aleatoriedad fuera del camino del gradiente: se muestrea `ε` de una
+      normal estándar —que no depende de ningún parámetro— y se construye `z = μ + σ·ε`. Ahora
+      `z` es una función determinista y derivable de `μ` y `σ`.
+
+      Un detalle de implementación que conviene entender: la red predice `log σ²`, no `σ`. La
+      razón es doble: el logaritmo puede tomar cualquier valor real, con lo que no hay que
+      restringir la salida, y exponenciarlo garantiza que la varianza sea positiva sin
+      artificios.
+
+      El término **KL** entre la posterior aproximada y el prior normal estándar tiene forma
+      cerrada, lo que evita estimarlo por muestreo y reduce la varianza del gradiente. Ese
+      término empuja las distribuciones latentes hacia el prior, y su tensión con el término de
+      reconstrucción es lo que da al VAE su comportamiento característico: muestras suaves y algo
+      borrosas.
+    ejemplo: |
+      Reparametrización en un espacio latente de dimensión 4.
+
+      ```text
+      mu      = ( 0,5 ; −0,3 ;  0,8 ;  0,1)
+      log_var = (−0,5 ; −1,0 ; −0,2 ; −0,8)
+
+      sigma = exp(log_var/2)
+            = (0,778801 ; 0,606531 ; 0,904837 ; 0,670320)
+
+      Muestreando z = mu + sigma·ε muchas veces:
+        media empírica    = (0,5108 ; −0,2871 ; 0,7997 ; 0,0878)
+        varianza empírica = (0,5910 ;  0,3745 ; 0,8373 ; 0,4378)
+
+      comprobación: sigma² = (0,6065 ; 0,3679 ; 0,8187 ; 0,4493)
+      coinciden con la varianza empírica                   ✓
+
+      La aleatoriedad está en ε, fuera del camino
+      del gradiente respecto de mu y sigma.
+      ```
+    errores:
+      - "Muestrear directamente de la distribución y romper el gradiente."
+      - "Predecir sigma en vez de log sigma² y obtener varianzas negativas."
+      - "Desequilibrar reconstrucción y KL sin controlar el colapso de la posterior."
+    aplicacion: |
+      Generación de imágenes, aprendizaje de representaciones, detección de anomalías,
+      compresión con pérdida y espacios latentes para modelos de difusión.
+    referencias:
+      - "[Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*, ICLR, 2014](https://arxiv.org/abs/1312.6114)"
+      - "[Doersch, C. *Tutorial on Variational Autoencoders*, 2016](https://arxiv.org/abs/1606.05908)"
+
+  "332":
+    concepto: "El ELBO acota la log-verosimilitud, y la brecha es exactamente otra KL."
+    formulas:
+      - "ELBO = E_q[log p(x|z)] − KL(q(z|x) ‖ p(z))"
+      - "log p(x) = ELBO + KL(q(z|x) ‖ p(z|x))"
+      - "la brecha es ≥ 0, luego log p(x) ≥ ELBO"
+    desarrollo: |
+      La log-verosimilitud de un modelo con variables latentes requiere integrar sobre todas las
+      configuraciones latentes posibles, y esa integral es intratable salvo en casos triviales.
+      La inferencia variacional sortea el problema optimizando una **cota inferior** en su lugar.
+
+      El ELBO tiene dos términos con lecturas claras. El de **reconstrucción** premia que el
+      decodificador recupere la entrada a partir del latente. El de **KL** penaliza que la
+      posterior aproximada se aleje del prior, actuando como regularizador del espacio latente.
+      Maximizar la suma equilibra fidelidad y estructura.
+
+      La identidad clave es que `log p(x)` es exactamente el ELBO **más** la KL entre la
+      posterior aproximada y la verdadera. Como toda KL es no negativa, el ELBO nunca supera la
+      log-verosimilitud, y maximizarlo hace dos cosas a la vez: sube la verosimilitud y acerca la
+      aproximación a la posterior real. Esa doble acción es lo elegante del método.
+
+      El ELBO es también el objeto que aparecía en el algoritmo EM de la clase 296. En EM el paso
+      E hace la cota exacta calculando la posterior verdadera; en inferencia variacional la
+      posterior no es tratable y la cota queda con holgura. Ver EM primero es lo que hace que el
+      ELBO no parezca una construcción sacada de la nada.
+    ejemplo: |
+      Descomposición numérica del ELBO.
+
+      ```text
+      término de reconstrucción: −12,4
+      término KL:                  3,7
+
+      ELBO = −12,4 − 3,7 = −16,1
+
+      Identidad:
+        log p(x) = ELBO + KL(q(z|x) ‖ p(z|x))
+                 = −16,1 + brecha
+
+      Como la brecha es ≥ 0:
+        log p(x) ≥ −16,1                                   ✓
+
+      Si la brecha fuera 0, la posterior aproximada
+      coincidiría con la verdadera y el ELBO sería exacto.
+
+      Maximizar el ELBO sube la verosimilitud y reduce
+      la brecha simultáneamente.
+      ```
+    errores:
+      - "Confundir el ELBO con la log-verosimilitud exacta."
+      - "Interpretar la brecha como error del modelo en vez de error de la aproximación."
+      - "Comparar valores de ELBO entre modelos con distintas dimensiones latentes."
+    aplicacion: |
+      VAE, inferencia variacional en modelos bayesianos, modelos de difusión y aproximaciones
+      tratables de posteriores complejas.
+    referencias:
+      - "[Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670)"
+      - "[Kingma, D.; Welling, M. *An Introduction to Variational Autoencoders*, 2019](https://arxiv.org/abs/1906.02691)"
+
+  "333":
+    concepto: "En el equilibrio de una GAN el discriminador acierta el 50 %: no distingue nada."
+    formulas:
+      - "min_G max_D  E[log D(x)] + E[log(1 − D(G(z)))]"
+      - "D*(x) = p_datos(x) / (p_datos(x) + p_G(x))"
+      - "en el equilibrio D = 0,5 y la pérdida vale log 2"
+    desarrollo: |
+      Una GAN enfrenta dos redes con objetivos opuestos. El **generador** produce muestras
+      falsas intentando parecer real; el **discriminador** intenta distinguir reales de falsas. El
+      entrenamiento es un juego minimax, y el objetivo del generador es hacer fracasar al
+      discriminador.
+
+      El resultado teórico central es que el discriminador óptimo tiene **forma cerrada**: la
+      proporción de densidad real sobre densidad total. Sustituyendo ese óptimo en el objetivo, se
+      obtiene que el generador está minimizando `2·JS(p_datos ‖ p_G) − log 4`, es decir, la
+      divergencia de Jensen-Shannon de la clase 265. El objetivo de las GAN no se inventó como
+      divergencia: resulta serlo.
+
+      En el equilibrio ideal, generador y datos tienen la misma distribución, el discriminador
+      óptimo vale 0,5 en todas partes y la pérdida vale `log 2 ≈ 0,693`. Ese número es el
+      diagnóstico: una pérdida de discriminador que se estabiliza cerca de 0,693 indica
+      equilibrio; una que se va a cero indica que el discriminador ha ganado y el generador ya no
+      recibe señal útil.
+
+      La inestabilidad práctica tiene una causa identificable en esa misma teoría: si los
+      soportes de ambas distribuciones no se solapan, la JS es constante y su gradiente es cero.
+      Esa observación motivó **WGAN**, que sustituye JS por la distancia de Wasserstein,
+      precisamente porque esta sí da gradiente útil cuando los soportes están separados.
+    ejemplo: |
+      Tres escenarios del juego y el punto de equilibrio.
+
+      ```text
+      objetivo: min_G max_D E[log D(x)] + E[log(1 − D(G(z)))]
+
+      escenario "D gana":
+        D(real) = 0,99    D(falso) = 0,01
+        pérdida de D = 0,01005      muy baja
+        el generador recibe gradiente casi nulo
+
+      escenario de equilibrio:
+        D(real) = 0,50    D(falso) = 0,50
+        pérdida teórica = log 2 = 0,693147                 ✓
+
+      D óptimo: D*(x) = p_datos / (p_datos + p_G)
+        si p_G = p_datos  →  D* = 0,5 en todas partes
+
+      El objetivo original equivale a minimizar
+      2·JS(p_datos ‖ p_G) − log 4.
+      ```
+    errores:
+      - "Entrenar el discriminador hasta la perfección y dejar al generador sin gradiente."
+      - "Interpretar una pérdida de discriminador cercana a cero como buena señal."
+      - "Ignorar el colapso de modos mirando solo las pérdidas."
+    aplicacion: |
+      Generación de imágenes, superresolución, traducción entre dominios, aumento de datos y
+      generación de datos sintéticos.
+    referencias:
+      - "[Goodfellow, I. et al. *Generative Adversarial Networks*, NeurIPS, 2014](https://arxiv.org/abs/1406.2661)"
+      - "[Arjovsky, M.; Chintala, S.; Bottou, L. *Wasserstein GAN*, ICML, 2017](https://arxiv.org/abs/1701.07875)"
+
+  "334":
+    concepto: "El proceso directo permite saltar a cualquier paso sin simular los anteriores."
+    formulas:
+      - "x_t = √ᾱ_t·x₀ + √(1−ᾱ_t)·ε"
+      - "ᾱ_t = Π_{s≤t} (1 − β_s)"
+      - "horario β: de 1e-4 a 0,02"
+    desarrollo: |
+      El proceso directo de difusión destruye progresivamente una muestra añadiendo ruido
+      gaussiano según un horario fijo. Tras suficientes pasos, lo que queda es indistinguible de
+      ruido puro. Este proceso **no tiene parámetros aprendidos**: es una definición.
+
+      Su propiedad más importante es computacional. Como la composición de ruidos gaussianos es
+      gaussiana, existe una fórmula cerrada que da `x_t` directamente a partir de `x₀` **sin
+      simular los `t−1` pasos intermedios**. Sin ella, entrenar exigiría recorrer secuencialmente
+      hasta el paso deseado, y el coste sería prohibitivo.
+
+      Con esa fórmula, el entrenamiento es sencillo: se toma una muestra, se elige un `t` al
+      azar, se salta directamente a `x_t` y se pide a la red que prediga el ruido añadido. Cada
+      paso de entrenamiento cuesta lo mismo independientemente de `t`.
+
+      El **horario de ruido** —cómo crece `β` con `t`— resulta importar bastante. El horario
+      lineal original funciona, y los horarios coseno posteriores destruyen la información de
+      forma más gradual y mejoran la calidad. Es un ejemplo de hiperparámetro que parecía menor y
+      resultó tener efecto sustancial.
+    ejemplo: |
+      Horario de 20 pasos y señal conservada.
+
+      ```text
+      T = 20      β de 0,0001 a 0,02
+
+       t     ᾱ_t        señal conservada
+       0   0,999900         99,995 %
+       5   0,98xxxx         ~99 %
+      10   0,94xxxx         ~97 %
+      15   0,879869         ~93,8 %
+      20   0,80xxxx         ~89 %
+
+      Fórmula: x_t = √ᾱ_t·x₀ + √(1−ᾱ_t)·ε
+
+      Con t = 15:
+        √ᾱ = 0,938     √(1−ᾱ) = 0,347
+        la señal aún domina sobre el ruido
+
+      Salto directo: para entrenar en t = 15 no hace falta
+      simular los 14 pasos anteriores.
+      ```
+    errores:
+      - "Simular paso a paso el proceso directo pudiendo saltar."
+      - "Usar un horario de ruido demasiado agresivo al principio."
+      - "Confundir β_t con ᾱ_t al implementar las fórmulas."
+    aplicacion: |
+      Stable Diffusion, DALL-E, generación de audio y vídeo, y modelos de difusión sobre datos
+      estructurados.
+    referencias:
+      - "[Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*, NeurIPS, 2020](https://arxiv.org/abs/2006.11239)"
+      - "[Nichol, A.; Dhariwal, P. *Improved Denoising Diffusion Probabilistic Models*, ICML, 2021](https://arxiv.org/abs/2102.09672)"
+
+  "335":
+    concepto: "La red no genera la imagen: predice el ruido, y de ahí se despeja la imagen."
+    formulas:
+      - "la red estima ε̂ = ε_θ(x_t, t)"
+      - "x̂₀ = (x_t − √(1−ᾱ_t)·ε̂) / √ᾱ_t"
+      - "pérdida: ‖ε − ε̂‖²"
+    desarrollo: |
+      El proceso inverso es donde está el aprendizaje. Dado un `x_t` ruidoso, una red predice
+      **qué ruido se añadió**, y despejando la fórmula del proceso directo se recupera una
+      estimación del dato original. Iterando ese paso desde ruido puro se genera una muestra
+      nueva.
+
+      Que la red prediga el ruido en vez de la imagen es una elección de parametrización, y
+      resultó funcionar mucho mejor. Son matemáticamente equivalentes —de una se despeja la
+      otra— pero predecir ruido da un objetivo mejor condicionado, con escala similar en todos
+      los pasos temporales, lo que estabiliza el entrenamiento.
+
+      La pérdida resultante es simplemente el error cuadrático entre el ruido real y el
+      predicho. Esa simplicidad es engañosa: la formulación completa parte de un ELBO como el de
+      la clase 332, y tras varias simplificaciones se reduce a este objetivo. La derivación es
+      laboriosa y el resultado es una línea de código.
+
+      El coste es el **número de pasos**. Los primeros modelos necesitaban mil evaluaciones de la
+      red por muestra, lo que hacía la generación lenta. Los muestreadores acelerados —DDIM,
+      DPM-Solver— reducen a decenas de pasos aplicando lo que la parte 11 enseña sobre
+      integradores: son métodos numéricos aplicados a la ecuación diferencial asociada al
+      proceso.
+    ejemplo: |
+      Reconstrucción exacta con un modelo perfecto.
+
+      ```text
+      t = 15        ᾱ_t = 0,87986861
+
+      x₀ real     =  1,000000
+      ruido real  = −0,198859
+      x_t         =  0,869089
+
+      Comprobación del proceso directo:
+        √0,8799 · 1,0 + √0,1201 · (−0,198859)
+        = 0,93800 − 0,06891 = 0,86909            ✓
+
+      Con un modelo perfecto (ε̂ = ε):
+        x̂₀ = (0,869089 − 0,346554·(−0,198859)) / 0,937961
+           = 1,000000                                      ✓
+
+      La red solo tiene que acertar el ruido;
+      la imagen se despeja algebraicamente.
+      ```
+    errores:
+      - "Parametrizar la red para predecir x₀ en vez del ruido sin justificarlo."
+      - "Usar mil pasos de muestreo existiendo muestreadores acelerados."
+      - "Olvidar condicionar la red en el paso temporal t."
+    aplicacion: |
+      Generación de imágenes, inpainting, superresolución, generación de audio y modelos
+      condicionados por texto.
+    referencias:
+      - "[Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*, NeurIPS, 2020](https://arxiv.org/abs/2006.11239)"
+      - "[Song, J.; Meng, C.; Ermon, S. *Denoising Diffusion Implicit Models*, ICLR, 2021](https://arxiv.org/abs/2010.02502)"
+
+  "336":
+    concepto: "La multiplicidad del autovalor cero del Laplaciano cuenta las componentes conexas."
+    formulas:
+      - "L = D − A"
+      - "autovalores: 0 = λ₁ ≤ λ₂ ≤ … ≤ λₙ"
+      - "λ₂ > 0 ⟺ el grafo es conexo"
+    desarrollo: |
+      El Laplaciano de un grafo se construye restando la matriz de adyacencia a la matriz
+      diagonal de grados. Pese a su simplicidad, su espectro contiene una cantidad notable de
+      información sobre la estructura, y ese es el objeto de la teoría espectral de grafos.
+
+      El autovalor **cero** está siempre presente, con el vector constante como autovector: es
+      inmediato comprobar que `L·1 = 0`. Lo interesante es su **multiplicidad**, que coincide
+      exactamente con el número de componentes conexas. Un grafo conexo tiene un único cero.
+
+      El segundo autovalor `λ₂` se llama **conectividad algebraica**, y mide cuán bien conectado
+      está el grafo: cerca de cero significa que hay un cuello de botella y el grafo está casi
+      partido en dos. Su autovector asociado, el vector de Fiedler, indica **por dónde** cortar, y
+      esa es la base del agrupamiento espectral.
+
+      Como `L` es simétrica y semidefinida positiva, todo el aparato del teorema espectral de la
+      parte 06 se aplica: autovalores reales no negativos y autovectores ortogonales. La versión
+      **normalizada** `D^{−1/2}·L·D^{−1/2}` acota los autovalores en `[0, 2]` y es la que usan las
+      redes convolucionales sobre grafos, con la precaución de tratar los nodos aislados para no
+      dividir por cero.
+    ejemplo: |
+      Laplaciano de un grafo de cinco nodos.
+
+      ```text
+      5 nodos, 6 aristas
+      grados: [3, 2, 3, 3, 1]
+
+      L = D − A:
+        [ 3  −1  −1  −1   0]
+        [−1   2  −1   0   0]
+        [−1  −1   3  ...   ]
+        [ ...                ]
+
+      autovalores:
+        [0,0 ; 0,82991351 ; 2,68889218 ; 4,0 ; 4,4811943]
+
+      multiplicidad de 0: 1  →  grafo conexo             ✓
+      λ₂ = 0,83 > 0        →  confirma la conexión       ✓
+
+      Un λ₂ pequeño indicaría un cuello de botella,
+      y el vector de Fiedler diría por dónde cortarlo.
+      ```
+    errores:
+      - "Normalizar el Laplaciano sin tratar los nodos aislados y dividir por cero."
+      - "Confundir el Laplaciano con la matriz de adyacencia."
+      - "Interpretar λ₂ sin comprobar antes que el grafo es conexo."
+    aplicacion: |
+      Agrupamiento espectral, redes convolucionales sobre grafos, análisis de redes sociales,
+      partición de mallas y detección de comunidades.
+    referencias:
+      - "[Chung, F. *Spectral Graph Theory*, AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html)"
+      - "[von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189)"
+
+  "337":
+    concepto: "Una capa de paso de mensajes ve un salto; k capas ven un vecindario de radio k."
+    formulas:
+      - "h_v^{(k+1)} = σ(Σ_{u∈N(v)∪{v}} w_{vu}·W·h_u^{(k)})"
+      - "normalización GCN: D^{−1/2}(A+I)D^{−1/2}"
+      - "campo receptivo tras k capas: radio k"
+    desarrollo: |
+      El paso de mensajes es el mecanismo central de las redes sobre grafos. En cada capa, cada
+      nodo recoge las representaciones de sus vecinos, las agrega y las combina con la suya para
+      producir una representación nueva. Repetir la operación propaga información cada vez más
+      lejos.
+
+      El paralelismo con las convoluciones de la parte 15 es exacto: **una capa equivale a un
+      salto**, y `k` capas dan un campo receptivo de radio `k`. La diferencia es que en una imagen
+      el vecindario es una rejilla regular y en un grafo es arbitrario, con nodos de grado 1 y de
+      grado 1000 en la misma red.
+
+      Esa irregularidad obliga a **normalizar**. Sin ella, un nodo con mil vecinos acumularía una
+      suma con escala completamente distinta a la de un nodo con dos, y las activaciones
+      quedarían descontroladas. La normalización simétrica `D^{−1/2}(A+I)D^{−1/2}` de las GCN
+      resuelve eso y además añade auto-lazos para que cada nodo conserve su propia información.
+
+      La limitación característica es el **sobresuavizado**: con muchas capas, las
+      representaciones de todos los nodos convergen a algo indistinguible, porque cada una acaba
+      siendo un promedio de casi todo el grafo. Por eso las GNN son típicamente poco profundas
+      —dos o tres capas— al contrario que las CNN, y por eso hay líneas de trabajo enteras
+      dedicadas a permitir GNN profundas.
+    ejemplo: |
+      Dos capas de paso de mensajes sobre cinco nodos.
+
+      ```text
+      características iniciales:
+        [1,0  0,0]  [0,0  1,0]  [1,0  1,0]  [0,5  0,5]  [2,0  −1,0]
+
+      tras 1 capa:
+        [0,625  0,663675]
+        [0,577  0,622008]
+        [0,625  0,663675]
+        [1,332107  ...]
+
+      tras 2 capas:
+        [0,812193  0,516758]
+        [0,553294  0,590509]
+        [0,812193  0,516758]
+
+      Los nodos 0 y 2 convergen a lo mismo: tienen
+      vecindarios equivalentes.
+
+      Campo receptivo tras k capas: vecindario de radio k.
+      Normalización: D^{−1/2}(A+I)D^{−1/2}, como en GCN.
+      ```
+    errores:
+      - "Apilar muchas capas y provocar sobresuavizado."
+      - "Omitir la normalización por grado con grafos muy heterogéneos."
+      - "Olvidar los auto-lazos y perder la información propia del nodo."
+    aplicacion: |
+      Predicción molecular, sistemas de recomendación sobre grafos, análisis de redes sociales,
+      detección de fraude y simulación física con partículas.
+    referencias:
+      - "[Kipf, T.; Welling, M. *Semi-Supervised Classification with Graph Convolutional Networks*, ICLR, 2017](https://arxiv.org/abs/1609.02907)"
+      - "[Gilmer, J. et al. *Neural Message Passing for Quantum Chemistry*, ICML, 2017](https://arxiv.org/abs/1704.01212)"
+
+  "338":
+    concepto: "El valor de un estado es la recompensa inmediata más el valor futuro descontado."
+    formulas:
+      - "V(s) = max_a [R(s,a) + γ·V(s')]"
+      - "γ ∈ [0,1): factor de descuento"
+      - "iteración de valor: aplicar la ecuación hasta converger"
+    desarrollo: |
+      La ecuación de Bellman descompone el valor de un estado en dos partes: lo que se obtiene
+      ahora y lo que se puede obtener después. Esa recursión es la base de todo el aprendizaje
+      por refuerzo y de buena parte de la programación dinámica.
+
+      El **factor de descuento** `γ` pondera el futuro. Con `γ` cercano a 0 el agente es
+      miope y solo persigue recompensa inmediata; con `γ` cercano a 1 planifica a largo plazo.
+      Además de reflejar una preferencia, tiene una función matemática: garantiza que la suma de
+      recompensas de un horizonte infinito converja.
+
+      La **iteración de valor** aplica la ecuación repetidamente hasta que los valores dejan de
+      cambiar. Converge siempre porque el operador de Bellman es una **contracción** con
+      constante `γ`: cada aplicación acerca la estimación al punto fijo en un factor `γ`. Es una
+      aplicación directa del teorema del punto fijo de Banach.
+
+      El límite es que exige conocer el modelo: las transiciones y las recompensas. Cuando no se
+      conocen —que es el caso interesante— aparecen los métodos libres de modelo como Q-learning,
+      que estiman lo mismo a partir de la experiencia. Y con espacios de estados enormes, la
+      tabla de valores se sustituye por una red neuronal, que es lo que hace DQN.
+    ejemplo: |
+      Iteración de valor sobre un MDP de cuatro estados.
+
+      ```text
+      estados: [0, 1, 2, 3]      terminal: 3      γ = 0,9
+
+      ecuación: V(s) = max_a [R(s,a) + γ·V(s')]
+
+      iter   V
+        1    {0: 0,000, 1: 0,000, 2: 1,000, 3: 1,000}
+        2    {0: 0,000, 1: 0,900, 2: 1,900, 3: 1,000}
+        3    {0: 0,810, 1: 1,710, 2: 1,900, 3: 1,000}
+      final  {0: 1,539, 1: 1,710, 2: 1,900, 3: 1,000}
+
+      El valor se propaga hacia atrás desde el terminal,
+      un estado por iteración.
+
+      V(0) = 0,9 · V(1) = 0,9 · 1,71 = 1,539              ✓
+      ```
+    errores:
+      - "Usar γ = 1 con horizonte infinito y no converger."
+      - "Confundir la función de valor de estado con la de acción."
+      - "Aplicar iteración de valor sin conocer el modelo de transiciones."
+    aplicacion: |
+      Aprendizaje por refuerzo, planificación en robótica, control óptimo, juegos y toma de
+      decisiones secuenciales.
+    referencias:
+      - "[Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*, 2ª ed., MIT Press, 2018](http://incompleteideas.net/book/the-book.html)"
+      - "[Bellman, R. *Dynamic Programming*, Princeton University Press, 1957](https://press.princeton.edu/books/paperback/9780691146683/dynamic-programming)"
+
+  "339":
+    concepto: "REINFORCE sube la probabilidad de lo que salió bien, y la línea base reduce la varianza."
+    formulas:
+      - "∇J = E[∇log π(a|s) · (R − b)]"
+      - "b es la línea base, típicamente el valor medio"
+      - "restar b no sesga el gradiente"
+    desarrollo: |
+      Los métodos de gradiente de política optimizan directamente la política parametrizada, sin
+      pasar por una función de valor. La actualización tiene una lectura muy directa: aumentar la
+      log-probabilidad de las acciones que produjeron recompensa alta y disminuir la de las que
+      produjeron recompensa baja.
+
+      El problema del estimador básico es la **varianza**. La recompensa de un episodio depende de
+      muchas decisiones y de la aleatoriedad del entorno, así que el gradiente es muy ruidoso y
+      el aprendizaje, lento e inestable.
+
+      La **línea base** lo mitiga. Restar una cantidad que no depende de la acción —típicamente
+      el valor medio del estado— **no cambia la esperanza del gradiente** pero reduce mucho su
+      varianza. Es un resultado limpio: se gana estabilidad sin introducir sesgo. La diferencia
+      `R − b` se llama ventaja, y mide cuánto mejor fue la acción que la media.
+
+      De ahí sale toda la familia actor-crítico: el actor es la política, el crítico estima la
+      línea base, y ambos se entrenan a la vez. PPO, el algoritmo estándar hoy y el que se usa en
+      el ajuste por retroalimentación humana de los modelos de lenguaje, es un refinamiento de
+      esta idea con una restricción que impide que la política cambie demasiado en un solo paso.
+    ejemplo: |
+      REINFORCE sobre un bandido de tres brazos.
+
+      ```text
+      probabilidades reales de recompensa: [0,2 ; 0,5 ; 0,8]
+      mejor brazo: 2
+
+      episodio    política                    línea base
+         1      [0,3222 ; 0,3222 ; 0,3557]      0,00
+       100      [ ... ]                          ...
+      final     [0,004018 ; 0,014253 ; 0,981729]
+
+      brazo preferido: 2                                   ✓
+
+      La política converge al brazo correcto sin conocer
+      las probabilidades: solo por experiencia.
+
+      Sin línea base, la varianza del gradiente sería
+      mucho mayor y la convergencia más lenta.
+      ```
+    errores:
+      - "Usar REINFORCE sin línea base y sufrir varianza excesiva."
+      - "Elegir una línea base que depende de la acción e introducir sesgo."
+      - "Actualizar la política con pasos grandes y colapsar la exploración."
+    aplicacion: |
+      Aprendizaje por refuerzo, RLHF en modelos de lenguaje, robótica, optimización de sistemas
+      de diálogo y control continuo.
+    referencias:
+      - "[Williams, R. *Simple statistical gradient-following algorithms*, Machine Learning, 1992](https://doi.org/10.1007/BF00992696)"
+      - "[Schulman, J. et al. *Proximal Policy Optimization Algorithms*, 2017](https://arxiv.org/abs/1707.06347)"
+
+  "340":
+    concepto: "Un Transformer de 101 parámetros aprende a mirar exactamente una posición atrás."
+    formulas:
+      - "embedding + positional encoding → self-attention causal → salida"
+      - "tarea: predecir el token anterior"
+      - "verificación: la atención debe concentrarse en la posición i−1"
+    desarrollo: |
+      El capstone construye un Transformer causal completo con todos los componentes de la parte:
+      embedding aprendido, codificación posicional sinusoidal, self-attention con máscara causal
+      y proyección de salida. Son 101 parámetros y funciona.
+
+      La tarea elegida —predecir el token anterior— es deliberadamente trivial, y esa trivialidad
+      es lo valioso. Permite verificar el mecanismo de forma **directa**: si la atención funciona
+      como se ha descrito, la matriz de atención aprendida debe concentrar su masa en la posición
+      `i−1`. No hace falta confiar en una métrica agregada; se puede mirar la matriz.
+
+      El papel de la codificación posicional se vuelve evidente aquí. Sin ella el modelo no
+      podría resolver la tarea en absoluto, porque «el token anterior» es una noción puramente
+      posicional y la atención por sí sola es ciega al orden. Quitarla y ver el fallo es el
+      experimento de ablación más instructivo posible.
+
+      La distancia con un modelo real es de escala, no de concepto: los mismos componentes,
+      repetidos decenas de veces y con dimensiones mil veces mayores. Entender qué hace cada
+      pieza en 101 parámetros es lo que permite razonar sobre qué ocurre en 100 000 millones, y
+      cierra el recorrido que empezó contando con los dedos en la parte 00.
+    ejemplo: |
+      Configuración del mini-Transformer.
+
+      ```text
+      tarea: predecir el token anterior (copia desplazada)
+
+      vocabulario: 6
+      d_model: 8
+      longitud de secuencia: 5
+
+      componentes:
+        embedding aprendido
+        positional encoding sinusoidal
+        self-attention causal
+        proyección de salida
+
+      parámetros entrenados: 101
+
+      Verificación esperada:
+        la matriz de atención debe concentrarse
+        en la posición i−1 para cada token i
+
+      Ablación: sin positional encoding la tarea
+      es irresoluble, porque "anterior" es posicional.
+      ```
+    errores:
+      - "Evaluar solo la pérdida sin inspeccionar la matriz de atención."
+      - "Omitir la codificación posicional en tareas que dependen del orden."
+      - "Extrapolar conclusiones de un modelo de juguete a modelos de gran escala."
+    aplicacion: |
+      Comprensión profunda de los Transformers, interpretabilidad mecanicista, docencia,
+      entrevistas técnicas y depuración de implementaciones.
+    referencias:
+      - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+      - "[Elhage, N. et al. *A Mathematical Framework for Transformer Circuits*, Anthropic, 2021](https://transformer-circuits.pub/2021/framework/index.html)"

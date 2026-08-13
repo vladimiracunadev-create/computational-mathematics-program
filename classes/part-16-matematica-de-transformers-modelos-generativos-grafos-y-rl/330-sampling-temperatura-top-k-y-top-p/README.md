@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**Temperatura alta no es más creatividad: es más entropía, y también más error.**
 
-Esta clase concreta ese objetivo sobre **Sampling, temperatura, top-k y top-p**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `sampling_strategies`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar la máscara causal en el modelado autoregresivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+temperatura: softmax(z/T)
+top-k: conservar los k logits mayores
+top-p: conservar la masa acumulada hasta p
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Bellman expresa el valor como recompensa inmediata más valor futuro descontado.
+Un modelo autorregresivo produce una distribución sobre el vocabulario; la estrategia de
+muestreo decide qué hacer con ella. Tomar siempre el máximo —**greedy**— es determinista y
+produce texto repetitivo; muestrear de la distribución cruda produce texto diverso pero
+con errores frecuentes de la cola.
+
+La **temperatura** divide los logits antes del softmax. Con `T < 1` las diferencias se
+amplifican y la distribución se concentra: más determinista y más conservador. Con `T > 1`
+las diferencias se comprimen y la distribución se aplana: más variedad y más riesgo. En el
+límite `T → 0` se recupera greedy y con `T → ∞` se obtiene la uniforme.
+
+Conviene decirlo sin eufemismos: temperatura alta **no es más creatividad, es más
+entropía**. Aumenta la probabilidad de tokens raros, y algunos de esos tokens son
+sorprendentes de forma interesante mientras que otros son simplemente incorrectos. El
+modelo no distingue entre ambos casos.
+
+**Top-k** y **top-p** atacan el problema desde otro ángulo: en vez de reescalar toda la
+distribución, truncan la cola. Top-k conserva los `k` candidatos más probables; top-p —o
+muestreo por núcleo— conserva los que acumulan una masa `p`, lo que **adapta el número de
+candidatos** a lo segura que esté la distribución. Cuando el modelo tiene clara la
+respuesta, top-p deja pocos; cuando duda, deja muchos. Es la razón de que sea preferible a
+top-k, y en la práctica se combina con temperatura moderada.
+
+## 🧮 Ejemplo trabajado
+
+La misma distribución bajo cinco estrategias.
+
+```text
+logits: [3,0 ; 2,5 ; 2,0 ; 1,0 ; 0,5 ; −1,0 ; −2,0]
+
+greedy (argmax): token 0
+
+T = 1,0:  [0,45108 ; 0,27360 ; 0,16594 ; 0,06105 ; ...]
+T = 0,5:  [0,65417 ; 0,24066 ; 0,08853 ; 0,01198 ; ...]
+           más determinista
+T = 2,0:  [0,30702 ; 0,23911 ; 0,18622 ; 0,11295 ; ...]
+           más diverso
+
+top-k = 3:
+  [0,50648 ; 0,30720 ; 0,18632 ; 0 ; 0 ; 0 ; 0]
+  la cola se elimina y se renormaliza
+
+Con T = 0,5 el token menos probable pasa de 3e-3 a 3e-5:
+queda prácticamente descartado.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 330
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Interpretar temperatura alta como mayor calidad.
+2. Combinar temperatura muy alta con top-p amplio y generar incoherencias.
+3. Usar greedy y luego quejarse de la repetición.
+
+## 🚀 Dónde se usa de verdad
+
+Generación con modelos de lenguaje, síntesis de imágenes, generación de código y control
+del compromiso entre diversidad y fiabilidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Holtzman, A. et al. *The Curious Case of Neural Text Degeneration*, ICLR, 2020](https://arxiv.org/abs/1904.09751)
+- [Fan, A.; Lewis, M.; Dauphin, Y. *Hierarchical Neural Story Generation*, ACL, 2018](https://arxiv.org/abs/1805.04833)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

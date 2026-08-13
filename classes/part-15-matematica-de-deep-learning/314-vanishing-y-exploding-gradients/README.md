@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**El gradiente a 50 pasos es un producto de 50 factores: o se anula o explota.**
 
-Esta clase concreta ese objetivo sobre **Vanishing y exploding gradients**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `vanishing_exploding`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar softmax sin restar el máximo y provocar overflow.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∂L/∂h₀ = Π_{t=1}^{T} (∂h_t/∂h_{t−1})
+factores < 1 ⟹ 0 exponencialmente
+factores > 1 ⟹ ∞ exponencialmente
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Normalizar estabiliza la escala interna y permite tasas de aprendizaje mayores.
+Al propagar el gradiente hacia atrás en el tiempo, la contribución al primer instante es el
+**producto** de las derivadas de todos los pasos intermedios. Ese producto es la causa
+única de los dos patologías más conocidas de las redes recurrentes.
+
+Si los factores son sistemáticamente menores que 1, el producto tiende a cero
+exponencialmente y el gradiente **se desvanece**: la red no puede aprender dependencias
+largas porque la señal de error nunca llega al principio de la secuencia. Con factor 0,5 y
+50 pasos, el gradiente inicial es del orden de `10⁻¹⁵`.
+
+Si los factores son mayores que 1, el producto **explota**: el gradiente crece hasta
+desbordar y produce NaN, destruyendo el entrenamiento en un solo paso. Es más visible que
+el desvanecimiento —se nota inmediatamente— y por eso más fácil de diagnosticar.
+
+Las soluciones son distintas para cada caso. La explosión se resuelve con **gradient
+clipping**: acotar la norma del gradiente conservando su dirección, un parche simple y
+eficaz. El desvanecimiento es más profundo y exige cambiar la arquitectura: LSTM y GRU
+crean un camino aditivo por el que el gradiente fluye sin multiplicarse, y las conexiones
+residuales resuelven el mismo problema en redes profundas no recurrentes.
+
+## 🧮 Ejemplo trabajado
+
+El mismo experimento con tres valores del factor.
+
+```text
+50 pasos de propagación hacia atrás
+
+w = 0,5  (desvanece)
+  paso  1: 0,470007
+  paso 10: ≈ 1e-4
+  paso 50: ≈ 1e-15        gradiente inexistente
+
+w = 1,0  (estable)
+  paso  1: 0,786448
+  paso 10: ≈ 0,3
+  paso 50: sigue siendo apreciable
+
+w = 1,5  (explota)
+  paso  1: 0,894879
+  paso 10: ≈ 50
+  paso 50: desborda a infinito
+
+Causa única: el gradiente en t=0 es el producto
+de 50 factores. Todo depende de si son <1 o >1.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 314
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Entrenar RNN largas sin gradient clipping.
+2. Atribuir a los datos un problema que es de propagación del gradiente.
+3. Intentar arreglar el desvanecimiento subiendo el learning rate.
+
+## 🚀 Dónde se usa de verdad
+
+Diagnóstico de entrenamientos inestables, justificación de LSTM y conexiones residuales,
+clipping en modelos de lenguaje y análisis de profundidad efectiva.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Bengio, Y.; Simard, P.; Frasconi, P. *Learning long-term dependencies with gradient descent is difficult*, 1994](https://doi.org/10.1109/72.279181)
+- [Pascanu, R.; Mikolov, T.; Bengio, Y. *On the difficulty of training recurrent neural networks*, ICML, 2013](https://arxiv.org/abs/1211.5063)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

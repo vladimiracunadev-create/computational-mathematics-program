@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**La multiplicidad del autovalor cero del Laplaciano cuenta las componentes conexas.**
 
-Esta clase concreta ese objetivo sobre **Graph Laplacian**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `graph_laplacian`.
 4. Interpretar las 12 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar la máscara causal en el modelado autoregresivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L = D − A
+autovalores: 0 = λ₁ ≤ λ₂ ≤ … ≤ λₙ
+λ₂ > 0 ⟺ el grafo es conexo
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La atención es un promedio ponderado por similitud, normalizado con softmax.
+El Laplaciano de un grafo se construye restando la matriz de adyacencia a la matriz
+diagonal de grados. Pese a su simplicidad, su espectro contiene una cantidad notable de
+información sobre la estructura, y ese es el objeto de la teoría espectral de grafos.
+
+El autovalor **cero** está siempre presente, con el vector constante como autovector: es
+inmediato comprobar que `L·1 = 0`. Lo interesante es su **multiplicidad**, que coincide
+exactamente con el número de componentes conexas. Un grafo conexo tiene un único cero.
+
+El segundo autovalor `λ₂` se llama **conectividad algebraica**, y mide cuán bien conectado
+está el grafo: cerca de cero significa que hay un cuello de botella y el grafo está casi
+partido en dos. Su autovector asociado, el vector de Fiedler, indica **por dónde** cortar, y
+esa es la base del agrupamiento espectral.
+
+Como `L` es simétrica y semidefinida positiva, todo el aparato del teorema espectral de la
+parte 06 se aplica: autovalores reales no negativos y autovectores ortogonales. La versión
+**normalizada** `D^{−1/2}·L·D^{−1/2}` acota los autovalores en `[0, 2]` y es la que usan las
+redes convolucionales sobre grafos, con la precaución de tratar los nodos aislados para no
+dividir por cero.
+
+## 🧮 Ejemplo trabajado
+
+Laplaciano de un grafo de cinco nodos.
+
+```text
+5 nodos, 6 aristas
+grados: [3, 2, 3, 3, 1]
+
+L = D − A:
+  [ 3  −1  −1  −1   0]
+  [−1   2  −1   0   0]
+  [−1  −1   3  ...   ]
+  [ ...                ]
+
+autovalores:
+  [0,0 ; 0,82991351 ; 2,68889218 ; 4,0 ; 4,4811943]
+
+multiplicidad de 0: 1  →  grafo conexo             ✓
+λ₂ = 0,83 > 0        →  confirma la conexión       ✓
+
+Un λ₂ pequeño indicaría un cuello de botella,
+y el vector de Fiedler diría por dónde cortarlo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 336
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Normalizar el Laplaciano sin tratar los nodos aislados y dividir por cero.
+2. Confundir el Laplaciano con la matriz de adyacencia.
+3. Interpretar λ₂ sin comprobar antes que el grafo es conexo.
+
+## 🚀 Dónde se usa de verdad
+
+Agrupamiento espectral, redes convolucionales sobre grafos, análisis de redes sociales,
+partición de mallas y detección de comunidades.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Chung, F. *Spectral Graph Theory*, AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html)
+- [von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

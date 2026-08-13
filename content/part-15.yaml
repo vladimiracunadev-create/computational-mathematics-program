@@ -1,0 +1,1349 @@
+part: "15"
+titulo: "Matemática de Deep Learning"
+
+resumen_extendido: |
+  Una red neuronal es una función compuesta con muchos parámetros, entrenada minimizando una
+  pérdida con descenso de gradiente. Esa frase contiene todo, y esta parte la desarrolla pieza
+  por pieza usando exactamente lo construido antes: la regla de la cadena de la parte 07, el
+  gradiente y la autodiferenciación de la parte 08, los optimizadores de la parte 12 y las
+  pérdidas de la parte 13.
+
+  Las clases 301 y 302 marcan la frontera histórica. El **perceptrón** converge si y solo si
+  los datos son linealmente separables, y su incapacidad para resolver XOR —señalada por Minsky
+  y Papert en 1969— congeló el campo durante una década. La solución es apilar capas **con no
+  linealidad entre ellas**: sin ella, componer transformaciones lineales da otra transformación
+  lineal y la profundidad no aporta nada. La capa oculta no clasifica: construye una
+  representación en la que el problema sí es separable, y ese es el mecanismo esencial del
+  aprendizaje profundo.
+
+  Las clases 303 a 306 son el motor. Cada **activación** tiene su zona de saturación, y la
+  sigmoide, con derivada máxima de 0,25, garantiza que el gradiente se atenúe al menos cuatro
+  veces por capa: por eso ReLU la desplazó. **Backpropagation** se desarrolla aquí paso a paso,
+  con números, y se ve que no es un algoritmo nuevo sino la regla de la cadena aplicada en
+  orden topológico inverso sobre el grafo de cómputo. El detalle que más se olvida al
+  implementarlo a mano es que un nodo reutilizado **acumula** gradientes de todos sus consumos.
+
+  Las clases 307 a 309 tratan lo que hace entrenable una red profunda. La **inicialización** no
+  es un detalle: con escala 0,01 las activaciones colapsan a cero en ocho capas y con escala 1,0
+  se saturan, mientras que Xavier y He mantienen la varianza estable en ambos sentidos. La
+  **normalización** estabiliza la escala interna, y batch norm y layer norm se distinguen
+  simplemente por el eje sobre el que promedian —una razón concreta por la que los Transformers
+  usan layer norm—. El **dropout** introduce ruido en entrenamiento y conserva la esperanza en
+  inferencia mediante escalado.
+
+  Las clases 310 a 312 desarrollan la convolución como capa: la fórmula del tamaño de salida
+  con padding y stride, el **campo receptivo** que crece al apilar capas, y el hecho de que dos
+  convoluciones de 3×3 cubren lo mismo que una de 5×5 con menos parámetros y más no linealidad
+  —la observación que define VGG—.
+
+  Las clases 313 a 316 tratan las secuencias. Una RNN comparte pesos en el tiempo y acumula
+  historia en su estado, pero el gradiente a través de 50 pasos es un **producto de 50
+  factores**: si cada uno es menor que 1 el producto se desvanece exponencialmente, y si es
+  mayor explota. La **LSTM** resuelve el desvanecimiento con un camino aditivo para el estado de
+  celda, y la GRU lo consigue con dos puertas en vez de tres y un 25 % menos de parámetros.
+
+  El cierre conecta con la práctica: embeddings como geometría del significado, las técnicas
+  reales de entrenamiento —warmup, clipping, planificadores—, y la comparación entre el motor
+  `Var` de la parte 08 y PyTorch o JAX, que hacen lo mismo con otra escala de ingeniería. El
+  capstone entrena una red completa en Python puro sobre dos espirales entrelazadas, y comprueba
+  que el gradiente derivado a mano coincide con el automático.
+
+mapa: |
+  flowchart TD
+      A["Clases 301-302 · Perceptron y MLP"] --> B["Clases 303-304 · Activaciones y perdidas"]
+      B --> C["Clases 305-306 · Backpropagation y grafo de computo"]
+      C --> D["Clases 307-309 · Inicializacion, normalizacion y dropout"]
+      D --> E["Clases 310-312 · Convolucion, campo receptivo y pooling"]
+      D --> F["Clases 313-316 · RNN, gradientes, LSTM y GRU"]
+      E --> G["Clases 317-319 · Embeddings, optimizacion y autodiff"]
+      F --> G
+      G --> H["Clase 320 · Capstone red desde cero"]
+      C -.-> I["Regla de la cadena y Var · Parte 08"]
+      G ==> J["Parte 16 · Transformers y frontera"]
+      D -.-> K["Optimizadores AdamW · Parte 12"]
+
+glosario:
+  - termino: "Perceptrón"
+    definicion: "Neurona lineal con umbral. Converge si y solo si los datos son linealmente separables."
+    clase: "301"
+  - termino: "Separabilidad lineal"
+    definicion: "Existencia de un hiperplano que separa las clases sin error. XOR no la cumple."
+    clase: "301"
+  - termino: "Perceptrón multicapa"
+    definicion: "Composición de capas lineales con no linealidad entre ellas."
+    clase: "302"
+  - termino: "Capa oculta"
+    definicion: "Capa intermedia que construye una representación donde el problema sí es separable."
+    clase: "302"
+  - termino: "Teorema de aproximación universal"
+    definicion: "Una capa oculta suficientemente ancha aproxima cualquier función continua. No dice cómo entrenarla."
+    clase: "302"
+  - termino: "Función de activación"
+    definicion: "No linealidad aplicada tras la transformación lineal. Sin ella la profundidad no aporta nada."
+    clase: "303"
+  - termino: "Saturación"
+    definicion: "Zona donde la derivada de la activación es casi nula y el gradiente deja de fluir."
+    clase: "303"
+  - termino: "ReLU"
+    definicion: "max(0, x). Derivada 1 en positivo: no satura por la derecha y es barata."
+    clase: "303"
+  - termino: "Pérdida de Huber"
+    definicion: "Cuadrática cerca de cero y lineal lejos. Robusta ante valores atípicos."
+    clase: "304"
+  - termino: "Backpropagation"
+    definicion: "Regla de la cadena aplicada en orden topológico inverso sobre el grafo de cómputo."
+    clase: "305"
+  - termino: "Paso hacia adelante"
+    definicion: "Cálculo de las salidas capa a capa, guardando los valores intermedios."
+    clase: "305"
+  - termino: "Grafo de cómputo"
+    definicion: "Representación de la expresión como nodos de operaciones y aristas de dependencia."
+    clase: "306"
+  - termino: "Acumulación de gradientes"
+    definicion: "Un nodo usado en varios sitios suma las contribuciones de todos sus consumos."
+    clase: "306"
+  - termino: "Inicialización de Xavier"
+    definicion: "Escala 1/√n. Mantiene la varianza estable con activaciones simétricas como tanh."
+    clase: "307"
+  - termino: "Inicialización de He"
+    definicion: "Escala √(2/n). Compensa que ReLU anula la mitad de las activaciones."
+    clase: "307"
+  - termino: "Ruptura de simetría"
+    definicion: "Inicializar con valores distintos para que las neuronas de una capa no aprendan lo mismo."
+    clase: "307"
+  - termino: "Batch normalization"
+    definicion: "Normaliza cada característica sobre el lote. Depende del tamaño del lote."
+    clase: "308"
+  - termino: "Layer normalization"
+    definicion: "Normaliza cada muestra sobre sus características. Independiente del lote."
+    clase: "308"
+  - termino: "Dropout"
+    definicion: "Apagar neuronas al azar durante el entrenamiento para evitar coadaptación."
+    clase: "309"
+  - termino: "Inverted dropout"
+    definicion: "Escalar durante el entrenamiento para que la inferencia no requiera ajuste."
+    clase: "309"
+  - termino: "Padding"
+    definicion: "Relleno del borde que permite conservar el tamaño espacial tras convolucionar."
+    clase: "310"
+  - termino: "Stride"
+    definicion: "Salto del núcleo al desplazarse. Reduce el tamaño de salida."
+    clase: "310"
+  - termino: "Campo receptivo"
+    definicion: "Región de la entrada que influye en una activación concreta. Crece al apilar capas."
+    clase: "311"
+  - termino: "Compartición de parámetros"
+    definicion: "El mismo núcleo se aplica en todas las posiciones. Reduce parámetros e impone invariancia."
+    clase: "311"
+  - termino: "Pooling"
+    definicion: "Reducción espacial por máximo o media. Sin parámetros aprendidos."
+    clase: "312"
+  - termino: "Red recurrente"
+    definicion: "Procesa secuencias manteniendo un estado oculto y compartiendo pesos en el tiempo."
+    clase: "313"
+  - termino: "Estado oculto"
+    definicion: "Vector que resume la historia procesada hasta el instante actual."
+    clase: "313"
+  - termino: "Gradiente que se desvanece"
+    definicion: "Producto de muchas derivadas menores que 1: el gradiente tiende a cero exponencialmente."
+    clase: "314"
+  - termino: "Gradient clipping"
+    definicion: "Acotar la norma del gradiente conservando su dirección. Evita la explosión."
+    clase: "314"
+  - termino: "LSTM"
+    definicion: "Celda con puertas de olvido, entrada y salida, y un camino aditivo para el gradiente."
+    clase: "315"
+  - termino: "Estado de celda"
+    definicion: "Memoria de largo plazo de la LSTM, actualizada de forma aditiva."
+    clase: "315"
+  - termino: "GRU"
+    definicion: "Celda recurrente con puertas de actualización y reinicio. Un 25 % menos de parámetros que LSTM."
+    clase: "316"
+  - termino: "Embedding"
+    definicion: "Representación densa aprendida donde la proximidad geométrica refleja similitud."
+    clase: "317"
+  - termino: "Similitud coseno"
+    definicion: "Coseno del ángulo entre dos vectores. Ignora la magnitud y mide solo la dirección."
+    clase: "317"
+  - termino: "Warmup"
+    definicion: "Subir el learning rate gradualmente al inicio para no divergir con estadísticas inmaduras."
+    clase: "318"
+  - termino: "Autodiferenciación en modo reverso"
+    definicion: "Una pasada hacia adelante y una hacia atrás dan todos los gradientes de una salida escalar."
+    clase: "319"
+
+clases:
+  "301":
+    concepto: "El perceptrón converge siempre en datos separables y nunca en XOR."
+    formulas:
+      - "salida = 1 si wᵀx + b > 0, si no 0"
+      - "actualización: w ← w + η·(y − ŷ)·x"
+      - "teorema de convergencia: finito si hay separabilidad"
+    desarrollo: |
+      El perceptrón de Rosenblatt es la unidad mínima: una suma ponderada de las entradas
+      seguida de un umbral. Su regla de aprendizaje es directa —cuando se equivoca, mueve los
+      pesos en la dirección del ejemplo mal clasificado— y tiene una garantía teórica sólida.
+
+      El **teorema de convergencia del perceptrón** dice que si los datos son linealmente
+      separables, el algoritmo encuentra un separador en un número finito de pasos. Es un
+      resultado fuerte y raro en aprendizaje automático: una garantía absoluta, sin condiciones
+      sobre el orden de los datos ni sobre la inicialización.
+
+      El problema es la otra cara. Si los datos **no** son separables, el algoritmo no converge
+      nunca: sigue oscilando indefinidamente sin acercarse a nada. Y la función XOR, con apenas
+      cuatro puntos, no es separable: no hay recta que deje `(0,0)` y `(1,1)` a un lado y
+      `(0,1)` y `(1,0)` al otro.
+
+      Ese ejemplo de cuatro puntos tuvo consecuencias históricas desproporcionadas. Minsky y
+      Papert lo publicaron en 1969, la financiación se retiró y el campo entró en el primer
+      invierno de la inteligencia artificial. La solución —apilar capas— ya se intuía, pero
+      faltaba el algoritmo para entrenarlas, y backpropagation no se popularizó hasta 1986.
+    ejemplo: |
+      El mismo algoritmo sobre AND y sobre XOR.
+
+      ```text
+      AND (separable):
+        pesos aprendidos: (2,0 ; 1,0)     sesgo: −2,0
+        errores tras 100 épocas: 0                         ✓
+
+        Comprobación:
+          (0,0): 0·2 + 0·1 − 2 = −2  →  0                  ✓
+          (1,1): 1·2 + 1·1 − 2 =  1  →  1                  ✓
+
+      XOR (no separable):
+        errores tras 100 épocas: 4
+        el algoritmo oscila sin converger                   ✗
+
+      No es un problema del algoritmo: no existe ninguna recta
+      que separe los cuatro puntos de XOR.
+      ```
+    errores:
+      - "Esperar convergencia del perceptrón con datos no separables."
+      - "Concluir que la red no puede aprender cuando el problema es de arquitectura."
+      - "Confundir el perceptrón clásico con la regresión logística, que sí da probabilidades."
+    aplicacion: |
+      Comprensión histórica del campo, línea base mínima, comprobación de separabilidad y
+      unidad básica de toda red neuronal.
+    referencias:
+      - "[Rosenblatt, F. *The perceptron: a probabilistic model*, Psychological Review, 1958](https://doi.org/10.1037/h0042519)"
+      - "[Minsky, M.; Papert, S. *Perceptrons*, MIT Press, 1969](https://mitpress.mit.edu/9780262534772/perceptrons/)"
+
+  "302":
+    concepto: "Sin no linealidad entre capas, cien capas siguen siendo una sola transformación lineal."
+    formulas:
+      - "MLP: f(x) = W₂·σ(W₁x + b₁) + b₂"
+      - "sin σ:  W₂(W₁x + b₁) + b₂ = W'x + b'"
+      - "XOR: 2 → 4 (tanh) → 1 (sigmoid)"
+    desarrollo: |
+      Un perceptrón multicapa apila transformaciones lineales con una función no lineal entre
+      ellas. La no linealidad no es un adorno: **es lo único que hace que la profundidad
+      importe**. Componer dos transformaciones lineales da otra transformación lineal, y por
+      tanto una red sin activaciones, por profunda que sea, no puede hacer más que un modelo
+      lineal de una capa.
+
+      Con no linealidad, la capa oculta hace algo cualitativamente distinto: **transforma el
+      espacio**. Las neuronas ocultas no clasifican; construyen una nueva representación de la
+      entrada en la que el problema original se vuelve separable, y la capa de salida se limita a
+      trazar el hiperplano en ese espacio nuevo.
+
+      XOR es la demostración mínima. En el espacio original no hay recta que sirva; tras pasar
+      por cuatro neuronas tanh, los cuatro puntos ocupan posiciones en las que sí la hay. Con 17
+      parámetros y unas cientos de épocas, el problema que hundió el campo en 1969 se resuelve.
+
+      El **teorema de aproximación universal** garantiza que una sola capa oculta suficientemente
+      ancha aproxima cualquier función continua con la precisión que se quiera. Conviene leer con
+      cuidado lo que **no** dice: no dice cuántas neuronas hacen falta —pueden ser
+      exponencialmente muchas—, ni que el entrenamiento vaya a encontrarlas. Es un resultado de
+      existencia, no de aprendibilidad, y la profundidad resulta ser mucho más eficiente en
+      parámetros que la anchura.
+    ejemplo: |
+      MLP resolviendo XOR con 17 parámetros.
+
+      ```text
+      arquitectura: 2 → 4 (tanh) → 1 (sigmoid)
+      parámetros: 17
+
+      época      pérdida
+         1      1,0765723
+       100      0,0249xxx
+       500      0,00xxxxx
+
+      predicciones finales:
+        (0,0) → 0,000049      esperado 0                   ✓
+        (0,1) → 0,999856      esperado 1                   ✓
+        (1,0) → 0,999829      esperado 1                   ✓
+        (1,1) → 0,000xxx      esperado 0                   ✓
+
+      Sin tanh entre las capas, el modelo colapsaría a
+      una única transformación lineal y fallaría igual
+      que el perceptrón.
+      ```
+    errores:
+      - "Apilar capas lineales sin activación entre ellas."
+      - "Interpretar el teorema de aproximación universal como garantía de entrenabilidad."
+      - "Aumentar la anchura cuando el problema pide profundidad."
+    aplicacion: |
+      Bloque básico de toda arquitectura moderna, capas feed-forward de los Transformers,
+      cabezas de clasificación y aproximación de funciones.
+    referencias:
+      - "[Rumelhart, D.; Hinton, G.; Williams, R. *Learning representations by back-propagating errors*, Nature, 1986](https://doi.org/10.1038/323533a0)"
+      - "[Cybenko, G. *Approximation by superpositions of a sigmoidal function*, 1989](https://doi.org/10.1007/BF02551274)"
+
+  "303":
+    concepto: "La derivada máxima de la sigmoide es 0,25: cada capa divide el gradiente por cuatro como mínimo."
+    formulas:
+      - "σ(x) = 1/(1+e⁻ˣ),   σ' ≤ 0,25"
+      - "tanh' ≤ 1,   ReLU' = 1 en positivo"
+      - "GELU: x·Φ(x), suave y no monótona cerca de cero"
+    desarrollo: |
+      La función de activación decide por dónde fluye el gradiente. Su elección parece un detalle
+      y determina si una red profunda se puede entrenar, y la razón es puramente cuantitativa:
+      **el valor máximo de su derivada**.
+
+      La **sigmoide** tiene derivada máxima 0,25, alcanzada en el origen. Eso significa que cada
+      capa multiplica el gradiente por 0,25 **como mucho**, y con diez capas el factor acumulado
+      es `0,25¹⁰ ≈ 10⁻⁶`. La **tanh** mejora a 1,0 y además está centrada en cero, lo que ayuda
+      a la optimización, pero sigue saturándose en ambos extremos.
+
+      **ReLU** cambió el panorama por su simplicidad: derivada exactamente 1 en la región
+      positiva, así que el gradiente pasa intacto. Es además trivialmente barata de calcular. Su
+      problema conocido es la **muerte de neuronas**: una unidad que queda siempre en la región
+      negativa tiene gradiente cero y no vuelve a actualizarse nunca. Leaky ReLU y ELU mitigan
+      eso con una pendiente pequeña en el lado negativo.
+
+      **GELU** es la activación de los Transformers modernos. Es suave en todo el dominio y no
+      monótona cerca del origen, lo que empíricamente funciona mejor en esas arquitecturas. La
+      elección de activación tiene menos margen del que sugiere la literatura: ReLU para redes
+      convolucionales y GELU para Transformers cubre casi todos los casos razonables.
+    ejemplo: |
+      Valores y derivadas de cinco activaciones.
+
+      ```text
+      x        sigmoid    tanh      relu   leaky    gelu
+      −5,0     0,006693  −0,999909  0,0   −0,05   −0,000001
+      −1,0     0,268941  −0,761594  0,0   −0,01   −0,158655
+       0,0     0,500000   0,000000  0,0    0,00    0,000000
+       1,0     0,731059   0,761594  1,0    1,00    0,841345
+       5,0     0,993307   0,999909  5,0    5,00    4,999999
+
+      Derivadas máximas:
+        sigmoid  0,25    →  10 capas: factor 1e-6
+        tanh     1,00    →  mejor, pero satura en los extremos
+        relu     1,00    →  sin saturación por la derecha
+
+      La sigmoide se satura claramente ya en |x| = 5:
+      su derivada allí es 0,0066.
+      ```
+    errores:
+      - "Usar sigmoide en capas ocultas de redes profundas."
+      - "Ignorar la muerte de neuronas ReLU con learning rates altos."
+      - "Cambiar de activación para arreglar un problema que era de inicialización."
+    aplicacion: |
+      Diseño de arquitecturas, diagnóstico de gradientes que no fluyen, elección entre ReLU y
+      GELU y depuración de entrenamientos estancados.
+    referencias:
+      - "[Glorot, X.; Bordes, A.; Bengio, Y. *Deep sparse rectifier neural networks*, AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html)"
+      - "[Hendrycks, D.; Gimpel, K. *Gaussian Error Linear Units*, 2016](https://arxiv.org/abs/1606.08415)"
+
+  "304":
+    concepto: "Un solo valor atípico multiplica el MSE por cien mil; Huber lo absorbe."
+    formulas:
+      - "MSE = media de (y − ŷ)²"
+      - "MAE = media de |y − ŷ|"
+      - "Huber: cuadrática si |e| ≤ δ, lineal si no"
+    desarrollo: |
+      La función de pérdida define qué significa equivocarse, y esa definición cambia por
+      completo el modelo resultante. No es un parámetro secundario: es la especificación del
+      problema.
+
+      El **error cuadrático medio** penaliza el cuadrado del error, así que un error diez veces
+      mayor pesa cien veces más. Eso lo hace extremadamente sensible a los valores atípicos: una
+      sola observación anómala puede dominar la suma y arrastrar el ajuste entero. El **error
+      absoluto medio** penaliza linealmente y es mucho más robusto, a cambio de no ser derivable
+      en cero y de converger más lentamente.
+
+      La **pérdida de Huber** combina lo mejor de ambas: se comporta como cuadrática para
+      errores pequeños —donde interesa la sensibilidad y la derivabilidad— y como lineal para
+      errores grandes —donde interesa la robustez—. El parámetro `δ` marca la transición, y es
+      la opción por defecto razonable cuando se sospecha que hay ruido de medición.
+
+      Detrás de cada elección hay un modelo probabilístico implícito, como se vio en la clase
+      215: MSE supone ruido gaussiano, MAE supone ruido de Laplace con colas más pesadas, y
+      entropía cruzada supone un modelo categórico. Elegir pérdida es declarar qué se cree del
+      ruido, y hacerlo explícitamente evita elegir por costumbre.
+    ejemplo: |
+      Cinco observaciones, una de ellas claramente anómala.
+
+      ```text
+      objetivos:    [1,0 ; 2,0 ; 3,0 ; 4,0 ; 100,0]
+      predicciones: [1,1 ; 2,1 ; 2,9 ; 4,2 ;   5,0]
+
+      MSE            = 1805,014
+      MAE            =   19,100
+      Huber (δ = 1)  =   18,907
+
+      MSE sin el atípico = 0,0175
+
+      El atípico multiplica el MSE por 103 000.
+      MAE y Huber apenas se descolocan.
+
+      Si ese 100,0 es un error de medición, MSE arruina
+      el ajuste entero por una sola observación.
+      ```
+    errores:
+      - "Usar MSE con datos que contienen errores de medición."
+      - "Elegir la pérdida por costumbre sin considerar el modelo de ruido."
+      - "Comparar valores de pérdidas distintas como si fueran la misma escala."
+    aplicacion: |
+      Regresión robusta, detección de objetos con pérdida Huber, entrenamiento con datos
+      ruidosos y diseño de objetivos personalizados.
+    referencias:
+      - "[Huber, P. *Robust estimation of a location parameter*, Annals of Mathematical Statistics, 1964](https://doi.org/10.1214/aoms/1177703732)"
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
+
+  "305":
+    concepto: "Backpropagation es la regla de la cadena recorrida hacia atrás, y se puede seguir con números."
+    formulas:
+      - "forward: z = Wx + b,  a = σ(z)"
+      - "backward: dL/dW = dL/dz · xᵀ"
+      - "con cross-entropy y sigmoide: dL/dz = a − y"
+    desarrollo: |
+      Backpropagation no es un algoritmo aparte: es la regla de la cadena de la clase 147
+      aplicada sistemáticamente al grafo de la red, recorriendo los nodos en orden topológico
+      inverso. Su valor es de eficiencia, no de concepto: calcula **todos** los gradientes en una
+      sola pasada hacia atrás.
+
+      El procedimiento tiene dos fases. En el **paso hacia adelante** se calculan las salidas
+      capa a capa y se **guardan** los valores intermedios, que harán falta después; ese
+      almacenamiento es la razón de que la memoria de entrenamiento crezca con la profundidad. En
+      el **paso hacia atrás** se propaga la derivada de la pérdida desde la salida hasta los
+      parámetros.
+
+      Hay una simplificación algebraica que conviene ver una vez con detalle. Al combinar
+      entropía cruzada con sigmoide en la salida, el gradiente respecto de la preactivación se
+      reduce a `a − y`: la derivada de la sigmoide se cancela exactamente contra el denominador
+      de la pérdida. Esa cancelación es la que evita los gradientes saturados de la clase 286, y
+      es la razón técnica de emparejar esas dos funciones.
+
+      Recorrer los números a mano una vez, como hace este ejemplo, vale más que leer la
+      demostración diez veces. Después conviene no volver a implementarlo: la autodiferenciación
+      de la clase 319 hace exactamente esto sin errores de signo ni de transposición.
+    ejemplo: |
+      Backpropagation completo sobre una red 2-2-1.
+
+      ```text
+      entrada: (0,5 ; −1,2)      objetivo: 1,0
+
+      FORWARD
+        z1 = (1,09 ; 0,01)
+        a1 = (0,796878 ; 0,01)        tras la activación
+        z2 = 0,524127
+        a2 = 0,628xxx                 salida sigmoide
+
+      BACKWARD
+        dL/da2 = −1,592072
+        dL/dz2 = a2 − y = −0,371888   ← la sigmoide se canceló
+        dL/dW2 = dL/dz2 · a1ᵀ
+               = (−0,296349 ; −0,003719)
+
+      El segundo peso recibe un gradiente 80 veces menor
+      porque su activación a1 vale solo 0,01.
+      ```
+    errores:
+      - "No guardar las activaciones del paso hacia adelante."
+      - "Aplicar por separado la derivada de la sigmoide y la de la pérdida, duplicando el factor."
+      - "Equivocar transposiciones al pasar de escalares a matrices."
+    aplicacion: |
+      Entrenamiento de cualquier red, comprensión de los frameworks, depuración de gradientes y
+      diseño de capas personalizadas.
+    referencias:
+      - "[Rumelhart, D.; Hinton, G.; Williams, R. *Learning representations by back-propagating errors*, Nature, 1986](https://doi.org/10.1038/323533a0)"
+      - "[Nielsen, M. *Neural Networks and Deep Learning*, cap. 2, 2015](http://neuralnetworksanddeeplearning.com/chap2.html)"
+
+  "306":
+    concepto: "Un nodo usado dos veces recibe la suma de los dos gradientes, no uno de ellos."
+    formulas:
+      - "cada operación es un nodo; cada dependencia, una arista"
+      - "orden topológico inverso para el paso hacia atrás"
+      - "nodo con k consumos: dL/dv = Σ de las k contribuciones"
+    desarrollo: |
+      Representar una expresión como grafo —nodos para las operaciones, aristas para las
+      dependencias— convierte la derivación en un procedimiento mecánico. Cada tipo de nodo sabe
+      derivar su operación local, y la regla de la cadena encadena esas derivadas locales a lo
+      largo del grafo.
+
+      La regla que genera más errores al implementar autodiferenciación a mano es la
+      **acumulación**. Si una variable se usa en varios sitios, su gradiente total es la
+      **suma** de las contribuciones de todos sus consumos, no la última calculada. Sobrescribir
+      en vez de sumar produce gradientes silenciosamente incorrectos, y el entrenamiento
+      simplemente converge peor sin dar ningún error.
+
+      El ejemplo mínimo lo muestra: en `y = x² + x`, la variable `x` alimenta dos ramas. La
+      derivada es `2x + 1`, que es exactamente la suma de las dos contribuciones. Si solo se
+      tomara una, el gradiente sería `2x` o `1`, y ambos son incorrectos.
+
+      Esa misma regla explica un detalle práctico de PyTorch que confunde al principio:
+      `optimizer.zero_grad()` hace falta precisamente porque el framework **acumula** por diseño.
+      Esa acumulación no es un fallo: es lo que permite simular lotes grandes sumando gradientes
+      de varios lotes pequeños antes de actualizar.
+    ejemplo: |
+      Dos expresiones con nodos reutilizados.
+
+      ```text
+      Expresión 1:  y = x² + x   en x = 2
+
+        y = 4 + 2 = 6,0
+
+        rama 1: d(x²)/dx = 2x = 4
+        rama 2: d(x)/dx  = 1
+        acumulado: dy/dx = 4 + 1 = 5,0
+
+        comprobación analítica 2x + 1 = 5,0                ✓
+
+        Si se sobrescribiera en vez de sumar, saldría 4 o 1.
+
+      Expresión 2:  e = (ab + a)·(ab)   en a = 3, b = 4
+
+        el producto ab se usa dos veces:
+        su gradiente acumula ambas contribuciones.
+      ```
+    errores:
+      - "Sobrescribir el gradiente de un nodo en vez de acumularlo."
+      - "Recorrer el grafo en orden incorrecto y usar gradientes aún no calculados."
+      - "Olvidar poner a cero los gradientes entre iteraciones en PyTorch."
+    aplicacion: |
+      Implementación de autodiferenciación, capas personalizadas, acumulación de gradientes para
+      lotes grandes y depuración de frameworks.
+    referencias:
+      - "[Baydin, A. et al. *Automatic differentiation in machine learning: a survey*, JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)"
+      - "[Karpathy, A. *micrograd*, 2020](https://github.com/karpathy/micrograd)"
+
+  "307":
+    concepto: "Con escala 0,01 las activaciones mueren en ocho capas; con escala 1,0 se saturan."
+    formulas:
+      - "Xavier: Var(W) = 1/n_in   (tanh, sigmoide)"
+      - "He: Var(W) = 2/n_in   (ReLU)"
+      - "todos los pesos iguales ⟹ todas las neuronas aprenden lo mismo"
+    desarrollo: |
+      Inicializar los pesos parece trivial y decide si una red profunda entrena o no. El
+      criterio es mantener **estable la varianza de las activaciones** al atravesar capas: si
+      cada capa la reduce, las señales se apagan; si la amplifica, se saturan o desbordan.
+
+      La demostración numérica es contundente. Con escala 0,01 y ocho capas, la desviación de las
+      activaciones cae de 0,009 a `1e-8` y luego a cero exacto: la señal ha desaparecido y no hay
+      gradiente que propagar. Con escala 1,0 ocurre lo contrario con tanh: las activaciones se
+      pegan a ±1, la derivada se anula y el gradiente tampoco fluye.
+
+      **Xavier** deriva la escala `1/√n` imponiendo que la varianza se conserve, y funciona con
+      activaciones simétricas como tanh. **He** ajusta a `√(2/n)` porque ReLU anula la mitad de
+      las activaciones y hay que compensar ese factor 2. Son las dos inicializaciones por defecto
+      y la elección se sigue de la activación, no del gusto.
+
+      Hay una condición previa que ninguna fórmula cubre: **romper la simetría**. Si todos los
+      pesos de una capa se inicializan al mismo valor, todas las neuronas calculan lo mismo,
+      reciben el mismo gradiente y siguen siendo idénticas para siempre. La capa entera equivale
+      a una sola neurona. Por eso se inicializa al azar, y por eso los sesgos sí pueden empezar
+      en cero: la simetría ya está rota por los pesos.
+    ejemplo: |
+      Desviación de las activaciones en capas 1, 4 y 8.
+
+      ```text
+      8 capas de 100 neuronas
+
+      escala 0,01 con tanh:
+        [0,00933503 ; 1e-08 ; 0,0]
+        las activaciones se apagan por completo            ✗
+
+      Xavier (1/√n) con tanh:
+        [0,36236997 ; 0,13964668 ; 0,08762870]
+        decae despacio, sigue habiendo señal                ✓
+
+      He (√(2/n)) con ReLU:
+        [0,67589597 ; 0,76192729 ; 0,62293017]
+        varianza estable en las ocho capas                  ✓
+
+      escala 1,0 con tanh:
+        [0,84424669 ; 0,85537312 ; 0,92118981]
+        saturación: casi todo en ±1, derivada nula          ✗
+      ```
+    errores:
+      - "Inicializar todos los pesos con el mismo valor."
+      - "Usar Xavier con ReLU en vez de He."
+      - "Elegir la escala por prueba y error sin mirar la varianza de las activaciones."
+    aplicacion: |
+      Entrenamiento de redes profundas, diagnóstico de entrenamientos que no arrancan, diseño de
+      arquitecturas nuevas y transferencia de aprendizaje.
+    referencias:
+      - "[Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*, AISTATS, 2010](https://proceedings.mlr.press/v9/glorot10a.html)"
+      - "[He, K. et al. *Delving Deep into Rectifiers*, ICCV, 2015](https://arxiv.org/abs/1502.01852)"
+
+  "308":
+    concepto: "Batch norm promedia por columna y layer norm por fila: ese eje es toda la diferencia."
+    formulas:
+      - "x̂ = (x − μ)/√(σ² + ε);   y = γx̂ + β"
+      - "batch norm: μ y σ por característica sobre el lote"
+      - "layer norm: μ y σ por muestra sobre las características"
+    desarrollo: |
+      Normalizar las activaciones internas estabiliza el entrenamiento y permite learning rates
+      mayores. La operación es la misma en ambos casos —restar media, dividir por desviación,
+      reescalar con parámetros aprendidos `γ` y `β`—; lo único que cambia es **sobre qué eje se
+      calculan las estadísticas**.
+
+      **Batch normalization** normaliza cada característica a lo largo del lote: la columna. Eso
+      la hace muy eficaz en redes convolucionales, donde los lotes son grandes, pero introduce
+      una dependencia incómoda del tamaño de lote y obliga a mantener estadísticas móviles para
+      inferencia. Mezclar las estadísticas de entrenamiento con las de inferencia es un error
+      clásico que produce resultados desastrosos e inexplicables.
+
+      **Layer normalization** normaliza cada muestra a lo largo de sus características: la fila.
+      No depende del lote en absoluto, funciona igual con lote de tamaño 1, y se comporta
+      idénticamente en entrenamiento y en inferencia. Por eso es la elección de los
+      Transformers, donde las secuencias tienen longitudes variables y el tamaño de lote efectivo
+      cambia.
+
+      El **mecanismo** por el que ayudan resultó no ser el que se propuso originalmente. El
+      artículo de batch norm lo atribuyó a reducir el «desplazamiento interno de covariables»;
+      trabajo posterior mostró que esa explicación no se sostiene, y que el efecto real es
+      **suavizar el paisaje de optimización**, permitiendo pasos más grandes. Es un buen ejemplo
+      de técnica que funciona antes de entenderse.
+    ejemplo: |
+      El mismo lote normalizado por columna y por fila.
+
+      ```text
+      lote original (4 muestras × 3 características):
+        [ 10  200    3]
+        [ 12  190    5]
+        [  8  210    1]
+        [ 14  195    x]
+
+      escalas por característica: [6,0 ; 20,0 ; 6,0]
+      la segunda característica domina completamente
+
+      batch norm (por columna):
+        [−0,4472   0,1690  −0,4472]
+        [ 0,4472  −1,1832   0,4472]
+        media por columna tras BN: [0, 0, 0]              ✓
+
+      layer norm (por fila):
+        [−0,6684   1,4135  −0,7451]
+        [−0,6658   1,4134  −0,7476]
+        media por fila tras LN: [0, 0, 0, 0]              ✓
+      ```
+    errores:
+      - "Usar estadísticas del lote durante la inferencia."
+      - "Aplicar batch norm con lotes muy pequeños."
+      - "Colocar la normalización sin decidir si va antes o después de la activación."
+    aplicacion: |
+      Estabilización de redes convolucionales, layer norm en Transformers, entrenamiento con
+      learning rates altos y arquitecturas residuales.
+    referencias:
+      - "[Ioffe, S.; Szegedy, C. *Batch Normalization*, ICML, 2015](https://arxiv.org/abs/1502.03167)"
+      - "[Santurkar, S. et al. *How does batch normalization help optimization?*, NeurIPS, 2018](https://arxiv.org/abs/1805.11604)"
+
+  "309":
+    concepto: "Dropout apaga neuronas al azar y escala en entrenamiento para que la inferencia no cambie."
+    formulas:
+      - "entrenamiento: apagar con probabilidad p y dividir por (1−p)"
+      - "inferencia: no hacer nada"
+      - "E[activación] se conserva"
+    desarrollo: |
+      Dropout apaga cada neurona con probabilidad `p` en cada paso de entrenamiento. La idea es
+      impedir la **coadaptación**: si una neurona no puede confiar en que sus compañeras estén
+      presentes, tiene que aprender características útiles por sí misma en lugar de depender de
+      combinaciones frágiles.
+
+      Otra lectura, complementaria, es que dropout entrena implícitamente un **ensemble
+      exponencial** de subredes que comparten pesos, y en inferencia promedia sus predicciones.
+      Eso lo emparenta con el bagging de la clase 292: reduce varianza combinando modelos que
+      cometen errores distintos.
+
+      El detalle de implementación importa. Apagar neuronas reduce la activación media, así que
+      hay que compensar. La versión moderna —**inverted dropout**— divide entre `(1−p)` durante
+      el entrenamiento, con lo que la esperanza se conserva y la inferencia no requiere ningún
+      ajuste. La versión antigua escalaba en inferencia, y mezclar ambas convenciones produce un
+      factor de escala erróneo difícil de detectar.
+
+      Su uso ha cambiado con el tiempo. En redes convolucionales fue desplazado por batch
+      normalization, que regulariza como efecto secundario. En Transformers sigue muy presente,
+      con valores bajos —0,1 es típico—, aplicado tras la atención y en las capas feed-forward.
+    ejemplo: |
+      Cien neuronas con probabilidad de apagado 0,5.
+
+      ```text
+      neuronas: 100      p = 0,5
+
+      media sin dropout:              1,00000
+      media con inverted dropout:     0,99976
+      la esperanza se conserva                             ✓
+
+      varianza introducida: 0,00958074
+
+      Mecanismo:
+        se apaga cada neurona con p = 0,5
+        las supervivientes se dividen entre (1 − 0,5) = 0,5
+        es decir, se multiplican por 2
+
+      En inferencia no se hace nada: ni apagado ni escalado.
+      Escalar también en inferencia daría el doble de activación.
+      ```
+    errores:
+      - "Dejar dropout activo durante la evaluación."
+      - "Mezclar la convención antigua con inverted dropout y duplicar la escala."
+      - "Aplicar valores altos de p en capas convolucionales."
+    aplicacion: |
+      Regularización de redes profundas, Transformers, estimación de incertidumbre con MC
+      dropout y prevención del sobreajuste con pocos datos.
+    referencias:
+      - "[Srivastava, N. et al. *Dropout: a simple way to prevent neural networks from overfitting*, JMLR, 2014](https://jmlr.org/papers/v15/srivastava14a.html)"
+      - "[Gal, Y.; Ghahramani, Z. *Dropout as a Bayesian approximation*, ICML, 2016](https://arxiv.org/abs/1506.02142)"
+
+  "310":
+    concepto: "El tamaño de salida sale de una fórmula, y equivocarla es el error más común al montar una CNN."
+    formulas:
+      - "salida = ⌊(n + 2p − k)/s⌋ + 1"
+      - "padding 'same' con s=1: p = (k−1)/2"
+      - "parámetros de la capa: k²·c_in·c_out + c_out"
+    desarrollo: |
+      La convolución 2D desliza un núcleo sobre una imagen calculando sumas ponderadas locales.
+      Sus tres parámetros geométricos —tamaño del núcleo `k`, padding `p` y stride `s`—
+      determinan el tamaño de la salida mediante una fórmula que conviene tener memorizada,
+      porque el 90 % de los errores al construir una CNN son desajustes de forma.
+
+      El **padding** rellena el borde, normalmente con ceros, y sirve para dos cosas: conservar
+      el tamaño espacial y evitar que los píxeles del borde se usen menos que los del centro. El
+      modo `same` con stride 1 requiere `p = (k−1)/2`, que es la razón de que los núcleos suelan
+      tener tamaño impar.
+
+      El **stride** es el salto entre posiciones. Con `s = 2` la salida tiene aproximadamente la
+      mitad de tamaño en cada dimensión, lo que sirve como alternativa aprendida al pooling. Las
+      arquitecturas modernas tienden a usar convoluciones con stride en lugar de pooling, porque
+      la reducción se aprende en vez de imponerse.
+
+      El núcleo del ejemplo es un **filtro de Sobel**, un detector clásico de bordes verticales
+      diseñado a mano en los años 60. En una CNN, un núcleo con esa forma **emerge del
+      entrenamiento** sin que nadie lo programe: las primeras capas aprenden detectores de bordes
+      y de color porque son las características más útiles para casi cualquier tarea visual.
+    ejemplo: |
+      Sobel vertical sobre una entrada 5×5.
+
+      ```text
+      entrada: 5×5      kernel: 3×3 (Sobel vertical)
+
+      kernel = [[−1  0  1]
+                [−2  0  2]
+                [−1  0  1]]
+
+      salida con stride 1, sin padding:
+        [[ 8,0  −16,0  −22,0]
+         [ 6,0  −13,0  −21,0]
+         [ 0,0    0,0   −2,0]]
+        forma: (3, 3)
+
+      Fórmula: (5 + 0 − 3)/1 + 1 = 3                       ✓
+
+      con stride 2:  (5 + 0 − 3)/2 + 1 = 2  →  forma (2,2) ✓
+
+      Para conservar 5×5 con k=3 y s=1 haría falta p = 1.
+      ```
+    errores:
+      - "Equivocar la fórmula del tamaño de salida y encadenar desajustes de forma."
+      - "Usar núcleos de tamaño par y no poder aplicar padding simétrico."
+      - "Olvidar que los canales de entrada multiplican el número de parámetros."
+    aplicacion: |
+      Diseño de redes convolucionales, procesamiento de imágenes, detección de bordes y capas
+      convolucionales en audio y series.
+    referencias:
+      - "[Dumoulin, V.; Visin, F. *A guide to convolution arithmetic for deep learning*, 2016](https://arxiv.org/abs/1603.07285)"
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)"
+
+  "311":
+    concepto: "Dos convoluciones de 3×3 ven lo mismo que una de 5×5 con menos parámetros y más no linealidad."
+    formulas:
+      - "RF_l = RF_{l−1} + (k_l − 1)·Π sᵢ"
+      - "dos 3×3 ⟹ campo receptivo 5, 18 parámetros"
+      - "una 5×5 ⟹ campo receptivo 5, 25 parámetros"
+    desarrollo: |
+      El **campo receptivo** de una activación es la región de la imagen de entrada que puede
+      influir en su valor. En la primera capa coincide con el núcleo; al apilar capas crece, y
+      con pooling o stride crece mucho más rápido porque cada paso vale por varios píxeles
+      originales.
+
+      La fórmula recursiva lo cuantifica: cada capa añade `(k−1)` multiplicado por el producto de
+      todos los strides anteriores. Ese producto —el «salto»— es lo que hace que el crecimiento
+      sea multiplicativo y no aditivo, y por eso unas pocas capas con reducción bastan para ver
+      la imagen entera.
+
+      La observación práctica más rentable es la de VGG: **dos convoluciones de 3×3 apiladas
+      tienen el mismo campo receptivo que una de 5×5**, pero usan 18 parámetros en vez de 25 y
+      aplican dos no linealidades en vez de una. Tres de 3×3 equivalen a una de 7×7 con 27
+      parámetros frente a 49. Por eso las arquitecturas modernas usan casi exclusivamente núcleos
+      3×3.
+
+      El campo receptivo importa porque limita lo que la red puede ver. Si un objeto ocupa 100
+      píxeles y el campo receptivo efectivo de la capa final es de 50, ninguna neurona podrá
+      integrarlo completo. Diseñar la profundidad y la reducción es, en buena medida, diseñar el
+      campo receptivo.
+    ejemplo: |
+      Crecimiento del campo receptivo en cinco capas.
+
+      ```text
+      arquitectura:
+        conv k=3 s=1  →  conv k=3 s=1  →  pool k=2 s=2
+        →  conv k=3 s=1  →  conv k=3 s=1
+
+      capa   tipo   campo receptivo   salto
+        1    conv          3            1
+        2    conv          5            1
+        3    pool          6            2
+        4    conv         10            2
+        5    conv         14            2
+
+      campo receptivo final: 14 píxeles
+
+      Comparación de coste:
+        dos conv 3×3:  campo 5,  18 parámetros, 2 ReLU
+        una conv 5×5:  campo 5,  25 parámetros, 1 ReLU
+
+      28 % menos parámetros y el doble de no linealidad.
+      ```
+    errores:
+      - "Diseñar la profundidad sin calcular el campo receptivo resultante."
+      - "Usar núcleos grandes donde varios pequeños son mejores."
+      - "Confundir campo receptivo teórico con el efectivo, que es menor."
+    aplicacion: |
+      Diseño de arquitecturas convolucionales, segmentación semántica, detección de objetos y
+      elección de profundidad según el tamaño de los objetos.
+    referencias:
+      - "[Simonyan, K.; Zisserman, A. *Very Deep Convolutional Networks (VGG)*, ICLR, 2015](https://arxiv.org/abs/1409.1556)"
+      - "[Luo, W. et al. *Understanding the effective receptive field*, NeurIPS, 2016](https://arxiv.org/abs/1701.04128)"
+
+  "312":
+    concepto: "Pooling reduce sin parámetros: max conserva la intensidad, average conserva el contexto."
+    formulas:
+      - "max pooling: máximo de cada ventana"
+      - "average pooling: media de cada ventana"
+      - "parámetros aprendidos: 0"
+    desarrollo: |
+      El pooling reduce la resolución espacial agregando ventanas de activaciones. No tiene
+      parámetros aprendidos: es una operación fija que reduce el cómputo, amplía el campo
+      receptivo e introduce cierta invariancia a pequeños desplazamientos.
+
+      **Max pooling** conserva la activación más fuerte de cada ventana. Es el más usado en
+      clasificación porque preserva la evidencia de que una característica está presente,
+      descartando dónde exactamente. **Average pooling** promedia y conserva más información de
+      contexto, y es el habitual en la capa final como *global average pooling*, que sustituye a
+      las capas densas y reduce enormemente los parámetros.
+
+      La invariancia que proporciona tiene un límite del que conviene ser consciente: es
+      invariancia a desplazamientos **pequeños**, del orden del tamaño de la ventana. No hace la
+      red invariante a traslaciones grandes, y como se vio en la clase 270, hacer submuestreo sin
+      suavizado previo introduce aliasing que **rompe** la invariancia en vez de crearla.
+
+      La tendencia arquitectónica ha ido reduciendo su papel. Muchas redes modernas usan
+      convoluciones con stride 2 en lugar de pooling, con el argumento de que así la reducción
+      es aprendida en vez de impuesta. El pooling sobrevive sobre todo en su forma global al
+      final de la red.
+    ejemplo: |
+      Max y average pooling 2×2 sobre la misma entrada.
+
+      ```text
+      entrada 4×4
+
+      max pool 2×2:
+        [[6,0   4,0]
+         [7,0   9,0]]
+
+      average pool 2×2:
+        [[3,75  2,25]
+         [3,50  5,50]]
+
+      forma de salida: (2, 2)
+      reducción: 16 elementos → 4
+      parámetros aprendidos: 0
+
+      Max conserva el pico de cada ventana; average lo diluye.
+      Para "¿está presente esta característica?" conviene max;
+      para "¿cuánta hay en promedio?" conviene average.
+      ```
+    errores:
+      - "Aplicar pooling agresivo y perder resolución necesaria para localizar."
+      - "Esperar invariancia a traslaciones grandes."
+      - "Submuestrear sin suavizado previo e introducir aliasing."
+    aplicacion: |
+      Redes convolucionales de clasificación, global average pooling como cabeza, reducción de
+      cómputo y agregación en redes sobre grafos.
+    referencias:
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)"
+      - "[Lin, M.; Chen, Q.; Yan, S. *Network In Network*, ICLR, 2014](https://arxiv.org/abs/1312.4400)"
+
+  "313":
+    concepto: "Una RNN procesa secuencias de cualquier longitud con un número fijo de parámetros."
+    formulas:
+      - "h_t = tanh(W_xh·x_t + W_hh·h_{t−1} + b_h)"
+      - "los mismos pesos en todos los instantes"
+      - "el estado resume toda la historia"
+    desarrollo: |
+      Una red recurrente procesa una secuencia elemento a elemento, manteniendo un **estado
+      oculto** que se actualiza en cada paso combinando la entrada nueva con el estado anterior.
+      Ese estado es el resumen de todo lo visto hasta el momento.
+
+      La propiedad decisiva es la **compartición de pesos en el tiempo**. Los mismos parámetros
+      se aplican en el instante 1 y en el 1000, igual que un núcleo convolucional se aplica en
+      todas las posiciones espaciales. Eso permite procesar secuencias de longitud arbitraria con
+      un número fijo de parámetros: el ejemplo de esta clase usa tres.
+
+      Entrenarla requiere **desplegar** la red en el tiempo, convirtiéndola en una red profunda
+      con tantas capas como pasos temporales, y aplicar backpropagation sobre esa estructura. El
+      procedimiento se llama BPTT, y su coste de memoria crece con la longitud de la secuencia,
+      lo que obliga a truncarlo en la práctica.
+
+      Ese despliegue es también el origen de su problema fundamental. Una secuencia de 50 pasos
+      genera una red efectiva de 50 capas, y el gradiente que llega al primer instante ha
+      atravesado 50 multiplicaciones. La clase siguiente cuantifica lo que eso implica. Las RNN
+      han sido en gran medida desplazadas por los Transformers, pero entenderlas es necesario
+      para entender por qué la atención fue una respuesta a un problema concreto.
+    ejemplo: |
+      RNN de un parámetro por matriz sobre cinco pasos.
+
+      ```text
+      secuencia: [1,0 ; 0,5 ; −0,3 ; 0,2 ; 0,9]
+      parámetros: W_xh = 0,8   W_hh = 0,9   b_h = 0,05
+
+      t    x       h
+      1   1,0    0,691069
+      2   0,5    0,790199
+      3  −0,3    0,4xxxxx
+      4   0,2    0,6xxxxx
+      5   0,9    0,856183
+
+      estado final: 0,856183
+
+      3 parámetros procesan una secuencia de cualquier longitud.
+      El estado en t=5 depende de las cinco entradas, aunque
+      la influencia de x₁ ya está muy atenuada.
+      ```
+    errores:
+      - "Olvidar reiniciar el estado oculto entre secuencias distintas."
+      - "Entrenar sobre secuencias largas sin truncar BPTT."
+      - "Confundir el número de pasos temporales con el número de parámetros."
+    aplicacion: |
+      Modelado de secuencias, series temporales, procesamiento de lenguaje anterior a los
+      Transformers y sistemas de control con estado.
+    referencias:
+      - "[Elman, J. *Finding structure in time*, Cognitive Science, 1990](https://doi.org/10.1207/s15516709cog1402_1)"
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 10](https://www.deeplearningbook.org/)"
+
+  "314":
+    concepto: "El gradiente a 50 pasos es un producto de 50 factores: o se anula o explota."
+    formulas:
+      - "∂L/∂h₀ = Π_{t=1}^{T} (∂h_t/∂h_{t−1})"
+      - "factores < 1 ⟹ 0 exponencialmente"
+      - "factores > 1 ⟹ ∞ exponencialmente"
+    desarrollo: |
+      Al propagar el gradiente hacia atrás en el tiempo, la contribución al primer instante es el
+      **producto** de las derivadas de todos los pasos intermedios. Ese producto es la causa
+      única de los dos patologías más conocidas de las redes recurrentes.
+
+      Si los factores son sistemáticamente menores que 1, el producto tiende a cero
+      exponencialmente y el gradiente **se desvanece**: la red no puede aprender dependencias
+      largas porque la señal de error nunca llega al principio de la secuencia. Con factor 0,5 y
+      50 pasos, el gradiente inicial es del orden de `10⁻¹⁵`.
+
+      Si los factores son mayores que 1, el producto **explota**: el gradiente crece hasta
+      desbordar y produce NaN, destruyendo el entrenamiento en un solo paso. Es más visible que
+      el desvanecimiento —se nota inmediatamente— y por eso más fácil de diagnosticar.
+
+      Las soluciones son distintas para cada caso. La explosión se resuelve con **gradient
+      clipping**: acotar la norma del gradiente conservando su dirección, un parche simple y
+      eficaz. El desvanecimiento es más profundo y exige cambiar la arquitectura: LSTM y GRU
+      crean un camino aditivo por el que el gradiente fluye sin multiplicarse, y las conexiones
+      residuales resuelven el mismo problema en redes profundas no recurrentes.
+    ejemplo: |
+      El mismo experimento con tres valores del factor.
+
+      ```text
+      50 pasos de propagación hacia atrás
+
+      w = 0,5  (desvanece)
+        paso  1: 0,470007
+        paso 10: ≈ 1e-4
+        paso 50: ≈ 1e-15        gradiente inexistente
+
+      w = 1,0  (estable)
+        paso  1: 0,786448
+        paso 10: ≈ 0,3
+        paso 50: sigue siendo apreciable
+
+      w = 1,5  (explota)
+        paso  1: 0,894879
+        paso 10: ≈ 50
+        paso 50: desborda a infinito
+
+      Causa única: el gradiente en t=0 es el producto
+      de 50 factores. Todo depende de si son <1 o >1.
+      ```
+    errores:
+      - "Entrenar RNN largas sin gradient clipping."
+      - "Atribuir a los datos un problema que es de propagación del gradiente."
+      - "Intentar arreglar el desvanecimiento subiendo el learning rate."
+    aplicacion: |
+      Diagnóstico de entrenamientos inestables, justificación de LSTM y conexiones residuales,
+      clipping en modelos de lenguaje y análisis de profundidad efectiva.
+    referencias:
+      - "[Bengio, Y.; Simard, P.; Frasconi, P. *Learning long-term dependencies with gradient descent is difficult*, 1994](https://doi.org/10.1109/72.279181)"
+      - "[Pascanu, R.; Mikolov, T.; Bengio, Y. *On the difficulty of training recurrent neural networks*, ICML, 2013](https://arxiv.org/abs/1211.5063)"
+
+  "315":
+    concepto: "La celda LSTM suma en vez de multiplicar, y por eso el gradiente sobrevive."
+    formulas:
+      - "c_t = f_t·c_{t−1} + i_t·g_t"
+      - "h_t = o_t·tanh(c_t)"
+      - "si f ≈ 1, ∂c_t/∂c_{t−1} ≈ 1"
+    desarrollo: |
+      La LSTM introduce un **estado de celda** separado del estado oculto, cuya actualización es
+      fundamentalmente **aditiva**. Tres puertas —olvido, entrada y salida— controlan qué se
+      descarta del pasado, qué se incorpora del presente y qué se expone al exterior.
+
+      La clave está en la forma de la actualización. En una RNN simple, la derivada de un estado
+      respecto del anterior involucra la matriz de pesos y la derivada de la activación, y se
+      multiplica en cada paso. En la LSTM, si la puerta de olvido está cerca de 1, la derivada
+      `∂c_t/∂c_{t−1}` es aproximadamente 1, y el gradiente **atraviesa el tiempo sin atenuarse**.
+
+      Ese camino se conoce como el carrusel de error constante, y es la misma idea que las
+      conexiones residuales de ResNet: crear una vía por la que el gradiente pase intacto. La
+      diferencia con una RNN no es de capacidad de representación sino de entrenabilidad.
+
+      Un detalle práctico que ilustra bien el diseño: el sesgo de la puerta de olvido se
+      inicializa en 1, no en 0. Así la puerta empieza abierta y la celda **recuerda por
+      defecto**, dejando que el entrenamiento aprenda cuándo olvidar en vez de tener que aprender
+      a recordar desde cero. Cuesta doce parámetros por celda frente a los tres de una RNN
+      simple, y durante veinte años ese coste mereció la pena.
+    ejemplo: |
+      Traza de una celda LSTM sobre una secuencia corta.
+
+      ```text
+      puertas: forget, input, output
+
+      t    x      c         h        forget   input
+      1   1,0   0,42874   0,270127   0,8176   0,6xxx
+      2   ...   ...       ...        ...      ...
+
+      El sesgo de forget se inicializa en 1:
+      la puerta arranca en 0,82, cerca de abierta.
+
+      Camino del gradiente:
+        c_t = f·c_{t−1} + i·g
+        ∂c_t/∂c_{t−1} = f ≈ 0,82
+
+      Con 50 pasos y f ≈ 1:  0,98⁵⁰ ≈ 0,36
+      Con una RNN y factor 0,5: 0,5⁵⁰ ≈ 1e-15
+
+      12 parámetros por celda, frente a 3 de la RNN simple.
+      ```
+    errores:
+      - "Inicializar el sesgo de la puerta de olvido en cero."
+      - "Confundir el estado de celda con el estado oculto."
+      - "Usar LSTM donde una arquitectura con atención sería más adecuada."
+    aplicacion: |
+      Modelado de secuencias largas, reconocimiento de voz, traducción automática anterior a los
+      Transformers y series temporales con dependencias lejanas.
+    referencias:
+      - "[Hochreiter, S.; Schmidhuber, J. *Long Short-Term Memory*, Neural Computation, 1997](https://doi.org/10.1162/neco.1997.9.8.1735)"
+      - "[Olah, C. *Understanding LSTM Networks*, 2015](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)"
+
+  "316":
+    concepto: "GRU consigue casi lo mismo que LSTM con dos puertas y un 25 % menos de parámetros."
+    formulas:
+      - "z: puerta de actualización;  r: puerta de reinicio"
+      - "h_t = (1−z)·h_{t−1} + z·h̃_t"
+      - "9 parámetros por celda frente a 12 de LSTM"
+    desarrollo: |
+      La GRU simplifica la LSTM fusionando el estado de celda con el estado oculto y reduciendo
+      las tres puertas a dos. La **puerta de actualización** decide cuánto del estado anterior se
+      conserva frente al candidato nuevo, combinando los papeles de las puertas de olvido y
+      entrada. La **puerta de reinicio** decide cuánto del pasado se usa para calcular ese
+      candidato.
+
+      La actualización tiene una forma de interpolación explícita: `(1−z)·h_anterior + z·h_nuevo`.
+      Si `z = 0` el estado se conserva íntegro, y esa es la misma vía aditiva que protege el
+      gradiente en la LSTM. La protección se consigue con menos maquinaria.
+
+      El ahorro es de 9 parámetros por celda frente a 12, un 25 %. Con capas de miles de unidades
+      eso se traduce en menos memoria y entrenamientos más rápidos, lo que en su momento fue una
+      ventaja práctica considerable.
+
+      La comparación empírica entre GRU y LSTM ha sido objeto de muchos estudios y la conclusión
+      es que **depende de la tarea**, sin ganador consistente. La recomendación razonable es
+      empezar por GRU por ser más ligera y probar LSTM si el rendimiento no basta. Ambas han
+      quedado en segundo plano frente a los Transformers, pero siguen siendo competitivas en
+      secuencias cortas y con pocos datos.
+    ejemplo: |
+      Traza de una celda GRU y comparación de parámetros.
+
+      ```text
+      puertas: update (z), reset (r)
+
+      t     h         update   reset
+      1   0,413336    0,6225   0,6457
+      2   ...         ...      ...
+
+      Parámetros por celda:
+        GRU:  9
+        LSTM: 12
+        ahorro: 25 %
+
+      Interpolación: h_t = (1−z)·h_{t−1} + z·h̃_t
+        z = 0  →  el estado se conserva íntegro           ✓
+        z = 1  →  el estado se sustituye por el candidato
+
+      Ese camino con z ≈ 0 es lo que protege el gradiente,
+      igual que la puerta de olvido de la LSTM.
+      ```
+    errores:
+      - "Elegir entre GRU y LSTM sin probar en la tarea concreta."
+      - "Confundir el sentido de la puerta de actualización al implementarla."
+      - "Suponer que menos parámetros implica siempre peor rendimiento."
+    aplicacion: |
+      Modelado de secuencias con recursos limitados, series temporales, reconocimiento de gestos
+      y sistemas embebidos.
+    referencias:
+      - "[Cho, K. et al. *Learning phrase representations using RNN encoder-decoder*, EMNLP, 2014](https://arxiv.org/abs/1406.1078)"
+      - "[Chung, J. et al. *Empirical evaluation of gated recurrent neural networks*, 2014](https://arxiv.org/abs/1412.3555)"
+
+  "317":
+    concepto: "En un espacio de embeddings, la dirección entre dos palabras codifica su relación."
+    formulas:
+      - "similitud coseno = (a·b) / (‖a‖·‖b‖)"
+      - "analogía: rey − hombre + mujer ≈ reina"
+      - "la magnitud no importa, solo la dirección"
+    desarrollo: |
+      Un embedding representa cada elemento discreto —palabra, usuario, producto— como un vector
+      denso de dimensión moderada, aprendido de forma que la **proximidad geométrica refleje
+      similitud semántica**. Es la alternativa a la codificación one-hot, que es enorme, dispersa
+      y en la que todos los elementos están a la misma distancia entre sí.
+
+      La medida de similitud habitual es el **coseno**, no la distancia euclídea. La razón es que
+      la magnitud de un embedding suele correlacionar con la frecuencia del término, que no es
+      información semántica; el coseno la descarta y mide solo la dirección. Es el producto
+      escalar normalizado de la parte 05.
+
+      El resultado que hizo famosos a los embeddings es que ciertas **direcciones codifican
+      relaciones**. El vector que va de «hombre» a «mujer» es aproximadamente el mismo que va de
+      «rey» a «reina», lo que permite resolver analogías con aritmética vectorial. Conviene
+      matizar: el efecto es real pero se exageró bastante en la divulgación, y depende mucho del
+      corpus y del método de evaluación.
+
+      Hay una consecuencia ética que no es opcional mencionar. Los embeddings aprenden los sesgos
+      presentes en los datos, y las mismas analogías que capturan «rey es a reina» capturan
+      asociaciones estereotipadas entre profesiones y género. Como el modelo aprende la
+      distribución del corpus, esos sesgos se propagan a cualquier sistema construido encima, y
+      detectarlos requiere auditar explícitamente.
+    ejemplo: |
+      Similitudes y analogía en un espacio de 4 dimensiones.
+
+      ```text
+      vocabulario: 5 términos, dimensión 4
+
+      similitudes con "rey":
+        hombre  0,857916
+        mujer   0,815207
+        reina   0,768974
+        mesa    0,3xxxxx
+
+      analogía: rey − hombre + mujer
+        vector resultante: [0,85 ; 0,1 ; 0,1 ; 0,05]
+
+        ranking por similitud:
+          reina   1,000000     ← la analogía funciona   ✓
+          mujer   0,835523
+          rey     0,768974
+
+      Nota: en este espacio pequeño "hombre" es más similar
+      a "rey" que "reina", lo que muestra que la similitud
+      directa y la analogía capturan cosas distintas.
+      ```
+    errores:
+      - "Usar distancia euclídea donde corresponde similitud coseno."
+      - "Sobreinterpretar las analogías como propiedad universal de los embeddings."
+      - "Desplegar embeddings sin auditar los sesgos heredados del corpus."
+    aplicacion: |
+      Representación de vocabularios, sistemas de recomendación, búsqueda semántica, bases de
+      datos vectoriales y capa de entrada de todo modelo de lenguaje.
+    referencias:
+      - "[Mikolov, T. et al. *Efficient estimation of word representations in vector space*, 2013](https://arxiv.org/abs/1301.3781)"
+      - "[Bolukbasi, T. et al. *Man is to computer programmer as woman is to homemaker?*, NeurIPS, 2016](https://arxiv.org/abs/1607.06520)"
+
+  "318":
+    concepto: "Warmup evita divergir al arrancar y clipping evita que un gradiente anómalo destruya el modelo."
+    formulas:
+      - "warmup: subir el lr linealmente durante los primeros pasos"
+      - "clipping: si ‖g‖ > c, escalar g ← c·g/‖g‖"
+      - "planificador: reducir el lr según avanza el entrenamiento"
+    desarrollo: |
+      Entrenar una red profunda es aplicar los optimizadores de la parte 12 a un problema no
+      convexo, ruidoso y de curvatura muy variable. Las técnicas de esta clase no son adornos:
+      son lo que hace la diferencia entre un entrenamiento que converge y uno que produce NaN en
+      el paso 300.
+
+      El **warmup** sube el learning rate gradualmente durante los primeros cientos o miles de
+      pasos. La razón es concreta: al principio los momentos de Adam están mal estimados y los
+      gradientes son grandes y poco informativos, así que un paso completo puede llevar los pesos
+      a una región de la que no se recuperan. Es prácticamente obligatorio al entrenar
+      Transformers.
+
+      El **gradient clipping** acota la norma del gradiente sin cambiar su dirección. Es un
+      seguro barato contra los picos anómalos —un lote raro, una muestra corrupta— que en un
+      solo paso podrían destruir horas de entrenamiento. Un valor de 1,0 es habitual y rara vez
+      perjudica.
+
+      Los **planificadores** reducen el learning rate a lo largo del entrenamiento: pasos grandes
+      al principio para explorar, pequeños al final para afinar. El decaimiento por coseno con
+      warmup es la receta estándar actual. Y conviene recordar que estas tres técnicas atacan
+      problemas de **optimización**, no de generalización: si el modelo converge bien y
+      generaliza mal, el remedio está en otra parte.
+    ejemplo: |
+      Cuatro configuraciones sobre el mismo objetivo ruidoso.
+
+      ```text
+      objetivo: minimizar ‖w − w*‖² con gradientes ruidosos
+
+      configuración              paso 10      paso 100
+      lr alto sin clipping      0,00039758      0,0
+      lr alto con clipping      4,96308444      0,0
+      lr moderado               0,00864028      0,0
+      lr moderado con warmup    2,80892690      0,0
+
+      Todas convergen aquí porque el problema es benigno.
+
+      Lo que cambia es el paso 10: warmup y clipping avanzan
+      más despacio al principio a cambio de no arriesgar.
+
+      En un problema real, "lr alto sin clipping" produciría
+      NaN antes del paso 100 con un solo lote anómalo.
+      ```
+    errores:
+      - "Entrenar Transformers sin warmup."
+      - "Prescindir del clipping y perder un entrenamiento largo por un lote anómalo."
+      - "Ajustar el learning rate para arreglar un problema de generalización."
+    aplicacion: |
+      Entrenamiento de modelos de lenguaje, recetas de entrenamiento reproducibles, ajuste fino
+      y depuración de entrenamientos inestables.
+    referencias:
+      - "[Goyal, P. et al. *Accurate, Large Minibatch SGD*, 2017](https://arxiv.org/abs/1706.02677)"
+      - "[Loshchilov, I.; Hutter, F. *SGDR: Stochastic Gradient Descent with Warm Restarts*, ICLR, 2017](https://arxiv.org/abs/1608.03983)"
+
+  "319":
+    concepto: "PyTorch y JAX hacen lo mismo que el Var de la parte 08, con ingeniería de por medio."
+    formulas:
+      - "modo reverso: una pasada adelante, una atrás"
+      - "coste ≈ 2 veces el del forward, independientemente del número de parámetros"
+      - "modo directo: eficiente con pocas entradas y muchas salidas"
+    desarrollo: |
+      La autodiferenciación en **modo reverso** obtiene los gradientes de una salida escalar
+      respecto de todas las entradas con una sola pasada hacia atrás. Su coste es
+      aproximadamente el doble del paso hacia adelante, **independientemente de cuántos
+      parámetros haya**. Esa propiedad es lo que hace viable entrenar modelos de miles de
+      millones de parámetros.
+
+      El **modo directo** propaga derivadas hacia adelante y es eficiente en el caso opuesto:
+      pocas entradas y muchas salidas. Como en aprendizaje automático la pérdida siempre es un
+      escalar y los parámetros son millones, el modo reverso es el adecuado, y por eso es el que
+      implementan todos los frameworks.
+
+      Ninguno de los dos es diferenciación simbólica ni numérica. No manipula fórmulas ni usa
+      diferencias finitas: evalúa derivadas exactas de operaciones elementales y las compone
+      según el grafo. Es exacta hasta el redondeo y eficiente, que es lo mejor de ambos mundos.
+
+      Lo que aportan PyTorch y JAX sobre el `Var` de la parte 08 no es el concepto sino la
+      ingeniería: núcleos optimizados para GPU y TPU, fusión de operaciones, compilación
+      diferida, paralelismo y una cobertura enorme de operaciones. El principio se entiende en
+      cien líneas de Python; la implementación de producción son cientos de miles.
+    ejemplo: |
+      La misma expresión derivada por el motor propio.
+
+      ```text
+      expresión: loss = (tanh(wx + b) − 1)²
+
+      loss = 0,09543807
+
+      dloss/dw = −0,48417723
+      dloss/db = −0,32278482
+      dloss/dx = −0,22594937
+
+      Tres gradientes de una sola pasada hacia atrás.
+
+      Con un millón de parámetros el coste sería el mismo
+      factor 2 sobre el forward: esa es la propiedad clave.
+
+      Con diferencias finitas harían falta un millón de
+      evaluaciones adicionales, una por parámetro.
+      ```
+    errores:
+      - "Confundir autodiferenciación con derivación simbólica o numérica."
+      - "Usar modo directo cuando hay muchos parámetros y una sola salida."
+      - "Reimplementar gradientes a mano existiendo autodiferenciación."
+    aplicacion: |
+      Todo entrenamiento moderno, optimización de simuladores diferenciables, física
+      diferenciable y cálculo de sensibilidades.
+    referencias:
+      - "[Paszke, A. et al. *PyTorch: An Imperative Style, High-Performance Deep Learning Library*, NeurIPS, 2019](https://arxiv.org/abs/1912.01703)"
+      - "[Bradbury, J. et al. *JAX: composable transformations of Python+NumPy programs*, 2018](https://github.com/google/jax)"
+
+  "320":
+    concepto: "Una red de 337 parámetros en Python puro separa dos espirales entrelazadas."
+    formulas:
+      - "arquitectura: 2 → 16 (ReLU) → 16 (ReLU) → 1 (sigmoid)"
+      - "inicialización He, SGD por muestra, lr = 0,08"
+      - "verificación: gradiente manual ≈ gradiente automático"
+    desarrollo: |
+      El capstone reúne toda la parte en una red completa escrita desde cero, sin NumPy ni
+      frameworks: inicialización, paso hacia adelante, backpropagation, actualización y
+      evaluación. Lo único que importa es que cada pieza sea legible y que el conjunto funcione.
+
+      El problema elegido, **dos espirales entrelazadas**, es un banco clásico y deliberadamente
+      difícil para modelos lineales: no hay ninguna recta ni curva simple que las separe. Un
+      modelo lineal queda en torno al 50 %, y resolverlo demuestra que las capas ocultas están
+      construyendo una representación no trivial.
+
+      Las decisiones de diseño vienen todas de clases anteriores y conviene enumerarlas:
+      inicialización **He** porque la activación es ReLU, **ReLU** en las ocultas para que el
+      gradiente no se sature, **sigmoide** en la salida con entropía cruzada para que el
+      gradiente se simplifique a `a − y`, y **SGD** por muestra por su ruido regularizador. Nada
+      es arbitrario.
+
+      La comprobación final es la que cierra el programa: el gradiente derivado a mano coincide
+      con el que produce el motor de autodiferenciación de la parte 08. Ese acuerdo entre dos
+      caminos independientes es la mejor prueba de que la teoría y la implementación dicen lo
+      mismo, y es exactamente el criterio de verificación que el programa entero defiende.
+    ejemplo: |
+      Configuración y resultado del capstone.
+
+      ```text
+      problema: dos espirales entrelazadas
+                (no linealmente separables)
+
+      arquitectura:  2 → 16 (ReLU) → 16 (ReLU) → 1 (sigmoid)
+      parámetros:    337
+      inicialización: He (√(2/n_in))
+      optimizador:   SGD por muestra
+      learning rate: 0,08
+
+      Desglose de los 337 parámetros:
+        capa 1:  2×16 + 16 =  48
+        capa 2: 16×16 + 16 = 272
+        capa 3: 16×1  +  1 =  17
+        total              = 337                          ✓
+
+      Un modelo lineal sobre estos datos queda en ≈ 50 %.
+      Verificación: gradiente manual ≈ gradiente de Var.
+      ```
+    errores:
+      - "Reimplementar redes desde cero en código de producción."
+      - "Cambiar varias decisiones a la vez al depurar un entrenamiento."
+      - "Omitir la verificación del gradiente al escribir backpropagation a mano."
+    aplicacion: |
+      Comprensión profunda de los frameworks, entrevistas técnicas, docencia, depuración de
+      implementaciones y diseño de capas personalizadas.
+    referencias:
+      - "[Karpathy, A. *Neural Networks: Zero to Hero*, 2022](https://karpathy.ai/zero-to-hero.html)"
+      - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016](https://www.deeplearningbook.org/)"

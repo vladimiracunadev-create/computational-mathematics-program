@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**PyTorch y JAX hacen lo mismo que el Var de la parte 08, con ingeniería de por medio.**
 
-Esta clase concreta ese objetivo sobre **Autodiff con PyTorch/JAX**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `autodiff_frameworks`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: inicializar todos los pesos iguales y romper la simetría nunca.
+
+## 🧩 Fórmulas de la clase
+
+```text
+modo reverso: una pasada adelante, una atrás
+coste ≈ 2 veces el del forward, independientemente del número de parámetros
+modo directo: eficiente con pocas entradas y muchas salidas
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Normalizar estabiliza la escala interna y permite tasas de aprendizaje mayores.
+La autodiferenciación en **modo reverso** obtiene los gradientes de una salida escalar
+respecto de todas las entradas con una sola pasada hacia atrás. Su coste es
+aproximadamente el doble del paso hacia adelante, **independientemente de cuántos
+parámetros haya**. Esa propiedad es lo que hace viable entrenar modelos de miles de
+millones de parámetros.
+
+El **modo directo** propaga derivadas hacia adelante y es eficiente en el caso opuesto:
+pocas entradas y muchas salidas. Como en aprendizaje automático la pérdida siempre es un
+escalar y los parámetros son millones, el modo reverso es el adecuado, y por eso es el que
+implementan todos los frameworks.
+
+Ninguno de los dos es diferenciación simbólica ni numérica. No manipula fórmulas ni usa
+diferencias finitas: evalúa derivadas exactas de operaciones elementales y las compone
+según el grafo. Es exacta hasta el redondeo y eficiente, que es lo mejor de ambos mundos.
+
+Lo que aportan PyTorch y JAX sobre el `Var` de la parte 08 no es el concepto sino la
+ingeniería: núcleos optimizados para GPU y TPU, fusión de operaciones, compilación
+diferida, paralelismo y una cobertura enorme de operaciones. El principio se entiende en
+cien líneas de Python; la implementación de producción son cientos de miles.
+
+## 🧮 Ejemplo trabajado
+
+La misma expresión derivada por el motor propio.
+
+```text
+expresión: loss = (tanh(wx + b) − 1)²
+
+loss = 0,09543807
+
+dloss/dw = −0,48417723
+dloss/db = −0,32278482
+dloss/dx = −0,22594937
+
+Tres gradientes de una sola pasada hacia atrás.
+
+Con un millón de parámetros el coste sería el mismo
+factor 2 sobre el forward: esa es la propiedad clave.
+
+Con diferencias finitas harían falta un millón de
+evaluaciones adicionales, una por parámetro.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 319
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Confundir autodiferenciación con derivación simbólica o numérica.
+2. Usar modo directo cuando hay muchos parámetros y una sola salida.
+3. Reimplementar gradientes a mano existiendo autodiferenciación.
+
+## 🚀 Dónde se usa de verdad
+
+Todo entrenamiento moderno, optimización de simuladores diferenciables, física
+diferenciable y cálculo de sensibilidades.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Paszke, A. et al. *PyTorch: An Imperative Style, High-Performance Deep Learning Library*, NeurIPS, 2019](https://arxiv.org/abs/1912.01703)
+- [Bradbury, J. et al. *JAX: composable transformations of Python+NumPy programs*, 2018](https://github.com/google/jax)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

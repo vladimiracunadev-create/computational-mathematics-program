@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**GRU consigue casi lo mismo que LSTM con dos puertas y un 25 % menos de parámetros.**
 
-Esta clase concreta ese objetivo sobre **GRU**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `gru`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: inicializar todos los pesos iguales y romper la simetría nunca.
+
+## 🧩 Fórmulas de la clase
+
+```text
+z: puerta de actualización;  r: puerta de reinicio
+h_t = (1−z)·h_{t−1} + z·h̃_t
+9 parámetros por celda frente a 12 de LSTM
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Backpropagation es la regla de la cadena aplicada en orden topológico inverso.
+La GRU simplifica la LSTM fusionando el estado de celda con el estado oculto y reduciendo
+las tres puertas a dos. La **puerta de actualización** decide cuánto del estado anterior se
+conserva frente al candidato nuevo, combinando los papeles de las puertas de olvido y
+entrada. La **puerta de reinicio** decide cuánto del pasado se usa para calcular ese
+candidato.
+
+La actualización tiene una forma de interpolación explícita: `(1−z)·h_anterior + z·h_nuevo`.
+Si `z = 0` el estado se conserva íntegro, y esa es la misma vía aditiva que protege el
+gradiente en la LSTM. La protección se consigue con menos maquinaria.
+
+El ahorro es de 9 parámetros por celda frente a 12, un 25 %. Con capas de miles de unidades
+eso se traduce en menos memoria y entrenamientos más rápidos, lo que en su momento fue una
+ventaja práctica considerable.
+
+La comparación empírica entre GRU y LSTM ha sido objeto de muchos estudios y la conclusión
+es que **depende de la tarea**, sin ganador consistente. La recomendación razonable es
+empezar por GRU por ser más ligera y probar LSTM si el rendimiento no basta. Ambas han
+quedado en segundo plano frente a los Transformers, pero siguen siendo competitivas en
+secuencias cortas y con pocos datos.
+
+## 🧮 Ejemplo trabajado
+
+Traza de una celda GRU y comparación de parámetros.
+
+```text
+puertas: update (z), reset (r)
+
+t     h         update   reset
+1   0,413336    0,6225   0,6457
+2   ...         ...      ...
+
+Parámetros por celda:
+  GRU:  9
+  LSTM: 12
+  ahorro: 25 %
+
+Interpolación: h_t = (1−z)·h_{t−1} + z·h̃_t
+  z = 0  →  el estado se conserva íntegro           ✓
+  z = 1  →  el estado se sustituye por el candidato
+
+Ese camino con z ≈ 0 es lo que protege el gradiente,
+igual que la puerta de olvido de la LSTM.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 316
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Elegir entre GRU y LSTM sin probar en la tarea concreta.
+2. Confundir el sentido de la puerta de actualización al implementarla.
+3. Suponer que menos parámetros implica siempre peor rendimiento.
+
+## 🚀 Dónde se usa de verdad
+
+Modelado de secuencias con recursos limitados, series temporales, reconocimiento de gestos
+y sistemas embebidos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Cho, K. et al. *Learning phrase representations using RNN encoder-decoder*, EMNLP, 2014](https://arxiv.org/abs/1406.1078)
+- [Chung, J. et al. *Empirical evaluation of gated recurrent neural networks*, 2014](https://arxiv.org/abs/1412.3555)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

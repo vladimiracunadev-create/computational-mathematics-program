@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Backpropagation es la regla de la cadena recorrida hacia atrás, y se puede seguir con números.**
 
-Esta clase concreta ese objetivo sobre **Backpropagation paso a paso**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `backpropagation`.
 4. Interpretar las 13 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar softmax sin restar el máximo y provocar overflow.
+
+## 🧩 Fórmulas de la clase
+
+```text
+forward: z = Wx + b,  a = σ(z)
+backward: dL/dW = dL/dz · xᵀ
+con cross-entropy y sigmoide: dL/dz = a − y
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> El gradiente que se desvanece es un producto de derivadas menores que uno.
+Backpropagation no es un algoritmo aparte: es la regla de la cadena de la clase 147
+aplicada sistemáticamente al grafo de la red, recorriendo los nodos en orden topológico
+inverso. Su valor es de eficiencia, no de concepto: calcula **todos** los gradientes en una
+sola pasada hacia atrás.
+
+El procedimiento tiene dos fases. En el **paso hacia adelante** se calculan las salidas
+capa a capa y se **guardan** los valores intermedios, que harán falta después; ese
+almacenamiento es la razón de que la memoria de entrenamiento crezca con la profundidad. En
+el **paso hacia atrás** se propaga la derivada de la pérdida desde la salida hasta los
+parámetros.
+
+Hay una simplificación algebraica que conviene ver una vez con detalle. Al combinar
+entropía cruzada con sigmoide en la salida, el gradiente respecto de la preactivación se
+reduce a `a − y`: la derivada de la sigmoide se cancela exactamente contra el denominador
+de la pérdida. Esa cancelación es la que evita los gradientes saturados de la clase 286, y
+es la razón técnica de emparejar esas dos funciones.
+
+Recorrer los números a mano una vez, como hace este ejemplo, vale más que leer la
+demostración diez veces. Después conviene no volver a implementarlo: la autodiferenciación
+de la clase 319 hace exactamente esto sin errores de signo ni de transposición.
+
+## 🧮 Ejemplo trabajado
+
+Backpropagation completo sobre una red 2-2-1.
+
+```text
+entrada: (0,5 ; −1,2)      objetivo: 1,0
+
+FORWARD
+  z1 = (1,09 ; 0,01)
+  a1 = (0,796878 ; 0,01)        tras la activación
+  z2 = 0,524127
+  a2 = 0,628xxx                 salida sigmoide
+
+BACKWARD
+  dL/da2 = −1,592072
+  dL/dz2 = a2 − y = −0,371888   ← la sigmoide se canceló
+  dL/dW2 = dL/dz2 · a1ᵀ
+         = (−0,296349 ; −0,003719)
+
+El segundo peso recibe un gradiente 80 veces menor
+porque su activación a1 vale solo 0,01.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 305
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. No guardar las activaciones del paso hacia adelante.
+2. Aplicar por separado la derivada de la sigmoide y la de la pérdida, duplicando el factor.
+3. Equivocar transposiciones al pasar de escalares a matrices.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de cualquier red, comprensión de los frameworks, depuración de gradientes y
+diseño de capas personalizadas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Rumelhart, D.; Hinton, G.; Williams, R. *Learning representations by back-propagating errors*, Nature, 1986](https://doi.org/10.1038/323533a0)
+- [Nielsen, M. *Neural Networks and Deep Learning*, cap. 2, 2015](http://neuralnetworksanddeeplearning.com/chap2.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

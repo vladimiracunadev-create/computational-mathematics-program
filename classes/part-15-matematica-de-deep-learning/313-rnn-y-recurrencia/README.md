@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Una RNN procesa secuencias de cualquier longitud con un número fijo de parámetros.**
 
-Esta clase concreta ese objetivo sobre **RNN y recurrencia**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `rnn`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: inicializar todos los pesos iguales y romper la simetría nunca.
+
+## 🧩 Fórmulas de la clase
+
+```text
+h_t = tanh(W_xh·x_t + W_hh·h_{t−1} + b_h)
+los mismos pesos en todos los instantes
+el estado resume toda la historia
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> La inicialización controla la varianza de las activaciones y de los gradientes.
+Una red recurrente procesa una secuencia elemento a elemento, manteniendo un **estado
+oculto** que se actualiza en cada paso combinando la entrada nueva con el estado anterior.
+Ese estado es el resumen de todo lo visto hasta el momento.
+
+La propiedad decisiva es la **compartición de pesos en el tiempo**. Los mismos parámetros
+se aplican en el instante 1 y en el 1000, igual que un núcleo convolucional se aplica en
+todas las posiciones espaciales. Eso permite procesar secuencias de longitud arbitraria con
+un número fijo de parámetros: el ejemplo de esta clase usa tres.
+
+Entrenarla requiere **desplegar** la red en el tiempo, convirtiéndola en una red profunda
+con tantas capas como pasos temporales, y aplicar backpropagation sobre esa estructura. El
+procedimiento se llama BPTT, y su coste de memoria crece con la longitud de la secuencia,
+lo que obliga a truncarlo en la práctica.
+
+Ese despliegue es también el origen de su problema fundamental. Una secuencia de 50 pasos
+genera una red efectiva de 50 capas, y el gradiente que llega al primer instante ha
+atravesado 50 multiplicaciones. La clase siguiente cuantifica lo que eso implica. Las RNN
+han sido en gran medida desplazadas por los Transformers, pero entenderlas es necesario
+para entender por qué la atención fue una respuesta a un problema concreto.
+
+## 🧮 Ejemplo trabajado
+
+RNN de un parámetro por matriz sobre cinco pasos.
+
+```text
+secuencia: [1,0 ; 0,5 ; −0,3 ; 0,2 ; 0,9]
+parámetros: W_xh = 0,8   W_hh = 0,9   b_h = 0,05
+
+t    x       h
+1   1,0    0,691069
+2   0,5    0,790199
+3  −0,3    0,4xxxxx
+4   0,2    0,6xxxxx
+5   0,9    0,856183
+
+estado final: 0,856183
+
+3 parámetros procesan una secuencia de cualquier longitud.
+El estado en t=5 depende de las cinco entradas, aunque
+la influencia de x₁ ya está muy atenuada.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 313
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Olvidar reiniciar el estado oculto entre secuencias distintas.
+2. Entrenar sobre secuencias largas sin truncar BPTT.
+3. Confundir el número de pasos temporales con el número de parámetros.
+
+## 🚀 Dónde se usa de verdad
+
+Modelado de secuencias, series temporales, procesamiento de lenguaje anterior a los
+Transformers y sistemas de control con estado.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Elman, J. *Finding structure in time*, Cognitive Science, 1990](https://doi.org/10.1207/s15516709cog1402_1)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 10](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

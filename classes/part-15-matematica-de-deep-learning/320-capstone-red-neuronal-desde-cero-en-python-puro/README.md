@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Una red de 337 parámetros en Python puro separa dos espirales entrelazadas.**
 
-Esta clase concreta ese objetivo sobre **Capstone: red neuronal desde cero en Python puro**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_neural_network`.
 4. Interpretar las 14 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar softmax sin restar el máximo y provocar overflow.
+
+## 🧩 Fórmulas de la clase
+
+```text
+arquitectura: 2 → 16 (ReLU) → 16 (ReLU) → 1 (sigmoid)
+inicialización He, SGD por muestra, lr = 0,08
+verificación: gradiente manual ≈ gradiente automático
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> El gradiente que se desvanece es un producto de derivadas menores que uno.
+El capstone reúne toda la parte en una red completa escrita desde cero, sin NumPy ni
+frameworks: inicialización, paso hacia adelante, backpropagation, actualización y
+evaluación. Lo único que importa es que cada pieza sea legible y que el conjunto funcione.
+
+El problema elegido, **dos espirales entrelazadas**, es un banco clásico y deliberadamente
+difícil para modelos lineales: no hay ninguna recta ni curva simple que las separe. Un
+modelo lineal queda en torno al 50 %, y resolverlo demuestra que las capas ocultas están
+construyendo una representación no trivial.
+
+Las decisiones de diseño vienen todas de clases anteriores y conviene enumerarlas:
+inicialización **He** porque la activación es ReLU, **ReLU** en las ocultas para que el
+gradiente no se sature, **sigmoide** en la salida con entropía cruzada para que el
+gradiente se simplifique a `a − y`, y **SGD** por muestra por su ruido regularizador. Nada
+es arbitrario.
+
+La comprobación final es la que cierra el programa: el gradiente derivado a mano coincide
+con el que produce el motor de autodiferenciación de la parte 08. Ese acuerdo entre dos
+caminos independientes es la mejor prueba de que la teoría y la implementación dicen lo
+mismo, y es exactamente el criterio de verificación que el programa entero defiende.
+
+## 🧮 Ejemplo trabajado
+
+Configuración y resultado del capstone.
+
+```text
+problema: dos espirales entrelazadas
+          (no linealmente separables)
+
+arquitectura:  2 → 16 (ReLU) → 16 (ReLU) → 1 (sigmoid)
+parámetros:    337
+inicialización: He (√(2/n_in))
+optimizador:   SGD por muestra
+learning rate: 0,08
+
+Desglose de los 337 parámetros:
+  capa 1:  2×16 + 16 =  48
+  capa 2: 16×16 + 16 = 272
+  capa 3: 16×1  +  1 =  17
+  total              = 337                          ✓
+
+Un modelo lineal sobre estos datos queda en ≈ 50 %.
+Verificación: gradiente manual ≈ gradiente de Var.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 320
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Reimplementar redes desde cero en código de producción.
+2. Cambiar varias decisiones a la vez al depurar un entrenamiento.
+3. Omitir la verificación del gradiente al escribir backpropagation a mano.
+
+## 🚀 Dónde se usa de verdad
+
+Comprensión profunda de los frameworks, entrevistas técnicas, docencia, depuración de
+implementaciones y diseño de capas personalizadas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Karpathy, A. *Neural Networks: Zero to Hero*, 2022](https://karpathy.ai/zero-to-hero.html)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

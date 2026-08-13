@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Dos convoluciones de 3×3 ven lo mismo que una de 5×5 con menos parámetros y más no linealidad.**
 
-Esta clase concreta ese objetivo sobre **CNN y receptive fields**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `cnn_receptive_fields`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar softmax sin restar el máximo y provocar overflow.
+
+## 🧩 Fórmulas de la clase
+
+```text
+RF_l = RF_{l−1} + (k_l − 1)·Π sᵢ
+dos 3×3 ⟹ campo receptivo 5, 18 parámetros
+una 5×5 ⟹ campo receptivo 5, 25 parámetros
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,53 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Backpropagation es la regla de la cadena aplicada en orden topológico inverso.
+El **campo receptivo** de una activación es la región de la imagen de entrada que puede
+influir en su valor. En la primera capa coincide con el núcleo; al apilar capas crece, y
+con pooling o stride crece mucho más rápido porque cada paso vale por varios píxeles
+originales.
+
+La fórmula recursiva lo cuantifica: cada capa añade `(k−1)` multiplicado por el producto de
+todos los strides anteriores. Ese producto —el «salto»— es lo que hace que el crecimiento
+sea multiplicativo y no aditivo, y por eso unas pocas capas con reducción bastan para ver
+la imagen entera.
+
+La observación práctica más rentable es la de VGG: **dos convoluciones de 3×3 apiladas
+tienen el mismo campo receptivo que una de 5×5**, pero usan 18 parámetros en vez de 25 y
+aplican dos no linealidades en vez de una. Tres de 3×3 equivalen a una de 7×7 con 27
+parámetros frente a 49. Por eso las arquitecturas modernas usan casi exclusivamente núcleos
+3×3.
+
+El campo receptivo importa porque limita lo que la red puede ver. Si un objeto ocupa 100
+píxeles y el campo receptivo efectivo de la capa final es de 50, ninguna neurona podrá
+integrarlo completo. Diseñar la profundidad y la reducción es, en buena medida, diseñar el
+campo receptivo.
+
+## 🧮 Ejemplo trabajado
+
+Crecimiento del campo receptivo en cinco capas.
+
+```text
+arquitectura:
+  conv k=3 s=1  →  conv k=3 s=1  →  pool k=2 s=2
+  →  conv k=3 s=1  →  conv k=3 s=1
+
+capa   tipo   campo receptivo   salto
+  1    conv          3            1
+  2    conv          5            1
+  3    pool          6            2
+  4    conv         10            2
+  5    conv         14            2
+
+campo receptivo final: 14 píxeles
+
+Comparación de coste:
+  dos conv 3×3:  campo 5,  18 parámetros, 2 ReLU
+  una conv 5×5:  campo 5,  25 parámetros, 1 ReLU
+
+28 % menos parámetros y el doble de no linealidad.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +117,16 @@ compmath run 311
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Diseñar la profundidad sin calcular el campo receptivo resultante.
+2. Usar núcleos grandes donde varios pequeños son mejores.
+3. Confundir campo receptivo teórico con el efectivo, que es menor.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de arquitecturas convolucionales, segmentación semántica, detección de objetos y
+elección de profundidad según el tamaño de los objetos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Simonyan, K.; Zisserman, A. *Very Deep Convolutional Networks (VGG)*, ICLR, 2015](https://arxiv.org/abs/1409.1556)
+- [Luo, W. et al. *Understanding the effective receptive field*, NeurIPS, 2016](https://arxiv.org/abs/1701.04128)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

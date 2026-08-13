@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Warmup evita divergir al arrancar y clipping evita que un gradiente anómalo destruya el modelo.**
 
-Esta clase concreta ese objetivo sobre **Optimización de redes profundas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `deep_optimization`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+warmup: subir el lr linealmente durante los primeros pasos
+clipping: si ‖g‖ > c, escalar g ← c·g/‖g‖
+planificador: reducir el lr según avanza el entrenamiento
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> La inicialización controla la varianza de las activaciones y de los gradientes.
+Entrenar una red profunda es aplicar los optimizadores de la parte 12 a un problema no
+convexo, ruidoso y de curvatura muy variable. Las técnicas de esta clase no son adornos:
+son lo que hace la diferencia entre un entrenamiento que converge y uno que produce NaN en
+el paso 300.
+
+El **warmup** sube el learning rate gradualmente durante los primeros cientos o miles de
+pasos. La razón es concreta: al principio los momentos de Adam están mal estimados y los
+gradientes son grandes y poco informativos, así que un paso completo puede llevar los pesos
+a una región de la que no se recuperan. Es prácticamente obligatorio al entrenar
+Transformers.
+
+El **gradient clipping** acota la norma del gradiente sin cambiar su dirección. Es un
+seguro barato contra los picos anómalos —un lote raro, una muestra corrupta— que en un
+solo paso podrían destruir horas de entrenamiento. Un valor de 1,0 es habitual y rara vez
+perjudica.
+
+Los **planificadores** reducen el learning rate a lo largo del entrenamiento: pasos grandes
+al principio para explorar, pequeños al final para afinar. El decaimiento por coseno con
+warmup es la receta estándar actual. Y conviene recordar que estas tres técnicas atacan
+problemas de **optimización**, no de generalización: si el modelo converge bien y
+generaliza mal, el remedio está en otra parte.
+
+## 🧮 Ejemplo trabajado
+
+Cuatro configuraciones sobre el mismo objetivo ruidoso.
+
+```text
+objetivo: minimizar ‖w − w*‖² con gradientes ruidosos
+
+configuración              paso 10      paso 100
+lr alto sin clipping      0,00039758      0,0
+lr alto con clipping      4,96308444      0,0
+lr moderado               0,00864028      0,0
+lr moderado con warmup    2,80892690      0,0
+
+Todas convergen aquí porque el problema es benigno.
+
+Lo que cambia es el paso 10: warmup y clipping avanzan
+más despacio al principio a cambio de no arriesgar.
+
+En un problema real, "lr alto sin clipping" produciría
+NaN antes del paso 100 con un solo lote anómalo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 318
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Entrenar Transformers sin warmup.
+2. Prescindir del clipping y perder un entrenamiento largo por un lote anómalo.
+3. Ajustar el learning rate para arreglar un problema de generalización.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de modelos de lenguaje, recetas de entrenamiento reproducibles, ajuste fino
+y depuración de entrenamientos inestables.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Goyal, P. et al. *Accurate, Large Minibatch SGD*, 2017](https://arxiv.org/abs/1706.02677)
+- [Loshchilov, I.; Hutter, F. *SGDR: Stochastic Gradient Descent with Warm Restarts*, ICLR, 2017](https://arxiv.org/abs/1608.03983)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

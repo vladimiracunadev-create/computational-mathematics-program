@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**REINFORCE sube la probabilidad de lo que salió bien, y la línea base reduce la varianza.**
 
-Esta clase concreta ese objetivo sobre **Policy gradients**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `policy_gradients`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar la máscara causal en el modelado autoregresivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∇J = E[∇log π(a|s) · (R − b)]
+b es la línea base, típicamente el valor medio
+restar b no sesga el gradiente
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> El ELBO acota inferiormente la log-verosimilitud con un término de reconstrucción y uno KL.
+Los métodos de gradiente de política optimizan directamente la política parametrizada, sin
+pasar por una función de valor. La actualización tiene una lectura muy directa: aumentar la
+log-probabilidad de las acciones que produjeron recompensa alta y disminuir la de las que
+produjeron recompensa baja.
+
+El problema del estimador básico es la **varianza**. La recompensa de un episodio depende de
+muchas decisiones y de la aleatoriedad del entorno, así que el gradiente es muy ruidoso y
+el aprendizaje, lento e inestable.
+
+La **línea base** lo mitiga. Restar una cantidad que no depende de la acción —típicamente
+el valor medio del estado— **no cambia la esperanza del gradiente** pero reduce mucho su
+varianza. Es un resultado limpio: se gana estabilidad sin introducir sesgo. La diferencia
+`R − b` se llama ventaja, y mide cuánto mejor fue la acción que la media.
+
+De ahí sale toda la familia actor-crítico: el actor es la política, el crítico estima la
+línea base, y ambos se entrenan a la vez. PPO, el algoritmo estándar hoy y el que se usa en
+el ajuste por retroalimentación humana de los modelos de lenguaje, es un refinamiento de
+esta idea con una restricción que impide que la política cambie demasiado en un solo paso.
+
+## 🧮 Ejemplo trabajado
+
+REINFORCE sobre un bandido de tres brazos.
+
+```text
+probabilidades reales de recompensa: [0,2 ; 0,5 ; 0,8]
+mejor brazo: 2
+
+episodio    política                    línea base
+   1      [0,3222 ; 0,3222 ; 0,3557]      0,00
+ 100      [ ... ]                          ...
+final     [0,004018 ; 0,014253 ; 0,981729]
+
+brazo preferido: 2                                   ✓
+
+La política converge al brazo correcto sin conocer
+las probabilidades: solo por experiencia.
+
+Sin línea base, la varianza del gradiente sería
+mucho mayor y la convergencia más lenta.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 339
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Usar REINFORCE sin línea base y sufrir varianza excesiva.
+2. Elegir una línea base que depende de la acción e introducir sesgo.
+3. Actualizar la política con pasos grandes y colapsar la exploración.
+
+## 🚀 Dónde se usa de verdad
+
+Aprendizaje por refuerzo, RLHF en modelos de lenguaje, robótica, optimización de sistemas
+de diálogo y control continuo.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Williams, R. *Simple statistical gradient-following algorithms*, Machine Learning, 1992](https://doi.org/10.1007/BF00992696)
+- [Schulman, J. et al. *Proximal Policy Optimization Algorithms*, 2017](https://arxiv.org/abs/1707.06347)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

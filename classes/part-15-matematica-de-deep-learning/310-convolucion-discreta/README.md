@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**El tamaño de salida sale de una fórmula, y equivocarla es el error más común al montar una CNN.**
 
-Esta clase concreta ese objetivo sobre **Convolución discreta**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `discrete_convolution`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: inicializar todos los pesos iguales y romper la simetría nunca.
+
+## 🧩 Fórmulas de la clase
+
+```text
+salida = ⌊(n + 2p − k)/s⌋ + 1
+padding 'same' con s=1: p = (k−1)/2
+parámetros de la capa: k²·c_in·c_out + c_out
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> El gradiente que se desvanece es un producto de derivadas menores que uno.
+La convolución 2D desliza un núcleo sobre una imagen calculando sumas ponderadas locales.
+Sus tres parámetros geométricos —tamaño del núcleo `k`, padding `p` y stride `s`—
+determinan el tamaño de la salida mediante una fórmula que conviene tener memorizada,
+porque el 90 % de los errores al construir una CNN son desajustes de forma.
+
+El **padding** rellena el borde, normalmente con ceros, y sirve para dos cosas: conservar
+el tamaño espacial y evitar que los píxeles del borde se usen menos que los del centro. El
+modo `same` con stride 1 requiere `p = (k−1)/2`, que es la razón de que los núcleos suelan
+tener tamaño impar.
+
+El **stride** es el salto entre posiciones. Con `s = 2` la salida tiene aproximadamente la
+mitad de tamaño en cada dimensión, lo que sirve como alternativa aprendida al pooling. Las
+arquitecturas modernas tienden a usar convoluciones con stride en lugar de pooling, porque
+la reducción se aprende en vez de imponerse.
+
+El núcleo del ejemplo es un **filtro de Sobel**, un detector clásico de bordes verticales
+diseñado a mano en los años 60. En una CNN, un núcleo con esa forma **emerge del
+entrenamiento** sin que nadie lo programe: las primeras capas aprenden detectores de bordes
+y de color porque son las características más útiles para casi cualquier tarea visual.
+
+## 🧮 Ejemplo trabajado
+
+Sobel vertical sobre una entrada 5×5.
+
+```text
+entrada: 5×5      kernel: 3×3 (Sobel vertical)
+
+kernel = [[−1  0  1]
+          [−2  0  2]
+          [−1  0  1]]
+
+salida con stride 1, sin padding:
+  [[ 8,0  −16,0  −22,0]
+   [ 6,0  −13,0  −21,0]
+   [ 0,0    0,0   −2,0]]
+  forma: (3, 3)
+
+Fórmula: (5 + 0 − 3)/1 + 1 = 3                       ✓
+
+con stride 2:  (5 + 0 − 3)/2 + 1 = 2  →  forma (2,2) ✓
+
+Para conservar 5×5 con k=3 y s=1 haría falta p = 1.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 310
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Equivocar la fórmula del tamaño de salida y encadenar desajustes de forma.
+2. Usar núcleos de tamaño par y no poder aplicar padding simétrico.
+3. Olvidar que los canales de entrada multiplican el número de parámetros.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de redes convolucionales, procesamiento de imágenes, detección de bordes y capas
+convolucionales en audio y series.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Dumoulin, V.; Visin, F. *A guide to convolution arithmetic for deep learning*, 2016](https://arxiv.org/abs/1603.07285)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

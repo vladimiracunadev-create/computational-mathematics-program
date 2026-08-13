@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**La red no genera la imagen: predice el ruido, y de ahí se despeja la imagen.**
 
-Esta clase concreta ese objetivo sobre **Diffusion models: reverse process**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `diffusion_reverse`.
 4. Interpretar las 12 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: normalizar el laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+
+## 🧩 Fórmulas de la clase
+
+```text
+la red estima ε̂ = ε_θ(x_t, t)
+x̂₀ = (x_t − √(1−ᾱ_t)·ε̂) / √ᾱ_t
+pérdida: ‖ε − ε̂‖²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Bellman expresa el valor como recompensa inmediata más valor futuro descontado.
+El proceso inverso es donde está el aprendizaje. Dado un `x_t` ruidoso, una red predice
+**qué ruido se añadió**, y despejando la fórmula del proceso directo se recupera una
+estimación del dato original. Iterando ese paso desde ruido puro se genera una muestra
+nueva.
+
+Que la red prediga el ruido en vez de la imagen es una elección de parametrización, y
+resultó funcionar mucho mejor. Son matemáticamente equivalentes —de una se despeja la
+otra— pero predecir ruido da un objetivo mejor condicionado, con escala similar en todos
+los pasos temporales, lo que estabiliza el entrenamiento.
+
+La pérdida resultante es simplemente el error cuadrático entre el ruido real y el
+predicho. Esa simplicidad es engañosa: la formulación completa parte de un ELBO como el de
+la clase 332, y tras varias simplificaciones se reduce a este objetivo. La derivación es
+laboriosa y el resultado es una línea de código.
+
+El coste es el **número de pasos**. Los primeros modelos necesitaban mil evaluaciones de la
+red por muestra, lo que hacía la generación lenta. Los muestreadores acelerados —DDIM,
+DPM-Solver— reducen a decenas de pasos aplicando lo que la parte 11 enseña sobre
+integradores: son métodos numéricos aplicados a la ecuación diferencial asociada al
+proceso.
+
+## 🧮 Ejemplo trabajado
+
+Reconstrucción exacta con un modelo perfecto.
+
+```text
+t = 15        ᾱ_t = 0,87986861
+
+x₀ real     =  1,000000
+ruido real  = −0,198859
+x_t         =  0,869089
+
+Comprobación del proceso directo:
+  √0,8799 · 1,0 + √0,1201 · (−0,198859)
+  = 0,93800 − 0,06891 = 0,86909            ✓
+
+Con un modelo perfecto (ε̂ = ε):
+  x̂₀ = (0,869089 − 0,346554·(−0,198859)) / 0,937961
+     = 1,000000                                      ✓
+
+La red solo tiene que acertar el ruido;
+la imagen se despeja algebraicamente.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 335
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Parametrizar la red para predecir x₀ en vez del ruido sin justificarlo.
+2. Usar mil pasos de muestreo existiendo muestreadores acelerados.
+3. Olvidar condicionar la red en el paso temporal t.
+
+## 🚀 Dónde se usa de verdad
+
+Generación de imágenes, inpainting, superresolución, generación de audio y modelos
+condicionados por texto.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*, NeurIPS, 2020](https://arxiv.org/abs/2006.11239)
+- [Song, J.; Meng, C.; Ermon, S. *Denoising Diffusion Implicit Models*, ICLR, 2021](https://arxiv.org/abs/2010.02502)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**Varias cabezas atienden a cosas distintas en subespacios distintos, al mismo coste.**
 
-Esta clase concreta ese objetivo sobre **Multi-head attention**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `multi_head_attention`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar la máscara causal en el modelado autoregresivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+d_por_cabeza = d_model / n_cabezas
+concatenar las salidas y proyectar con W_O
+coste total similar al de una sola cabeza de dimensión completa
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La escala 1/√d evita que el producto punto sature la softmax en alta dimensión.
+Una sola cabeza de atención produce una única distribución de pesos por token, y eso obliga
+a comprometer: no puede atender a la vez a la concordancia sintáctica y a la relación
+semántica. Multi-head resuelve el conflicto ejecutando varias atenciones en paralelo sobre
+**subespacios distintos**.
+
+La aritmética está diseñada para que no cueste más. Con `d_model = 512` y 8 cabezas, cada
+una trabaja en dimensión 64, y el total de parámetros es aproximadamente el mismo que el de
+una única atención de dimensión 512. Se gana diversidad sin pagar capacidad.
+
+Los patrones aprendidos son efectivamente distintos, y eso se puede comprobar
+inspeccionando las matrices. El análisis de modelos entrenados encuentra cabezas
+especializadas de forma reconocible: unas siguen dependencias sintácticas, otras enlazan
+referencias, otras miran sistemáticamente al token anterior. También encuentra que muchas
+cabezas son redundantes y se pueden podar sin pérdida apreciable.
+
+La concatenación de las salidas se proyecta con una matriz `W_O` que mezcla la información
+de todas las cabezas. Sin ese paso final, las cabezas quedarían en subespacios estancos y
+no podrían combinarse.
+
+## 🧮 Ejemplo trabajado
+
+Cuatro cabezas sobre un modelo de dimensión 8.
+
+```text
+d_model = 8      cabezas = 4      d por cabeza = 2
+
+patrones de atención (primera fila de cada cabeza):
+  cabeza 1: [0,1657  0,7332  0,1010]
+  cabeza 2: [0,0010  0,9989  0,0000]
+  cabeza 3: [0,0423  0,0099  0,9478]
+  cabeza 4: [ ... ]
+
+Las cabezas atienden a posiciones distintas          ✓
+La cabeza 2 está muy concentrada; la 1, repartida.
+
+parámetros totales: 256
+Una sola cabeza de dimensión 8 costaría lo mismo.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 327
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Elegir un número de cabezas que no divide la dimensión del modelo.
+2. Omitir la proyección final W_O tras la concatenación.
+3. Suponer que todas las cabezas aportan información útil.
+
+## 🚀 Dónde se usa de verdad
+
+Todos los Transformers, interpretabilidad mecanicista, poda de cabezas redundantes y
+diseño de arquitecturas eficientes.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
+- [Michel, P.; Levy, O.; Neubig, G. *Are sixteen heads really better than one?*, NeurIPS, 2019](https://arxiv.org/abs/1905.10650)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

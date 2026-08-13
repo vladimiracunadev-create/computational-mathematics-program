@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**No se puede derivar a través de un muestreo, y reparametrizar es la salida.**
 
-Esta clase concreta ese objetivo sobre **Variational Autoencoders**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `variational_autoencoder`.
 4. Interpretar las 12 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir temperatura alta con mayor calidad en lugar de mayor entropía.
+
+## 🧩 Fórmulas de la clase
+
+```text
+codificador: x → (μ, log σ²)
+reparametrización: z = μ + σ·ε,  ε ~ N(0,1)
+KL en forma cerrada: ½·Σ(σ² + μ² − 1 − log σ²)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La atención es un promedio ponderado por similitud, normalizado con softmax.
+Un autoencoder variacional codifica cada entrada no en un punto sino en una
+**distribución** del espacio latente, muestrea de ella y decodifica. Esa aleatoriedad es
+lo que hace del espacio latente algo continuo y muestreable, y lo que permite generar datos
+nuevos en vez de solo reconstruir.
+
+El problema técnico es que muestrear no es diferenciable: no hay forma de propagar el
+gradiente a través de una operación aleatoria. El **truco de reparametrización** lo
+resuelve moviendo la aleatoriedad fuera del camino del gradiente: se muestrea `ε` de una
+normal estándar —que no depende de ningún parámetro— y se construye `z = μ + σ·ε`. Ahora
+`z` es una función determinista y derivable de `μ` y `σ`.
+
+Un detalle de implementación que conviene entender: la red predice `log σ²`, no `σ`. La
+razón es doble: el logaritmo puede tomar cualquier valor real, con lo que no hay que
+restringir la salida, y exponenciarlo garantiza que la varianza sea positiva sin
+artificios.
+
+El término **KL** entre la posterior aproximada y el prior normal estándar tiene forma
+cerrada, lo que evita estimarlo por muestreo y reduce la varianza del gradiente. Ese
+término empuja las distribuciones latentes hacia el prior, y su tensión con el término de
+reconstrucción es lo que da al VAE su comportamiento característico: muestras suaves y algo
+borrosas.
+
+## 🧮 Ejemplo trabajado
+
+Reparametrización en un espacio latente de dimensión 4.
+
+```text
+mu      = ( 0,5 ; −0,3 ;  0,8 ;  0,1)
+log_var = (−0,5 ; −1,0 ; −0,2 ; −0,8)
+
+sigma = exp(log_var/2)
+      = (0,778801 ; 0,606531 ; 0,904837 ; 0,670320)
+
+Muestreando z = mu + sigma·ε muchas veces:
+  media empírica    = (0,5108 ; −0,2871 ; 0,7997 ; 0,0878)
+  varianza empírica = (0,5910 ;  0,3745 ; 0,8373 ; 0,4378)
+
+comprobación: sigma² = (0,6065 ; 0,3679 ; 0,8187 ; 0,4493)
+coinciden con la varianza empírica                   ✓
+
+La aleatoriedad está en ε, fuera del camino
+del gradiente respecto de mu y sigma.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 331
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Muestrear directamente de la distribución y romper el gradiente.
+2. Predecir sigma en vez de log sigma² y obtener varianzas negativas.
+3. Desequilibrar reconstrucción y KL sin controlar el colapso de la posterior.
+
+## 🚀 Dónde se usa de verdad
+
+Generación de imágenes, aprendizaje de representaciones, detección de anomalías,
+compresión con pérdida y espacios latentes para modelos de difusión.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*, ICLR, 2014](https://arxiv.org/abs/1312.6114)
+- [Doersch, C. *Tutorial on Variational Autoencoders*, 2016](https://arxiv.org/abs/1606.05908)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

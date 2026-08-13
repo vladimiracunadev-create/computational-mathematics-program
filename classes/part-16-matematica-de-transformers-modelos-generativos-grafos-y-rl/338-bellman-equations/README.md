@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**El valor de un estado es la recompensa inmediata más el valor futuro descontado.**
 
-Esta clase concreta ese objetivo sobre **Bellman equations**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bellman_equations`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: normalizar el laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+
+## 🧩 Fórmulas de la clase
+
+```text
+V(s) = max_a [R(s,a) + γ·V(s')]
+γ ∈ [0,1): factor de descuento
+iteración de valor: aplicar la ecuación hasta converger
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> Temperatura, top-k y top-p reescriben la distribución antes de muestrear.
+La ecuación de Bellman descompone el valor de un estado en dos partes: lo que se obtiene
+ahora y lo que se puede obtener después. Esa recursión es la base de todo el aprendizaje
+por refuerzo y de buena parte de la programación dinámica.
+
+El **factor de descuento** `γ` pondera el futuro. Con `γ` cercano a 0 el agente es
+miope y solo persigue recompensa inmediata; con `γ` cercano a 1 planifica a largo plazo.
+Además de reflejar una preferencia, tiene una función matemática: garantiza que la suma de
+recompensas de un horizonte infinito converja.
+
+La **iteración de valor** aplica la ecuación repetidamente hasta que los valores dejan de
+cambiar. Converge siempre porque el operador de Bellman es una **contracción** con
+constante `γ`: cada aplicación acerca la estimación al punto fijo en un factor `γ`. Es una
+aplicación directa del teorema del punto fijo de Banach.
+
+El límite es que exige conocer el modelo: las transiciones y las recompensas. Cuando no se
+conocen —que es el caso interesante— aparecen los métodos libres de modelo como Q-learning,
+que estiman lo mismo a partir de la experiencia. Y con espacios de estados enormes, la
+tabla de valores se sustituye por una red neuronal, que es lo que hace DQN.
+
+## 🧮 Ejemplo trabajado
+
+Iteración de valor sobre un MDP de cuatro estados.
+
+```text
+estados: [0, 1, 2, 3]      terminal: 3      γ = 0,9
+
+ecuación: V(s) = max_a [R(s,a) + γ·V(s')]
+
+iter   V
+  1    {0: 0,000, 1: 0,000, 2: 1,000, 3: 1,000}
+  2    {0: 0,000, 1: 0,900, 2: 1,900, 3: 1,000}
+  3    {0: 0,810, 1: 1,710, 2: 1,900, 3: 1,000}
+final  {0: 1,539, 1: 1,710, 2: 1,900, 3: 1,000}
+
+El valor se propaga hacia atrás desde el terminal,
+un estado por iteración.
+
+V(0) = 0,9 · V(1) = 0,9 · 1,71 = 1,539              ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 338
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Usar γ = 1 con horizonte infinito y no converger.
+2. Confundir la función de valor de estado con la de acción.
+3. Aplicar iteración de valor sin conocer el modelo de transiciones.
+
+## 🚀 Dónde se usa de verdad
+
+Aprendizaje por refuerzo, planificación en robótica, control óptimo, juegos y toma de
+decisiones secuenciales.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*, 2ª ed., MIT Press, 2018](http://incompleteideas.net/book/the-book.html)
+- [Bellman, R. *Dynamic Programming*, Princeton University Press, 1957](https://press.princeton.edu/books/paperback/9780691146683/dynamic-programming)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

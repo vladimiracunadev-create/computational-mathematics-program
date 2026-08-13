@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**Pooling reduce sin parámetros: max conserva la intensidad, average conserva el contexto.**
 
-Esta clase concreta ese objetivo sobre **Pooling y downsampling**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `pooling`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+max pooling: máximo de cada ventana
+average pooling: media de cada ventana
+parámetros aprendidos: 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> Sin no linealidad, apilar capas sigue siendo una única transformación lineal.
+El pooling reduce la resolución espacial agregando ventanas de activaciones. No tiene
+parámetros aprendidos: es una operación fija que reduce el cómputo, amplía el campo
+receptivo e introduce cierta invariancia a pequeños desplazamientos.
+
+**Max pooling** conserva la activación más fuerte de cada ventana. Es el más usado en
+clasificación porque preserva la evidencia de que una característica está presente,
+descartando dónde exactamente. **Average pooling** promedia y conserva más información de
+contexto, y es el habitual en la capa final como *global average pooling*, que sustituye a
+las capas densas y reduce enormemente los parámetros.
+
+La invariancia que proporciona tiene un límite del que conviene ser consciente: es
+invariancia a desplazamientos **pequeños**, del orden del tamaño de la ventana. No hace la
+red invariante a traslaciones grandes, y como se vio en la clase 270, hacer submuestreo sin
+suavizado previo introduce aliasing que **rompe** la invariancia en vez de crearla.
+
+La tendencia arquitectónica ha ido reduciendo su papel. Muchas redes modernas usan
+convoluciones con stride 2 en lugar de pooling, con el argumento de que así la reducción
+es aprendida en vez de impuesta. El pooling sobrevive sobre todo en su forma global al
+final de la red.
+
+## 🧮 Ejemplo trabajado
+
+Max y average pooling 2×2 sobre la misma entrada.
+
+```text
+entrada 4×4
+
+max pool 2×2:
+  [[6,0   4,0]
+   [7,0   9,0]]
+
+average pool 2×2:
+  [[3,75  2,25]
+   [3,50  5,50]]
+
+forma de salida: (2, 2)
+reducción: 16 elementos → 4
+parámetros aprendidos: 0
+
+Max conserva el pico de cada ventana; average lo diluye.
+Para "¿está presente esta característica?" conviene max;
+para "¿cuánta hay en promedio?" conviene average.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 312
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Aplicar pooling agresivo y perder resolución necesaria para localizar.
+2. Esperar invariancia a traslaciones grandes.
+3. Submuestrear sin suavizado previo e introducir aliasing.
+
+## 🚀 Dónde se usa de verdad
+
+Redes convolucionales de clasificación, global average pooling como cabeza, reducción de
+cómputo y agregación en redes sobre grafos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)
+- [Lin, M.; Chen, Q.; Yan, S. *Network In Network*, ICLR, 2014](https://arxiv.org/abs/1312.4400)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

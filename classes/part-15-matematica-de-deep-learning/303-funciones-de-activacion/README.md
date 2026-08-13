@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
+**La derivada máxima de la sigmoide es 0,25: cada capa divide el gradiente por cuatro como mínimo.**
 
-Esta clase concreta ese objetivo sobre **Funciones de activación**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos de cómputo, inicialización, normalización, convolución, recurrencia y embeddings.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `activations`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+σ(x) = 1/(1+e⁻ˣ),   σ' ≤ 0,25
+tanh' ≤ 1,   ReLU' = 1 en positivo
+GELU: x·Φ(x), suave y no monótona cerca de cero
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
-## 🧠 Idea rectora de la parte 15
+## 📖 Fundamentos
 
-> La inicialización controla la varianza de las activaciones y de los gradientes.
+La función de activación decide por dónde fluye el gradiente. Su elección parece un detalle
+y determina si una red profunda se puede entrenar, y la razón es puramente cuantitativa:
+**el valor máximo de su derivada**.
+
+La **sigmoide** tiene derivada máxima 0,25, alcanzada en el origen. Eso significa que cada
+capa multiplica el gradiente por 0,25 **como mucho**, y con diez capas el factor acumulado
+es `0,25¹⁰ ≈ 10⁻⁶`. La **tanh** mejora a 1,0 y además está centrada en cero, lo que ayuda
+a la optimización, pero sigue saturándose en ambos extremos.
+
+**ReLU** cambió el panorama por su simplicidad: derivada exactamente 1 en la región
+positiva, así que el gradiente pasa intacto. Es además trivialmente barata de calcular. Su
+problema conocido es la **muerte de neuronas**: una unidad que queda siempre en la región
+negativa tiene gradiente cero y no vuelve a actualizarse nunca. Leaky ReLU y ELU mitigan
+eso con una pendiente pequeña en el lado negativo.
+
+**GELU** es la activación de los Transformers modernos. Es suave en todo el dominio y no
+monótona cerca del origen, lo que empíricamente funciona mejor en esas arquitecturas. La
+elección de activación tiene menos margen del que sugiere la literatura: ReLU para redes
+convolucionales y GELU para Transformers cubre casi todos los casos razonables.
+
+## 🧮 Ejemplo trabajado
+
+Valores y derivadas de cinco activaciones.
+
+```text
+x        sigmoid    tanh      relu   leaky    gelu
+−5,0     0,006693  −0,999909  0,0   −0,05   −0,000001
+−1,0     0,268941  −0,761594  0,0   −0,01   −0,158655
+ 0,0     0,500000   0,000000  0,0    0,00    0,000000
+ 1,0     0,731059   0,761594  1,0    1,00    0,841345
+ 5,0     0,993307   0,999909  5,0    5,00    4,999999
+
+Derivadas máximas:
+  sigmoid  0,25    →  10 capas: factor 1e-6
+  tanh     1,00    →  mejor, pero satura en los extremos
+  relu     1,00    →  sin saturación por la derecha
+
+La sigmoide se satura claramente ya en |x| = 5:
+su derivada allí es 0,0066.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 303
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Inicializar todos los pesos iguales y romper la simetría nunca.
-- Aplicar softmax sin restar el máximo y provocar overflow.
-- Mezclar estadísticas de batch normalization entre entrenamiento e inferencia.
+1. Usar sigmoide en capas ocultas de redes profundas.
+2. Ignorar la muerte de neuronas ReLU con learning rates altos.
+3. Cambiar de activación para arreglar un problema que era de inicialización.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de arquitecturas, diagnóstico de gradientes que no fluyen, elección entre ReLU y
+GELU y depuración de entrenamientos estancados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
-- Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
-- He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+- [Glorot, X.; Bordes, A.; Bengio, Y. *Deep sparse rectifier neural networks*, AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html)
+- [Hendrycks, D.; Gimpel, K. *Gaussian Error Linear Units*, 2016](https://arxiv.org/abs/1606.08415)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

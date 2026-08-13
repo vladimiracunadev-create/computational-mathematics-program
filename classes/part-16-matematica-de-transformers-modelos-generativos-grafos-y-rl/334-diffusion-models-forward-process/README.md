@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**El proceso directo permite saltar a cualquier paso sin simular los anteriores.**
 
-Esta clase concreta ese objetivo sobre **Diffusion models: forward process**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `diffusion_forward`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir temperatura alta con mayor calidad en lugar de mayor entropía.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x_t = √ᾱ_t·x₀ + √(1−ᾱ_t)·ε
+ᾱ_t = Π_{s≤t} (1 − β_s)
+horario β: de 1e-4 a 0,02
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> El ELBO acota inferiormente la log-verosimilitud con un término de reconstrucción y uno KL.
+El proceso directo de difusión destruye progresivamente una muestra añadiendo ruido
+gaussiano según un horario fijo. Tras suficientes pasos, lo que queda es indistinguible de
+ruido puro. Este proceso **no tiene parámetros aprendidos**: es una definición.
+
+Su propiedad más importante es computacional. Como la composición de ruidos gaussianos es
+gaussiana, existe una fórmula cerrada que da `x_t` directamente a partir de `x₀` **sin
+simular los `t−1` pasos intermedios**. Sin ella, entrenar exigiría recorrer secuencialmente
+hasta el paso deseado, y el coste sería prohibitivo.
+
+Con esa fórmula, el entrenamiento es sencillo: se toma una muestra, se elige un `t` al
+azar, se salta directamente a `x_t` y se pide a la red que prediga el ruido añadido. Cada
+paso de entrenamiento cuesta lo mismo independientemente de `t`.
+
+El **horario de ruido** —cómo crece `β` con `t`— resulta importar bastante. El horario
+lineal original funciona, y los horarios coseno posteriores destruyen la información de
+forma más gradual y mejoran la calidad. Es un ejemplo de hiperparámetro que parecía menor y
+resultó tener efecto sustancial.
+
+## 🧮 Ejemplo trabajado
+
+Horario de 20 pasos y señal conservada.
+
+```text
+T = 20      β de 0,0001 a 0,02
+
+ t     ᾱ_t        señal conservada
+ 0   0,999900         99,995 %
+ 5   0,98xxxx         ~99 %
+10   0,94xxxx         ~97 %
+15   0,879869         ~93,8 %
+20   0,80xxxx         ~89 %
+
+Fórmula: x_t = √ᾱ_t·x₀ + √(1−ᾱ_t)·ε
+
+Con t = 15:
+  √ᾱ = 0,938     √(1−ᾱ) = 0,347
+  la señal aún domina sobre el ruido
+
+Salto directo: para entrenar en t = 15 no hace falta
+simular los 14 pasos anteriores.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 334
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Simular paso a paso el proceso directo pudiendo saltar.
+2. Usar un horario de ruido demasiado agresivo al principio.
+3. Confundir β_t con ᾱ_t al implementar las fórmulas.
+
+## 🚀 Dónde se usa de verdad
+
+Stable Diffusion, DALL-E, generación de audio y vídeo, y modelos de difusión sobre datos
+estructurados.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*, NeurIPS, 2020](https://arxiv.org/abs/2006.11239)
+- [Nichol, A.; Dhariwal, P. *Improved Denoising Diffusion Probabilistic Models*, ICML, 2021](https://arxiv.org/abs/2102.09672)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

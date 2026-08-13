@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**El ELBO acota la log-verosimilitud, y la brecha es exactamente otra KL.**
 
-Esta clase concreta ese objetivo sobre **ELBO y variational inference**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `elbo`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: normalizar el laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ELBO = E_q[log p(x|z)] − KL(q(z|x) ‖ p(z))
+log p(x) = ELBO + KL(q(z|x) ‖ p(z|x))
+la brecha es ≥ 0, luego log p(x) ≥ ELBO
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La escala 1/√d evita que el producto punto sature la softmax en alta dimensión.
+La log-verosimilitud de un modelo con variables latentes requiere integrar sobre todas las
+configuraciones latentes posibles, y esa integral es intratable salvo en casos triviales.
+La inferencia variacional sortea el problema optimizando una **cota inferior** en su lugar.
+
+El ELBO tiene dos términos con lecturas claras. El de **reconstrucción** premia que el
+decodificador recupere la entrada a partir del latente. El de **KL** penaliza que la
+posterior aproximada se aleje del prior, actuando como regularizador del espacio latente.
+Maximizar la suma equilibra fidelidad y estructura.
+
+La identidad clave es que `log p(x)` es exactamente el ELBO **más** la KL entre la
+posterior aproximada y la verdadera. Como toda KL es no negativa, el ELBO nunca supera la
+log-verosimilitud, y maximizarlo hace dos cosas a la vez: sube la verosimilitud y acerca la
+aproximación a la posterior real. Esa doble acción es lo elegante del método.
+
+El ELBO es también el objeto que aparecía en el algoritmo EM de la clase 296. En EM el paso
+E hace la cota exacta calculando la posterior verdadera; en inferencia variacional la
+posterior no es tratable y la cota queda con holgura. Ver EM primero es lo que hace que el
+ELBO no parezca una construcción sacada de la nada.
+
+## 🧮 Ejemplo trabajado
+
+Descomposición numérica del ELBO.
+
+```text
+término de reconstrucción: −12,4
+término KL:                  3,7
+
+ELBO = −12,4 − 3,7 = −16,1
+
+Identidad:
+  log p(x) = ELBO + KL(q(z|x) ‖ p(z|x))
+           = −16,1 + brecha
+
+Como la brecha es ≥ 0:
+  log p(x) ≥ −16,1                                   ✓
+
+Si la brecha fuera 0, la posterior aproximada
+coincidiría con la verdadera y el ELBO sería exacto.
+
+Maximizar el ELBO sube la verosimilitud y reduce
+la brecha simultáneamente.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 332
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Confundir el ELBO con la log-verosimilitud exacta.
+2. Interpretar la brecha como error del modelo en vez de error de la aproximación.
+3. Comparar valores de ELBO entre modelos con distintas dimensiones latentes.
+
+## 🚀 Dónde se usa de verdad
+
+VAE, inferencia variacional en modelos bayesianos, modelos de difusión y aproximaciones
+tratables de posteriores complejas.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670)
+- [Kingma, D.; Welling, M. *An Introduction to Variational Autoencoders*, 2019](https://arxiv.org/abs/1906.02691)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
+**El coseno ignora la magnitud, y en embeddings la magnitud suele ser frecuencia, no significado.**
 
-Esta clase concreta ese objetivo sobre **Embeddings y similitud coseno**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Softmax, embeddings, positional encoding, atención escalada, multi-head, Transformer completo, muestreo, VAE, GAN, difusión, GNN y ecuaciones de Bellman.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `cosine_similarity`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir temperatura alta con mayor calidad en lugar de mayor entropía.
+
+## 🧩 Fórmulas de la clase
+
+```text
+cos(a,b) = (a·b) / (‖a‖·‖b‖)
+rango [−1, 1]
+invariante al escalado de cualquiera de los dos vectores
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
-## 🧠 Idea rectora de la parte 16
+## 📖 Fundamentos
 
-> La escala 1/√d evita que el producto punto sature la softmax en alta dimensión.
+La similitud coseno mide el ángulo entre dos vectores, descartando sus longitudes. En
+espacios de embeddings es la medida estándar, y la razón es concreta: la norma de un
+embedding tiende a correlacionar con la frecuencia del término en el corpus, que no es
+información semántica.
+
+La diferencia con la distancia euclídea se ve mejor con un caso extremo. Un vector y su
+doble apuntan exactamente en la misma dirección, así que su coseno es 1 —máxima
+similitud—, mientras que su distancia euclídea puede ser enorme. Para «¿hablan de lo
+mismo?» el coseno acierta y la distancia no.
+
+El **producto escalar sin normalizar** es lo que usa la atención, y ahí la magnitud sí
+influye deliberadamente: un token puede aprender a tener clave de norma grande para
+atraer más atención. Es una decisión de diseño distinta, no un descuido, y por eso la
+atención necesita el factor `1/√d` mientras que la búsqueda por similitud usa coseno.
+
+La consecuencia de ingeniería es que si los vectores se **normalizan previamente**, el
+producto escalar **es** el coseno. Las bases de datos vectoriales explotan esto: normalizan
+al indexar y luego usan producto escalar, que es más rápido y está mejor optimizado que
+calcular normas en cada consulta.
+
+## 🧮 Ejemplo trabajado
+
+Coseno frente a distancia euclídea sobre la misma consulta.
+
+```text
+consulta: (0,8 ; 0,5 ; 0,2 ; 0,1)
+
+candidato          coseno     distancia euclídea
+muy relacionado   0,994667        0,100000
+relacionado       0,787527        0,608276
+ortogonal         0,0xxxxx        1,352770
+
+Efecto del escalado:
+  multiplicar un candidato por 10
+    coseno:    no cambia                            ✓
+    distancia: se multiplica por ~10                ✗
+
+En embeddings la norma suele reflejar frecuencia,
+no significado: por eso se usa coseno.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 322
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Olvidar la máscara causal en el modelado autoregresivo.
-- Confundir temperatura alta con mayor calidad en lugar de mayor entropía.
-- Normalizar el Laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+1. Usar distancia euclídea sin normalizar sobre embeddings.
+2. Normalizar los vectores de atención y perder la información de magnitud.
+3. Comparar cosenos entre espacios de embeddings distintos.
+
+## 🚀 Dónde se usa de verdad
+
+Búsqueda semántica, bases de datos vectoriales, RAG, sistemas de recomendación y
+deduplicación de documentos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
-- Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
-- Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
-- Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+- [Mikolov, T. et al. *Distributed representations of words and phrases*, NeurIPS, 2013](https://arxiv.org/abs/1310.4546)
+- [Reimers, N.; Gurevych, I. *Sentence-BERT*, EMNLP, 2019](https://arxiv.org/abs/1908.10084)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
