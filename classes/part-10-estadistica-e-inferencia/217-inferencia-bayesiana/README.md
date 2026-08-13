@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**El intervalo creíble sí admite la lectura probabilística que el de confianza no admite.**
 
-Esta clase concreta ese objetivo sobre **Inferencia bayesiana**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bayesian_inference`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🧩 Fórmulas de la clase
+
+```text
+p(θ | datos) ∝ p(datos | θ)·p(θ)
+Beta(a,b) + k éxitos en n ⟹ Beta(a+k, b+n−k)
+intervalo creíble al 95 %: región con masa posterior 0,95
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Un intervalo de confianza describe el procedimiento, no una probabilidad del parámetro.
+La inferencia bayesiana trata el parámetro como una variable aleatoria y devuelve su
+**distribución completa** dada la evidencia. No un punto con una barra de error, sino una
+función que asigna plausibilidad a cada valor posible. De ella se leen la media, la moda,
+la desviación y cualquier intervalo que interese.
+
+Esa diferencia de objeto produce una diferencia de interpretación. El **intervalo creíble**
+al 95 % contiene el parámetro con probabilidad 0,95 **según la posterior**, y esa es
+exactamente la frase que no se podía decir del intervalo de confianza en la clase 205. La
+lectura intuitiva que todo el mundo quiere hacer es correcta aquí, y solo aquí.
+
+La **conjugación** hace el cálculo trivial en casos favorables. Con prior Beta y
+verosimilitud binomial, la posterior es Beta con parámetros actualizados: sumar los éxitos
+a `a` y los fracasos a `b`. Un prior `Beta(1,1)` es uniforme y representa ignorancia
+previa; con él, la media posterior es `(k+1)/(n+2)`, la regla de sucesión de Laplace.
+
+Lo que el enfoque exige a cambio es **declarar el prior**. Esa exigencia se presenta a veces
+como debilidad, pero es transparencia: todo análisis incorpora supuestos, y el bayesiano
+obliga a escribirlos. La crítica seria no es filosófica sino computacional: fuera de los
+casos conjugados la posterior no tiene forma cerrada y hay que recurrir a MCMC o a
+inferencia variacional, que es adonde llega la parte 17.
+
+## 🧮 Ejemplo trabajado
+
+Prior uniforme y evidencia creciente sobre un parámetro real de 0,62.
+
+```text
+parámetro real = 0,62      prior = Beta(1,1) = uniforme
+
+   n    posterior        media     desv.
+   0    Beta(1,1)       0,5000    0,2887
+  10    Beta(7,5)       0,5833    0,1370
+  50    Beta(32,20)     0,6154    0,0669
+ 200    Beta(125,77)    0,6188    0,0340
+1000    Beta(621,381)   0,6198    0,0153
+
+La media se acerca al valor real y la desviación cae como 1/√n.
+
+Intervalo creíble al 95 % con n = 1000:
+  aproximadamente (0,590 , 0,650)
+
+Lectura legítima:
+  "hay un 95 % de probabilidad de que θ esté ahí"
+Esa frase sería incorrecta para un intervalo de confianza.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 217
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. No declarar el prior utilizado.
+2. Tratar intervalo creíble e intervalo de confianza como sinónimos.
+3. Actualizar dos veces con la misma evidencia.
+
+## 🚀 Dónde se usa de verdad
+
+Tests A/B bayesianos, bandidos multibrazo, cuantificación de incertidumbre en modelos y
+estimación con datos escasos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)
+- [McElreath, R. *Statistical Rethinking*, 2ª ed., CRC, 2020](https://xcelab.net/rm/statistical-rethinking/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

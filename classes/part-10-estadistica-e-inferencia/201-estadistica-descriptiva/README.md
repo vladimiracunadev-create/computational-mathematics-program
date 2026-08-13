@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Centro, dispersión y forma responden preguntas distintas y ninguna basta sola.**
 
-Esta clase concreta ese objetivo sobre **Estadística descriptiva**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `descriptive_statistics`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: p-hacking por comparaciones múltiples sin corrección.
+
+## 🧩 Fórmulas de la clase
+
+```text
+media = Σxᵢ / n;  mediana = valor central ordenado
+IQR = Q3 − Q1;  σ = √(Σ(xᵢ − x̄)²/n)
+con cola derecha: media > mediana
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> El p-value es P(datos tan extremos | H0), nunca P(H0 | datos).
+Resumir un conjunto de datos exige responder tres preguntas independientes: dónde está el
+centro, cuánto se dispersan los valores y qué forma tiene la distribución. Dar solo la
+media es responder una de tres, y muchas veces la menos informativa.
+
+Para el centro hay tres candidatos con propiedades distintas. La **media** usa todos los
+valores y por eso un solo dato extremo la arrastra. La **mediana** solo mira la posición
+central y es robusta: cambiar el máximo por uno diez veces mayor no la mueve. La **moda**
+es la única que sirve para variables categóricas. Que los salarios se reporten por mediana
+y no por media no es casualidad.
+
+Para la dispersión, la desviación estándar es la medida clásica y el **rango
+intercuartílico** la robusta. El IQR ignora el 25 % de cada cola y es la base del criterio
+de valores atípicos por diagrama de caja: fuera de `Q1 − 1,5·IQR` y `Q3 + 1,5·IQR`.
+
+La **forma** es lo que más se olvida. La relación entre media y mediana delata la
+asimetría: si la media supera a la mediana, hay cola a la derecha. Y distribuciones
+radicalmente distintas pueden compartir media y desviación: el cuarteto de Anscombe y el
+Datasaurus son la demostración visual de que resumir sin graficar es peligroso.
+
+## 🧮 Ejemplo trabajado
+
+Veinte mediciones: centro, dispersión y forma.
+
+```text
+n = 20
+
+media               = 12,6050
+mediana             = 12,6500     media < mediana → ligera cola izquierda
+desviación estándar =  0,8630
+rango               =  3,2000
+Q1                  = 11,9250
+Q3                  = 13,2000
+IQR                 =  1,2750
+
+Límites de atípicos (criterio 1,5·IQR):
+  inferior: 11,925 − 1,9125 = 10,0125
+  superior: 13,200 + 1,9125 = 15,1125
+  ningún dato queda fuera
+
+Sensibilidad: si el máximo pasara de 14,2 a 30,0
+  media   → 13,395   (sube un 6,3 %)
+  mediana → 12,650   (no cambia)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 201
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Reportar la media de una distribución muy asimétrica sin la mediana.
+2. Confundir dispersión con error: son cosas distintas.
+3. Resumir sin graficar y perder la forma de los datos.
+
+## 🚀 Dónde se usa de verdad
+
+Exploración inicial de cualquier conjunto de datos, informes de latencia por percentiles,
+detección de atípicos y control de calidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 7](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Tukey, J. *Exploratory Data Analysis*, Addison-Wesley, 1977](https://archive.org/details/exploratorydataa0000tuke)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

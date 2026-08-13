@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**MAP es verosimilitud más prior, y ese prior es exactamente la regularización.**
 
-Esta clase concreta ese objetivo sobre **Estimación MAP**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `map_estimation`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: p-hacking por comparaciones múltiples sin corrección.
+
+## 🧩 Fórmulas de la clase
+
+```text
+θ_MAP = argmax [ log L(θ) + log p(θ) ]
+prior uniforme ⟹ MAP = MLE
+prior gaussiano ⟹ penalización L2;  prior Laplace ⟹ L1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> El p-value es P(datos tan extremos | H0), nunca P(H0 | datos).
+La estimación MAP añade a la verosimilitud una creencia previa sobre el parámetro y
+maximiza la posterior. Formalmente es un cambio pequeño —sumar `log p(θ)` al objetivo—
+pero cambia el comportamiento del estimador cuando hay pocos datos, que es justo cuando
+hace falta ayuda.
+
+La equivalencia con la **regularización** es exacta y merece verse una vez con detalle. Un
+prior gaussiano centrado en cero aporta un término `−λ‖θ‖²` al objetivo, que es la
+penalización L2 o *weight decay*. Un prior de Laplace aporta `−λ‖θ‖₁`, que es Lasso y
+produce soluciones dispersas. Regularizar no es un truco de ingeniería: es declarar una
+creencia previa.
+
+El comportamiento asintótico es el esperado: al crecer `n`, la verosimilitud domina y el
+MAP converge al MLE. El prior importa cuando la evidencia es escasa, se diluye cuando
+abunda, y desaparece por completo si es uniforme. Esa es la respuesta a la objeción de que
+el prior contamina el resultado.
+
+La diferencia con la inferencia bayesiana completa de la clase siguiente es que MAP se
+queda con un **punto**: el máximo de la posterior. Es rápido y encaja con cualquier
+optimizador, pero descarta toda la información sobre incertidumbre. Y en dimensión alta el
+máximo puede estar en una región de probabilidad casi nula, lo que hace de MAP un resumen
+engañoso de la posterior.
+
+## 🧮 Ejemplo trabajado
+
+Prior sesgado hacia 0,8 frente a un parámetro real de 0,4.
+
+```text
+parámetro real = 0,40      prior = Beta(8,2), centrado en 0,8
+
+     n     MLE      MAP     distancia MAP al real
+     5   0,6000   0,7692        0,3692
+    20   0,4500   0,5357        0,1357
+   100   0,4100   0,4340        0,0340
+  1000   0,4030   0,4055        0,0055
+
+Con n = 5 el prior domina y empeora la estimación.
+Con n = 1000 el prior es irrelevante: MAP → MLE.
+
+Equivalencias:
+  prior uniforme   →  MAP = MLE
+  prior gaussiano  →  regularización L2
+  prior Laplace    →  regularización L1
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 216
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Usar un prior fuerte con pocos datos y presentar el resultado como empírico.
+2. Creer que MAP resume bien la posterior en dimensión alta.
+3. No declarar el prior elegido al reportar una estimación MAP.
+
+## 🚀 Dónde se usa de verdad
+
+Weight decay y Lasso, suavizado de Laplace en modelos de lenguaje, estimación con datos
+escasos y calibración con conocimiento del dominio.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 3](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

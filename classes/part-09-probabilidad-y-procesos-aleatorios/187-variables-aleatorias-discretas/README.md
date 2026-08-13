@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Una variable aleatoria discreta se describe por su masa de probabilidad y su acumulada.**
 
-Esta clase concreta ese objetivo sobre **Variables aleatorias discretas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `discrete_rv`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🧩 Fórmulas de la clase
+
+```text
+pmf: p(x) = P(X = x),  Σ p(x) = 1
+cdf: F(x) = P(X ≤ x)
+P(a < X ≤ b) = F(b) − F(a)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> La esperanza es lineal siempre; la varianza solo bajo independencia.
+Una **variable aleatoria** es una función que asigna un número a cada resultado del
+espacio muestral. El nombre es histórico y engañoso: ni es una variable en el sentido del
+álgebra, ni es aleatoria —la función es perfectamente determinista; lo aleatorio es su
+argumento—. Verla como función es lo que permite sumarlas, componerlas y tomar esperanzas.
+
+Cuando el conjunto de valores es finito o numerable, la variable es **discreta** y queda
+descrita por su **función de masa** `p(x) = P(X = x)`. Las dos condiciones que debe
+cumplir son las heredadas de los axiomas: valores no negativos y suma total igual a 1.
+Cualquier vector de números que cumpla eso es una distribución discreta válida, y una
+salida softmax lo es por construcción.
+
+La **función de distribución acumulada** `F(x) = P(X ≤ x)` recoge la misma información en
+otra forma. Es no decreciente, empieza en 0 y termina en 1, y sirve para calcular
+probabilidades de intervalos restando. En la práctica, la cdf es también el mecanismo para
+**generar muestras**: aplicar su inversa a un uniforme produce muestras de la
+distribución, técnica que la clase 198 usa.
+
+El paso de un espacio muestral a una variable aleatoria es una simplificación deliberada:
+se pierde información sobre qué resultado ocurrió y se conserva solo el número de interés.
+Esa pérdida es justamente lo que hace manejable el modelado.
+
+## 🧮 Ejemplo trabajado
+
+Una variable con cinco valores: masa, acumulada y esperanza.
+
+```text
+x        0     1     2     3     4
+p(x)    0,1   0,2   0,4   0,2   0,1     suma = 1,0    ✓
+F(x)    0,1   0,3   0,7   0,9   1,0     no decreciente ✓
+
+P(X ≤ 2) = F(2) = 0,7
+P(X > 2) = 1 − 0,7 = 0,3
+P(1 < X ≤ 3) = F(3) − F(1) = 0,9 − 0,3 = 0,6
+
+E[X] = 0(0,1) + 1(0,2) + 2(0,4) + 3(0,2) + 4(0,1) = 2,0
+
+La distribución es simétrica en torno a 2, y la esperanza lo confirma.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 187
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Escribir una pmf cuyos valores no suman 1.
+2. Confundir p(x) con F(x) al calcular probabilidades de intervalos.
+3. Restar mal los extremos: P(a ≤ X ≤ b) incluye a, F(b) − F(a) no.
+
+## 🚀 Dónde se usa de verdad
+
+Distribuciones sobre vocabularios en modelos de lenguaje, conteos de eventos, modelado de
+clases en clasificación y muestreo por transformada inversa.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 3](https://projects.iq.harvard.edu/stat110/home)
+- [Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

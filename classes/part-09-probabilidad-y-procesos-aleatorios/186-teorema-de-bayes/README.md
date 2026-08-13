@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Un test muy preciso sobre una enfermedad rara produce sobre todo falsos positivos.**
 
-Esta clase concreta ese objetivo sobre **Teorema de Bayes**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bayes`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados monte carlo sin semilla ni intervalo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+P(H|E) = P(E|H)·P(H) / P(E)
+P(E) = P(E|H)·P(H) + P(E|Hᶜ)·P(Hᶜ)
+posterior ∝ verosimilitud × prior
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> P(A|B) y P(B|A) no son intercambiables: confundirlas es la falacia del fiscal.
+El teorema de Bayes invierte el condicionamiento: convierte `P(E|H)`, que suele ser lo
+que se sabe del mecanismo, en `P(H|E)`, que es lo que se quiere saber tras observar la
+evidencia. Su demostración cabe en una línea —basta escribir `P(H∩E)` de las dos maneras
+posibles— y su importancia es difícil de exagerar.
+
+La lectura que hay que interiorizar es `posterior ∝ verosimilitud × prior`. La
+verosimilitud `P(E|H)` mide cuán bien la hipótesis explica lo observado; el prior `P(H)`
+mide cuán plausible era la hipótesis de entrada. **Un test excelente no puede compensar un
+prior muy bajo**, y esa es la fuente de la falacia de la tasa base.
+
+El caso numérico canónico: enfermedad con prevalencia 0,1 %, test con 99 % de sensibilidad
+y 99 % de especificidad. Entre 100 000 personas hay 100 enfermas, de las que el test marca
+99, y 99 900 sanas, de las que marca 999. Total de positivos: 1098, de los cuales solo 99
+están enfermos. `P(enfermo | positivo) ≈ 9 %`. Diez falsos positivos por cada verdadero, y
+el test no tiene ningún defecto.
+
+La misma estructura aparece en juicios —«la probabilidad de esta coincidencia por azar es
+1 entre un millón» no es la probabilidad de inocencia—, en detección de fraude, en alertas
+de seguridad y en cualquier clasificador aplicado a una clase minoritaria. Por eso los
+sistemas de detección de eventos raros se evalúan con precisión y exhaustividad, no con
+exactitud.
+
+## 🧮 Ejemplo trabajado
+
+Prevalencia 0,1 %, sensibilidad 99 %, especificidad 99 %.
+
+```text
+Sobre 100 000 personas:
+
+                 enfermos (100)   sanos (99 900)   total
+  test +              99               999          1 098
+  test −               1            98 901         98 902
+
+P(enfermo | +) = 99 / 1 098 = 0,0902  ≈  9 %
+
+Por la fórmula:
+  P(+) = 0,99 × 0,001 + 0,01 × 0,999 = 0,01098
+  P(enfermo|+) = (0,99 × 0,001) / 0,01098 = 0,0902     ✓
+
+falsos positivos por cada verdadero: 999 / 99 ≈ 10,1
+
+Si la prevalencia sube al 10 %, P(enfermo|+) sube al 92 %.
+Cambió el prior, no el test.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 186
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Leer la sensibilidad del test como probabilidad de estar enfermo.
+2. Ignorar la prevalencia al interpretar un positivo.
+3. Evaluar clasificadores de clases raras con exactitud global.
+
+## 🚀 Dónde se usa de verdad
+
+Cribado médico, detección de fraude, filtros antispam, pruebas forenses y evaluación de
+clasificadores con clases desbalanceadas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)
+- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

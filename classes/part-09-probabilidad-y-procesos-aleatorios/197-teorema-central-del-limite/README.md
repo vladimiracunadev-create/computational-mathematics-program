@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La media de muchas variables tiende a una normal aunque el origen no lo sea.**
 
-Esta clase concreta ese objetivo sobre **Teorema central del límite**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `central_limit`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: ignorar la probabilidad base al interpretar un test positivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x̄ₙ ≈ Normal(μ, σ²/n)  para n grande
+(x̄ₙ − μ)/(σ/√n) → Normal(0,1)
+error estándar = σ/√n
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> La esperanza es lineal siempre; la varianza solo bajo independencia.
+El teorema central del límite es el resultado más sorprendente de la probabilidad
+elemental: la distribución de la media muestral tiende a una normal **sin importar de qué
+distribución vengan los datos**, siempre que tengan media y varianza finitas y sean
+independientes. La forma original se olvida; solo sobreviven su media y su varianza.
+
+Mientras la ley de los grandes números dice **hacia dónde** converge la media, el TCL dice
+**cómo se distribuye alrededor** de ese límite. Esa información es lo que permite construir
+intervalos de confianza y contrastes de hipótesis: sin TCL no habría estadística
+inferencial práctica.
+
+El **error estándar** `σ/√n` es la desviación de la media muestral, no de los datos.
+Confundir `σ` con `σ/√n` es el error más frecuente al reportar resultados: la primera
+describe cuánto varían las observaciones, la segunda cuánto varía la estimación. Sus
+valores difieren por un factor `√n`, que con `n = 10 000` es cien.
+
+La regla de «con n ≥ 30 basta» es una guía burda. La velocidad de convergencia depende de
+la asimetría de la distribución de origen: para una exponencial `n = 30` ya es razonable,
+para una distribución muy sesgada o con valores extremos puede hacer falta mucho más. Y si
+la varianza es infinita, el TCL directamente no aplica.
+
+## 🧮 Ejemplo trabajado
+
+Medias de muestras de tamaño 30 de una exponencial claramente asimétrica.
+
+```text
+población: Exponencial(1)      media 1,   varianza 1
+           fuertemente asimétrica, nada normal
+
+8 000 réplicas de muestras de tamaño n = 30:
+
+  media de las medias    = 0,997036     teórico 1,0        ✓
+  varianza de las medias = 0,032656     teórico 1/30 = 0,0333  ✓
+  desviación             = 0,1807       teórico 1/√30 = 0,1826 ✓
+
+La distribución de las medias es casi simétrica y acampanada
+aunque la población de origen no tenga nada de normal.
+
+error estándar frente a desviación de los datos:
+  σ      = 1,0       cuánto varía una observación
+  σ/√30  = 0,183     cuánto varía la media
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 197
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Reportar σ donde corresponde σ/√n.
+2. Aplicar el TCL a datos dependientes o con varianza infinita.
+3. Creer que el TCL vuelve normales a los datos: normaliza las medias, no las observaciones.
+
+## 🚀 Dónde se usa de verdad
+
+Intervalos de confianza, contrastes de hipótesis, barras de error en experimentos y
+justificación del ruido gaussiano en modelos de medición.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 5](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

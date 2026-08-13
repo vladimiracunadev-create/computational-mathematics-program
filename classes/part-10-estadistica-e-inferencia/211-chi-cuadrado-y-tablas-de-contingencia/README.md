@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Chi-cuadrado compara frecuencias observadas con las esperadas bajo independencia.**
 
-Esta clase concreta ese objetivo sobre **Chi-cuadrado y tablas de contingencia**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `chi_square`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🧩 Fórmulas de la clase
+
+```text
+χ² = Σ (O − E)² / E
+E_ij = (total fila i × total columna j) / n
+gl = (filas − 1)·(columnas − 1)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> El p-value es P(datos tan extremos | H0), nunca P(H0 | datos).
+Cuando las dos variables son categóricas, la comparación de medias no aplica y el
+instrumento natural es la **tabla de contingencia**: el recuento cruzado de categorías. La
+pregunta es si la distribución de una variable cambia según el valor de la otra, es decir,
+si son independientes.
+
+La tabla **esperada** bajo independencia se construye con la regla del producto de la clase
+185: si las variables fueran independientes, la proporción conjunta sería el producto de
+las marginales, y multiplicando por `n` se obtiene la frecuencia esperada de cada celda. El
+estadístico suma las discrepancias al cuadrado normalizadas por lo esperado.
+
+Normalizar por `E` es esencial: una diferencia de 5 en una celda donde se esperaban 10 es
+enorme, y en una donde se esperaban 1000 es ruido. Los grados de libertad,
+`(f−1)·(c−1)`, cuentan cuántas celdas quedan libres una vez fijados los totales marginales.
+
+El test tiene dos condiciones prácticas. Trabaja con **frecuencias absolutas**, nunca con
+porcentajes: aplicarlo a porcentajes convierte cualquier tabla en una de n = 100 y falsea
+el resultado. Y exige frecuencias esperadas razonables —la regla habitual es al menos 5 por
+celda—; con celdas pequeñas corresponde el test exacto de Fisher.
+
+## 🧮 Ejemplo trabajado
+
+Tabla 2×2 con 100 observaciones.
+
+```text
+observado          C1    C2   | total
+  F1               30    20   |  50
+  F2               15    35   |  50
+-----------------------------------
+  total            45    55   | 100
+
+esperado bajo independencia  E = fila × columna / n
+  F1: 50·45/100 = 22,5     50·55/100 = 27,5
+  F2: 22,5                 27,5
+
+χ² = (30−22,5)²/22,5 + (20−27,5)²/27,5
+   + (15−22,5)²/22,5 + (35−27,5)²/27,5
+   = 2,5 + 2,045 + 2,5 + 2,045 = 9,0909
+
+gl = (2−1)(2−1) = 1        valor crítico al 5 % = 3,841
+9,0909 > 3,841  →  se rechaza la independencia
+p ≈ 0,0026
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 211
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Aplicar el test a porcentajes en vez de a recuentos.
+2. Usarlo con frecuencias esperadas menores que 5.
+3. Concluir causalidad a partir de una asociación significativa.
+
+## 🚀 Dónde se usa de verdad
+
+Análisis de encuestas, matrices de confusión, comparación de tasas por segmento y
+detección de asociación entre variables categóricas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Agresti, A. *Categorical Data Analysis*, 3ª ed., Wiley, 2013](https://doi.org/10.1002/9780470594001)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

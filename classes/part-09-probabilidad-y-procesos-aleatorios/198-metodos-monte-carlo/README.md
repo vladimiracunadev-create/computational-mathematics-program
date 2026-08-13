@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Monte Carlo estima integrales muestreando, con error 1/√n en cualquier dimensión.**
 
-Esta clase concreta ese objetivo sobre **Métodos Monte Carlo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `monte_carlo`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados monte carlo sin semilla ni intervalo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+E[g(X)] ≈ (1/n)·Σ g(xᵢ)
+error estándar = s/√n
+intervalo aproximado: estimación ± 1,96·s/√n
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> El TCL explica por qué la normal aparece incluso sin normalidad de origen.
+El método de Monte Carlo resuelve un problema determinista —una integral, un área, una
+probabilidad— convirtiéndolo en un experimento aleatorio y promediando. Su justificación
+es la ley de los grandes números, y su control de error es el teorema central del límite:
+las dos clases anteriores existían para llegar aquí.
+
+El ejemplo clásico estima π lanzando puntos uniformes en el cuadrado unitario y contando
+cuántos caen dentro del cuarto de círculo. La proporción tiende a `π/4`. Es un método
+malísimo para calcular π —hay algoritmos que dan miles de dígitos— pero perfecto para
+entender el mecanismo y su coste.
+
+Ese coste es la convergencia `O(1/√n)`, que es lenta: para un dígito decimal más hacen
+falta cien veces más muestras. La compensación es decisiva: **esa velocidad no depende de
+la dimensión**. Las reglas de cuadratura clásicas empeoran exponencialmente al crecer la
+dimensión, y por encima de unas pocas variables Monte Carlo es la única opción viable.
+
+Dos exigencias de higiene, que la clase trata como obligatorias. Primera: **fijar la
+semilla**, porque un resultado no reproducible no es un resultado. Segunda: **reportar el
+error estándar** junto a la estimación; un número Monte Carlo sin su incertidumbre no
+permite saber si la diferencia observada frente a otro método es real o es ruido.
+
+## 🧮 Ejemplo trabajado
+
+Estimación de π por muestreo uniforme, con semilla fija.
+
+```text
+semilla = 20260819
+
+      n     estimación    error      error estándar
+  1 000       3,156000    0,014407      0,0519
+ 10 000       3,145600    0,004007      0,0164
+100 000       3,142880    0,001287      0,0052
+
+π real = 3,141593
+
+El error cae como 1/√n:
+  n × 100  →  error estándar / 10                        ✓
+
+Intervalo al 95 % con n = 100 000:
+  3,142880 ± 1,96 × 0,0052 = [3,13268, 3,15308]
+  contiene a π                                           ✓
+
+Ganar un decimal más exigiría n ≈ 10 000 000.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 198
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Publicar una estimación sin semilla ni error estándar.
+2. Esperar precisión alta de una simulación corta.
+3. Descartar Monte Carlo en alta dimensión, donde es lo único que escala.
+
+## 🚀 Dónde se usa de verdad
+
+Integración en alta dimensión, valoración de opciones, propagación de incertidumbre,
+dropout en inferencia y muestreo en modelos generativos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)
+- [Robert, C.; Casella, G. *Monte Carlo Statistical Methods*, 2ª ed., Springer, 2004](https://link.springer.com/book/10.1007/978-1-4757-4145-2)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

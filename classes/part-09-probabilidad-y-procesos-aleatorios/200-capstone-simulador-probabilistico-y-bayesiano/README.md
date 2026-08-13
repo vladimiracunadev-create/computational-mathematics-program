@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Con suficientes datos, el prior se diluye y bayesiano y frecuentista convergen.**
 
-Esta clase concreta ese objetivo sobre **Capstone: simulador probabilístico y bayesiano**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_probabilistic_simulator`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: ignorar la probabilidad base al interpretar un test positivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+posterior ∝ verosimilitud × prior
+Beta(a,b) + k éxitos en n ⟹ Beta(a+k, b+n−k)
+media posterior = (a+k) / (a+b+n)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Una cadena de Markov ergódica olvida su estado inicial.
+El capstone reúne toda la parte en un simulador: se fija un parámetro real desconocido
+para el observador, se generan datos, y se estima ese parámetro de dos maneras —contando
+frecuencias y actualizando una creencia con Bayes— para ver cómo se comportan a medida que
+llegan observaciones.
+
+El prior `Beta(2,2)` expresa una creencia previa suave centrada en 0,5. Es **conjugado** de
+la binomial, lo que significa que el posterior pertenece a la misma familia y la
+actualización se reduce a sumar: `Beta(a+k, b+n−k)`. Esa comodidad algebraica es la razón
+histórica de que los priores conjugados dominaran antes de que MCMC hiciera viable
+cualquier prior.
+
+Lo que el experimento muestra es la **dilución del prior**. Con pocas observaciones la
+media posterior está tirada hacia 0,5 por la creencia previa; con cientos de datos se pega
+a la frecuencia observada, y las dos estimaciones se vuelven indistinguibles. El prior
+importa cuando hay poca evidencia, que es precisamente cuando hace falta que importe.
+
+La diferencia de fondo entre ambos enfoques no es numérica sino de interpretación. El
+frecuentista da un punto y un intervalo con garantías de cobertura a largo plazo; el
+bayesiano da una **distribución completa** sobre el parámetro, de la que se leen media,
+incertidumbre e intervalo creíble. Esa distribución es lo que la parte 10 formaliza y lo
+que hace del enfoque bayesiano el lenguaje natural de la cuantificación de incertidumbre.
+
+## 🧮 Ejemplo trabajado
+
+Parámetro real 0,35, prior Beta(2,2), evidencia creciente.
+
+```text
+  n obs   éxitos   media posterior   desv. posterior
+      0        0        0,5000           0,2236
+     10        3        0,3571           0,1247
+     50        16       0,3333           0,0645
+    200        58       0,2941           0,0313
+  1 000      265        0,2669           0,0140
+
+estimación frecuentista final (265/1000) = 0,2650
+estimación bayesiana final                = 0,2696
+
+diferencia = 0,0046  →  el prior ya casi no pesa
+
+peso del prior:  a+b = 4 observaciones equivalentes
+  frente a n = 10   pesa un 29 %
+  frente a n = 1000 pesa un 0,4 %
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 200
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Elegir un prior muy informativo y presentar el resultado como si viniera de los datos.
+2. Comparar un intervalo de confianza con uno creíble como si significaran lo mismo.
+3. Actualizar dos veces con la misma observación.
+
+## 🚀 Dónde se usa de verdad
+
+Tests A/B bayesianos, bandidos multibrazo con Thompson sampling, calibración de modelos y
+estimación de tasas con pocos datos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 8](https://projects.iq.harvard.edu/stat110/home)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

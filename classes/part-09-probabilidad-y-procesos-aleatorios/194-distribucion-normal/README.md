@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La normal queda fijada por media y desviación, y la puntuación z la vuelve universal.**
 
-Esta clase concreta ese objetivo sobre **Distribución normal**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `normal_distribution`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: ignorar la probabilidad base al interpretar un test positivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+f(x) = 1/(σ√(2π)) · e^(−(x−μ)²/(2σ²))
+z = (x − μ) / σ  ⟹  Z ~ Normal(0,1)
+68,27 % · 95,45 % · 99,73 % dentro de 1σ, 2σ y 3σ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Monte Carlo convierge como 1/√n: cuadruplicar muestras solo duplica la precisión.
+La distribución normal es simétrica, unimodal y queda completamente determinada por dos
+números: la media `μ`, que fija dónde está el centro, y la desviación `σ`, que fija cuán
+ancha es. Ninguna otra distribución tan simple aparece tan a menudo, y la razón no es
+estética: es el teorema central del límite de la clase 197.
+
+La **estandarización** `z = (x − μ)/σ` convierte cualquier normal en la normal estándar.
+Eso permite tabular una sola distribución y responder cualquier pregunta sobre todas las
+demás. La puntuación z se lee directamente como «a cuántas desviaciones del centro está
+este valor», y es la forma correcta de comparar magnitudes medidas en escalas distintas.
+
+La **regla 68-95-99,7** conviene memorizarla porque da intuición inmediata: dentro de una
+desviación cae el 68 % de los datos, dentro de dos el 95 % y dentro de tres el 99,7 %. Un
+valor a más de tres sigmas ocurre menos de tres veces de cada mil, y por eso ese umbral se
+usa como criterio de anomalía.
+
+La advertencia habitual: la normal tiene **colas ligeras**, que decaen exponencialmente al
+cuadrado. Muchos fenómenos reales —retornos financieros, tamaños de archivo, popularidad
+de contenidos— tienen colas mucho más pesadas, y modelarlos como normales subestima
+gravemente los eventos extremos. Suponer normalidad sin comprobarla es un error caro.
+
+## 🧮 Ejemplo trabajado
+
+Distribución de CI con media 100 y desviación 15.
+
+```text
+μ = 100,  σ = 15
+
+P(85  < X < 115) = 0,6827      1σ
+P(70  < X < 130) = 0,9545      2σ
+P(55  < X < 145) = 0,9973      3σ
+
+z de 130 = (130 − 100) / 15 = 2,0
+P(X > 130) = (1 − 0,9545) / 2 = 0,0228   ≈ 1 de cada 44
+
+Comparación entre escalas:
+  130 en CI  (z = 2,0)
+  620 en una prueba de μ=500, σ=100  (z = 1,2)
+  el primero es más extremo pese al número menor
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 194
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Suponer normalidad sin comprobarla.
+2. Usar la normal para fenómenos con colas pesadas o soporte acotado.
+3. Confundir la puntuación z con una probabilidad.
+
+## 🚀 Dónde se usa de verdad
+
+Inicialización de pesos en redes, ruido gaussiano en modelos de difusión, control
+estadístico de procesos, intervalos de confianza y detección de anomalías.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 5](https://projects.iq.harvard.edu/stat110/home)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 2](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La binomial cuenta éxitos en n ensayos de Bernoulli independientes.**
 
-Esta clase concreta ese objetivo sobre **Bernoulli y binomial**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bernoulli_binomial`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados monte carlo sin semilla ni intervalo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Bernoulli: P(X=1) = p,  E[X] = p,  Var(X) = p(1−p)
+Binomial: P(X=k) = C(n,k)·pᵏ·(1−p)ⁿ⁻ᵏ
+E[X] = np,   Var(X) = np(1−p)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> La esperanza es lineal siempre; la varianza solo bajo independencia.
+Un **ensayo de Bernoulli** es el experimento más simple posible: éxito con probabilidad
+`p`, fracaso con `1−p`. Su esperanza es `p` y su varianza `p(1−p)`, que alcanza su máximo
+en `p = 0,5`: la máxima incertidumbre está en la moneda justa, y decae hacia cero cuando
+el resultado es casi seguro en cualquiera de los dos sentidos.
+
+Repetir `n` ensayos independientes con la misma `p` y contar los éxitos da la
+**binomial**. Su fórmula tiene tres piezas que conviene leer por separado: `pᵏ` es la
+probabilidad de los k éxitos, `(1−p)ⁿ⁻ᵏ` la de los fracasos restantes, y `C(n,k)` cuenta
+de cuántas maneras distintas pueden ordenarse. Esa combinatoria es la de la parte 04.
+
+La media `np` y la varianza `np(1−p)` salen sin esfuerzo de la linealidad de la esperanza
+y de la aditividad de la varianza bajo independencia: la binomial es una suma de `n`
+Bernoullis. Este es el ejemplo más limpio de por qué esas dos propiedades merecían clases
+propias.
+
+Las condiciones importan. Si los ensayos no son independientes, o si `p` cambia entre
+ellos, la binomial no aplica: extraer cartas sin reposición da una hipergeométrica, no una
+binomial. En aprendizaje automático la Bernoulli aparece como salida de toda regresión
+logística, y su log-verosimilitud negativa **es** la entropía cruzada binaria.
+
+## 🧮 Ejemplo trabajado
+
+Diez ensayos con probabilidad de éxito 0,3.
+
+```text
+n = 10,  p = 0,3
+
+media teórica     = np       = 3,0
+varianza teórica  = np(1−p)  = 2,1
+
+P(X = 3) = C(10,3) · 0,3³ · 0,7⁷
+         = 120 · 0,027 · 0,0823543
+         = 0,266828
+
+simulación con 10⁵ réplicas:  media 2,99145         ✓
+
+Var máxima de un Bernoulli: p = 0,5 → 0,25
+Var con p = 0,3            → 0,21
+Var con p = 0,01           → 0,0099
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 192
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Aplicar la binomial a ensayos dependientes o con p variable.
+2. Olvidar el coeficiente combinatorio y calcular solo pᵏ(1−p)ⁿ⁻ᵏ.
+3. Confundir el número de ensayos n con el número de éxitos k.
+
+## 🚀 Dónde se usa de verdad
+
+Tests A/B, tasas de conversión, control de calidad por muestreo, salida de regresión
+logística y entropía cruzada binaria.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 3](https://projects.iq.harvard.edu/stat110/home)
+- [Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

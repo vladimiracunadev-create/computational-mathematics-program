@@ -1,0 +1,1341 @@
+part: "10"
+titulo: "Estadística e inferencia"
+
+resumen_extendido: |
+  La probabilidad va de la causa al efecto: dado un modelo, ¿qué datos son plausibles? La
+  estadística recorre el camino inverso: dados unos datos, ¿qué modelo los explica y con cuánta
+  confianza? Esa inversión es más difícil, más frágil y más fácil de hacer mal, y es donde se
+  pierde la mayor parte de la credibilidad de los resultados publicados.
+
+  Las clases 201 a 204 preparan el terreno. La estadística descriptiva resume; el muestreo
+  condiciona todo lo que vendrá después. La lección más cara está en la clase 202: **el sesgo
+  de selección no se corrige con más datos**. Una muestra sesgada de un millón de personas es
+  peor que una muestra aleatoria de mil, porque el error sistemático no se diluye al crecer n,
+  y encima la mayor precisión hace más convincente la conclusión equivocada.
+
+  Las clases 205 a 209 son el núcleo de la inferencia frecuentista y contienen los tres errores
+  de interpretación más extendidos de toda la ciencia aplicada. Un intervalo de confianza del
+  95 % **no** dice que el parámetro esté ahí con probabilidad 0,95: describe un procedimiento
+  que, repetido muchas veces, atrapa el parámetro el 95 % de las veces. Un p-value **no** es la
+  probabilidad de que la hipótesis nula sea cierta: es la probabilidad de ver datos así de
+  extremos si la nula fuera cierta. Y un resultado no significativo en un estudio sin potencia
+  declarada **no significa nada**: no distingue entre «no hay efecto» y «no había datos
+  suficientes para verlo».
+
+  Las clases 210 a 214 son las pruebas de trabajo: t-test para medias, chi-cuadrado para tablas
+  de contingencia, ANOVA para varios grupos y regresión lineal con su lectura estadística. Cada
+  una tiene supuestos, y aplicarlas sin comprobarlos es la forma habitual de producir p-values
+  que no significan lo que parece. La clase 213 se dedica entera a la confusión más famosa:
+  correlación no implica causalidad, y un confusor basta para fabricar una correlación fuerte
+  entre dos variables que no se tocan.
+
+  Las clases 215 a 218 introducen el punto de vista de la verosimilitud y el bayesiano. La
+  máxima verosimilitud es el principio que fundamenta casi toda función de pérdida en
+  aprendizaje automático; MAP le añade un prior, y ese prior **es** la regularización. La
+  inferencia bayesiana devuelve una distribución entera sobre el parámetro, y su intervalo
+  creíble sí admite la lectura probabilística que el intervalo de confianza no admite. El
+  bootstrap cierra el bloque con una idea casi tramposa por lo simple: remuestrear los propios
+  datos para estimar la variabilidad, sin suponer ninguna distribución poblacional.
+
+  El cierre (219 y 220) baja a la práctica: A/B testing con tamaño muestral calculado de
+  antemano, y un estudio completo, reproducible, con semilla fija, intervalos declarados y
+  limitaciones explícitas. Esa disciplina —fijar el análisis antes de ver los datos, reportar la
+  incertidumbre, corregir por comparaciones múltiples y declarar lo que el estudio no puede
+  concluir— es lo que separa un resultado de una anécdota con números.
+
+  Para quien viene de la inteligencia artificial, esta parte es la que enseña a **evaluar**.
+  Comparar dos modelos por su exactitud puntual sin intervalo de confianza, elegir la mejor
+  configuración entre veinte y reportar su rendimiento sin corregir por selección, o medir sobre
+  datos que participaron en el ajuste, son exactamente los errores que esta parte nombra y
+  desarma.
+
+mapa: |
+  flowchart TD
+      A["Clases 201-204 · Descriptiva, muestreo y estimadores"] --> B["Clases 205-206 · Intervalos y pruebas de hipotesis"]
+      B --> C["Clases 207-209 · p-value, errores y potencia"]
+      C --> D["Clases 210-212 · t-test, chi-cuadrado y ANOVA"]
+      C --> E["Clases 213-214 · Causalidad y regresion"]
+      D --> F["Clases 215-217 · Verosimilitud, MAP y bayesiana"]
+      E --> F
+      F --> G["Clases 218-219 · Bootstrap y A/B testing"]
+      G --> H["Clase 220 · Capstone estudio reproducible"]
+      F ==> I["Parte 14 · Perdidas por maxima verosimilitud"]
+      C -.-> J["Evaluacion honesta de modelos · Parte 14"]
+      F -.-> K["Inferencia variacional · Parte 17"]
+
+glosario:
+  - termino: "Media, mediana y moda"
+    definicion: "Tres medidas de centro. La mediana resiste valores extremos; la media no."
+    clase: "201"
+  - termino: "Rango intercuartílico"
+    definicion: "Q3 − Q1. Dispersión robusta que ignora el 25 % de cada cola."
+    clase: "201"
+  - termino: "Asimetría"
+    definicion: "Sesgo de la distribución. Con cola derecha la media supera a la mediana."
+    clase: "201"
+  - termino: "Sesgo de selección"
+    definicion: "La muestra no representa a la población. No se corrige aumentando el tamaño."
+    clase: "202"
+  - termino: "Sesgo del superviviente"
+    definicion: "Analizar solo los casos que llegaron al final, ignorando los que desaparecieron."
+    clase: "202"
+  - termino: "Distribución muestral"
+    definicion: "Distribución de un estadístico al repetir el muestreo. Es el objeto que hace posible inferir."
+    clase: "203"
+  - termino: "Error estándar"
+    definicion: "Desviación típica de un estimador. Para la media vale σ/√n."
+    clase: "203"
+  - termino: "Estimador insesgado"
+    definicion: "Aquel cuya esperanza coincide con el parámetro. No implica que sea bueno."
+    clase: "204"
+  - termino: "Consistencia"
+    definicion: "El estimador converge al parámetro cuando n crece. Es una garantía asintótica."
+    clase: "204"
+  - termino: "Intervalo de confianza"
+    definicion: "Procedimiento que, repetido, contiene el parámetro en el 95 % de los casos. No es una probabilidad del parámetro."
+    clase: "205"
+  - termino: "Hipótesis nula"
+    definicion: "Enunciado de ausencia de efecto que se somete a prueba. Nunca se acepta, solo se rechaza o no."
+    clase: "206"
+  - termino: "Estadístico de contraste"
+    definicion: "Número calculado de la muestra cuya distribución bajo H0 se conoce."
+    clase: "206"
+  - termino: "p-value"
+    definicion: "P(estadístico tan o más extremo | H0 cierta). Nunca es P(H0 | datos)."
+    clase: "207"
+  - termino: "p-hacking"
+    definicion: "Probar variantes de análisis hasta obtener p < 0,05. Invalida el significado del p-value."
+    clase: "207"
+  - termino: "Error tipo I"
+    definicion: "Rechazar una H0 verdadera. Su tasa es α, elegida de antemano."
+    clase: "208"
+  - termino: "Error tipo II"
+    definicion: "No rechazar una H0 falsa. Su tasa es β y depende del tamaño del efecto y de n."
+    clase: "208"
+  - termino: "Potencia"
+    definicion: "1 − β. Probabilidad de detectar un efecto real. Sin ella, un no significativo no informa."
+    clase: "209"
+  - termino: "Tamaño del efecto"
+    definicion: "Magnitud de la diferencia en unidades de desviación, como la d de Cohen. Independiente de n."
+    clase: "209"
+  - termino: "t de Student"
+    definicion: "Contraste de medias con varianza desconocida. Sus colas son más pesadas que las de la normal."
+    clase: "210"
+  - termino: "Grados de libertad"
+    definicion: "Número de valores libres tras imponer las restricciones del modelo."
+    clase: "210"
+  - termino: "Chi-cuadrado"
+    definicion: "Contraste que compara frecuencias observadas con esperadas en una tabla."
+    clase: "211"
+  - termino: "Tabla de contingencia"
+    definicion: "Recuento cruzado de dos variables categóricas."
+    clase: "211"
+  - termino: "ANOVA"
+    definicion: "Compara varias medias descomponiendo la variabilidad entre grupos y dentro de ellos."
+    clase: "212"
+  - termino: "Comparaciones múltiples"
+    definicion: "Al hacer k contrastes, la probabilidad de algún falso positivo crece; exige corrección."
+    clase: "212"
+  - termino: "Variable de confusión"
+    definicion: "Causa común de dos variables que genera correlación sin relación causal directa."
+    clase: "213"
+  - termino: "Aleatorización"
+    definicion: "Asignar el tratamiento al azar para romper la influencia de confusores conocidos y desconocidos."
+    clase: "213"
+  - termino: "Coeficiente de determinación"
+    definicion: "R². Proporción de la variabilidad explicada por el modelo. Un R² alto no valida el modelo."
+    clase: "214"
+  - termino: "Residuo"
+    definicion: "Diferencia entre valor observado y predicho. Su patrón revela los fallos del modelo."
+    clase: "214"
+  - termino: "Máxima verosimilitud"
+    definicion: "Elegir el parámetro que hace más probables los datos observados."
+    clase: "215"
+  - termino: "Log-verosimilitud"
+    definicion: "Logaritmo de la verosimilitud. Convierte productos en sumas y evita el subdesbordamiento."
+    clase: "215"
+  - termino: "Estimación MAP"
+    definicion: "Máximo de la posterior: verosimilitud por prior. El prior actúa como regularización."
+    clase: "216"
+  - termino: "Intervalo creíble"
+    definicion: "Región que contiene el parámetro con probabilidad dada bajo la posterior. Sí es una probabilidad del parámetro."
+    clase: "217"
+  - termino: "Prior conjugado"
+    definicion: "Prior cuya posterior pertenece a la misma familia. Beta es conjugado de la binomial."
+    clase: "217"
+  - termino: "Bootstrap"
+    definicion: "Remuestrear con reposición los propios datos para estimar la variabilidad de un estadístico."
+    clase: "218"
+  - termino: "Lift"
+    definicion: "Mejora relativa de la variante frente al control en un experimento."
+    clase: "219"
+  - termino: "Preinscripción del análisis"
+    definicion: "Fijar hipótesis, métrica y tamaño muestral antes de recoger datos. Bloquea el p-hacking."
+    clase: "220"
+
+clases:
+  "201":
+    concepto: "Centro, dispersión y forma responden preguntas distintas y ninguna basta sola."
+    formulas:
+      - "media = Σxᵢ / n;  mediana = valor central ordenado"
+      - "IQR = Q3 − Q1;  σ = √(Σ(xᵢ − x̄)²/n)"
+      - "con cola derecha: media > mediana"
+    desarrollo: |
+      Resumir un conjunto de datos exige responder tres preguntas independientes: dónde está el
+      centro, cuánto se dispersan los valores y qué forma tiene la distribución. Dar solo la
+      media es responder una de tres, y muchas veces la menos informativa.
+
+      Para el centro hay tres candidatos con propiedades distintas. La **media** usa todos los
+      valores y por eso un solo dato extremo la arrastra. La **mediana** solo mira la posición
+      central y es robusta: cambiar el máximo por uno diez veces mayor no la mueve. La **moda**
+      es la única que sirve para variables categóricas. Que los salarios se reporten por mediana
+      y no por media no es casualidad.
+
+      Para la dispersión, la desviación estándar es la medida clásica y el **rango
+      intercuartílico** la robusta. El IQR ignora el 25 % de cada cola y es la base del criterio
+      de valores atípicos por diagrama de caja: fuera de `Q1 − 1,5·IQR` y `Q3 + 1,5·IQR`.
+
+      La **forma** es lo que más se olvida. La relación entre media y mediana delata la
+      asimetría: si la media supera a la mediana, hay cola a la derecha. Y distribuciones
+      radicalmente distintas pueden compartir media y desviación: el cuarteto de Anscombe y el
+      Datasaurus son la demostración visual de que resumir sin graficar es peligroso.
+    ejemplo: |
+      Veinte mediciones: centro, dispersión y forma.
+
+      ```text
+      n = 20
+
+      media               = 12,6050
+      mediana             = 12,6500     media < mediana → ligera cola izquierda
+      desviación estándar =  0,8630
+      rango               =  3,2000
+      Q1                  = 11,9250
+      Q3                  = 13,2000
+      IQR                 =  1,2750
+
+      Límites de atípicos (criterio 1,5·IQR):
+        inferior: 11,925 − 1,9125 = 10,0125
+        superior: 13,200 + 1,9125 = 15,1125
+        ningún dato queda fuera
+
+      Sensibilidad: si el máximo pasara de 14,2 a 30,0
+        media   → 13,395   (sube un 6,3 %)
+        mediana → 12,650   (no cambia)
+      ```
+    errores:
+      - "Reportar la media de una distribución muy asimétrica sin la mediana."
+      - "Confundir dispersión con error: son cosas distintas."
+      - "Resumir sin graficar y perder la forma de los datos."
+    aplicacion: |
+      Exploración inicial de cualquier conjunto de datos, informes de latencia por percentiles,
+      detección de atípicos y control de calidad.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 7](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Tukey, J. *Exploratory Data Analysis*, Addison-Wesley, 1977](https://archive.org/details/exploratorydataa0000tuke)"
+
+  "202":
+    concepto: "El sesgo de selección no se corrige con más datos: solo se vuelve más convincente."
+    formulas:
+      - "error total = sesgo + error aleatorio"
+      - "el error aleatorio ~ 1/√n; el sesgo no depende de n"
+      - "muestra aleatoria simple: toda unidad con igual probabilidad"
+    desarrollo: |
+      Toda inferencia se apoya en un supuesto que rara vez se enuncia: que la muestra representa
+      a la población. Cuando ese supuesto falla, ninguna técnica posterior lo arregla. La
+      estadística sofisticada aplicada a una muestra sesgada produce conclusiones sofisticadas y
+      falsas.
+
+      La clave está en distinguir dos fuentes de error. El **error aleatorio** viene de que la
+      muestra es finita y decae como `1/√n`: más datos lo reducen. El **sesgo** viene de que el
+      mecanismo de selección favorece a ciertos individuos, y es **constante en n**: más datos
+      no lo tocan. Peor aún, reducen el error aleatorio y estrechan el intervalo, dando más
+      confianza a un número equivocado.
+
+      Los ejemplos históricos son elocuentes. La encuesta del *Literary Digest* de 1936 recogió
+      2,4 millones de respuestas y predijo mal las elecciones, porque muestreó de listas de
+      propietarios de teléfono y automóvil. Gallup acertó con 50 000 respuestas bien muestreadas.
+      El **sesgo del superviviente** es la variante más traicionera: estudiar solo empresas que
+      siguen existiendo, aviones que volvieron o usuarios que no abandonaron.
+
+      La defensa es de diseño, no de análisis: **aleatorizar la selección**. Cuando no es
+      posible, hay que declarar el mecanismo de selección y razonar explícitamente sobre a qué
+      población se puede extrapolar. En aprendizaje automático el mismo problema aparece como
+      desplazamiento de distribución entre los datos de entrenamiento y los de producción.
+    ejemplo: |
+      Misma población, dos mecanismos de muestreo.
+
+      ```text
+      población: 10 000 individuos,  media real = 50,02
+
+      muestra aleatoria (n = 500)
+        media = 49,83        error = 0,20
+
+      muestra sesgada (n = 500, favorece valores altos)
+        media = 61,36        error = 11,34        57 veces peor
+
+      Aumentar el sesgado a n = 5 000:
+        error aleatorio ↓        el sesgo se mantiene en ≈ 11
+        el intervalo se estrecha alrededor del valor equivocado
+
+      Conclusión: 500 datos bien muestreados baten a 5 000 mal muestreados.
+      ```
+    errores:
+      - "Creer que un n enorme compensa un muestreo defectuoso."
+      - "Extrapolar de una muestra de conveniencia a la población general."
+      - "Analizar solo los casos que sobrevivieron hasta el final del periodo."
+    aplicacion: |
+      Diseño de encuestas, construcción de conjuntos de entrenamiento, auditoría de sesgo en
+      modelos y detección de desplazamiento de distribución en producción.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Meng, X.-L. *Statistical paradises and paradoxes in big data*, Annals of Applied Statistics, 2018](https://doi.org/10.1214/18-AOAS1161SF)"
+
+  "203":
+    concepto: "El estadístico también tiene distribución, y esa distribución es la que permite inferir."
+    formulas:
+      - "x̄ ~ Normal(μ, σ²/n)  para n grande"
+      - "SE = σ/√n"
+      - "n × 4  ⟹  SE / 2"
+    desarrollo: |
+      La idea que abre la inferencia es un cambio de nivel: si se repitiera el muestreo muchas
+      veces, cada muestra daría una media distinta, y esas medias tienen su propia distribución.
+      Esa es la **distribución muestral**, y es el objeto sobre el que se construyen intervalos y
+      contrastes.
+
+      Su desviación estándar recibe el nombre de **error estándar** para distinguirla de la
+      desviación de los datos. Son cantidades distintas que se confunden constantemente: `σ`
+      dice cuánto varía una observación individual, `σ/√n` cuánto varía la estimación de la
+      media. Con `n = 100` difieren por un factor 10.
+
+      La forma de esa distribución la garantiza el teorema central del límite de la clase 197:
+      es aproximadamente normal aunque la población no lo sea. Por eso las mismas fórmulas
+      funcionan para datos de origen muy variado, y por eso la normal aparece en todas partes en
+      estadística sin que nadie suponga que los datos son normales.
+
+      La raíz cuadrada tiene consecuencias económicas directas. Reducir a la mitad el error
+      exige **cuadruplicar** el tamaño muestral, y eso normalmente significa cuadruplicar el
+      coste del experimento. Saber esto antes de diseñar un estudio evita descubrir a mitad de
+      camino que el presupuesto no alcanza para la precisión prometida.
+    ejemplo: |
+      Muestras de una población normal de media 50 y desviación 10.
+
+      ```text
+      población: Normal(50, 10)
+
+         n     media de medias   SE observado   SE teórico σ/√n
+         5         49,9483          4,4782          4,4721
+        20         50,0142          2,2380          2,2361
+        80         49,9911          1,1145          1,1180
+       320         50,0037          0,5581          0,5590
+
+      La media de las medias acierta siempre; lo que cambia es la dispersión.
+
+      n de 5 a 20  → ×4  → SE de 4,47 a 2,24  → mitad         ✓
+      n de 20 a 80 → ×4  → SE de 2,24 a 1,11  → mitad         ✓
+      ```
+    errores:
+      - "Usar la desviación de los datos donde corresponde el error estándar."
+      - "Suponer que un n mayor cambia la media esperada del estimador."
+      - "Ignorar que reducir el error a la mitad cuadruplica el coste."
+    aplicacion: |
+      Dimensionado de experimentos, barras de error en gráficos, comparación de métricas entre
+      modelos y control de precisión en simulaciones.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 5](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)"
+
+  "204":
+    concepto: "Insesgado no significa bueno: hay que mirar también la varianza."
+    formulas:
+      - "sesgo(θ̂) = E[θ̂] − θ"
+      - "ECM = sesgo² + varianza"
+      - "consistencia: θ̂ₙ → θ cuando n → ∞"
+    desarrollo: |
+      Un **estimador** es una receta para calcular un parámetro desconocido a partir de la
+      muestra. Como depende de datos aleatorios, es él mismo una variable aleatoria, y se juzga
+      por las propiedades de su distribución: sesgo, varianza y comportamiento asintótico.
+
+      El **sesgo** mide si el estimador acierta en promedio. Dividir entre `n` al calcular la
+      varianza muestral produce un estimador sesgado a la baja, porque las desviaciones se miden
+      respecto de una media ajustada a los propios datos; dividir entre `n−1` corrige ese sesgo.
+      Es la corrección de Bessel de la clase 190, vista ahora desde la teoría de estimación.
+
+      Pero insesgado no equivale a bueno. El **error cuadrático medio** se descompone en
+      `sesgo² + varianza`, y hay estimadores sesgados con ECM mucho menor que el insesgado. Toda
+      la regularización en aprendizaje automático se apoya en ese intercambio: introducir sesgo
+      a cambio de reducir varianza. Es la misma descomposición sesgo-varianza que reaparecerá en
+      la parte 14.
+
+      La **consistencia** es la garantía mínima que se le pide a un estimador: converger al
+      parámetro cuando los datos crecen. Es una propiedad asintótica y no dice nada sobre el
+      comportamiento con la muestra que realmente se tiene, que suele ser pequeña y es donde el
+      sesgo y la varianza deciden.
+    ejemplo: |
+      Dos estimadores de la varianza con muestras de tamaño 8.
+
+      ```text
+      varianza real = 25,0        n = 8      10 000 réplicas
+
+      estimador dividiendo entre n:
+        E[σ̂²] = 21,7438        sesgo = −3,2562    (−13 %)
+
+      estimador dividiendo entre n−1:
+        E[s²]  = 24,8501        sesgo = −0,1499    (−0,6 %)
+
+      Factor de corrección teórico: (n−1)/n = 7/8 = 0,875
+        21,7438 / 0,875 = 24,85                              ✓
+
+      Con n = 100 el sesgo del primero baja al 1 %: ambos son
+      consistentes, pero solo el segundo es insesgado.
+      ```
+    errores:
+      - "Elegir un estimador solo por ser insesgado, sin mirar su varianza."
+      - "Confiar en garantías asintóticas con muestras pequeñas."
+      - "Confundir el estimador, que es aleatorio, con la estimación concreta obtenida."
+    aplicacion: |
+      Regularización como sesgo deliberado, estimación de varianza en normalización, evaluación
+      de estimadores de gradiente y elección entre modelos simples y complejos.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002](https://www.cengage.com/)"
+
+  "205":
+    concepto: "El 95 % de un intervalo de confianza es una propiedad del procedimiento, no del parámetro."
+    formulas:
+      - "IC 95 % ≈ x̄ ± 1,96·(s/√n)"
+      - "cobertura: proporción de intervalos que contienen θ al repetir el estudio"
+      - "amplitud ∝ 1/√n"
+    desarrollo: |
+      La frase «hay un 95 % de probabilidad de que el parámetro esté en el intervalo» es
+      incorrecta en el marco frecuentista, y es probablemente la frase mal dicha con más
+      frecuencia en toda la ciencia aplicada. El parámetro es un número fijo: o está en el
+      intervalo o no está, y no hay probabilidad en ello.
+
+      Lo que es aleatorio es el **intervalo**, porque se calcula a partir de datos aleatorios. La
+      afirmación correcta es sobre el procedimiento: si se repitiera el estudio muchas veces,
+      alrededor del 95 % de los intervalos construidos así contendrían el parámetro. El 95 % es
+      una tasa de acierto a largo plazo del método, no una creencia sobre este caso concreto.
+
+      La distinción no es pedantería. Cambia lo que se puede concluir, y explica por qué existe
+      el **intervalo creíble** bayesiano de la clase 217, que sí admite la lectura
+      probabilística directa porque parte de tratar el parámetro como variable aleatoria. Ambos
+      son legítimos; lo ilegítimo es dar la interpretación de uno al otro.
+
+      La cobertura real puede quedarse por debajo de la nominal cuando los supuestos fallan:
+      muestras pequeñas, poblaciones muy asimétricas o uso de la normal donde correspondía la t.
+      Un intervalo del 95 % que en simulación cubre el 93 % está informando de que el modelo es
+      aproximado, y conviene reportarlo en vez de esconderlo.
+    ejemplo: |
+      Cobertura simulada de intervalos al 95 %.
+
+      ```text
+      3 000 réplicas del estudio completo
+
+        intervalos que contienen el parámetro: 2 791
+        cobertura observada: 93,03 %
+        cobertura nominal:   95,00 %
+
+      Un intervalo concreto (n = 20):
+        media  = 12,6050
+        SE     =  0,1930
+        IC 95% = (12,2268 , 12,9832)      amplitud 0,7564
+
+      Lectura correcta:
+        "el procedimiento acierta el 95 % de las veces"
+      Lectura incorrecta:
+        "hay un 95 % de probabilidad de que μ esté aquí"
+
+      Con n = 80 la amplitud bajaría a la mitad: 0,378.
+      ```
+    errores:
+      - "Leer el 95 % como probabilidad sobre el parámetro."
+      - "Concluir que no hay efecto porque el intervalo contiene el cero."
+      - "Ignorar que la cobertura real depende de que se cumplan los supuestos."
+    aplicacion: |
+      Reporte de métricas de modelos, comparación de tratamientos, estimación de tasas de
+      conversión y cualquier resultado que deba comunicarse con incertidumbre.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Morey, R. et al. *The fallacy of placing confidence in confidence intervals*, Psychonomic Bulletin, 2016](https://doi.org/10.3758/s13423-015-0947-8)"
+
+  "206":
+    concepto: "Una prueba de hipótesis nunca acepta la nula: solo la rechaza o se queda sin evidencia."
+    formulas:
+      - "H0: μ = μ₀   frente a   H1: μ ≠ μ₀"
+      - "z = (x̄ − μ₀) / (s/√n)"
+      - "rechazar si |z| > z_{α/2}  ó  p < α"
+    desarrollo: |
+      Una prueba de hipótesis es un procedimiento de decisión con una estructura fija que
+      conviene ejecutar siempre en el mismo orden: enunciar H0 y H1, fijar `α`, elegir el
+      estadístico, calcular su valor y su p-value, y decidir. Fijar `α` **antes** de ver los
+      datos no es un formalismo: es lo único que impide ajustar el umbral al resultado.
+
+      La lógica es la de la reducción al absurdo probabilística. Se supone H0 cierta, se calcula
+      cuán raros serían los datos observados bajo ese supuesto, y si son suficientemente raros
+      se rechaza H0. Lo que no se puede hacer es el paso simétrico: no rechazar **no** demuestra
+      que H0 sea cierta, igual que no encontrar pruebas no demuestra inocencia.
+
+      Por eso el vocabulario correcto es «no se rechaza H0», nunca «se acepta H0». Un resultado
+      no significativo es compatible con dos escenarios muy distintos: que no haya efecto, o que
+      el estudio no tuviera potencia para detectarlo. Distinguirlos exige la clase 209.
+
+      La decisión también depende de si el contraste es de **una o dos colas**. La versión de dos
+      colas contrasta «distinto de», la de una cola «mayor que» y reparte todo `α` en un lado.
+      Cambiar a una cola después de ver la dirección del efecto duplica de hecho la tasa de
+      falsos positivos, y es una de las formas más comunes de p-hacking.
+    ejemplo: |
+      Contraste bilateral sobre una media con n = 20.
+
+      ```text
+      H0: μ = 12,0        H1: μ ≠ 12,0        α = 0,05
+
+      media muestral  = 12,6050
+      error estándar  =  0,1930
+      z = (12,6050 − 12,0) / 0,1930 = 3,1353
+
+      valor crítico bilateral: ±1,96
+      |3,1353| > 1,96   →  se rechaza H0
+
+      p-value = 2·P(Z > 3,1353) = 0,00172
+
+      Redacción correcta:
+        "se rechaza H0 al 5 %; la media difiere de 12,0"
+      Redacción incorrecta:
+        "queda demostrado que μ = 12,605"
+      ```
+    errores:
+      - "Escribir «se acepta H0» ante un resultado no significativo."
+      - "Elegir α después de ver el p-value."
+      - "Pasar a una cola tras conocer la dirección del efecto."
+    aplicacion: |
+      Comparación de modelos, validación de cambios en producción, control de calidad y ensayos
+      clínicos.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002, cap. 8](https://www.cengage.com/)"
+
+  "207":
+    concepto: "El p-value mide la rareza de los datos bajo H0, no la probabilidad de que H0 sea cierta."
+    formulas:
+      - "p = P(estadístico tan o más extremo | H0 cierta)"
+      - "p ≠ P(H0 | datos)"
+      - "bajo H0, el p-value se distribuye Uniforme(0,1)"
+    desarrollo: |
+      El p-value responde a una pregunta muy concreta: **si la hipótesis nula fuera cierta**,
+      ¿con qué frecuencia se verían datos al menos tan extremos como los observados? Es una
+      probabilidad condicionada a H0, no una probabilidad **de** H0. Esa inversión ilegítima es
+      la misma falacia del fiscal de la clase 186, aplicada a la práctica científica.
+
+      Hay un hecho que aclara todo lo demás: **bajo H0, el p-value es uniforme en el intervalo
+      unitario**. Cualquier valor es igual de probable. Por eso rechazar con `p < 0,05` produce
+      exactamente un 5 % de falsos positivos cuando no hay ningún efecto; el umbral no es
+      mágico, es simplemente la fracción de la uniforme que se decide sacrificar.
+
+      De la uniformidad se deduce el mecanismo del **p-hacking**. Si se prueban 20 análisis
+      distintos sobre datos sin efecto, la probabilidad de que alguno baje de 0,05 es
+      `1 − 0,95²⁰ ≈ 64 %`. Probar variantes, subgrupos, transformaciones o momentos de parada
+      hasta obtener significancia no es análisis exploratorio: es fabricar resultados. La defensa
+      es preinscribir el análisis y corregir por comparaciones múltiples.
+
+      Y hay una última confusión, independiente de las anteriores: **significancia no es
+      relevancia**. Con n suficientemente grande, cualquier diferencia por minúscula que sea
+      resulta significativa. Un p-value pequeño dice que el efecto probablemente no es cero; no
+      dice que importe. Por eso hay que reportar siempre el tamaño del efecto y su intervalo.
+    ejemplo: |
+      Distribución del p-value cuando no hay efecto alguno.
+
+      ```text
+      100 000 experimentos simulados con H0 cierta
+
+        media de los p-values          = 0,49789    ≈ 0,5 (uniforme)
+        proporción con p < 0,05        = 0,05750    ≈ 5 %
+        proporción con p < 0,01        = 0,01417    ≈ 1 %
+
+      El 5 % de los estudios "encuentra" un efecto inexistente.
+
+      Comparaciones múltiples sin corrección:
+        k = 1    P(algún falso positivo) = 5 %
+        k = 5                            = 23 %
+        k = 20                           = 64 %
+        k = 100                          = 99,4 %
+
+      Corrección de Bonferroni: usar α/k en cada contraste.
+      ```
+    errores:
+      - "Leer p = 0,03 como «hay un 3 % de probabilidad de que H0 sea cierta»."
+      - "Probar múltiples análisis y reportar solo el significativo."
+      - "Confundir significancia estadística con importancia práctica."
+    aplicacion: |
+      Interpretación de literatura científica, evaluación de experimentos A/B, comparación de
+      modelos y auditoría de resultados publicados.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Wasserstein, R.; Lazar, N. *The ASA statement on p-values*, The American Statistician, 2016](https://doi.org/10.1080/00031305.2016.1154108)"
+
+  "208":
+    concepto: "Bajar la tasa de falsos positivos sube la de falsos negativos: el compromiso es inevitable."
+    formulas:
+      - "α = P(rechazar H0 | H0 cierta)   error tipo I"
+      - "β = P(no rechazar H0 | H0 falsa)  error tipo II"
+      - "potencia = 1 − β"
+    desarrollo: |
+      Toda prueba puede fallar de dos maneras. El **error tipo I** es una falsa alarma: rechazar
+      una nula que era cierta. El **error tipo II** es un fallo de detección: no rechazar una
+      nula que era falsa. Sus tasas se llaman `α` y `β`, y no se pueden minimizar ambas a la vez
+      con una muestra fija.
+
+      La razón es geométrica. Mover el umbral de decisión hacia la derecha reduce las falsas
+      alarmas y aumenta los fallos de detección; moverlo hacia la izquierda hace lo contrario. Es
+      exactamente el mismo compromiso que en clasificación entre precisión y exhaustividad, y la
+      curva ROC es su representación gráfica.
+
+      Cuál de los dos errores duele más es una decisión **del dominio, no de la estadística**. En
+      un cribado de cáncer un falso negativo es mucho peor que un falso positivo, y conviene un
+      `α` alto. En un juicio penal la asimetría es la opuesta. El convenio de `α = 0,05` es una
+      herencia histórica de Fisher, no un resultado matemático, y en física de partículas se usa
+      un umbral equivalente a cinco sigmas.
+
+      La única forma de reducir ambos errores simultáneamente es **aumentar el tamaño muestral**,
+      porque estrecha las distribuciones y reduce su solapamiento. Ese es el contenido de la
+      clase siguiente y la razón por la que el cálculo de potencia debe hacerse antes de recoger
+      datos.
+    ejemplo: |
+      Tasas observadas con α nominal 0,05 y un efecto real de media desviación.
+
+      ```text
+      Bajo H0 cierta (efecto nulo):
+        tasa de error tipo I observada = 0,0683      ≈ α
+
+      Bajo H1 cierta (efecto d = 0,5):
+        tasa de error tipo II (β)      = 0,2083
+        potencia (1 − β)               = 0,7917
+
+      Compromiso al mover el umbral:
+           α        β       potencia
+        0,100    0,133      0,867
+        0,050    0,208      0,792
+        0,010    0,392      0,608
+        0,001    0,616      0,384
+
+      Bajar α diez veces casi duplica β. Solo subir n mejora ambos.
+      ```
+    errores:
+      - "Bajar α sin comprobar qué le pasa a la potencia."
+      - "Tratar α = 0,05 como una constante universal."
+      - "Ignorar cuál de los dos errores es más costoso en el dominio concreto."
+    aplicacion: |
+      Umbrales de clasificadores, sistemas de alerta, cribado médico, detección de fraude y
+      criterios de parada en monitorización.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Cohen, J. *Statistical Power Analysis for the Behavioral Sciences*, 2ª ed., Routledge, 1988](https://doi.org/10.4324/9780203771587)"
+
+  "209":
+    concepto: "Sin potencia declarada, un resultado no significativo no distingue entre no hay efecto y no hay datos."
+    formulas:
+      - "potencia = 1 − β = P(rechazar H0 | H1 cierta)"
+      - "d de Cohen = (μ₁ − μ₀) / σ"
+      - "n ≈ 16/d²  para 80 % de potencia con α = 0,05"
+    desarrollo: |
+      La potencia es la probabilidad de detectar un efecto que realmente existe. Depende de tres
+      cosas: el tamaño del efecto, el nivel `α` y el tamaño muestral. Fijadas las dos primeras,
+      es el `n` el que decide, y por eso el cálculo de potencia es un paso de **diseño**, no de
+      análisis.
+
+      Un estudio con potencia baja tiene un problema doble, y el segundo es el que casi nadie
+      menciona. El primero es obvio: probablemente no detectará el efecto. El segundo es más
+      grave: **si lo detecta, la magnitud estimada estará inflada**, porque solo las muestras
+      con desviación favorable superan el umbral. Es el fenómeno de la maldición del ganador, y
+      explica buena parte de la crisis de replicación.
+
+      El **tamaño del efecto** —la d de Cohen, la diferencia en unidades de desviación— es la
+      pieza que hay que estimar antes de empezar, a partir de literatura previa o de un estudio
+      piloto. Es independiente de `n`, a diferencia del p-value, y es lo que debe reportarse
+      junto a la significancia.
+
+      La regla práctica `n ≈ 16/d²` da el orden de magnitud para un 80 % de potencia. Detectar un
+      efecto mediano necesita unas 64 observaciones por grupo; detectar uno pequeño de `d = 0,2`
+      necesita unas 400. Descubrir eso al terminar el experimento, y no al planificarlo, es
+      descubrir que el estudio nunca pudo concluir nada.
+    ejemplo: |
+      Potencia frente a tamaño muestral con efecto d = 0,5 y α = 0,05.
+
+      ```text
+      d = 0,5      α = 0,05
+
+           n      potencia
+          10       0,3526
+          30       0,7819
+          64       0,9666
+         100       0,9963
+
+      n necesario para 80 % de potencia: 32 por grupo
+      regla práctica 16/d² = 16/0,25 = 64 (conservadora, dos grupos)
+
+      Con n = 10 y resultado no significativo:
+        la probabilidad de detectar el efecto era del 35 %
+        no rechazar no informa casi nada
+
+      Efectos pequeños (d = 0,2) exigen n ≈ 400 por grupo.
+      ```
+    errores:
+      - "Calcular la potencia después del experimento en vez de antes."
+      - "Interpretar un no significativo de un estudio pequeño como ausencia de efecto."
+      - "Confiar en la magnitud estimada de un efecto detectado con potencia baja."
+    aplicacion: |
+      Planificación de experimentos A/B, dimensionado de ensayos clínicos, diseño de estudios de
+      usabilidad y evaluación de si una comparación de modelos puede concluir algo.
+    referencias:
+      - "[Cohen, J. *Statistical Power Analysis for the Behavioral Sciences*, 2ª ed., Routledge, 1988](https://doi.org/10.4324/9780203771587)"
+      - "[Button, K. et al. *Power failure: why small sample size undermines the reliability of neuroscience*, Nature Reviews Neuroscience, 2013](https://doi.org/10.1038/nrn3475)"
+
+  "210":
+    concepto: "La t de Student compara medias cuando la varianza poblacional es desconocida."
+    formulas:
+      - "t = (x̄₁ − x̄₂) / (s_p·√(1/n₁ + 1/n₂))"
+      - "s_p² = ((n₁−1)s₁² + (n₂−1)s₂²) / (n₁+n₂−2)"
+      - "gl = n₁ + n₂ − 2"
+    desarrollo: |
+      Cuando se compara la media de dos grupos y no se conoce la varianza poblacional, sustituir
+      `σ` por su estimación introduce incertidumbre adicional. La distribución t la absorbe con
+      colas más pesadas que la normal: para el mismo nivel de confianza exige valores más
+      extremos, y esa penalización se relaja al crecer los grados de libertad.
+
+      El estadístico tiene una lectura directa: es la diferencia observada dividida entre el
+      ruido esperado de esa diferencia. Un `t` de 2,7 significa que los grupos están separados
+      por 2,7 veces la incertidumbre de la medición, lo cual es difícil de explicar por azar.
+
+      La versión clásica supone **normalidad aproximada, independencia y varianzas similares**.
+      La normalidad es la menos crítica gracias al TCL; la independencia es la más crítica y la
+      más violada, típicamente con medidas repetidas del mismo sujeto, que exigen la versión
+      pareada. Con varianzas muy distintas se usa la corrección de Welch, que es hoy el valor por
+      defecto en la mayoría de bibliotecas.
+
+      El t-test da un p-value, pero lo que hay que reportar es la **diferencia con su intervalo
+      de confianza**. «Los grupos difieren en 11,3 puntos, IC 95 % [2,9 , 19,6]» comunica
+      magnitud y precisión; «p = 0,009» solo comunica que la diferencia no es cero.
+    ejemplo: |
+      Dos grupos independientes de 25 observaciones cada uno.
+
+      ```text
+      grupo A: media  94,2816
+      grupo B: media 105,5441
+      diferencia      11,2626
+
+      desviación combinada s_p = 14,6574
+      SE de la diferencia = 14,6574·√(1/25 + 1/25) = 4,1457
+
+      t = 11,2626 / 4,1457 = 2,7167       gl = 48
+
+      valor crítico bilateral al 5 %: ±2,011
+      |2,7167| > 2,011  →  se rechaza H0
+      p ≈ 0,0091
+
+      IC 95 % de la diferencia:
+        11,2626 ± 2,011 × 4,1457 = (2,926 , 19,600)
+
+      Reportar el intervalo, no solo el p-value.
+      ```
+    errores:
+      - "Aplicar el test independiente a medidas pareadas."
+      - "Ignorar varianzas muy dispares en vez de usar Welch."
+      - "Reportar solo el p-value y omitir la diferencia y su intervalo."
+    aplicacion: |
+      Comparación de dos variantes en A/B testing, contraste de métricas entre dos modelos,
+      ensayos clínicos de dos brazos y estudios de rendimiento antes y después.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Student. *The probable error of a mean*, Biometrika, 1908](https://doi.org/10.2307/2331554)"
+
+  "211":
+    concepto: "Chi-cuadrado compara frecuencias observadas con las esperadas bajo independencia."
+    formulas:
+      - "χ² = Σ (O − E)² / E"
+      - "E_ij = (total fila i × total columna j) / n"
+      - "gl = (filas − 1)·(columnas − 1)"
+    desarrollo: |
+      Cuando las dos variables son categóricas, la comparación de medias no aplica y el
+      instrumento natural es la **tabla de contingencia**: el recuento cruzado de categorías. La
+      pregunta es si la distribución de una variable cambia según el valor de la otra, es decir,
+      si son independientes.
+
+      La tabla **esperada** bajo independencia se construye con la regla del producto de la clase
+      185: si las variables fueran independientes, la proporción conjunta sería el producto de
+      las marginales, y multiplicando por `n` se obtiene la frecuencia esperada de cada celda. El
+      estadístico suma las discrepancias al cuadrado normalizadas por lo esperado.
+
+      Normalizar por `E` es esencial: una diferencia de 5 en una celda donde se esperaban 10 es
+      enorme, y en una donde se esperaban 1000 es ruido. Los grados de libertad,
+      `(f−1)·(c−1)`, cuentan cuántas celdas quedan libres una vez fijados los totales marginales.
+
+      El test tiene dos condiciones prácticas. Trabaja con **frecuencias absolutas**, nunca con
+      porcentajes: aplicarlo a porcentajes convierte cualquier tabla en una de n = 100 y falsea
+      el resultado. Y exige frecuencias esperadas razonables —la regla habitual es al menos 5 por
+      celda—; con celdas pequeñas corresponde el test exacto de Fisher.
+    ejemplo: |
+      Tabla 2×2 con 100 observaciones.
+
+      ```text
+      observado          C1    C2   | total
+        F1               30    20   |  50
+        F2               15    35   |  50
+      -----------------------------------
+        total            45    55   | 100
+
+      esperado bajo independencia  E = fila × columna / n
+        F1: 50·45/100 = 22,5     50·55/100 = 27,5
+        F2: 22,5                 27,5
+
+      χ² = (30−22,5)²/22,5 + (20−27,5)²/27,5
+         + (15−22,5)²/22,5 + (35−27,5)²/27,5
+         = 2,5 + 2,045 + 2,5 + 2,045 = 9,0909
+
+      gl = (2−1)(2−1) = 1        valor crítico al 5 % = 3,841
+      9,0909 > 3,841  →  se rechaza la independencia
+      p ≈ 0,0026
+      ```
+    errores:
+      - "Aplicar el test a porcentajes en vez de a recuentos."
+      - "Usarlo con frecuencias esperadas menores que 5."
+      - "Concluir causalidad a partir de una asociación significativa."
+    aplicacion: |
+      Análisis de encuestas, matrices de confusión, comparación de tasas por segmento y
+      detección de asociación entre variables categóricas.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Agresti, A. *Categorical Data Analysis*, 3ª ed., Wiley, 2013](https://doi.org/10.1002/9780470594001)"
+
+  "212":
+    concepto: "ANOVA compara varias medias a la vez sin inflar la tasa de falsos positivos."
+    formulas:
+      - "SS_total = SS_entre + SS_dentro"
+      - "F = (SS_entre/gl_entre) / (SS_dentro/gl_dentro)"
+      - "k grupos ⟹ C(k,2) comparaciones por pares"
+    desarrollo: |
+      Con tres o más grupos, hacer todos los t-tests por pares infla la tasa de falsos positivos:
+      con 3 grupos son 3 comparaciones y la probabilidad de alguna falsa alarma sube del 5 % al
+      14 %; con 5 grupos son 10 comparaciones y sube al 40 %. ANOVA resuelve el problema con un
+      único contraste global.
+
+      Su mecanismo es una **descomposición de la variabilidad**, y es la misma idea del teorema
+      de Pitágoras aplicada a sumas de cuadrados. La variación total de los datos respecto de la
+      gran media se parte exactamente en dos: la variación **entre** grupos, que refleja las
+      diferencias de medias, y la variación **dentro** de cada grupo, que es ruido.
+
+      El estadístico `F` es el cociente entre ambas, cada una dividida por sus grados de
+      libertad. Si los grupos no difieren, ambas estiman la misma varianza y `F` ronda 1. Si
+      difieren, la variación entre grupos crece y `F` se dispara. El nombre honra a Fisher, que
+      lo desarrolló para experimentos agrícolas.
+
+      ANOVA solo dice **si hay alguna diferencia**, no cuál. Para localizarla hacen falta
+      contrastes posteriores con corrección —Tukey, Bonferroni o Holm—, y hacerlos sin corregir
+      devuelve el problema al punto de partida. Los supuestos son los del t-test extendidos:
+      independencia, normalidad aproximada y homogeneidad de varianzas.
+    ejemplo: |
+      Tres grupos, descomposición completa de la variabilidad.
+
+      ```text
+      medias de los grupos: 51,0576   54,4184   56,2285
+      gran media: 53,9015
+
+      SS_entre  =   275,3983      gl = k − 1  = 2
+      SS_dentro = 1 610,7534      gl = n − k  = 57
+      SS_total  = 1 886,1516      comprobación: 275,40 + 1610,75 ✓
+
+      MS_entre  = 275,3983 / 2  = 137,699
+      MS_dentro = 1610,7534 / 57 =  28,259
+
+      F = 137,699 / 28,259 = 4,873
+      valor crítico F(2,57) al 5 % ≈ 3,16
+      4,873 > 3,16  →  al menos un grupo difiere      p ≈ 0,011
+
+      Inflación sin ANOVA:
+        3 t-tests sin corregir → P(falso positivo) ≈ 14 %
+      ```
+    errores:
+      - "Encadenar t-tests por pares sin corregir el nivel."
+      - "Concluir qué grupo difiere a partir del F global."
+      - "Aplicar ANOVA con varianzas muy dispares entre grupos."
+    aplicacion: |
+      Comparación de más de dos variantes en un experimento, evaluación de varias
+      configuraciones de modelo, diseño factorial y estudios multicentro.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Fisher, R. A. *The Design of Experiments*, Oliver & Boyd, 1935](https://archive.org/details/in.ernet.dli.2015.502684)"
+
+  "213":
+    concepto: "Un confusor basta para fabricar correlación fuerte entre variables que no se tocan."
+    formulas:
+      - "corr(X,Y) alta ⇏ X → Y"
+      - "confusor Z: Z → X y Z → Y"
+      - "aleatorizar la asignación rompe todas las flechas hacia el tratamiento"
+    desarrollo: |
+      Que dos variables se muevan juntas admite al menos cuatro explicaciones distintas: X causa
+      Y, Y causa X, una tercera variable Z causa ambas, o es coincidencia en una muestra pequeña.
+      La correlación no distingue entre ellas, y elegir la primera por defecto es el error de
+      interpretación más caro de la estadística aplicada.
+
+      El caso escolar —venta de helados y ahogamientos— tiene la estructura completa. Ambas
+      variables suben con la temperatura, y por eso correlacionan entre sí sin que ninguna cause
+      la otra. La **variable de confusión** es la temperatura, y basta condicionar sobre ella
+      para que la asociación se desvanezca.
+
+      Hay dos formas de romper el problema. La primera es **aleatorizar**: si el tratamiento se
+      asigna al azar, ninguna variable previa —ni las conocidas ni las que se ignoran— puede
+      influir en quién lo recibe, y la diferencia observada sí admite lectura causal. Es la razón
+      de ser del ensayo controlado aleatorizado. La segunda es **controlar** los confusores
+      conocidos mediante estratificación o regresión, con la limitación evidente de que solo
+      funciona con los que se han identificado.
+
+      La inferencia causal moderna —grafos causales, criterio de puerta trasera, contrafactuales—
+      formaliza cuándo un ajuste es válido y cuándo introduce sesgo nuevo. Un resultado
+      contraintuitivo: controlar por una variable equivocada, como un colisionador, **crea**
+      asociación espuria en vez de eliminarla. Ajustar por todo lo disponible no es una
+      estrategia segura.
+    ejemplo: |
+      Helados, ahogamientos y temperatura.
+
+      ```text
+      corr(helados, ahogamientos)   = 0,5759
+      corr(temperatura, helados)    = 0,9205
+      corr(temperatura, ahogamientos) = 0,6306
+
+      Estructura causal real:
+        temperatura → helados
+        temperatura → ahogamientos
+        helados     ↛ ahogamientos
+
+      Al condicionar sobre temperatura, la correlación
+      entre helados y ahogamientos se desvanece.
+
+      Prohibir el helado no reduciría ni un ahogamiento.
+
+      Detección:
+        aleatorizar la asignación, o
+        controlar explícitamente el confusor.
+      ```
+    errores:
+      - "Leer una correlación fuerte como evidencia causal."
+      - "Controlar por todas las variables disponibles sin criterio."
+      - "Olvidar que la causalidad inversa explica igual de bien los datos observacionales."
+    aplicacion: |
+      Evaluación de campañas y políticas, atribución de conversiones, análisis de sesgo en
+      modelos y diseño de experimentos controlados.
+    referencias:
+      - "[Pearl, J.; Mackenzie, D. *The Book of Why*, Basic Books, 2018](https://bayes.cs.ucla.edu/WHY/)"
+      - "[Hernán, M.; Robins, J. *Causal Inference: What If*, CRC, 2020](https://miguelhernan.org/whatifbook)"
+
+  "214":
+    concepto: "Un R² alto no valida el modelo: los residuos son los que lo hacen."
+    formulas:
+      - "ŷ = b₀ + b₁x,   b₁ = Σ(x−x̄)(y−ȳ) / Σ(x−x̄)²"
+      - "R² = 1 − SS_res / SS_tot"
+      - "t = b₁ / SE(b₁),  gl = n − 2"
+    desarrollo: |
+      La regresión lineal ajusta la recta que minimiza la suma de residuos al cuadrado. Vista
+      desde el álgebra lineal es la proyección de la parte 05; vista desde la estadística, cada
+      coeficiente es un **estimador** con su error estándar, su intervalo de confianza y su
+      contraste de significancia.
+
+      El **coeficiente de determinación** `R²` mide qué fracción de la variabilidad de `y`
+      explica el modelo. Es útil pero se sobreinterpreta: un `R²` alto no garantiza que el
+      modelo sea correcto, ni que la relación sea causal, ni que sirva para predecir fuera del
+      rango observado. Añadir variables sin sentido siempre sube el `R²`, y por eso existe el
+      `R²` ajustado.
+
+      Lo que sí valida el modelo son los **residuos**. Deben aparecer sin estructura: sin
+      curvatura —que indicaría relación no lineal—, sin embudo —que indicaría varianza no
+      constante— y sin patrón temporal —que indicaría dependencia—. El cuarteto de Anscombe
+      construye cuatro conjuntos con idénticos coeficientes y `R²` de los que solo uno merece una
+      recta.
+
+      La significancia de la pendiente contrasta `H0: b₁ = 0`, es decir, que `x` no aporta nada.
+      Como en toda la parte, lo que hay que reportar es la pendiente con su intervalo: dice
+      cuánto cambia `y` por unidad de `x` y con qué precisión, que es la información útil para
+      decidir.
+    ejemplo: |
+      Ocho puntos con relación casi perfectamente lineal.
+
+      ```text
+      n = 8
+
+      intercepto b₀ = 0,1750
+      pendiente  b₁ = 1,9917
+
+      R² = 0,998227           SS_residual = 0,295833
+      SE(b₁) = 0,034263
+
+      t = 1,9917 / 0,034263 = 58,13     gl = 6
+      p < 0,0001   →  la pendiente es claramente distinta de cero
+
+      IC 95 % de la pendiente:
+        1,9917 ± 2,447 × 0,034263 = (1,9078 , 2,0755)
+
+      Lectura: cada unidad de x aumenta y en ≈ 1,99, con
+      una precisión de ±0,08. Eso es lo que hay que reportar.
+      ```
+    errores:
+      - "Validar el modelo solo por el R² sin mirar los residuos."
+      - "Extrapolar fuera del rango de los datos observados."
+      - "Leer la pendiente como efecto causal en datos observacionales."
+    aplicacion: |
+      Modelos base en aprendizaje automático, análisis de tendencias, calibración de
+      instrumentos y estimación de elasticidades.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 13](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Anscombe, F. J. *Graphs in statistical analysis*, The American Statistician, 1973](https://doi.org/10.1080/00031305.1973.10478966)"
+
+  "215":
+    concepto: "La máxima verosimilitud elige el parámetro que hace más probables los datos observados."
+    formulas:
+      - "L(θ) = Π f(xᵢ | θ)"
+      - "ℓ(θ) = Σ log f(xᵢ | θ)"
+      - "para la normal: μ̂ = x̄,  σ̂² = Σ(xᵢ − x̄)²/n"
+    desarrollo: |
+      La máxima verosimilitud invierte la pregunta habitual. En vez de fijar el parámetro y
+      preguntar qué datos son probables, fija los datos observados y pregunta qué valor del
+      parámetro los habría hecho más probables. Ese valor es el estimador MLE.
+
+      Se trabaja siempre con el **logaritmo** de la verosimilitud, por dos razones. La primera es
+      algebraica: convierte productos en sumas y las derivadas se vuelven manejables. La segunda
+      es numérica y decisiva: multiplicar mil densidades menores que 1 produce subdesbordamiento
+      a cero en punto flotante, mientras que sumar mil logaritmos no tiene ese problema. Es la
+      misma lección de la parte 01.
+
+      Para la normal el resultado es especialmente limpio: el MLE de la media es la media
+      muestral, y el de la varianza es la versión que divide entre `n`, que es sesgada. Eso ya
+      dice algo importante: el MLE **no tiene por qué ser insesgado**, aunque sí es consistente y
+      asintóticamente eficiente bajo condiciones de regularidad.
+
+      El vínculo con el aprendizaje automático es de identidad, no de analogía. Minimizar el
+      error cuadrático medio **es** maximizar la verosimilitud bajo ruido gaussiano; minimizar la
+      entropía cruzada **es** maximizar la verosimilitud bajo un modelo categórico. Las funciones
+      de pérdida no se inventan: se derivan del modelo probabilístico que se supone para los
+      datos.
+    ejemplo: |
+      Ajuste normal por máxima verosimilitud sobre 20 observaciones.
+
+      ```text
+      n = 20
+
+      μ̂ (MLE) = 12,6050        coincide con la media muestral
+      σ̂ (MLE) =  0,8411        divide entre n, no entre n−1
+
+      log-verosimilitud máxima = −24,9182
+
+      Barrido en μ manteniendo σ̂:
+        μ = 11,61   →  ℓ = −39,0530
+        μ = 12,11   →  ℓ = −28,4519
+        μ = 12,61   →  ℓ = −24,9182     ← máximo
+        μ = 13,11   →  ℓ = −28,4519
+        μ = 13,61   →  ℓ = −39,0530
+
+      La curva es simétrica y su máximo cae en la media muestral.
+      Su curvatura en el máximo determina la precisión del estimador.
+      ```
+    errores:
+      - "Multiplicar verosimilitudes en vez de sumar logaritmos."
+      - "Suponer que el MLE es insesgado."
+      - "Comparar verosimilitudes de modelos con distinto número de parámetros sin penalizar."
+    aplicacion: |
+      Derivación de funciones de pérdida, ajuste de modelos paramétricos, criterios AIC y BIC y
+      entrenamiento de modelos generativos.
+    referencias:
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 9](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+      - "[Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)"
+
+  "216":
+    concepto: "MAP es verosimilitud más prior, y ese prior es exactamente la regularización."
+    formulas:
+      - "θ_MAP = argmax [ log L(θ) + log p(θ) ]"
+      - "prior uniforme ⟹ MAP = MLE"
+      - "prior gaussiano ⟹ penalización L2;  prior Laplace ⟹ L1"
+    desarrollo: |
+      La estimación MAP añade a la verosimilitud una creencia previa sobre el parámetro y
+      maximiza la posterior. Formalmente es un cambio pequeño —sumar `log p(θ)` al objetivo—
+      pero cambia el comportamiento del estimador cuando hay pocos datos, que es justo cuando
+      hace falta ayuda.
+
+      La equivalencia con la **regularización** es exacta y merece verse una vez con detalle. Un
+      prior gaussiano centrado en cero aporta un término `−λ‖θ‖²` al objetivo, que es la
+      penalización L2 o *weight decay*. Un prior de Laplace aporta `−λ‖θ‖₁`, que es Lasso y
+      produce soluciones dispersas. Regularizar no es un truco de ingeniería: es declarar una
+      creencia previa.
+
+      El comportamiento asintótico es el esperado: al crecer `n`, la verosimilitud domina y el
+      MAP converge al MLE. El prior importa cuando la evidencia es escasa, se diluye cuando
+      abunda, y desaparece por completo si es uniforme. Esa es la respuesta a la objeción de que
+      el prior contamina el resultado.
+
+      La diferencia con la inferencia bayesiana completa de la clase siguiente es que MAP se
+      queda con un **punto**: el máximo de la posterior. Es rápido y encaja con cualquier
+      optimizador, pero descarta toda la información sobre incertidumbre. Y en dimensión alta el
+      máximo puede estar en una región de probabilidad casi nula, lo que hace de MAP un resumen
+      engañoso de la posterior.
+    ejemplo: |
+      Prior sesgado hacia 0,8 frente a un parámetro real de 0,4.
+
+      ```text
+      parámetro real = 0,40      prior = Beta(8,2), centrado en 0,8
+
+           n     MLE      MAP     distancia MAP al real
+           5   0,6000   0,7692        0,3692
+          20   0,4500   0,5357        0,1357
+         100   0,4100   0,4340        0,0340
+        1000   0,4030   0,4055        0,0055
+
+      Con n = 5 el prior domina y empeora la estimación.
+      Con n = 1000 el prior es irrelevante: MAP → MLE.
+
+      Equivalencias:
+        prior uniforme   →  MAP = MLE
+        prior gaussiano  →  regularización L2
+        prior Laplace    →  regularización L1
+      ```
+    errores:
+      - "Usar un prior fuerte con pocos datos y presentar el resultado como empírico."
+      - "Creer que MAP resume bien la posterior en dimensión alta."
+      - "No declarar el prior elegido al reportar una estimación MAP."
+    aplicacion: |
+      Weight decay y Lasso, suavizado de Laplace en modelos de lenguaje, estimación con datos
+      escasos y calibración con conocimiento del dominio.
+    referencias:
+      - "[Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 3](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "217":
+    concepto: "El intervalo creíble sí admite la lectura probabilística que el de confianza no admite."
+    formulas:
+      - "p(θ | datos) ∝ p(datos | θ)·p(θ)"
+      - "Beta(a,b) + k éxitos en n ⟹ Beta(a+k, b+n−k)"
+      - "intervalo creíble al 95 %: región con masa posterior 0,95"
+    desarrollo: |
+      La inferencia bayesiana trata el parámetro como una variable aleatoria y devuelve su
+      **distribución completa** dada la evidencia. No un punto con una barra de error, sino una
+      función que asigna plausibilidad a cada valor posible. De ella se leen la media, la moda,
+      la desviación y cualquier intervalo que interese.
+
+      Esa diferencia de objeto produce una diferencia de interpretación. El **intervalo creíble**
+      al 95 % contiene el parámetro con probabilidad 0,95 **según la posterior**, y esa es
+      exactamente la frase que no se podía decir del intervalo de confianza en la clase 205. La
+      lectura intuitiva que todo el mundo quiere hacer es correcta aquí, y solo aquí.
+
+      La **conjugación** hace el cálculo trivial en casos favorables. Con prior Beta y
+      verosimilitud binomial, la posterior es Beta con parámetros actualizados: sumar los éxitos
+      a `a` y los fracasos a `b`. Un prior `Beta(1,1)` es uniforme y representa ignorancia
+      previa; con él, la media posterior es `(k+1)/(n+2)`, la regla de sucesión de Laplace.
+
+      Lo que el enfoque exige a cambio es **declarar el prior**. Esa exigencia se presenta a veces
+      como debilidad, pero es transparencia: todo análisis incorpora supuestos, y el bayesiano
+      obliga a escribirlos. La crítica seria no es filosófica sino computacional: fuera de los
+      casos conjugados la posterior no tiene forma cerrada y hay que recurrir a MCMC o a
+      inferencia variacional, que es adonde llega la parte 17.
+    ejemplo: |
+      Prior uniforme y evidencia creciente sobre un parámetro real de 0,62.
+
+      ```text
+      parámetro real = 0,62      prior = Beta(1,1) = uniforme
+
+         n    posterior        media     desv.
+         0    Beta(1,1)       0,5000    0,2887
+        10    Beta(7,5)       0,5833    0,1370
+        50    Beta(32,20)     0,6154    0,0669
+       200    Beta(125,77)    0,6188    0,0340
+      1000    Beta(621,381)   0,6198    0,0153
+
+      La media se acerca al valor real y la desviación cae como 1/√n.
+
+      Intervalo creíble al 95 % con n = 1000:
+        aproximadamente (0,590 , 0,650)
+
+      Lectura legítima:
+        "hay un 95 % de probabilidad de que θ esté ahí"
+      Esa frase sería incorrecta para un intervalo de confianza.
+      ```
+    errores:
+      - "No declarar el prior utilizado."
+      - "Tratar intervalo creíble e intervalo de confianza como sinónimos."
+      - "Actualizar dos veces con la misma evidencia."
+    aplicacion: |
+      Tests A/B bayesianos, bandidos multibrazo, cuantificación de incertidumbre en modelos y
+      estimación con datos escasos.
+    referencias:
+      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)"
+      - "[McElreath, R. *Statistical Rethinking*, 2ª ed., CRC, 2020](https://xcelab.net/rm/statistical-rethinking/)"
+
+  "218":
+    concepto: "El bootstrap estima la variabilidad remuestreando los datos, sin suponer distribución."
+    formulas:
+      - "remuestrear n observaciones con reposición, B veces"
+      - "SE_bootstrap = desviación estándar de las B réplicas"
+      - "IC percentil: cuantiles 2,5 % y 97,5 % de las réplicas"
+    desarrollo: |
+      El bootstrap parte de una idea que suena a trampa: usar la muestra como si fuera la
+      población. Se extraen `B` muestras del mismo tamaño **con reposición** de los datos
+      originales, se calcula el estadístico en cada una, y la dispersión de esas `B` réplicas
+      estima la variabilidad del estadístico.
+
+      Su valor está en que funciona para estadísticos **sin fórmula cerrada**. Para la media
+      existe `σ/√n`, pero para la mediana, el percentil 95, la razón de dos medias, el
+      coeficiente de correlación o una métrica de evaluación de un modelo, deducir el error
+      estándar analíticamente es difícil o imposible. El bootstrap lo obtiene igual en todos los
+      casos, cambiando análisis por cómputo.
+
+      El **intervalo percentil** se lee directamente de los cuantiles de las réplicas, sin
+      suponer normalidad ni simetría. Con distribuciones asimétricas produce intervalos
+      asimétricos, que es lo correcto, mientras que el intervalo `±1,96·SE` fuerza simetría
+      aunque los datos no la tengan.
+
+      No es magia y tiene límites claros. Sigue exigiendo que la muestra sea representativa —el
+      bootstrap no arregla el sesgo de selección de la clase 202— y falla con estadísticos de
+      valores extremos, como el máximo, porque el remuestreo no puede generar valores que no
+      estaban. Con datos dependientes hay que usar variantes por bloques.
+    ejemplo: |
+      Bootstrap de la media con 20 observaciones y 10 000 réplicas.
+
+      ```text
+      n = 20        B = 10 000
+      media observada = 12,6050
+
+      SE bootstrap = 0,188371
+      SE teórico   = 0,192965        coinciden al 2 %      ✓
+
+      IC 95 % percentil: (12,235 , 12,980)
+      IC 95 % paramétrico: (12,227 , 12,983)
+
+      Ventaja real: la mediana no tiene fórmula sencilla de SE,
+      y el bootstrap la da con el mismo procedimiento.
+
+      Límite: para el máximo el bootstrap subestima gravemente
+      la variabilidad, porque nunca genera valores nuevos.
+      ```
+    errores:
+      - "Remuestrear sin reposición: se recupera siempre la muestra original."
+      - "Usarlo con estadísticos de extremos como máximos o mínimos."
+      - "Creer que corrige un muestreo sesgado."
+    aplicacion: |
+      Intervalos de confianza para métricas de modelos, comparación de algoritmos, estimación de
+      incertidumbre en estadísticos complejos y bagging.
+    referencias:
+      - "[Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*, Chapman & Hall, 1993](https://doi.org/10.1201/9780429246593)"
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 8](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+
+  "219":
+    concepto: "Un A/B test se diseña antes de recogerlo: tamaño muestral, métrica y criterio de parada."
+    formulas:
+      - "z = (p̂_B − p̂_A) / √(p̂(1−p̂)(1/n_A + 1/n_B))"
+      - "lift relativo = (p_B − p_A) / p_A"
+      - "n por grupo ≈ 16·p(1−p) / Δ²  para 80 % de potencia"
+    desarrollo: |
+      Un A/B test es un ensayo controlado aleatorizado aplicado a producto. La aleatorización es
+      lo que le da valor causal: si la asignación al grupo es al azar, las diferencias
+      observadas se atribuyen al cambio y no a características previas de los usuarios. Sin
+      aleatorización es un estudio observacional con todos los confusores de la clase 213.
+
+      Tres decisiones deben tomarse **antes** de recoger datos: la métrica principal, el tamaño
+      del efecto mínimo relevante, y el tamaño muestral que da potencia suficiente para
+      detectarlo. Sin esas tres, el experimento no puede concluir nada aunque se ejecute
+      perfectamente.
+
+      El error operativo más destructivo es el **peeking**: mirar el resultado a diario y parar
+      cuando aparece `p < 0,05`. Ese procedimiento multiplica la tasa de falsos positivos por
+      tres o más, porque da múltiples oportunidades de cruzar el umbral por azar. Las soluciones
+      son fijar la duración de antemano o usar métodos de parada secuencial diseñados para ello.
+
+      Y hay que separar significancia de relevancia. Un lift del 17 % con `p = 0,0098` es un
+      resultado sólido; el mismo `p` con un lift del 0,3 % puede no justificar el coste del
+      cambio. Lo que se decide no es si el efecto es distinto de cero, sino si merece la pena, y
+      para eso hace falta el intervalo del efecto, no el p-value.
+    ejemplo: |
+      Experimento de conversión con 4 000 usuarios por grupo.
+
+      ```text
+      grupo A (control):    conversión 0,10350
+      grupo B (variante):   conversión 0,12175
+      diferencia absoluta:  0,01825
+      lift relativo:        17,63 %
+
+      n por grupo = 4 000
+      proporción combinada p̂ = 0,112625
+      SE = √(0,112625 · 0,887375 · (1/4000 + 1/4000)) = 0,007070
+
+      z = 0,01825 / 0,007070 = 2,5817
+      p = 0,00983     →  significativo al 5 %
+
+      IC 95 % de la diferencia:
+        0,01825 ± 1,96 × 0,007070 = (0,00439 , 0,03211)
+        lift entre 4,2 % y 31,0 %
+
+      Peeking diario durante 14 días sin corrección:
+        tasa real de falsos positivos ≈ 20 %, no 5 %.
+      ```
+    errores:
+      - "Parar el experimento en cuanto el p-value baja de 0,05."
+      - "Cambiar la métrica principal después de ver los resultados."
+      - "Confundir significancia con impacto suficiente para justificar el cambio."
+    aplicacion: |
+      Experimentación de producto, comparación de modelos en producción, optimización de
+      conversión y despliegues progresivos.
+    referencias:
+      - "[Kohavi, R.; Tang, D.; Xu, Y. *Trustworthy Online Controlled Experiments*, Cambridge, 2020](https://experimentguide.com/)"
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+
+  "220":
+    concepto: "Un estudio creíble declara su semilla, su intervalo y lo que no puede concluir."
+    formulas:
+      - "reportar: efecto, IC, n, α, potencia y semilla"
+      - "IC paramétrico frente a IC bootstrap como comprobación cruzada"
+      - "d de Cohen = diferencia / desviación combinada"
+    desarrollo: |
+      El capstone ejecuta un estudio completo con la disciplina de la parte entera: diseño de
+      dos grupos independientes, semilla fija, análisis decidido de antemano, y reporte que
+      incluye tanto lo que se concluye como lo que no. El objetivo no es obtener un resultado
+      llamativo sino uno **defendible**.
+
+      La **reproducibilidad** empieza por la semilla. Un análisis que no se puede reejecutar y
+      obtener los mismos números no es verificable, y no serlo es un defecto tan grave como un
+      error de cálculo. Fijar la semilla, versionar los datos y dejar el código ejecutable es lo
+      mínimo exigible.
+
+      El reporte debe llevar el **efecto con su intervalo**, no solo el p-value. Y conviene
+      calcular el intervalo por dos vías —paramétrica y bootstrap— porque su coincidencia es
+      evidencia de que los supuestos se sostienen, y su discrepancia es una señal de alarma que
+      merece investigarse antes de publicar.
+
+      Por último, un estudio honesto **declara sus límites**: la población a la que se puede
+      extrapolar, los supuestos que se han hecho, las comparaciones que se han realizado y las
+      preguntas que este diseño no puede responder. Escribir esa sección obliga a mirar las
+      debilidades, y esa mirada es lo que separa el análisis del marketing con números.
+    ejemplo: |
+      Estudio de dos grupos con n = 60 por brazo, semilla fija.
+
+      ```text
+      semilla = 20260827
+      diseño: dos grupos independientes, n = 60 cada uno
+
+      media control      = 73,1961
+      media tratamiento  = 75,2439
+      diferencia         =  2,0478
+
+      IC 95 % paramétrico: (−0,9648 , 5,0604)
+      IC 95 % bootstrap:   (−0,9531 , 5,0442)      coinciden   ✓
+
+      El intervalo contiene el cero → no se rechaza H0.
+      p ≈ 0,18       d de Cohen ≈ 0,25 (efecto pequeño)
+
+      Potencia para d = 0,25 con n = 60 por grupo: ≈ 30 %
+      → el estudio no tenía potencia para detectarlo
+
+      Conclusión honesta: no hay evidencia suficiente; el diseño
+      no permite descartar un efecto de hasta 5 puntos.
+      ```
+    errores:
+      - "Publicar sin semilla ni código ejecutable."
+      - "Reportar el p-value sin el tamaño del efecto ni su intervalo."
+      - "Omitir la sección de limitaciones y las comparaciones realizadas."
+    aplicacion: |
+      Informes técnicos, tarjetas de modelo, publicaciones científicas, auditorías internas y
+      documentación de experimentos de producto.
+    referencias:
+      - "[Kohavi, R.; Tang, D.; Xu, Y. *Trustworthy Online Controlled Experiments*, Cambridge, 2020](https://experimentguide.com/)"
+      - "[Wilson, G. et al. *Good enough practices in scientific computing*, PLOS Computational Biology, 2017](https://doi.org/10.1371/journal.pcbi.1005510)"

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**El bootstrap estima la variabilidad remuestreando los datos, sin suponer distribución.**
 
-Esta clase concreta ese objetivo sobre **Bootstrap y remuestreo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bootstrap`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: evaluar sobre datos que participaron en la selección del modelo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+remuestrear n observaciones con reposición, B veces
+SE_bootstrap = desviación estándar de las B réplicas
+IC percentil: cuantiles 2,5 % y 97,5 % de las réplicas
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Sin potencia declarada, un resultado no significativo no dice nada.
+El bootstrap parte de una idea que suena a trampa: usar la muestra como si fuera la
+población. Se extraen `B` muestras del mismo tamaño **con reposición** de los datos
+originales, se calcula el estadístico en cada una, y la dispersión de esas `B` réplicas
+estima la variabilidad del estadístico.
+
+Su valor está en que funciona para estadísticos **sin fórmula cerrada**. Para la media
+existe `σ/√n`, pero para la mediana, el percentil 95, la razón de dos medias, el
+coeficiente de correlación o una métrica de evaluación de un modelo, deducir el error
+estándar analíticamente es difícil o imposible. El bootstrap lo obtiene igual en todos los
+casos, cambiando análisis por cómputo.
+
+El **intervalo percentil** se lee directamente de los cuantiles de las réplicas, sin
+suponer normalidad ni simetría. Con distribuciones asimétricas produce intervalos
+asimétricos, que es lo correcto, mientras que el intervalo `±1,96·SE` fuerza simetría
+aunque los datos no la tengan.
+
+No es magia y tiene límites claros. Sigue exigiendo que la muestra sea representativa —el
+bootstrap no arregla el sesgo de selección de la clase 202— y falla con estadísticos de
+valores extremos, como el máximo, porque el remuestreo no puede generar valores que no
+estaban. Con datos dependientes hay que usar variantes por bloques.
+
+## 🧮 Ejemplo trabajado
+
+Bootstrap de la media con 20 observaciones y 10 000 réplicas.
+
+```text
+n = 20        B = 10 000
+media observada = 12,6050
+
+SE bootstrap = 0,188371
+SE teórico   = 0,192965        coinciden al 2 %      ✓
+
+IC 95 % percentil: (12,235 , 12,980)
+IC 95 % paramétrico: (12,227 , 12,983)
+
+Ventaja real: la mediana no tiene fórmula sencilla de SE,
+y el bootstrap la da con el mismo procedimiento.
+
+Límite: para el máximo el bootstrap subestima gravemente
+la variabilidad, porque nunca genera valores nuevos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 218
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Remuestrear sin reposición: se recupera siempre la muestra original.
+2. Usarlo con estadísticos de extremos como máximos o mínimos.
+3. Creer que corrige un muestreo sesgado.
+
+## 🚀 Dónde se usa de verdad
+
+Intervalos de confianza para métricas de modelos, comparación de algoritmos, estimación de
+incertidumbre en estadísticos complejos y bagging.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*, Chapman & Hall, 1993](https://doi.org/10.1201/9780429246593)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 8](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

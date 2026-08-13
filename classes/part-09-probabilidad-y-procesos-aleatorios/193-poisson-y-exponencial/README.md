@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Poisson cuenta eventos raros por intervalo; la exponencial mide el tiempo entre ellos.**
 
-Esta clase concreta ese objetivo sobre **Poisson y exponencial**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `poisson_exponential`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Poisson: P(N=k) = e^(−λ)·λᵏ / k!,  E[N] = Var(N) = λ
+Exponencial: f(t) = λ·e^(−λt),  E[T] = 1/λ
+falta de memoria: P(T > s+t | T > s) = P(T > t)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> El TCL explica por qué la normal aparece incluso sin normalidad de origen.
+La distribución de Poisson describe el número de eventos que ocurren en un intervalo
+cuando esos eventos son independientes y suceden a una tasa media constante `λ`. Surge
+como límite de una binomial con `n` grande y `p` pequeño manteniendo `np = λ`: muchísimas
+oportunidades, cada una muy improbable.
+
+Su firma es que **media y varianza coinciden**, ambas iguales a `λ`. Ese hecho sirve de
+diagnóstico: si en unos datos de conteo la varianza supera claramente a la media, hay
+**sobredispersión** y el modelo de Poisson es inadecuado, normalmente porque la tasa no es
+constante o los eventos se agrupan.
+
+La exponencial es la otra cara del mismo proceso: si los conteos son Poisson con tasa `λ`,
+los **tiempos entre eventos** son exponenciales con media `1/λ`. Tres eventos por hora
+implican una espera media de veinte minutos. Es la misma información contada desde el
+tiempo en vez de desde la cuenta.
+
+La propiedad de **falta de memoria** es lo que hace la exponencial única entre las
+distribuciones continuas: haber esperado ya media hora no acorta la espera restante. Es
+realista para procesos sin desgaste —desintegración radiactiva, llegadas a un servidor— y
+claramente falso para procesos con envejecimiento, donde se usan Weibull o gamma.
+
+## 🧮 Ejemplo trabajado
+
+Tres eventos por hora: conteos y esperas.
+
+```text
+λ = 3 eventos/hora
+
+Poisson:
+  P(N = 0) = e^(−3)              = 0,049787
+  P(N = 3) = e^(−3)·3³ / 3!      = 0,224042
+  E[N] = 3,0      Var(N) = 3,0      iguales      ✓
+
+Exponencial:
+  E[T] = 1/3 hora = 20 minutos
+  P(T > 1 h) = e^(−3) = 0,049787
+
+Coherencia: "ningún evento en 1 hora" es lo mismo que
+"la primera espera supera 1 hora"   →  mismo 0,049787   ✓
+
+Falta de memoria:
+  P(T > 1,5 | T > 0,5) = e^(−3) = P(T > 1)              ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 193
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Modelar conteos sobredispersos con Poisson.
+2. Confundir la tasa λ con la media de la espera, que es 1/λ.
+3. Suponer falta de memoria en procesos con desgaste o envejecimiento.
+
+## 🚀 Dónde se usa de verdad
+
+Colas y capacidad de servidores, llegadas de peticiones, fiabilidad de componentes,
+conteos de defectos y modelos de supervivencia.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 5](https://projects.iq.harvard.edu/stat110/home)
+- [Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019](https://services.math.duke.edu/~rtd/PTE/pte.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Un estudio creíble declara su semilla, su intervalo y lo que no puede concluir.**
 
-Esta clase concreta ese objetivo sobre **Capstone: estudio estadístico reproducible**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_reproducible_study`.
 4. Interpretar las 13 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🧩 Fórmulas de la clase
+
+```text
+reportar: efecto, IC, n, α, potencia y semilla
+IC paramétrico frente a IC bootstrap como comprobación cruzada
+d de Cohen = diferencia / desviación combinada
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> El bootstrap estima la variabilidad sin suponer la distribución poblacional.
+El capstone ejecuta un estudio completo con la disciplina de la parte entera: diseño de
+dos grupos independientes, semilla fija, análisis decidido de antemano, y reporte que
+incluye tanto lo que se concluye como lo que no. El objetivo no es obtener un resultado
+llamativo sino uno **defendible**.
+
+La **reproducibilidad** empieza por la semilla. Un análisis que no se puede reejecutar y
+obtener los mismos números no es verificable, y no serlo es un defecto tan grave como un
+error de cálculo. Fijar la semilla, versionar los datos y dejar el código ejecutable es lo
+mínimo exigible.
+
+El reporte debe llevar el **efecto con su intervalo**, no solo el p-value. Y conviene
+calcular el intervalo por dos vías —paramétrica y bootstrap— porque su coincidencia es
+evidencia de que los supuestos se sostienen, y su discrepancia es una señal de alarma que
+merece investigarse antes de publicar.
+
+Por último, un estudio honesto **declara sus límites**: la población a la que se puede
+extrapolar, los supuestos que se han hecho, las comparaciones que se han realizado y las
+preguntas que este diseño no puede responder. Escribir esa sección obliga a mirar las
+debilidades, y esa mirada es lo que separa el análisis del marketing con números.
+
+## 🧮 Ejemplo trabajado
+
+Estudio de dos grupos con n = 60 por brazo, semilla fija.
+
+```text
+semilla = 20260827
+diseño: dos grupos independientes, n = 60 cada uno
+
+media control      = 73,1961
+media tratamiento  = 75,2439
+diferencia         =  2,0478
+
+IC 95 % paramétrico: (−0,9648 , 5,0604)
+IC 95 % bootstrap:   (−0,9531 , 5,0442)      coinciden   ✓
+
+El intervalo contiene el cero → no se rechaza H0.
+p ≈ 0,18       d de Cohen ≈ 0,25 (efecto pequeño)
+
+Potencia para d = 0,25 con n = 60 por grupo: ≈ 30 %
+→ el estudio no tenía potencia para detectarlo
+
+Conclusión honesta: no hay evidencia suficiente; el diseño
+no permite descartar un efecto de hasta 5 puntos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 220
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Publicar sin semilla ni código ejecutable.
+2. Reportar el p-value sin el tamaño del efecto ni su intervalo.
+3. Omitir la sección de limitaciones y las comparaciones realizadas.
+
+## 🚀 Dónde se usa de verdad
+
+Informes técnicos, tarjetas de modelo, publicaciones científicas, auditorías internas y
+documentación de experimentos de producto.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Kohavi, R.; Tang, D.; Xu, Y. *Trustworthy Online Controlled Experiments*, Cambridge, 2020](https://experimentguide.com/)
+- [Wilson, G. et al. *Good enough practices in scientific computing*, PLOS Computational Biology, 2017](https://doi.org/10.1371/journal.pcbi.1005510)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Un confusor basta para fabricar correlación fuerte entre variables que no se tocan.**
 
-Esta clase concreta ese objetivo sobre **Correlación frente a causalidad**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `correlation_causation`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: p-hacking por comparaciones múltiples sin corrección.
+
+## 🧩 Fórmulas de la clase
+
+```text
+corr(X,Y) alta ⇏ X → Y
+confusor Z: Z → X y Z → Y
+aleatorizar la asignación rompe todas las flechas hacia el tratamiento
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Sin potencia declarada, un resultado no significativo no dice nada.
+Que dos variables se muevan juntas admite al menos cuatro explicaciones distintas: X causa
+Y, Y causa X, una tercera variable Z causa ambas, o es coincidencia en una muestra pequeña.
+La correlación no distingue entre ellas, y elegir la primera por defecto es el error de
+interpretación más caro de la estadística aplicada.
+
+El caso escolar —venta de helados y ahogamientos— tiene la estructura completa. Ambas
+variables suben con la temperatura, y por eso correlacionan entre sí sin que ninguna cause
+la otra. La **variable de confusión** es la temperatura, y basta condicionar sobre ella
+para que la asociación se desvanezca.
+
+Hay dos formas de romper el problema. La primera es **aleatorizar**: si el tratamiento se
+asigna al azar, ninguna variable previa —ni las conocidas ni las que se ignoran— puede
+influir en quién lo recibe, y la diferencia observada sí admite lectura causal. Es la razón
+de ser del ensayo controlado aleatorizado. La segunda es **controlar** los confusores
+conocidos mediante estratificación o regresión, con la limitación evidente de que solo
+funciona con los que se han identificado.
+
+La inferencia causal moderna —grafos causales, criterio de puerta trasera, contrafactuales—
+formaliza cuándo un ajuste es válido y cuándo introduce sesgo nuevo. Un resultado
+contraintuitivo: controlar por una variable equivocada, como un colisionador, **crea**
+asociación espuria en vez de eliminarla. Ajustar por todo lo disponible no es una
+estrategia segura.
+
+## 🧮 Ejemplo trabajado
+
+Helados, ahogamientos y temperatura.
+
+```text
+corr(helados, ahogamientos)   = 0,5759
+corr(temperatura, helados)    = 0,9205
+corr(temperatura, ahogamientos) = 0,6306
+
+Estructura causal real:
+  temperatura → helados
+  temperatura → ahogamientos
+  helados     ↛ ahogamientos
+
+Al condicionar sobre temperatura, la correlación
+entre helados y ahogamientos se desvanece.
+
+Prohibir el helado no reduciría ni un ahogamiento.
+
+Detección:
+  aleatorizar la asignación, o
+  controlar explícitamente el confusor.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 213
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Leer una correlación fuerte como evidencia causal.
+2. Controlar por todas las variables disponibles sin criterio.
+3. Olvidar que la causalidad inversa explica igual de bien los datos observacionales.
+
+## 🚀 Dónde se usa de verdad
+
+Evaluación de campañas y políticas, atribución de conversiones, análisis de sesgo en
+modelos y diseño de experimentos controlados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Pearl, J.; Mackenzie, D. *The Book of Why*, Basic Books, 2018](https://bayes.cs.ucla.edu/WHY/)
+- [Hernán, M.; Robins, J. *Causal Inference: What If*, CRC, 2020](https://miguelhernan.org/whatifbook)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

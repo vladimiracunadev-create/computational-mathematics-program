@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**En una variable continua la densidad no es probabilidad y puede superar 1.**
 
-Esta clase concreta ese objetivo sobre **Variables aleatorias continuas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `continuous_rv`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: ignorar la probabilidad base al interpretar un test positivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+P(a < X ≤ b) = ∫ₐᵇ f(x) dx
+∫ f(x) dx = 1  sobre todo el soporte
+P(X = c) = 0 para todo c
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> El TCL explica por qué la normal aparece incluso sin normalidad de origen.
+Una variable continua toma valores en un intervalo, y ahí ocurre algo que sorprende: la
+probabilidad de **cualquier valor concreto es cero**. No porque sea imposible, sino porque
+hay infinitos valores y la probabilidad total es 1. Lo que tiene probabilidad positiva son
+los intervalos, y se obtiene integrando.
+
+La **función de densidad** `f(x)` no es una probabilidad: es una probabilidad **por unidad
+de x**. Por eso puede valer más de 1 sin contradicción alguna, igual que una velocidad
+puede ser de 100 km/h sin que se recorran 100 km. La exponencial con `λ = 2` tiene
+densidad 2 en el origen, y no hay nada roto.
+
+La cdf sigue siendo `F(x) = P(X ≤ x)`, ahora la integral de la densidad, y sigue siendo la
+forma cómoda de calcular: `P(a < X ≤ b) = F(b) − F(a)`. Como los puntos no aportan
+probabilidad, en el caso continuo da igual usar `<` o `≤`, algo que en el discreto sí
+importa.
+
+La consecuencia práctica más olvidada aparece al comparar modelos: la **verosimilitud** de
+datos continuos es una densidad, no una probabilidad, y por eso puede ser mayor que 1 y su
+logaritmo puede ser positivo. Ver un log-likelihood positivo en un modelo continuo no es
+un error; verlo en uno discreto sí lo es.
+
+## 🧮 Ejemplo trabajado
+
+Exponencial con λ = 2: densidad, probabilidad puntual e intervalos.
+
+```text
+f(x) = 2·e^(−2x)   para x ≥ 0
+F(x) = 1 − e^(−2x)
+
+f(0) = 2,0            densidad > 1, perfectamente válido
+P(X = 0,5) = 0        todo punto tiene probabilidad cero
+
+P(X ≤ 0,5)      = 1 − e^(−1)   = 0,6321
+P(0,5 < X ≤ 1)  = F(1) − F(0,5)
+                = (1 − e^(−2)) − (1 − e^(−1))
+                = 0,8647 − 0,6321 = 0,2325
+
+Comprobación: el área total bajo f es 1.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 188
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Interpretar f(x) como P(X = x).
+2. Alarmarse porque una densidad supera 1.
+3. Arrastrar la distinción entre < y ≤ del caso discreto al continuo.
+
+## 🚀 Dónde se usa de verdad
+
+Modelado de tiempos de espera, verosimilitudes gaussianas, modelos de difusión y todo
+estimador de densidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 5](https://projects.iq.harvard.edu/stat110/home)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 2](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

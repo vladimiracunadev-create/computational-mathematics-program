@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Una cadena de Markov olvida su historia y, si es ergódica, olvida también su inicio.**
 
-Esta clase concreta ese objetivo sobre **Cadenas de Markov**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `markov_chains`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🧩 Fórmulas de la clase
+
+```text
+P(Xₙ₊₁ | Xₙ, …, X₀) = P(Xₙ₊₁ | Xₙ)
+distribución tras n pasos: v·Pⁿ
+estacionaria: πP = π,  con Σπᵢ = 1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Monte Carlo convierge como 1/√n: cuadruplicar muestras solo duplica la precisión.
+Una cadena de Markov es un proceso en el que el futuro depende del presente pero no del
+pasado. Esa **propiedad de Markov** es una simplificación drástica y sorprendentemente
+útil: basta con la matriz de transición `P`, donde `Pᵢⱼ` es la probabilidad de pasar del
+estado i al j, y cada fila suma 1.
+
+La evolución es álgebra lineal pura. Si `v` es la distribución actual sobre los estados,
+tras un paso es `vP` y tras `n` pasos es `vPⁿ`. Toda la parte 06 se vuelve relevante aquí:
+las potencias de la matriz se calculan con su diagonalización, y la velocidad de
+convergencia la marca el segundo autovalor en módulo.
+
+La **distribución estacionaria** `π` cumple `πP = π`: es un autovector izquierdo con
+autovalor 1, y describe el régimen de equilibrio. Si la cadena es **ergódica** —se puede
+llegar de cualquier estado a cualquier otro y no hay ciclos rígidos— entonces la
+estacionaria es única y la cadena converge a ella desde **cualquier** inicio. La condición
+inicial se olvida.
+
+Esa propiedad es la base de MCMC: si se quiere muestrear de una distribución imposible de
+muestrear directamente, se construye una cadena cuya estacionaria sea esa distribución y
+se la deja correr. PageRank es exactamente lo mismo aplicado al grafo de la web, y los
+modelos de difusión son un proceso estocástico cuyo reverso se aprende con una red.
+
+## 🧮 Ejemplo trabajado
+
+Cadena de dos estados y su equilibrio.
+
+```text
+P = [[0,9   0,1]        filas suman 1        ✓
+     [0,5   0,5]]
+
+inicio v = [1,0   0,0]      seguro en el estado A
+
+paso 1:  [0,9000   0,1000]
+paso 2:  [0,8600   0,1400]
+paso 5:  [0,8346   0,1654]
+paso 20: [0,8333   0,1667]
+
+Estacionaria exacta: resolver πP = π con π₀ + π₁ = 1
+  0,9π₀ + 0,5π₁ = π₀   →   0,5π₁ = 0,1π₀   →   π₀ = 5π₁
+  π = [5/6   1/6] = [0,833333   0,166667]              ✓
+
+Desde v = [0,0  1,0] la cadena converge al mismo π.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 199
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Usar matrices de transición cuyas filas no suman 1.
+2. Confundir filas con columnas al multiplicar por la izquierda o la derecha.
+3. Suponer convergencia en cadenas periódicas o reducibles.
+
+## 🚀 Dónde se usa de verdad
+
+PageRank, MCMC, modelos ocultos de Markov, aprendizaje por refuerzo con procesos de
+decisión markovianos y procesos de difusión.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 11](https://projects.iq.harvard.edu/stat110/home)
+- [Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019, cap. 5](https://services.math.duke.edu/~rtd/PTE/pte.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

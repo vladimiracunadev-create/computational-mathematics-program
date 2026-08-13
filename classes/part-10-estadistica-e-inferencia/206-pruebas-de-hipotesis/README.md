@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Una prueba de hipótesis nunca acepta la nula: solo la rechaza o se queda sin evidencia.**
 
-Esta clase concreta ese objetivo sobre **Pruebas de hipótesis**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `hypothesis_testing`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: evaluar sobre datos que participaron en la selección del modelo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+H0: μ = μ₀   frente a   H1: μ ≠ μ₀
+z = (x̄ − μ₀) / (s/√n)
+rechazar si |z| > z_{α/2}  ó  p < α
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> El p-value es P(datos tan extremos | H0), nunca P(H0 | datos).
+Una prueba de hipótesis es un procedimiento de decisión con una estructura fija que
+conviene ejecutar siempre en el mismo orden: enunciar H0 y H1, fijar `α`, elegir el
+estadístico, calcular su valor y su p-value, y decidir. Fijar `α` **antes** de ver los
+datos no es un formalismo: es lo único que impide ajustar el umbral al resultado.
+
+La lógica es la de la reducción al absurdo probabilística. Se supone H0 cierta, se calcula
+cuán raros serían los datos observados bajo ese supuesto, y si son suficientemente raros
+se rechaza H0. Lo que no se puede hacer es el paso simétrico: no rechazar **no** demuestra
+que H0 sea cierta, igual que no encontrar pruebas no demuestra inocencia.
+
+Por eso el vocabulario correcto es «no se rechaza H0», nunca «se acepta H0». Un resultado
+no significativo es compatible con dos escenarios muy distintos: que no haya efecto, o que
+el estudio no tuviera potencia para detectarlo. Distinguirlos exige la clase 209.
+
+La decisión también depende de si el contraste es de **una o dos colas**. La versión de dos
+colas contrasta «distinto de», la de una cola «mayor que» y reparte todo `α` en un lado.
+Cambiar a una cola después de ver la dirección del efecto duplica de hecho la tasa de
+falsos positivos, y es una de las formas más comunes de p-hacking.
+
+## 🧮 Ejemplo trabajado
+
+Contraste bilateral sobre una media con n = 20.
+
+```text
+H0: μ = 12,0        H1: μ ≠ 12,0        α = 0,05
+
+media muestral  = 12,6050
+error estándar  =  0,1930
+z = (12,6050 − 12,0) / 0,1930 = 3,1353
+
+valor crítico bilateral: ±1,96
+|3,1353| > 1,96   →  se rechaza H0
+
+p-value = 2·P(Z > 3,1353) = 0,00172
+
+Redacción correcta:
+  "se rechaza H0 al 5 %; la media difiere de 12,0"
+Redacción incorrecta:
+  "queda demostrado que μ = 12,605"
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 206
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Escribir «se acepta H0» ante un resultado no significativo.
+2. Elegir α después de ver el p-value.
+3. Pasar a una cola tras conocer la dirección del efecto.
+
+## 🚀 Dónde se usa de verdad
+
+Comparación de modelos, validación de cambios en producción, control de calidad y ensayos
+clínicos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002, cap. 8](https://www.cengage.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

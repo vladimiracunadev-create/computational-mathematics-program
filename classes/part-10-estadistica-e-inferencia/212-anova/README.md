@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**ANOVA compara varias medias a la vez sin inflar la tasa de falsos positivos.**
 
-Esta clase concreta ese objetivo sobre **ANOVA**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `anova`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: evaluar sobre datos que participaron en la selección del modelo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+SS_total = SS_entre + SS_dentro
+F = (SS_entre/gl_entre) / (SS_dentro/gl_dentro)
+k grupos ⟹ C(k,2) comparaciones por pares
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Un intervalo de confianza describe el procedimiento, no una probabilidad del parámetro.
+Con tres o más grupos, hacer todos los t-tests por pares infla la tasa de falsos positivos:
+con 3 grupos son 3 comparaciones y la probabilidad de alguna falsa alarma sube del 5 % al
+14 %; con 5 grupos son 10 comparaciones y sube al 40 %. ANOVA resuelve el problema con un
+único contraste global.
+
+Su mecanismo es una **descomposición de la variabilidad**, y es la misma idea del teorema
+de Pitágoras aplicada a sumas de cuadrados. La variación total de los datos respecto de la
+gran media se parte exactamente en dos: la variación **entre** grupos, que refleja las
+diferencias de medias, y la variación **dentro** de cada grupo, que es ruido.
+
+El estadístico `F` es el cociente entre ambas, cada una dividida por sus grados de
+libertad. Si los grupos no difieren, ambas estiman la misma varianza y `F` ronda 1. Si
+difieren, la variación entre grupos crece y `F` se dispara. El nombre honra a Fisher, que
+lo desarrolló para experimentos agrícolas.
+
+ANOVA solo dice **si hay alguna diferencia**, no cuál. Para localizarla hacen falta
+contrastes posteriores con corrección —Tukey, Bonferroni o Holm—, y hacerlos sin corregir
+devuelve el problema al punto de partida. Los supuestos son los del t-test extendidos:
+independencia, normalidad aproximada y homogeneidad de varianzas.
+
+## 🧮 Ejemplo trabajado
+
+Tres grupos, descomposición completa de la variabilidad.
+
+```text
+medias de los grupos: 51,0576   54,4184   56,2285
+gran media: 53,9015
+
+SS_entre  =   275,3983      gl = k − 1  = 2
+SS_dentro = 1 610,7534      gl = n − k  = 57
+SS_total  = 1 886,1516      comprobación: 275,40 + 1610,75 ✓
+
+MS_entre  = 275,3983 / 2  = 137,699
+MS_dentro = 1610,7534 / 57 =  28,259
+
+F = 137,699 / 28,259 = 4,873
+valor crítico F(2,57) al 5 % ≈ 3,16
+4,873 > 3,16  →  al menos un grupo difiere      p ≈ 0,011
+
+Inflación sin ANOVA:
+  3 t-tests sin corregir → P(falso positivo) ≈ 14 %
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 212
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Encadenar t-tests por pares sin corregir el nivel.
+2. Concluir qué grupo difiere a partir del F global.
+3. Aplicar ANOVA con varianzas muy dispares entre grupos.
+
+## 🚀 Dónde se usa de verdad
+
+Comparación de más de dos variantes en un experimento, evaluación de varias
+configuraciones de modelo, diseño factorial y estudios multicentro.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Fisher, R. A. *The Design of Experiments*, Oliver & Boyd, 1935](https://archive.org/details/in.ernet.dli.2015.502684)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

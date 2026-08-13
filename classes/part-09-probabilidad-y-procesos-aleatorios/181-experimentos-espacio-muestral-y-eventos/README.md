@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Antes de calcular ninguna probabilidad hay que escribir el espacio muestral.**
 
-Esta clase concreta ese objetivo sobre **Experimentos, espacio muestral y eventos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `sample_space`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Ω = conjunto de resultados posibles
+A ⊆ Ω  es un evento
+modelo equiprobable: P(A) = |A| / |Ω|
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> P(A|B) y P(B|A) no son intercambiables: confundirlas es la falacia del fiscal.
+Un **experimento aleatorio** es cualquier procedimiento cuyo resultado individual no se
+puede predecir pero cuyo comportamiento agregado sí se puede describir. Lanzar dos dados,
+medir el tiempo entre dos peticiones a un servidor o muestrear el siguiente token de un
+modelo de lenguaje son experimentos aleatorios en ese sentido técnico.
+
+El **espacio muestral** `Ω` es el conjunto de todos los resultados posibles, y escribirlo
+explícitamente es el paso que más problemas resuelve. La mayoría de los errores clásicos
+de probabilidad —el problema de Monty Hall, la paradoja de los dos niños, la del
+cumpleaños— no son errores de cálculo: son espacios muestrales mal escritos.
+
+Un **evento** es un subconjunto de `Ω`. «La suma es 7» no es un resultado, es el conjunto
+de los seis pares que suman 7. Esta identificación entre eventos y conjuntos es lo que
+permite usar unión, intersección y complemento como operaciones lógicas: «A o B» es
+`A∪B`, «A y B» es `A∩B`, «no A» es `Aᶜ`.
+
+El **modelo equiprobable** —contar casos favorables entre casos posibles— es solo un caso
+particular, válido cuando hay simetría física que justifique que todos los resultados
+pesan igual. Con dos dados, `Ω` tiene 36 pares ordenados, no 21 sumas: las sumas **no**
+son equiprobables, y confundir «resultados» con «valores de interés» es el error que hace
+que la gente calcule `P(suma=7) = 1/11`.
+
+## 🧮 Ejemplo trabajado
+
+Dos dados equilibrados: el espacio muestral y dos eventos.
+
+```text
+Ω = {(1,1), (1,2), ..., (6,6)}            |Ω| = 6 × 6 = 36
+
+A = "la suma es 7"
+  = {(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)}     |A| = 6
+  P(A) = 6/36 = 1/6 ≈ 0,1667
+
+B = "ambos dados son pares"
+  = {2,4,6} × {2,4,6}                              |B| = 9
+  P(B) = 9/36 = 0,25
+
+Error frecuente: tomar Ω = {2,3,...,12} y decir P(suma=7) = 1/11.
+Esas 11 sumas NO son equiprobables: 7 sale de 6 formas, 2 sale de 1.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 181
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Calcular antes de escribir Ω.
+2. Suponer equiprobabilidad sobre valores agregados en vez de sobre resultados elementales.
+3. Confundir el evento con uno de sus resultados.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de experimentos, cálculo de tasas de colisión en tablas hash, análisis de casos en
+pruebas aleatorizadas y cualquier modelado que empiece por enumerar lo que puede pasar.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 1](https://projects.iq.harvard.edu/stat110/home)
+- [Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 2](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

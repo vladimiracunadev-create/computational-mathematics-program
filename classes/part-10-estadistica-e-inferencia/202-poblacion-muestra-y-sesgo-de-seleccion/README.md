@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**El sesgo de selección no se corrige con más datos: solo se vuelve más convincente.**
 
-Esta clase concreta ese objetivo sobre **Población, muestra y sesgo de selección**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `population_sample`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🧩 Fórmulas de la clase
+
+```text
+error total = sesgo + error aleatorio
+el error aleatorio ~ 1/√n; el sesgo no depende de n
+muestra aleatoria simple: toda unidad con igual probabilidad
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Un intervalo de confianza describe el procedimiento, no una probabilidad del parámetro.
+Toda inferencia se apoya en un supuesto que rara vez se enuncia: que la muestra representa
+a la población. Cuando ese supuesto falla, ninguna técnica posterior lo arregla. La
+estadística sofisticada aplicada a una muestra sesgada produce conclusiones sofisticadas y
+falsas.
+
+La clave está en distinguir dos fuentes de error. El **error aleatorio** viene de que la
+muestra es finita y decae como `1/√n`: más datos lo reducen. El **sesgo** viene de que el
+mecanismo de selección favorece a ciertos individuos, y es **constante en n**: más datos
+no lo tocan. Peor aún, reducen el error aleatorio y estrechan el intervalo, dando más
+confianza a un número equivocado.
+
+Los ejemplos históricos son elocuentes. La encuesta del *Literary Digest* de 1936 recogió
+2,4 millones de respuestas y predijo mal las elecciones, porque muestreó de listas de
+propietarios de teléfono y automóvil. Gallup acertó con 50 000 respuestas bien muestreadas.
+El **sesgo del superviviente** es la variante más traicionera: estudiar solo empresas que
+siguen existiendo, aviones que volvieron o usuarios que no abandonaron.
+
+La defensa es de diseño, no de análisis: **aleatorizar la selección**. Cuando no es
+posible, hay que declarar el mecanismo de selección y razonar explícitamente sobre a qué
+población se puede extrapolar. En aprendizaje automático el mismo problema aparece como
+desplazamiento de distribución entre los datos de entrenamiento y los de producción.
+
+## 🧮 Ejemplo trabajado
+
+Misma población, dos mecanismos de muestreo.
+
+```text
+población: 10 000 individuos,  media real = 50,02
+
+muestra aleatoria (n = 500)
+  media = 49,83        error = 0,20
+
+muestra sesgada (n = 500, favorece valores altos)
+  media = 61,36        error = 11,34        57 veces peor
+
+Aumentar el sesgado a n = 5 000:
+  error aleatorio ↓        el sesgo se mantiene en ≈ 11
+  el intervalo se estrecha alrededor del valor equivocado
+
+Conclusión: 500 datos bien muestreados baten a 5 000 mal muestreados.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 202
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Creer que un n enorme compensa un muestreo defectuoso.
+2. Extrapolar de una muestra de conveniencia a la población general.
+3. Analizar solo los casos que sobrevivieron hasta el final del periodo.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de encuestas, construcción de conjuntos de entrenamiento, auditoría de sesgo en
+modelos y detección de desplazamiento de distribución en producción.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Meng, X.-L. *Statistical paradises and paradoxes in big data*, Annals of Applied Statistics, 2018](https://doi.org/10.1214/18-AOAS1161SF)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**La máxima verosimilitud elige el parámetro que hace más probables los datos observados.**
 
-Esta clase concreta ese objetivo sobre **Máxima verosimilitud**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `maximum_likelihood`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: evaluar sobre datos que participaron en la selección del modelo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L(θ) = Π f(xᵢ | θ)
+ℓ(θ) = Σ log f(xᵢ | θ)
+para la normal: μ̂ = x̄,  σ̂² = Σ(xᵢ − x̄)²/n
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> El bootstrap estima la variabilidad sin suponer la distribución poblacional.
+La máxima verosimilitud invierte la pregunta habitual. En vez de fijar el parámetro y
+preguntar qué datos son probables, fija los datos observados y pregunta qué valor del
+parámetro los habría hecho más probables. Ese valor es el estimador MLE.
+
+Se trabaja siempre con el **logaritmo** de la verosimilitud, por dos razones. La primera es
+algebraica: convierte productos en sumas y las derivadas se vuelven manejables. La segunda
+es numérica y decisiva: multiplicar mil densidades menores que 1 produce subdesbordamiento
+a cero en punto flotante, mientras que sumar mil logaritmos no tiene ese problema. Es la
+misma lección de la parte 01.
+
+Para la normal el resultado es especialmente limpio: el MLE de la media es la media
+muestral, y el de la varianza es la versión que divide entre `n`, que es sesgada. Eso ya
+dice algo importante: el MLE **no tiene por qué ser insesgado**, aunque sí es consistente y
+asintóticamente eficiente bajo condiciones de regularidad.
+
+El vínculo con el aprendizaje automático es de identidad, no de analogía. Minimizar el
+error cuadrático medio **es** maximizar la verosimilitud bajo ruido gaussiano; minimizar la
+entropía cruzada **es** maximizar la verosimilitud bajo un modelo categórico. Las funciones
+de pérdida no se inventan: se derivan del modelo probabilístico que se supone para los
+datos.
+
+## 🧮 Ejemplo trabajado
+
+Ajuste normal por máxima verosimilitud sobre 20 observaciones.
+
+```text
+n = 20
+
+μ̂ (MLE) = 12,6050        coincide con la media muestral
+σ̂ (MLE) =  0,8411        divide entre n, no entre n−1
+
+log-verosimilitud máxima = −24,9182
+
+Barrido en μ manteniendo σ̂:
+  μ = 11,61   →  ℓ = −39,0530
+  μ = 12,11   →  ℓ = −28,4519
+  μ = 12,61   →  ℓ = −24,9182     ← máximo
+  μ = 13,11   →  ℓ = −28,4519
+  μ = 13,61   →  ℓ = −39,0530
+
+La curva es simétrica y su máximo cae en la media muestral.
+Su curvatura en el máximo determina la precisión del estimador.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 215
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Multiplicar verosimilitudes en vez de sumar logaritmos.
+2. Suponer que el MLE es insesgado.
+3. Comparar verosimilitudes de modelos con distinto número de parámetros sin penalizar.
+
+## 🚀 Dónde se usa de verdad
+
+Derivación de funciones de pérdida, ajuste de modelos paramétricos, criterios AIC y BIC y
+entrenamiento de modelos generativos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 9](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Murphy, K. *Probabilistic Machine Learning: An Introduction*, MIT Press, 2022](https://probml.github.io/pml-book/book1.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

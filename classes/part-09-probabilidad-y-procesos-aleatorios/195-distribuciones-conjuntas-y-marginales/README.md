@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**De la conjunta se obtienen las marginales sumando y las condicionales dividiendo.**
 
-Esta clase concreta ese objetivo sobre **Distribuciones conjuntas y marginales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,15 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `joint_marginal`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados monte carlo sin semilla ni intervalo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+conjunta: p(x,y) = P(X=x, Y=y),  Σ p(x,y) = 1
+marginal: p(x) = Σᵧ p(x,y)
+condicional: p(y|x) = p(x,y) / p(x)
+independencia ⟺ p(x,y) = p(x)·p(y) para todo par
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +48,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Una cadena de Markov ergódica olvida su estado inicial.
+Cuando dos variables se observan a la vez, la descripción completa es la **distribución
+conjunta**: una probabilidad por cada par de valores. Todo lo demás se deriva de ella, y
+esa es la razón de que la conjunta sea el objeto fundamental y las marginales solo
+resúmenes.
+
+**Marginalizar** es sumar sobre la variable que no interesa. El nombre viene de las tablas
+de doble entrada, donde esas sumas se escribían literalmente en los márgenes. Marginalizar
+pierde información: dos conjuntas muy distintas pueden tener exactamente las mismas
+marginales, y por eso conocer cada variable por separado no basta para saber cómo se
+relacionan.
+
+**Condicionar** es dividir por la marginal correspondiente, lo cual reescala una fila o
+columna para que vuelva a sumar 1. La comparación entre `p(x,y)` y `p(x)·p(y)` es el test
+de independencia: si coinciden para todos los pares, las variables son independientes; si
+difieren en alguno, no lo son.
+
+Esta es la maquinaria de los modelos gráficos y de todo el modelado probabilístico
+moderno. Un modelo generativo aprende una conjunta sobre datos y etiquetas; la inferencia
+consiste en condicionar sobre lo observado y marginalizar lo latente. En el caso continuo
+las sumas se vuelven integrales, y esas integrales intratables son las que motivan la
+inferencia variacional y los métodos de la parte 17.
+
+## 🧮 Ejemplo trabajado
+
+Conjunta de dos variables binarias.
+
+```text
+p(x,y)        y=0     y=1    | marginal X
+x=0           0,20    0,30   |    0,50
+x=1           0,10    0,40   |    0,50
+------------------------------------------
+marginal Y    0,30    0,70   |    1,00     ✓
+
+Condicional:
+  p(y=1 | x=1) = 0,40 / 0,50 = 0,80
+  p(y=1 | x=0) = 0,30 / 0,50 = 0,60
+
+Test de independencia en el par (1,1):
+  p(1,1)        = 0,40
+  p(1)·p(1)     = 0,50 × 0,70 = 0,35
+  0,40 ≠ 0,35   →  X e Y NO son independientes
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 195
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Reconstruir la conjunta a partir de las marginales.
+2. Dividir por la marginal equivocada al condicionar.
+3. Olvidar comprobar que la conjunta suma 1.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos gráficos probabilísticos, inferencia bayesiana, tablas de contingencia y
+distribuciones latentes en modelos generativos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 7](https://projects.iq.harvard.edu/stat110/home)
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 8](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

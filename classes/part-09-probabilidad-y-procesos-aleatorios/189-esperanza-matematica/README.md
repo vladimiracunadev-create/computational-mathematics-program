@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La esperanza es lineal siempre, incluso cuando las variables son dependientes.**
 
-Esta clase concreta ese objetivo sobre **Esperanza matemática**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `expectation`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados monte carlo sin semilla ni intervalo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+E[X] = Σ x·p(x)   ó   ∫ x·f(x) dx
+E[aX + bY] = a·E[X] + b·E[Y]   sin exigir independencia
+en general E[g(X)] ≠ g(E[X])
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Monte Carlo convierge como 1/√n: cuadruplicar muestras solo duplica la precisión.
+La esperanza es la media ponderada por probabilidad: el valor alrededor del cual se
+equilibra la distribución. No tiene por qué ser un valor posible —la esperanza de un dado
+es 3,5— porque describe el comportamiento agregado, no un resultado individual.
+
+Su propiedad más útil es la **linealidad**, y es más fuerte de lo que suele recordarse:
+`E[X + Y] = E[X] + E[Y]` vale **siempre**, sin ninguna hipótesis de independencia. Esa
+generosidad convierte problemas aparentemente imposibles en sumas triviales: el número
+esperado de puntos fijos de una permutación aleatoria es 1, y se obtiene sumando
+indicadores fuertemente dependientes.
+
+Lo que **no** vale es intercambiar la esperanza con una función no lineal.
+`E[X²] ≠ E[X]²`, y la diferencia entre ambas es exactamente la varianza. Para funciones
+convexas, la **desigualdad de Jensen** dice que `E[g(X)] ≥ g(E[X])`, y ese detalle es el
+que separa la media de los logaritmos del logaritmo de la media en toda derivación de
+ELBO o de verosimilitud.
+
+En aprendizaje automático la esperanza está en la definición misma del objetivo: el riesgo
+es `E[pérdida]` sobre la distribución de datos, y como esa distribución es desconocida se
+estima con la media empírica. Toda la teoría del aprendizaje trata de cuánto se parece esa
+media a la esperanza que se quería minimizar.
+
+## 🧮 Ejemplo trabajado
+
+Uniforme en el intervalo unitario: teoría frente a simulación.
+
+```text
+X ~ Uniforme(0,1)
+
+teórico            simulado con 10⁶ muestras
+  E[X]   = 0,5       0,499912
+  E[X²]  = 1/3       0,333282
+
+E[X]² = 0,25   ≠   E[X²] = 0,3333
+
+diferencia = 0,3333 − 0,25 = 0,0833 = 1/12 = Var(X)     ✓
+
+Linealidad sin independencia:
+  E[X + X] = 2·E[X] = 1,0    aunque X no es independiente de sí misma
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 189
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Exigir independencia para sumar esperanzas.
+2. Escribir E[g(X)] = g(E[X]) con g no lineal.
+3. Esperar que la esperanza sea un valor alcanzable.
+
+## 🚀 Dónde se usa de verdad
+
+Riesgo esperado en aprendizaje, valoración de apuestas y carteras, análisis del tiempo
+medio de ejecución y estimadores de gradiente por muestreo.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 4](https://projects.iq.harvard.edu/stat110/home)
+- [Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 7](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

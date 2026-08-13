@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Un R² alto no valida el modelo: los residuos son los que lo hacen.**
 
-Esta clase concreta ese objetivo sobre **Regresión lineal estadística**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_regression_stats`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🧩 Fórmulas de la clase
+
+```text
+ŷ = b₀ + b₁x,   b₁ = Σ(x−x̄)(y−ȳ) / Σ(x−x̄)²
+R² = 1 − SS_res / SS_tot
+t = b₁ / SE(b₁),  gl = n − 2
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Correlación no implica causalidad, pero causalidad sí restringe la correlación.
+La regresión lineal ajusta la recta que minimiza la suma de residuos al cuadrado. Vista
+desde el álgebra lineal es la proyección de la parte 05; vista desde la estadística, cada
+coeficiente es un **estimador** con su error estándar, su intervalo de confianza y su
+contraste de significancia.
+
+El **coeficiente de determinación** `R²` mide qué fracción de la variabilidad de `y`
+explica el modelo. Es útil pero se sobreinterpreta: un `R²` alto no garantiza que el
+modelo sea correcto, ni que la relación sea causal, ni que sirva para predecir fuera del
+rango observado. Añadir variables sin sentido siempre sube el `R²`, y por eso existe el
+`R²` ajustado.
+
+Lo que sí valida el modelo son los **residuos**. Deben aparecer sin estructura: sin
+curvatura —que indicaría relación no lineal—, sin embudo —que indicaría varianza no
+constante— y sin patrón temporal —que indicaría dependencia—. El cuarteto de Anscombe
+construye cuatro conjuntos con idénticos coeficientes y `R²` de los que solo uno merece una
+recta.
+
+La significancia de la pendiente contrasta `H0: b₁ = 0`, es decir, que `x` no aporta nada.
+Como en toda la parte, lo que hay que reportar es la pendiente con su intervalo: dice
+cuánto cambia `y` por unidad de `x` y con qué precisión, que es la información útil para
+decidir.
+
+## 🧮 Ejemplo trabajado
+
+Ocho puntos con relación casi perfectamente lineal.
+
+```text
+n = 8
+
+intercepto b₀ = 0,1750
+pendiente  b₁ = 1,9917
+
+R² = 0,998227           SS_residual = 0,295833
+SE(b₁) = 0,034263
+
+t = 1,9917 / 0,034263 = 58,13     gl = 6
+p < 0,0001   →  la pendiente es claramente distinta de cero
+
+IC 95 % de la pendiente:
+  1,9917 ± 2,447 × 0,034263 = (1,9078 , 2,0755)
+
+Lectura: cada unidad de x aumenta y en ≈ 1,99, con
+una precisión de ±0,08. Eso es lo que hay que reportar.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 214
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Validar el modelo solo por el R² sin mirar los residuos.
+2. Extrapolar fuera del rango de los datos observados.
+3. Leer la pendiente como efecto causal en datos observacionales.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos base en aprendizaje automático, análisis de tendencias, calibración de
+instrumentos y estimación de elasticidades.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 13](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Anscombe, F. J. *Graphs in statistical analysis*, The American Statistician, 1973](https://doi.org/10.1080/00031305.1973.10478966)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

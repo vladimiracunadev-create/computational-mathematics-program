@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La media muestral converge a la esperanza, pero a velocidad de raíz cuadrada.**
 
-Esta clase concreta ese objetivo sobre **Ley de los grandes números**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `law_large_numbers`.
 4. Interpretar las 5 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x̄ₙ → μ  cuando n → ∞
+error típico ≈ σ/√n
+cuadruplicar n reduce el error a la mitad
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> P(A|B) y P(B|A) no son intercambiables: confundirlas es la falacia del fiscal.
+La ley de los grandes números es el puente entre probabilidad y realidad: garantiza que
+promediar muchas observaciones independientes acerca la media muestral a la esperanza
+teórica. Sin ella, la probabilidad sería un juego formal sin conexión con los datos, y
+ninguna simulación tendría sentido.
+
+Lo que la ley **no** dice es igual de importante. No dice que las desviaciones se
+compensen: si han salido diez caras seguidas, la moneda no «debe» ahora cruces. La
+convergencia ocurre porque las primeras observaciones se **diluyen** al crecer el
+denominador, no porque algo las corrija. Creer lo contrario es la **falacia del jugador**.
+
+Tampoco garantiza nada sobre una muestra concreta. Es un enunciado asintótico: para
+cualquier margen de error, existe un `n` a partir del cual la desviación es improbable.
+Ese `n` puede ser enorme si la varianza es grande, y para distribuciones sin media finita
+—como la Cauchy— la ley sencillamente no se cumple.
+
+La velocidad es la parte que más cuesta aceptar en la práctica. El error típico cae como
+`σ/√n`, de modo que pasar de 1000 a 4000 muestras solo reduce el error a la mitad, y
+ganar un dígito decimal cuesta multiplicar por cien el trabajo. Esa raíz cuadrada es la
+que gobierna el coste de toda simulación Monte Carlo.
+
+## 🧮 Ejemplo trabajado
+
+Media muestral de una uniforme en el intervalo unitario.
+
+```text
+distribución: Uniforme(0,1)     media real = 0,5
+
+     n        media       error
+    10       0,607062    0,107062
+   100       0,509220    0,009220
+ 1 000       0,503115    0,003115
+10 000       0,500987    0,000987
+
+El error cae aproximadamente como 1/√n:
+  de n=100 a n=10 000  →  n × 100  →  error / 10       ✓
+
+Nada garantiza que una muestra concreta se comporte:
+con n = 10 el error fue del 21 %.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 196
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Esperar que los desvíos pasados se compensen.
+2. Aplicar la ley a distribuciones sin media finita.
+3. Confiar en una única simulación corta como si fuera el valor exacto.
+
+## 🚀 Dónde se usa de verdad
+
+Justificación de la simulación, validación de estimadores, dimensionamiento de tests A/B y
+tamaño de lote en descenso estocástico.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)
+- [Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019, cap. 2](https://services.math.duke.edu/~rtd/PTE/pte.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

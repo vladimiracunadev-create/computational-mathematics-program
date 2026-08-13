@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Tres axiomas de Kolmogorov generan toda la teoría de la probabilidad.**
 
-Esta clase concreta ese objetivo sobre **Axiomas de probabilidad**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,15 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `axioms`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: ignorar la probabilidad base al interpretar un test positivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+1. P(A) ≥ 0
+2. P(Ω) = 1
+3. A∩B = ∅ ⟹ P(A∪B) = P(A) + P(B)
+consecuencias: P(∅) = 0,  P(Aᶜ) = 1 − P(A)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +48,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> La esperanza es lineal siempre; la varianza solo bajo independencia.
+En 1933 Kolmogorov redujo la probabilidad a tres reglas. La primera dice que no hay
+probabilidades negativas; la segunda, que algo tiene que pasar; la tercera, que si dos
+eventos no pueden ocurrir a la vez, la probabilidad de que ocurra alguno es la suma. Nada
+más. Todo teorema de probabilidad es una consecuencia de estos tres enunciados.
+
+De ellos se deducen inmediatamente las propiedades que se usan a diario. Como `Ω` y `∅`
+son disjuntos y su unión es `Ω`, resulta `P(∅) = 0`. Como `A` y `Aᶜ` son disjuntos y su
+unión es `Ω`, resulta la **regla del complemento** `P(Aᶜ) = 1 − P(A)`, que es la
+herramienta más rentable del cálculo elemental: casi siempre es más fácil contar lo que
+no pasa.
+
+También se deduce la **monotonía**: si `A ⊆ B` entonces `P(A) ≤ P(B)`, y por tanto ninguna
+probabilidad puede pasar de 1. Un cálculo que devuelva 1,3 no está mal redondeado: está
+mal planteado, casi siempre por sumar eventos que se solapan sin restar la intersección.
+
+Los axiomas no dicen **qué** probabilidades asignar. Esa es una decisión de modelado —por
+simetría, por frecuencia observada o por creencia subjetiva— y los axiomas solo garantizan
+que la asignación sea coherente. Esa separación entre estructura y modelo es lo que
+permite que frecuentistas y bayesianos usen la misma matemática y discrepen en la
+interpretación.
+
+## 🧮 Ejemplo trabajado
+
+Comprobación de los axiomas sobre una distribución de tres resultados.
+
+```text
+Ω = {a, b, c}      P(a)=0,5   P(b)=0,3   P(c)=0,2
+
+Axioma 1  no negatividad:  0,5 ≥ 0, 0,3 ≥ 0, 0,2 ≥ 0        ✓
+Axioma 2  normalización:   0,5 + 0,3 + 0,2 = 1,0            ✓
+Axioma 3  aditividad:      P({a,b}) = 0,5 + 0,3 = 0,8       ✓
+
+Consecuencias:
+  P(∅)  = 0
+  P(aᶜ) = 1 − 0,5 = 0,5 = P(b) + P(c)                       ✓
+  A={a} ⊆ B={a,b}:  0,5 ≤ 0,8                               ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 182
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Obtener probabilidades mayores que 1 y aceptarlas como redondeo.
+2. Aplicar el tercer axioma a eventos que sí se solapan.
+3. Creer que los axiomas dicen cómo asignar las probabilidades iniciales.
+
+## 🚀 Dónde se usa de verdad
+
+Validación de distribuciones en código —comprobar que una salida softmax suma 1—,
+verificación de modelos probabilísticos y depuración de simuladores.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 1](https://projects.iq.harvard.edu/stat110/home)
+- [Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019](https://services.math.duke.edu/~rtd/PTE/pte.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

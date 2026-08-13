@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La covarianza depende de las unidades; la correlación no, pero solo ve lo lineal.**
 
-Esta clase concreta ese objetivo sobre **Covarianza y correlación**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `covariance_correlation`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: ignorar la probabilidad base al interpretar un test positivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Cov(X,Y) = E[(X − μₓ)(Y − μᵧ)]
+ρ = Cov(X,Y) / (σₓ·σᵧ),   −1 ≤ ρ ≤ 1
+Var(X+Y) = Var(X) + Var(Y) + 2·Cov(X,Y)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> P(A|B) y P(B|A) no son intercambiables: confundirlas es la falacia del fiscal.
+La covarianza mide si dos variables se desvían de su media en el mismo sentido. Positiva
+significa que suelen subir juntas; negativa, que una sube cuando la otra baja; cero, que
+no hay tendencia lineal conjunta. Su defecto es que su magnitud depende de las escalas:
+medir en milímetros en vez de metros multiplica la covarianza por mil sin que la relación
+haya cambiado.
+
+La **correlación de Pearson** arregla eso dividiendo por las desviaciones estándar. El
+resultado es adimensional y está acotado en `[−1, 1]`, con los extremos alcanzados solo si
+la relación es exactamente lineal. Esa acotación es la desigualdad de Cauchy-Schwarz
+aplicada a variables centradas, y conecta con el ángulo entre vectores de la parte 05:
+la correlación **es** el coseno del ángulo entre los datos centrados.
+
+La limitación crítica es que la correlación solo detecta relaciones **lineales**. Si
+`Y = X²` con `X` simétrica alrededor de cero, la correlación es exactamente 0 y la
+dependencia es total. Correlación cero no implica independencia; la implicación solo va en
+un sentido, y solo bajo normalidad conjunta se convierte en equivalencia.
+
+La fórmula de la varianza de una suma muestra por qué la covarianza importa en la práctica:
+diversificar una cartera, promediar predictores en un ensemble o combinar estimadores
+reduce la varianza solo en la medida en que las covarianzas sean bajas. Modelos muy
+correlacionados no se ayudan al promediarse.
+
+## 🧮 Ejemplo trabajado
+
+Invariancia de escala: multiplicar una variable por mil.
+
+```text
+x = 1, 2, 3, 4, 5 ...        y correlacionada con x
+z = 1000·y                   misma relación, otras unidades
+
+Cov(x, y) =    4,925
+Cov(x, z) = 4 925,0          × 1000, como la escala
+
+corr(x, y) = 0,998830
+corr(x, z) = 0,998830        idéntica                     ✓
+
+Dependencia no lineal invisible:
+  x = −2, −1, 0, 1, 2      y = x² = 4, 1, 0, 1, 4
+  corr(x, y) = 0    y sin embargo y está determinada por x
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 191
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Interpretar la magnitud de una covarianza sin mirar las unidades.
+2. Deducir independencia de una correlación cero.
+3. Leer correlación como causalidad.
+
+## 🚀 Dónde se usa de verdad
+
+Matrices de covarianza en PCA, selección de características, diversificación de carteras y
+diseño de ensembles con predictores poco correlacionados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 7](https://projects.iq.harvard.edu/stat110/home)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 3](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

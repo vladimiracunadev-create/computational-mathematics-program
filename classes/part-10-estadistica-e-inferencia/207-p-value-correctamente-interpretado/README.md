@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**El p-value mide la rareza de los datos bajo H0, no la probabilidad de que H0 sea cierta.**
 
-Esta clase concreta ese objetivo sobre **p-value correctamente interpretado**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `p_value`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: p-hacking por comparaciones múltiples sin corrección.
+
+## 🧩 Fórmulas de la clase
+
+```text
+p = P(estadístico tan o más extremo | H0 cierta)
+p ≠ P(H0 | datos)
+bajo H0, el p-value se distribuye Uniforme(0,1)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Un intervalo de confianza describe el procedimiento, no una probabilidad del parámetro.
+El p-value responde a una pregunta muy concreta: **si la hipótesis nula fuera cierta**,
+¿con qué frecuencia se verían datos al menos tan extremos como los observados? Es una
+probabilidad condicionada a H0, no una probabilidad **de** H0. Esa inversión ilegítima es
+la misma falacia del fiscal de la clase 186, aplicada a la práctica científica.
+
+Hay un hecho que aclara todo lo demás: **bajo H0, el p-value es uniforme en el intervalo
+unitario**. Cualquier valor es igual de probable. Por eso rechazar con `p < 0,05` produce
+exactamente un 5 % de falsos positivos cuando no hay ningún efecto; el umbral no es
+mágico, es simplemente la fracción de la uniforme que se decide sacrificar.
+
+De la uniformidad se deduce el mecanismo del **p-hacking**. Si se prueban 20 análisis
+distintos sobre datos sin efecto, la probabilidad de que alguno baje de 0,05 es
+`1 − 0,95²⁰ ≈ 64 %`. Probar variantes, subgrupos, transformaciones o momentos de parada
+hasta obtener significancia no es análisis exploratorio: es fabricar resultados. La defensa
+es preinscribir el análisis y corregir por comparaciones múltiples.
+
+Y hay una última confusión, independiente de las anteriores: **significancia no es
+relevancia**. Con n suficientemente grande, cualquier diferencia por minúscula que sea
+resulta significativa. Un p-value pequeño dice que el efecto probablemente no es cero; no
+dice que importe. Por eso hay que reportar siempre el tamaño del efecto y su intervalo.
+
+## 🧮 Ejemplo trabajado
+
+Distribución del p-value cuando no hay efecto alguno.
+
+```text
+100 000 experimentos simulados con H0 cierta
+
+  media de los p-values          = 0,49789    ≈ 0,5 (uniforme)
+  proporción con p < 0,05        = 0,05750    ≈ 5 %
+  proporción con p < 0,01        = 0,01417    ≈ 1 %
+
+El 5 % de los estudios "encuentra" un efecto inexistente.
+
+Comparaciones múltiples sin corrección:
+  k = 1    P(algún falso positivo) = 5 %
+  k = 5                            = 23 %
+  k = 20                           = 64 %
+  k = 100                          = 99,4 %
+
+Corrección de Bonferroni: usar α/k en cada contraste.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 207
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Leer p = 0,03 como «hay un 3 % de probabilidad de que H0 sea cierta».
+2. Probar múltiples análisis y reportar solo el significativo.
+3. Confundir significancia estadística con importancia práctica.
+
+## 🚀 Dónde se usa de verdad
+
+Interpretación de literatura científica, evaluación de experimentos A/B, comparación de
+modelos y auditoría de resultados publicados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Wasserstein, R.; Lazar, N. *The ASA statement on p-values*, The American Statistician, 2016](https://doi.org/10.1080/00031305.2016.1154108)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

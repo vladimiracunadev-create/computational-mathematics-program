@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Bajar la tasa de falsos positivos sube la de falsos negativos: el compromiso es inevitable.**
 
-Esta clase concreta ese objetivo sobre **Errores tipo I y II**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `type_errors`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🧩 Fórmulas de la clase
+
+```text
+α = P(rechazar H0 | H0 cierta)   error tipo I
+β = P(no rechazar H0 | H0 falsa)  error tipo II
+potencia = 1 − β
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Sin potencia declarada, un resultado no significativo no dice nada.
+Toda prueba puede fallar de dos maneras. El **error tipo I** es una falsa alarma: rechazar
+una nula que era cierta. El **error tipo II** es un fallo de detección: no rechazar una
+nula que era falsa. Sus tasas se llaman `α` y `β`, y no se pueden minimizar ambas a la vez
+con una muestra fija.
+
+La razón es geométrica. Mover el umbral de decisión hacia la derecha reduce las falsas
+alarmas y aumenta los fallos de detección; moverlo hacia la izquierda hace lo contrario. Es
+exactamente el mismo compromiso que en clasificación entre precisión y exhaustividad, y la
+curva ROC es su representación gráfica.
+
+Cuál de los dos errores duele más es una decisión **del dominio, no de la estadística**. En
+un cribado de cáncer un falso negativo es mucho peor que un falso positivo, y conviene un
+`α` alto. En un juicio penal la asimetría es la opuesta. El convenio de `α = 0,05` es una
+herencia histórica de Fisher, no un resultado matemático, y en física de partículas se usa
+un umbral equivalente a cinco sigmas.
+
+La única forma de reducir ambos errores simultáneamente es **aumentar el tamaño muestral**,
+porque estrecha las distribuciones y reduce su solapamiento. Ese es el contenido de la
+clase siguiente y la razón por la que el cálculo de potencia debe hacerse antes de recoger
+datos.
+
+## 🧮 Ejemplo trabajado
+
+Tasas observadas con α nominal 0,05 y un efecto real de media desviación.
+
+```text
+Bajo H0 cierta (efecto nulo):
+  tasa de error tipo I observada = 0,0683      ≈ α
+
+Bajo H1 cierta (efecto d = 0,5):
+  tasa de error tipo II (β)      = 0,2083
+  potencia (1 − β)               = 0,7917
+
+Compromiso al mover el umbral:
+     α        β       potencia
+  0,100    0,133      0,867
+  0,050    0,208      0,792
+  0,010    0,392      0,608
+  0,001    0,616      0,384
+
+Bajar α diez veces casi duplica β. Solo subir n mejora ambos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 208
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Bajar α sin comprobar qué le pasa a la potencia.
+2. Tratar α = 0,05 como una constante universal.
+3. Ignorar cuál de los dos errores es más costoso en el dominio concreto.
+
+## 🚀 Dónde se usa de verdad
+
+Umbrales de clasificadores, sistemas de alerta, cribado médico, detección de fraude y
+criterios de parada en monitorización.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Cohen, J. *Statistical Power Analysis for the Behavioral Sciences*, 2ª ed., Routledge, 1988](https://doi.org/10.4324/9780203771587)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

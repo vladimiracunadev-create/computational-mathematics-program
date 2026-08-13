@@ -1,0 +1,1294 @@
+part: "09"
+titulo: "Probabilidad y procesos aleatorios"
+
+resumen_extendido: |
+  La probabilidad es el lenguaje con el que se habla de lo que no se sabe. No mide ignorancia
+  vaga: la mide con la misma precisión con la que el álgebra lineal mide una rotación. Esta
+  parte construye ese lenguaje desde los axiomas hasta las cadenas de Markov, y en el camino
+  desarma tres o cuatro confusiones que arruinan más análisis de datos que cualquier error de
+  programación.
+
+  Las clases 181 a 186 son los cimientos. Un experimento aleatorio produce resultados de un
+  **espacio muestral**, un evento es un subconjunto de ese espacio, y una probabilidad es una
+  función que asigna números a eventos cumpliendo tres axiomas de Kolmogorov. Todo lo demás
+  —la regla de la suma, la del producto, la probabilidad condicional, la independencia y el
+  teorema de Bayes— se deduce de ahí. No hay nada más que memorizar.
+
+  El punto de inflexión es la clase 184, y merece detenerse: **condicionar es cambiar de
+  espacio muestral**. `P(A|B)` no es una probabilidad distinta de A, es la probabilidad de A
+  dentro de un mundo donde B ya ocurrió. De esa lectura sale de forma natural que `P(A|B)` y
+  `P(B|A)` no tienen por qué parecerse en nada, y la clase 186 lo muestra con el ejemplo más
+  costoso de la vida real: un test con 99 % de sensibilidad y 99 % de especificidad, aplicado
+  a una enfermedad que afecta a 1 de cada 1000 personas, produce un positivo que solo acierta
+  el 9 % de las veces. Diez falsos positivos por cada verdadero. Confundir esas dos
+  probabilidades se llama **falacia del fiscal** y ha mandado gente a la cárcel.
+
+  Las clases 187 a 195 introducen las variables aleatorias y sus resúmenes. Una variable
+  aleatoria no es una variable ni es aleatoria: es una **función** del espacio muestral a los
+  números. Ese cambio de perspectiva permite hablar de esperanza, varianza, covarianza y
+  correlación, y trabajar con distribuciones concretas —Bernoulli, binomial, Poisson,
+  exponencial y normal— en vez de con espacios muestrales explícitos. Dos hechos hay que
+  grabar: la esperanza es lineal **siempre**, incluso con variables dependientes; la varianza
+  solo se suma bajo independencia.
+
+  Las clases 196 y 197 son los dos teoremas límite que sostienen toda la estadística. La ley
+  de los grandes números dice que la media muestral converge a la media real; el teorema
+  central del límite dice **a qué velocidad y con qué forma**. El TCL es el que explica por
+  qué la campana de Gauss aparece en fenómenos que no tienen nada de gaussiano: si un
+  resultado es la suma de muchos efectos pequeños e independientes, su distribución tiende a
+  la normal, venga de donde venga.
+
+  Las clases 198 y 199 pasan a la simulación. Monte Carlo estima integrales y probabilidades
+  muestreando, con un error que cae como `1/√n`: cuadruplicar el número de muestras solo
+  duplica la precisión, y esa lentitud es el precio a cambio de que la velocidad **no dependa
+  de la dimensión**. Las cadenas de Markov formalizan los procesos sin memoria y su
+  distribución estacionaria, que es la base de MCMC, de PageRank y del proceso de difusión
+  que genera imágenes.
+
+  El vínculo con la inteligencia artificial es directo y no metafórico. Un modelo de lenguaje
+  es literalmente una distribución condicional `P(token | contexto)`; la temperatura de
+  muestreo modifica esa distribución; un modelo de difusión es un proceso estocástico cuyo
+  reverso se aprende; y toda función de pérdida por máxima verosimilitud es un enunciado
+  probabilístico. Sin esta parte, el resto del programa se lee pero no se entiende.
+
+mapa: |
+  flowchart TD
+      A["Clases 181-183 · Espacio muestral, axiomas y reglas"] --> B["Clases 184-186 · Condicional, independencia y Bayes"]
+      B --> C["Clases 187-188 · Variables aleatorias discretas y continuas"]
+      C --> D["Clases 189-191 · Esperanza, varianza y correlacion"]
+      D --> E["Clases 192-195 · Distribuciones clave y conjuntas"]
+      E --> F["Clases 196-197 · Ley de los grandes numeros y TCL"]
+      F --> G["Clases 198-199 · Monte Carlo y cadenas de Markov"]
+      G --> H["Clase 200 · Capstone simulador bayesiano"]
+      F ==> I["Parte 10 · Inferencia estadistica"]
+      E -.-> J["Entropia y verosimilitud · Parte 13"]
+      B -.-> K["Naive Bayes y modelos generativos · Parte 14"]
+      G -.-> L["Difusion y MCMC · Parte 17"]
+
+glosario:
+  - termino: "Experimento aleatorio"
+    definicion: "Procedimiento cuyo resultado no se puede predecir individualmente, pero sí describir en conjunto."
+    clase: "181"
+  - termino: "Espacio muestral"
+    definicion: "Conjunto Ω de todos los resultados posibles de un experimento. Se escribe antes que cualquier cálculo."
+    clase: "181"
+  - termino: "Evento"
+    definicion: "Subconjunto del espacio muestral. Ocurre si el resultado observado pertenece a él."
+    clase: "181"
+  - termino: "Axiomas de Kolmogorov"
+    definicion: "P(A) ≥ 0, P(Ω) = 1 y aditividad para eventos disjuntos. Toda la teoría se deduce de estos tres."
+    clase: "182"
+  - termino: "Inclusión-exclusión"
+    definicion: "P(A∪B) = P(A) + P(B) − P(A∩B). El término restado corrige el solapamiento contado dos veces."
+    clase: "183"
+  - termino: "Probabilidad condicional"
+    definicion: "P(A|B) = P(A∩B)/P(B). Es la probabilidad de A dentro del espacio reducido a B."
+    clase: "184"
+  - termino: "Independencia"
+    definicion: "A y B son independientes si P(A∩B) = P(A)·P(B). Se comprueba, no se supone."
+    clase: "185"
+  - termino: "Teorema de Bayes"
+    definicion: "P(H|E) = P(E|H)·P(H)/P(E). Invierte el condicionamiento y actualiza una creencia con evidencia."
+    clase: "186"
+  - termino: "Probabilidad base"
+    definicion: "Prevalencia del evento antes de ver evidencia. Ignorarla es la falacia de la tasa base."
+    clase: "186"
+  - termino: "Variable aleatoria"
+    definicion: "Función que asigna un número a cada resultado del espacio muestral. Ni es variable ni es aleatoria."
+    clase: "187"
+  - termino: "Función de masa"
+    definicion: "pmf. Asigna a cada valor discreto su probabilidad; todas suman 1."
+    clase: "187"
+  - termino: "Función de densidad"
+    definicion: "pdf. Su integral sobre un intervalo da la probabilidad. Puede superar 1 sin contradicción."
+    clase: "188"
+  - termino: "Función de distribución"
+    definicion: "cdf. F(x) = P(X ≤ x). Es no decreciente y va de 0 a 1."
+    clase: "188"
+  - termino: "Esperanza"
+    definicion: "E[X] = Σ x·P(X=x). Media ponderada por probabilidad; es lineal incluso sin independencia."
+    clase: "189"
+  - termino: "Varianza"
+    definicion: "Var(X) = E[(X−μ)²] = E[X²] − E[X]². Mide dispersión en unidades al cuadrado."
+    clase: "190"
+  - termino: "Corrección de Bessel"
+    definicion: "Dividir entre n−1 en vez de n para que la varianza muestral sea un estimador insesgado."
+    clase: "190"
+  - termino: "Covarianza"
+    definicion: "E[(X−μₓ)(Y−μᵧ)]. Mide variación conjunta; su valor depende de las unidades."
+    clase: "191"
+  - termino: "Correlación de Pearson"
+    definicion: "Covarianza normalizada por las desviaciones. Vive en [−1, 1] y solo detecta relación lineal."
+    clase: "191"
+  - termino: "Ensayo de Bernoulli"
+    definicion: "Experimento con dos resultados y probabilidad p de éxito. Ladrillo de la binomial."
+    clase: "192"
+  - termino: "Distribución binomial"
+    definicion: "Número de éxitos en n ensayos independientes. Media np, varianza np(1−p)."
+    clase: "192"
+  - termino: "Distribución de Poisson"
+    definicion: "Cuenta eventos raros en un intervalo. Su media y su varianza valen ambas λ."
+    clase: "193"
+  - termino: "Falta de memoria"
+    definicion: "Propiedad de la exponencial y la geométrica: P(X > s+t | X > s) = P(X > t)."
+    clase: "193"
+  - termino: "Distribución normal"
+    definicion: "Campana simétrica definida por μ y σ. Regla 68-95-99,7 dentro de una, dos y tres desviaciones."
+    clase: "194"
+  - termino: "Puntuación z"
+    definicion: "z = (x − μ)/σ. Expresa un valor en desviaciones estándar y permite comparar escalas distintas."
+    clase: "194"
+  - termino: "Distribución conjunta"
+    definicion: "Probabilidad de pares de valores. De ella se obtienen marginales sumando y condicionales dividiendo."
+    clase: "195"
+  - termino: "Distribución marginal"
+    definicion: "Distribución de una variable obtenida sumando la conjunta sobre la otra."
+    clase: "195"
+  - termino: "Ley de los grandes números"
+    definicion: "La media muestral converge a la esperanza cuando n crece. No dice nada de una muestra concreta."
+    clase: "196"
+  - termino: "Falacia del jugador"
+    definicion: "Creer que los resultados pasados compensan a los futuros. La moneda no tiene memoria."
+    clase: "196"
+  - termino: "Teorema central del límite"
+    definicion: "La media de n variables iid tiende a una normal de media μ y desviación σ/√n."
+    clase: "197"
+  - termino: "Error estándar"
+    definicion: "σ/√n. Desviación estándar de la media muestral; cae como la raíz del tamaño."
+    clase: "197"
+  - termino: "Monte Carlo"
+    definicion: "Estimar cantidades por muestreo aleatorio. Su error cae como 1/√n en cualquier dimensión."
+    clase: "198"
+  - termino: "Cadena de Markov"
+    definicion: "Proceso donde el siguiente estado depende solo del actual, no de la historia previa."
+    clase: "199"
+  - termino: "Distribución estacionaria"
+    definicion: "Vector π que cumple πP = π. Una cadena ergódica converge a él desde cualquier inicio."
+    clase: "199"
+  - termino: "Prior y posterior"
+    definicion: "Creencia antes y después de ver datos. Bayes es la regla que lleva de una a otra."
+    clase: "200"
+  - termino: "Conjugación"
+    definicion: "Prior y posterior de la misma familia. Beta es conjugada de la binomial y la actualización es sumar."
+    clase: "200"
+
+clases:
+  "181":
+    concepto: "Antes de calcular ninguna probabilidad hay que escribir el espacio muestral."
+    formulas:
+      - "Ω = conjunto de resultados posibles"
+      - "A ⊆ Ω  es un evento"
+      - "modelo equiprobable: P(A) = |A| / |Ω|"
+    desarrollo: |
+      Un **experimento aleatorio** es cualquier procedimiento cuyo resultado individual no se
+      puede predecir pero cuyo comportamiento agregado sí se puede describir. Lanzar dos dados,
+      medir el tiempo entre dos peticiones a un servidor o muestrear el siguiente token de un
+      modelo de lenguaje son experimentos aleatorios en ese sentido técnico.
+
+      El **espacio muestral** `Ω` es el conjunto de todos los resultados posibles, y escribirlo
+      explícitamente es el paso que más problemas resuelve. La mayoría de los errores clásicos
+      de probabilidad —el problema de Monty Hall, la paradoja de los dos niños, la del
+      cumpleaños— no son errores de cálculo: son espacios muestrales mal escritos.
+
+      Un **evento** es un subconjunto de `Ω`. «La suma es 7» no es un resultado, es el conjunto
+      de los seis pares que suman 7. Esta identificación entre eventos y conjuntos es lo que
+      permite usar unión, intersección y complemento como operaciones lógicas: «A o B» es
+      `A∪B`, «A y B» es `A∩B`, «no A» es `Aᶜ`.
+
+      El **modelo equiprobable** —contar casos favorables entre casos posibles— es solo un caso
+      particular, válido cuando hay simetría física que justifique que todos los resultados
+      pesan igual. Con dos dados, `Ω` tiene 36 pares ordenados, no 21 sumas: las sumas **no**
+      son equiprobables, y confundir «resultados» con «valores de interés» es el error que hace
+      que la gente calcule `P(suma=7) = 1/11`.
+    ejemplo: |
+      Dos dados equilibrados: el espacio muestral y dos eventos.
+
+      ```text
+      Ω = {(1,1), (1,2), ..., (6,6)}            |Ω| = 6 × 6 = 36
+
+      A = "la suma es 7"
+        = {(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)}     |A| = 6
+        P(A) = 6/36 = 1/6 ≈ 0,1667
+
+      B = "ambos dados son pares"
+        = {2,4,6} × {2,4,6}                              |B| = 9
+        P(B) = 9/36 = 0,25
+
+      Error frecuente: tomar Ω = {2,3,...,12} y decir P(suma=7) = 1/11.
+      Esas 11 sumas NO son equiprobables: 7 sale de 6 formas, 2 sale de 1.
+      ```
+    errores:
+      - "Calcular antes de escribir Ω."
+      - "Suponer equiprobabilidad sobre valores agregados en vez de sobre resultados elementales."
+      - "Confundir el evento con uno de sus resultados."
+    aplicacion: |
+      Diseño de experimentos, cálculo de tasas de colisión en tablas hash, análisis de casos en
+      pruebas aleatorizadas y cualquier modelado que empiece por enumerar lo que puede pasar.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 1](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 2](https://www.pearson.com/)"
+
+  "182":
+    concepto: "Tres axiomas de Kolmogorov generan toda la teoría de la probabilidad."
+    formulas:
+      - "1. P(A) ≥ 0"
+      - "2. P(Ω) = 1"
+      - "3. A∩B = ∅ ⟹ P(A∪B) = P(A) + P(B)"
+      - "consecuencias: P(∅) = 0,  P(Aᶜ) = 1 − P(A)"
+    desarrollo: |
+      En 1933 Kolmogorov redujo la probabilidad a tres reglas. La primera dice que no hay
+      probabilidades negativas; la segunda, que algo tiene que pasar; la tercera, que si dos
+      eventos no pueden ocurrir a la vez, la probabilidad de que ocurra alguno es la suma. Nada
+      más. Todo teorema de probabilidad es una consecuencia de estos tres enunciados.
+
+      De ellos se deducen inmediatamente las propiedades que se usan a diario. Como `Ω` y `∅`
+      son disjuntos y su unión es `Ω`, resulta `P(∅) = 0`. Como `A` y `Aᶜ` son disjuntos y su
+      unión es `Ω`, resulta la **regla del complemento** `P(Aᶜ) = 1 − P(A)`, que es la
+      herramienta más rentable del cálculo elemental: casi siempre es más fácil contar lo que
+      no pasa.
+
+      También se deduce la **monotonía**: si `A ⊆ B` entonces `P(A) ≤ P(B)`, y por tanto ninguna
+      probabilidad puede pasar de 1. Un cálculo que devuelva 1,3 no está mal redondeado: está
+      mal planteado, casi siempre por sumar eventos que se solapan sin restar la intersección.
+
+      Los axiomas no dicen **qué** probabilidades asignar. Esa es una decisión de modelado —por
+      simetría, por frecuencia observada o por creencia subjetiva— y los axiomas solo garantizan
+      que la asignación sea coherente. Esa separación entre estructura y modelo es lo que
+      permite que frecuentistas y bayesianos usen la misma matemática y discrepen en la
+      interpretación.
+    ejemplo: |
+      Comprobación de los axiomas sobre una distribución de tres resultados.
+
+      ```text
+      Ω = {a, b, c}      P(a)=0,5   P(b)=0,3   P(c)=0,2
+
+      Axioma 1  no negatividad:  0,5 ≥ 0, 0,3 ≥ 0, 0,2 ≥ 0        ✓
+      Axioma 2  normalización:   0,5 + 0,3 + 0,2 = 1,0            ✓
+      Axioma 3  aditividad:      P({a,b}) = 0,5 + 0,3 = 0,8       ✓
+
+      Consecuencias:
+        P(∅)  = 0
+        P(aᶜ) = 1 − 0,5 = 0,5 = P(b) + P(c)                       ✓
+        A={a} ⊆ B={a,b}:  0,5 ≤ 0,8                               ✓
+      ```
+    errores:
+      - "Obtener probabilidades mayores que 1 y aceptarlas como redondeo."
+      - "Aplicar el tercer axioma a eventos que sí se solapan."
+      - "Creer que los axiomas dicen cómo asignar las probabilidades iniciales."
+    aplicacion: |
+      Validación de distribuciones en código —comprobar que una salida softmax suma 1—,
+      verificación de modelos probabilísticos y depuración de simuladores.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 1](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019](https://services.math.duke.edu/~rtd/PTE/pte.html)"
+
+  "183":
+    concepto: "La regla de la suma resta la intersección; olvidarla infla la probabilidad."
+    formulas:
+      - "P(A∪B) = P(A) + P(B) − P(A∩B)"
+      - "si A y B son disjuntos: P(A∪B) = P(A) + P(B)"
+      - "P(A∩B) = P(A)·P(B|A)   (regla del producto)"
+    desarrollo: |
+      La **regla de la suma** general es inclusión-exclusión, la misma idea que apareció en
+      combinatoria en la parte 04: al sumar `P(A)` y `P(B)` se cuentan dos veces los resultados
+      que están en ambos, y hay que restarlos una vez. El caso simple —sumar sin más— solo vale
+      cuando los eventos son **mutuamente excluyentes**, es decir, cuando su intersección es
+      vacía.
+
+      La distinción importa porque el error es silencioso. Si dos eventos se solapan poco, la
+      suma sin corregir da un número plausible pero equivocado, y nada avisa. Solo cuando el
+      solapamiento es grande la suma supera 1 y el fallo se hace visible. La costumbre correcta
+      es preguntarse siempre si los eventos pueden ocurrir a la vez.
+
+      La **regla del producto** es la definición de probabilidad condicional despejada:
+      `P(A∩B) = P(A)·P(B|A)`. Se lee como una secuencia: primero ocurre A, y después B dado que
+      A ocurrió. Encadenada, produce la **regla de la cadena** probabilística
+      `P(A₁∩…∩Aₙ) = P(A₁)·P(A₂|A₁)·…·P(Aₙ|A₁…Aₙ₋₁)`, que es exactamente cómo un modelo de
+      lenguaje autorregresivo factoriza la probabilidad de una frase.
+
+      Solo cuando hay independencia el producto se simplifica a `P(A)·P(B)`. Ese atajo es tan
+      cómodo que se aplica por inercia, y la clase 185 insiste en que la independencia es una
+      propiedad que se verifica, no una comodidad que se asume.
+    ejemplo: |
+      Dos dados: A = "el primero es 1", B = "la suma es 7".
+
+      ```text
+      P(A) = 6/36  = 0,1667
+      P(B) = 6/36  = 0,1667
+
+      A∩B = {(1,6)}          P(A∩B) = 1/36 = 0,0278
+
+      inclusión-exclusión:
+        P(A∪B) = 0,1667 + 0,1667 − 0,0278 = 0,3056
+
+      conteo directo: |A∪B| = 11 pares    11/36 = 0,3056      ✓
+
+      sumar sin restar daría 0,3333: un 9 % de más, sin ningún aviso.
+      ```
+    errores:
+      - "Sumar probabilidades de eventos que se solapan."
+      - "Llamar «excluyentes» a eventos que solo son poco probables a la vez."
+      - "Usar P(A)·P(B) sin haber comprobado la independencia."
+    aplicacion: |
+      Cálculo de tasas de fallo en sistemas redundantes, unión de condiciones en filtros de
+      datos y factorización autorregresiva de secuencias.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://www.pearson.com/)"
+
+  "184":
+    concepto: "Condicionar es reducir el espacio muestral, no cambiar la realidad."
+    formulas:
+      - "P(A|B) = P(A∩B) / P(B),  con P(B) > 0"
+      - "P(A∩B) = P(B)·P(A|B)"
+      - "en general P(A|B) ≠ P(B|A)"
+    desarrollo: |
+      La probabilidad condicional responde a: «sabiendo que ocurrió B, ¿cuál es ahora la
+      probabilidad de A?». La fórmula `P(A|B) = P(A∩B)/P(B)` se entiende mejor leída como un
+      cambio de universo: el denominador reemplaza a `P(Ω) = 1` porque el nuevo espacio muestral
+      es `B`, y el numerador cuenta la parte de A que sobrevive dentro de él.
+
+      Nada cambia en el mundo al condicionar. Los dados ya cayeron; lo que cambia es **la
+      información disponible**, y con ella el reparto de probabilidad. Esta lectura evita la
+      idea mágica de que observar algo «modifica» el resultado, y explica por qué la
+      probabilidad condicional es la herramienta natural para razonar con evidencia parcial.
+
+      La consecuencia práctica es que `P(A|B)` y `P(B|A)` son cantidades distintas. `P(positivo
+      | enfermo)` es una propiedad del test; `P(enfermo | positivo)` es lo que le importa al
+      paciente, y depende además de cuánta gente está enferma. Intercambiarlas es la **falacia
+      del fiscal**, y la clase 186 pone los números.
+
+      Condicionar es además una técnica de cálculo. La **ley de probabilidad total** parte el
+      espacio en casos disjuntos y suma:
+      `P(A) = Σ P(A|Bᵢ)·P(Bᵢ)`. Casi todo problema difícil de probabilidad se vuelve fácil al
+      condicionar sobre la primera cosa que ocurre.
+    ejemplo: |
+      Dos dados: probabilidad de que la suma pase de 9, sabiendo que el primero salió 6.
+
+      ```text
+      A = "suma > 9"          |A| = 6      P(A) = 6/36 = 0,1667
+      B = "primer dado = 6"   |B| = 6      P(B) = 6/36 = 0,1667
+
+      A∩B = {(6,4), (6,5), (6,6)}         P(A∩B) = 3/36 = 0,0833
+
+      P(A|B) = 0,0833 / 0,1667 = 0,5
+
+      Lectura directa: el espacio se reduce de 36 a 6 pares,
+      y 3 de esos 6 cumplen la condición → 3/6 = 0,5           ✓
+
+      La información triplicó la probabilidad: de 0,1667 a 0,5.
+      ```
+    errores:
+      - "Intercambiar P(A|B) con P(B|A)."
+      - "Condicionar sobre un evento de probabilidad cero."
+      - "Creer que observar el condicionante altera físicamente el experimento."
+    aplicacion: |
+      Diagnóstico médico, filtros de spam, sistemas de recomendación y toda la factorización
+      condicional que usan los modelos generativos.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://www.pearson.com/)"
+
+  "185":
+    concepto: "La independencia es una igualdad que se verifica, no una suposición cómoda."
+    formulas:
+      - "A ⫫ B  ⟺  P(A∩B) = P(A)·P(B)"
+      - "equivalente: P(A|B) = P(A)"
+      - "independencia mutua exige la factorización para todo subconjunto"
+    desarrollo: |
+      Dos eventos son independientes cuando saber que uno ocurrió no cambia la probabilidad del
+      otro. La definición operativa es la factorización `P(A∩B) = P(A)·P(B)`, y la forma
+      equivalente `P(A|B) = P(A)` deja claro el contenido intuitivo: la información no aporta
+      nada.
+
+      Independencia no es lo mismo que **exclusión mutua**; de hecho son casi opuestas. Si A y B
+      son excluyentes y ambos tienen probabilidad positiva, saber que ocurrió A garantiza que B
+      no ocurrió, lo cual es una dependencia máxima. Confundir ambos conceptos es el error más
+      común de esta clase.
+
+      Con más de dos eventos, la independencia **por pares** no basta. Existen tríos donde cada
+      par factoriza pero el trío no, y en esos casos las conclusiones extraídas de suponer
+      independencia mutua son falsas. La independencia mutua exige que la factorización se
+      cumpla para todos los subconjuntos, no solo para los pares.
+
+      En la práctica, la independencia casi nunca es exacta: es una aproximación de modelado.
+      Naive Bayes supone que las palabras de un texto son condicionalmente independientes dadas
+      las clases, lo cual es falso, y aun así funciona razonablemente. El pecado no es suponer
+      independencia, es suponerla **sin decirlo** y luego interpretar los resultados como si
+      fuera cierta.
+    ejemplo: |
+      Tres eventos sobre dos lanzamientos de moneda.
+
+      ```text
+      Ω = {CC, CX, XC, XX}, equiprobables
+
+      A = "primera cara"       P(A) = 0,5
+      B = "segunda cara"       P(B) = 0,5
+      C = "ambas iguales"      P(C) = 0,5
+
+      A∩B = {CC}   P = 0,25 = 0,5 × 0,5     A ⫫ B    ✓
+      A∩C = {CC}   P = 0,25 = 0,5 × 0,5     A ⫫ C    ✓
+      B∩C = {CC}   P = 0,25 = 0,5 × 0,5     B ⫫ C    ✓
+
+      A∩B∩C = {CC}  P = 0,25
+      producto de los tres = 0,125          0,25 ≠ 0,125
+
+      Independientes por pares, NO mutuamente independientes.
+      ```
+    errores:
+      - "Confundir independencia con exclusión mutua."
+      - "Deducir independencia mutua a partir de independencia por pares."
+      - "Suponer independencia entre observaciones correlacionadas en el tiempo."
+    aplicacion: |
+      Naive Bayes, análisis de fiabilidad de componentes, validación cruzada con datos
+      temporales y todo supuesto de muestras iid en aprendizaje automático.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019](https://services.math.duke.edu/~rtd/PTE/pte.html)"
+
+  "186":
+    concepto: "Un test muy preciso sobre una enfermedad rara produce sobre todo falsos positivos."
+    formulas:
+      - "P(H|E) = P(E|H)·P(H) / P(E)"
+      - "P(E) = P(E|H)·P(H) + P(E|Hᶜ)·P(Hᶜ)"
+      - "posterior ∝ verosimilitud × prior"
+    desarrollo: |
+      El teorema de Bayes invierte el condicionamiento: convierte `P(E|H)`, que suele ser lo
+      que se sabe del mecanismo, en `P(H|E)`, que es lo que se quiere saber tras observar la
+      evidencia. Su demostración cabe en una línea —basta escribir `P(H∩E)` de las dos maneras
+      posibles— y su importancia es difícil de exagerar.
+
+      La lectura que hay que interiorizar es `posterior ∝ verosimilitud × prior`. La
+      verosimilitud `P(E|H)` mide cuán bien la hipótesis explica lo observado; el prior `P(H)`
+      mide cuán plausible era la hipótesis de entrada. **Un test excelente no puede compensar un
+      prior muy bajo**, y esa es la fuente de la falacia de la tasa base.
+
+      El caso numérico canónico: enfermedad con prevalencia 0,1 %, test con 99 % de sensibilidad
+      y 99 % de especificidad. Entre 100 000 personas hay 100 enfermas, de las que el test marca
+      99, y 99 900 sanas, de las que marca 999. Total de positivos: 1098, de los cuales solo 99
+      están enfermos. `P(enfermo | positivo) ≈ 9 %`. Diez falsos positivos por cada verdadero, y
+      el test no tiene ningún defecto.
+
+      La misma estructura aparece en juicios —«la probabilidad de esta coincidencia por azar es
+      1 entre un millón» no es la probabilidad de inocencia—, en detección de fraude, en alertas
+      de seguridad y en cualquier clasificador aplicado a una clase minoritaria. Por eso los
+      sistemas de detección de eventos raros se evalúan con precisión y exhaustividad, no con
+      exactitud.
+    ejemplo: |
+      Prevalencia 0,1 %, sensibilidad 99 %, especificidad 99 %.
+
+      ```text
+      Sobre 100 000 personas:
+
+                       enfermos (100)   sanos (99 900)   total
+        test +              99               999          1 098
+        test −               1            98 901         98 902
+
+      P(enfermo | +) = 99 / 1 098 = 0,0902  ≈  9 %
+
+      Por la fórmula:
+        P(+) = 0,99 × 0,001 + 0,01 × 0,999 = 0,01098
+        P(enfermo|+) = (0,99 × 0,001) / 0,01098 = 0,0902     ✓
+
+      falsos positivos por cada verdadero: 999 / 99 ≈ 10,1
+
+      Si la prevalencia sube al 10 %, P(enfermo|+) sube al 92 %.
+      Cambió el prior, no el test.
+      ```
+    errores:
+      - "Leer la sensibilidad del test como probabilidad de estar enfermo."
+      - "Ignorar la prevalencia al interpretar un positivo."
+      - "Evaluar clasificadores de clases raras con exactitud global."
+    aplicacion: |
+      Cribado médico, detección de fraude, filtros antispam, pruebas forenses y evaluación de
+      clasificadores con clases desbalanceadas.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)"
+
+  "187":
+    concepto: "Una variable aleatoria discreta se describe por su masa de probabilidad y su acumulada."
+    formulas:
+      - "pmf: p(x) = P(X = x),  Σ p(x) = 1"
+      - "cdf: F(x) = P(X ≤ x)"
+      - "P(a < X ≤ b) = F(b) − F(a)"
+    desarrollo: |
+      Una **variable aleatoria** es una función que asigna un número a cada resultado del
+      espacio muestral. El nombre es histórico y engañoso: ni es una variable en el sentido del
+      álgebra, ni es aleatoria —la función es perfectamente determinista; lo aleatorio es su
+      argumento—. Verla como función es lo que permite sumarlas, componerlas y tomar esperanzas.
+
+      Cuando el conjunto de valores es finito o numerable, la variable es **discreta** y queda
+      descrita por su **función de masa** `p(x) = P(X = x)`. Las dos condiciones que debe
+      cumplir son las heredadas de los axiomas: valores no negativos y suma total igual a 1.
+      Cualquier vector de números que cumpla eso es una distribución discreta válida, y una
+      salida softmax lo es por construcción.
+
+      La **función de distribución acumulada** `F(x) = P(X ≤ x)` recoge la misma información en
+      otra forma. Es no decreciente, empieza en 0 y termina en 1, y sirve para calcular
+      probabilidades de intervalos restando. En la práctica, la cdf es también el mecanismo para
+      **generar muestras**: aplicar su inversa a un uniforme produce muestras de la
+      distribución, técnica que la clase 198 usa.
+
+      El paso de un espacio muestral a una variable aleatoria es una simplificación deliberada:
+      se pierde información sobre qué resultado ocurrió y se conserva solo el número de interés.
+      Esa pérdida es justamente lo que hace manejable el modelado.
+    ejemplo: |
+      Una variable con cinco valores: masa, acumulada y esperanza.
+
+      ```text
+      x        0     1     2     3     4
+      p(x)    0,1   0,2   0,4   0,2   0,1     suma = 1,0    ✓
+      F(x)    0,1   0,3   0,7   0,9   1,0     no decreciente ✓
+
+      P(X ≤ 2) = F(2) = 0,7
+      P(X > 2) = 1 − 0,7 = 0,3
+      P(1 < X ≤ 3) = F(3) − F(1) = 0,9 − 0,3 = 0,6
+
+      E[X] = 0(0,1) + 1(0,2) + 2(0,4) + 3(0,2) + 4(0,1) = 2,0
+
+      La distribución es simétrica en torno a 2, y la esperanza lo confirma.
+      ```
+    errores:
+      - "Escribir una pmf cuyos valores no suman 1."
+      - "Confundir p(x) con F(x) al calcular probabilidades de intervalos."
+      - "Restar mal los extremos: P(a ≤ X ≤ b) incluye a, F(b) − F(a) no."
+    aplicacion: |
+      Distribuciones sobre vocabularios en modelos de lenguaje, conteos de eventos, modelado de
+      clases en clasificación y muestreo por transformada inversa.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 3](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://www.pearson.com/)"
+
+  "188":
+    concepto: "En una variable continua la densidad no es probabilidad y puede superar 1."
+    formulas:
+      - "P(a < X ≤ b) = ∫ₐᵇ f(x) dx"
+      - "∫ f(x) dx = 1  sobre todo el soporte"
+      - "P(X = c) = 0 para todo c"
+    desarrollo: |
+      Una variable continua toma valores en un intervalo, y ahí ocurre algo que sorprende: la
+      probabilidad de **cualquier valor concreto es cero**. No porque sea imposible, sino porque
+      hay infinitos valores y la probabilidad total es 1. Lo que tiene probabilidad positiva son
+      los intervalos, y se obtiene integrando.
+
+      La **función de densidad** `f(x)` no es una probabilidad: es una probabilidad **por unidad
+      de x**. Por eso puede valer más de 1 sin contradicción alguna, igual que una velocidad
+      puede ser de 100 km/h sin que se recorran 100 km. La exponencial con `λ = 2` tiene
+      densidad 2 en el origen, y no hay nada roto.
+
+      La cdf sigue siendo `F(x) = P(X ≤ x)`, ahora la integral de la densidad, y sigue siendo la
+      forma cómoda de calcular: `P(a < X ≤ b) = F(b) − F(a)`. Como los puntos no aportan
+      probabilidad, en el caso continuo da igual usar `<` o `≤`, algo que en el discreto sí
+      importa.
+
+      La consecuencia práctica más olvidada aparece al comparar modelos: la **verosimilitud** de
+      datos continuos es una densidad, no una probabilidad, y por eso puede ser mayor que 1 y su
+      logaritmo puede ser positivo. Ver un log-likelihood positivo en un modelo continuo no es
+      un error; verlo en uno discreto sí lo es.
+    ejemplo: |
+      Exponencial con λ = 2: densidad, probabilidad puntual e intervalos.
+
+      ```text
+      f(x) = 2·e^(−2x)   para x ≥ 0
+      F(x) = 1 − e^(−2x)
+
+      f(0) = 2,0            densidad > 1, perfectamente válido
+      P(X = 0,5) = 0        todo punto tiene probabilidad cero
+
+      P(X ≤ 0,5)      = 1 − e^(−1)   = 0,6321
+      P(0,5 < X ≤ 1)  = F(1) − F(0,5)
+                      = (1 − e^(−2)) − (1 − e^(−1))
+                      = 0,8647 − 0,6321 = 0,2325
+
+      Comprobación: el área total bajo f es 1.
+      ```
+    errores:
+      - "Interpretar f(x) como P(X = x)."
+      - "Alarmarse porque una densidad supera 1."
+      - "Arrastrar la distinción entre < y ≤ del caso discreto al continuo."
+    aplicacion: |
+      Modelado de tiempos de espera, verosimilitudes gaussianas, modelos de difusión y todo
+      estimador de densidad.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 5](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 2](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+
+  "189":
+    concepto: "La esperanza es lineal siempre, incluso cuando las variables son dependientes."
+    formulas:
+      - "E[X] = Σ x·p(x)   ó   ∫ x·f(x) dx"
+      - "E[aX + bY] = a·E[X] + b·E[Y]   sin exigir independencia"
+      - "en general E[g(X)] ≠ g(E[X])"
+    desarrollo: |
+      La esperanza es la media ponderada por probabilidad: el valor alrededor del cual se
+      equilibra la distribución. No tiene por qué ser un valor posible —la esperanza de un dado
+      es 3,5— porque describe el comportamiento agregado, no un resultado individual.
+
+      Su propiedad más útil es la **linealidad**, y es más fuerte de lo que suele recordarse:
+      `E[X + Y] = E[X] + E[Y]` vale **siempre**, sin ninguna hipótesis de independencia. Esa
+      generosidad convierte problemas aparentemente imposibles en sumas triviales: el número
+      esperado de puntos fijos de una permutación aleatoria es 1, y se obtiene sumando
+      indicadores fuertemente dependientes.
+
+      Lo que **no** vale es intercambiar la esperanza con una función no lineal.
+      `E[X²] ≠ E[X]²`, y la diferencia entre ambas es exactamente la varianza. Para funciones
+      convexas, la **desigualdad de Jensen** dice que `E[g(X)] ≥ g(E[X])`, y ese detalle es el
+      que separa la media de los logaritmos del logaritmo de la media en toda derivación de
+      ELBO o de verosimilitud.
+
+      En aprendizaje automático la esperanza está en la definición misma del objetivo: el riesgo
+      es `E[pérdida]` sobre la distribución de datos, y como esa distribución es desconocida se
+      estima con la media empírica. Toda la teoría del aprendizaje trata de cuánto se parece esa
+      media a la esperanza que se quería minimizar.
+    ejemplo: |
+      Uniforme en el intervalo unitario: teoría frente a simulación.
+
+      ```text
+      X ~ Uniforme(0,1)
+
+      teórico            simulado con 10⁶ muestras
+        E[X]   = 0,5       0,499912
+        E[X²]  = 1/3       0,333282
+
+      E[X]² = 0,25   ≠   E[X²] = 0,3333
+
+      diferencia = 0,3333 − 0,25 = 0,0833 = 1/12 = Var(X)     ✓
+
+      Linealidad sin independencia:
+        E[X + X] = 2·E[X] = 1,0    aunque X no es independiente de sí misma
+      ```
+    errores:
+      - "Exigir independencia para sumar esperanzas."
+      - "Escribir E[g(X)] = g(E[X]) con g no lineal."
+      - "Esperar que la esperanza sea un valor alcanzable."
+    aplicacion: |
+      Riesgo esperado en aprendizaje, valoración de apuestas y carteras, análisis del tiempo
+      medio de ejecución y estimadores de gradiente por muestreo.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 4](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 7](https://www.pearson.com/)"
+
+  "190":
+    concepto: "La varianza mide dispersión al cuadrado; dividir entre n−1 la vuelve insesgada."
+    formulas:
+      - "Var(X) = E[(X − μ)²] = E[X²] − E[X]²"
+      - "σ = √Var(X)"
+      - "muestral insesgada: s² = Σ(xᵢ − x̄)² / (n − 1)"
+    desarrollo: |
+      La varianza promedia el cuadrado de las desviaciones respecto de la media. Se eleva al
+      cuadrado, y no se toma el valor absoluto, porque así la varianza de una suma de variables
+      independientes es la suma de varianzas —una propiedad que el valor absoluto no tiene— y
+      porque el resultado es derivable, lo cual importa al optimizar.
+
+      El precio es que la varianza vive en **unidades al cuadrado**: si los datos son euros, la
+      varianza son euros al cuadrado, y no se puede comparar con la media. Por eso se define la
+      **desviación estándar** como su raíz, que vuelve a las unidades originales y sí es
+      comparable e interpretable.
+
+      La fórmula computacional `Var(X) = E[X²] − E[X]²` es cómoda pero numéricamente peligrosa:
+      resta dos números grandes y parecidos, que es exactamente la cancelación catastrófica de
+      la parte 01. Con datos alejados del origen puede devolver varianzas negativas. Las
+      bibliotecas serias usan el algoritmo de Welford en una pasada, no esa fórmula.
+
+      La **corrección de Bessel** —dividir entre `n−1`— compensa que las desviaciones se calculan
+      respecto de la media **muestral**, que está ajustada a los propios datos y por tanto los
+      aproxima demasiado bien. Se han gastado un grado de libertad al estimar la media, y
+      devolverlo hace que el estimador sea insesgado.
+    ejemplo: |
+      Ocho observaciones: dos denominadores, dos resultados.
+
+      ```text
+      datos: 2, 4, 4, 4, 5, 5, 7, 9      n = 8
+      media: 40 / 8 = 5,0
+
+      desviaciones:  −3, −1, −1, −1, 0, 0, 2, 4
+      cuadrados:      9,  1,  1,  1, 0, 0, 4, 16      suma = 32
+
+      varianza poblacional  = 32 / 8 = 4,0        σ = 2,0
+      varianza muestral     = 32 / 7 = 4,5714     s = 2,1381
+
+      Con n grande la diferencia se desvanece; con n = 8 es del 14 %.
+      ```
+    errores:
+      - "Comparar una varianza con una media: las unidades no coinciden."
+      - "Usar E[X²] − E[X]² con datos grandes y sufrir cancelación."
+      - "Elegir n o n−1 sin saber si se describe una población o se estima."
+    aplicacion: |
+      Normalización de características, batch normalization, control de calidad, medición de
+      riesgo financiero y análisis de estabilidad de entrenamientos.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 4](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 3](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+
+  "191":
+    concepto: "La covarianza depende de las unidades; la correlación no, pero solo ve lo lineal."
+    formulas:
+      - "Cov(X,Y) = E[(X − μₓ)(Y − μᵧ)]"
+      - "ρ = Cov(X,Y) / (σₓ·σᵧ),   −1 ≤ ρ ≤ 1"
+      - "Var(X+Y) = Var(X) + Var(Y) + 2·Cov(X,Y)"
+    desarrollo: |
+      La covarianza mide si dos variables se desvían de su media en el mismo sentido. Positiva
+      significa que suelen subir juntas; negativa, que una sube cuando la otra baja; cero, que
+      no hay tendencia lineal conjunta. Su defecto es que su magnitud depende de las escalas:
+      medir en milímetros en vez de metros multiplica la covarianza por mil sin que la relación
+      haya cambiado.
+
+      La **correlación de Pearson** arregla eso dividiendo por las desviaciones estándar. El
+      resultado es adimensional y está acotado en `[−1, 1]`, con los extremos alcanzados solo si
+      la relación es exactamente lineal. Esa acotación es la desigualdad de Cauchy-Schwarz
+      aplicada a variables centradas, y conecta con el ángulo entre vectores de la parte 05:
+      la correlación **es** el coseno del ángulo entre los datos centrados.
+
+      La limitación crítica es que la correlación solo detecta relaciones **lineales**. Si
+      `Y = X²` con `X` simétrica alrededor de cero, la correlación es exactamente 0 y la
+      dependencia es total. Correlación cero no implica independencia; la implicación solo va en
+      un sentido, y solo bajo normalidad conjunta se convierte en equivalencia.
+
+      La fórmula de la varianza de una suma muestra por qué la covarianza importa en la práctica:
+      diversificar una cartera, promediar predictores en un ensemble o combinar estimadores
+      reduce la varianza solo en la medida en que las covarianzas sean bajas. Modelos muy
+      correlacionados no se ayudan al promediarse.
+    ejemplo: |
+      Invariancia de escala: multiplicar una variable por mil.
+
+      ```text
+      x = 1, 2, 3, 4, 5 ...        y correlacionada con x
+      z = 1000·y                   misma relación, otras unidades
+
+      Cov(x, y) =    4,925
+      Cov(x, z) = 4 925,0          × 1000, como la escala
+
+      corr(x, y) = 0,998830
+      corr(x, z) = 0,998830        idéntica                     ✓
+
+      Dependencia no lineal invisible:
+        x = −2, −1, 0, 1, 2      y = x² = 4, 1, 0, 1, 4
+        corr(x, y) = 0    y sin embargo y está determinada por x
+      ```
+    errores:
+      - "Interpretar la magnitud de una covarianza sin mirar las unidades."
+      - "Deducir independencia de una correlación cero."
+      - "Leer correlación como causalidad."
+    aplicacion: |
+      Matrices de covarianza en PCA, selección de características, diversificación de carteras y
+      diseño de ensembles con predictores poco correlacionados.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 7](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 3](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+
+  "192":
+    concepto: "La binomial cuenta éxitos en n ensayos de Bernoulli independientes."
+    formulas:
+      - "Bernoulli: P(X=1) = p,  E[X] = p,  Var(X) = p(1−p)"
+      - "Binomial: P(X=k) = C(n,k)·pᵏ·(1−p)ⁿ⁻ᵏ"
+      - "E[X] = np,   Var(X) = np(1−p)"
+    desarrollo: |
+      Un **ensayo de Bernoulli** es el experimento más simple posible: éxito con probabilidad
+      `p`, fracaso con `1−p`. Su esperanza es `p` y su varianza `p(1−p)`, que alcanza su máximo
+      en `p = 0,5`: la máxima incertidumbre está en la moneda justa, y decae hacia cero cuando
+      el resultado es casi seguro en cualquiera de los dos sentidos.
+
+      Repetir `n` ensayos independientes con la misma `p` y contar los éxitos da la
+      **binomial**. Su fórmula tiene tres piezas que conviene leer por separado: `pᵏ` es la
+      probabilidad de los k éxitos, `(1−p)ⁿ⁻ᵏ` la de los fracasos restantes, y `C(n,k)` cuenta
+      de cuántas maneras distintas pueden ordenarse. Esa combinatoria es la de la parte 04.
+
+      La media `np` y la varianza `np(1−p)` salen sin esfuerzo de la linealidad de la esperanza
+      y de la aditividad de la varianza bajo independencia: la binomial es una suma de `n`
+      Bernoullis. Este es el ejemplo más limpio de por qué esas dos propiedades merecían clases
+      propias.
+
+      Las condiciones importan. Si los ensayos no son independientes, o si `p` cambia entre
+      ellos, la binomial no aplica: extraer cartas sin reposición da una hipergeométrica, no una
+      binomial. En aprendizaje automático la Bernoulli aparece como salida de toda regresión
+      logística, y su log-verosimilitud negativa **es** la entropía cruzada binaria.
+    ejemplo: |
+      Diez ensayos con probabilidad de éxito 0,3.
+
+      ```text
+      n = 10,  p = 0,3
+
+      media teórica     = np       = 3,0
+      varianza teórica  = np(1−p)  = 2,1
+
+      P(X = 3) = C(10,3) · 0,3³ · 0,7⁷
+               = 120 · 0,027 · 0,0823543
+               = 0,266828
+
+      simulación con 10⁵ réplicas:  media 2,99145         ✓
+
+      Var máxima de un Bernoulli: p = 0,5 → 0,25
+      Var con p = 0,3            → 0,21
+      Var con p = 0,01           → 0,0099
+      ```
+    errores:
+      - "Aplicar la binomial a ensayos dependientes o con p variable."
+      - "Olvidar el coeficiente combinatorio y calcular solo pᵏ(1−p)ⁿ⁻ᵏ."
+      - "Confundir el número de ensayos n con el número de éxitos k."
+    aplicacion: |
+      Tests A/B, tasas de conversión, control de calidad por muestreo, salida de regresión
+      logística y entropía cruzada binaria.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 3](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://www.pearson.com/)"
+
+  "193":
+    concepto: "Poisson cuenta eventos raros por intervalo; la exponencial mide el tiempo entre ellos."
+    formulas:
+      - "Poisson: P(N=k) = e^(−λ)·λᵏ / k!,  E[N] = Var(N) = λ"
+      - "Exponencial: f(t) = λ·e^(−λt),  E[T] = 1/λ"
+      - "falta de memoria: P(T > s+t | T > s) = P(T > t)"
+    desarrollo: |
+      La distribución de Poisson describe el número de eventos que ocurren en un intervalo
+      cuando esos eventos son independientes y suceden a una tasa media constante `λ`. Surge
+      como límite de una binomial con `n` grande y `p` pequeño manteniendo `np = λ`: muchísimas
+      oportunidades, cada una muy improbable.
+
+      Su firma es que **media y varianza coinciden**, ambas iguales a `λ`. Ese hecho sirve de
+      diagnóstico: si en unos datos de conteo la varianza supera claramente a la media, hay
+      **sobredispersión** y el modelo de Poisson es inadecuado, normalmente porque la tasa no es
+      constante o los eventos se agrupan.
+
+      La exponencial es la otra cara del mismo proceso: si los conteos son Poisson con tasa `λ`,
+      los **tiempos entre eventos** son exponenciales con media `1/λ`. Tres eventos por hora
+      implican una espera media de veinte minutos. Es la misma información contada desde el
+      tiempo en vez de desde la cuenta.
+
+      La propiedad de **falta de memoria** es lo que hace la exponencial única entre las
+      distribuciones continuas: haber esperado ya media hora no acorta la espera restante. Es
+      realista para procesos sin desgaste —desintegración radiactiva, llegadas a un servidor— y
+      claramente falso para procesos con envejecimiento, donde se usan Weibull o gamma.
+    ejemplo: |
+      Tres eventos por hora: conteos y esperas.
+
+      ```text
+      λ = 3 eventos/hora
+
+      Poisson:
+        P(N = 0) = e^(−3)              = 0,049787
+        P(N = 3) = e^(−3)·3³ / 3!      = 0,224042
+        E[N] = 3,0      Var(N) = 3,0      iguales      ✓
+
+      Exponencial:
+        E[T] = 1/3 hora = 20 minutos
+        P(T > 1 h) = e^(−3) = 0,049787
+
+      Coherencia: "ningún evento en 1 hora" es lo mismo que
+      "la primera espera supera 1 hora"   →  mismo 0,049787   ✓
+
+      Falta de memoria:
+        P(T > 1,5 | T > 0,5) = e^(−3) = P(T > 1)              ✓
+      ```
+    errores:
+      - "Modelar conteos sobredispersos con Poisson."
+      - "Confundir la tasa λ con la media de la espera, que es 1/λ."
+      - "Suponer falta de memoria en procesos con desgaste o envejecimiento."
+    aplicacion: |
+      Colas y capacidad de servidores, llegadas de peticiones, fiabilidad de componentes,
+      conteos de defectos y modelos de supervivencia.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 5](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019](https://services.math.duke.edu/~rtd/PTE/pte.html)"
+
+  "194":
+    concepto: "La normal queda fijada por media y desviación, y la puntuación z la vuelve universal."
+    formulas:
+      - "f(x) = 1/(σ√(2π)) · e^(−(x−μ)²/(2σ²))"
+      - "z = (x − μ) / σ  ⟹  Z ~ Normal(0,1)"
+      - "68,27 % · 95,45 % · 99,73 % dentro de 1σ, 2σ y 3σ"
+    desarrollo: |
+      La distribución normal es simétrica, unimodal y queda completamente determinada por dos
+      números: la media `μ`, que fija dónde está el centro, y la desviación `σ`, que fija cuán
+      ancha es. Ninguna otra distribución tan simple aparece tan a menudo, y la razón no es
+      estética: es el teorema central del límite de la clase 197.
+
+      La **estandarización** `z = (x − μ)/σ` convierte cualquier normal en la normal estándar.
+      Eso permite tabular una sola distribución y responder cualquier pregunta sobre todas las
+      demás. La puntuación z se lee directamente como «a cuántas desviaciones del centro está
+      este valor», y es la forma correcta de comparar magnitudes medidas en escalas distintas.
+
+      La **regla 68-95-99,7** conviene memorizarla porque da intuición inmediata: dentro de una
+      desviación cae el 68 % de los datos, dentro de dos el 95 % y dentro de tres el 99,7 %. Un
+      valor a más de tres sigmas ocurre menos de tres veces de cada mil, y por eso ese umbral se
+      usa como criterio de anomalía.
+
+      La advertencia habitual: la normal tiene **colas ligeras**, que decaen exponencialmente al
+      cuadrado. Muchos fenómenos reales —retornos financieros, tamaños de archivo, popularidad
+      de contenidos— tienen colas mucho más pesadas, y modelarlos como normales subestima
+      gravemente los eventos extremos. Suponer normalidad sin comprobarla es un error caro.
+    ejemplo: |
+      Distribución de CI con media 100 y desviación 15.
+
+      ```text
+      μ = 100,  σ = 15
+
+      P(85  < X < 115) = 0,6827      1σ
+      P(70  < X < 130) = 0,9545      2σ
+      P(55  < X < 145) = 0,9973      3σ
+
+      z de 130 = (130 − 100) / 15 = 2,0
+      P(X > 130) = (1 − 0,9545) / 2 = 0,0228   ≈ 1 de cada 44
+
+      Comparación entre escalas:
+        130 en CI  (z = 2,0)
+        620 en una prueba de μ=500, σ=100  (z = 1,2)
+        el primero es más extremo pese al número menor
+      ```
+    errores:
+      - "Suponer normalidad sin comprobarla."
+      - "Usar la normal para fenómenos con colas pesadas o soporte acotado."
+      - "Confundir la puntuación z con una probabilidad."
+    aplicacion: |
+      Inicialización de pesos en redes, ruido gaussiano en modelos de difusión, control
+      estadístico de procesos, intervalos de confianza y detección de anomalías.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 5](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 2](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+
+  "195":
+    concepto: "De la conjunta se obtienen las marginales sumando y las condicionales dividiendo."
+    formulas:
+      - "conjunta: p(x,y) = P(X=x, Y=y),  Σ p(x,y) = 1"
+      - "marginal: p(x) = Σᵧ p(x,y)"
+      - "condicional: p(y|x) = p(x,y) / p(x)"
+      - "independencia ⟺ p(x,y) = p(x)·p(y) para todo par"
+    desarrollo: |
+      Cuando dos variables se observan a la vez, la descripción completa es la **distribución
+      conjunta**: una probabilidad por cada par de valores. Todo lo demás se deriva de ella, y
+      esa es la razón de que la conjunta sea el objeto fundamental y las marginales solo
+      resúmenes.
+
+      **Marginalizar** es sumar sobre la variable que no interesa. El nombre viene de las tablas
+      de doble entrada, donde esas sumas se escribían literalmente en los márgenes. Marginalizar
+      pierde información: dos conjuntas muy distintas pueden tener exactamente las mismas
+      marginales, y por eso conocer cada variable por separado no basta para saber cómo se
+      relacionan.
+
+      **Condicionar** es dividir por la marginal correspondiente, lo cual reescala una fila o
+      columna para que vuelva a sumar 1. La comparación entre `p(x,y)` y `p(x)·p(y)` es el test
+      de independencia: si coinciden para todos los pares, las variables son independientes; si
+      difieren en alguno, no lo son.
+
+      Esta es la maquinaria de los modelos gráficos y de todo el modelado probabilístico
+      moderno. Un modelo generativo aprende una conjunta sobre datos y etiquetas; la inferencia
+      consiste en condicionar sobre lo observado y marginalizar lo latente. En el caso continuo
+      las sumas se vuelven integrales, y esas integrales intratables son las que motivan la
+      inferencia variacional y los métodos de la parte 17.
+    ejemplo: |
+      Conjunta de dos variables binarias.
+
+      ```text
+      p(x,y)        y=0     y=1    | marginal X
+      x=0           0,20    0,30   |    0,50
+      x=1           0,10    0,40   |    0,50
+      ------------------------------------------
+      marginal Y    0,30    0,70   |    1,00     ✓
+
+      Condicional:
+        p(y=1 | x=1) = 0,40 / 0,50 = 0,80
+        p(y=1 | x=0) = 0,30 / 0,50 = 0,60
+
+      Test de independencia en el par (1,1):
+        p(1,1)        = 0,40
+        p(1)·p(1)     = 0,50 × 0,70 = 0,35
+        0,40 ≠ 0,35   →  X e Y NO son independientes
+      ```
+    errores:
+      - "Reconstruir la conjunta a partir de las marginales."
+      - "Dividir por la marginal equivocada al condicionar."
+      - "Olvidar comprobar que la conjunta suma 1."
+    aplicacion: |
+      Modelos gráficos probabilísticos, inferencia bayesiana, tablas de contingencia y
+      distribuciones latentes en modelos generativos.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 7](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 8](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "196":
+    concepto: "La media muestral converge a la esperanza, pero a velocidad de raíz cuadrada."
+    formulas:
+      - "x̄ₙ → μ  cuando n → ∞"
+      - "error típico ≈ σ/√n"
+      - "cuadruplicar n reduce el error a la mitad"
+    desarrollo: |
+      La ley de los grandes números es el puente entre probabilidad y realidad: garantiza que
+      promediar muchas observaciones independientes acerca la media muestral a la esperanza
+      teórica. Sin ella, la probabilidad sería un juego formal sin conexión con los datos, y
+      ninguna simulación tendría sentido.
+
+      Lo que la ley **no** dice es igual de importante. No dice que las desviaciones se
+      compensen: si han salido diez caras seguidas, la moneda no «debe» ahora cruces. La
+      convergencia ocurre porque las primeras observaciones se **diluyen** al crecer el
+      denominador, no porque algo las corrija. Creer lo contrario es la **falacia del jugador**.
+
+      Tampoco garantiza nada sobre una muestra concreta. Es un enunciado asintótico: para
+      cualquier margen de error, existe un `n` a partir del cual la desviación es improbable.
+      Ese `n` puede ser enorme si la varianza es grande, y para distribuciones sin media finita
+      —como la Cauchy— la ley sencillamente no se cumple.
+
+      La velocidad es la parte que más cuesta aceptar en la práctica. El error típico cae como
+      `σ/√n`, de modo que pasar de 1000 a 4000 muestras solo reduce el error a la mitad, y
+      ganar un dígito decimal cuesta multiplicar por cien el trabajo. Esa raíz cuadrada es la
+      que gobierna el coste de toda simulación Monte Carlo.
+    ejemplo: |
+      Media muestral de una uniforme en el intervalo unitario.
+
+      ```text
+      distribución: Uniforme(0,1)     media real = 0,5
+
+           n        media       error
+          10       0,607062    0,107062
+         100       0,509220    0,009220
+       1 000       0,503115    0,003115
+      10 000       0,500987    0,000987
+
+      El error cae aproximadamente como 1/√n:
+        de n=100 a n=10 000  →  n × 100  →  error / 10       ✓
+
+      Nada garantiza que una muestra concreta se comporte:
+      con n = 10 el error fue del 21 %.
+      ```
+    errores:
+      - "Esperar que los desvíos pasados se compensen."
+      - "Aplicar la ley a distribuciones sin media finita."
+      - "Confiar en una única simulación corta como si fuera el valor exacto."
+    aplicacion: |
+      Justificación de la simulación, validación de estimadores, dimensionamiento de tests A/B y
+      tamaño de lote en descenso estocástico.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019, cap. 2](https://services.math.duke.edu/~rtd/PTE/pte.html)"
+
+  "197":
+    concepto: "La media de muchas variables tiende a una normal aunque el origen no lo sea."
+    formulas:
+      - "x̄ₙ ≈ Normal(μ, σ²/n)  para n grande"
+      - "(x̄ₙ − μ)/(σ/√n) → Normal(0,1)"
+      - "error estándar = σ/√n"
+    desarrollo: |
+      El teorema central del límite es el resultado más sorprendente de la probabilidad
+      elemental: la distribución de la media muestral tiende a una normal **sin importar de qué
+      distribución vengan los datos**, siempre que tengan media y varianza finitas y sean
+      independientes. La forma original se olvida; solo sobreviven su media y su varianza.
+
+      Mientras la ley de los grandes números dice **hacia dónde** converge la media, el TCL dice
+      **cómo se distribuye alrededor** de ese límite. Esa información es lo que permite construir
+      intervalos de confianza y contrastes de hipótesis: sin TCL no habría estadística
+      inferencial práctica.
+
+      El **error estándar** `σ/√n` es la desviación de la media muestral, no de los datos.
+      Confundir `σ` con `σ/√n` es el error más frecuente al reportar resultados: la primera
+      describe cuánto varían las observaciones, la segunda cuánto varía la estimación. Sus
+      valores difieren por un factor `√n`, que con `n = 10 000` es cien.
+
+      La regla de «con n ≥ 30 basta» es una guía burda. La velocidad de convergencia depende de
+      la asimetría de la distribución de origen: para una exponencial `n = 30` ya es razonable,
+      para una distribución muy sesgada o con valores extremos puede hacer falta mucho más. Y si
+      la varianza es infinita, el TCL directamente no aplica.
+    ejemplo: |
+      Medias de muestras de tamaño 30 de una exponencial claramente asimétrica.
+
+      ```text
+      población: Exponencial(1)      media 1,   varianza 1
+                 fuertemente asimétrica, nada normal
+
+      8 000 réplicas de muestras de tamaño n = 30:
+
+        media de las medias    = 0,997036     teórico 1,0        ✓
+        varianza de las medias = 0,032656     teórico 1/30 = 0,0333  ✓
+        desviación             = 0,1807       teórico 1/√30 = 0,1826 ✓
+
+      La distribución de las medias es casi simétrica y acampanada
+      aunque la población de origen no tenga nada de normal.
+
+      error estándar frente a desviación de los datos:
+        σ      = 1,0       cuánto varía una observación
+        σ/√30  = 0,183     cuánto varía la media
+      ```
+    errores:
+      - "Reportar σ donde corresponde σ/√n."
+      - "Aplicar el TCL a datos dependientes o con varianza infinita."
+      - "Creer que el TCL vuelve normales a los datos: normaliza las medias, no las observaciones."
+    aplicacion: |
+      Intervalos de confianza, contrastes de hipótesis, barras de error en experimentos y
+      justificación del ruido gaussiano en modelos de medición.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 5](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
+
+  "198":
+    concepto: "Monte Carlo estima integrales muestreando, con error 1/√n en cualquier dimensión."
+    formulas:
+      - "E[g(X)] ≈ (1/n)·Σ g(xᵢ)"
+      - "error estándar = s/√n"
+      - "intervalo aproximado: estimación ± 1,96·s/√n"
+    desarrollo: |
+      El método de Monte Carlo resuelve un problema determinista —una integral, un área, una
+      probabilidad— convirtiéndolo en un experimento aleatorio y promediando. Su justificación
+      es la ley de los grandes números, y su control de error es el teorema central del límite:
+      las dos clases anteriores existían para llegar aquí.
+
+      El ejemplo clásico estima π lanzando puntos uniformes en el cuadrado unitario y contando
+      cuántos caen dentro del cuarto de círculo. La proporción tiende a `π/4`. Es un método
+      malísimo para calcular π —hay algoritmos que dan miles de dígitos— pero perfecto para
+      entender el mecanismo y su coste.
+
+      Ese coste es la convergencia `O(1/√n)`, que es lenta: para un dígito decimal más hacen
+      falta cien veces más muestras. La compensación es decisiva: **esa velocidad no depende de
+      la dimensión**. Las reglas de cuadratura clásicas empeoran exponencialmente al crecer la
+      dimensión, y por encima de unas pocas variables Monte Carlo es la única opción viable.
+
+      Dos exigencias de higiene, que la clase trata como obligatorias. Primera: **fijar la
+      semilla**, porque un resultado no reproducible no es un resultado. Segunda: **reportar el
+      error estándar** junto a la estimación; un número Monte Carlo sin su incertidumbre no
+      permite saber si la diferencia observada frente a otro método es real o es ruido.
+    ejemplo: |
+      Estimación de π por muestreo uniforme, con semilla fija.
+
+      ```text
+      semilla = 20260819
+
+            n     estimación    error      error estándar
+        1 000       3,156000    0,014407      0,0519
+       10 000       3,145600    0,004007      0,0164
+      100 000       3,142880    0,001287      0,0052
+
+      π real = 3,141593
+
+      El error cae como 1/√n:
+        n × 100  →  error estándar / 10                        ✓
+
+      Intervalo al 95 % con n = 100 000:
+        3,142880 ± 1,96 × 0,0052 = [3,13268, 3,15308]
+        contiene a π                                           ✓
+
+      Ganar un decimal más exigiría n ≈ 10 000 000.
+      ```
+    errores:
+      - "Publicar una estimación sin semilla ni error estándar."
+      - "Esperar precisión alta de una simulación corta."
+      - "Descartar Monte Carlo en alta dimensión, donde es lo único que escala."
+    aplicacion: |
+      Integración en alta dimensión, valoración de opciones, propagación de incertidumbre,
+      dropout en inferencia y muestreo en modelos generativos.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Robert, C.; Casella, G. *Monte Carlo Statistical Methods*, 2ª ed., Springer, 2004](https://link.springer.com/book/10.1007/978-1-4757-4145-2)"
+
+  "199":
+    concepto: "Una cadena de Markov olvida su historia y, si es ergódica, olvida también su inicio."
+    formulas:
+      - "P(Xₙ₊₁ | Xₙ, …, X₀) = P(Xₙ₊₁ | Xₙ)"
+      - "distribución tras n pasos: v·Pⁿ"
+      - "estacionaria: πP = π,  con Σπᵢ = 1"
+    desarrollo: |
+      Una cadena de Markov es un proceso en el que el futuro depende del presente pero no del
+      pasado. Esa **propiedad de Markov** es una simplificación drástica y sorprendentemente
+      útil: basta con la matriz de transición `P`, donde `Pᵢⱼ` es la probabilidad de pasar del
+      estado i al j, y cada fila suma 1.
+
+      La evolución es álgebra lineal pura. Si `v` es la distribución actual sobre los estados,
+      tras un paso es `vP` y tras `n` pasos es `vPⁿ`. Toda la parte 06 se vuelve relevante aquí:
+      las potencias de la matriz se calculan con su diagonalización, y la velocidad de
+      convergencia la marca el segundo autovalor en módulo.
+
+      La **distribución estacionaria** `π` cumple `πP = π`: es un autovector izquierdo con
+      autovalor 1, y describe el régimen de equilibrio. Si la cadena es **ergódica** —se puede
+      llegar de cualquier estado a cualquier otro y no hay ciclos rígidos— entonces la
+      estacionaria es única y la cadena converge a ella desde **cualquier** inicio. La condición
+      inicial se olvida.
+
+      Esa propiedad es la base de MCMC: si se quiere muestrear de una distribución imposible de
+      muestrear directamente, se construye una cadena cuya estacionaria sea esa distribución y
+      se la deja correr. PageRank es exactamente lo mismo aplicado al grafo de la web, y los
+      modelos de difusión son un proceso estocástico cuyo reverso se aprende con una red.
+    ejemplo: |
+      Cadena de dos estados y su equilibrio.
+
+      ```text
+      P = [[0,9   0,1]        filas suman 1        ✓
+           [0,5   0,5]]
+
+      inicio v = [1,0   0,0]      seguro en el estado A
+
+      paso 1:  [0,9000   0,1000]
+      paso 2:  [0,8600   0,1400]
+      paso 5:  [0,8346   0,1654]
+      paso 20: [0,8333   0,1667]
+
+      Estacionaria exacta: resolver πP = π con π₀ + π₁ = 1
+        0,9π₀ + 0,5π₁ = π₀   →   0,5π₁ = 0,1π₀   →   π₀ = 5π₁
+        π = [5/6   1/6] = [0,833333   0,166667]              ✓
+
+      Desde v = [0,0  1,0] la cadena converge al mismo π.
+      ```
+    errores:
+      - "Usar matrices de transición cuyas filas no suman 1."
+      - "Confundir filas con columnas al multiplicar por la izquierda o la derecha."
+      - "Suponer convergencia en cadenas periódicas o reducibles."
+    aplicacion: |
+      PageRank, MCMC, modelos ocultos de Markov, aprendizaje por refuerzo con procesos de
+      decisión markovianos y procesos de difusión.
+    referencias:
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 11](https://projects.iq.harvard.edu/stat110/home)"
+      - "[Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019, cap. 5](https://services.math.duke.edu/~rtd/PTE/pte.html)"
+
+  "200":
+    concepto: "Con suficientes datos, el prior se diluye y bayesiano y frecuentista convergen."
+    formulas:
+      - "posterior ∝ verosimilitud × prior"
+      - "Beta(a,b) + k éxitos en n ⟹ Beta(a+k, b+n−k)"
+      - "media posterior = (a+k) / (a+b+n)"
+    desarrollo: |
+      El capstone reúne toda la parte en un simulador: se fija un parámetro real desconocido
+      para el observador, se generan datos, y se estima ese parámetro de dos maneras —contando
+      frecuencias y actualizando una creencia con Bayes— para ver cómo se comportan a medida que
+      llegan observaciones.
+
+      El prior `Beta(2,2)` expresa una creencia previa suave centrada en 0,5. Es **conjugado** de
+      la binomial, lo que significa que el posterior pertenece a la misma familia y la
+      actualización se reduce a sumar: `Beta(a+k, b+n−k)`. Esa comodidad algebraica es la razón
+      histórica de que los priores conjugados dominaran antes de que MCMC hiciera viable
+      cualquier prior.
+
+      Lo que el experimento muestra es la **dilución del prior**. Con pocas observaciones la
+      media posterior está tirada hacia 0,5 por la creencia previa; con cientos de datos se pega
+      a la frecuencia observada, y las dos estimaciones se vuelven indistinguibles. El prior
+      importa cuando hay poca evidencia, que es precisamente cuando hace falta que importe.
+
+      La diferencia de fondo entre ambos enfoques no es numérica sino de interpretación. El
+      frecuentista da un punto y un intervalo con garantías de cobertura a largo plazo; el
+      bayesiano da una **distribución completa** sobre el parámetro, de la que se leen media,
+      incertidumbre e intervalo creíble. Esa distribución es lo que la parte 10 formaliza y lo
+      que hace del enfoque bayesiano el lenguaje natural de la cuantificación de incertidumbre.
+    ejemplo: |
+      Parámetro real 0,35, prior Beta(2,2), evidencia creciente.
+
+      ```text
+        n obs   éxitos   media posterior   desv. posterior
+            0        0        0,5000           0,2236
+           10        3        0,3571           0,1247
+           50        16       0,3333           0,0645
+          200        58       0,2941           0,0313
+        1 000      265        0,2669           0,0140
+
+      estimación frecuentista final (265/1000) = 0,2650
+      estimación bayesiana final                = 0,2696
+
+      diferencia = 0,0046  →  el prior ya casi no pesa
+
+      peso del prior:  a+b = 4 observaciones equivalentes
+        frente a n = 10   pesa un 29 %
+        frente a n = 1000 pesa un 0,4 %
+      ```
+    errores:
+      - "Elegir un prior muy informativo y presentar el resultado como si viniera de los datos."
+      - "Comparar un intervalo de confianza con uno creíble como si significaran lo mismo."
+      - "Actualizar dos veces con la misma observación."
+    aplicacion: |
+      Tests A/B bayesianos, bandidos multibrazo con Thompson sampling, calibración de modelos y
+      estimación de tasas con pocos datos.
+    referencias:
+      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)"
+      - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 8](https://projects.iq.harvard.edu/stat110/home)"

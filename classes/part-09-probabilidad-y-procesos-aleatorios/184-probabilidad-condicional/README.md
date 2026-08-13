@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**Condicionar es reducir el espacio muestral, no cambiar la realidad.**
 
-Esta clase concreta ese objetivo sobre **Probabilidad condicional**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `conditional`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🧩 Fórmulas de la clase
+
+```text
+P(A|B) = P(A∩B) / P(B),  con P(B) > 0
+P(A∩B) = P(B)·P(A|B)
+en general P(A|B) ≠ P(B|A)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Monte Carlo convierge como 1/√n: cuadruplicar muestras solo duplica la precisión.
+La probabilidad condicional responde a: «sabiendo que ocurrió B, ¿cuál es ahora la
+probabilidad de A?». La fórmula `P(A|B) = P(A∩B)/P(B)` se entiende mejor leída como un
+cambio de universo: el denominador reemplaza a `P(Ω) = 1` porque el nuevo espacio muestral
+es `B`, y el numerador cuenta la parte de A que sobrevive dentro de él.
+
+Nada cambia en el mundo al condicionar. Los dados ya cayeron; lo que cambia es **la
+información disponible**, y con ella el reparto de probabilidad. Esta lectura evita la
+idea mágica de que observar algo «modifica» el resultado, y explica por qué la
+probabilidad condicional es la herramienta natural para razonar con evidencia parcial.
+
+La consecuencia práctica es que `P(A|B)` y `P(B|A)` son cantidades distintas. `P(positivo
+| enfermo)` es una propiedad del test; `P(enfermo | positivo)` es lo que le importa al
+paciente, y depende además de cuánta gente está enferma. Intercambiarlas es la **falacia
+del fiscal**, y la clase 186 pone los números.
+
+Condicionar es además una técnica de cálculo. La **ley de probabilidad total** parte el
+espacio en casos disjuntos y suma:
+`P(A) = Σ P(A|Bᵢ)·P(Bᵢ)`. Casi todo problema difícil de probabilidad se vuelve fácil al
+condicionar sobre la primera cosa que ocurre.
+
+## 🧮 Ejemplo trabajado
+
+Dos dados: probabilidad de que la suma pase de 9, sabiendo que el primero salió 6.
+
+```text
+A = "suma > 9"          |A| = 6      P(A) = 6/36 = 0,1667
+B = "primer dado = 6"   |B| = 6      P(B) = 6/36 = 0,1667
+
+A∩B = {(6,4), (6,5), (6,6)}         P(A∩B) = 3/36 = 0,0833
+
+P(A|B) = 0,0833 / 0,1667 = 0,5
+
+Lectura directa: el espacio se reduce de 36 a 6 pares,
+y 3 de esos 6 cumplen la condición → 3/6 = 0,5           ✓
+
+La información triplicó la probabilidad: de 0,1667 a 0,5.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 184
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Intercambiar P(A|B) con P(B|A).
+2. Condicionar sobre un evento de probabilidad cero.
+3. Creer que observar el condicionante altera físicamente el experimento.
+
+## 🚀 Dónde se usa de verdad
+
+Diagnóstico médico, filtros de spam, sistemas de recomendación y toda la factorización
+condicional que usan los modelos generativos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)
+- [Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

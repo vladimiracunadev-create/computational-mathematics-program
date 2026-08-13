@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La independencia es una igualdad que se verifica, no una suposición cómoda.**
 
-Esta clase concreta ese objetivo sobre **Independencia**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `independence`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: ignorar la probabilidad base al interpretar un test positivo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A ⫫ B  ⟺  P(A∩B) = P(A)·P(B)
+equivalente: P(A|B) = P(A)
+independencia mutua exige la factorización para todo subconjunto
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Una cadena de Markov ergódica olvida su estado inicial.
+Dos eventos son independientes cuando saber que uno ocurrió no cambia la probabilidad del
+otro. La definición operativa es la factorización `P(A∩B) = P(A)·P(B)`, y la forma
+equivalente `P(A|B) = P(A)` deja claro el contenido intuitivo: la información no aporta
+nada.
+
+Independencia no es lo mismo que **exclusión mutua**; de hecho son casi opuestas. Si A y B
+son excluyentes y ambos tienen probabilidad positiva, saber que ocurrió A garantiza que B
+no ocurrió, lo cual es una dependencia máxima. Confundir ambos conceptos es el error más
+común de esta clase.
+
+Con más de dos eventos, la independencia **por pares** no basta. Existen tríos donde cada
+par factoriza pero el trío no, y en esos casos las conclusiones extraídas de suponer
+independencia mutua son falsas. La independencia mutua exige que la factorización se
+cumpla para todos los subconjuntos, no solo para los pares.
+
+En la práctica, la independencia casi nunca es exacta: es una aproximación de modelado.
+Naive Bayes supone que las palabras de un texto son condicionalmente independientes dadas
+las clases, lo cual es falso, y aun así funciona razonablemente. El pecado no es suponer
+independencia, es suponerla **sin decirlo** y luego interpretar los resultados como si
+fuera cierta.
+
+## 🧮 Ejemplo trabajado
+
+Tres eventos sobre dos lanzamientos de moneda.
+
+```text
+Ω = {CC, CX, XC, XX}, equiprobables
+
+A = "primera cara"       P(A) = 0,5
+B = "segunda cara"       P(B) = 0,5
+C = "ambas iguales"      P(C) = 0,5
+
+A∩B = {CC}   P = 0,25 = 0,5 × 0,5     A ⫫ B    ✓
+A∩C = {CC}   P = 0,25 = 0,5 × 0,5     A ⫫ C    ✓
+B∩C = {CC}   P = 0,25 = 0,5 × 0,5     B ⫫ C    ✓
+
+A∩B∩C = {CC}  P = 0,25
+producto de los tres = 0,125          0,25 ≠ 0,125
+
+Independientes por pares, NO mutuamente independientes.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 185
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Confundir independencia con exclusión mutua.
+2. Deducir independencia mutua a partir de independencia por pares.
+3. Suponer independencia entre observaciones correlacionadas en el tiempo.
+
+## 🚀 Dónde se usa de verdad
+
+Naive Bayes, análisis de fiabilidad de componentes, validación cruzada con datos
+temporales y todo supuesto de muestras iid en aprendizaje automático.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)
+- [Durrett, R. *Probability: Theory and Examples*, 5ª ed., Cambridge, 2019](https://services.math.duke.edu/~rtd/PTE/pte.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

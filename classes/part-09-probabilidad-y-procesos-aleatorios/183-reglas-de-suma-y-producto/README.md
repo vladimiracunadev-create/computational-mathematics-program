@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La regla de la suma resta la intersección; olvidarla infla la probabilidad.**
 
-Esta clase concreta ese objetivo sobre **Reglas de suma y producto**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `sum_product_rules`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados monte carlo sin semilla ni intervalo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+P(A∪B) = P(A) + P(B) − P(A∩B)
+si A y B son disjuntos: P(A∪B) = P(A) + P(B)
+P(A∩B) = P(A)·P(B|A)   (regla del producto)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> El TCL explica por qué la normal aparece incluso sin normalidad de origen.
+La **regla de la suma** general es inclusión-exclusión, la misma idea que apareció en
+combinatoria en la parte 04: al sumar `P(A)` y `P(B)` se cuentan dos veces los resultados
+que están en ambos, y hay que restarlos una vez. El caso simple —sumar sin más— solo vale
+cuando los eventos son **mutuamente excluyentes**, es decir, cuando su intersección es
+vacía.
+
+La distinción importa porque el error es silencioso. Si dos eventos se solapan poco, la
+suma sin corregir da un número plausible pero equivocado, y nada avisa. Solo cuando el
+solapamiento es grande la suma supera 1 y el fallo se hace visible. La costumbre correcta
+es preguntarse siempre si los eventos pueden ocurrir a la vez.
+
+La **regla del producto** es la definición de probabilidad condicional despejada:
+`P(A∩B) = P(A)·P(B|A)`. Se lee como una secuencia: primero ocurre A, y después B dado que
+A ocurrió. Encadenada, produce la **regla de la cadena** probabilística
+`P(A₁∩…∩Aₙ) = P(A₁)·P(A₂|A₁)·…·P(Aₙ|A₁…Aₙ₋₁)`, que es exactamente cómo un modelo de
+lenguaje autorregresivo factoriza la probabilidad de una frase.
+
+Solo cuando hay independencia el producto se simplifica a `P(A)·P(B)`. Ese atajo es tan
+cómodo que se aplica por inercia, y la clase 185 insiste en que la independencia es una
+propiedad que se verifica, no una comodidad que se asume.
+
+## 🧮 Ejemplo trabajado
+
+Dos dados: A = "el primero es 1", B = "la suma es 7".
+
+```text
+P(A) = 6/36  = 0,1667
+P(B) = 6/36  = 0,1667
+
+A∩B = {(1,6)}          P(A∩B) = 1/36 = 0,0278
+
+inclusión-exclusión:
+  P(A∪B) = 0,1667 + 0,1667 − 0,0278 = 0,3056
+
+conteo directo: |A∪B| = 11 pares    11/36 = 0,3056      ✓
+
+sumar sin restar daría 0,3333: un 9 % de más, sin ningún aviso.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 183
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Sumar probabilidades de eventos que se solapan.
+2. Llamar «excluyentes» a eventos que solo son poco probables a la vez.
+3. Usar P(A)·P(B) sin haber comprobado la independencia.
+
+## 🚀 Dónde se usa de verdad
+
+Cálculo de tasas de fallo en sistemas redundantes, unión de condiciones en filtros de
+datos y factorización autorregresiva de secuencias.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)
+- [Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://www.pearson.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

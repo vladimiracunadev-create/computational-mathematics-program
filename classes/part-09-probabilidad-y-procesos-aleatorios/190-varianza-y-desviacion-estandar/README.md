@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
+**La varianza mide dispersión al cuadrado; dividir entre n−1 la vuelve insesgada.**
 
-Esta clase concreta ese objetivo sobre **Varianza y desviación estándar**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varianza, distribuciones clave, LGN, TCL, Monte Carlo y cadenas de Markov.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `variance`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Var(X) = E[(X − μ)²] = E[X²] − E[X]²
+σ = √Var(X)
+muestral insesgada: s² = Σ(xᵢ − x̄)² / (n − 1)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
-## 🧠 Idea rectora de la parte 09
+## 📖 Fundamentos
 
-> Una cadena de Markov ergódica olvida su estado inicial.
+La varianza promedia el cuadrado de las desviaciones respecto de la media. Se eleva al
+cuadrado, y no se toma el valor absoluto, porque así la varianza de una suma de variables
+independientes es la suma de varianzas —una propiedad que el valor absoluto no tiene— y
+porque el resultado es derivable, lo cual importa al optimizar.
+
+El precio es que la varianza vive en **unidades al cuadrado**: si los datos son euros, la
+varianza son euros al cuadrado, y no se puede comparar con la media. Por eso se define la
+**desviación estándar** como su raíz, que vuelve a las unidades originales y sí es
+comparable e interpretable.
+
+La fórmula computacional `Var(X) = E[X²] − E[X]²` es cómoda pero numéricamente peligrosa:
+resta dos números grandes y parecidos, que es exactamente la cancelación catastrófica de
+la parte 01. Con datos alejados del origen puede devolver varianzas negativas. Las
+bibliotecas serias usan el algoritmo de Welford en una pasada, no esa fórmula.
+
+La **corrección de Bessel** —dividir entre `n−1`— compensa que las desviaciones se calculan
+respecto de la media **muestral**, que está ajustada a los propios datos y por tanto los
+aproxima demasiado bien. Se han gastado un grado de libertad al estimar la media, y
+devolverlo hace que el estimador sea insesgado.
+
+## 🧮 Ejemplo trabajado
+
+Ocho observaciones: dos denominadores, dos resultados.
+
+```text
+datos: 2, 4, 4, 4, 5, 5, 7, 9      n = 8
+media: 40 / 8 = 5,0
+
+desviaciones:  −3, −1, −1, −1, 0, 0, 2, 4
+cuadrados:      9,  1,  1,  1, 0, 0, 4, 16      suma = 32
+
+varianza poblacional  = 32 / 8 = 4,0        σ = 2,0
+varianza muestral     = 32 / 7 = 4,5714     s = 2,1381
+
+Con n grande la diferencia se desvanece; con n = 8 es del 14 %.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 190
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Asumir independencia sin justificarla.
-- Ignorar la probabilidad base al interpretar un test positivo.
-- Reportar resultados Monte Carlo sin semilla ni intervalo.
+1. Comparar una varianza con una media: las unidades no coinciden.
+2. Usar E[X²] − E[X]² con datos grandes y sufrir cancelación.
+3. Elegir n o n−1 sin saber si se describe una población o se estima.
+
+## 🚀 Dónde se usa de verdad
+
+Normalización de características, batch normalization, control de calidad, medición de
+riesgo financiero y análisis de estabilidad de entrenamientos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
-- Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
-- Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 4](https://projects.iq.harvard.edu/stat110/home)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 3](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

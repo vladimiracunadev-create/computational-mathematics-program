@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**El estadístico también tiene distribución, y esa distribución es la que permite inferir.**
 
-Esta clase concreta ese objetivo sobre **Muestreo y distribuciones muestrales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `sampling_distributions`.
 4. Interpretar las 4 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: evaluar sobre datos que participaron en la selección del modelo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x̄ ~ Normal(μ, σ²/n)  para n grande
+SE = σ/√n
+n × 4  ⟹  SE / 2
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Sin potencia declarada, un resultado no significativo no dice nada.
+La idea que abre la inferencia es un cambio de nivel: si se repitiera el muestreo muchas
+veces, cada muestra daría una media distinta, y esas medias tienen su propia distribución.
+Esa es la **distribución muestral**, y es el objeto sobre el que se construyen intervalos y
+contrastes.
+
+Su desviación estándar recibe el nombre de **error estándar** para distinguirla de la
+desviación de los datos. Son cantidades distintas que se confunden constantemente: `σ`
+dice cuánto varía una observación individual, `σ/√n` cuánto varía la estimación de la
+media. Con `n = 100` difieren por un factor 10.
+
+La forma de esa distribución la garantiza el teorema central del límite de la clase 197:
+es aproximadamente normal aunque la población no lo sea. Por eso las mismas fórmulas
+funcionan para datos de origen muy variado, y por eso la normal aparece en todas partes en
+estadística sin que nadie suponga que los datos son normales.
+
+La raíz cuadrada tiene consecuencias económicas directas. Reducir a la mitad el error
+exige **cuadruplicar** el tamaño muestral, y eso normalmente significa cuadruplicar el
+coste del experimento. Saber esto antes de diseñar un estudio evita descubrir a mitad de
+camino que el presupuesto no alcanza para la precisión prometida.
+
+## 🧮 Ejemplo trabajado
+
+Muestras de una población normal de media 50 y desviación 10.
+
+```text
+población: Normal(50, 10)
+
+   n     media de medias   SE observado   SE teórico σ/√n
+   5         49,9483          4,4782          4,4721
+  20         50,0142          2,2380          2,2361
+  80         49,9911          1,1145          1,1180
+ 320         50,0037          0,5581          0,5590
+
+La media de las medias acierta siempre; lo que cambia es la dispersión.
+
+n de 5 a 20  → ×4  → SE de 4,47 a 2,24  → mitad         ✓
+n de 20 a 80 → ×4  → SE de 2,24 a 1,11  → mitad         ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 203
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Usar la desviación de los datos donde corresponde el error estándar.
+2. Suponer que un n mayor cambia la media esperada del estimador.
+3. Ignorar que reducir el error a la mitad cuadruplica el coste.
+
+## 🚀 Dónde se usa de verdad
+
+Dimensionado de experimentos, barras de error en gráficos, comparación de métricas entre
+modelos y control de precisión en simulaciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 5](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 10](https://projects.iq.harvard.edu/stat110/home)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

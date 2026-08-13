@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**El 95 % de un intervalo de confianza es una propiedad del procedimiento, no del parámetro.**
 
-Esta clase concreta ese objetivo sobre **Intervalos de confianza**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `confidence_intervals`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🧩 Fórmulas de la clase
+
+```text
+IC 95 % ≈ x̄ ± 1,96·(s/√n)
+cobertura: proporción de intervalos que contienen θ al repetir el estudio
+amplitud ∝ 1/√n
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> El bootstrap estima la variabilidad sin suponer la distribución poblacional.
+La frase «hay un 95 % de probabilidad de que el parámetro esté en el intervalo» es
+incorrecta en el marco frecuentista, y es probablemente la frase mal dicha con más
+frecuencia en toda la ciencia aplicada. El parámetro es un número fijo: o está en el
+intervalo o no está, y no hay probabilidad en ello.
+
+Lo que es aleatorio es el **intervalo**, porque se calcula a partir de datos aleatorios. La
+afirmación correcta es sobre el procedimiento: si se repitiera el estudio muchas veces,
+alrededor del 95 % de los intervalos construidos así contendrían el parámetro. El 95 % es
+una tasa de acierto a largo plazo del método, no una creencia sobre este caso concreto.
+
+La distinción no es pedantería. Cambia lo que se puede concluir, y explica por qué existe
+el **intervalo creíble** bayesiano de la clase 217, que sí admite la lectura
+probabilística directa porque parte de tratar el parámetro como variable aleatoria. Ambos
+son legítimos; lo ilegítimo es dar la interpretación de uno al otro.
+
+La cobertura real puede quedarse por debajo de la nominal cuando los supuestos fallan:
+muestras pequeñas, poblaciones muy asimétricas o uso de la normal donde correspondía la t.
+Un intervalo del 95 % que en simulación cubre el 93 % está informando de que el modelo es
+aproximado, y conviene reportarlo en vez de esconderlo.
+
+## 🧮 Ejemplo trabajado
+
+Cobertura simulada de intervalos al 95 %.
+
+```text
+3 000 réplicas del estudio completo
+
+  intervalos que contienen el parámetro: 2 791
+  cobertura observada: 93,03 %
+  cobertura nominal:   95,00 %
+
+Un intervalo concreto (n = 20):
+  media  = 12,6050
+  SE     =  0,1930
+  IC 95% = (12,2268 , 12,9832)      amplitud 0,7564
+
+Lectura correcta:
+  "el procedimiento acierta el 95 % de las veces"
+Lectura incorrecta:
+  "hay un 95 % de probabilidad de que μ esté aquí"
+
+Con n = 80 la amplitud bajaría a la mitad: 0,378.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 205
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Leer el 95 % como probabilidad sobre el parámetro.
+2. Concluir que no hay efecto porque el intervalo contiene el cero.
+3. Ignorar que la cobertura real depende de que se cumplan los supuestos.
+
+## 🚀 Dónde se usa de verdad
+
+Reporte de métricas de modelos, comparación de tratamientos, estimación de tasas de
+conversión y cualquier resultado que deba comunicarse con incertidumbre.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Morey, R. et al. *The fallacy of placing confidence in confidence intervals*, Psychonomic Bulletin, 2016](https://doi.org/10.3758/s13423-015-0947-8)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

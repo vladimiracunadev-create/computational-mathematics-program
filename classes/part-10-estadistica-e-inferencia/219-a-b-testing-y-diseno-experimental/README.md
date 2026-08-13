@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Un A/B test se diseña antes de recogerlo: tamaño muestral, métrica y criterio de parada.**
 
-Esta clase concreta ese objetivo sobre **A/B testing y diseño experimental**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `ab_testing`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: p-hacking por comparaciones múltiples sin corrección.
+
+## 🧩 Fórmulas de la clase
+
+```text
+z = (p̂_B − p̂_A) / √(p̂(1−p̂)(1/n_A + 1/n_B))
+lift relativo = (p_B − p_A) / p_A
+n por grupo ≈ 16·p(1−p) / Δ²  para 80 % de potencia
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Correlación no implica causalidad, pero causalidad sí restringe la correlación.
+Un A/B test es un ensayo controlado aleatorizado aplicado a producto. La aleatorización es
+lo que le da valor causal: si la asignación al grupo es al azar, las diferencias
+observadas se atribuyen al cambio y no a características previas de los usuarios. Sin
+aleatorización es un estudio observacional con todos los confusores de la clase 213.
+
+Tres decisiones deben tomarse **antes** de recoger datos: la métrica principal, el tamaño
+del efecto mínimo relevante, y el tamaño muestral que da potencia suficiente para
+detectarlo. Sin esas tres, el experimento no puede concluir nada aunque se ejecute
+perfectamente.
+
+El error operativo más destructivo es el **peeking**: mirar el resultado a diario y parar
+cuando aparece `p < 0,05`. Ese procedimiento multiplica la tasa de falsos positivos por
+tres o más, porque da múltiples oportunidades de cruzar el umbral por azar. Las soluciones
+son fijar la duración de antemano o usar métodos de parada secuencial diseñados para ello.
+
+Y hay que separar significancia de relevancia. Un lift del 17 % con `p = 0,0098` es un
+resultado sólido; el mismo `p` con un lift del 0,3 % puede no justificar el coste del
+cambio. Lo que se decide no es si el efecto es distinto de cero, sino si merece la pena, y
+para eso hace falta el intervalo del efecto, no el p-value.
+
+## 🧮 Ejemplo trabajado
+
+Experimento de conversión con 4 000 usuarios por grupo.
+
+```text
+grupo A (control):    conversión 0,10350
+grupo B (variante):   conversión 0,12175
+diferencia absoluta:  0,01825
+lift relativo:        17,63 %
+
+n por grupo = 4 000
+proporción combinada p̂ = 0,112625
+SE = √(0,112625 · 0,887375 · (1/4000 + 1/4000)) = 0,007070
+
+z = 0,01825 / 0,007070 = 2,5817
+p = 0,00983     →  significativo al 5 %
+
+IC 95 % de la diferencia:
+  0,01825 ± 1,96 × 0,007070 = (0,00439 , 0,03211)
+  lift entre 4,2 % y 31,0 %
+
+Peeking diario durante 14 días sin corrección:
+  tasa real de falsos positivos ≈ 20 %, no 5 %.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 219
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Parar el experimento en cuanto el p-value baja de 0,05.
+2. Cambiar la métrica principal después de ver los resultados.
+3. Confundir significancia con impacto suficiente para justificar el cambio.
+
+## 🚀 Dónde se usa de verdad
+
+Experimentación de producto, comparación de modelos en producción, optimización de
+conversión y despliegues progresivos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Kohavi, R.; Tang, D.; Xu, Y. *Trustworthy Online Controlled Experiments*, Cambridge, 2020](https://experimentguide.com/)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
+**Insesgado no significa bueno: hay que mirar también la varianza.**
 
-Esta clase concreta ese objetivo sobre **Estimadores y propiedades**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `estimators`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: p-hacking por comparaciones múltiples sin corrección.
+
+## 🧩 Fórmulas de la clase
+
+```text
+sesgo(θ̂) = E[θ̂] − θ
+ECM = sesgo² + varianza
+consistencia: θ̂ₙ → θ cuando n → ∞
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
-## 🧠 Idea rectora de la parte 10
+## 📖 Fundamentos
 
-> Correlación no implica causalidad, pero causalidad sí restringe la correlación.
+Un **estimador** es una receta para calcular un parámetro desconocido a partir de la
+muestra. Como depende de datos aleatorios, es él mismo una variable aleatoria, y se juzga
+por las propiedades de su distribución: sesgo, varianza y comportamiento asintótico.
+
+El **sesgo** mide si el estimador acierta en promedio. Dividir entre `n` al calcular la
+varianza muestral produce un estimador sesgado a la baja, porque las desviaciones se miden
+respecto de una media ajustada a los propios datos; dividir entre `n−1` corrige ese sesgo.
+Es la corrección de Bessel de la clase 190, vista ahora desde la teoría de estimación.
+
+Pero insesgado no equivale a bueno. El **error cuadrático medio** se descompone en
+`sesgo² + varianza`, y hay estimadores sesgados con ECM mucho menor que el insesgado. Toda
+la regularización en aprendizaje automático se apoya en ese intercambio: introducir sesgo
+a cambio de reducir varianza. Es la misma descomposición sesgo-varianza que reaparecerá en
+la parte 14.
+
+La **consistencia** es la garantía mínima que se le pide a un estimador: converger al
+parámetro cuando los datos crecen. Es una propiedad asintótica y no dice nada sobre el
+comportamiento con la muestra que realmente se tiene, que suele ser pequeña y es donde el
+sesgo y la varianza deciden.
+
+## 🧮 Ejemplo trabajado
+
+Dos estimadores de la varianza con muestras de tamaño 8.
+
+```text
+varianza real = 25,0        n = 8      10 000 réplicas
+
+estimador dividiendo entre n:
+  E[σ̂²] = 21,7438        sesgo = −3,2562    (−13 %)
+
+estimador dividiendo entre n−1:
+  E[s²]  = 24,8501        sesgo = −0,1499    (−0,6 %)
+
+Factor de corrección teórico: (n−1)/n = 7/8 = 0,875
+  21,7438 / 0,875 = 24,85                              ✓
+
+Con n = 100 el sesgo del primero baja al 1 %: ambos son
+consistentes, pero solo el segundo es insesgado.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 204
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- p-hacking por comparaciones múltiples sin corrección.
-- Confundir significancia estadística con relevancia práctica.
-- Evaluar sobre datos que participaron en la selección del modelo.
+1. Elegir un estimador solo por ser insesgado, sin mirar su varianza.
+2. Confiar en garantías asintóticas con muestras pequeñas.
+3. Confundir el estimador, que es aleatorio, con la estimación concreta obtenida.
+
+## 🚀 Dónde se usa de verdad
+
+Regularización como sesgo deliberado, estimación de varianza en normalización, evaluación
+de estimadores de gradiente y elección entre modelos simples y complejos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Wasserman, L. *All of Statistics*. Springer, 2004.
-- Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
-- Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)
+- [Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002](https://www.cengage.com/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

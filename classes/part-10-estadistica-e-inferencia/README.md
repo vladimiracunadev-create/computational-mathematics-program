@@ -10,6 +10,70 @@
 
 Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótesis, p-value, potencia, verosimilitud, MAP, inferencia bayesiana, bootstrap y A/B testing.
 
+La probabilidad va de la causa al efecto: dado un modelo, ¿qué datos son plausibles? La
+estadística recorre el camino inverso: dados unos datos, ¿qué modelo los explica y con cuánta
+confianza? Esa inversión es más difícil, más frágil y más fácil de hacer mal, y es donde se
+pierde la mayor parte de la credibilidad de los resultados publicados.
+
+Las clases 201 a 204 preparan el terreno. La estadística descriptiva resume; el muestreo
+condiciona todo lo que vendrá después. La lección más cara está en la clase 202: **el sesgo
+de selección no se corrige con más datos**. Una muestra sesgada de un millón de personas es
+peor que una muestra aleatoria de mil, porque el error sistemático no se diluye al crecer n,
+y encima la mayor precisión hace más convincente la conclusión equivocada.
+
+Las clases 205 a 209 son el núcleo de la inferencia frecuentista y contienen los tres errores
+de interpretación más extendidos de toda la ciencia aplicada. Un intervalo de confianza del
+95 % **no** dice que el parámetro esté ahí con probabilidad 0,95: describe un procedimiento
+que, repetido muchas veces, atrapa el parámetro el 95 % de las veces. Un p-value **no** es la
+probabilidad de que la hipótesis nula sea cierta: es la probabilidad de ver datos así de
+extremos si la nula fuera cierta. Y un resultado no significativo en un estudio sin potencia
+declarada **no significa nada**: no distingue entre «no hay efecto» y «no había datos
+suficientes para verlo».
+
+Las clases 210 a 214 son las pruebas de trabajo: t-test para medias, chi-cuadrado para tablas
+de contingencia, ANOVA para varios grupos y regresión lineal con su lectura estadística. Cada
+una tiene supuestos, y aplicarlas sin comprobarlos es la forma habitual de producir p-values
+que no significan lo que parece. La clase 213 se dedica entera a la confusión más famosa:
+correlación no implica causalidad, y un confusor basta para fabricar una correlación fuerte
+entre dos variables que no se tocan.
+
+Las clases 215 a 218 introducen el punto de vista de la verosimilitud y el bayesiano. La
+máxima verosimilitud es el principio que fundamenta casi toda función de pérdida en
+aprendizaje automático; MAP le añade un prior, y ese prior **es** la regularización. La
+inferencia bayesiana devuelve una distribución entera sobre el parámetro, y su intervalo
+creíble sí admite la lectura probabilística que el intervalo de confianza no admite. El
+bootstrap cierra el bloque con una idea casi tramposa por lo simple: remuestrear los propios
+datos para estimar la variabilidad, sin suponer ninguna distribución poblacional.
+
+El cierre (219 y 220) baja a la práctica: A/B testing con tamaño muestral calculado de
+antemano, y un estudio completo, reproducible, con semilla fija, intervalos declarados y
+limitaciones explícitas. Esa disciplina —fijar el análisis antes de ver los datos, reportar la
+incertidumbre, corregir por comparaciones múltiples y declarar lo que el estudio no puede
+concluir— es lo que separa un resultado de una anécdota con números.
+
+Para quien viene de la inteligencia artificial, esta parte es la que enseña a **evaluar**.
+Comparar dos modelos por su exactitud puntual sin intervalo de confianza, elegir la mejor
+configuración entre veinte y reportar su rendimiento sin corregir por selección, o medir sobre
+datos que participaron en el ajuste, son exactamente los errores que esta parte nombra y
+desarma.
+
+## 🗺️ Mapa conceptual
+
+```mermaid
+flowchart TD
+    A["Clases 201-204 · Descriptiva, muestreo y estimadores"] --> B["Clases 205-206 · Intervalos y pruebas de hipotesis"]
+    B --> C["Clases 207-209 · p-value, errores y potencia"]
+    C --> D["Clases 210-212 · t-test, chi-cuadrado y ANOVA"]
+    C --> E["Clases 213-214 · Causalidad y regresion"]
+    D --> F["Clases 215-217 · Verosimilitud, MAP y bayesiana"]
+    E --> F
+    F --> G["Clases 218-219 · Bootstrap y A/B testing"]
+    G --> H["Clase 220 · Capstone estudio reproducible"]
+    F ==> I["Parte 14 · Perdidas por maxima verosimilitud"]
+    C -.-> J["Evaluacion honesta de modelos · Parte 14"]
+    F -.-> K["Inferencia variacional · Parte 17"]
+```
+
 ## 🧠 Ideas centrales
 
 - El p-value es P(datos tan extremos | H0), nunca P(H0 | datos).
@@ -90,26 +154,30 @@ flowchart LR
 
 | # | Clase | Demostración | Idea central |
 |---|---|---|---|
-| `201` | [Estadística descriptiva](201-estadistica-descriptiva/README.md) | `descriptive_statistics` | Centro, dispersión y forma: tres preguntas distintas. |
-| `202` | [Población, muestra y sesgo de selección](202-poblacion-muestra-y-sesgo-de-seleccion/README.md) | `population_sample` | Sesgo de selección: la muestra no representa a la población. |
-| `203` | [Muestreo y distribuciones muestrales](203-muestreo-y-distribuciones-muestrales/README.md) | `sampling_distributions` | La distribución de la media muestral y su error estándar. |
-| `204` | [Estimadores y propiedades](204-estimadores-y-propiedades/README.md) | `estimators` | Sesgo, varianza y consistencia de dos estimadores de la varianza. |
-| `205` | [Intervalos de confianza](205-intervalos-de-confianza/README.md) | `confidence_intervals` | Un IC 95 % describe el procedimiento, no una probabilidad del parámetro. |
-| `206` | [Pruebas de hipótesis](206-pruebas-de-hipotesis/README.md) | `hypothesis_testing` | Estructura completa de una prueba de hipótesis. |
-| `207` | [p-value correctamente interpretado](207-p-value-correctamente-interpretado/README.md) | `p_value` | Qué mide y qué no mide un p-value. |
-| `208` | [Errores tipo I y II](208-errores-tipo-i-y-ii/README.md) | `type_errors` | Errores tipo I y II: el compromiso es inevitable. |
-| `209` | [Potencia estadística](209-potencia-estadistica/README.md) | `statistical_power` | Potencia en función del tamaño muestral. |
-| `210` | [t-test y comparación de medias](210-t-test-y-comparacion-de-medias/README.md) | `t_test` | t-test de dos muestras independientes. |
-| `211` | [Chi-cuadrado y tablas de contingencia](211-chi-cuadrado-y-tablas-de-contingencia/README.md) | `chi_square` | Chi-cuadrado de independencia sobre una tabla de contingencia. |
-| `212` | [ANOVA](212-anova/README.md) | `anova` | ANOVA de un factor: descomposición de la variabilidad. |
-| `213` | [Correlación frente a causalidad](213-correlacion-frente-a-causalidad/README.md) | `correlation_causation` | Una variable de confusión genera correlación sin causalidad. |
-| `214` | [Regresión lineal estadística](214-regresion-lineal-estadistica/README.md) | `linear_regression_stats` | Regresión lineal con R², error estándar y significancia. |
-| `215` | [Máxima verosimilitud](215-maxima-verosimilitud/README.md) | `maximum_likelihood` | MLE para la normal: la media muestral maximiza la verosimilitud. |
-| `216` | [Estimación MAP](216-estimacion-map/README.md) | `map_estimation` | MAP: verosimilitud más prior, y su límite con muchos datos. |
-| `217` | [Inferencia bayesiana](217-inferencia-bayesiana/README.md) | `bayesian_inference` | Actualización bayesiana conjugada Beta-Binomial. |
-| `218` | [Bootstrap y remuestreo](218-bootstrap-y-remuestreo/README.md) | `bootstrap` | Bootstrap: estimar la variabilidad sin suponer la distribución. |
-| `219` | [A/B testing y diseño experimental](219-a-b-testing-y-diseno-experimental/README.md) | `ab_testing` | A/B test de proporciones con tamaño muestral y significancia. |
-| `220` | [Capstone: estudio estadístico reproducible](220-capstone-estudio-estadistico-reproducible/README.md) | `capstone_reproducible_study` | Capstone: estudio completo, reproducible y con límites declarados. |
+| `201` | [Estadística descriptiva](201-estadistica-descriptiva/README.md) | `descriptive_statistics` | Centro, dispersión y forma responden preguntas distintas y ninguna basta sola. |
+| `202` | [Población, muestra y sesgo de selección](202-poblacion-muestra-y-sesgo-de-seleccion/README.md) | `population_sample` | El sesgo de selección no se corrige con más datos: solo se vuelve más convincente. |
+| `203` | [Muestreo y distribuciones muestrales](203-muestreo-y-distribuciones-muestrales/README.md) | `sampling_distributions` | El estadístico también tiene distribución, y esa distribución es la que permite inferir. |
+| `204` | [Estimadores y propiedades](204-estimadores-y-propiedades/README.md) | `estimators` | Insesgado no significa bueno: hay que mirar también la varianza. |
+| `205` | [Intervalos de confianza](205-intervalos-de-confianza/README.md) | `confidence_intervals` | El 95 % de un intervalo de confianza es una propiedad del procedimiento, no del parámetro. |
+| `206` | [Pruebas de hipótesis](206-pruebas-de-hipotesis/README.md) | `hypothesis_testing` | Una prueba de hipótesis nunca acepta la nula: solo la rechaza o se queda sin evidencia. |
+| `207` | [p-value correctamente interpretado](207-p-value-correctamente-interpretado/README.md) | `p_value` | El p-value mide la rareza de los datos bajo H0, no la probabilidad de que H0 sea cierta. |
+| `208` | [Errores tipo I y II](208-errores-tipo-i-y-ii/README.md) | `type_errors` | Bajar la tasa de falsos positivos sube la de falsos negativos: el compromiso es inevitable. |
+| `209` | [Potencia estadística](209-potencia-estadistica/README.md) | `statistical_power` | Sin potencia declarada, un resultado no significativo no distingue entre no hay efecto y no hay datos. |
+| `210` | [t-test y comparación de medias](210-t-test-y-comparacion-de-medias/README.md) | `t_test` | La t de Student compara medias cuando la varianza poblacional es desconocida. |
+| `211` | [Chi-cuadrado y tablas de contingencia](211-chi-cuadrado-y-tablas-de-contingencia/README.md) | `chi_square` | Chi-cuadrado compara frecuencias observadas con las esperadas bajo independencia. |
+| `212` | [ANOVA](212-anova/README.md) | `anova` | ANOVA compara varias medias a la vez sin inflar la tasa de falsos positivos. |
+| `213` | [Correlación frente a causalidad](213-correlacion-frente-a-causalidad/README.md) | `correlation_causation` | Un confusor basta para fabricar correlación fuerte entre variables que no se tocan. |
+| `214` | [Regresión lineal estadística](214-regresion-lineal-estadistica/README.md) | `linear_regression_stats` | Un R² alto no valida el modelo: los residuos son los que lo hacen. |
+| `215` | [Máxima verosimilitud](215-maxima-verosimilitud/README.md) | `maximum_likelihood` | La máxima verosimilitud elige el parámetro que hace más probables los datos observados. |
+| `216` | [Estimación MAP](216-estimacion-map/README.md) | `map_estimation` | MAP es verosimilitud más prior, y ese prior es exactamente la regularización. |
+| `217` | [Inferencia bayesiana](217-inferencia-bayesiana/README.md) | `bayesian_inference` | El intervalo creíble sí admite la lectura probabilística que el de confianza no admite. |
+| `218` | [Bootstrap y remuestreo](218-bootstrap-y-remuestreo/README.md) | `bootstrap` | El bootstrap estima la variabilidad remuestreando los datos, sin suponer distribución. |
+| `219` | [A/B testing y diseño experimental](219-a-b-testing-y-diseno-experimental/README.md) | `ab_testing` | Un A/B test se diseña antes de recogerlo: tamaño muestral, métrica y criterio de parada. |
+| `220` | [Capstone: estudio estadístico reproducible](220-capstone-estudio-estadistico-reproducible/README.md) | `capstone_reproducible_study` | Un estudio creíble declara su semilla, su intervalo y lo que no puede concluir. |
+
+## 📖 Glosario de la parte (36 términos)
+
+Definiciones precisas en [`GLOSARIO.md`](GLOSARIO.md).
 
 ## 🧰 Stack de referencia
 
