@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**El orden de convergencia dice cómo cae el error al refinar: trapecio es O(h²) y Simpson O(h⁴).**
 
-Esta clase concreta ese objetivo sobre **Integración numérica introductoria**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `numerical_integration_intro`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+trapecio: h·(f(a)/2 + Σf(xᵢ) + f(b)/2),  error O(h²)
+Simpson: h/3·(f(a) + 4Σimpares + 2Σpares + f(b)),  error O(h⁴)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,42 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> Integrar es acumular; derivar e integrar son operaciones inversas.
+Cuando una integral no tiene forma cerrada —el caso habitual— hay que calcularla
+numéricamente. El trapecio aproxima la función por segmentos rectos entre nodos; Simpson
+la aproxima por parábolas que pasan por tres nodos consecutivos.
+
+La diferencia de precisión es notable. El trapecio tiene error `O(h²)`: duplicar el
+número de subintervalos divide el error por 4. Simpson tiene error `O(h⁴)`: duplicar lo
+divide por 16. Con 100 subintervalos, Simpson suele dar diez órdenes de magnitud más de
+precisión con el mismo número de evaluaciones de la función.
+
+Ese salto tiene una explicación bonita: Simpson es exacto para polinomios de grado 3,
+aunque solo interpole parábolas. El término cúbico se cancela por simetría, y esa
+cancelación regala un orden completo. Es el mismo fenómeno que hace superior la
+diferencia central.
+
+La función del laboratorio, `e^(-x²)`, no tiene antiderivada elemental (clase 155) y su
+integral define la función error. Que el resultado numérico coincida con `erf` a doce
+decimales es la comprobación de que el método funciona, y es cómo se calculan en la
+práctica las probabilidades de la distribución normal.
+
+## 🧮 Ejemplo trabajado
+
+Integrar e^(-x²) en [0,1] con 100 subintervalos.
+
+```text
+referencia (erf): 0.746824132812
+
+trapecio: 0.746820967  →  error 3.17e−06
+Simpson:  0.746824133  →  error 1.11e−13
+
+Simpson es 7 órdenes de magnitud más preciso
+con el mismo número de evaluaciones.
+
+Órdenes: trapecio O(h²), Simpson O(h⁴)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +105,16 @@ compmath run 159
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Usar Simpson con un número impar de subintervalos: requiere que sea par.
+2. Aplicar estos métodos a integrandos con singularidades o muy oscilantes.
+3. Aumentar n indefinidamente: el error de redondeo acaba dominando.
+
+## 🚀 Dónde se usa de verdad
+
+Probabilidades de la distribución normal, cálculo de expectativas, integración de
+señales y cualquier integral sin forma cerrada.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)
+- [Burden & Faires. *Numerical Analysis*, 10ª ed., Cengage, 2015](https://www.cengage.com/c/numerical-analysis-10e-burden/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

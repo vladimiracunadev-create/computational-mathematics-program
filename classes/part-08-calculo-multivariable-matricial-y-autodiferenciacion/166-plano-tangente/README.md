@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**El plano tangente es la aproximación lineal en varias variables, y su error crece cuadráticamente.**
 
-Esta clase concreta ese objetivo sobre **Plano tangente**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `tangent_plane`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+z = f(a) + ∇f(a)·(x − a)
+error ≈ ½·(x−a)ᵀH(x−a) = O(‖x−a‖²)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El gradiente apunta al mayor ascenso; por eso se desciende en su dirección opuesta.
+El plano tangente es a las superficies lo que la recta tangente a las curvas: la mejor
+aproximación lineal en un punto. Su ecuación usa el gradiente como vector de pendientes:
+`f(a) + ∇f(a)·(x − a)`.
+
+Lo interesante es cómo se comporta el error. Al alejarse del punto de tangencia, el error
+crece **cuadráticamente**, no linealmente. Duplicar la distancia cuadruplica el error. Eso
+explica por qué las aproximaciones lineales funcionan bien cerca y mal lejos, y por qué
+el paso del descenso de gradiente debe ser pequeño: el gradiente solo describe la función
+en un entorno.
+
+El término cuadrático del error es exactamente el que captura el Hessiano, y por eso
+Taylor de segundo orden (clase 170) es tanto más preciso. Los métodos de Newton usan esa
+información para dar pasos más largos con seguridad.
+
+La diferenciabilidad en varias variables se define precisamente como la existencia de una
+buena aproximación lineal, con error `o(‖x−a‖)`. Es una condición más fuerte que la mera
+existencia de las parciales, y es la que garantiza que el plano tangente merece ese
+nombre.
+
+## 🧮 Ejemplo trabajado
+
+Plano tangente y crecimiento del error.
+
+```text
+f(x,y) = x²y + 3xy² + 2   en (2,3)
+f(2,3) = 68,  ∇f = (39, 40)
+
+plano: z = 68 + 39(x−2) + 40(y−3)
+
+punto cercano (2.01, 3.01):
+  f real     = 68.79
+  plano      = 68.79
+  error      = 0.0034
+
+punto lejano (3, 4):
+  f real     = 182.0
+  plano      = 147.0
+  error      = 35.0
+
+Distancia ×100 → error ×10 000: crecimiento cuadrático  ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 166
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Usar la aproximación lineal lejos del punto de tangencia.
+2. Confundir el plano tangente con la superficie.
+3. Suponer que la existencia de las parciales implica que hay plano tangente.
+
+## 🚀 Dónde se usa de verdad
+
+Linealización de modelos, propagación de incertidumbre de primer orden, un paso de
+descenso de gradiente y aproximación local de funciones complejas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Apostol, T. *Mathematical Analysis*, 2ª ed., 1974](https://www.pearson.com/en-us/subject-catalog/p/mathematical-analysis/P200000006155)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

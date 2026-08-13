@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La derivada de un producto no es el producto de las derivadas.**
 
-Esta clase concreta ese objetivo sobre **Regla del producto y cociente**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `product_quotient_rule`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir punto crítico con extremo global.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(fg)' = f'g + fg'
+(f/g)' = (f'g − fg')/g²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> La derivada es la mejor aproximación lineal local, no solo una pendiente.
+La regla del producto es contraintuitiva la primera vez y su demostración explica por
+qué: al incrementar `x`, cambian tanto `f` como `g`, y el cambio total del producto tiene
+dos contribuciones —una por cada factor— más un término de segundo orden que se anula en
+el límite.
+
+Geométricamente, si `f` y `g` son los lados de un rectángulo, `fg` es su área. Al
+incrementar ambos lados, el área crece en dos franjas —`f'g` y `fg'`— más una esquina
+diminuta que es despreciable. Esa imagen hace la regla memorable sin memorizarla.
+
+La regla del cociente se deduce de la del producto aplicada a `f · g⁻¹`, y su forma
+—numerador con resta, denominador al cuadrado— hay que respetarla en el orden: `f'g − fg'`
+y no al revés. Invertir el orden cambia el signo, error frecuente y silencioso.
+
+En machine learning estas reglas aparecen cada vez que una función de pérdida es un
+producto o un cociente de términos. La derivada de la softmax, del cociente de
+verosimilitudes y de las puertas de una LSTM (clase 315) usan la del producto; la
+derivada de la sigmoide, `σ' = σ(1−σ)`, se obtiene con la del cociente.
+
+## 🧮 Ejemplo trabajado
+
+Producto y cociente de x² y sin(x) en x = 1.3.
+
+```text
+f = x²,  g = sin(x),  x = 1.3
+
+(fg)' por la regla:  2x·sin(x) + x²·cos(x)
+                  =  2.5057 + 0.4518 = 2.9575
+(fg)' numérica    =  2.9575                    ✓
+
+(f/g)' por la regla: (2x·sin x − x²·cos x)/sin²x
+                  =  2.2160
+(f/g)' numérica    =  2.2160                   ✓
+
+ERROR común: f'·g' = 2x·cos(x) = 0.6952  ✗ no es la derivada
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +106,16 @@ compmath run 146
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Escribir (fg)' = f'g'.
+2. Invertir el orden de la resta en la regla del cociente.
+3. Olvidar elevar al cuadrado el denominador.
+
+## 🚀 Dónde se usa de verdad
+
+Derivada de la sigmoide y de la softmax, puertas de LSTM y GRU, cocientes de
+verosimilitud y cualquier pérdida con términos multiplicativos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)
+- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

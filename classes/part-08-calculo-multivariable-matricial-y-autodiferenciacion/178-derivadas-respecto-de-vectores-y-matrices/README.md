@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**El gradiente de la pérdida cuadrática es 2Xᵀ(Xw − y)/n: esa expresión es el gradiente de una capa lineal.**
 
-Esta clase concreta ese objetivo sobre **Derivadas respecto de vectores y matrices**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `vector_matrix_derivatives`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L(w) = ‖Xw − y‖²/n
+∇L = 2Xᵀ(Xw − y)/n
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,42 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El Hessiano describe la curvatura y decide el tipo de punto crítico.
+Esta clase deduce la fórmula que más se usa en todo el machine learning. La pérdida
+cuadrática media de un modelo lineal es `‖Xw − y‖²/n`, y su gradiente respecto a los pesos
+es `2Xᵀr/n`, donde `r = Xw − y` es el vector de residuos.
+
+La estructura de esa expresión merece leerse despacio, porque es la misma en modelos mucho
+más complejos. El residuo mide el error de cada observación; `Xᵀ` lo proyecta de vuelta al
+espacio de parámetros, atribuyendo a cada peso la parte del error que le corresponde
+según su feature; y la división por `n` promedia.
+
+En una red neuronal ocurre exactamente lo mismo capa a capa: se calcula el error en la
+salida y se «retropropaga» multiplicando por la transpuesta de la matriz de pesos. La
+aparición de `Wᵀ` en backpropagation no es un truco: es esta fórmula.
+
+Igualar el gradiente a cero da `XᵀXw = Xᵀy`, las ecuaciones normales de la clase 131.
+Optimización iterativa y solución cerrada llegan al mismo sitio; la primera escala a
+millones de parámetros y la segunda no.
+
+## 🧮 Ejemplo trabajado
+
+Gradiente de la pérdida cuadrática de un modelo lineal.
+
+```text
+X = [[1,2],[2,1],[3,4]]   y = (5, 4, 11)   w = (1, 1)
+
+predicciones: Xw = (3, 3, 7)
+residuos r = Xw − y = (−2, −1, −4)
+
+MSE = (4 + 1 + 16)/3 = 7.0
+
+∇w = 2Xᵀr/n = 2·(−16, −21)/3 = (−10.6667, −14.0)
+numérico:                       (−10.6667, −14.0)   ✓
+
+Igualar a cero → ecuaciones normales XᵀXw = Xᵀy
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +105,16 @@ compmath run 178
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Olvidar el factor 2 o la división por n.
+2. Transponer X en el lado equivocado y obtener un shape incorrecto.
+3. Confundir el residuo (predicción menos objetivo) con su opuesto: cambia el signo del gradiente.
+
+## 🚀 Dónde se usa de verdad
+
+Gradiente de una capa lineal, regresión por descenso de gradiente, deducción de
+backpropagation y toda función de pérdida cuadrática.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 5](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

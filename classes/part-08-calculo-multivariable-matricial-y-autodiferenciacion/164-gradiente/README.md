@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**El gradiente apunta al mayor ascenso; por eso se minimiza moviéndose en dirección contraria.**
 
-Esta clase concreta ese objetivo sobre **Gradiente**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `gradient`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir la convención de layout (numerador vs denominador) en cálculo matricial.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∇f = (∂f/∂x₁, ..., ∂f/∂xₙ)
+descenso: x ← x − α∇f
+‖∇f‖ = pendiente máxima
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Modo reverso calcula todas las derivadas en un solo barrido hacia atrás.
+El gradiente reúne todas las derivadas parciales en un vector, y ese vector tiene dos
+propiedades que lo convierten en el objeto central de la optimización: **apunta en la
+dirección de máximo crecimiento** y **su norma es la pendiente en esa dirección**.
+
+La primera propiedad es la que justifica el algoritmo más usado del machine learning
+moderno. Si el gradiente apunta hacia arriba, moverse en `−∇f` es la forma más rápida de
+bajar localmente. `x ← x − α∇f` es el descenso de gradiente, y toda la parte 12 son
+variantes de esa línea.
+
+La palabra **localmente** es esencial. El gradiente solo informa del comportamiento
+infinitesimal alrededor del punto; nada garantiza que la dirección de máximo descenso
+local lleve al mínimo global, ni siquiera que sea una buena dirección a media distancia.
+En un valle alargado, la dirección de máximo descenso es casi perpendicular a la que
+lleva al mínimo.
+
+La norma del gradiente sirve además como **criterio de parada**: cerca de un punto
+crítico, `‖∇f‖` tiende a cero. Es el indicador que usan todos los optimizadores para
+decidir cuándo detenerse, y es preferible a un número fijo de iteraciones porque se
+adapta al problema.
+
+## 🧮 Ejemplo trabajado
+
+Gradiente y verificación de la dirección de ascenso.
+
+```text
+f(x,y) = x²y + 3xy² + 2   en el punto (2,3)
+
+∇f = (39, 40),   ‖∇f‖ = 55.87
+dirección unitaria: (0.6981, 0.7160)
+
+f(2,3) = 68.0
+
+Moverse h = 0.001 en dirección +∇f:  68.055872   ↑
+Moverse h = 0.001 en dirección −∇f:  67.944128   ↓
+
+El gradiente sube y su opuesto baja           ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 164
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Confundir el gradiente con la derivada direccional (que es un escalar).
+2. Suponer que la dirección de máximo descenso local lleva al mínimo global.
+3. Detener la optimización por número de iteraciones sin comprobar la norma del gradiente.
+
+## 🚀 Dónde se usa de verdad
+
+Descenso de gradiente y todas sus variantes, criterios de parada, mapas de saliencia en
+interpretabilidad y ataques adversariales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+- [Ruder, S. *An overview of gradient descent optimization algorithms*. arXiv, 2016](https://arxiv.org/abs/1609.04747)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

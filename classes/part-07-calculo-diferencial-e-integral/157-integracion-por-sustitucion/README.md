@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La sustitución es la regla de la cadena leída al revés.**
 
-Esta clase concreta ese objetivo sobre **Integración por sustitución**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `substitution`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: derivar en un punto donde la función no es continua.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∫f(g(x))·g'(x)dx = ∫f(u)du  con u = g(x)
+los límites también se transforman
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,41 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> La regla de la cadena es el mecanismo entero de backpropagation.
+Integrar por sustitución consiste en reconocer que el integrando tiene la forma
+`f(g(x))·g'(x)`, que es exactamente lo que produce derivar `F(g(x))` por la regla de la
+cadena. Al identificar `u = g(x)`, la integral se convierte en `∫f(u)du`, que suele ser
+inmediata.
+
+La señal para aplicarla es la presencia de una función y de su derivada como factor. En
+`∫2x·cos(x²)dx`, el `2x` es la derivada de `x²`, así que la sustitución `u = x²` cierra
+el problema. Reconocer ese patrón es la habilidad que hay que entrenar.
+
+En integrales **definidas** hay que transformar también los límites, y ese es el error
+más frecuente: cambiar la variable sin cambiar el intervalo. La alternativa es deshacer
+la sustitución antes de evaluar, pero transformar los límites es más limpio y menos
+propenso a error.
+
+En probabilidad, la sustitución es el **cambio de variable** de una densidad, y allí
+aparece el jacobiano como factor de corrección (clase 075). Esa corrección es la que
+hace que la densidad transformada siga integrando a 1, y es el mecanismo central de los
+normalizing flows.
+
+## 🧮 Ejemplo trabajado
+
+Integrar 2x·cos(x²) de 0 a 1.
+
+```text
+Reconocer: la derivada de x² es 2x, que está presente
+
+Sustitución: u = x²,  du = 2x dx
+Límites: x=0 → u=0,   x=1 → u=1
+
+∫₀¹ 2x·cos(x²)dx = ∫₀¹ cos(u)du = sin(1) = 0.841471
+
+Verificación numérica directa: 0.841471       ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +104,16 @@ compmath run 157
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Cambiar la variable sin transformar los límites en una integral definida.
+2. Olvidar el factor du = g'(x)dx.
+3. Aplicar la sustitución cuando la derivada de g no está presente en el integrando.
+
+## 🚀 Dónde se usa de verdad
+
+Cambio de variable en densidades de probabilidad, normalizing flows, simplificación de
+integrales y reparametrización en inferencia variacional.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +156,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 19](https://www.mathpop.com/calculus)
+- [Papamakarios, G. et al. *Normalizing Flows for Probabilistic Modeling and Inference*. JMLR, 2021](https://jmlr.org/papers/v22/19-1028.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

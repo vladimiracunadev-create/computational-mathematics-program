@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La antiderivada está determinada salvo una constante, y esa constante desaparece en la integral definida.**
 
-Esta clase concreta ese objetivo sobre **Antiderivadas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `antiderivatives`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir punto crítico con extremo global.
+
+## 🧩 Fórmulas de la clase
+
+```text
+F' = f  ⟹  (F + C)' = f
+∫ₐᵇ f = F(b) − F(a),  independiente de C
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> Derivada nula señala punto crítico, no necesariamente mínimo.
+Una antiderivada de `f` es cualquier función cuya derivada sea `f`. Como la derivada de
+una constante es cero (clase 145), sumar cualquier constante a una antiderivada da otra
+antiderivada. La familia completa es `F(x) + C`, y esa `C` es la razón por la que la
+integral indefinida se escribe siempre con ella.
+
+En la integral **definida** la constante desaparece: al restar `F(b) − F(a)`, las
+constantes se cancelan. Por eso el valor de una integral definida no depende de qué
+antiderivada se elija, resultado que parece obvio y que conviene comprobar una vez.
+
+Encontrar antiderivadas es sustancialmente más difícil que derivar. Derivar es un
+procedimiento mecánico que siempre termina; integrar requiere reconocer patrones, y hay
+funciones elementales cuya antiderivada **no** es elemental. `e^(-x²)` es el caso más
+famoso: su integral define la función error `erf`, que no se puede escribir con
+funciones elementales.
+
+Ese hecho —demostrado por Liouville en el siglo XIX— es la razón de ser de la integración
+numérica. No es que no sepamos calcular la integral: es que se ha demostrado que no
+existe forma cerrada elemental. La probabilidad normal acumulada es precisamente uno de
+esos casos.
+
+## 🧮 Ejemplo trabajado
+
+Dos antiderivadas de x² y su integral definida.
+
+```text
+F₁(x) = x³/3
+F₂(x) = x³/3 + 7
+
+F₁'(2) = 4.0                                 ✓
+F₂'(2) = 4.0                                 ✓ misma derivada
+
+diferencia constante: F₂ − F₁ = 7
+
+Integral definida en [1,3]:
+  con F₁: 9 − 1/3 = 8.6667
+  con F₂: 16 − 7.3333 = 8.6667              ✓ la constante se cancela
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 155
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Omitir la constante de integración en una integral indefinida.
+2. Suponer que toda función elemental tiene antiderivada elemental.
+3. Usar antiderivadas distintas para los dos límites de una integral definida.
+
+## 🚀 Dónde se usa de verdad
+
+Resolución de ecuaciones diferenciales, cálculo de probabilidades acumuladas y
+reconstrucción de una magnitud a partir de su tasa de cambio.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Liouville's theorem on elementary integrals — Wolfram MathWorld](https://mathworld.wolfram.com/LiouvillesTheorem.html)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 14](https://www.mathpop.com/calculus)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

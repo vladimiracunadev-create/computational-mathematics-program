@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**Una función puede no estar definida en un punto y tener límite perfectamente definido en él.**
 
-Esta clase concreta ese objetivo sobre **Intuición de límite**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `limit_intuition`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+lím(x→0) sin(x)/x = 1
+el límite existe si los laterales coinciden
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> La derivada es la mejor aproximación lineal local, no solo una pendiente.
+El límite responde a una pregunta que la evaluación directa no puede: ¿a qué valor se
+acerca `f(x)` cuando `x` se acerca a `a`, **sin llegar nunca**? Esa exclusión del punto
+es la clave: el límite no depende de `f(a)`, y por eso existe aunque la función no esté
+definida allí.
+
+`sin(x)/x` en cero es el ejemplo canónico. Sustituir da `0/0`, que no es un número. Pero
+al acercarse, los valores tienden inequívocamente a 1, y ese límite es el que hace que
+la derivada del seno sea el coseno. Toda la trigonometría del cálculo descansa en él.
+
+La definición formal —para todo ε existe un δ— tiene el orden de cuantificadores de la
+clase 083 y no es un capricho: δ puede depender de ε, y en la mayoría de los casos
+depende. Cambiar el orden daría la definición de continuidad uniforme, una condición
+estrictamente más fuerte.
+
+Para que el límite exista, los **límites laterales** deben coincidir. Una función con un
+salto tiene ambos laterales pero distintos, y por tanto no tiene límite en ese punto.
+Comprobar los dos lados numéricamente, como hace el laboratorio, es la forma práctica de
+detectar discontinuidades.
+
+## 🧮 Ejemplo trabajado
+
+Acercarse a cero por ambos lados.
+
+```text
+f(x) = sin(x)/x       (no definida en x = 0)
+
+x        f(x)
+1.0      0.841471
+0.1      0.998334
+0.01     0.999983
+0.001    0.99999983
+1e−6     0.9999999999998
+
+límite = 1
+error en 1e−6: 1.67e−13
+
+Por la izquierda: f(−1e−6) = 0.9999999999998
+Los laterales coinciden → el límite existe    ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 141
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Concluir que no hay límite porque la función no está definida en el punto.
+2. Comprobar el límite por un solo lado.
+3. Usar valores de x demasiado pequeños y confundir el límite con el error de redondeo.
+
+## 🚀 Dónde se usa de verdad
+
+Definición de derivada e integral, análisis de convergencia de sucesiones y series,
+comportamiento asintótico de algoritmos y estabilidad de métodos numéricos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Spivak, M. *Calculus*, 4ª ed., Publish or Perish, 2008, cap. 5](https://www.mathpop.com/calculus)
+- [Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

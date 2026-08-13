@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Las curvas de nivel son los conjuntos donde la función vale lo mismo, y el gradiente es perpendicular a ellas.**
 
-Esta clase concreta ese objetivo sobre **Superficies y curvas de nivel**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `level_curves`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que el hessiano es definido positivo sin comprobarlo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+curva de nivel: f(x,y) = c
+∇f ⊥ curva de nivel
+curvas juntas ⟹ pendiente alta
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El Jacobiano generaliza la derivada a funciones vectoriales.
+Una curva de nivel une los puntos donde la función toma el mismo valor. Es el mismo
+concepto que las isolíneas de un mapa topográfico, y la analogía es exacta: la altura del
+terreno es una función de dos variables, y las curvas de nivel son las líneas de altitud
+constante.
+
+De esa imagen se leen dos hechos importantes. Primero, el **gradiente es perpendicular a
+la curva de nivel**: la dirección de máximo ascenso es la que cruza las isolíneas de
+frente, no la que las recorre. Segundo, **cuanto más juntas están las curvas, mayor es la
+pendiente**: la misma diferencia de valor en menos distancia.
+
+Esa segunda observación es la que explica el zigzagueo del descenso de gradiente. Cuando
+las curvas de nivel son elipses muy alargadas —función mal condicionada, clase 128—, el
+gradiente apunta casi perpendicular al eje largo, es decir, casi perpendicular a la
+dirección hacia el mínimo. El algoritmo rebota entre las paredes del valle en lugar de
+avanzar por él.
+
+Los gráficos de contorno son la herramienta estándar para visualizar funciones de dos
+variables, y en optimización se usan para mostrar trayectorias de convergencia. Su
+limitación es la misma de siempre: solo funcionan en dos dimensiones, y los paisajes
+reales tienen millones.
+
+## 🧮 Ejemplo trabajado
+
+Curvas de nivel de x² + y².
+
+```text
+g(x,y) = x² + y²,   nivel c = 4
+
+puntos del nivel 4:
+  (2,0)     → 4    ✓
+  (0,2)     → 4    ✓
+  (√2,√2)   → 4    ✓
+  (−2,0)    → 4    ✓
+
+forma: circunferencia de radio 2
+
+gradiente en (2,0): (4, 0)
+  apunta radialmente hacia fuera
+  perpendicular a la circunferencia        ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 162
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Suponer que el gradiente es tangente a la curva de nivel: es perpendicular.
+2. Interpretar la separación entre curvas al revés: juntas significa pendiente alta.
+3. Extrapolar la intuición de un gráfico de contorno 2D a un espacio de millones de dimensiones.
+
+## 🚀 Dónde se usa de verdad
+
+Visualización de paisajes de pérdida, mapas topográficos, análisis de convergencia y
+diagnóstico de mal condicionamiento.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Li, H. et al. *Visualizing the Loss Landscape of Neural Nets*. NeurIPS, 2018](https://arxiv.org/abs/1712.09913)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

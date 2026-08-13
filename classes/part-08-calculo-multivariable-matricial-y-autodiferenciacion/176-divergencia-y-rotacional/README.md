@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**La divergencia mide fuente o sumidero; el rotacional mide circulación local.**
 
-Esta clase concreta ese objetivo sobre **Divergencia y rotacional**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `divergence_curl`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir la convención de layout (numerador vs denominador) en cálculo matricial.
+
+## 🧩 Fórmulas de la clase
+
+```text
+div F = ∂P/∂x + ∂Q/∂y
+rot F = ∂Q/∂x − ∂P/∂y  (en 2D)
+div(∇φ) = Δφ  (laplaciano)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El gradiente apunta al mayor ascenso; por eso se desciende en su dirección opuesta.
+La divergencia y el rotacional son las dos formas de derivar un campo vectorial. La
+**divergencia** es un escalar que mide el flujo neto que sale de un entorno del punto:
+positiva indica fuente, negativa sumidero, nula indica que lo que entra sale. El
+**rotacional** mide la tendencia del campo a hacer girar un objeto colocado en ese punto.
+
+Ambos aparecen en las ecuaciones de Maxwell y en la mecánica de fluidos, y su combinación
+da los teoremas integrales —Green, Gauss, Stokes— que relacionan lo que ocurre en el
+interior de una región con lo que ocurre en su frontera.
+
+La divergencia del gradiente es el **laplaciano**, `Δφ = div(∇φ)`, que es la traza del
+Hessiano. Ese operador aparece en la ecuación del calor, en la de ondas y —lo que importa
+aquí— en el **Laplaciano de un grafo** (clase 336), que es su análogo discreto y es la
+base del clustering espectral y de las GNN.
+
+El teorema clave para esta parte es que el rotacional de un gradiente es siempre cero. Por
+tanto, un campo con rotacional no nulo **no puede** ser un campo de gradientes, y ese es
+el criterio para detectar dinámicas que no derivan de ninguna función objetivo.
+
+## 🧮 Ejemplo trabajado
+
+Divergencia y rotacional de F = (x², xy).
+
+```text
+F(x,y) = (x², xy)   en el punto (1,2)
+
+div F = ∂(x²)/∂x + ∂(xy)/∂y = 2x + x = 3x
+  analítica en (1,2): 3
+  numérica:           3.000000            ✓
+
+rot F = ∂(xy)/∂x − ∂(x²)/∂y = y − 0 = y
+  analítica en (1,2): 2
+  numérica:           2.000000            ✓
+
+rot ≠ 0  →  F NO es un campo de gradientes
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 176
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Confundir divergencia (escalar) con rotacional (vector en 3D, escalar en 2D).
+2. Suponer que un campo con divergencia nula es conservativo: son propiedades distintas.
+3. Calcular estas derivadas con h demasiado pequeño y amplificar el redondeo.
+
+## 🚀 Dónde se usa de verdad
+
+Mecánica de fluidos, electromagnetismo, laplaciano de grafos, difusión y detección de
+dinámicas no conservativas en entrenamiento adversarial.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Chung, F. *Spectral Graph Theory*. AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

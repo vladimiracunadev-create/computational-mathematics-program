@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Una integral triple con densidad variable calcula masa; el volumen es el caso de densidad unitaria.**
 
-Esta clase concreta ese objetivo sobre **Integrales triples**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `triple_integrals`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que el hessiano es definido positivo sin comprobarlo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+V = ∭ dV
+m = ∭ ρ(x,y,z) dV
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,42 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Modo reverso calcula todas las derivadas en un solo barrido hacia atrás.
+La integral triple extiende la acumulación a tres dimensiones. Con integrando 1 da el
+**volumen**; con una función de densidad da la **masa**. Esa distinción —volumen como caso
+particular de masa con densidad constante— es la que se generaliza a la probabilidad: la
+masa total de una densidad debe ser 1.
+
+El coste crece con el cubo del refinamiento: una malla de 60 puntos por eje son 216 000
+celdas para un cubo unitario. Ya en tres dimensiones la integración en malla empieza a ser
+cara, y en más dimensiones deja de ser viable.
+
+Los cambios de coordenadas —cilíndricas, esféricas— simplifican regiones con simetría, al
+precio de introducir el **jacobiano** como factor: `r` en cilíndricas, `r²sin φ` en
+esféricas. Ese factor es el determinante de la clase 117 corrigiendo el cambio de volumen,
+y olvidarlo es el error clásico.
+
+En probabilidad, la integral triple aparece al marginalizar una densidad conjunta de tres
+variables, y la normalización de la gaussiana multivariante es una integral de este tipo
+resuelta con un cambio de variable que diagonaliza la covarianza.
+
+## 🧮 Ejemplo trabajado
+
+Volumen y masa de un cubo con densidad variable.
+
+```text
+región: cubo unitario [0,1]³
+densidad: ρ(x,y,z) = 1 + x
+
+volumen numérico: 1.00000000     exacto 1     ✓
+
+masa = ∭(1+x)dV = 1 + 1/2 = 1.5
+masa numérica: 1.500000
+error: 4.2e−07
+
+malla: 60³ = 216 000 celdas
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +105,16 @@ compmath run 174
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Olvidar el jacobiano al cambiar a coordenadas cilíndricas o esféricas.
+2. Usar integración en malla en más de tres o cuatro dimensiones.
+3. Confundir volumen (densidad 1) con masa (densidad variable).
+
+## 🚀 Dónde se usa de verdad
+
+Masa y centro de gravedad, marginalización de densidades conjuntas, normalización de
+distribuciones multivariantes y cálculo de momentos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 15](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006, cap. 2](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

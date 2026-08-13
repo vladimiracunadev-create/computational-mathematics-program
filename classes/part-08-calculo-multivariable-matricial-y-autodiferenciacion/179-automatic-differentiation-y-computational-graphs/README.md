@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**La autodiferenciación en modo reverso obtiene todos los gradientes con un barrido hacia adelante y uno hacia atrás.**
 
-Esta clase concreta ese objetivo sobre **Automatic differentiation y computational graphs**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `autodiff`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir la convención de layout (numerador vs denominador) en cálculo matricial.
+
+## 🧩 Fórmulas de la clase
+
+```text
+coste del modo reverso: O(1) barridos, independiente del número de variables
+coste de diferencias finitas: 2 evaluaciones por variable
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Modo reverso calcula todas las derivadas en un solo barrido hacia atrás.
+La autodiferenciación no es derivación simbólica ni numérica: es una **tercera opción**.
+Registra las operaciones elementales que se ejecutan formando un grafo de cómputo, y luego
+aplica la regla de la cadena sobre ese grafo. El resultado es exacto salvo redondeo, sin
+la explosión de expresiones del cálculo simbólico ni el error de truncamiento de las
+diferencias finitas.
+
+El **modo reverso** es el que usan los frameworks de deep learning. Hace un barrido hacia
+adelante guardando valores intermedios y otro hacia atrás propagando derivadas, y obtiene
+**todas** las derivadas parciales en ese único par de barridos. Con un millón de
+parámetros, las diferencias finitas necesitarían dos millones de evaluaciones; el modo
+reverso necesita el equivalente a unas pocas.
+
+El precio es la memoria: hay que guardar los valores intermedios del barrido hacia
+adelante para usarlos en el de vuelta. Esa es la razón por la que entrenar consume mucha
+más memoria que inferir, y por la que existe el *gradient checkpointing*, que recalcula
+partes en lugar de guardarlas.
+
+La implementación del programa (`Var` en `part08.py`) tiene unas cien líneas y hace
+exactamente lo mismo que PyTorch en su núcleo: cada operación registra cómo propagar el
+gradiente, `backward()` construye el orden topológico y lo recorre al revés acumulando.
+Lo que añaden los frameworks reales es tensores, GPU, fusión de operaciones y compilación,
+no un mecanismo distinto.
+
+## 🧮 Ejemplo trabajado
+
+Autodiferenciación de una expresión con dos variables.
+
+```text
+z = (x·y + sin x)·y²    en x = 2, y = 3
+
+valor: 63.1852
+
+dz/dx autodiff:  30.7482
+dz/dx numérico:  30.7482                     ✓
+dz/dy autodiff:  60.7902
+dz/dy numérico:  60.7902                     ✓
+
+Coste:
+  autodiff:            1 barrido adelante + 1 atrás
+  diferencias finitas: 2 evaluaciones por variable
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 179
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Confundir autodiferenciación con derivación simbólica o numérica.
+2. Olvidar acumular gradientes en nodos reutilizados.
+3. Usar el modo directo cuando hay muchas entradas y una salida.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de cualquier red neuronal, optimización de hiperparámetros por gradiente,
+física diferenciable y gradientes de simuladores.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)
+- [Griewank & Walther. *Evaluating Derivatives*, 2ª ed., SIAM, 2008](https://epubs.siam.org/doi/book/10.1137/1.9780898717761)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

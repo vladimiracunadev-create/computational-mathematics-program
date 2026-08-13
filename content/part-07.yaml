@@ -1,0 +1,1136 @@
+part: "07"
+titulo: "Cálculo diferencial e integral"
+
+resumen_extendido: |
+  El cálculo es el estudio del cambio, y su invención independiente por Newton y Leibniz en
+  la década de 1660 es probablemente el acontecimiento más productivo de la historia de la
+  matemática. Esta parte lo reconstruye con una orientación concreta: **la derivada es la
+  mejor aproximación lineal local**, y la regla de la cadena es el mecanismo entero del
+  entrenamiento de una red neuronal.
+
+  Las clases 141 a 143 tratan el límite y la continuidad. El límite responde a una pregunta
+  que la aritmética no puede: qué valor «debería» tener una función donde no está definida.
+  `sin(x)/x` no existe en cero y sin embargo tiene un límite perfectamente definido, y esa
+  distinción entre valor y límite es la que hace posible definir la derivada.
+
+  Las clases 144 a 150 construyen la derivada y sus reglas. La más importante con diferencia
+  es la **regla de la cadena** (147): derivar una composición es multiplicar las derivadas de
+  sus piezas. Como una red neuronal es una composición de capas (clase 057), su gradiente es
+  un producto de factores, uno por capa. Ese producto explica de golpe el desvanecimiento del
+  gradiente, por qué ReLU funciona mejor que la sigmoide y por qué las conexiones residuales
+  ayudan.
+
+  Las clases 151 y 152 introducen Taylor y la optimización de una variable. Taylor cambia una
+  función difícil por un polinomio con error acotado, y es la base de los métodos de segundo
+  orden, del análisis de convergencia y de la mitad de las aproximaciones que usa el análisis
+  numérico. La condición `f'(x) = 0` es el caso unidimensional de `∇f = 0`, la condición de
+  primer orden de toda la parte 12.
+
+  Las clases 153 a 158 desarrollan la integral como acumulación y el teorema fundamental, que
+  establece que derivar e integrar son operaciones inversas. Ese teorema conecta dos ideas
+  que nacieron separadas —la tangente y el área— y es el resultado que da nombre a la
+  asignatura.
+
+  El cierre (159 y 160) pasa a la integración numérica, que es como se calcula en la práctica
+  casi cualquier integral: no hay forma cerrada para `e^(-x²)` y sin embargo su integral es
+  la que define la distribución normal. Trapecio y Simpson introducen el concepto de **orden
+  de convergencia**, que reaparecerá en toda la parte 11.
+
+mapa: |
+  flowchart TD
+      A["Clases 141-143 · Limite y continuidad"] --> B["Clases 144-150 · Derivada y sus reglas"]
+      B --> C["Clase 147 · Regla de la cadena"]
+      B --> D["Clases 151-152 · Taylor y optimizacion"]
+      A --> E["Clases 153-156 · Integral y teorema fundamental"]
+      E --> F["Clases 157-159 · Tecnicas e integracion numerica"]
+      D --> G["Clase 160 · Capstone optimizar y acumular"]
+      F --> G
+      C ==> H["Parte 08 · Gradiente y autodiferenciacion"]
+      C -.-> I["Backpropagation · Parte 15"]
+      D -.-> J["Metodos de segundo orden · Parte 12"]
+      F -.-> K["Cuadratura y EDO · Parte 11"]
+
+glosario:
+  - termino: "Límite"
+    definicion: "Valor al que se acerca una función cerca de un punto, exista o no la función en él."
+    clase: "141"
+  - termino: "Indeterminación"
+    definicion: "Forma como 0/0 o ∞/∞ que no determina el límite por sí sola; es de la expresión, no del límite."
+    clase: "142"
+  - termino: "Continuidad"
+    definicion: "f(a) existe, el límite existe y coinciden. Continua no implica derivable."
+    clase: "143"
+  - termino: "Derivada"
+    definicion: "Límite del cociente incremental. Es la pendiente de la mejor aproximación lineal local."
+    clase: "144"
+  - termino: "Diferencia central"
+    definicion: "(f(x+h) − f(x−h))/2h. Aproxima la derivada con error O(h²), un orden mejor que la diferencia adelantada."
+    clase: "144"
+  - termino: "Regla del producto"
+    definicion: "(fg)' = f'g + fg'. No es el producto de las derivadas."
+    clase: "146"
+  - termino: "Regla de la cadena"
+    definicion: "(f∘g)' = f'(g(x))·g'(x). Es el mecanismo completo de backpropagation."
+    clase: "147"
+  - termino: "Derivación implícita"
+    definicion: "Derivar una relación F(x,y)=0 sin despejar y, tratando y como función de x."
+    clase: "150"
+  - termino: "Serie de Taylor"
+    definicion: "Aproximación polinómica de una función alrededor de un punto, con error acotado por el término siguiente."
+    clase: "151"
+  - termino: "Punto crítico"
+    definicion: "Punto donde la derivada se anula. Puede ser máximo, mínimo o inflexión."
+    clase: "152"
+  - termino: "Criterio de la segunda derivada"
+    definicion: "En un punto crítico, f'' > 0 indica mínimo y f'' < 0 máximo."
+    clase: "152"
+  - termino: "Suma de Riemann"
+    definicion: "Aproximación de una integral por rectángulos. Converge a la integral al refinar la partición."
+    clase: "153"
+  - termino: "Integral definida"
+    definicion: "Área con signo bajo la curva entre dos límites. Es aditiva y cambia de signo al invertir la orientación."
+    clase: "154"
+  - termino: "Antiderivada"
+    definicion: "Función cuya derivada es la dada. Está determinada salvo una constante aditiva."
+    clase: "155"
+  - termino: "Teorema fundamental del cálculo"
+    definicion: "Derivar la integral de una función devuelve la función. Derivación e integración son inversas."
+    clase: "156"
+  - termino: "Sustitución"
+    definicion: "Cambio de variable en una integral. Es la regla de la cadena leída al revés."
+    clase: "157"
+  - termino: "Integración por partes"
+    definicion: "∫u dv = uv − ∫v du. Es la regla del producto leída al revés."
+    clase: "158"
+  - termino: "Orden de convergencia"
+    definicion: "Exponente p tal que el error de un método cae como O(hᵖ). Trapecio es 2, Simpson es 4."
+    clase: "159"
+
+clases:
+  "141":
+    concepto: "Una función puede no estar definida en un punto y tener límite perfectamente definido en él."
+    formulas:
+      - "lím(x→0) sin(x)/x = 1"
+      - "el límite existe si los laterales coinciden"
+    desarrollo: |
+      El límite responde a una pregunta que la evaluación directa no puede: ¿a qué valor se
+      acerca `f(x)` cuando `x` se acerca a `a`, **sin llegar nunca**? Esa exclusión del punto
+      es la clave: el límite no depende de `f(a)`, y por eso existe aunque la función no esté
+      definida allí.
+
+      `sin(x)/x` en cero es el ejemplo canónico. Sustituir da `0/0`, que no es un número. Pero
+      al acercarse, los valores tienden inequívocamente a 1, y ese límite es el que hace que
+      la derivada del seno sea el coseno. Toda la trigonometría del cálculo descansa en él.
+
+      La definición formal —para todo ε existe un δ— tiene el orden de cuantificadores de la
+      clase 083 y no es un capricho: δ puede depender de ε, y en la mayoría de los casos
+      depende. Cambiar el orden daría la definición de continuidad uniforme, una condición
+      estrictamente más fuerte.
+
+      Para que el límite exista, los **límites laterales** deben coincidir. Una función con un
+      salto tiene ambos laterales pero distintos, y por tanto no tiene límite en ese punto.
+      Comprobar los dos lados numéricamente, como hace el laboratorio, es la forma práctica de
+      detectar discontinuidades.
+    ejemplo: |
+      Acercarse a cero por ambos lados.
+
+      ```text
+      f(x) = sin(x)/x       (no definida en x = 0)
+
+      x        f(x)
+      1.0      0.841471
+      0.1      0.998334
+      0.01     0.999983
+      0.001    0.99999983
+      1e−6     0.9999999999998
+
+      límite = 1
+      error en 1e−6: 1.67e−13
+
+      Por la izquierda: f(−1e−6) = 0.9999999999998
+      Los laterales coinciden → el límite existe    ✓
+      ```
+    errores:
+      - "Concluir que no hay límite porque la función no está definida en el punto."
+      - "Comprobar el límite por un solo lado."
+      - "Usar valores de x demasiado pequeños y confundir el límite con el error de redondeo."
+    aplicacion: |
+      Definición de derivada e integral, análisis de convergencia de sucesiones y series,
+      comportamiento asintótico de algoritmos y estabilidad de métodos numéricos.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., Publish or Perish, 2008, cap. 5](https://www.mathpop.com/calculus)"
+      - "[Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)"
+
+  "142":
+    concepto: "Una indeterminación es una propiedad de la expresión, no del límite: casi siempre se resuelve reescribiéndola."
+    formulas:
+      - "(x²−4)/(x−2) = x+2  para x ≠ 2"
+      - "lím(x→2) = 4"
+    desarrollo: |
+      Formas como `0/0` o `∞/∞` se llaman indeterminadas porque no determinan el límite: hay
+      ejemplos con esa forma cuyo límite es 0, otros con límite infinito y otros con
+      cualquier valor intermedio. La forma no basta; hay que analizar la expresión concreta.
+
+      La técnica básica es **reescribir**. En `(x²−4)/(x−2)`, factorizar el numerador permite
+      cancelar el factor `(x−2)`, que era el causante de la indeterminación. La función
+      resultante, `x+2`, coincide con la original en todos los puntos salvo en `x = 2`, donde
+      la original no existe. Como el límite ignora el punto, el límite de ambas es el mismo.
+
+      Ese es el patrón general: la indeterminación aparece porque la expresión escrita esconde
+      una cancelación. Racionalizar, factorizar, dividir por la potencia dominante o usar una
+      identidad son las técnicas habituales. Cuando ninguna funciona, L'Hôpital deriva
+      numerador y denominador por separado —pero conviene usarla como último recurso, porque
+      oculta la estructura del problema.
+
+      Hay una conexión directa con la parte 01: la cancelación catastrófica (clase 032) es el
+      equivalente numérico de esta situación. La expresión `√(x²+1) − x` no es indeterminada
+      en el sentido analítico, pero sufre el mismo problema estructural —una resta que anula
+      dígitos— y se resuelve con la misma técnica: reescribirla.
+    ejemplo: |
+      Resolver una indeterminación 0/0 por factorización.
+
+      ```text
+      f(x) = (x² − 4)/(x − 2)
+
+      En x = 2:  (4−4)/(2−2) = 0/0        indeterminado
+
+      Factorizar: (x−2)(x+2)/(x−2) = x+2   para x ≠ 2
+
+      lím(x→2) f(x) = 4
+
+      Comprobación numérica:
+        f(2.0001) = 4.0001
+        f(1.9999) = 3.9999
+        error respecto a 4: 1e−4          ✓
+      ```
+    errores:
+      - "Concluir que 0/0 significa que el límite no existe."
+      - "Cancelar el factor sin advertir que la función original sigue sin estar definida en el punto."
+      - "Aplicar L'Hôpital a formas que no son indeterminadas."
+    aplicacion: |
+      Cálculo de derivadas por definición, análisis asintótico y reescritura de expresiones
+      numéricamente inestables.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)"
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+
+  "143":
+    concepto: "Continuidad exige tres condiciones; ser continua no implica ser derivable."
+    formulas:
+      - "f continua en a ⟺ f(a) existe, lím f existe, y coinciden"
+      - "derivable ⟹ continua, pero no al revés"
+    desarrollo: |
+      La continuidad es la ausencia de saltos, y su definición formal descompone esa idea en
+      tres requisitos: que la función esté definida en el punto, que el límite exista y que
+      ambos coincidan. Que sean tres y no uno permite clasificar las discontinuidades según
+      cuál falla.
+
+      Una discontinuidad **removible** es aquella en la que el límite existe pero no coincide
+      con el valor (o el valor no existe). Se «arregla» redefiniendo la función en ese punto,
+      de ahí el nombre. Una discontinuidad **de salto** tiene límites laterales distintos y no
+      se puede arreglar de ninguna forma.
+
+      La implicación «derivable implica continua» es cierta y su recíproca es falsa. `|x|` es
+      continua en cero y no derivable, porque las pendientes laterales son −1 y +1. Ese
+      contraejemplo tiene consecuencias prácticas: ReLU (clase 059) es exactamente ese caso, y
+      su no derivabilidad en cero se resuelve por convenio.
+
+      Weierstrass construyó en 1872 una función continua en todo punto y derivable en ninguno,
+      demostrando que la intuición geométrica —«una curva sin saltos tiene tangente casi
+      siempre»— es falsa. Las trayectorias del movimiento browniano tienen esa misma
+      propiedad, hecho relevante en la parte 17 al tratar ecuaciones diferenciales
+      estocásticas.
+    ejemplo: |
+      Dos discontinuidades y una no derivabilidad.
+
+      ```text
+      Salto:      f(x) = 0 si x<1, 1 si x≥1
+        lím izquierda = 0,  lím derecha = 1
+        no coinciden → no continua                ✗
+
+      Removible:  g(x) = (x²−1)/(x−1) con g(1) = 5
+        límite = 2,  valor asignado = 5
+        no coinciden → no continua                ✗
+        se arregla redefiniendo g(1) = 2          ✓
+
+      Continua no derivable: |x| en 0
+        continua                                  ✓
+        pendiente izquierda −1, derecha +1        ✗ no derivable
+      ```
+    errores:
+      - "Comprobar solo el límite y no el valor de la función en el punto."
+      - "Deducir derivabilidad a partir de continuidad."
+      - "Suponer que toda discontinuidad se puede eliminar redefiniendo la función."
+    aplicacion: |
+      Validez de teoremas que exigen continuidad, activaciones no derivables como ReLU,
+      funciones de pérdida por tramos y detección de saltos en series temporales.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 6](https://www.mathpop.com/calculus)"
+      - "[Weierstrass function — Wolfram MathWorld](https://mathworld.wolfram.com/WeierstrassFunction.html)"
+
+  "144":
+    concepto: "La derivada es la pendiente de la mejor recta que aproxima la función cerca de un punto."
+    formulas:
+      - "f'(x) = lím(h→0) (f(x+h) − f(x))/h"
+      - "diferencia central: (f(x+h) − f(x−h))/2h, error O(h²)"
+    desarrollo: |
+      La derivada nace de una pregunta física —¿cuál es la velocidad instantánea?— y se
+      resuelve con un límite: la pendiente de la secante entre dos puntos, cuando esos puntos
+      se juntan. El resultado es la pendiente de la **tangente**, y esa recta es la mejor
+      aproximación lineal de la función cerca del punto.
+
+      Esa lectura, «mejor aproximación lineal», es más útil que «pendiente» porque se
+      generaliza. En varias variables, la derivada es el gradiente y define el plano tangente
+      (clase 166); en funciones vectoriales, es el Jacobiano. Siempre es lo mismo: el objeto
+      lineal que mejor aproxima localmente.
+
+      Numéricamente, la diferencia **central** es superior a la adelantada. Su error es
+      `O(h²)` en lugar de `O(h)`, porque los términos de orden impar del desarrollo de Taylor
+      se cancelan. Con `h = 10⁻⁶`, la central da unos 12 dígitos correctos y la adelantada
+      unos 6.
+
+      Pero reducir `h` indefinidamente no mejora: por debajo de cierto valor, el error de
+      redondeo de la resta —cancelación catastrófica, clase 032— domina sobre el error de
+      truncamiento. Existe un `h` óptimo, aproximadamente `√ε ≈ 1.5·10⁻⁸` para la central, y
+      la clase 221 lo mide.
+    ejemplo: |
+      Derivada de x² en x = 3 por varios caminos.
+
+      ```text
+      cociente incremental (f(3+h)−f(3))/h:
+        h = 1.0     →  7.0
+        h = 0.1     →  6.1
+        h = 0.01    →  6.01
+        h = 1e−4    →  6.0001
+
+      derivada exacta (2x): 6.0
+      diferencia central con h = 1e−6: 6.0000000000
+      error de la central: 8.8e−11
+
+      La central es dos órdenes mejor que la adelantada.
+      ```
+    errores:
+      - "Usar h demasiado pequeño y amplificar el error de redondeo."
+      - "Usar la diferencia adelantada cuando la central cuesta lo mismo y es mejor."
+      - "Derivar en un punto donde la función no es continua."
+    aplicacion: |
+      Verificación de gradientes analíticos (gradient checking), análisis de sensibilidad,
+      métodos numéricos y cualquier cálculo de tasa instantánea de cambio.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 9](https://www.mathpop.com/calculus)"
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 8](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+
+  "145":
+    concepto: "Las reglas de derivación se deducen del límite una vez y se aplican mecánicamente después."
+    formulas:
+      - "(xⁿ)' = n·xⁿ⁻¹"
+      - "(f + g)' = f' + g'"
+      - "(c·f)' = c·f'"
+      - "(c)' = 0"
+    desarrollo: |
+      Las reglas básicas convierten la derivación en un procedimiento mecánico. Cada una se
+      demuestra una vez desde la definición por límite y luego se aplica sin volver a pensar
+      en límites, que es exactamente el propósito de tener reglas.
+
+      La **linealidad** —la derivada de una suma es la suma de las derivadas, y las constantes
+      salen fuera— es la propiedad que hace que la derivación sea un operador lineal. Eso
+      importa más de lo que parece: permite derivar término a término cualquier polinomio,
+      cualquier serie de potencias y cualquier combinación lineal de funciones.
+
+      La regla de la potencia, `(xⁿ)' = n·xⁿ⁻¹`, vale para todo exponente real, no solo
+      natural. Su demostración para exponentes naturales usa el binomio de Newton; para
+      exponentes reales necesita la definición exponencial de la clase 148.
+
+      La derivada de una constante es cero, y esa es la razón por la que la antiderivada no es
+      única (clase 155): sumar cualquier constante no cambia la derivada. En optimización, ese
+      hecho significa que desplazar la función objetivo verticalmente no cambia dónde está su
+      mínimo, propiedad que se usa para estabilizar cálculos.
+    ejemplo: |
+      Cuatro derivadas verificadas numéricamente.
+
+      ```text
+      función        punto   numérica    analítica   coinciden
+      x³              2      12.000000   3x² = 12       ✓
+      5x              7       5.000000   5              ✓
+      x³ + 5x         2      17.000000   3x²+5 = 17     ✓
+      constante 4     1       0.000000   0              ✓
+
+      Linealidad verificada:
+        (x³ + 5x)' = (x³)' + (5x)' = 12 + 5 = 17       ✓
+      ```
+    errores:
+      - "Aplicar la regla de la potencia a exponentes que dependen de x: (xˣ)' no es x·xˣ⁻¹."
+      - "Suponer que la derivada de un producto es el producto de las derivadas."
+      - "Olvidar que la derivada de una constante es cero, no la constante."
+    aplicacion: |
+      Derivación de polinomios y modelos lineales, cálculo de gradientes analíticos y
+      verificación de implementaciones de autodiferenciación.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 10](https://www.mathpop.com/calculus)"
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015](https://www.cengage.com/c/calculus-8e-stewart/)"
+
+  "146":
+    concepto: "La derivada de un producto no es el producto de las derivadas."
+    formulas:
+      - "(fg)' = f'g + fg'"
+      - "(f/g)' = (f'g − fg')/g²"
+    desarrollo: |
+      La regla del producto es contraintuitiva la primera vez y su demostración explica por
+      qué: al incrementar `x`, cambian tanto `f` como `g`, y el cambio total del producto tiene
+      dos contribuciones —una por cada factor— más un término de segundo orden que se anula en
+      el límite.
+
+      Geométricamente, si `f` y `g` son los lados de un rectángulo, `fg` es su área. Al
+      incrementar ambos lados, el área crece en dos franjas —`f'g` y `fg'`— más una esquina
+      diminuta que es despreciable. Esa imagen hace la regla memorable sin memorizarla.
+
+      La regla del cociente se deduce de la del producto aplicada a `f · g⁻¹`, y su forma
+      —numerador con resta, denominador al cuadrado— hay que respetarla en el orden: `f'g − fg'`
+      y no al revés. Invertir el orden cambia el signo, error frecuente y silencioso.
+
+      En machine learning estas reglas aparecen cada vez que una función de pérdida es un
+      producto o un cociente de términos. La derivada de la softmax, del cociente de
+      verosimilitudes y de las puertas de una LSTM (clase 315) usan la del producto; la
+      derivada de la sigmoide, `σ' = σ(1−σ)`, se obtiene con la del cociente.
+    ejemplo: |
+      Producto y cociente de x² y sin(x) en x = 1.3.
+
+      ```text
+      f = x²,  g = sin(x),  x = 1.3
+
+      (fg)' por la regla:  2x·sin(x) + x²·cos(x)
+                        =  2.5057 + 0.4518 = 2.9575
+      (fg)' numérica    =  2.9575                    ✓
+
+      (f/g)' por la regla: (2x·sin x − x²·cos x)/sin²x
+                        =  2.2160
+      (f/g)' numérica    =  2.2160                   ✓
+
+      ERROR común: f'·g' = 2x·cos(x) = 0.6952  ✗ no es la derivada
+      ```
+    errores:
+      - "Escribir (fg)' = f'g'."
+      - "Invertir el orden de la resta en la regla del cociente."
+      - "Olvidar elevar al cuadrado el denominador."
+    aplicacion: |
+      Derivada de la sigmoide y de la softmax, puertas de LSTM y GRU, cocientes de
+      verosimilitud y cualquier pérdida con términos multiplicativos.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)"
+      - "[Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)"
+
+  "147":
+    concepto: "La regla de la cadena es el mecanismo completo de backpropagation: derivar una composición es multiplicar factores."
+    formulas:
+      - "(f∘g)'(x) = f'(g(x)) · g'(x)"
+      - "cadena de L funciones: producto de L derivadas"
+    desarrollo: |
+      La regla de la cadena dice que la derivada de una composición es el producto de las
+      derivadas de sus piezas, evaluadas en los puntos correctos. La intuición de tasas
+      encadenadas lo hace evidente: si `y` cambia 3 veces más rápido que `u`, y `u` cambia 2
+      veces más rápido que `x`, entonces `y` cambia 6 veces más rápido que `x`.
+
+      Esta clase es la más importante del programa para quien quiera entender deep learning.
+      Una red de L capas es una composición de L funciones (clase 057), así que su gradiente
+      respecto a los parámetros de la primera capa es un **producto de L factores**. Ese
+      producto explica de golpe tres fenómenos que suelen presentarse por separado:
+
+      Si cada factor es menor que 1, el producto tiende a cero exponencialmente: el gradiente
+      **se desvanece** y las primeras capas dejan de aprender (clase 314). Si cada factor es
+      mayor que 1, el producto diverge: el gradiente **explota**. Y como la derivada de ReLU
+      vale exactamente 1 en el semieje positivo, sustituir la sigmoide —cuya derivada máxima
+      es 0.25— por ReLU evita que el producto se atenúe.
+
+      La regla se generaliza a varias variables como una suma de productos sobre todos los
+      caminos del grafo de cómputo (clase 167), y su implementación eficiente en modo reverso
+      es la autodiferenciación (clase 179). Todo lo demás en el entrenamiento de una red es
+      ingeniería alrededor de esta regla.
+    ejemplo: |
+      Derivar sin(x²+1) y una cadena de tres niveles.
+
+      ```text
+      f(u) = sin(u),  g(x) = x²+1,  x = 1.5
+
+      g(x) = 3.25
+      df/du en g(x) = cos(3.25) = −0.9940
+      dg/dx = 2x = 3.0
+
+      producto: −0.9940 × 3.0 = −2.9821
+      derivada numérica:        −2.9821          ✓
+
+      Cadena de tres: e^(sin(x²)) en x = 0.8
+        derivada = 2.0871
+
+      En una red de L capas: el gradiente es un producto de L factores.
+      ```
+    errores:
+      - "Evaluar f' en x en lugar de en g(x)."
+      - "Olvidar multiplicar por la derivada interna."
+      - "No reconocer que una expresión es una composición y derivarla como si fuera simple."
+    aplicacion: |
+      Backpropagation, autodiferenciación, cambio de variable en integrales, propagación de
+      incertidumbre y análisis de gradientes que se desvanecen o explotan.
+    referencias:
+      - "[Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://www.nature.com/articles/323533a0)"
+      - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
+
+  "148":
+    concepto: "e^x es la única función que es su propia derivada, y por eso e aparece en todas partes."
+    formulas:
+      - "(eˣ)' = eˣ"
+      - "(ln x)' = 1/x"
+      - "(aˣ)' = aˣ · ln a"
+    desarrollo: |
+      La función exponencial `e^x` tiene una propiedad que ninguna otra función no nula
+      comparte: es su propia derivada. Ese hecho **define** el número e, y es la razón por la
+      que aparece en toda ecuación que modele crecimiento proporcional a la cantidad presente.
+
+      Con otra base aparece un factor: `(aˣ)' = aˣ·ln a`. Solo cuando `a = e` ese factor vale
+      1. Es el mismo fenómeno que con los radianes (clase 062): existe una elección de unidad
+      o de base que elimina las constantes de conversión, y esa elección es la «natural».
+
+      La derivada del logaritmo, `1/x`, es igual de notable: una función trascendente cuya
+      derivada es una función racional simple. De ahí que `∫dx/x = ln|x|`, la única
+      excepción a la regla de integración de potencias.
+
+      En machine learning estas dos derivadas aparecen constantemente. La derivada de la
+      sigmoide se calcula con la de la exponencial; el gradiente de la cross-entropy, con la
+      del logaritmo; y la combinación de ambas produce la simplificación más elegante del
+      área: el gradiente de sigmoide más entropía cruzada es simplemente `(p − y)`, sin
+      términos residuales (clase 305).
+    ejemplo: |
+      Las tres derivadas verificadas.
+
+      ```text
+      x = 2
+
+      d(eˣ)/dx numérica = 7.389056
+      e²                = 7.389056                ✓ es su propia derivada
+
+      d(ln x)/dx numérica = 0.500000
+      1/x = 0.5                                   ✓
+
+      d(3ˣ)/dx numérica = 9.887511
+      3²·ln 3 = 9 × 1.098612 = 9.887511           ✓ aparece el factor ln a
+      ```
+    errores:
+      - "Escribir (aˣ)' = x·aˣ⁻¹: esa es la regla de la potencia, no de la exponencial."
+      - "Olvidar el factor ln a con bases distintas de e."
+      - "Derivar ln x sin restringir el dominio a x > 0."
+    aplicacion: |
+      Sigmoide y softmax, cross-entropy, decaimiento exponencial del learning rate, interés
+      compuesto y toda ecuación diferencial de crecimiento proporcional.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 18](https://www.mathpop.com/calculus)"
+      - "[Maor, E. *e: The Story of a Number*. Princeton University Press, 1994](https://press.princeton.edu/books/paperback/9780691168487/e-the-story-of-a-number)"
+
+  "149":
+    concepto: "Las derivadas trigonométricas forman un ciclo de periodo cuatro."
+    formulas:
+      - "(sin x)' = cos x"
+      - "(cos x)' = −sin x"
+      - "(tan x)' = sec²x = 1/cos²x"
+    desarrollo: |
+      Derivar el seno da el coseno, derivar el coseno da menos el seno, y repitiendo se vuelve
+      al principio tras cuatro pasos. Ese ciclo de periodo cuatro tiene una consecuencia
+      elegante: la cuarta derivada de `sin x` es `sin x`, igual que `e^x` es su propia primera
+      derivada.
+
+      Esa analogía no es casual. La fórmula de Euler, `e^(ix) = cos x + i·sin x`, unifica
+      ambas familias: las funciones trigonométricas son exponenciales de argumento imaginario.
+      Derivar `e^(ix)` multiplica por `i`, y multiplicar por `i` es girar 90° en el plano
+      complejo, que es exactamente el desplazamiento de fase entre seno y coseno.
+
+      El requisito ineludible es que el argumento esté en **radianes** (clase 062). En grados,
+      cada derivada arrastraría un factor `π/180`, y tras cuatro derivaciones el factor sería
+      `(π/180)⁴ ≈ 9·10⁻⁹`. Los errores de unidad angular no lanzan excepción: producen
+      resultados escalados por un factor que parece arbitrario.
+
+      La derivada de la tangente, `sec²x`, diverge donde el coseno se anula. Esa singularidad
+      es real y hay que manejarla: en robótica produce el «bloqueo de cardán», y en cualquier
+      cálculo con ángulos cerca de 90° conviene reformular usando seno y coseno directamente.
+    ejemplo: |
+      El ciclo de derivadas en x = 0.7.
+
+      ```text
+      d(sin)/dx  numérica = 0.764842   cos(0.7) = 0.764842    ✓
+      d(cos)/dx  numérica = −0.644218  −sin(0.7) = −0.644218  ✓
+      d(tan)/dx  numérica = 1.703879   sec²(0.7) = 1.703879   ✓
+
+      Ciclo:  sin → cos → −sin → −cos → sin
+      La cuarta derivada de sin es sin                        ✓
+
+      Requisito: argumento en RADIANES
+      ```
+    errores:
+      - "Derivar funciones trigonométricas con el argumento en grados."
+      - "Olvidar el signo negativo en la derivada del coseno."
+      - "Evaluar la derivada de la tangente cerca de 90° sin controlar la singularidad."
+    aplicacion: |
+      Análisis de señales, positional encoding, oscilaciones y ondas, cinemática y cualquier
+      modelo periódico.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 15](https://www.mathpop.com/calculus)"
+      - "[Needham, T. *Visual Complex Analysis*. Oxford University Press, 1997](https://global.oup.com/academic/product/visual-complex-analysis-9780198534464)"
+
+  "150":
+    concepto: "La derivación implícita permite derivar una relación sin despejar una variable en función de la otra."
+    formulas:
+      - "x² + y² = r²  ⟹  dy/dx = −x/y"
+      - "derivar ambos lados tratando y como función de x"
+    desarrollo: |
+      No toda relación entre `x` e `y` se puede despejar. `x² + y² = 25` define una
+      circunferencia, y despejar `y` obliga a elegir una de las dos ramas. La derivación
+      implícita evita el problema: se deriva la ecuación entera respecto a `x`, tratando `y`
+      como función de `x` y aplicando la regla de la cadena a cada término que la contenga.
+
+      Del término `y²` sale `2y·(dy/dx)`, y de ahí se despeja `dy/dx`. El resultado, `−x/y`,
+      depende de ambas coordenadas, lo que es coherente: la pendiente de la tangente a una
+      circunferencia depende de en qué punto se esté.
+
+      La verificación geométrica es bonita: la tangente a una circunferencia es perpendicular
+      al radio en ese punto. La pendiente del radio es `y/x` y la de la tangente es `−x/y`, y
+      su producto es −1, que es exactamente la condición de perpendicularidad de la clase 069.
+      El laboratorio comprueba esa relación.
+
+      La técnica se generaliza al caso multivariable como el teorema de la función implícita,
+      y aparece en machine learning en la **diferenciación implícita** de capas definidas como
+      la solución de un problema de optimización —modelos de equilibrio profundo, capas de
+      optimización diferenciables—, donde no hay fórmula explícita que derivar.
+    ejemplo: |
+      Tangente a la circunferencia de radio 5 en (3,4).
+
+      ```text
+      x² + y² = 25
+
+      Derivar: 2x + 2y·(dy/dx) = 0
+      Despejar: dy/dx = −x/y = −3/4 = −0.75
+
+      Verificación numérica con y = √(25−x²):
+        dy/dx en x=3 → −0.750000                  ✓
+
+      Recta tangente: y − 4 = −0.75(x − 3)
+
+      Perpendicularidad con el radio:
+        pendiente del radio = 4/3
+        (−3/4)·(4/3) = −1                         ✓
+      ```
+    errores:
+      - "Olvidar multiplicar por dy/dx al derivar términos que contienen y."
+      - "Despejar y antes de derivar cuando la relación no es una función."
+      - "Evaluar dy/dx en un punto donde y = 0: la tangente es vertical."
+    aplicacion: |
+      Curvas definidas implícitamente, teorema de la función implícita, capas de optimización
+      diferenciables y modelos de equilibrio profundo.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)"
+      - "[Bai, Kolter & Koltun. *Deep Equilibrium Models*. NeurIPS, 2019](https://arxiv.org/abs/1909.01377)"
+
+  "151":
+    concepto: "Taylor cambia una función difícil por un polinomio con error acotado por el primer término omitido."
+    formulas:
+      - "f(x) ≈ Σ f⁽ⁿ⁾(a)(x−a)ⁿ/n!"
+      - "error del grado n ≤ máx|f⁽ⁿ⁺¹⁾|·|x−a|ⁿ⁺¹/(n+1)!"
+      - "aproximación lineal: f(a) + f'(a)(x−a)"
+    desarrollo: |
+      La serie de Taylor aproxima una función por un polinomio construido con sus derivadas en
+      un punto. El grado 1 es la recta tangente; el grado 2 añade curvatura; cada grado
+      adicional captura más estructura local. Y lo más útil: el error está **acotado**, no
+      solo es «pequeño».
+
+      Esa cota es lo que convierte la aproximación en una herramienta rigurosa. Saber que el
+      error del polinomio de grado n no supera `máx|f⁽ⁿ⁺¹⁾|·|x−a|ⁿ⁺¹/(n+1)!` permite decidir
+      cuántos términos hacen falta para una precisión dada, en lugar de añadir términos hasta
+      que «parezca suficiente».
+
+      Taylor es el motor de buena parte del análisis numérico. El orden de error de la
+      diferencia central (clase 144), el de la regla del trapecio (clase 229) y el del método
+      de Euler (clase 236) se deducen todos truncando un desarrollo de Taylor y contando
+      potencias de `h`. Cuando la parte 11 diga «error O(h²)», estará diciendo «el desarrollo
+      de Taylor se truncó tras el término lineal».
+
+      En optimización, el desarrollo de segundo orden es lo que da el método de Newton: se
+      aproxima la función por una parábola y se salta a su vértice. Y en machine learning, la
+      linealización de primer orden es la que justifica que un paso pequeño en dirección
+      contraria al gradiente reduzca la función.
+    ejemplo: |
+      Aproximar e^0.5 con polinomios de grado creciente.
+
+      ```text
+      valor exacto: 1.6487212707
+
+      grado  aproximación      error
+        0    1.0000000000      6.49e−01
+        1    1.5000000000      1.49e−01
+        2    1.6250000000      2.37e−02
+        3    1.6458333333      2.89e−03
+        4    1.6484375000      2.84e−04
+        5    1.6486979167      2.34e−05
+
+      Cota teórica del error de grado 5:
+        e^0.5 · 0.5⁶/6! = 3.58e−05      ✓ acota el error real
+      ```
+    errores:
+      - "Usar Taylor lejos del punto de desarrollo sin comprobar la cota de error."
+      - "Suponer que añadir términos siempre mejora: fuera del radio de convergencia, empeora."
+      - "Olvidar el factorial en el denominador."
+    aplicacion: |
+      Métodos numéricos y sus órdenes de error, método de Newton, linealización de modelos,
+      análisis de convergencia y funciones especiales en bibliotecas matemáticas.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 20](https://www.mathpop.com/calculus)"
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+
+  "152":
+    concepto: "La derivada nula señala un punto crítico; el signo de la segunda derivada decide de qué tipo es."
+    formulas:
+      - "condición de primer orden: f'(x) = 0"
+      - "f''(x) > 0 ⟹ mínimo local; f''(x) < 0 ⟹ máximo local"
+      - "f''(x) = 0 ⟹ el criterio no decide"
+    desarrollo: |
+      Los extremos locales de una función derivable ocurren donde la derivada se anula, porque
+      en un máximo o un mínimo la tangente es horizontal. Esa es la **condición de primer
+      orden**, y es necesaria pero no suficiente: `x³` tiene derivada nula en cero y no tiene
+      ahí ni máximo ni mínimo.
+
+      La segunda derivada resuelve la ambigüedad en la mayoría de los casos: positiva indica
+      que la función se curva hacia arriba (mínimo) y negativa que se curva hacia abajo
+      (máximo). Cuando vale cero, el criterio no decide y hay que examinar derivadas superiores
+      o el comportamiento a ambos lados.
+
+      Un punto crítico es **local**, no global. Encontrar todos los mínimos locales de una
+      función arbitraria es un problema difícil, y esa dificultad es exactamente la que hace
+      que el entrenamiento de redes neuronales sea un problema no convexo. En una función
+      convexa (clase 242), todo mínimo local es global y el problema se simplifica
+      radicalmente.
+
+      La generalización a varias variables sustituye `f' = 0` por `∇f = 0` y el signo de `f''`
+      por el carácter definido positivo del Hessiano (clase 169). La lógica no cambia: primera
+      derivada para localizar, segunda para clasificar.
+    ejemplo: |
+      Puntos críticos de x³ − 3x.
+
+      ```text
+      f(x) = x³ − 3x,   f'(x) = 3x² − 3
+
+      f'(x) = 0  →  x = ±1
+
+      x = −1:  f = 2,   f'' = 6x = −6 < 0  →  MÁXIMO local
+      x =  1:  f = −2,  f'' = 6  > 0       →  MÍNIMO local
+
+      Extremos globales en ℝ: no existen
+        f no está acotada: f(x) → ±∞
+      ```
+    errores:
+      - "Confundir punto crítico con extremo."
+      - "Olvidar comprobar la frontera del dominio al buscar extremos globales."
+      - "Concluir cuando f'' = 0 en lugar de examinar el entorno."
+    aplicacion: |
+      Optimización de una variable, condición de primer orden en la parte 12, ajuste de
+      hiperparámetros y análisis de curvas de aprendizaje.
+    referencias:
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 11](https://www.mathpop.com/calculus)"
+
+  "153":
+    concepto: "La integral es el límite de sumas de rectángulos, y la regla del punto medio converge como O(h²)."
+    formulas:
+      - "∫f ≈ Σ f(xᵢ*)·Δx"
+      - "punto medio: error O(h²)"
+    desarrollo: |
+      Integrar es acumular. La suma de Riemann aproxima el área bajo una curva con rectángulos,
+      y al refinar la partición esa suma converge a la integral. La definición formal exige que
+      el límite sea el mismo independientemente de cómo se elija el punto de evaluación dentro
+      de cada subintervalo, y esa independencia es lo que define a las funciones integrables.
+
+      La **elección del punto** afecta a la velocidad de convergencia aunque no al límite.
+      Evaluar en el extremo izquierdo o derecho da error `O(h)`; evaluar en el **punto medio**
+      da `O(h²)`, porque los errores por exceso y por defecto se compensan en cada
+      subintervalo. Es una mejora gratuita: el mismo número de evaluaciones, un orden más de
+      precisión.
+
+      Esa cancelación por simetría es la misma idea que hace superior la diferencia central
+      (clase 144). Aparece una y otra vez en análisis numérico: **aprovechar la simetría para
+      cancelar términos de error de orden impar**.
+
+      Riemann formalizó esta construcción en 1854. Lebesgue la generalizó en 1902 con una
+      integral que maneja funciones mucho más patológicas y que es la base de la teoría de la
+      probabilidad moderna. Para las funciones de este programa, ambas coinciden.
+    ejemplo: |
+      Integrar x² en [0,1] por punto medio.
+
+      ```text
+      valor exacto: 1/3 = 0.333333...
+
+      n      suma           error
+      4      0.33203125     1.30e−03
+      16     0.33325195     8.14e−05
+      64     0.33333206     5.09e−06
+      256    0.33333333     3.18e−07
+
+      Al cuadruplicar n, el error se divide por 16 → O(h²)   ✓
+      ```
+    errores:
+      - "Usar el extremo del intervalo cuando el punto medio cuesta lo mismo y converge mejor."
+      - "Suponer que más subintervalos siempre mejoran: el error de redondeo acaba dominando."
+      - "Aplicar sumas de Riemann a funciones con singularidades sin tratarlas."
+    aplicacion: |
+      Cuadratura numérica, cálculo de probabilidades por integración, acumulación de señales y
+      cualquier magnitud que se obtenga sumando contribuciones infinitesimales.
+    referencias:
+      - "[Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+
+  "154":
+    concepto: "La integral definida es aditiva en el intervalo y cambia de signo al invertir la orientación."
+    formulas:
+      - "∫ₐᵇ + ∫_b^c = ∫ₐ^c"
+      - "∫ₐᵇ = −∫_bₐ"
+      - "valor medio = (1/(b−a))·∫ₐᵇ f"
+    desarrollo: |
+      La integral definida representa el área con **signo**: las regiones bajo el eje cuentan
+      negativo. Esa convención es la que permite que la integral de una función que oscila
+      alrededor de cero sea pequeña, y es la que hace consistente el teorema fundamental.
+
+      Las propiedades estructurales son tres. La **aditividad** en el intervalo permite partir
+      un dominio en trozos y sumar. La **orientación** invierte el signo al intercambiar los
+      límites, lo que hace que `∫ₐᵃ = 0` sea consistente. Y la **linealidad** permite integrar
+      término a término, igual que se derivaba.
+
+      El **valor medio** de una función en un intervalo es su integral dividida por la
+      longitud, y es la altura del rectángulo con la misma área. El teorema del valor medio
+      integral garantiza que la función alcanza ese valor en algún punto del intervalo, si es
+      continua.
+
+      Esa noción es la que conecta con probabilidad: la esperanza de una variable aleatoria
+      continua es la integral de `x·f(x)`, es decir, un promedio ponderado por la densidad. Y
+      es la que aparece en machine learning como el promedio de una pérdida sobre una
+      distribución, que en la práctica se estima con Monte Carlo (clase 198).
+    ejemplo: |
+      Propiedades de la integral de x².
+
+      ```text
+      ∫₀¹ x² = 0.333333
+      ∫₁² x² = 2.333333
+      ∫₀² x² = 2.666667
+
+      Aditividad: 0.333333 + 2.333333 = 2.666667      ✓
+
+      Orientación: ∫₁⁰ x² = −0.333333                 ✓
+      Intervalo nulo: ∫₀⁰ x² = 0                      ✓
+
+      Valor medio en [0,2]: 2.666667/2 = 1.333333
+      ```
+    errores:
+      - "Olvidar el signo al intercambiar los límites de integración."
+      - "Interpretar la integral como área geométrica cuando la función toma valores negativos."
+      - "Confundir el valor medio de la función con la media de sus valores en unos puntos."
+    aplicacion: |
+      Esperanza de variables continuas, trabajo y energía en física, acumulación de métricas y
+      área bajo la curva ROC.
+    referencias:
+      - "[Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)"
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 13](https://www.mathpop.com/calculus)"
+
+  "155":
+    concepto: "La antiderivada está determinada salvo una constante, y esa constante desaparece en la integral definida."
+    formulas:
+      - "F' = f  ⟹  (F + C)' = f"
+      - "∫ₐᵇ f = F(b) − F(a),  independiente de C"
+    desarrollo: |
+      Una antiderivada de `f` es cualquier función cuya derivada sea `f`. Como la derivada de
+      una constante es cero (clase 145), sumar cualquier constante a una antiderivada da otra
+      antiderivada. La familia completa es `F(x) + C`, y esa `C` es la razón por la que la
+      integral indefinida se escribe siempre con ella.
+
+      En la integral **definida** la constante desaparece: al restar `F(b) − F(a)`, las
+      constantes se cancelan. Por eso el valor de una integral definida no depende de qué
+      antiderivada se elija, resultado que parece obvio y que conviene comprobar una vez.
+
+      Encontrar antiderivadas es sustancialmente más difícil que derivar. Derivar es un
+      procedimiento mecánico que siempre termina; integrar requiere reconocer patrones, y hay
+      funciones elementales cuya antiderivada **no** es elemental. `e^(-x²)` es el caso más
+      famoso: su integral define la función error `erf`, que no se puede escribir con
+      funciones elementales.
+
+      Ese hecho —demostrado por Liouville en el siglo XIX— es la razón de ser de la integración
+      numérica. No es que no sepamos calcular la integral: es que se ha demostrado que no
+      existe forma cerrada elemental. La probabilidad normal acumulada es precisamente uno de
+      esos casos.
+    ejemplo: |
+      Dos antiderivadas de x² y su integral definida.
+
+      ```text
+      F₁(x) = x³/3
+      F₂(x) = x³/3 + 7
+
+      F₁'(2) = 4.0                                 ✓
+      F₂'(2) = 4.0                                 ✓ misma derivada
+
+      diferencia constante: F₂ − F₁ = 7
+
+      Integral definida en [1,3]:
+        con F₁: 9 − 1/3 = 8.6667
+        con F₂: 16 − 7.3333 = 8.6667              ✓ la constante se cancela
+      ```
+    errores:
+      - "Omitir la constante de integración en una integral indefinida."
+      - "Suponer que toda función elemental tiene antiderivada elemental."
+      - "Usar antiderivadas distintas para los dos límites de una integral definida."
+    aplicacion: |
+      Resolución de ecuaciones diferenciales, cálculo de probabilidades acumuladas y
+      reconstrucción de una magnitud a partir de su tasa de cambio.
+    referencias:
+      - "[Liouville's theorem on elementary integrals — Wolfram MathWorld](https://mathworld.wolfram.com/LiouvillesTheorem.html)"
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 14](https://www.mathpop.com/calculus)"
+
+  "156":
+    concepto: "Derivar e integrar son operaciones inversas: ese es el teorema que da nombre al cálculo."
+    formulas:
+      - "d/dx ∫ₐˣ f(t)dt = f(x)"
+      - "∫ₐᵇ f = F(b) − F(a)  con F' = f"
+    desarrollo: |
+      El teorema fundamental del cálculo conecta dos problemas que nacieron completamente
+      separados: el de la tangente —resuelto con derivadas— y el del área —resuelto con
+      integrales—. Su enunciado es que son inversos, y esa unificación es el logro central de
+      Newton y Leibniz.
+
+      La **primera parte** dice que la función área, `F(x) = ∫ₐˣ f`, tiene derivada `f`.
+      Intuitivamente: al mover el extremo derecho un poquito, el área crece en una franja de
+      altura `f(x)` y anchura infinitesimal. La segunda parte convierte ese resultado en un
+      método de cálculo: para integrar, basta encontrar una antiderivada y evaluarla en los
+      extremos.
+
+      El impacto práctico es difícil de exagerar. Sin el teorema, cada integral exigiría un
+      límite de sumas; con él, muchas se resuelven en una línea. Es la diferencia entre
+      calcular áreas una por una y tener un método general.
+
+      El laboratorio comprueba ambas partes numéricamente con `cos`, cuya antiderivada es
+      `sin`: integra `cos` desde cero hasta `x` y verifica que da `sin(x)`, y luego deriva esa
+      integral y verifica que devuelve `cos(x)`. Que ambas comprobaciones pasen es la
+      confirmación ejecutable del teorema.
+    ejemplo: |
+      Verificar las dos partes con cos.
+
+      ```text
+      Primera parte: F(x) = ∫₀ˣ cos(t)dt
+
+        F(1.2) numérica = 0.932039
+        sin(1.2)        = 0.932039              ✓
+
+      Segunda parte: dF/dx debe ser cos(x)
+
+        dF/dx en 1.2 (numérica) = 0.362358
+        cos(1.2)                = 0.362358      ✓
+
+      Derivar deshace integrar.
+      ```
+    errores:
+      - "Aplicar el teorema a funciones discontinuas en el intervalo."
+      - "Confundir la variable de integración con el límite superior."
+      - "Olvidar que la primera parte exige que f sea continua."
+    aplicacion: |
+      Cálculo de integrales en forma cerrada, resolución de ecuaciones diferenciales, relación
+      entre función de densidad y función de distribución acumulada.
+    referencias:
+      - "[Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)"
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 14](https://www.mathpop.com/calculus)"
+
+  "157":
+    concepto: "La sustitución es la regla de la cadena leída al revés."
+    formulas:
+      - "∫f(g(x))·g'(x)dx = ∫f(u)du  con u = g(x)"
+      - "los límites también se transforman"
+    desarrollo: |
+      Integrar por sustitución consiste en reconocer que el integrando tiene la forma
+      `f(g(x))·g'(x)`, que es exactamente lo que produce derivar `F(g(x))` por la regla de la
+      cadena. Al identificar `u = g(x)`, la integral se convierte en `∫f(u)du`, que suele ser
+      inmediata.
+
+      La señal para aplicarla es la presencia de una función y de su derivada como factor. En
+      `∫2x·cos(x²)dx`, el `2x` es la derivada de `x²`, así que la sustitución `u = x²` cierra
+      el problema. Reconocer ese patrón es la habilidad que hay que entrenar.
+
+      En integrales **definidas** hay que transformar también los límites, y ese es el error
+      más frecuente: cambiar la variable sin cambiar el intervalo. La alternativa es deshacer
+      la sustitución antes de evaluar, pero transformar los límites es más limpio y menos
+      propenso a error.
+
+      En probabilidad, la sustitución es el **cambio de variable** de una densidad, y allí
+      aparece el jacobiano como factor de corrección (clase 075). Esa corrección es la que
+      hace que la densidad transformada siga integrando a 1, y es el mecanismo central de los
+      normalizing flows.
+    ejemplo: |
+      Integrar 2x·cos(x²) de 0 a 1.
+
+      ```text
+      Reconocer: la derivada de x² es 2x, que está presente
+
+      Sustitución: u = x²,  du = 2x dx
+      Límites: x=0 → u=0,   x=1 → u=1
+
+      ∫₀¹ 2x·cos(x²)dx = ∫₀¹ cos(u)du = sin(1) = 0.841471
+
+      Verificación numérica directa: 0.841471       ✓
+      ```
+    errores:
+      - "Cambiar la variable sin transformar los límites en una integral definida."
+      - "Olvidar el factor du = g'(x)dx."
+      - "Aplicar la sustitución cuando la derivada de g no está presente en el integrando."
+    aplicacion: |
+      Cambio de variable en densidades de probabilidad, normalizing flows, simplificación de
+      integrales y reparametrización en inferencia variacional.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 19](https://www.mathpop.com/calculus)"
+      - "[Papamakarios, G. et al. *Normalizing Flows for Probabilistic Modeling and Inference*. JMLR, 2021](https://jmlr.org/papers/v22/19-1028.html)"
+
+  "158":
+    concepto: "La integración por partes es la regla del producto leída al revés."
+    formulas:
+      - "∫u dv = uv − ∫v du"
+      - "criterio LIATE para elegir u"
+    desarrollo: |
+      Integrar por partes se obtiene integrando la regla del producto y despejando. Su
+      utilidad es transformar una integral difícil en otra más fácil, cambiando cuál de los dos
+      factores se deriva y cuál se integra.
+
+      La elección de `u` determina si el método ayuda o empeora. El criterio **LIATE**
+      —logarítmica, inversa trigonométrica, algebraica, trigonométrica, exponencial— ordena
+      qué tipo de función conviene elegir como `u`, y funciona en la mayoría de los casos
+      escolares. La lógica es elegir como `u` lo que se simplifica al derivar.
+
+      En `∫x·eˣdx`, elegir `u = x` hace que `du = dx` desaparezca el polinomio, dejando
+      `∫eˣdx`, inmediata. Elegir al revés produciría `x²/2·eˣ`, que es peor. La misma integral
+      con un polinomio de grado n requiere aplicar el método n veces.
+
+      Hay un caso elegante que conviene conocer: al integrar por partes dos veces `∫eˣ·sin x dx`,
+      reaparece la integral original, y despejarla algebraicamente da el resultado. Es un truco
+      que muestra que la integración es más creativa que la derivación.
+    ejemplo: |
+      Integrar x·eˣ de 0 a 1.
+
+      ```text
+      Elegir u = x  (algebraica, se simplifica al derivar)
+             dv = eˣdx
+
+      du = dx,  v = eˣ
+
+      ∫x·eˣdx = x·eˣ − ∫eˣdx = x·eˣ − eˣ
+
+      Evaluar en [0,1]:
+        (1·e − e) − (0 − 1) = 0 + 1 = 1
+
+      Verificación numérica: 1.0000000            ✓
+      error: 1.4e−09
+      ```
+    errores:
+      - "Elegir u de forma que la nueva integral sea más difícil que la original."
+      - "Olvidar el signo menos delante de la segunda integral."
+      - "No evaluar el término uv en los límites en una integral definida."
+    aplicacion: |
+      Cálculo de momentos de distribuciones, transformadas de Laplace y Fourier, y deducción
+      de fórmulas de recurrencia para integrales.
+    referencias:
+      - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 19](https://www.mathpop.com/calculus)"
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 7](https://www.cengage.com/c/calculus-8e-stewart/)"
+
+  "159":
+    concepto: "El orden de convergencia dice cómo cae el error al refinar: trapecio es O(h²) y Simpson O(h⁴)."
+    formulas:
+      - "trapecio: h·(f(a)/2 + Σf(xᵢ) + f(b)/2),  error O(h²)"
+      - "Simpson: h/3·(f(a) + 4Σimpares + 2Σpares + f(b)),  error O(h⁴)"
+    desarrollo: |
+      Cuando una integral no tiene forma cerrada —el caso habitual— hay que calcularla
+      numéricamente. El trapecio aproxima la función por segmentos rectos entre nodos; Simpson
+      la aproxima por parábolas que pasan por tres nodos consecutivos.
+
+      La diferencia de precisión es notable. El trapecio tiene error `O(h²)`: duplicar el
+      número de subintervalos divide el error por 4. Simpson tiene error `O(h⁴)`: duplicar lo
+      divide por 16. Con 100 subintervalos, Simpson suele dar diez órdenes de magnitud más de
+      precisión con el mismo número de evaluaciones de la función.
+
+      Ese salto tiene una explicación bonita: Simpson es exacto para polinomios de grado 3,
+      aunque solo interpole parábolas. El término cúbico se cancela por simetría, y esa
+      cancelación regala un orden completo. Es el mismo fenómeno que hace superior la
+      diferencia central.
+
+      La función del laboratorio, `e^(-x²)`, no tiene antiderivada elemental (clase 155) y su
+      integral define la función error. Que el resultado numérico coincida con `erf` a doce
+      decimales es la comprobación de que el método funciona, y es cómo se calculan en la
+      práctica las probabilidades de la distribución normal.
+    ejemplo: |
+      Integrar e^(-x²) en [0,1] con 100 subintervalos.
+
+      ```text
+      referencia (erf): 0.746824132812
+
+      trapecio: 0.746820967  →  error 3.17e−06
+      Simpson:  0.746824133  →  error 1.11e−13
+
+      Simpson es 7 órdenes de magnitud más preciso
+      con el mismo número de evaluaciones.
+
+      Órdenes: trapecio O(h²), Simpson O(h⁴)
+      ```
+    errores:
+      - "Usar Simpson con un número impar de subintervalos: requiere que sea par."
+      - "Aplicar estos métodos a integrandos con singularidades o muy oscilantes."
+      - "Aumentar n indefinidamente: el error de redondeo acaba dominando."
+    aplicacion: |
+      Probabilidades de la distribución normal, cálculo de expectativas, integración de
+      señales y cualquier integral sin forma cerrada.
+    referencias:
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+      - "[Burden & Faires. *Numerical Analysis*, 10ª ed., Cengage, 2015](https://www.cengage.com/c/numerical-analysis-10e-burden/)"
+
+  "160":
+    concepto: "Derivar localiza; integrar acumula. Un mismo problema suele necesitar las dos."
+    formulas:
+      - "máximo: buscar la raíz de f'"
+      - "energía: ∫f²  ·  área: ∫f  ·  valor medio: (1/T)∫f"
+    desarrollo: |
+      El capstone analiza una señal amortiguada, `e^(-0.5t)·sin(3t)`, con las dos operaciones
+      del cálculo. La derivada localiza sus extremos; la integral acumula su área, su energía y
+      su valor medio. Ninguna de las dos por separado describe la señal.
+
+      Encontrar el máximo se plantea como **buscar la raíz de la derivada**, y se resuelve por
+      bisección. Esa reformulación —optimizar equivale a resolver `f' = 0`— es la que conecta
+      la parte 07 con la parte 11: los métodos de búsqueda de raíces son también métodos de
+      optimización, y viceversa.
+
+      Las tres integrales tienen interpretaciones distintas. El **área** es la acumulación con
+      signo, y en una señal oscilante tiende a cancelarse. La **energía**, `∫f²`, no se cancela
+      porque el cuadrado es siempre positivo, y por eso es la medida estándar de «cuánta señal
+      hay». El **valor medio** normaliza el área por la duración.
+
+      Esa distinción entre área y energía reaparece en la parte 13: el teorema de Parseval dice
+      que la energía calculada en el tiempo coincide con la calculada en frecuencia, y es la
+      base del análisis espectral. Aquí se introduce sin nombrarla todavía.
+    ejemplo: |
+      Analizar la señal amortiguada en [0,6].
+
+      ```text
+      f(t) = e^(−0.5t)·sin(3t)
+
+      Primer máximo (raíz de f' por bisección):
+        t = 0.4048,  f(t) = 0.7818
+        f'(t) = 1.4e−09                  ✓ derivada nula
+
+      Acumulaciones en [0,6]:
+        área    ∫f  = 0.3220
+        energía ∫f² = 0.2856
+        valor medio = 0.0537
+
+      El área casi se cancela por la oscilación;
+      la energía no, porque el cuadrado es positivo.
+      ```
+    errores:
+      - "Confundir el área (con signo) con la energía (siempre positiva)."
+      - "Buscar el máximo evaluando en una malla en lugar de resolviendo f' = 0."
+      - "Reportar un valor medio sin declarar el intervalo sobre el que se calculó."
+    aplicacion: |
+      Análisis de señales, cálculo de energía en física, métricas acumuladas en el tiempo y
+      localización de extremos en curvas experimentales.
+    referencias:
+      - "[Oppenheim & Schafer. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003226)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](http://numerical.recipes/)"

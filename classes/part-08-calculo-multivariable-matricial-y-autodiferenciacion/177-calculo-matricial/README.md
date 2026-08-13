@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**El cálculo matricial da fórmulas cerradas para gradientes respecto a vectores y matrices.**
 
-Esta clase concreta ese objetivo sobre **Cálculo matricial**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `matrix_calculus`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que el hessiano es definido positivo sin comprobarlo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∂(aᵀx)/∂x = a
+∂(xᵀAx)/∂x = (A + Aᵀ)x,  y 2Ax si A es simétrica
+∂‖x‖²/∂x = 2x
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,42 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El Jacobiano generaliza la derivada a funciones vectoriales.
+Derivar respecto a un vector o una matriz componente a componente es tedioso y propenso a
+error. El cálculo matricial ofrece fórmulas cerradas para los patrones que aparecen una y
+otra vez, y saberlas de memoria acelera cualquier deducción en machine learning.
+
+Las dos más útiles son inmediatas: la derivada de una forma lineal `aᵀx` es `a`, y la de
+una forma cuadrática `xᵀAx` es `(A + Aᵀ)x`, que se reduce a `2Ax` cuando `A` es simétrica
+—el caso habitual, porque toda forma cuadrática se puede escribir con matriz simétrica—.
+
+El escollo práctico es la **convención de layout**. En la convención del denominador el
+gradiente es un vector columna; en la del numerador, una fila. Ambas son correctas y las
+fórmulas difieren en una transposición. Mezclarlas produce errores de shape que a veces
+no se detectan porque las dimensiones cuadran por casualidad.
+
+La recomendación práctica es fijar una convención, declararla en el código y verificar
+**siempre** las fórmulas contra diferencias finitas. El laboratorio hace exactamente eso, y
+es lo mismo que hace `torch.autograd.gradcheck`.
+
+## 🧮 Ejemplo trabajado
+
+Dos identidades verificadas numéricamente.
+
+```text
+x = (1, 2),  a = (4, −1),  A = [[2,1],[1,3]] (simétrica)
+
+Forma lineal aᵀx:
+  fórmula:  ∂/∂x = a = (4, −1)
+  numérica: (4.000000, −1.000000)          ✓
+
+Forma cuadrática xᵀAx:
+  fórmula:  (A + Aᵀ)x = 2Ax = (8, 14)
+  numérica: (8.00000, 14.00000)            ✓
+
+Convención usada: denominador (gradiente como columna)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +106,16 @@ compmath run 177
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Mezclar convenciones de layout entre partes del mismo código.
+2. Aplicar la fórmula 2Ax a una matriz no simétrica.
+3. No verificar las fórmulas contra diferencias finitas.
+
+## 🚀 Dónde se usa de verdad
+
+Deducción de gradientes de funciones de pérdida, backpropagation analítica, métodos de
+segundo orden y cualquier derivación en un paper de machine learning.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
+- [Magnus & Neudecker. *Matrix Differential Calculus*, 3ª ed., Wiley, 2019](https://www.wiley.com/en-us/Matrix+Differential+Calculus+with+Applications+in+Statistics+and+Econometrics%2C+3rd+Edition-p-9781119541202)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

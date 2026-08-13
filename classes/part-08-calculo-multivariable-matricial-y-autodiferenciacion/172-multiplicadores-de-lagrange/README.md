@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Lagrange convierte una restricción en un término del objetivo, y su multiplicador mide el precio de esa restricción.**
 
-Esta clase concreta ese objetivo sobre **Multiplicadores de Lagrange**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `lagrange_multipliers`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L = f(x) − λ(g(x) − c)
+∇f = λ∇g en el óptimo
+λ = tasa de mejora del óptimo por unidad de relajación
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El Jacobiano generaliza la derivada a funciones vectoriales.
+Optimizar con una restricción de igualdad no se puede hacer anulando el gradiente del
+objetivo: el óptimo restringido rara vez es un punto crítico libre. La condición correcta
+es que los gradientes del objetivo y de la restricción sean **paralelos**: `∇f = λ∇g`.
+
+La intuición geométrica es clara. Si el gradiente del objetivo tuviera una componente
+tangente a la curva de restricción, se podría mejorar moviéndose a lo largo de ella. En el
+óptimo, esa componente tangente debe anularse, y eso ocurre exactamente cuando ambos
+gradientes son colineales.
+
+El multiplicador `λ` no es un artificio de cálculo: tiene interpretación económica
+directa. Es la tasa a la que mejora el óptimo si se relaja la restricción una unidad —el
+**precio sombra** en programación lineal—. En el ejemplo del laboratorio, maximizar `xy`
+con `x+y=10` da `λ = 5`: cada unidad adicional de presupuesto añade 5 al óptimo.
+
+La generalización a restricciones de **desigualdad** son las condiciones KKT (clase 257),
+que añaden dos requisitos: los multiplicadores deben ser no negativos y debe cumplirse la
+holgura complementaria —una restricción inactiva tiene multiplicador nulo—. Toda la
+optimización con restricciones se construye sobre esta clase.
+
+## 🧮 Ejemplo trabajado
+
+Maximizar xy sujeto a x + y = 10.
+
+```text
+L = xy − λ(x + y − 10)
+
+Condiciones:
+  ∂L/∂x: y = λ
+  ∂L/∂y: x = λ
+  restricción: x + y = 10
+
+Solución: x = y = 5,  λ = 5,  valor óptimo = 25
+
+Verificación con alternativas:
+  x=1 → 9    x=3 → 21   x=5 → 25   x=7 → 21   x=9 → 9
+  el máximo está en x=5                        ✓
+
+Interpretación de λ: si el presupuesto sube a 11,
+el óptimo sube aproximadamente 5 unidades.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 172
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Buscar el óptimo restringido anulando solo el gradiente del objetivo.
+2. Ignorar la interpretación de λ como precio sombra.
+3. Aplicar Lagrange a restricciones de desigualdad sin las condiciones KKT.
+
+## 🚀 Dónde se usa de verdad
+
+Optimización con restricciones, SVM con margen máximo, regularización vista como
+restricción, y precios sombra en asignación de recursos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 12](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

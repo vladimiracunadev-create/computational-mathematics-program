@@ -10,6 +10,57 @@
 
 Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
+El cálculo es el estudio del cambio, y su invención independiente por Newton y Leibniz en
+la década de 1660 es probablemente el acontecimiento más productivo de la historia de la
+matemática. Esta parte lo reconstruye con una orientación concreta: **la derivada es la
+mejor aproximación lineal local**, y la regla de la cadena es el mecanismo entero del
+entrenamiento de una red neuronal.
+
+Las clases 141 a 143 tratan el límite y la continuidad. El límite responde a una pregunta
+que la aritmética no puede: qué valor «debería» tener una función donde no está definida.
+`sin(x)/x` no existe en cero y sin embargo tiene un límite perfectamente definido, y esa
+distinción entre valor y límite es la que hace posible definir la derivada.
+
+Las clases 144 a 150 construyen la derivada y sus reglas. La más importante con diferencia
+es la **regla de la cadena** (147): derivar una composición es multiplicar las derivadas de
+sus piezas. Como una red neuronal es una composición de capas (clase 057), su gradiente es
+un producto de factores, uno por capa. Ese producto explica de golpe el desvanecimiento del
+gradiente, por qué ReLU funciona mejor que la sigmoide y por qué las conexiones residuales
+ayudan.
+
+Las clases 151 y 152 introducen Taylor y la optimización de una variable. Taylor cambia una
+función difícil por un polinomio con error acotado, y es la base de los métodos de segundo
+orden, del análisis de convergencia y de la mitad de las aproximaciones que usa el análisis
+numérico. La condición `f'(x) = 0` es el caso unidimensional de `∇f = 0`, la condición de
+primer orden de toda la parte 12.
+
+Las clases 153 a 158 desarrollan la integral como acumulación y el teorema fundamental, que
+establece que derivar e integrar son operaciones inversas. Ese teorema conecta dos ideas
+que nacieron separadas —la tangente y el área— y es el resultado que da nombre a la
+asignatura.
+
+El cierre (159 y 160) pasa a la integración numérica, que es como se calcula en la práctica
+casi cualquier integral: no hay forma cerrada para `e^(-x²)` y sin embargo su integral es
+la que define la distribución normal. Trapecio y Simpson introducen el concepto de **orden
+de convergencia**, que reaparecerá en toda la parte 11.
+
+## 🗺️ Mapa conceptual
+
+```mermaid
+flowchart TD
+    A["Clases 141-143 · Limite y continuidad"] --> B["Clases 144-150 · Derivada y sus reglas"]
+    B --> C["Clase 147 · Regla de la cadena"]
+    B --> D["Clases 151-152 · Taylor y optimizacion"]
+    A --> E["Clases 153-156 · Integral y teorema fundamental"]
+    E --> F["Clases 157-159 · Tecnicas e integracion numerica"]
+    D --> G["Clase 160 · Capstone optimizar y acumular"]
+    F --> G
+    C ==> H["Parte 08 · Gradiente y autodiferenciacion"]
+    C -.-> I["Backpropagation · Parte 15"]
+    D -.-> J["Metodos de segundo orden · Parte 12"]
+    F -.-> K["Cuadratura y EDO · Parte 11"]
+```
+
 ## 🧠 Ideas centrales
 
 - La derivada es la mejor aproximación lineal local, no solo una pendiente.
@@ -90,26 +141,30 @@ flowchart LR
 
 | # | Clase | Demostración | Idea central |
 |---|---|---|---|
-| `141` | [Intuición de límite](141-intuicion-de-limite/README.md) | `limit_intuition` | sin(x)/x cuando x→0: indeterminado en el punto, definido en el límite. |
-| `142` | [Límites algebraicos](142-limites-algebraicos/README.md) | `algebraic_limits` | Indeterminación 0/0 resuelta por factorización. |
-| `143` | [Continuidad](143-continuidad/README.md) | `continuity` | Los tres requisitos de continuidad en un punto. |
-| `144` | [Derivada como tasa de cambio](144-derivada-como-tasa-de-cambio/README.md) | `derivative_as_rate` | Derivada como límite del cociente incremental. |
-| `145` | [Reglas de derivación](145-reglas-de-derivacion/README.md) | `derivative_rules` | Reglas de potencia, suma y constante verificadas numéricamente. |
-| `146` | [Regla del producto y cociente](146-regla-del-producto-y-cociente/README.md) | `product_quotient_rule` | Regla del producto y del cociente. |
-| `147` | [Regla de la cadena](147-regla-de-la-cadena/README.md) | `chain_rule` | La regla de la cadena: el mecanismo entero de backpropagation. |
-| `148` | [Derivadas de exponenciales y logaritmos](148-derivadas-de-exponenciales-y-logaritmos/README.md) | `exp_log_derivatives` | e^x es su propia derivada; log tiene derivada 1/x. |
-| `149` | [Derivadas trigonométricas](149-derivadas-trigonometricas/README.md) | `trig_derivatives` | Derivadas trigonométricas y su ciclo de periodo 4. |
-| `150` | [Derivación implícita](150-derivacion-implicita/README.md) | `implicit_differentiation` | Derivación implícita sobre la circunferencia x²+y²=25. |
-| `151` | [Aproximación lineal y Taylor](151-aproximacion-lineal-y-taylor/README.md) | `taylor_approximation` | Taylor de e^x en 0: el error cae con el grado. |
-| `152` | [Máximos y mínimos](152-maximos-y-minimos/README.md) | `extrema` | Máximos y mínimos por derivada y criterio de la segunda derivada. |
-| `153` | [Integral como acumulación](153-integral-como-acumulacion/README.md) | `integral_as_accumulation` | Sumas de Riemann convergiendo a la integral. |
-| `154` | [Integral definida](154-integral-definida/README.md) | `definite_integral` | Propiedades de la integral definida. |
-| `155` | [Antiderivadas](155-antiderivadas/README.md) | `antiderivatives` | La antiderivada no es única: difiere en una constante. |
-| `156` | [Teorema fundamental del cálculo](156-teorema-fundamental-del-calculo/README.md) | `fundamental_theorem` | Teorema fundamental: derivar deshace integrar. |
-| `157` | [Integración por sustitución](157-integracion-por-sustitucion/README.md) | `substitution` | Integración por sustitución: la regla de la cadena al revés. |
-| `158` | [Integración por partes](158-integracion-por-partes/README.md) | `integration_by_parts` | Integración por partes: la regla del producto al revés. |
-| `159` | [Integración numérica introductoria](159-integracion-numerica-introductoria/README.md) | `numerical_integration_intro` | Trapecio frente a Simpson sobre la misma integral. |
-| `160` | [Capstone: optimizar y acumular una señal](160-capstone-optimizar-y-acumular-una-senal/README.md) | `capstone_optimize_and_accumulate` | Capstone: derivar para optimizar e integrar para acumular una señal. |
+| `141` | [Intuición de límite](141-intuicion-de-limite/README.md) | `limit_intuition` | Una función puede no estar definida en un punto y tener límite perfectamente definido en él. |
+| `142` | [Límites algebraicos](142-limites-algebraicos/README.md) | `algebraic_limits` | Una indeterminación es una propiedad de la expresión, no del límite: casi siempre se resuelve reescribiéndola. |
+| `143` | [Continuidad](143-continuidad/README.md) | `continuity` | Continuidad exige tres condiciones; ser continua no implica ser derivable. |
+| `144` | [Derivada como tasa de cambio](144-derivada-como-tasa-de-cambio/README.md) | `derivative_as_rate` | La derivada es la pendiente de la mejor recta que aproxima la función cerca de un punto. |
+| `145` | [Reglas de derivación](145-reglas-de-derivacion/README.md) | `derivative_rules` | Las reglas de derivación se deducen del límite una vez y se aplican mecánicamente después. |
+| `146` | [Regla del producto y cociente](146-regla-del-producto-y-cociente/README.md) | `product_quotient_rule` | La derivada de un producto no es el producto de las derivadas. |
+| `147` | [Regla de la cadena](147-regla-de-la-cadena/README.md) | `chain_rule` | La regla de la cadena es el mecanismo completo de backpropagation: derivar una composición es multiplicar factores. |
+| `148` | [Derivadas de exponenciales y logaritmos](148-derivadas-de-exponenciales-y-logaritmos/README.md) | `exp_log_derivatives` | e^x es la única función que es su propia derivada, y por eso e aparece en todas partes. |
+| `149` | [Derivadas trigonométricas](149-derivadas-trigonometricas/README.md) | `trig_derivatives` | Las derivadas trigonométricas forman un ciclo de periodo cuatro. |
+| `150` | [Derivación implícita](150-derivacion-implicita/README.md) | `implicit_differentiation` | La derivación implícita permite derivar una relación sin despejar una variable en función de la otra. |
+| `151` | [Aproximación lineal y Taylor](151-aproximacion-lineal-y-taylor/README.md) | `taylor_approximation` | Taylor cambia una función difícil por un polinomio con error acotado por el primer término omitido. |
+| `152` | [Máximos y mínimos](152-maximos-y-minimos/README.md) | `extrema` | La derivada nula señala un punto crítico; el signo de la segunda derivada decide de qué tipo es. |
+| `153` | [Integral como acumulación](153-integral-como-acumulacion/README.md) | `integral_as_accumulation` | La integral es el límite de sumas de rectángulos, y la regla del punto medio converge como O(h²). |
+| `154` | [Integral definida](154-integral-definida/README.md) | `definite_integral` | La integral definida es aditiva en el intervalo y cambia de signo al invertir la orientación. |
+| `155` | [Antiderivadas](155-antiderivadas/README.md) | `antiderivatives` | La antiderivada está determinada salvo una constante, y esa constante desaparece en la integral definida. |
+| `156` | [Teorema fundamental del cálculo](156-teorema-fundamental-del-calculo/README.md) | `fundamental_theorem` | Derivar e integrar son operaciones inversas: ese es el teorema que da nombre al cálculo. |
+| `157` | [Integración por sustitución](157-integracion-por-sustitucion/README.md) | `substitution` | La sustitución es la regla de la cadena leída al revés. |
+| `158` | [Integración por partes](158-integracion-por-partes/README.md) | `integration_by_parts` | La integración por partes es la regla del producto leída al revés. |
+| `159` | [Integración numérica introductoria](159-integracion-numerica-introductoria/README.md) | `numerical_integration_intro` | El orden de convergencia dice cómo cae el error al refinar: trapecio es O(h²) y Simpson O(h⁴). |
+| `160` | [Capstone: optimizar y acumular una señal](160-capstone-optimizar-y-acumular-una-senal/README.md) | `capstone_optimize_and_accumulate` | Derivar localiza; integrar acumula. Un mismo problema suele necesitar las dos. |
+
+## 📖 Glosario de la parte (18 términos)
+
+Definiciones precisas en [`GLOSARIO.md`](GLOSARIO.md).
 
 ## 🧰 Stack de referencia
 

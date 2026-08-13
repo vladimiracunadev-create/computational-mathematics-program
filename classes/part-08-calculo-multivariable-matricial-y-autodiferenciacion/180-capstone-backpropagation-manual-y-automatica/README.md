@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Backpropagation manual y autodiferenciación dan exactamente el mismo número: autograd no es magia.**
 
-Esta clase concreta ese objetivo sobre **Capstone: backpropagation manual y automática**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_backpropagation`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que el hessiano es definido positivo sin comprobarlo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+cadena hacia atrás: dL/dw = dL/da · da/dz · dz/dw
+tanh': 1 − tanh²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Lagrange convierte una restricción en un término de la función objetivo.
+El capstone cierra la parte comparando dos caminos hacia el mismo resultado. Se define una
+red mínima —dos capas con `tanh` y pérdida cuadrática—, se derivan sus gradientes a mano
+aplicando la regla de la cadena paso a paso, y se calculan también con el motor de
+autodiferenciación. Ambos deben coincidir hasta el último dígito.
+
+La derivación manual hace explícito lo que autograd oculta. Se empieza por `dL/da₂`, se
+multiplica por la derivada de la activación para obtener `dL/dz₂`, y se distribuye a los
+parámetros de esa capa. Después se propaga hacia atrás multiplicando por el peso, se
+vuelve a multiplicar por la derivada de la activación, y se distribuye a la capa anterior.
+Ese patrón —error, derivada de activación, distribución, propagación— se repite capa a
+capa.
+
+Que los dos caminos coincidan exactamente es la comprobación que convierte autograd de
+caja negra en herramienta comprendida. Un practicante que ha hecho este ejercicio una vez
+sabe qué está calculando `loss.backward()`, por qué hace falta `zero_grad()` y por qué el
+gradiente se desvanece en redes profundas.
+
+Es también la técnica de depuración estándar: cuando un gradiente personalizado parece mal,
+se compara contra diferencias finitas. `torch.autograd.gradcheck` hace exactamente esa
+comparación, y es la primera herramienta que hay que usar al implementar una capa nueva.
+
+## 🧮 Ejemplo trabajado
+
+Comparar backpropagation manual y automática.
+
+```text
+Red: x → tanh(w₁x + b₁) → tanh(w₂h + b₂) → MSE
+x = 0.5, objetivo = 1.0
+w₁ = 1.2, b₁ = −0.3, w₂ = 0.8, b₂ = 0.1
+
+predicción: 0.5216
+pérdida:    0.2288
+
+parámetro   manual      autodiff     coinciden
+w₁         −0.1495     −0.1495          ✓
+b₁         −0.2990     −0.2990          ✓
+w₂         −0.2016     −0.2016          ✓
+b₂         −0.6970     −0.6970          ✓
+
+Conclusión: autograd es la regla de la cadena
+en orden topológico inverso.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 180
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Olvidar multiplicar por la derivada de la activación en cada capa.
+2. Confundir el orden de propagación: se va de la pérdida hacia las entradas.
+3. No verificar un gradiente personalizado contra diferencias finitas.
+
+## 🚀 Dónde se usa de verdad
+
+Depuración de gradientes, implementación de capas personalizadas, comprensión de
+`loss.backward()` y diagnóstico de gradientes que se desvanecen.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://www.nature.com/articles/323533a0)
+- [PyTorch: `torch.autograd.gradcheck`](https://pytorch.org/docs/stable/generated/torch.autograd.gradcheck.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

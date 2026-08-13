@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**La regla de la cadena multivariable suma las contribuciones de todos los caminos.**
 
-Esta clase concreta ese objetivo sobre **Regla de la cadena multivariable**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `multivariable_chain_rule`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir la convención de layout (numerador vs denominador) en cálculo matricial.
+
+## 🧩 Fórmulas de la clase
+
+```text
+dh/dt = (∂f/∂x)(dx/dt) + (∂f/∂y)(dy/dt)
+en general: producto punto entre gradiente y velocidad
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El Jacobiano generaliza la derivada a funciones vectoriales.
+Cuando una función depende de variables que a su vez dependen de un parámetro, la tasa de
+cambio total suma las contribuciones de cada camino. Esa es la regla de la cadena
+multivariable, y su forma compacta es un producto punto: gradiente por vector velocidad.
+
+La lectura de «suma sobre caminos» es la que se generaliza al grafo de cómputo. En una
+red neuronal, un parámetro puede influir en la pérdida por varias rutas —pesos
+compartidos, conexiones residuales, capas que se reutilizan— y su gradiente total es la
+**suma** de las contribuciones de todas ellas.
+
+Ese detalle es la causa del error más común al implementar autodiferenciación a mano: si
+un nodo se usa dos veces, hay que **acumular** su gradiente en lugar de sobrescribirlo.
+El motor del programa usa `+=` precisamente por eso, y la clase 306 lo hace explícito. En
+PyTorch, olvidar `zero_grad()` es el mismo problema al revés: acumular cuando no se debe.
+
+La verificación numérica es directa: componer las funciones, derivar la composición por
+diferencias finitas y comparar con la suma de productos. El laboratorio lo hace sobre una
+trayectoria circular, donde `x = cos t` e `y = sin t`.
+
+## 🧮 Ejemplo trabajado
+
+Derivar f(x(t), y(t)) sobre una circunferencia.
+
+```text
+f(x,y) = x²y + 3xy² + 2
+x(t) = cos t,  y(t) = sin t,   t = 1.5
+
+∇f en (cos 1.5, sin 1.5) = (2.9787, 0.2318)
+velocidad (dx/dt, dy/dt) = (−sin 1.5, cos 1.5) = (−0.9975, 0.0707)
+
+Regla de la cadena:
+  2.9787·(−0.9975) + 0.2318·0.0707 = −2.9548
+
+Derivada numérica de h(t):  −2.9548           ✓
+
+Estructura: producto punto entre gradiente y velocidad
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 167
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Sobrescribir el gradiente de un nodo reutilizado en lugar de acumularlo.
+2. Olvidar alguno de los caminos de dependencia.
+3. Evaluar el gradiente en el punto equivocado de la trayectoria.
+
+## 🚀 Dónde se usa de verdad
+
+Backpropagation con pesos compartidos, redes recurrentes, conexiones residuales y
+propagación de incertidumbre a través de varias etapas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

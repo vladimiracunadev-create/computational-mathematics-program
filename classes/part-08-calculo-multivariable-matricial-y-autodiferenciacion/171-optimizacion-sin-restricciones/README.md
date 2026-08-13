@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**El descenso de gradiente converge en una cuadrática si el paso respeta el límite de estabilidad.**
 
-Esta clase concreta ese objetivo sobre **Optimización sin restricciones**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `unconstrained_optimization`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que el hessiano es definido positivo sin comprobarlo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x ← x − α∇f(x)
+estable si α < 2/λ_max
+convergencia lenta si λ_max/λ_min es grande
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El gradiente apunta al mayor ascenso; por eso se desciende en su dirección opuesta.
+El descenso de gradiente aplica repetidamente la misma regla: moverse en dirección
+contraria al gradiente con un paso `α`. Sobre una función cuadrática se puede analizar
+exactamente, y ese análisis explica todo lo que se observa en la práctica.
+
+La condición de estabilidad es `α < 2/λ_max`, donde `λ_max` es el mayor autovalor del
+Hessiano. Superarla hace que el algoritmo diverja, y por eso el learning rate es el
+hiperparámetro que más divergencias explica. La clase 244 lo comprueba con cuatro valores
+distintos.
+
+La velocidad de convergencia la determina el **cociente** de autovalores. Si son
+parecidos, el descenso avanza directo al mínimo; si son muy dispares, el gradiente apunta
+casi perpendicular al eje largo del valle y el algoritmo zigzaguea. Con `f = x² + 20y²`,
+la relación es 20 a 1 y el zigzagueo es visible.
+
+Ese diagnóstico es el que motiva todo lo demás. Momentum (clase 246) amortigua la
+oscilación acumulando velocidad; los métodos adaptativos escalan cada coordenada por
+separado; los de segundo orden corrigen la anisotropía directamente. Todos atacan el
+mismo problema.
+
+## 🧮 Ejemplo trabajado
+
+Descenso sobre una cuadrática mal condicionada.
+
+```text
+f(x,y) = (x−3)² + 5(y+1)²,  lr = 0.08
+inicio (0,0),  mínimo teórico (3,−1)
+
+paso    x                 f
+  1     (0.48, −0.80)     6.55
+  5     (1.72, −0.99)     1.63
+ 20     (2.90, −1.00)     0.0092
+ 60     (3.00, −1.00)     1.6e−09
+
+gradiente final: 8.9e−05     → convergió       ✓
+
+Límite de estabilidad: α < 2/10 = 0.2
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 171
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Elegir el learning rate sin considerar la curvatura del problema.
+2. Detener por número de iteraciones sin comprobar la norma del gradiente.
+3. Suponer que la convergencia en una cuadrática predice la de un problema no convexo.
+
+## 🚀 Dónde se usa de verdad
+
+Entrenamiento de cualquier modelo por gradiente, ajuste del learning rate y diagnóstico de
+divergencias.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Ruder, S. *An overview of gradient descent optimization algorithms*. arXiv, 2016](https://arxiv.org/abs/1609.04747)
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

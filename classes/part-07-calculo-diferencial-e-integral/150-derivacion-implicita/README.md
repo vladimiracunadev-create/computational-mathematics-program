@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La derivación implícita permite derivar una relación sin despejar una variable en función de la otra.**
 
-Esta clase concreta ese objetivo sobre **Derivación implícita**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `implicit_differentiation`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+x² + y² = r²  ⟹  dy/dx = −x/y
+derivar ambos lados tratando y como función de x
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> Derivada nula señala punto crítico, no necesariamente mínimo.
+No toda relación entre `x` e `y` se puede despejar. `x² + y² = 25` define una
+circunferencia, y despejar `y` obliga a elegir una de las dos ramas. La derivación
+implícita evita el problema: se deriva la ecuación entera respecto a `x`, tratando `y`
+como función de `x` y aplicando la regla de la cadena a cada término que la contenga.
+
+Del término `y²` sale `2y·(dy/dx)`, y de ahí se despeja `dy/dx`. El resultado, `−x/y`,
+depende de ambas coordenadas, lo que es coherente: la pendiente de la tangente a una
+circunferencia depende de en qué punto se esté.
+
+La verificación geométrica es bonita: la tangente a una circunferencia es perpendicular
+al radio en ese punto. La pendiente del radio es `y/x` y la de la tangente es `−x/y`, y
+su producto es −1, que es exactamente la condición de perpendicularidad de la clase 069.
+El laboratorio comprueba esa relación.
+
+La técnica se generaliza al caso multivariable como el teorema de la función implícita,
+y aparece en machine learning en la **diferenciación implícita** de capas definidas como
+la solución de un problema de optimización —modelos de equilibrio profundo, capas de
+optimización diferenciables—, donde no hay fórmula explícita que derivar.
+
+## 🧮 Ejemplo trabajado
+
+Tangente a la circunferencia de radio 5 en (3,4).
+
+```text
+x² + y² = 25
+
+Derivar: 2x + 2y·(dy/dx) = 0
+Despejar: dy/dx = −x/y = −3/4 = −0.75
+
+Verificación numérica con y = √(25−x²):
+  dy/dx en x=3 → −0.750000                  ✓
+
+Recta tangente: y − 4 = −0.75(x − 3)
+
+Perpendicularidad con el radio:
+  pendiente del radio = 4/3
+  (−3/4)·(4/3) = −1                         ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 150
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Olvidar multiplicar por dy/dx al derivar términos que contienen y.
+2. Despejar y antes de derivar cuando la relación no es una función.
+3. Evaluar dy/dx en un punto donde y = 0: la tangente es vertical.
+
+## 🚀 Dónde se usa de verdad
+
+Curvas definidas implícitamente, teorema de la función implícita, capas de optimización
+diferenciables y modelos de equilibrio profundo.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)
+- [Bai, Kolter & Koltun. *Deep Equilibrium Models*. NeurIPS, 2019](https://arxiv.org/abs/1909.01377)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

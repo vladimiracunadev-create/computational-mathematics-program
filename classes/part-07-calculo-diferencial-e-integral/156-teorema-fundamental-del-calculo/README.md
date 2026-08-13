@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**Derivar e integrar son operaciones inversas: ese es el teorema que da nombre al cálculo.**
 
-Esta clase concreta ese objetivo sobre **Teorema fundamental del cálculo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `fundamental_theorem`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+d/dx ∫ₐˣ f(t)dt = f(x)
+∫ₐᵇ f = F(b) − F(a)  con F' = f
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> La derivada es la mejor aproximación lineal local, no solo una pendiente.
+El teorema fundamental del cálculo conecta dos problemas que nacieron completamente
+separados: el de la tangente —resuelto con derivadas— y el del área —resuelto con
+integrales—. Su enunciado es que son inversos, y esa unificación es el logro central de
+Newton y Leibniz.
+
+La **primera parte** dice que la función área, `F(x) = ∫ₐˣ f`, tiene derivada `f`.
+Intuitivamente: al mover el extremo derecho un poquito, el área crece en una franja de
+altura `f(x)` y anchura infinitesimal. La segunda parte convierte ese resultado en un
+método de cálculo: para integrar, basta encontrar una antiderivada y evaluarla en los
+extremos.
+
+El impacto práctico es difícil de exagerar. Sin el teorema, cada integral exigiría un
+límite de sumas; con él, muchas se resuelven en una línea. Es la diferencia entre
+calcular áreas una por una y tener un método general.
+
+El laboratorio comprueba ambas partes numéricamente con `cos`, cuya antiderivada es
+`sin`: integra `cos` desde cero hasta `x` y verifica que da `sin(x)`, y luego deriva esa
+integral y verifica que devuelve `cos(x)`. Que ambas comprobaciones pasen es la
+confirmación ejecutable del teorema.
+
+## 🧮 Ejemplo trabajado
+
+Verificar las dos partes con cos.
+
+```text
+Primera parte: F(x) = ∫₀ˣ cos(t)dt
+
+  F(1.2) numérica = 0.932039
+  sin(1.2)        = 0.932039              ✓
+
+Segunda parte: dF/dx debe ser cos(x)
+
+  dF/dx en 1.2 (numérica) = 0.362358
+  cos(1.2)                = 0.362358      ✓
+
+Derivar deshace integrar.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 156
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Aplicar el teorema a funciones discontinuas en el intervalo.
+2. Confundir la variable de integración con el límite superior.
+3. Olvidar que la primera parte exige que f sea continua.
+
+## 🚀 Dónde se usa de verdad
+
+Cálculo de integrales en forma cerrada, resolución de ecuaciones diferenciales, relación
+entre función de densidad y función de distribución acumulada.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 14](https://www.mathpop.com/calculus)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Una función de varias variables asigna un número a cada punto de un espacio; su gráfica vive una dimensión más arriba.**
 
-Esta clase concreta ese objetivo sobre **Funciones de varias variables**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `multivariable_functions`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir la convención de layout (numerador vs denominador) en cálculo matricial.
+
+## 🧩 Fórmulas de la clase
+
+```text
+f: ℝⁿ → ℝ
+f(x,y) = x²y + 3xy² + 2
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El gradiente apunta al mayor ascenso; por eso se desciende en su dirección opuesta.
+Pasar de una a varias variables no es un cambio de grado: es un cambio de naturaleza. La
+gráfica de `f(x)` es una curva en el plano; la de `f(x,y)` es una superficie en el
+espacio; la de una función de diez variables no se puede dibujar. A partir de tres
+variables hay que razonar con álgebra, y esa es la habilidad que instala esta parte.
+
+La función del laboratorio, `x²y + 3xy² + 2`, es deliberadamente **no simétrica**: `f(2,1)`
+y `f(1,2)` dan valores distintos. Esa asimetría importa porque en machine learning las
+variables casi nunca son intercambiables, y suponer simetría donde no la hay produce
+errores de interpretación.
+
+La forma práctica de explorar una función de varias variables es fijar todas las
+variables menos una y observar el corte resultante, que es una función de una variable.
+Esa es exactamente la idea de derivada parcial (clase 163), y es también la técnica de
+los gráficos de dependencia parcial en interpretabilidad de modelos.
+
+En machine learning, la función de pérdida es una función de varias variables donde las
+«variables» son los parámetros: millones de ellos. Su gráfica vive en un espacio de
+millones de dimensiones y no se puede visualizar. Todo lo que se dice sobre «paisajes de
+pérdida» son proyecciones bidimensionales, útiles como intuición y engañosas si se toman
+literalmente.
+
+## 🧮 Ejemplo trabajado
+
+Evaluar una función de dos variables.
+
+```text
+f(x,y) = x²y + 3xy² + 2
+
+f(0,0) = 2
+f(1,1) = 1 + 3 + 2 = 6
+f(2,1) = 4 + 6 + 2 = 12
+f(1,2) = 2 + 12 + 2 = 16
+
+f(2,1) ≠ f(1,2)  →  no simétrica         ✓
+
+dominio: ℝ²      codominio: ℝ
+la gráfica es una superficie en ℝ³
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 161
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Suponer simetría entre variables sin comprobarla.
+2. Intentar visualizar funciones de más de dos variables.
+3. Confundir el dominio (ℝⁿ) con la gráfica (que vive en ℝⁿ⁺¹).
+
+## 🚀 Dónde se usa de verdad
+
+Funciones de pérdida, superficies de respuesta, modelos con varias entradas y gráficos de
+dependencia parcial en interpretabilidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 4](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

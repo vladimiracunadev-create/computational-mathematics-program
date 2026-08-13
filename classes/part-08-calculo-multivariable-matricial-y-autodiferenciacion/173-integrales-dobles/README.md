@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Fubini permite calcular una integral doble como dos integrales simples encadenadas.**
 
-Esta clase concreta ese objetivo sobre **Integrales dobles**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `double_integrals`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir la convención de layout (numerador vs denominador) en cálculo matricial.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∬f dA = ∫(∫f dx)dy
+sobre un rectángulo: los límites son constantes
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El Hessiano describe la curvatura y decide el tipo de punto crítico.
+Una integral doble acumula sobre una región del plano en lugar de sobre un intervalo. Su
+definición es un límite de sumas sobre una malla de rectángulos, análoga a la suma de
+Riemann de la clase 153.
+
+El **teorema de Fubini** permite calcularla como dos integrales simples encadenadas, en
+cualquier orden, siempre que la función sea integrable. Esa reducción es lo que la hace
+calculable: en lugar de un límite bidimensional, dos aplicaciones del cálculo de una
+variable.
+
+El coste computacional de la integración numérica en varias dimensiones crece
+exponencialmente: una malla con `n` puntos por dimensión requiere `nᵈ` evaluaciones. En
+dimensión 10 con 100 puntos por eje son 10²⁰ evaluaciones: imposible. Esa es la maldición
+de la dimensionalidad aplicada a la integración.
+
+La salida es **Monte Carlo** (clase 198), cuyo error decae como `1/√n` **independientemente
+de la dimensión**. Por eso toda expectativa de alta dimensión en machine learning se
+estima muestreando en lugar de integrando en malla: el ELBO de un VAE, la esperanza de una
+política en RL, cualquier integral sobre el espacio de parámetros.
+
+## 🧮 Ejemplo trabajado
+
+Integral doble de xy sobre un rectángulo.
+
+```text
+∬ xy dA  sobre [0,2] × [0,3]
+
+Por Fubini:
+  ∫₀³ (∫₀² xy dx) dy = ∫₀³ (2y) dy = 9
+
+Valor exacto: (2²/2)·(3²/2) = 2·4.5 = 9
+
+Numérico con malla 200×200: 9.00000000
+error: 1.1e−13                              ✓
+
+Coste: 40 000 evaluaciones para 2 dimensiones.
+En 10 dimensiones serían 100¹⁰.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 173
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Intercambiar el orden de integración sin comprobar las hipótesis de Fubini.
+2. Usar integración en malla en dimensión alta.
+3. Confundir los límites al cambiar el orden en regiones no rectangulares.
+
+## 🚀 Dónde se usa de verdad
+
+Probabilidades conjuntas, marginalización, cálculo de masas y centros de gravedad, y
+normalización de densidades multivariantes.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 15](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Robert & Casella. *Monte Carlo Statistical Methods*, 2ª ed., Springer, 2004](https://link.springer.com/book/10.1007/978-1-4757-4145-2)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

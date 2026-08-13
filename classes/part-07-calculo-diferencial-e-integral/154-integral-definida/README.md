@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La integral definida es aditiva en el intervalo y cambia de signo al invertir la orientación.**
 
-Esta clase concreta ese objetivo sobre **Integral definida**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `definite_integral`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: derivar en un punto donde la función no es continua.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∫ₐᵇ + ∫_b^c = ∫ₐ^c
+∫ₐᵇ = −∫_bₐ
+valor medio = (1/(b−a))·∫ₐᵇ f
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> Integrar es acumular; derivar e integrar son operaciones inversas.
+La integral definida representa el área con **signo**: las regiones bajo el eje cuentan
+negativo. Esa convención es la que permite que la integral de una función que oscila
+alrededor de cero sea pequeña, y es la que hace consistente el teorema fundamental.
+
+Las propiedades estructurales son tres. La **aditividad** en el intervalo permite partir
+un dominio en trozos y sumar. La **orientación** invierte el signo al intercambiar los
+límites, lo que hace que `∫ₐᵃ = 0` sea consistente. Y la **linealidad** permite integrar
+término a término, igual que se derivaba.
+
+El **valor medio** de una función en un intervalo es su integral dividida por la
+longitud, y es la altura del rectángulo con la misma área. El teorema del valor medio
+integral garantiza que la función alcanza ese valor en algún punto del intervalo, si es
+continua.
+
+Esa noción es la que conecta con probabilidad: la esperanza de una variable aleatoria
+continua es la integral de `x·f(x)`, es decir, un promedio ponderado por la densidad. Y
+es la que aparece en machine learning como el promedio de una pérdida sobre una
+distribución, que en la práctica se estima con Monte Carlo (clase 198).
+
+## 🧮 Ejemplo trabajado
+
+Propiedades de la integral de x².
+
+```text
+∫₀¹ x² = 0.333333
+∫₁² x² = 2.333333
+∫₀² x² = 2.666667
+
+Aditividad: 0.333333 + 2.333333 = 2.666667      ✓
+
+Orientación: ∫₁⁰ x² = −0.333333                 ✓
+Intervalo nulo: ∫₀⁰ x² = 0                      ✓
+
+Valor medio en [0,2]: 2.666667/2 = 1.333333
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 154
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Olvidar el signo al intercambiar los límites de integración.
+2. Interpretar la integral como área geométrica cuando la función toma valores negativos.
+3. Confundir el valor medio de la función con la media de sus valores en unos puntos.
+
+## 🚀 Dónde se usa de verdad
+
+Esperanza de variables continuas, trabajo y energía en física, acumulación de métricas y
+área bajo la curva ROC.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 13](https://www.mathpop.com/calculus)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

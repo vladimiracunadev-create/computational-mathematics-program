@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La integración por partes es la regla del producto leída al revés.**
 
-Esta clase concreta ese objetivo sobre **Integración por partes**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `integration_by_parts`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir punto crítico con extremo global.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∫u dv = uv − ∫v du
+criterio LIATE para elegir u
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> Taylor cambia una función difícil por un polinomio con error acotado.
+Integrar por partes se obtiene integrando la regla del producto y despejando. Su
+utilidad es transformar una integral difícil en otra más fácil, cambiando cuál de los dos
+factores se deriva y cuál se integra.
+
+La elección de `u` determina si el método ayuda o empeora. El criterio **LIATE**
+—logarítmica, inversa trigonométrica, algebraica, trigonométrica, exponencial— ordena
+qué tipo de función conviene elegir como `u`, y funciona en la mayoría de los casos
+escolares. La lógica es elegir como `u` lo que se simplifica al derivar.
+
+En `∫x·eˣdx`, elegir `u = x` hace que `du = dx` desaparezca el polinomio, dejando
+`∫eˣdx`, inmediata. Elegir al revés produciría `x²/2·eˣ`, que es peor. La misma integral
+con un polinomio de grado n requiere aplicar el método n veces.
+
+Hay un caso elegante que conviene conocer: al integrar por partes dos veces `∫eˣ·sin x dx`,
+reaparece la integral original, y despejarla algebraicamente da el resultado. Es un truco
+que muestra que la integración es más creativa que la derivación.
+
+## 🧮 Ejemplo trabajado
+
+Integrar x·eˣ de 0 a 1.
+
+```text
+Elegir u = x  (algebraica, se simplifica al derivar)
+       dv = eˣdx
+
+du = dx,  v = eˣ
+
+∫x·eˣdx = x·eˣ − ∫eˣdx = x·eˣ − eˣ
+
+Evaluar en [0,1]:
+  (1·e − e) − (0 − 1) = 0 + 1 = 1
+
+Verificación numérica: 1.0000000            ✓
+error: 1.4e−09
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +106,16 @@ compmath run 158
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Elegir u de forma que la nueva integral sea más difícil que la original.
+2. Olvidar el signo menos delante de la segunda integral.
+3. No evaluar el término uv en los límites en una integral definida.
+
+## 🚀 Dónde se usa de verdad
+
+Cálculo de momentos de distribuciones, transformadas de Laplace y Fourier, y deducción
+de fórmulas de recurrencia para integrales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 19](https://www.mathpop.com/calculus)
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 7](https://www.cengage.com/c/calculus-8e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**Las reglas de derivación se deducen del límite una vez y se aplican mecánicamente después.**
 
-Esta clase concreta ese objetivo sobre **Reglas de derivación**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,15 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `derivative_rules`.
 4. Interpretar las 4 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: derivar en un punto donde la función no es continua.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(xⁿ)' = n·xⁿ⁻¹
+(f + g)' = f' + g'
+(c·f)' = c·f'
+(c)' = 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +48,40 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> Derivada nula señala punto crítico, no necesariamente mínimo.
+Las reglas básicas convierten la derivación en un procedimiento mecánico. Cada una se
+demuestra una vez desde la definición por límite y luego se aplica sin volver a pensar
+en límites, que es exactamente el propósito de tener reglas.
+
+La **linealidad** —la derivada de una suma es la suma de las derivadas, y las constantes
+salen fuera— es la propiedad que hace que la derivación sea un operador lineal. Eso
+importa más de lo que parece: permite derivar término a término cualquier polinomio,
+cualquier serie de potencias y cualquier combinación lineal de funciones.
+
+La regla de la potencia, `(xⁿ)' = n·xⁿ⁻¹`, vale para todo exponente real, no solo
+natural. Su demostración para exponentes naturales usa el binomio de Newton; para
+exponentes reales necesita la definición exponencial de la clase 148.
+
+La derivada de una constante es cero, y esa es la razón por la que la antiderivada no es
+única (clase 155): sumar cualquier constante no cambia la derivada. En optimización, ese
+hecho significa que desplazar la función objetivo verticalmente no cambia dónde está su
+mínimo, propiedad que se usa para estabilizar cálculos.
+
+## 🧮 Ejemplo trabajado
+
+Cuatro derivadas verificadas numéricamente.
+
+```text
+función        punto   numérica    analítica   coinciden
+x³              2      12.000000   3x² = 12       ✓
+5x              7       5.000000   5              ✓
+x³ + 5x         2      17.000000   3x²+5 = 17     ✓
+constante 4     1       0.000000   0              ✓
+
+Linealidad verificada:
+  (x³ + 5x)' = (x³)' + (5x)' = 12 + 5 = 17       ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +105,16 @@ compmath run 145
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Aplicar la regla de la potencia a exponentes que dependen de x: (xˣ)' no es x·xˣ⁻¹.
+2. Suponer que la derivada de un producto es el producto de las derivadas.
+3. Olvidar que la derivada de una constante es cero, no la constante.
+
+## 🚀 Dónde se usa de verdad
+
+Derivación de polinomios y modelos lineales, cálculo de gradientes analíticos y
+verificación de implementaciones de autodiferenciación.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 10](https://www.mathpop.com/calculus)
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015](https://www.cengage.com/c/calculus-8e-stewart/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

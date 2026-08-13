@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Una derivada parcial mide el cambio en una dirección de eje, congelando el resto.**
 
-Esta clase concreta ese objetivo sobre **Derivadas parciales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `partial_derivatives`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+∂f/∂x = derivada tratando y como constante
+teorema de Schwarz: ∂²f/∂x∂y = ∂²f/∂y∂x
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> El Hessiano describe la curvatura y decide el tipo de punto crítico.
+La derivada parcial respecto a `x` se calcula tratando todas las demás variables como
+constantes. Operativamente, es la derivada de una variable de la clase 144 aplicada al
+corte de la función. La notación `∂` en lugar de `d` recuerda que hay otras variables
+congeladas.
+
+El **teorema de Schwarz** garantiza que las derivadas cruzadas coinciden —`∂²f/∂x∂y =
+∂²f/∂y∂x`— si son continuas. Ese resultado es el que hace que el Hessiano sea simétrico
+(clase 169), y la simetría del Hessiano es lo que permite aplicarle el teorema espectral
+de la clase 126.
+
+La limitación conceptual de las parciales es que solo miran en direcciones de eje. Una
+función puede tener ambas parciales definidas en un punto y no ser diferenciable allí,
+porque el comportamiento en direcciones oblicuas es distinto. La diferenciabilidad exige
+más: que exista una buena aproximación lineal en **todas** las direcciones (clase 166).
+
+En machine learning, cada componente del gradiente es una derivada parcial: cuánto cambia
+la pérdida al mover **un** parámetro dejando el resto fijo. Con millones de parámetros,
+calcularlas una a una por diferencias finitas costaría millones de evaluaciones; la
+autodiferenciación las obtiene todas de una vez, y esa es su razón de ser.
+
+## 🧮 Ejemplo trabajado
+
+Parciales de x²y + 3xy² en (2,3).
+
+```text
+∂f/∂x = 2xy + 3y²
+      = 2·2·3 + 3·9 = 12 + 27 = 39
+numérica: 39.000000                        ✓
+
+∂f/∂y = x² + 6xy
+      = 4 + 6·2·3 = 4 + 36 = 40
+numérica: 40.000000                        ✓
+
+Cruzadas (Schwarz):
+  ∂²f/∂x∂y = 2x + 6y
+  ∂²f/∂y∂x = 2x + 6y                       ✓ coinciden
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 163
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Derivar respecto a una variable sin tratar las demás como constantes.
+2. Deducir diferenciabilidad de la existencia de las parciales.
+3. Confundir la notación ∂ con d en funciones de una sola variable.
+
+## 🚀 Dónde se usa de verdad
+
+Componentes del gradiente, análisis de sensibilidad respecto a un parámetro, elasticidades
+en economía y ecuaciones en derivadas parciales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Apostol, T. *Mathematical Analysis*, 2ª ed., Addison-Wesley, 1974](https://www.pearson.com/en-us/subject-catalog/p/mathematical-analysis/P200000006155)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

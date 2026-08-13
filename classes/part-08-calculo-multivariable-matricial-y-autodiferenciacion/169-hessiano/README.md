@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**El Hessiano describe la curvatura, y el signo de sus autovalores clasifica el punto crítico.**
 
-Esta clase concreta ese objetivo sobre **Hessiano**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `hessian`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Hᵢⱼ = ∂²f/∂xᵢ∂xⱼ
+definido positivo ⟹ mínimo; definido negativo ⟹ máximo; signos mixtos ⟹ silla
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Modo reverso calcula todas las derivadas en un solo barrido hacia atrás.
+El Hessiano recoge todas las segundas derivadas y describe cómo se curva la función en
+cada dirección. Es simétrico por el teorema de Schwarz (clase 163), y por tanto tiene
+autovalores reales y autovectores ortogonales (clase 126).
+
+Los autovalores son las **curvaturas principales**. Todos positivos significa que la
+función se curva hacia arriba en todas las direcciones: mínimo local. Todos negativos:
+máximo. Signos mixtos: **punto de silla**, mínimo en unas direcciones y máximo en otras.
+
+Ese último caso es el que domina en alta dimensión. En un espacio de un millón de
+dimensiones, que todos los autovalores tengan el mismo signo es extraordinariamente
+improbable; lo típico es que haya mezcla. Por eso el consenso actual es que el problema
+del entrenamiento de redes profundas **no son los mínimos locales malos, son los puntos
+de silla y las mesetas** que los rodean.
+
+El Hessiano también determina la velocidad de convergencia. El cociente entre su mayor y
+su menor autovalor es el número de condición del problema, y controla lo lento que
+converge el descenso de gradiente (clase 244). Los métodos de segundo orden usan el
+Hessiano para corregir esa anisotropía, a costa de un coste `O(n³)` que los hace
+inviables con millones de parámetros.
+
+## 🧮 Ejemplo trabajado
+
+Hessiano de x² + 3y² en el origen.
+
+```text
+f(x,y) = x² + 3y²
+
+∇f(0,0) = (0, 0)                    → punto crítico
+
+H = [[2, 0],
+     [0, 6]]
+
+autovalores: 2 y 6,  ambos positivos → definido positivo
+
+Clasificación: MÍNIMO local          ✓
+
+Número de condición: 6/2 = 3
+  curvas de nivel: elipses con ejes 3:1
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 169
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Clasificar un punto crítico sin calcular los autovalores del Hessiano.
+2. Suponer que los mínimos locales son el principal obstáculo en alta dimensión.
+3. Construir el Hessiano completo en problemas con muchos parámetros.
+
+## 🚀 Dónde se usa de verdad
+
+Clasificación de puntos críticos, método de Newton, análisis de convergencia,
+aproximación de Laplace en inferencia bayesiana y K-FAC.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Dauphin, Y. et al. *Identifying and attacking the saddle point problem in high-dimensional non-convex optimization*. NeurIPS, 2014](https://arxiv.org/abs/1406.2572)
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

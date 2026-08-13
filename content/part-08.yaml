@@ -1,0 +1,1161 @@
+part: "08"
+titulo: "Cálculo multivariable, matricial y autodiferenciación"
+
+resumen_extendido: |
+  Esta es la parte donde el programa deja de hablar de matemática «que se usa en IA» y pasa a
+  construir el mecanismo exacto que entrena una red neuronal. Al final de las 20 clases habrás
+  implementado un motor de autodiferenciación en modo reverso de unas cien líneas y habrás
+  comprobado que sus gradientes coinciden con los que calculaste a mano.
+
+  Las clases 161 a 166 extienden la derivada a varias variables. La idea central es que el
+  **gradiente** es el vector de derivadas parciales y apunta en la dirección de mayor
+  crecimiento. De ahí sale, sin más argumento, el descenso de gradiente: para minimizar, hay
+  que moverse en la dirección opuesta. Todo el entrenamiento de un modelo es esa frase repetida
+  millones de veces.
+
+  Las clases 167 a 170 generalizan la maquinaria: regla de la cadena multivariable, Jacobiano,
+  Hessiano y Taylor. El Jacobiano es la derivada de una función vectorial y es el objeto que
+  manipulan internamente los frameworks: `backward()` calcula un producto vector-Jacobiano sin
+  construir nunca el Jacobiano completo, que sería inmanejable. El Hessiano describe la
+  curvatura y decide si un punto crítico es mínimo, máximo o silla.
+
+  Las clases 171 y 172 son optimización: descenso de gradiente sobre una cuadrática y
+  multiplicadores de Lagrange. Lagrange convierte una restricción en un término del objetivo, y
+  su multiplicador tiene una interpretación económica precisa —cuánto mejora el óptimo si se
+  relaja la restricción— que reaparece en KKT (clase 257) y en el precio sombra de la
+  programación lineal.
+
+  Las clases 173 a 176 tratan integrales múltiples y campos vectoriales, y las clases 177 y 178
+  el cálculo matricial: cómo derivar respecto a vectores y matrices. Ahí aparece la identidad
+  más usada en machine learning: el gradiente de la pérdida cuadrática `‖Xw − y‖²/n` es
+  `2Xᵀ(Xw − y)/n`. Esa expresión **es** el gradiente de una capa lineal.
+
+  El cierre (179 y 180) implementa la autodiferenciación y la contrasta con backpropagation
+  manual sobre la misma red. Que ambos den exactamente el mismo número es la demostración de
+  que autograd no es magia: es la regla de la cadena aplicada en orden topológico inverso
+  (clase 096).
+
+mapa: |
+  flowchart TD
+      A["Clases 161-166 · Funciones de varias variables y gradiente"] --> B["Clases 167-170 · Cadena, Jacobiano, Hessiano y Taylor"]
+      B --> C["Clases 171-172 · Optimizacion y Lagrange"]
+      A --> D["Clases 173-176 · Integrales multiples y campos"]
+      B --> E["Clases 177-178 · Calculo matricial"]
+      E --> F["Clases 179-180 · Autodiferenciacion y capstone"]
+      C --> F
+      F ==> G["Parte 15 · Backpropagation en redes profundas"]
+      A -.-> H["Descenso de gradiente · Parte 12"]
+      B -.-> I["Metodos de segundo orden · Parte 12"]
+      E -.-> J["Gradiente de una capa lineal · Parte 14"]
+
+glosario:
+  - termino: "Derivada parcial"
+    definicion: "Derivada respecto a una variable manteniendo las demás fijas. Se denota ∂f/∂x."
+    clase: "163"
+  - termino: "Curva de nivel"
+    definicion: "Conjunto de puntos donde la función toma el mismo valor. El gradiente es perpendicular a ella."
+    clase: "162"
+  - termino: "Gradiente"
+    definicion: "Vector de derivadas parciales. Apunta en la dirección de mayor crecimiento y su norma mide la pendiente."
+    clase: "164"
+  - termino: "Derivada direccional"
+    definicion: "Tasa de cambio en una dirección unitaria; es la proyección del gradiente sobre ella."
+    clase: "165"
+  - termino: "Plano tangente"
+    definicion: "Aproximación lineal de una superficie en un punto. Su error crece cuadráticamente con la distancia."
+    clase: "166"
+  - termino: "Jacobiano"
+    definicion: "Matriz de primeras derivadas de una función vectorial. Su fila i es el gradiente de la componente i."
+    clase: "168"
+  - termino: "VJP"
+    definicion: "Producto vector-Jacobiano. Es lo que calcula el modo reverso sin construir el Jacobiano completo."
+    clase: "168"
+  - termino: "Hessiano"
+    definicion: "Matriz de segundas derivadas. Describe la curvatura y clasifica los puntos críticos."
+    clase: "169"
+  - termino: "Punto de silla"
+    definicion: "Punto crítico con Hessiano de autovalores de signos mixtos: mínimo en unas direcciones y máximo en otras."
+    clase: "169"
+  - termino: "Taylor multivariable"
+    definicion: "f(x+d) ≈ f(x) + ∇fᵀd + ½dᵀHd. El término de segundo orden usa el Hessiano."
+    clase: "170"
+  - termino: "Multiplicador de Lagrange"
+    definicion: "Coeficiente λ que mide cuánto mejora el óptimo al relajar la restricción una unidad."
+    clase: "172"
+  - termino: "Teorema de Fubini"
+    definicion: "Permite calcular una integral múltiple como integrales iteradas cuando la función es integrable."
+    clase: "173"
+  - termino: "Campo vectorial"
+    definicion: "Función que asigna un vector a cada punto del espacio."
+    clase: "175"
+  - termino: "Campo conservativo"
+    definicion: "Campo que es el gradiente de una función potencial. Su rotacional es nulo."
+    clase: "175"
+  - termino: "Divergencia"
+    definicion: "Medida de cuánto un campo actúa como fuente o sumidero en un punto."
+    clase: "176"
+  - termino: "Rotacional"
+    definicion: "Medida de la circulación local de un campo alrededor de un punto."
+    clase: "176"
+  - termino: "Convención de layout"
+    definicion: "Acuerdo sobre si el gradiente es fila o columna. Mezclar convenciones produce transposiciones erróneas."
+    clase: "177"
+  - termino: "Grafo de cómputo"
+    definicion: "DAG cuyos nodos son operaciones. La autodiferenciación lo recorre en orden topológico inverso."
+    clase: "179"
+  - termino: "Modo reverso"
+    definicion: "Estrategia de autodiferenciación que calcula todas las derivadas con un barrido hacia adelante y uno hacia atrás."
+    clase: "179"
+
+clases:
+  "161":
+    concepto: "Una función de varias variables asigna un número a cada punto de un espacio; su gráfica vive una dimensión más arriba."
+    formulas:
+      - "f: ℝⁿ → ℝ"
+      - "f(x,y) = x²y + 3xy² + 2"
+    desarrollo: |
+      Pasar de una a varias variables no es un cambio de grado: es un cambio de naturaleza. La
+      gráfica de `f(x)` es una curva en el plano; la de `f(x,y)` es una superficie en el
+      espacio; la de una función de diez variables no se puede dibujar. A partir de tres
+      variables hay que razonar con álgebra, y esa es la habilidad que instala esta parte.
+
+      La función del laboratorio, `x²y + 3xy² + 2`, es deliberadamente **no simétrica**: `f(2,1)`
+      y `f(1,2)` dan valores distintos. Esa asimetría importa porque en machine learning las
+      variables casi nunca son intercambiables, y suponer simetría donde no la hay produce
+      errores de interpretación.
+
+      La forma práctica de explorar una función de varias variables es fijar todas las
+      variables menos una y observar el corte resultante, que es una función de una variable.
+      Esa es exactamente la idea de derivada parcial (clase 163), y es también la técnica de
+      los gráficos de dependencia parcial en interpretabilidad de modelos.
+
+      En machine learning, la función de pérdida es una función de varias variables donde las
+      «variables» son los parámetros: millones de ellos. Su gráfica vive en un espacio de
+      millones de dimensiones y no se puede visualizar. Todo lo que se dice sobre «paisajes de
+      pérdida» son proyecciones bidimensionales, útiles como intuición y engañosas si se toman
+      literalmente.
+    ejemplo: |
+      Evaluar una función de dos variables.
+
+      ```text
+      f(x,y) = x²y + 3xy² + 2
+
+      f(0,0) = 2
+      f(1,1) = 1 + 3 + 2 = 6
+      f(2,1) = 4 + 6 + 2 = 12
+      f(1,2) = 2 + 12 + 2 = 16
+
+      f(2,1) ≠ f(1,2)  →  no simétrica         ✓
+
+      dominio: ℝ²      codominio: ℝ
+      la gráfica es una superficie en ℝ³
+      ```
+    errores:
+      - "Suponer simetría entre variables sin comprobarla."
+      - "Intentar visualizar funciones de más de dos variables."
+      - "Confundir el dominio (ℝⁿ) con la gráfica (que vive en ℝⁿ⁺¹)."
+    aplicacion: |
+      Funciones de pérdida, superficies de respuesta, modelos con varias entradas y gráficos de
+      dependencia parcial en interpretabilidad.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 4](https://www.deeplearningbook.org/)"
+
+  "162":
+    concepto: "Las curvas de nivel son los conjuntos donde la función vale lo mismo, y el gradiente es perpendicular a ellas."
+    formulas:
+      - "curva de nivel: f(x,y) = c"
+      - "∇f ⊥ curva de nivel"
+      - "curvas juntas ⟹ pendiente alta"
+    desarrollo: |
+      Una curva de nivel une los puntos donde la función toma el mismo valor. Es el mismo
+      concepto que las isolíneas de un mapa topográfico, y la analogía es exacta: la altura del
+      terreno es una función de dos variables, y las curvas de nivel son las líneas de altitud
+      constante.
+
+      De esa imagen se leen dos hechos importantes. Primero, el **gradiente es perpendicular a
+      la curva de nivel**: la dirección de máximo ascenso es la que cruza las isolíneas de
+      frente, no la que las recorre. Segundo, **cuanto más juntas están las curvas, mayor es la
+      pendiente**: la misma diferencia de valor en menos distancia.
+
+      Esa segunda observación es la que explica el zigzagueo del descenso de gradiente. Cuando
+      las curvas de nivel son elipses muy alargadas —función mal condicionada, clase 128—, el
+      gradiente apunta casi perpendicular al eje largo, es decir, casi perpendicular a la
+      dirección hacia el mínimo. El algoritmo rebota entre las paredes del valle en lugar de
+      avanzar por él.
+
+      Los gráficos de contorno son la herramienta estándar para visualizar funciones de dos
+      variables, y en optimización se usan para mostrar trayectorias de convergencia. Su
+      limitación es la misma de siempre: solo funcionan en dos dimensiones, y los paisajes
+      reales tienen millones.
+    ejemplo: |
+      Curvas de nivel de x² + y².
+
+      ```text
+      g(x,y) = x² + y²,   nivel c = 4
+
+      puntos del nivel 4:
+        (2,0)     → 4    ✓
+        (0,2)     → 4    ✓
+        (√2,√2)   → 4    ✓
+        (−2,0)    → 4    ✓
+
+      forma: circunferencia de radio 2
+
+      gradiente en (2,0): (4, 0)
+        apunta radialmente hacia fuera
+        perpendicular a la circunferencia        ✓
+      ```
+    errores:
+      - "Suponer que el gradiente es tangente a la curva de nivel: es perpendicular."
+      - "Interpretar la separación entre curvas al revés: juntas significa pendiente alta."
+      - "Extrapolar la intuición de un gráfico de contorno 2D a un espacio de millones de dimensiones."
+    aplicacion: |
+      Visualización de paisajes de pérdida, mapas topográficos, análisis de convergencia y
+      diagnóstico de mal condicionamiento.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Li, H. et al. *Visualizing the Loss Landscape of Neural Nets*. NeurIPS, 2018](https://arxiv.org/abs/1712.09913)"
+
+  "163":
+    concepto: "Una derivada parcial mide el cambio en una dirección de eje, congelando el resto."
+    formulas:
+      - "∂f/∂x = derivada tratando y como constante"
+      - "teorema de Schwarz: ∂²f/∂x∂y = ∂²f/∂y∂x"
+    desarrollo: |
+      La derivada parcial respecto a `x` se calcula tratando todas las demás variables como
+      constantes. Operativamente, es la derivada de una variable de la clase 144 aplicada al
+      corte de la función. La notación `∂` en lugar de `d` recuerda que hay otras variables
+      congeladas.
+
+      El **teorema de Schwarz** garantiza que las derivadas cruzadas coinciden —`∂²f/∂x∂y =
+      ∂²f/∂y∂x`— si son continuas. Ese resultado es el que hace que el Hessiano sea simétrico
+      (clase 169), y la simetría del Hessiano es lo que permite aplicarle el teorema espectral
+      de la clase 126.
+
+      La limitación conceptual de las parciales es que solo miran en direcciones de eje. Una
+      función puede tener ambas parciales definidas en un punto y no ser diferenciable allí,
+      porque el comportamiento en direcciones oblicuas es distinto. La diferenciabilidad exige
+      más: que exista una buena aproximación lineal en **todas** las direcciones (clase 166).
+
+      En machine learning, cada componente del gradiente es una derivada parcial: cuánto cambia
+      la pérdida al mover **un** parámetro dejando el resto fijo. Con millones de parámetros,
+      calcularlas una a una por diferencias finitas costaría millones de evaluaciones; la
+      autodiferenciación las obtiene todas de una vez, y esa es su razón de ser.
+    ejemplo: |
+      Parciales de x²y + 3xy² en (2,3).
+
+      ```text
+      ∂f/∂x = 2xy + 3y²
+            = 2·2·3 + 3·9 = 12 + 27 = 39
+      numérica: 39.000000                        ✓
+
+      ∂f/∂y = x² + 6xy
+            = 4 + 6·2·3 = 4 + 36 = 40
+      numérica: 40.000000                        ✓
+
+      Cruzadas (Schwarz):
+        ∂²f/∂x∂y = 2x + 6y
+        ∂²f/∂y∂x = 2x + 6y                       ✓ coinciden
+      ```
+    errores:
+      - "Derivar respecto a una variable sin tratar las demás como constantes."
+      - "Deducir diferenciabilidad de la existencia de las parciales."
+      - "Confundir la notación ∂ con d en funciones de una sola variable."
+    aplicacion: |
+      Componentes del gradiente, análisis de sensibilidad respecto a un parámetro, elasticidades
+      en economía y ecuaciones en derivadas parciales.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Apostol, T. *Mathematical Analysis*, 2ª ed., Addison-Wesley, 1974](https://www.pearson.com/en-us/subject-catalog/p/mathematical-analysis/P200000006155)"
+
+  "164":
+    concepto: "El gradiente apunta al mayor ascenso; por eso se minimiza moviéndose en dirección contraria."
+    formulas:
+      - "∇f = (∂f/∂x₁, ..., ∂f/∂xₙ)"
+      - "descenso: x ← x − α∇f"
+      - "‖∇f‖ = pendiente máxima"
+    desarrollo: |
+      El gradiente reúne todas las derivadas parciales en un vector, y ese vector tiene dos
+      propiedades que lo convierten en el objeto central de la optimización: **apunta en la
+      dirección de máximo crecimiento** y **su norma es la pendiente en esa dirección**.
+
+      La primera propiedad es la que justifica el algoritmo más usado del machine learning
+      moderno. Si el gradiente apunta hacia arriba, moverse en `−∇f` es la forma más rápida de
+      bajar localmente. `x ← x − α∇f` es el descenso de gradiente, y toda la parte 12 son
+      variantes de esa línea.
+
+      La palabra **localmente** es esencial. El gradiente solo informa del comportamiento
+      infinitesimal alrededor del punto; nada garantiza que la dirección de máximo descenso
+      local lleve al mínimo global, ni siquiera que sea una buena dirección a media distancia.
+      En un valle alargado, la dirección de máximo descenso es casi perpendicular a la que
+      lleva al mínimo.
+
+      La norma del gradiente sirve además como **criterio de parada**: cerca de un punto
+      crítico, `‖∇f‖` tiende a cero. Es el indicador que usan todos los optimizadores para
+      decidir cuándo detenerse, y es preferible a un número fijo de iteraciones porque se
+      adapta al problema.
+    ejemplo: |
+      Gradiente y verificación de la dirección de ascenso.
+
+      ```text
+      f(x,y) = x²y + 3xy² + 2   en el punto (2,3)
+
+      ∇f = (39, 40),   ‖∇f‖ = 55.87
+      dirección unitaria: (0.6981, 0.7160)
+
+      f(2,3) = 68.0
+
+      Moverse h = 0.001 en dirección +∇f:  68.055872   ↑
+      Moverse h = 0.001 en dirección −∇f:  67.944128   ↓
+
+      El gradiente sube y su opuesto baja           ✓
+      ```
+    errores:
+      - "Confundir el gradiente con la derivada direccional (que es un escalar)."
+      - "Suponer que la dirección de máximo descenso local lleva al mínimo global."
+      - "Detener la optimización por número de iteraciones sin comprobar la norma del gradiente."
+    aplicacion: |
+      Descenso de gradiente y todas sus variantes, criterios de parada, mapas de saliencia en
+      interpretabilidad y ataques adversariales.
+    referencias:
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+      - "[Ruder, S. *An overview of gradient descent optimization algorithms*. arXiv, 2016](https://arxiv.org/abs/1609.04747)"
+
+  "165":
+    concepto: "La derivada direccional es la proyección del gradiente sobre una dirección unitaria."
+    formulas:
+      - "D_u f = ∇f · u,  con ‖u‖ = 1"
+      - "máximo: ‖∇f‖ en la dirección de ∇f"
+      - "nulo: en direcciones perpendiculares a ∇f"
+    desarrollo: |
+      La derivada direccional generaliza la parcial a cualquier dirección, no solo a los ejes.
+      Su fórmula es un producto punto: `D_u f = ∇f · u`, y de esa expresión se leen
+      inmediatamente sus valores extremos usando la clase 103.
+
+      Como `∇f · u = ‖∇f‖·cos θ` para `u` unitario, el valor es máximo cuando `θ = 0` —en la
+      dirección del gradiente— y vale `‖∇f‖`. Es mínimo en la dirección opuesta, valiendo
+      `−‖∇f‖`. Y es **cero** en las direcciones perpendiculares al gradiente, que son
+      precisamente las tangentes a la curva de nivel (clase 162).
+
+      Esa última observación cierra el círculo: moverse a lo largo de una curva de nivel no
+      cambia el valor de la función, y por eso la derivada direccional en esa dirección es
+      nula. La perpendicularidad entre gradiente y curva de nivel no es un hecho adicional: es
+      una consecuencia.
+
+      El requisito de que `u` sea **unitario** no es formalismo. Si no se normaliza, el
+      resultado escala con la longitud del vector y deja de ser una tasa de cambio por unidad
+      de distancia. Es el error más frecuente al implementar derivadas direccionales.
+    ejemplo: |
+      Derivada direccional en cuatro direcciones.
+
+      ```text
+      punto (2,3),  ∇f = (39, 40),  ‖∇f‖ = 55.87
+
+      dirección          D_u f
+      e₁ = (1,0)         39.00
+      e₂ = (0,1)         40.00
+      45° = (0.707,0.707) 55.86    ← casi el máximo
+      −∇f normalizado   −55.87     ← el mínimo
+
+      perpendicular a ∇f: (−40, 39)/‖·‖  →  0.0    ✓ nula
+
+      máximo posible = ‖∇f‖ = 55.87
+      ```
+    errores:
+      - "No normalizar el vector de dirección."
+      - "Confundir la derivada direccional (escalar) con el gradiente (vector)."
+      - "Suponer que la derivada direccional es máxima en la dirección de una variable."
+    aplicacion: |
+      Análisis de sensibilidad en direcciones combinadas, búsqueda de línea en optimización
+      (clase 254) y estudio de la anisotropía de una función de pérdida.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+
+  "166":
+    concepto: "El plano tangente es la aproximación lineal en varias variables, y su error crece cuadráticamente."
+    formulas:
+      - "z = f(a) + ∇f(a)·(x − a)"
+      - "error ≈ ½·(x−a)ᵀH(x−a) = O(‖x−a‖²)"
+    desarrollo: |
+      El plano tangente es a las superficies lo que la recta tangente a las curvas: la mejor
+      aproximación lineal en un punto. Su ecuación usa el gradiente como vector de pendientes:
+      `f(a) + ∇f(a)·(x − a)`.
+
+      Lo interesante es cómo se comporta el error. Al alejarse del punto de tangencia, el error
+      crece **cuadráticamente**, no linealmente. Duplicar la distancia cuadruplica el error. Eso
+      explica por qué las aproximaciones lineales funcionan bien cerca y mal lejos, y por qué
+      el paso del descenso de gradiente debe ser pequeño: el gradiente solo describe la función
+      en un entorno.
+
+      El término cuadrático del error es exactamente el que captura el Hessiano, y por eso
+      Taylor de segundo orden (clase 170) es tanto más preciso. Los métodos de Newton usan esa
+      información para dar pasos más largos con seguridad.
+
+      La diferenciabilidad en varias variables se define precisamente como la existencia de una
+      buena aproximación lineal, con error `o(‖x−a‖)`. Es una condición más fuerte que la mera
+      existencia de las parciales, y es la que garantiza que el plano tangente merece ese
+      nombre.
+    ejemplo: |
+      Plano tangente y crecimiento del error.
+
+      ```text
+      f(x,y) = x²y + 3xy² + 2   en (2,3)
+      f(2,3) = 68,  ∇f = (39, 40)
+
+      plano: z = 68 + 39(x−2) + 40(y−3)
+
+      punto cercano (2.01, 3.01):
+        f real     = 68.79
+        plano      = 68.79
+        error      = 0.0034
+
+      punto lejano (3, 4):
+        f real     = 182.0
+        plano      = 147.0
+        error      = 35.0
+
+      Distancia ×100 → error ×10 000: crecimiento cuadrático  ✓
+      ```
+    errores:
+      - "Usar la aproximación lineal lejos del punto de tangencia."
+      - "Confundir el plano tangente con la superficie."
+      - "Suponer que la existencia de las parciales implica que hay plano tangente."
+    aplicacion: |
+      Linealización de modelos, propagación de incertidumbre de primer orden, un paso de
+      descenso de gradiente y aproximación local de funciones complejas.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Apostol, T. *Mathematical Analysis*, 2ª ed., 1974](https://www.pearson.com/en-us/subject-catalog/p/mathematical-analysis/P200000006155)"
+
+  "167":
+    concepto: "La regla de la cadena multivariable suma las contribuciones de todos los caminos."
+    formulas:
+      - "dh/dt = (∂f/∂x)(dx/dt) + (∂f/∂y)(dy/dt)"
+      - "en general: producto punto entre gradiente y velocidad"
+    desarrollo: |
+      Cuando una función depende de variables que a su vez dependen de un parámetro, la tasa de
+      cambio total suma las contribuciones de cada camino. Esa es la regla de la cadena
+      multivariable, y su forma compacta es un producto punto: gradiente por vector velocidad.
+
+      La lectura de «suma sobre caminos» es la que se generaliza al grafo de cómputo. En una
+      red neuronal, un parámetro puede influir en la pérdida por varias rutas —pesos
+      compartidos, conexiones residuales, capas que se reutilizan— y su gradiente total es la
+      **suma** de las contribuciones de todas ellas.
+
+      Ese detalle es la causa del error más común al implementar autodiferenciación a mano: si
+      un nodo se usa dos veces, hay que **acumular** su gradiente en lugar de sobrescribirlo.
+      El motor del programa usa `+=` precisamente por eso, y la clase 306 lo hace explícito. En
+      PyTorch, olvidar `zero_grad()` es el mismo problema al revés: acumular cuando no se debe.
+
+      La verificación numérica es directa: componer las funciones, derivar la composición por
+      diferencias finitas y comparar con la suma de productos. El laboratorio lo hace sobre una
+      trayectoria circular, donde `x = cos t` e `y = sin t`.
+    ejemplo: |
+      Derivar f(x(t), y(t)) sobre una circunferencia.
+
+      ```text
+      f(x,y) = x²y + 3xy² + 2
+      x(t) = cos t,  y(t) = sin t,   t = 1.5
+
+      ∇f en (cos 1.5, sin 1.5) = (2.9787, 0.2318)
+      velocidad (dx/dt, dy/dt) = (−sin 1.5, cos 1.5) = (−0.9975, 0.0707)
+
+      Regla de la cadena:
+        2.9787·(−0.9975) + 0.2318·0.0707 = −2.9548
+
+      Derivada numérica de h(t):  −2.9548           ✓
+
+      Estructura: producto punto entre gradiente y velocidad
+      ```
+    errores:
+      - "Sobrescribir el gradiente de un nodo reutilizado en lugar de acumularlo."
+      - "Olvidar alguno de los caminos de dependencia."
+      - "Evaluar el gradiente en el punto equivocado de la trayectoria."
+    aplicacion: |
+      Backpropagation con pesos compartidos, redes recurrentes, conexiones residuales y
+      propagación de incertidumbre a través de varias etapas.
+    referencias:
+      - "[Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)"
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)"
+
+  "168":
+    concepto: "El Jacobiano es la derivada de una función vectorial; el modo reverso calcula vᵀJ sin construirlo."
+    formulas:
+      - "J ∈ ℝ^(m×n) para F: ℝⁿ → ℝᵐ"
+      - "fila i = ∇Fᵢ"
+      - "VJP: vᵀJ · JVP: Jv"
+    desarrollo: |
+      Cuando la función devuelve un vector en lugar de un escalar, su derivada es una matriz: el
+      **Jacobiano**. Su fila `i` es el gradiente de la componente `i` de la salida, y su columna
+      `j` recoge cómo afecta la entrada `j` a todas las salidas.
+
+      Su tamaño es el problema. Para una capa que va de 1000 entradas a 1000 salidas, el
+      Jacobiano tiene un millón de entradas; para un modelo completo, sería inmanejable. Por eso
+      **los frameworks nunca lo construyen**.
+
+      Lo que sí calculan son productos con el Jacobiano. El **VJP** (vector-Jacobian product),
+      `vᵀJ`, es lo que hace `backward()`: propaga un gradiente hacia atrás sin materializar la
+      matriz. El **JVP** (Jacobian-vector product), `Jv`, es lo que hace el modo directo. Cada
+      uno cuesta aproximadamente lo mismo que evaluar la función una vez.
+
+      La elección entre modos depende de la forma. Si hay muchas entradas y una sola salida
+      —el caso de una función de pérdida, con millones de parámetros y un escalar— el **modo
+      reverso** obtiene todos los gradientes con un solo barrido. Si hay pocas entradas y
+      muchas salidas, el modo directo es más eficiente. El entrenamiento de redes es el primer
+      caso, y por eso backpropagation es modo reverso.
+    ejemplo: |
+      Jacobiano de una función de ℝ² en ℝ³.
+
+      ```text
+      F(x,y) = (x²+y,  sin(x)·y,  x−3y)   en (1,2)
+
+      J (shape 3×2):
+        [[2x,        1     ]     [[2.0,     1.0   ]
+         [cos(x)·y,  sin(x)]  =   [1.0806,  0.8415]
+         [1,        −3     ]]     [1.0,    −3.0   ]]
+
+      fila 1 = ∇(x²+y) = (2x, 1) = (2, 1)          ✓
+
+      VJP (modo reverso): vᵀJ, coste ≈ 1 evaluación
+      JVP (modo directo): Jv,  coste ≈ 1 evaluación
+      ```
+    errores:
+      - "Construir el Jacobiano completo cuando basta un producto con él."
+      - "Confundir filas con columnas al escribirlo."
+      - "Elegir el modo directo cuando hay muchas entradas y una salida."
+    aplicacion: |
+      Autodiferenciación, cambio de variable en densidades, cinemática de robots y análisis de
+      sensibilidad de sistemas con varias salidas.
+    referencias:
+      - "[Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)"
+      - "[JAX: autodiff cookbook](https://docs.jax.dev/en/latest/notebooks/autodiff_cookbook.html)"
+
+  "169":
+    concepto: "El Hessiano describe la curvatura, y el signo de sus autovalores clasifica el punto crítico."
+    formulas:
+      - "Hᵢⱼ = ∂²f/∂xᵢ∂xⱼ"
+      - "definido positivo ⟹ mínimo; definido negativo ⟹ máximo; signos mixtos ⟹ silla"
+    desarrollo: |
+      El Hessiano recoge todas las segundas derivadas y describe cómo se curva la función en
+      cada dirección. Es simétrico por el teorema de Schwarz (clase 163), y por tanto tiene
+      autovalores reales y autovectores ortogonales (clase 126).
+
+      Los autovalores son las **curvaturas principales**. Todos positivos significa que la
+      función se curva hacia arriba en todas las direcciones: mínimo local. Todos negativos:
+      máximo. Signos mixtos: **punto de silla**, mínimo en unas direcciones y máximo en otras.
+
+      Ese último caso es el que domina en alta dimensión. En un espacio de un millón de
+      dimensiones, que todos los autovalores tengan el mismo signo es extraordinariamente
+      improbable; lo típico es que haya mezcla. Por eso el consenso actual es que el problema
+      del entrenamiento de redes profundas **no son los mínimos locales malos, son los puntos
+      de silla y las mesetas** que los rodean.
+
+      El Hessiano también determina la velocidad de convergencia. El cociente entre su mayor y
+      su menor autovalor es el número de condición del problema, y controla lo lento que
+      converge el descenso de gradiente (clase 244). Los métodos de segundo orden usan el
+      Hessiano para corregir esa anisotropía, a costa de un coste `O(n³)` que los hace
+      inviables con millones de parámetros.
+    ejemplo: |
+      Hessiano de x² + 3y² en el origen.
+
+      ```text
+      f(x,y) = x² + 3y²
+
+      ∇f(0,0) = (0, 0)                    → punto crítico
+
+      H = [[2, 0],
+           [0, 6]]
+
+      autovalores: 2 y 6,  ambos positivos → definido positivo
+
+      Clasificación: MÍNIMO local          ✓
+
+      Número de condición: 6/2 = 3
+        curvas de nivel: elipses con ejes 3:1
+      ```
+    errores:
+      - "Clasificar un punto crítico sin calcular los autovalores del Hessiano."
+      - "Suponer que los mínimos locales son el principal obstáculo en alta dimensión."
+      - "Construir el Hessiano completo en problemas con muchos parámetros."
+    aplicacion: |
+      Clasificación de puntos críticos, método de Newton, análisis de convergencia,
+      aproximación de Laplace en inferencia bayesiana y K-FAC.
+    referencias:
+      - "[Dauphin, Y. et al. *Identifying and attacking the saddle point problem in high-dimensional non-convex optimization*. NeurIPS, 2014](https://arxiv.org/abs/1406.2572)"
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+
+  "170":
+    concepto: "Taylor de segundo orden usa el Hessiano y reduce el error de cuadrático a cúbico."
+    formulas:
+      - "f(x+d) ≈ f(x) + ∇fᵀd + ½dᵀHd"
+      - "error de orden 1: O(‖d‖²); de orden 2: O(‖d‖³)"
+    desarrollo: |
+      El desarrollo de Taylor multivariable tiene la misma estructura que el de una variable,
+      con el gradiente en el término lineal y el Hessiano en el cuadrático. La expresión
+      `½dᵀHd` es una forma cuadrática (clase 128), y su valor depende de la dirección del
+      desplazamiento.
+
+      La ganancia de precisión es sustancial: el término de orden 2 reduce el error de `O(‖d‖²)`
+      a `O(‖d‖³)`. Para un desplazamiento de 0.05, eso significa pasar de un error del orden de
+      0.0025 a uno del orden de 0.000125: veinte veces mejor.
+
+      Esa mejora es la que justifica los métodos de segundo orden. Newton aproxima la función
+      por su Taylor cuadrático y salta directamente al mínimo de esa parábola, lo que converge
+      cuadráticamente cerca del óptimo. El precio es calcular e invertir el Hessiano.
+
+      Todos los optimizadores adaptativos de la parte 12 —AdaGrad, RMSProp, Adam— son intentos
+      de capturar información de segundo orden **sin** calcular el Hessiano, usando en su lugar
+      estadísticas acumuladas del gradiente. Entender qué aproximan exige entender este
+      desarrollo.
+    ejemplo: |
+      Órdenes 0, 1 y 2 alrededor de (1,1).
+
+      ```text
+      f(x,y) = x²y + 3xy² + 2,  desplazamiento d = (0.05, −0.03)
+
+      valor exacto:  6.0296
+
+      orden 0:  6.0000     error 2.96e−02
+      orden 1:  6.0250     error 4.60e−03
+      orden 2:  6.0296     error 1.11e−04
+
+      Cada orden reduce el error en más de un factor 10.
+      ```
+    errores:
+      - "Olvidar el factor ½ en el término cuadrático."
+      - "Usar el desarrollo lejos del punto base."
+      - "Suponer que el Hessiano es constante fuera del caso cuadrático."
+    aplicacion: |
+      Método de Newton, análisis de convergencia, aproximación de Laplace y justificación de
+      los optimizadores adaptativos.
+    referencias:
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+      - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004](https://web.stanford.edu/~boyd/cvxbook/)"
+
+  "171":
+    concepto: "El descenso de gradiente converge en una cuadrática si el paso respeta el límite de estabilidad."
+    formulas:
+      - "x ← x − α∇f(x)"
+      - "estable si α < 2/λ_max"
+      - "convergencia lenta si λ_max/λ_min es grande"
+    desarrollo: |
+      El descenso de gradiente aplica repetidamente la misma regla: moverse en dirección
+      contraria al gradiente con un paso `α`. Sobre una función cuadrática se puede analizar
+      exactamente, y ese análisis explica todo lo que se observa en la práctica.
+
+      La condición de estabilidad es `α < 2/λ_max`, donde `λ_max` es el mayor autovalor del
+      Hessiano. Superarla hace que el algoritmo diverja, y por eso el learning rate es el
+      hiperparámetro que más divergencias explica. La clase 244 lo comprueba con cuatro valores
+      distintos.
+
+      La velocidad de convergencia la determina el **cociente** de autovalores. Si son
+      parecidos, el descenso avanza directo al mínimo; si son muy dispares, el gradiente apunta
+      casi perpendicular al eje largo del valle y el algoritmo zigzaguea. Con `f = x² + 20y²`,
+      la relación es 20 a 1 y el zigzagueo es visible.
+
+      Ese diagnóstico es el que motiva todo lo demás. Momentum (clase 246) amortigua la
+      oscilación acumulando velocidad; los métodos adaptativos escalan cada coordenada por
+      separado; los de segundo orden corrigen la anisotropía directamente. Todos atacan el
+      mismo problema.
+    ejemplo: |
+      Descenso sobre una cuadrática mal condicionada.
+
+      ```text
+      f(x,y) = (x−3)² + 5(y+1)²,  lr = 0.08
+      inicio (0,0),  mínimo teórico (3,−1)
+
+      paso    x                 f
+        1     (0.48, −0.80)     6.55
+        5     (1.72, −0.99)     1.63
+       20     (2.90, −1.00)     0.0092
+       60     (3.00, −1.00)     1.6e−09
+
+      gradiente final: 8.9e−05     → convergió       ✓
+
+      Límite de estabilidad: α < 2/10 = 0.2
+      ```
+    errores:
+      - "Elegir el learning rate sin considerar la curvatura del problema."
+      - "Detener por número de iteraciones sin comprobar la norma del gradiente."
+      - "Suponer que la convergencia en una cuadrática predice la de un problema no convexo."
+    aplicacion: |
+      Entrenamiento de cualquier modelo por gradiente, ajuste del learning rate y diagnóstico de
+      divergencias.
+    referencias:
+      - "[Ruder, S. *An overview of gradient descent optimization algorithms*. arXiv, 2016](https://arxiv.org/abs/1609.04747)"
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+
+  "172":
+    concepto: "Lagrange convierte una restricción en un término del objetivo, y su multiplicador mide el precio de esa restricción."
+    formulas:
+      - "L = f(x) − λ(g(x) − c)"
+      - "∇f = λ∇g en el óptimo"
+      - "λ = tasa de mejora del óptimo por unidad de relajación"
+    desarrollo: |
+      Optimizar con una restricción de igualdad no se puede hacer anulando el gradiente del
+      objetivo: el óptimo restringido rara vez es un punto crítico libre. La condición correcta
+      es que los gradientes del objetivo y de la restricción sean **paralelos**: `∇f = λ∇g`.
+
+      La intuición geométrica es clara. Si el gradiente del objetivo tuviera una componente
+      tangente a la curva de restricción, se podría mejorar moviéndose a lo largo de ella. En el
+      óptimo, esa componente tangente debe anularse, y eso ocurre exactamente cuando ambos
+      gradientes son colineales.
+
+      El multiplicador `λ` no es un artificio de cálculo: tiene interpretación económica
+      directa. Es la tasa a la que mejora el óptimo si se relaja la restricción una unidad —el
+      **precio sombra** en programación lineal—. En el ejemplo del laboratorio, maximizar `xy`
+      con `x+y=10` da `λ = 5`: cada unidad adicional de presupuesto añade 5 al óptimo.
+
+      La generalización a restricciones de **desigualdad** son las condiciones KKT (clase 257),
+      que añaden dos requisitos: los multiplicadores deben ser no negativos y debe cumplirse la
+      holgura complementaria —una restricción inactiva tiene multiplicador nulo—. Toda la
+      optimización con restricciones se construye sobre esta clase.
+    ejemplo: |
+      Maximizar xy sujeto a x + y = 10.
+
+      ```text
+      L = xy − λ(x + y − 10)
+
+      Condiciones:
+        ∂L/∂x: y = λ
+        ∂L/∂y: x = λ
+        restricción: x + y = 10
+
+      Solución: x = y = 5,  λ = 5,  valor óptimo = 25
+
+      Verificación con alternativas:
+        x=1 → 9    x=3 → 21   x=5 → 25   x=7 → 21   x=9 → 9
+        el máximo está en x=5                        ✓
+
+      Interpretación de λ: si el presupuesto sube a 11,
+      el óptimo sube aproximadamente 5 unidades.
+      ```
+    errores:
+      - "Buscar el óptimo restringido anulando solo el gradiente del objetivo."
+      - "Ignorar la interpretación de λ como precio sombra."
+      - "Aplicar Lagrange a restricciones de desigualdad sin las condiciones KKT."
+    aplicacion: |
+      Optimización con restricciones, SVM con margen máximo, regularización vista como
+      restricción, y precios sombra en asignación de recursos.
+    referencias:
+      - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)"
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 12](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+
+  "173":
+    concepto: "Fubini permite calcular una integral doble como dos integrales simples encadenadas."
+    formulas:
+      - "∬f dA = ∫(∫f dx)dy"
+      - "sobre un rectángulo: los límites son constantes"
+    desarrollo: |
+      Una integral doble acumula sobre una región del plano en lugar de sobre un intervalo. Su
+      definición es un límite de sumas sobre una malla de rectángulos, análoga a la suma de
+      Riemann de la clase 153.
+
+      El **teorema de Fubini** permite calcularla como dos integrales simples encadenadas, en
+      cualquier orden, siempre que la función sea integrable. Esa reducción es lo que la hace
+      calculable: en lugar de un límite bidimensional, dos aplicaciones del cálculo de una
+      variable.
+
+      El coste computacional de la integración numérica en varias dimensiones crece
+      exponencialmente: una malla con `n` puntos por dimensión requiere `nᵈ` evaluaciones. En
+      dimensión 10 con 100 puntos por eje son 10²⁰ evaluaciones: imposible. Esa es la maldición
+      de la dimensionalidad aplicada a la integración.
+
+      La salida es **Monte Carlo** (clase 198), cuyo error decae como `1/√n` **independientemente
+      de la dimensión**. Por eso toda expectativa de alta dimensión en machine learning se
+      estima muestreando en lugar de integrando en malla: el ELBO de un VAE, la esperanza de una
+      política en RL, cualquier integral sobre el espacio de parámetros.
+    ejemplo: |
+      Integral doble de xy sobre un rectángulo.
+
+      ```text
+      ∬ xy dA  sobre [0,2] × [0,3]
+
+      Por Fubini:
+        ∫₀³ (∫₀² xy dx) dy = ∫₀³ (2y) dy = 9
+
+      Valor exacto: (2²/2)·(3²/2) = 2·4.5 = 9
+
+      Numérico con malla 200×200: 9.00000000
+      error: 1.1e−13                              ✓
+
+      Coste: 40 000 evaluaciones para 2 dimensiones.
+      En 10 dimensiones serían 100¹⁰.
+      ```
+    errores:
+      - "Intercambiar el orden de integración sin comprobar las hipótesis de Fubini."
+      - "Usar integración en malla en dimensión alta."
+      - "Confundir los límites al cambiar el orden en regiones no rectangulares."
+    aplicacion: |
+      Probabilidades conjuntas, marginalización, cálculo de masas y centros de gravedad, y
+      normalización de densidades multivariantes.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 15](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Robert & Casella. *Monte Carlo Statistical Methods*, 2ª ed., Springer, 2004](https://link.springer.com/book/10.1007/978-1-4757-4145-2)"
+
+  "174":
+    concepto: "Una integral triple con densidad variable calcula masa; el volumen es el caso de densidad unitaria."
+    formulas:
+      - "V = ∭ dV"
+      - "m = ∭ ρ(x,y,z) dV"
+    desarrollo: |
+      La integral triple extiende la acumulación a tres dimensiones. Con integrando 1 da el
+      **volumen**; con una función de densidad da la **masa**. Esa distinción —volumen como caso
+      particular de masa con densidad constante— es la que se generaliza a la probabilidad: la
+      masa total de una densidad debe ser 1.
+
+      El coste crece con el cubo del refinamiento: una malla de 60 puntos por eje son 216 000
+      celdas para un cubo unitario. Ya en tres dimensiones la integración en malla empieza a ser
+      cara, y en más dimensiones deja de ser viable.
+
+      Los cambios de coordenadas —cilíndricas, esféricas— simplifican regiones con simetría, al
+      precio de introducir el **jacobiano** como factor: `r` en cilíndricas, `r²sin φ` en
+      esféricas. Ese factor es el determinante de la clase 117 corrigiendo el cambio de volumen,
+      y olvidarlo es el error clásico.
+
+      En probabilidad, la integral triple aparece al marginalizar una densidad conjunta de tres
+      variables, y la normalización de la gaussiana multivariante es una integral de este tipo
+      resuelta con un cambio de variable que diagonaliza la covarianza.
+    ejemplo: |
+      Volumen y masa de un cubo con densidad variable.
+
+      ```text
+      región: cubo unitario [0,1]³
+      densidad: ρ(x,y,z) = 1 + x
+
+      volumen numérico: 1.00000000     exacto 1     ✓
+
+      masa = ∭(1+x)dV = 1 + 1/2 = 1.5
+      masa numérica: 1.500000
+      error: 4.2e−07
+
+      malla: 60³ = 216 000 celdas
+      ```
+    errores:
+      - "Olvidar el jacobiano al cambiar a coordenadas cilíndricas o esféricas."
+      - "Usar integración en malla en más de tres o cuatro dimensiones."
+      - "Confundir volumen (densidad 1) con masa (densidad variable)."
+    aplicacion: |
+      Masa y centro de gravedad, marginalización de densidades conjuntas, normalización de
+      distribuciones multivariantes y cálculo de momentos.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 15](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006, cap. 2](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)"
+
+  "175":
+    concepto: "Un campo conservativo es el gradiente de un potencial; no todos los campos lo son."
+    formulas:
+      - "campo: F(x,y) = (P, Q)"
+      - "conservativo ⟺ F = ∇φ para algún potencial φ"
+      - "condición necesaria: ∂P/∂y = ∂Q/∂x"
+    desarrollo: |
+      Un campo vectorial asigna un vector a cada punto: velocidad de un fluido, fuerza
+      gravitatoria, dirección de descenso. La distinción fundamental es entre campos que
+      **derivan de un potencial** y los que no.
+
+      Un campo conservativo es el gradiente de una función escalar. Su propiedad característica
+      es que el trabajo entre dos puntos no depende del camino, solo de los extremos, y por
+      tanto el trabajo en un circuito cerrado es cero. La gravedad es conservativa; el rozamiento
+      no.
+
+      El campo `F(x,y) = (−y, x)` del laboratorio es puramente rotacional: en cada punto es
+      perpendicular al radio, así que hace girar sin acercar ni alejar. No es conservativo, y su
+      rotacional es no nulo (clase 176).
+
+      La conexión con optimización es exacta: el campo de gradientes de una función escalar es
+      **siempre conservativo por construcción**, y esa es la razón por la que el descenso de
+      gradiente no puede quedar atrapado en un ciclo. En cambio, en optimización de dos jugadores
+      —los GAN de la clase 333— el campo de actualizaciones **no** es un gradiente de nada, puede
+      tener componente rotacional, y de ahí que el entrenamiento pueda ciclar en lugar de
+      converger.
+    ejemplo: |
+      Un campo rotacional y uno conservativo.
+
+      ```text
+      Campo F(x,y) = (−y, x)      rotacional puro
+        en (1,0): (0, 1)
+        en (0,1): (−1, 0)
+        en (1,1): (−1, 1)
+
+        F·(x,y) = −xy + yx = 0     ✓ perpendicular al radio
+
+      Campo G = ∇(x²+y²) = (2x, 2y)   conservativo
+        en (1,0): (2, 0)
+        en (1,1): (2, 2)
+        deriva del potencial φ = x²+y²
+      ```
+    errores:
+      - "Suponer que todo campo vectorial tiene potencial."
+      - "Confundir un campo vectorial con una función escalar."
+      - "Olvidar que la condición ∂P/∂y = ∂Q/∂x es necesaria pero no suficiente en dominios no simplemente conexos."
+    aplicacion: |
+      Campos de fuerzas en física, campos de gradientes en optimización, dinámica de
+      entrenamiento adversarial y flujos en modelos generativos continuos.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Balduzzi, D. et al. *The Mechanics of n-Player Differentiable Games*. ICML, 2018](https://arxiv.org/abs/1802.05642)"
+
+  "176":
+    concepto: "La divergencia mide fuente o sumidero; el rotacional mide circulación local."
+    formulas:
+      - "div F = ∂P/∂x + ∂Q/∂y"
+      - "rot F = ∂Q/∂x − ∂P/∂y  (en 2D)"
+      - "div(∇φ) = Δφ  (laplaciano)"
+    desarrollo: |
+      La divergencia y el rotacional son las dos formas de derivar un campo vectorial. La
+      **divergencia** es un escalar que mide el flujo neto que sale de un entorno del punto:
+      positiva indica fuente, negativa sumidero, nula indica que lo que entra sale. El
+      **rotacional** mide la tendencia del campo a hacer girar un objeto colocado en ese punto.
+
+      Ambos aparecen en las ecuaciones de Maxwell y en la mecánica de fluidos, y su combinación
+      da los teoremas integrales —Green, Gauss, Stokes— que relacionan lo que ocurre en el
+      interior de una región con lo que ocurre en su frontera.
+
+      La divergencia del gradiente es el **laplaciano**, `Δφ = div(∇φ)`, que es la traza del
+      Hessiano. Ese operador aparece en la ecuación del calor, en la de ondas y —lo que importa
+      aquí— en el **Laplaciano de un grafo** (clase 336), que es su análogo discreto y es la
+      base del clustering espectral y de las GNN.
+
+      El teorema clave para esta parte es que el rotacional de un gradiente es siempre cero. Por
+      tanto, un campo con rotacional no nulo **no puede** ser un campo de gradientes, y ese es
+      el criterio para detectar dinámicas que no derivan de ninguna función objetivo.
+    ejemplo: |
+      Divergencia y rotacional de F = (x², xy).
+
+      ```text
+      F(x,y) = (x², xy)   en el punto (1,2)
+
+      div F = ∂(x²)/∂x + ∂(xy)/∂y = 2x + x = 3x
+        analítica en (1,2): 3
+        numérica:           3.000000            ✓
+
+      rot F = ∂(xy)/∂x − ∂(x²)/∂y = y − 0 = y
+        analítica en (1,2): 2
+        numérica:           2.000000            ✓
+
+      rot ≠ 0  →  F NO es un campo de gradientes
+      ```
+    errores:
+      - "Confundir divergencia (escalar) con rotacional (vector en 3D, escalar en 2D)."
+      - "Suponer que un campo con divergencia nula es conservativo: son propiedades distintas."
+      - "Calcular estas derivadas con h demasiado pequeño y amplificar el redondeo."
+    aplicacion: |
+      Mecánica de fluidos, electromagnetismo, laplaciano de grafos, difusión y detección de
+      dinámicas no conservativas en entrenamiento adversarial.
+    referencias:
+      - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/)"
+      - "[Chung, F. *Spectral Graph Theory*. AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html)"
+
+  "177":
+    concepto: "El cálculo matricial da fórmulas cerradas para gradientes respecto a vectores y matrices."
+    formulas:
+      - "∂(aᵀx)/∂x = a"
+      - "∂(xᵀAx)/∂x = (A + Aᵀ)x,  y 2Ax si A es simétrica"
+      - "∂‖x‖²/∂x = 2x"
+    desarrollo: |
+      Derivar respecto a un vector o una matriz componente a componente es tedioso y propenso a
+      error. El cálculo matricial ofrece fórmulas cerradas para los patrones que aparecen una y
+      otra vez, y saberlas de memoria acelera cualquier deducción en machine learning.
+
+      Las dos más útiles son inmediatas: la derivada de una forma lineal `aᵀx` es `a`, y la de
+      una forma cuadrática `xᵀAx` es `(A + Aᵀ)x`, que se reduce a `2Ax` cuando `A` es simétrica
+      —el caso habitual, porque toda forma cuadrática se puede escribir con matriz simétrica—.
+
+      El escollo práctico es la **convención de layout**. En la convención del denominador el
+      gradiente es un vector columna; en la del numerador, una fila. Ambas son correctas y las
+      fórmulas difieren en una transposición. Mezclarlas produce errores de shape que a veces
+      no se detectan porque las dimensiones cuadran por casualidad.
+
+      La recomendación práctica es fijar una convención, declararla en el código y verificar
+      **siempre** las fórmulas contra diferencias finitas. El laboratorio hace exactamente eso, y
+      es lo mismo que hace `torch.autograd.gradcheck`.
+    ejemplo: |
+      Dos identidades verificadas numéricamente.
+
+      ```text
+      x = (1, 2),  a = (4, −1),  A = [[2,1],[1,3]] (simétrica)
+
+      Forma lineal aᵀx:
+        fórmula:  ∂/∂x = a = (4, −1)
+        numérica: (4.000000, −1.000000)          ✓
+
+      Forma cuadrática xᵀAx:
+        fórmula:  (A + Aᵀ)x = 2Ax = (8, 14)
+        numérica: (8.00000, 14.00000)            ✓
+
+      Convención usada: denominador (gradiente como columna)
+      ```
+    errores:
+      - "Mezclar convenciones de layout entre partes del mismo código."
+      - "Aplicar la fórmula 2Ax a una matriz no simétrica."
+      - "No verificar las fórmulas contra diferencias finitas."
+    aplicacion: |
+      Deducción de gradientes de funciones de pérdida, backpropagation analítica, métodos de
+      segundo orden y cualquier derivación en un paper de machine learning.
+    referencias:
+      - "[Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)"
+      - "[Magnus & Neudecker. *Matrix Differential Calculus*, 3ª ed., Wiley, 2019](https://www.wiley.com/en-us/Matrix+Differential+Calculus+with+Applications+in+Statistics+and+Econometrics%2C+3rd+Edition-p-9781119541202)"
+
+  "178":
+    concepto: "El gradiente de la pérdida cuadrática es 2Xᵀ(Xw − y)/n: esa expresión es el gradiente de una capa lineal."
+    formulas:
+      - "L(w) = ‖Xw − y‖²/n"
+      - "∇L = 2Xᵀ(Xw − y)/n"
+    desarrollo: |
+      Esta clase deduce la fórmula que más se usa en todo el machine learning. La pérdida
+      cuadrática media de un modelo lineal es `‖Xw − y‖²/n`, y su gradiente respecto a los pesos
+      es `2Xᵀr/n`, donde `r = Xw − y` es el vector de residuos.
+
+      La estructura de esa expresión merece leerse despacio, porque es la misma en modelos mucho
+      más complejos. El residuo mide el error de cada observación; `Xᵀ` lo proyecta de vuelta al
+      espacio de parámetros, atribuyendo a cada peso la parte del error que le corresponde
+      según su feature; y la división por `n` promedia.
+
+      En una red neuronal ocurre exactamente lo mismo capa a capa: se calcula el error en la
+      salida y se «retropropaga» multiplicando por la transpuesta de la matriz de pesos. La
+      aparición de `Wᵀ` en backpropagation no es un truco: es esta fórmula.
+
+      Igualar el gradiente a cero da `XᵀXw = Xᵀy`, las ecuaciones normales de la clase 131.
+      Optimización iterativa y solución cerrada llegan al mismo sitio; la primera escala a
+      millones de parámetros y la segunda no.
+    ejemplo: |
+      Gradiente de la pérdida cuadrática de un modelo lineal.
+
+      ```text
+      X = [[1,2],[2,1],[3,4]]   y = (5, 4, 11)   w = (1, 1)
+
+      predicciones: Xw = (3, 3, 7)
+      residuos r = Xw − y = (−2, −1, −4)
+
+      MSE = (4 + 1 + 16)/3 = 7.0
+
+      ∇w = 2Xᵀr/n = 2·(−16, −21)/3 = (−10.6667, −14.0)
+      numérico:                       (−10.6667, −14.0)   ✓
+
+      Igualar a cero → ecuaciones normales XᵀXw = Xᵀy
+      ```
+    errores:
+      - "Olvidar el factor 2 o la división por n."
+      - "Transponer X en el lado equivocado y obtener un shape incorrecto."
+      - "Confundir el residuo (predicción menos objetivo) con su opuesto: cambia el signo del gradiente."
+    aplicacion: |
+      Gradiente de una capa lineal, regresión por descenso de gradiente, deducción de
+      backpropagation y toda función de pérdida cuadrática.
+    referencias:
+      - "[Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)"
+      - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 5](https://www.deeplearningbook.org/)"
+
+  "179":
+    concepto: "La autodiferenciación en modo reverso obtiene todos los gradientes con un barrido hacia adelante y uno hacia atrás."
+    formulas:
+      - "coste del modo reverso: O(1) barridos, independiente del número de variables"
+      - "coste de diferencias finitas: 2 evaluaciones por variable"
+    desarrollo: |
+      La autodiferenciación no es derivación simbólica ni numérica: es una **tercera opción**.
+      Registra las operaciones elementales que se ejecutan formando un grafo de cómputo, y luego
+      aplica la regla de la cadena sobre ese grafo. El resultado es exacto salvo redondeo, sin
+      la explosión de expresiones del cálculo simbólico ni el error de truncamiento de las
+      diferencias finitas.
+
+      El **modo reverso** es el que usan los frameworks de deep learning. Hace un barrido hacia
+      adelante guardando valores intermedios y otro hacia atrás propagando derivadas, y obtiene
+      **todas** las derivadas parciales en ese único par de barridos. Con un millón de
+      parámetros, las diferencias finitas necesitarían dos millones de evaluaciones; el modo
+      reverso necesita el equivalente a unas pocas.
+
+      El precio es la memoria: hay que guardar los valores intermedios del barrido hacia
+      adelante para usarlos en el de vuelta. Esa es la razón por la que entrenar consume mucha
+      más memoria que inferir, y por la que existe el *gradient checkpointing*, que recalcula
+      partes en lugar de guardarlas.
+
+      La implementación del programa (`Var` en `part08.py`) tiene unas cien líneas y hace
+      exactamente lo mismo que PyTorch en su núcleo: cada operación registra cómo propagar el
+      gradiente, `backward()` construye el orden topológico y lo recorre al revés acumulando.
+      Lo que añaden los frameworks reales es tensores, GPU, fusión de operaciones y compilación,
+      no un mecanismo distinto.
+    ejemplo: |
+      Autodiferenciación de una expresión con dos variables.
+
+      ```text
+      z = (x·y + sin x)·y²    en x = 2, y = 3
+
+      valor: 63.1852
+
+      dz/dx autodiff:  30.7482
+      dz/dx numérico:  30.7482                     ✓
+      dz/dy autodiff:  60.7902
+      dz/dy numérico:  60.7902                     ✓
+
+      Coste:
+        autodiff:            1 barrido adelante + 1 atrás
+        diferencias finitas: 2 evaluaciones por variable
+      ```
+    errores:
+      - "Confundir autodiferenciación con derivación simbólica o numérica."
+      - "Olvidar acumular gradientes en nodos reutilizados."
+      - "Usar el modo directo cuando hay muchas entradas y una salida."
+    aplicacion: |
+      Entrenamiento de cualquier red neuronal, optimización de hiperparámetros por gradiente,
+      física diferenciable y gradientes de simuladores.
+    referencias:
+      - "[Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)"
+      - "[Griewank & Walther. *Evaluating Derivatives*, 2ª ed., SIAM, 2008](https://epubs.siam.org/doi/book/10.1137/1.9780898717761)"
+
+  "180":
+    concepto: "Backpropagation manual y autodiferenciación dan exactamente el mismo número: autograd no es magia."
+    formulas:
+      - "cadena hacia atrás: dL/dw = dL/da · da/dz · dz/dw"
+      - "tanh': 1 − tanh²"
+    desarrollo: |
+      El capstone cierra la parte comparando dos caminos hacia el mismo resultado. Se define una
+      red mínima —dos capas con `tanh` y pérdida cuadrática—, se derivan sus gradientes a mano
+      aplicando la regla de la cadena paso a paso, y se calculan también con el motor de
+      autodiferenciación. Ambos deben coincidir hasta el último dígito.
+
+      La derivación manual hace explícito lo que autograd oculta. Se empieza por `dL/da₂`, se
+      multiplica por la derivada de la activación para obtener `dL/dz₂`, y se distribuye a los
+      parámetros de esa capa. Después se propaga hacia atrás multiplicando por el peso, se
+      vuelve a multiplicar por la derivada de la activación, y se distribuye a la capa anterior.
+      Ese patrón —error, derivada de activación, distribución, propagación— se repite capa a
+      capa.
+
+      Que los dos caminos coincidan exactamente es la comprobación que convierte autograd de
+      caja negra en herramienta comprendida. Un practicante que ha hecho este ejercicio una vez
+      sabe qué está calculando `loss.backward()`, por qué hace falta `zero_grad()` y por qué el
+      gradiente se desvanece en redes profundas.
+
+      Es también la técnica de depuración estándar: cuando un gradiente personalizado parece mal,
+      se compara contra diferencias finitas. `torch.autograd.gradcheck` hace exactamente esa
+      comparación, y es la primera herramienta que hay que usar al implementar una capa nueva.
+    ejemplo: |
+      Comparar backpropagation manual y automática.
+
+      ```text
+      Red: x → tanh(w₁x + b₁) → tanh(w₂h + b₂) → MSE
+      x = 0.5, objetivo = 1.0
+      w₁ = 1.2, b₁ = −0.3, w₂ = 0.8, b₂ = 0.1
+
+      predicción: 0.5216
+      pérdida:    0.2288
+
+      parámetro   manual      autodiff     coinciden
+      w₁         −0.1495     −0.1495          ✓
+      b₁         −0.2990     −0.2990          ✓
+      w₂         −0.2016     −0.2016          ✓
+      b₂         −0.6970     −0.6970          ✓
+
+      Conclusión: autograd es la regla de la cadena
+      en orden topológico inverso.
+      ```
+    errores:
+      - "Olvidar multiplicar por la derivada de la activación en cada capa."
+      - "Confundir el orden de propagación: se va de la pérdida hacia las entradas."
+      - "No verificar un gradiente personalizado contra diferencias finitas."
+    aplicacion: |
+      Depuración de gradientes, implementación de capas personalizadas, comprensión de
+      `loss.backward()` y diagnóstico de gradientes que se desvanecen.
+    referencias:
+      - "[Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://www.nature.com/articles/323533a0)"
+      - "[PyTorch: `torch.autograd.gradcheck`](https://pytorch.org/docs/stable/generated/torch.autograd.gradcheck.html)"

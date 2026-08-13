@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Taylor de segundo orden usa el Hessiano y reduce el error de cuadrático a cúbico.**
 
-Esta clase concreta ese objetivo sobre **Taylor multivariable**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `multivariable_taylor`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir la convención de layout (numerador vs denominador) en cálculo matricial.
+
+## 🧩 Fórmulas de la clase
+
+```text
+f(x+d) ≈ f(x) + ∇fᵀd + ½dᵀHd
+error de orden 1: O(‖d‖²); de orden 2: O(‖d‖³)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,41 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Lagrange convierte una restricción en un término de la función objetivo.
+El desarrollo de Taylor multivariable tiene la misma estructura que el de una variable,
+con el gradiente en el término lineal y el Hessiano en el cuadrático. La expresión
+`½dᵀHd` es una forma cuadrática (clase 128), y su valor depende de la dirección del
+desplazamiento.
+
+La ganancia de precisión es sustancial: el término de orden 2 reduce el error de `O(‖d‖²)`
+a `O(‖d‖³)`. Para un desplazamiento de 0.05, eso significa pasar de un error del orden de
+0.0025 a uno del orden de 0.000125: veinte veces mejor.
+
+Esa mejora es la que justifica los métodos de segundo orden. Newton aproxima la función
+por su Taylor cuadrático y salta directamente al mínimo de esa parábola, lo que converge
+cuadráticamente cerca del óptimo. El precio es calcular e invertir el Hessiano.
+
+Todos los optimizadores adaptativos de la parte 12 —AdaGrad, RMSProp, Adam— son intentos
+de capturar información de segundo orden **sin** calcular el Hessiano, usando en su lugar
+estadísticas acumuladas del gradiente. Entender qué aproximan exige entender este
+desarrollo.
+
+## 🧮 Ejemplo trabajado
+
+Órdenes 0, 1 y 2 alrededor de (1,1).
+
+```text
+f(x,y) = x²y + 3xy² + 2,  desplazamiento d = (0.05, −0.03)
+
+valor exacto:  6.0296
+
+orden 0:  6.0000     error 2.96e−02
+orden 1:  6.0250     error 4.60e−03
+orden 2:  6.0296     error 1.11e−04
+
+Cada orden reduce el error en más de un factor 10.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +104,16 @@ compmath run 170
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Olvidar el factor ½ en el término cuadrático.
+2. Usar el desarrollo lejos del punto base.
+3. Suponer que el Hessiano es constante fuera del caso cuadrático.
+
+## 🚀 Dónde se usa de verdad
+
+Método de Newton, análisis de convergencia, aproximación de Laplace y justificación de
+los optimizadores adaptativos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +156,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004](https://web.stanford.edu/~boyd/cvxbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

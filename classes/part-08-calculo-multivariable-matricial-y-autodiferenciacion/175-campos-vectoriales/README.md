@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**Un campo conservativo es el gradiente de un potencial; no todos los campos lo son.**
 
-Esta clase concreta ese objetivo sobre **Campos vectoriales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `vector_fields`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+campo: F(x,y) = (P, Q)
+conservativo ⟺ F = ∇φ para algún potencial φ
+condición necesaria: ∂P/∂y = ∂Q/∂x
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Lagrange convierte una restricción en un término de la función objetivo.
+Un campo vectorial asigna un vector a cada punto: velocidad de un fluido, fuerza
+gravitatoria, dirección de descenso. La distinción fundamental es entre campos que
+**derivan de un potencial** y los que no.
+
+Un campo conservativo es el gradiente de una función escalar. Su propiedad característica
+es que el trabajo entre dos puntos no depende del camino, solo de los extremos, y por
+tanto el trabajo en un circuito cerrado es cero. La gravedad es conservativa; el rozamiento
+no.
+
+El campo `F(x,y) = (−y, x)` del laboratorio es puramente rotacional: en cada punto es
+perpendicular al radio, así que hace girar sin acercar ni alejar. No es conservativo, y su
+rotacional es no nulo (clase 176).
+
+La conexión con optimización es exacta: el campo de gradientes de una función escalar es
+**siempre conservativo por construcción**, y esa es la razón por la que el descenso de
+gradiente no puede quedar atrapado en un ciclo. En cambio, en optimización de dos jugadores
+—los GAN de la clase 333— el campo de actualizaciones **no** es un gradiente de nada, puede
+tener componente rotacional, y de ahí que el entrenamiento pueda ciclar en lugar de
+converger.
+
+## 🧮 Ejemplo trabajado
+
+Un campo rotacional y uno conservativo.
+
+```text
+Campo F(x,y) = (−y, x)      rotacional puro
+  en (1,0): (0, 1)
+  en (0,1): (−1, 0)
+  en (1,1): (−1, 1)
+
+  F·(x,y) = −xy + yx = 0     ✓ perpendicular al radio
+
+Campo G = ∇(x²+y²) = (2x, 2y)   conservativo
+  en (1,0): (2, 0)
+  en (1,1): (2, 2)
+  deriva del potencial φ = x²+y²
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 175
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. Suponer que todo campo vectorial tiene potencial.
+2. Confundir un campo vectorial con una función escalar.
+3. Olvidar que la condición ∂P/∂y = ∂Q/∂x es necesaria pero no suficiente en dominios no simplemente conexos.
+
+## 🚀 Dónde se usa de verdad
+
+Campos de fuerzas en física, campos de gradientes en optimización, dinámica de
+entrenamiento adversarial y flujos en modelos generativos continuos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Balduzzi, D. et al. *The Mechanics of n-Player Differentiable Games*. ICML, 2018](https://arxiv.org/abs/1802.05642)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

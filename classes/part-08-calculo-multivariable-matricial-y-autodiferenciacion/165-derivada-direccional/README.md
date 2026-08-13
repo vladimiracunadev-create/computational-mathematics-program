@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
+**La derivada direccional es la proyección del gradiente sobre una dirección unitaria.**
 
-Esta clase concreta ese objetivo sobre **Derivada direccional**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multiplicadores de Lagrange, cálculo matricial y autodiferenciación.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `directional_derivative`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que el hessiano es definido positivo sin comprobarlo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+D_u f = ∇f · u,  con ‖u‖ = 1
+máximo: ‖∇f‖ en la dirección de ∇f
+nulo: en direcciones perpendiculares a ∇f
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
-## 🧠 Idea rectora de la parte 08
+## 📖 Fundamentos
 
-> Lagrange convierte una restricción en un término de la función objetivo.
+La derivada direccional generaliza la parcial a cualquier dirección, no solo a los ejes.
+Su fórmula es un producto punto: `D_u f = ∇f · u`, y de esa expresión se leen
+inmediatamente sus valores extremos usando la clase 103.
+
+Como `∇f · u = ‖∇f‖·cos θ` para `u` unitario, el valor es máximo cuando `θ = 0` —en la
+dirección del gradiente— y vale `‖∇f‖`. Es mínimo en la dirección opuesta, valiendo
+`−‖∇f‖`. Y es **cero** en las direcciones perpendiculares al gradiente, que son
+precisamente las tangentes a la curva de nivel (clase 162).
+
+Esa última observación cierra el círculo: moverse a lo largo de una curva de nivel no
+cambia el valor de la función, y por eso la derivada direccional en esa dirección es
+nula. La perpendicularidad entre gradiente y curva de nivel no es un hecho adicional: es
+una consecuencia.
+
+El requisito de que `u` sea **unitario** no es formalismo. Si no se normaliza, el
+resultado escala con la longitud del vector y deja de ser una tasa de cambio por unidad
+de distancia. Es el error más frecuente al implementar derivadas direccionales.
+
+## 🧮 Ejemplo trabajado
+
+Derivada direccional en cuatro direcciones.
+
+```text
+punto (2,3),  ∇f = (39, 40),  ‖∇f‖ = 55.87
+
+dirección          D_u f
+e₁ = (1,0)         39.00
+e₂ = (0,1)         40.00
+45° = (0.707,0.707) 55.86    ← casi el máximo
+−∇f normalizado   −55.87     ← el mínimo
+
+perpendicular a ∇f: (−40, 39)/‖·‖  →  0.0    ✓ nula
+
+máximo posible = ‖∇f‖ = 55.87
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 165
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Confundir la convención de layout (numerador vs denominador) en cálculo matricial.
-- Suponer que el Hessiano es definido positivo sin comprobarlo.
-- Olvidar acumular gradientes cuando un nodo se reutiliza en el grafo.
+1. No normalizar el vector de dirección.
+2. Confundir la derivada direccional (escalar) con el gradiente (vector).
+3. Suponer que la derivada direccional es máxima en la dirección de una variable.
+
+## 🚀 Dónde se usa de verdad
+
+Análisis de sensibilidad en direcciones combinadas, búsqueda de línea en optimización
+(clase 254) y estudio de la anisotropía de una función de pérdida.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
-- Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
-- Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

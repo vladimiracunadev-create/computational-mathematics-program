@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La derivada nula señala un punto crítico; el signo de la segunda derivada decide de qué tipo es.**
 
-Esta clase concreta ese objetivo sobre **Máximos y mínimos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `extrema`.
 4. Interpretar las 3 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir punto crítico con extremo global.
+
+## 🧩 Fórmulas de la clase
+
+```text
+condición de primer orden: f'(x) = 0
+f''(x) > 0 ⟹ mínimo local; f''(x) < 0 ⟹ máximo local
+f''(x) = 0 ⟹ el criterio no decide
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> La regla de la cadena es el mecanismo entero de backpropagation.
+Los extremos locales de una función derivable ocurren donde la derivada se anula, porque
+en un máximo o un mínimo la tangente es horizontal. Esa es la **condición de primer
+orden**, y es necesaria pero no suficiente: `x³` tiene derivada nula en cero y no tiene
+ahí ni máximo ni mínimo.
+
+La segunda derivada resuelve la ambigüedad en la mayoría de los casos: positiva indica
+que la función se curva hacia arriba (mínimo) y negativa que se curva hacia abajo
+(máximo). Cuando vale cero, el criterio no decide y hay que examinar derivadas superiores
+o el comportamiento a ambos lados.
+
+Un punto crítico es **local**, no global. Encontrar todos los mínimos locales de una
+función arbitraria es un problema difícil, y esa dificultad es exactamente la que hace
+que el entrenamiento de redes neuronales sea un problema no convexo. En una función
+convexa (clase 242), todo mínimo local es global y el problema se simplifica
+radicalmente.
+
+La generalización a varias variables sustituye `f' = 0` por `∇f = 0` y el signo de `f''`
+por el carácter definido positivo del Hessiano (clase 169). La lógica no cambia: primera
+derivada para localizar, segunda para clasificar.
+
+## 🧮 Ejemplo trabajado
+
+Puntos críticos de x³ − 3x.
+
+```text
+f(x) = x³ − 3x,   f'(x) = 3x² − 3
+
+f'(x) = 0  →  x = ±1
+
+x = −1:  f = 2,   f'' = 6x = −6 < 0  →  MÁXIMO local
+x =  1:  f = −2,  f'' = 6  > 0       →  MÍNIMO local
+
+Extremos globales en ℝ: no existen
+  f no está acotada: f(x) → ±∞
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 152
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Confundir punto crítico con extremo.
+2. Olvidar comprobar la frontera del dominio al buscar extremos globales.
+3. Concluir cuando f'' = 0 en lugar de examinar el entorno.
+
+## 🚀 Dónde se usa de verdad
+
+Optimización de una variable, condición de primer orden en la parte 12, ajuste de
+hiperparámetros y análisis de curvas de aprendizaje.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 11](https://www.mathpop.com/calculus)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

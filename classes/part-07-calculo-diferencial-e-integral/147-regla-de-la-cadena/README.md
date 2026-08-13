@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**La regla de la cadena es el mecanismo completo de backpropagation: derivar una composición es multiplicar factores.**
 
-Esta clase concreta ese objetivo sobre **Regla de la cadena**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `chain_rule`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(f∘g)'(x) = f'(g(x)) · g'(x)
+cadena de L funciones: producto de L derivadas
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> La regla de la cadena es el mecanismo entero de backpropagation.
+La regla de la cadena dice que la derivada de una composición es el producto de las
+derivadas de sus piezas, evaluadas en los puntos correctos. La intuición de tasas
+encadenadas lo hace evidente: si `y` cambia 3 veces más rápido que `u`, y `u` cambia 2
+veces más rápido que `x`, entonces `y` cambia 6 veces más rápido que `x`.
+
+Esta clase es la más importante del programa para quien quiera entender deep learning.
+Una red de L capas es una composición de L funciones (clase 057), así que su gradiente
+respecto a los parámetros de la primera capa es un **producto de L factores**. Ese
+producto explica de golpe tres fenómenos que suelen presentarse por separado:
+
+Si cada factor es menor que 1, el producto tiende a cero exponencialmente: el gradiente
+**se desvanece** y las primeras capas dejan de aprender (clase 314). Si cada factor es
+mayor que 1, el producto diverge: el gradiente **explota**. Y como la derivada de ReLU
+vale exactamente 1 en el semieje positivo, sustituir la sigmoide —cuya derivada máxima
+es 0.25— por ReLU evita que el producto se atenúe.
+
+La regla se generaliza a varias variables como una suma de productos sobre todos los
+caminos del grafo de cómputo (clase 167), y su implementación eficiente en modo reverso
+es la autodiferenciación (clase 179). Todo lo demás en el entrenamiento de una red es
+ingeniería alrededor de esta regla.
+
+## 🧮 Ejemplo trabajado
+
+Derivar sin(x²+1) y una cadena de tres niveles.
+
+```text
+f(u) = sin(u),  g(x) = x²+1,  x = 1.5
+
+g(x) = 3.25
+df/du en g(x) = cos(3.25) = −0.9940
+dg/dx = 2x = 3.0
+
+producto: −0.9940 × 3.0 = −2.9821
+derivada numérica:        −2.9821          ✓
+
+Cadena de tres: e^(sin(x²)) en x = 0.8
+  derivada = 2.0871
+
+En una red de L capas: el gradiente es un producto de L factores.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 147
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Evaluar f' en x en lugar de en g(x).
+2. Olvidar multiplicar por la derivada interna.
+3. No reconocer que una expresión es una composición y derivarla como si fuera simple.
+
+## 🚀 Dónde se usa de verdad
+
+Backpropagation, autodiferenciación, cambio de variable en integrales, propagación de
+incertidumbre y análisis de gradientes que se desvanecen o explotan.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://www.nature.com/articles/323533a0)
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

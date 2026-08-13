@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
+**e^x es la única función que es su propia derivada, y por eso e aparece en todas partes.**
 
-Esta clase concreta ese objetivo sobre **Derivadas de exponenciales y logaritmos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `exp_log_derivatives`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: derivar en un punto donde la función no es continua.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(eˣ)' = eˣ
+(ln x)' = 1/x
+(aˣ)' = aˣ · ln a
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,42 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
-## 🧠 Idea rectora de la parte 07
+## 📖 Fundamentos
 
-> Taylor cambia una función difícil por un polinomio con error acotado.
+La función exponencial `e^x` tiene una propiedad que ninguna otra función no nula
+comparte: es su propia derivada. Ese hecho **define** el número e, y es la razón por la
+que aparece en toda ecuación que modele crecimiento proporcional a la cantidad presente.
+
+Con otra base aparece un factor: `(aˣ)' = aˣ·ln a`. Solo cuando `a = e` ese factor vale
+1. Es el mismo fenómeno que con los radianes (clase 062): existe una elección de unidad
+o de base que elimina las constantes de conversión, y esa elección es la «natural».
+
+La derivada del logaritmo, `1/x`, es igual de notable: una función trascendente cuya
+derivada es una función racional simple. De ahí que `∫dx/x = ln|x|`, la única
+excepción a la regla de integración de potencias.
+
+En machine learning estas dos derivadas aparecen constantemente. La derivada de la
+sigmoide se calcula con la de la exponencial; el gradiente de la cross-entropy, con la
+del logaritmo; y la combinación de ambas produce la simplificación más elegante del
+área: el gradiente de sigmoide más entropía cruzada es simplemente `(p − y)`, sin
+términos residuales (clase 305).
+
+## 🧮 Ejemplo trabajado
+
+Las tres derivadas verificadas.
+
+```text
+x = 2
+
+d(eˣ)/dx numérica = 7.389056
+e²                = 7.389056                ✓ es su propia derivada
+
+d(ln x)/dx numérica = 0.500000
+1/x = 0.5                                   ✓
+
+d(3ˣ)/dx numérica = 9.887511
+3²·ln 3 = 9 × 1.098612 = 9.887511           ✓ aparece el factor ln a
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +106,16 @@ compmath run 148
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
-- Derivar en un punto donde la función no es continua.
-- Confundir punto crítico con extremo global.
+1. Escribir (aˣ)' = x·aˣ⁻¹: esa es la regla de la potencia, no de la exponencial.
+2. Olvidar el factor ln a con bases distintas de e.
+3. Derivar ln x sin restringir el dominio a x > 0.
+
+## 🚀 Dónde se usa de verdad
+
+Sigmoide y softmax, cross-entropy, decaimiento exponencial del learning rate, interés
+compuesto y toda ecuación diferencial de crecimiento proporcional.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
-- Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
-- Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 18](https://www.mathpop.com/calculus)
+- [Maor, E. *e: The Story of a Number*. Princeton University Press, 1994](https://press.princeton.edu/books/paperback/9780691168487/e-the-story-of-a-number)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
