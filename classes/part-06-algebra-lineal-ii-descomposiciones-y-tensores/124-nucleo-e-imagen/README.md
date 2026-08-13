@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Lo que no llega a la imagen se pierde en el núcleo: rango más nulidad es el número de columnas.**
 
-Esta clase concreta ese objetivo sobre **Núcleo e imagen**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `kernel_image`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar pca sin centrar (ni escalar) los datos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+núcleo = {x : Ax = 0}
+imagen = espacio columna
+rango + nulidad = n
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> El número de condición es el cociente entre el mayor y el menor valor singular.
+El **núcleo** de una transformación es el conjunto de vectores que manda al cero, y la
+**imagen** es el conjunto de vectores alcanzables. Ambos son subespacios, y el teorema
+del rango-nulidad los relaciona: la suma de sus dimensiones es el número de columnas.
+
+La lectura es de conservación: cada dimensión de entrada o bien sobrevive en la imagen o
+bien colapsa en el núcleo. No hay una tercera opción. Si una transformación de ℝ³ en ℝ²
+tiene rango 2, su núcleo tiene dimensión 1: hay una recta entera de vectores distintos
+que producen la misma salida.
+
+Esa pérdida es irreversible. Si el núcleo no es trivial, la transformación no es
+inyectiva y no se puede invertir: dada una salida, no se sabe de qué entrada vino. Es la
+versión lineal de la inyectividad de la clase 086, y es la razón por la que una capa que
+reduce dimensión pierde información necesariamente.
+
+El núcleo también describe la **no unicidad** de la solución de un sistema: si `x₀`
+resuelve `Ax = b`, entonces `x₀ + k` también lo resuelve para cualquier `k` del núcleo.
+Por eso un sistema con núcleo no trivial tiene infinitas soluciones, y por eso la
+pseudoinversa (clase 134) elige entre ellas la de norma mínima.
+
+## 🧮 Ejemplo trabajado
+
+Núcleo e imagen de una matriz 2×3 de rango 1.
+
+```text
+A = [[1, 2, 3],
+     [2, 4, 6]]        (fila2 = 2·fila1)
+
+rango = 1     (dimensión de la imagen)
+columnas = 3
+nulidad = 3 − 1 = 2                        ✓ teorema
+
+Un vector del núcleo: (2, −1, 0)
+  A·(2,−1,0) = (2−2+0, 4−4+0) = (0,0)      ✓
+
+Consecuencia: A no es inyectiva.
+Infinitos vectores distintos dan la misma salida.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,17 @@ compmath run 124
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Confundir el núcleo (en el dominio) con la imagen (en el codominio).
+2. Suponer que núcleo trivial implica sobreyectividad.
+3. Olvidar que el teorema cuenta las columnas, no las filas.
+
+## 🚀 Dónde se usa de verdad
+
+Unicidad de soluciones, pérdida de información en capas con reducción de dimensión,
+análisis de identificabilidad de modelos y espacios nulos en optimización con
+restricciones.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/)
+- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024](https://linear.axler.net/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

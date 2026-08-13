@@ -1,0 +1,1164 @@
+part: "05"
+titulo: "Álgebra lineal I: vectores y matrices"
+
+resumen_extendido: |
+  Si hubiera que elegir **una** parte del programa como la más rentable para alguien que
+  quiere entender IA, sería esta. Todo modelo moderno —desde la regresión lineal hasta un
+  Transformer de cien mil millones de parámetros— opera sobre vectores y matrices, y casi
+  toda su computación es producto matricial. Quien no distingue un espacio columna de un
+  espacio fila no puede depurar un error de dimensiones ni entender por qué una capa pierde
+  información.
+
+  El cambio de perspectiva que propone la parte es concreto: **dejar de ver una matriz como
+  una tabla y verla como una función**. Una matriz `A` de tamaño m×n es una transformación
+  lineal de ℝⁿ en ℝᵐ, y sus columnas son las imágenes de los vectores de la base. Con esa
+  lectura, `Ax` deja de ser «filas por columnas» y pasa a ser una combinación lineal de las
+  columnas de A con los coeficientes de x —que es exactamente lo que hace una capa densa
+  con sus pesos—.
+
+  Las clases 101 a 108 construyen el vocabulario vectorial: operaciones, producto punto,
+  normas, independencia y span. El producto punto es el protagonista: mide alineación, define
+  ortogonalidad y es la operación que ejecutan miles de millones de veces por segundo los
+  aceleradores. La similitud coseno de un buscador semántico es un producto punto
+  normalizado, ni más ni menos.
+
+  Las clases 109 a 117 pasan a las matrices: producto, transpuesta, sistemas lineales,
+  eliminación de Gauss, rango, inversa y determinante. Aquí aparece el mensaje práctico más
+  importante de la parte: **resolver `Ax = b` casi nunca requiere calcular `A⁻¹`**. Invertir
+  es más caro y numéricamente peor que factorizar; ninguna biblioteca seria invierte una
+  matriz para resolver un sistema, y saber por qué distingue a quien entiende de quien
+  recita.
+
+  Las clases 118 y 119 introducen la ortogonalidad como propiedad numérica privilegiada: las
+  transformaciones ortogonales no amplifican el error, y la proyección ortogonal es la mejor
+  aproximación posible en norma euclídea. Ese resultado es el que sostiene los mínimos
+  cuadrados (parte 06), PCA (clase 135) y la descomposición de la varianza en estadística.
+
+  El capstone construye un sistema de recomendación por similitud coseno entre usuarios. No
+  usa ninguna biblioteca de machine learning: es todo producto punto y norma. Ese es el
+  punto de la parte.
+
+mapa: |
+  flowchart TD
+      A["Clases 101-108 · Vectores"] --> B["Clases 109-112 · Matrices y su producto"]
+      A --> C["Clases 103-105 · Producto punto y normas"]
+      B --> D["Clases 113-117 · Sistemas lineales, rango e inversa"]
+      C --> E["Clases 118-119 · Ortogonalidad y proyeccion"]
+      D --> E
+      E --> F["Clase 120 · Capstone recomendador lineal"]
+      D ==> G["Parte 06 · Descomposiciones y SVD"]
+      C -.-> H["Similitud coseno y atencion · Parte 16"]
+      B -.-> I["Capa densa y = Wx + b · Parte 15"]
+      E -.-> J["Minimos cuadrados y PCA · Parte 06"]
+
+glosario:
+  - termino: "Escalar, vector, matriz, tensor"
+    definicion: "Tensores de orden 0, 1, 2 y n. El orden es el número de índices necesarios para localizar un elemento."
+    clase: "101"
+  - termino: "Combinación lineal"
+    definicion: "Suma de vectores multiplicados por escalares. Es la operación que define todo el álgebra lineal."
+    clase: "106"
+  - termino: "Producto punto"
+    definicion: "Σuᵢvᵢ. Mide alineación; es cero si y solo si los vectores son ortogonales."
+    clase: "103"
+  - termino: "Norma"
+    definicion: "Medida de magnitud de un vector. L2 es la euclídea; L1 induce dispersión; L∞ mira el máximo."
+    clase: "104"
+  - termino: "Desigualdad triangular"
+    definicion: "‖u+v‖ ≤ ‖u‖ + ‖v‖. Es una de las tres condiciones que definen una norma."
+    clase: "102"
+  - termino: "Vector unitario"
+    definicion: "Vector de norma 1. Normalizar separa dirección de magnitud."
+    clase: "105"
+  - termino: "Independencia lineal"
+    definicion: "Ningún vector del conjunto es combinación de los demás. Se detecta por el rango, no por inspección."
+    clase: "107"
+  - termino: "Span"
+    definicion: "Conjunto de todas las combinaciones lineales de unos vectores. Es siempre un subespacio."
+    clase: "108"
+  - termino: "Subespacio"
+    definicion: "Subconjunto cerrado bajo suma y producto por escalar. Contiene siempre al vector cero."
+    clase: "108"
+  - termino: "Espacio columna"
+    definicion: "Span de las columnas de A. Es donde vive Ax; el sistema Ax = b tiene solución si y solo si b está en él."
+    clase: "110"
+  - termino: "Producto matricial"
+    definicion: "Composición de transformaciones lineales. Asociativo pero no conmutativo. Coste O(n³) ingenuo."
+    clase: "111"
+  - termino: "Transpuesta"
+    definicion: "Intercambio de filas y columnas. (AB)ᵀ = BᵀAᵀ, con el orden invertido."
+    clase: "112"
+  - termino: "Pivoteo parcial"
+    definicion: "Intercambio de filas para usar el mayor pivote disponible. Evita dividir por valores casi nulos."
+    clase: "114"
+  - termino: "Rango"
+    definicion: "Dimensión del espacio columna. Es la dimensión efectiva de la salida de la transformación."
+    clase: "115"
+  - termino: "Teorema del rango-nulidad"
+    definicion: "rango + nulidad = número de columnas. Lo que no llega a la imagen se pierde en el núcleo."
+    clase: "115"
+  - termino: "Matriz singular"
+    definicion: "Matriz sin inversa; su determinante es cero y su rango es deficiente."
+    clase: "116"
+  - termino: "Determinante"
+    definicion: "Factor por el que la transformación escala el volumen. Cero significa que aplasta el espacio."
+    clase: "117"
+  - termino: "Matriz ortogonal"
+    definicion: "QᵀQ = I. Preserva normas y ángulos, y su número de condición es 1: no amplifica el error."
+    clase: "118"
+  - termino: "Proyección ortogonal"
+    definicion: "Mejor aproximación de un vector dentro de un subespacio, en norma euclídea. Su residuo es ortogonal al subespacio."
+    clase: "119"
+
+clases:
+  "101":
+    concepto: "Escalar, vector, matriz y tensor son el mismo objeto con distinto número de índices."
+    formulas:
+      - "escalar: orden 0 · vector: orden 1 · matriz: orden 2"
+      - "shape de una matriz m×n: (m, n)"
+      - "(Aᵀ)ᵢⱼ = Aⱼᵢ"
+    desarrollo: |
+      La jerarquía escalar → vector → matriz → tensor no es una lista de objetos distintos:
+      es el mismo objeto con distinto número de índices. Un escalar necesita cero índices
+      para localizar su valor, un vector uno, una matriz dos y un tensor de orden n, n
+      índices. Esa lectura unifica lo que en muchos cursos se presenta por separado.
+
+      El **shape** es el dato operativo: la tupla de tamaños de cada dimensión. La mayoría de
+      los errores al programar con arrays son errores de shape, y la disciplina más rentable
+      al escribir código numérico es anotar el shape esperado de cada variable. Un comentario
+      `# (batch, seq, d_model)` ahorra horas de depuración.
+
+      Multiplicar un vector por un escalar escala su magnitud sin cambiar su dirección —salvo
+      que el escalar sea negativo, que la invierte—. Es la operación más simple y ya contiene
+      la idea central: las operaciones lineales respetan la estructura del espacio.
+
+      La transposición intercambia filas y columnas, y su efecto sobre el shape es invertir
+      la tupla: una matriz (3,2) transpuesta es (2,3). En deep learning la transposición
+      aparece constantemente al calcular gradientes, porque la derivada de `Wx` respecto a `x`
+      involucra `Wᵀ`.
+    ejemplo: |
+      Los cuatro objetos y sus shapes.
+
+      ```text
+      escalar   3.0                      shape ()      orden 0
+      vector    [1, 2, 3]                shape (3,)    orden 1
+      matriz    [[1,2],[3,4],[5,6]]      shape (3,2)   orden 2
+      tensor    imágenes de un lote      shape (N,C,H,W)  orden 4
+
+      escalar × vector:  3·[1,2,3] = [3,6,9]
+
+      transpuesta de la matriz (3,2) → shape (2,3)
+        [[1,3,5],
+         [2,4,6]]
+      ```
+    errores:
+      - "Confundir el orden del tensor con el tamaño de sus dimensiones."
+      - "No anotar el shape esperado de cada variable en código numérico."
+      - "Suponer que un vector es una matriz columna: en NumPy, (3,) y (3,1) no son lo mismo."
+    aplicacion: |
+      Toda representación de datos en machine learning: un lote de imágenes es un tensor de
+      orden 4, un lote de secuencias uno de orden 3. Los errores de shape son la categoría de
+      bug más frecuente al entrenar modelos.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 2](https://www.deeplearningbook.org/)"
+
+  "102":
+    concepto: "La suma de vectores es componente a componente, y la desigualdad triangular acota la norma del resultado."
+    formulas:
+      - "(u + v)ᵢ = uᵢ + vᵢ"
+      - "‖u + v‖ ≤ ‖u‖ + ‖v‖"
+    desarrollo: |
+      La suma de vectores tiene dos lecturas que conviene mantener a la vez. Algebraicamente
+      se suman las componentes. Geométricamente se aplica la regla del paralelogramo: el
+      resultado es la diagonal del paralelogramo que forman ambos vectores. Las dos describen
+      la misma operación.
+
+      La desigualdad triangular —`‖u+v‖ ≤ ‖u‖ + ‖v‖`— dice que el camino directo nunca es más
+      largo que el rodeo, y es una de las tres condiciones que definen una norma. La igualdad
+      se alcanza solo cuando los vectores son paralelos y del mismo sentido; en cualquier
+      otro caso hay cancelación parcial.
+
+      Esa desigualdad no es un tecnicismo: es la que permite acotar errores acumulados. Si el
+      error de cada paso está acotado, el error total lo está por la suma, y de ahí salen las
+      cotas de estabilidad de los métodos iterativos (parte 11) y las cotas de generalización
+      (parte 17).
+
+      Restar es sumar el opuesto, y `u − v` es el vector que va de `v` a `u`. Esa
+      interpretación —la diferencia como desplazamiento— es la que convierte `‖u − v‖` en la
+      distancia entre los dos puntos, conectando con la clase 061.
+    ejemplo: |
+      Suma, resta y desigualdad triangular.
+
+      ```text
+      u = (1, 2),  v = (3, −1)
+
+      u + v = (4, 1)
+      u − v = (−2, 3)
+      2u − 3v = (2,4) − (9,−3) = (−7, 7)
+
+      ‖u+v‖ = √17 = 4.123
+      ‖u‖ + ‖v‖ = √5 + √10 = 2.236 + 3.162 = 5.398
+
+      4.123 ≤ 5.398      ✓ desigualdad triangular
+
+      La diferencia (5.398 − 4.123) mide cuánto se cancelan entre sí.
+      ```
+    errores:
+      - "Sumar vectores de dimensiones distintas."
+      - "Suponer que ‖u+v‖ = ‖u‖ + ‖v‖ en general: solo si son paralelos y del mismo sentido."
+      - "Confundir u − v con v − u: son opuestos."
+    aplicacion: |
+      Composición de desplazamientos, acumulación de gradientes, cotas de error en métodos
+      iterativos y agregación de vectores en sistemas de recomendación.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024](https://linear.axler.net/)"
+
+  "103":
+    concepto: "El producto punto mide alineación; su normalización es la similitud coseno de los embeddings."
+    formulas:
+      - "u·v = Σuᵢvᵢ = ‖u‖‖v‖cos θ"
+      - "cos θ = u·v / (‖u‖‖v‖)"
+      - "u·u = ‖u‖²"
+    desarrollo: |
+      El producto punto es la operación más importante de esta parte y probablemente de todo
+      el programa. Definido como suma de productos componente a componente, resulta ser
+      `‖u‖‖v‖cos θ`, lo que le da una interpretación geométrica: mide cuánto apuntan dos
+      vectores en la misma dirección, escalado por sus magnitudes.
+
+      Tres lecturas del signo: positivo significa ángulo agudo, cero significa
+      **ortogonalidad**, negativo significa ángulo obtuso. La ortogonalidad definida como
+      «producto punto nulo» es la que se generaliza a dimensión arbitraria, donde no se puede
+      dibujar un ángulo recto.
+
+      La **similitud coseno** normaliza por las magnitudes y deja solo el ángulo. Es la
+      métrica estándar entre embeddings porque la magnitud de un embedding suele codificar
+      frecuencia o longitud del texto, no significado: dos documentos sobre el mismo tema,
+      uno largo y otro corto, tienen coseno alto y distancia euclídea grande.
+
+      Computacionalmente, el producto punto es la operación que domina el coste de un modelo
+      moderno. Una capa densa es un conjunto de productos punto; la atención calcula un
+      producto punto por cada par consulta-clave. Los TFLOPS de una GPU miden, en esencia,
+      cuántos productos punto por segundo puede hacer.
+    ejemplo: |
+      Ángulos entre tres vectores.
+
+      ```text
+      u = (1, 0),  v = (1, 1),  w = (0, 1)
+
+      u·v = 1        cos = 1/(1·√2) = 0.7071   →  45°
+      u·w = 0        cos = 0                   →  90°  ortogonales
+      u·u = 1 = ‖u‖²                            ✓
+
+      Similitud coseno en embeddings:
+        misma fórmula, dimensión 768 o 1536
+        la magnitud se descarta a propósito
+      ```
+    errores:
+      - "Comparar vectores por producto punto sin normalizar cuando importa solo la dirección."
+      - "Calcular acos sin acotar el argumento a [−1,1]: el redondeo puede sacarlo del dominio."
+      - "Confundir el producto punto con el producto componente a componente (Hadamard)."
+    aplicacion: |
+      Similitud coseno en búsqueda semántica y RAG, capas densas, atención escalada, y
+      cálculo de proyecciones e iluminación en gráficos.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
+
+  "104":
+    concepto: "La norma elegida determina qué se penaliza: L1 induce dispersión, L2 penaliza los valores grandes."
+    formulas:
+      - "L1 = Σ|xᵢ| · L2 = √Σxᵢ² · L∞ = máx|xᵢ|"
+      - "L∞ ≤ L2 ≤ L1"
+    desarrollo: |
+      Una norma asigna una magnitud a un vector cumpliendo tres condiciones: es positiva
+      salvo en el cero, escala con el valor absoluto del escalar y satisface la desigualdad
+      triangular. Hay infinitas normas; las tres de la familia Lp son las que se usan en la
+      práctica.
+
+      La elección no es estética: cambia qué se penaliza. La **L2** eleva al cuadrado, así que
+      castiga desproporcionadamente los componentes grandes y tiende a repartir el valor
+      entre todos. La **L1** trata todos los componentes por igual y, usada como penalización,
+      empuja los pequeños exactamente a cero. Esa diferencia es la que separa Ridge de Lasso
+      (clases 283 y 284) y es puramente geométrica: la bola L1 tiene vértices sobre los ejes
+      y el óptimo tiende a caer en ellos.
+
+      La **L∞** solo mira el peor componente. Es la norma adecuada cuando lo que importa es
+      garantizar que ningún error individual supere un umbral, y aparece en robustez
+      adversarial: un ataque «acotado en L∞» limita cuánto puede cambiar cada píxel.
+
+      El orden `L∞ ≤ L2 ≤ L1` se cumple siempre y conviene verificarlo numéricamente una vez.
+      Explica que la misma perturbación parezca grande o pequeña según la norma con la que se
+      mida, y por qué comparar magnitudes exige declarar la norma.
+    ejemplo: |
+      Tres normas del mismo vector.
+
+      ```text
+      v = (3, −4, 12)
+
+      L1  = 3 + 4 + 12 = 19
+      L2  = √(9 + 16 + 144) = √169 = 13
+      L∞  = máx(3, 4, 12) = 12
+
+      Orden: 12 ≤ 13 ≤ 19          ✓
+
+      Interpretación:
+        L1  penaliza la suma total de desviaciones → dispersión
+        L2  penaliza los componentes grandes      → reparto
+        L∞  solo mira el peor componente          → garantía
+      ```
+    errores:
+      - "Reportar una magnitud sin declarar la norma usada."
+      - "Suponer que Ridge (L2) produce coeficientes exactamente cero."
+      - "Comparar normas de vectores de dimensiones distintas sin normalizar por la dimensión."
+    aplicacion: |
+      Regularización Ridge y Lasso, funciones de pérdida MSE y MAE, robustez adversarial
+      acotada en L∞ y criterios de convergencia.
+    referencias:
+      - "[Tibshirani, R. *Regression Shrinkage and Selection via the Lasso*. JRSS-B, 1996](https://www.jstor.org/stable/2346178)"
+      - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 2](https://web.stanford.edu/~boyd/cvxbook/)"
+
+  "105":
+    concepto: "Normalizar separa dirección de magnitud; el vector cero no tiene dirección definida."
+    formulas:
+      - "û = v / ‖v‖,  ‖û‖ = 1"
+      - "v = ‖v‖ · û   (reconstrucción)"
+    desarrollo: |
+      Un vector codifica dos informaciones: hacia dónde apunta y cuánto mide. Normalizar
+      —dividir por la norma— conserva la primera y descarta la segunda. La reconstrucción es
+      inmediata: `v = ‖v‖·û`, lo que muestra que la descomposición no pierde nada, solo separa.
+
+      La operación tiene una excepción que hay que tratar: el vector cero no se puede
+      normalizar, porque no tiene dirección. En una implementación, dividir por su norma da
+      `NaN` o `inf` (clase 033), así que hay que comprobar el caso explícitamente. El motor
+      del programa devuelve el vector cero sin modificar, decisión que hay que declarar
+      porque no es la única razonable.
+
+      Normalizar es lo que hace que la comparación entre embeddings sea justa. También es lo
+      que hace la **normalización de capa** (clase 308), aunque allí se normaliza por media y
+      desviación en lugar de solo por norma. En ambos casos el objetivo es el mismo: que la
+      escala no domine la comparación.
+
+      Un detalle numérico: normalizar un vector de norma muy pequeña amplifica su error
+      relativo, porque se divide por un número cercano a cero. En cálculos sensibles conviene
+      comprobar que la norma supera un umbral antes de dividir.
+    ejemplo: |
+      Normalizar y reconstruir.
+
+      ```text
+      v = (6, 8)
+      ‖v‖ = √(36 + 64) = 10
+
+      û = (0.6, 0.8)
+      ‖û‖ = √(0.36 + 0.64) = 1.0        ✓
+
+      Reconstrucción: 10 · (0.6, 0.8) = (6, 8)    ✓
+
+      Caso límite:
+        normalizar (0, 0) → división por cero
+        el motor devuelve (0, 0) y lo declara
+      ```
+    errores:
+      - "Normalizar sin comprobar que la norma es no nula."
+      - "Normalizar vectores de norma muy pequeña y amplificar su error relativo."
+      - "Suponer que normalizar conserva toda la información: descarta la magnitud a propósito."
+    aplicacion: |
+      Comparación de embeddings, normalización de gradientes (gradient clipping), vectores
+      normales en gráficos y preparación de datos para similitud coseno.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Ba, Kiros & Hinton. *Layer Normalization*. arXiv, 2016](https://arxiv.org/abs/1607.06450)"
+
+  "106":
+    concepto: "Una combinación lineal es la operación fundamental del álgebra lineal, y una capa densa es exactamente eso."
+    formulas:
+      - "Σ αᵢvᵢ = α₁v₁ + ... + αₖvₖ"
+      - "capa densa: y = Wx + b"
+    desarrollo: |
+      Una combinación lineal suma vectores multiplicados por escalares. Toda la estructura
+      del álgebra lineal se construye sobre esta única operación: independencia, span, base,
+      dimensión, transformación lineal y rango se definen en términos de combinaciones
+      lineales.
+
+      Con la base canónica la combinación es trivial —los coeficientes son las propias
+      coordenadas— y por eso las coordenadas de un vector son sus coeficientes en esa base.
+      Con otra base, los coeficientes cambian aunque el vector sea el mismo, que es
+      exactamente el contenido de la clase 121.
+
+      La conexión con machine learning es directa y merece enunciarse sin rodeos: **una capa
+      densa calcula combinaciones lineales**. Cada neurona de salida toma los pesos de una
+      fila de `W` como coeficientes y combina las entradas. `y = Wx + b` es un conjunto de
+      combinaciones lineales más un desplazamiento.
+
+      El sesgo `b` es lo que impide que la capa sea estrictamente lineal: una transformación
+      lineal manda el cero al cero, y sumar `b` lo mueve. Técnicamente `Wx + b` es una
+      transformación **afín**, no lineal, y esa distinción es la misma que la clase 073
+      resolvió con coordenadas homogéneas.
+    ejemplo: |
+      Combinación lineal en la base canónica.
+
+      ```text
+      e₁ = (1,0,0)   e₂ = (0,1,0)   e₃ = (0,0,1)
+      coeficientes: 2, −3, 5
+
+      2·e₁ + (−3)·e₂ + 5·e₃ = (2, −3, 5)
+
+      Los coeficientes SON las coordenadas       ✓
+      (esto solo ocurre en la base canónica)
+
+      Capa densa equivalente:
+        y = Wx + b   con W de shape (salidas, entradas)
+        cada fila de W son los coeficientes de una combinación
+      ```
+    errores:
+      - "Confundir los coeficientes con las coordenadas fuera de la base canónica."
+      - "Llamar lineal a Wx + b: es afín, porque no manda el cero al cero."
+      - "Olvidar que el número de coeficientes debe coincidir con el de vectores."
+    aplicacion: |
+      Capas densas, mezclas de modelos, interpolación, representación en bases y
+      superposición de señales.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[3Blue1Brown. *Linear combinations, span, and basis vectors*](https://www.3blue1brown.com/lessons/span)"
+
+  "107":
+    concepto: "La independencia lineal se detecta por el rango, no por inspección visual."
+    formulas:
+      - "independientes ⟺ Σαᵢvᵢ = 0 solo con todos los αᵢ = 0"
+      - "k vectores en ℝⁿ con k > n son siempre dependientes"
+    desarrollo: |
+      Un conjunto de vectores es linealmente independiente si ninguno se puede escribir como
+      combinación de los demás. La definición formal —la única combinación que da el vector
+      cero es la trivial— es la operativa, porque se traduce en un sistema homogéneo cuya
+      única solución debe ser la nula.
+
+      En la práctica no se comprueba a ojo: se calcula el **rango**. Si el rango del conjunto
+      coincide con el número de vectores, son independientes; si es menor, hay al menos una
+      relación de dependencia. Para conjuntos cuadrados, el determinante nulo es equivalente y
+      más rápido de calcular.
+
+      La dependencia lineal en datos tiene un nombre propio en estadística: **multicolinealidad**.
+      Cuando dos features son casi combinación lineal una de otra, la matriz `XᵀX` se vuelve
+      casi singular, los coeficientes de la regresión se disparan y pierden interpretabilidad.
+      Ridge (clase 283) existe en buena parte para mitigar exactamente eso.
+
+      Un hecho de conteo que conviene tener presente: en ℝⁿ no puede haber más de n vectores
+      independientes. Si un conjunto de datos tiene más features que observaciones, las filas
+      son necesariamente dependientes, y eso garantiza que el sistema esté indeterminado sin
+      regularización.
+    ejemplo: |
+      Dos conjuntos de tres vectores en ℝ³.
+
+      ```text
+      A = base canónica         rango 3 = 3 vectores  → independientes ✓
+      B = {(1,2,3), (2,4,6), (1,1,1)}
+
+        fila2 = 2 · fila1       → hay dependencia
+        rango(B) = 2 < 3        → dependientes       ✗
+        det(B) = 0                                   ✓ coherente
+
+      En ℝ³ nunca puede haber 4 vectores independientes.
+      ```
+    errores:
+      - "Juzgar la independencia por inspección en lugar de calcular el rango."
+      - "Usar el determinante en matrices no cuadradas: no está definido."
+      - "Ignorar la multicolinealidad al interpretar coeficientes de una regresión."
+    aplicacion: |
+      Detección de multicolinealidad, selección de features, diagnóstico de sistemas mal
+      condicionados y reducción de dimensionalidad.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., 2009](https://hastie.su.domains/ElemStatLearn/)"
+
+  "108":
+    concepto: "El span de un conjunto es siempre un subespacio, y su dimensión es el rango del conjunto."
+    formulas:
+      - "span{v₁,...,vₖ} = {Σαᵢvᵢ}"
+      - "dim(span) = rango del conjunto"
+    desarrollo: |
+      El span de un conjunto de vectores es el conjunto de todas sus combinaciones lineales.
+      Siempre es un **subespacio**: contiene el vector cero y es cerrado bajo suma y producto
+      por escalar. Esa cerradura es lo que lo distingue de un subconjunto cualquiera.
+
+      Su dimensión —el número de vectores independientes que contiene— determina qué tipo de
+      objeto geométrico es. En ℝ³, el span de un vector no nulo es una recta por el origen; el
+      de dos vectores independientes, un plano; el de tres, todo el espacio. Añadir un vector
+      que ya está en el span no cambia nada, y esa es la definición operativa de redundancia.
+
+      La conexión con datos es directa. Si las features de un conjunto de datos generan un
+      subespacio de dimensión menor que el número de features, hay redundancia, y PCA
+      (clase 135) encuentra una base de ese subespacio con menos vectores. La «dimensión
+      intrínseca» de un conjunto de datos es la dimensión de su span aproximado.
+
+      En redes neuronales, el espacio columna de la matriz de pesos determina qué salidas son
+      alcanzables. Si `W` tiene rango deficiente, la capa proyecta sobre un subespacio y pierde
+      información irrecuperablemente: dos entradas distintas pueden producir la misma salida.
+    ejemplo: |
+      Span en ℝ³.
+
+      ```text
+      v₁ = (1,0,0),  v₂ = (0,1,0)
+
+      span{v₁, v₂}:  dimensión 2  →  el plano z = 0
+      ¿contiene (0,0,1)?  No
+
+      Al añadir v₃ = (0,0,1):
+        rango pasa de 2 a 3  →  ahora genera todo ℝ³
+
+      Propiedades del subespacio:
+        contiene el (0,0,0)                  ✓
+        cerrado bajo suma y escala           ✓
+      ```
+    errores:
+      - "Suponer que el span de k vectores tiene dimensión k sin comprobar la independencia."
+      - "Olvidar que todo subespacio contiene el vector cero."
+      - "Confundir el span (infinito) con el conjunto generador (finito)."
+    aplicacion: |
+      Dimensión intrínseca de un conjunto de datos, PCA, análisis de capacidad de una capa y
+      compresión por reducción de rango.
+    referencias:
+      - "[Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 2](https://linear.axler.net/)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "109":
+    concepto: "Suma, escala y transpuesta operan elemento a elemento; la traza suma la diagonal."
+    formulas:
+      - "(A + B)ᵢⱼ = Aᵢⱼ + Bᵢⱼ"
+      - "(Aᵀ)ᵀ = A"
+      - "tr(A) = Σ Aᵢᵢ = suma de los autovalores"
+    desarrollo: |
+      Las operaciones básicas con matrices son las que se esperan: suma y escala elemento a
+      elemento, ambas definidas solo entre matrices del mismo shape. El producto matricial es
+      la excepción: no es elemento a elemento, y por eso la clase 111 lo trata aparte.
+
+      La **traza** —la suma de la diagonal— parece una definición arbitraria y tiene
+      propiedades notables: es lineal, es invariante bajo transposición y cumple
+      `tr(AB) = tr(BA)` aunque `AB ≠ BA`. Esa última propiedad la hace invariante bajo cambio
+      de base, y de ahí que la traza sea igual a la suma de los autovalores (clase 125).
+
+      En machine learning la traza aparece con frecuencia en formas cuadráticas y en el
+      cálculo de gradientes matriciales: `∂tr(AᵀB)/∂A = B`. También es la que define la
+      **norma de Frobenius**, `‖A‖_F = √tr(AᵀA)`, que es la norma euclídea de la matriz vista
+      como un vector largo.
+
+      La transposición cumple `(Aᵀ)ᵀ = A` y, lo más útil, `(AB)ᵀ = BᵀAᵀ` **con el orden
+      invertido**. Ese cambio de orden es la causa de la mitad de los errores al derivar
+      expresiones matriciales, y conviene comprobarlo numéricamente una vez para fijarlo.
+    ejemplo: |
+      Operaciones básicas con matrices 2×2.
+
+      ```text
+      A = [[1,2],[3,4]]      B = [[0,1],[−1,2]]
+
+      A + B = [[1,3],[2,6]]
+      3A    = [[3,6],[9,12]]
+
+      Aᵀ    = [[1,3],[2,4]]
+      (Aᵀ)ᵀ = A                            ✓
+
+      traza(A) = 1 + 4 = 5
+      ```
+    errores:
+      - "Sumar matrices de shapes distintos."
+      - "Olvidar invertir el orden en (AB)ᵀ = BᵀAᵀ."
+      - "Confundir la traza con el determinante."
+    aplicacion: |
+      Norma de Frobenius, cálculo de gradientes matriciales, invariantes bajo cambio de base
+      y regularización de matrices de pesos.
+    referencias:
+      - "[Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "110":
+    concepto: "Ax es una combinación lineal de las columnas de A, y por eso vive en el espacio columna."
+    formulas:
+      - "Ax = Σ xⱼ · (columna j de A)"
+      - "Ax = b tiene solución ⟺ b ∈ espacio columna de A"
+    desarrollo: |
+      Hay dos formas de calcular `Ax` y una de entenderlo. La primera —fila por fila, cada
+      componente del resultado es un producto punto— es la que se enseña para calcular a mano.
+      La segunda —combinación lineal de las columnas de A con los coeficientes de x— es la que
+      **explica** qué está ocurriendo.
+
+      Esa segunda lectura tiene una consecuencia inmediata y muy útil: `Ax` siempre está en el
+      span de las columnas de A, es decir, en el **espacio columna**. Y por tanto `Ax = b`
+      tiene solución si y solo si `b` pertenece a ese espacio. La existencia de solución deja
+      de ser un misterio y pasa a ser una pregunta sobre pertenencia a un subespacio.
+
+      En deep learning, `Wx + b` es exactamente esto: cada fila de `W` define una combinación
+      de las entradas, o equivalentemente, la salida es una combinación de las columnas de
+      `W`. Si `W` tiene rango deficiente, la salida está confinada a un subespacio de dimensión
+      menor que el número de neuronas: hay capacidad desperdiciada.
+
+      El coste de `Ax` es `O(mn)`, lineal en el número de elementos de la matriz. Es la
+      operación básica sobre la que se construye todo lo demás, y por eso las bibliotecas la
+      implementan en BLAS de nivel 2 con optimizaciones de caché específicas.
+    ejemplo: |
+      Ax como combinación de columnas.
+
+      ```text
+      A = [[2,1],       x = (4, 5)
+           [0,3],
+           [1,−1]]
+
+      Cálculo por filas:
+        (2·4 + 1·5, 0·4 + 3·5, 1·4 + (−1)·5) = (13, 15, −1)
+
+      Cálculo por columnas:
+        4·(2,0,1) + 5·(1,3,−1) = (8,0,4) + (5,15,−5) = (13,15,−1)   ✓
+
+      Ax vive en el span de {(2,0,1), (1,3,−1)}: un plano en ℝ³
+      ```
+    errores:
+      - "Multiplicar matrices con dimensiones incompatibles."
+      - "Olvidar que Ax siempre está en el espacio columna de A."
+      - "Suponer que Ax = b siempre tiene solución."
+    aplicacion: |
+      Capas densas, transformación de coordenadas, sistemas de ecuaciones y análisis de
+      capacidad de una red.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 2](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[3Blue1Brown. *Matrices as linear transformations*](https://www.3blue1brown.com/lessons/linear-transformations)"
+
+  "111":
+    concepto: "El producto matricial compone transformaciones, es asociativo y no conmuta."
+    formulas:
+      - "(AB)ᵢⱼ = Σₖ AᵢₖBₖⱼ"
+      - "(AB)C = A(BC)  pero  AB ≠ BA"
+      - "(AB)ᵀ = BᵀAᵀ"
+    desarrollo: |
+      El producto matricial no se define elemento a elemento porque no representa una suma:
+      representa una **composición**. Aplicar B y luego A es aplicar la matriz `AB`, y de esa
+      definición se deduce la fórmula «filas por columnas», no al revés.
+
+      Que sea asociativo pero no conmutativo tiene consecuencias prácticas. La
+      asociatividad permite elegir el orden de evaluación, y esa elección puede cambiar
+      radicalmente el coste: calcular `(AB)C` con A de (1000,1000), B de (1000,1) y C de
+      (1,1000) cuesta muchísimo más que `A(BC)`. Es una optimización real que hacen los
+      compiladores de grafos de cómputo.
+
+      La no conmutatividad es la que hace que el orden de las capas importe, que rotar y luego
+      escalar difiera de escalar y luego rotar (clase 073), y que las derivadas matriciales
+      tengan que respetar el orden.
+
+      El coste del algoritmo ingenuo es `O(n³)`. Strassen redujo el exponente a 2.807 en 1969,
+      y el récord teórico actual está por debajo de 2.372, aunque esos algoritmos no son
+      prácticos por sus constantes. En la práctica, el rendimiento lo determinan la localidad
+      de caché y el paralelismo, no el exponente asintótico, y esa es la razón de existir de
+      BLAS y de las unidades tensoriales de las GPU.
+    ejemplo: |
+      El producto no conmuta.
+
+      ```text
+      A = [[1,2],[3,4]]      B = [[0,1],[1,0]]   (intercambia columnas)
+
+      AB = [[2,1],[4,3]]
+      BA = [[3,4],[1,2]]
+      ¿AB = BA?  No                              ✗
+
+      Transpuesta del producto:
+        (AB)ᵀ = [[2,4],[1,3]]
+        BᵀAᵀ  = [[2,4],[1,3]]                    ✓ con el orden invertido
+
+      Coste ingenuo n×n: O(n³)
+      ```
+    errores:
+      - "Suponer que el producto matricial conmuta."
+      - "Escribir (AB)ᵀ = AᵀBᵀ sin invertir el orden."
+      - "Elegir el orden de evaluación sin considerar el coste en cadenas de matrices."
+    aplicacion: |
+      Composición de capas, pipelines de transformación gráfica, optimización del orden de
+      evaluación en grafos de cómputo y atención multi-cabeza.
+    referencias:
+      - "[Golub & Van Loan. *Matrix Computations*, 4ª ed., Johns Hopkins, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)"
+      - "[Strassen, V. *Gaussian elimination is not optimal*. Numer. Math., 1969](https://link.springer.com/article/10.1007/BF02165411)"
+
+  "112":
+    concepto: "Toda matriz cuadrada se descompone en parte simétrica y antisimétrica, y AᵀA es siempre simétrica."
+    formulas:
+      - "A = (A+Aᵀ)/2 + (A−Aᵀ)/2"
+      - "AᵀA es simétrica y semidefinida positiva"
+    desarrollo: |
+      Una matriz es simétrica si coincide con su transpuesta. Las simétricas tienen
+      propiedades excepcionales que la parte 06 desarrolla: sus autovalores son **reales**,
+      sus autovectores son **ortogonales** y siempre son diagonalizables. Nada de eso está
+      garantizado para una matriz general.
+
+      Toda matriz cuadrada se descompone de forma única en una parte simétrica y una
+      antisimétrica, y esa descomposición es un ejemplo de una idea general: separar un objeto
+      en componentes con propiedades distintas para tratar cada una por separado. En física,
+      esa separación distingue deformación de rotación.
+
+      El hecho más útil de esta clase es que `AᵀA` es **siempre** simétrica, sea A cuadrada o
+      no, y además semidefinida positiva. Esa propiedad es la que hace que las ecuaciones
+      normales de mínimos cuadrados (clase 131) tengan solución, que la matriz de covarianza
+      (clase 191) sea diagonalizable con autovalores no negativos, y que la SVD exista para
+      toda matriz (clase 132).
+
+      La contrapartida numérica es que `AᵀA` **eleva al cuadrado el número de condición** de A.
+      Por eso, aunque las ecuaciones normales son correctas en teoría, en la práctica se
+      prefiere QR o SVD: la clase 234 mide esa diferencia.
+    ejemplo: |
+      Descomposición y simetría de AᵀA.
+
+      ```text
+      A = [[1,2],[4,5]]
+
+      parte simétrica    = (A + Aᵀ)/2 = [[1,3],[3,5]]
+      parte antisimétrica = (A − Aᵀ)/2 = [[0,−1],[1,0]]
+      suma = A                                   ✓
+
+      simétrica = su transpuesta                 ✓
+      antisimétrica: diagonal nula, opuestos fuera
+
+      AᵀA = [[17,22],[22,29]]
+      ¿es simétrica?  Sí                         ✓
+      ```
+    errores:
+      - "Suponer que una matriz general tiene autovalores reales."
+      - "Usar las ecuaciones normales con matrices mal condicionadas sin considerar QR."
+      - "Confundir simétrica (A = Aᵀ) con ortogonal (AᵀA = I)."
+    aplicacion: |
+      Matriz de covarianza, ecuaciones normales, Hessiano (siempre simétrico si f es dos
+      veces derivable con continuidad) y matriz de Gram en métodos kernel.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "113":
+    concepto: "Un sistema lineal tiene solución única si el determinante no es nulo; el residuo es el criterio de aceptación."
+    formulas:
+      - "Ax = b"
+      - "residuo r = Ax − b, debe ser ≈ 0"
+      - "solución única ⟺ det(A) ≠ 0 ⟺ rango(A) = n"
+    desarrollo: |
+      Resolver `Ax = b` es el problema computacional más frecuente del álgebra lineal, y sus
+      tres desenlaces posibles —solución única, ninguna o infinitas— se distinguen por el
+      rango. Con determinante no nulo, la matriz es invertible y la solución es única; con
+      determinante nulo, hay que comparar el rango de A con el de la matriz ampliada para
+      distinguir los otros dos casos.
+
+      El **residuo** `r = Ax − b` es el criterio de aceptación universal. Un solver puede
+      devolver un vector sin lanzar ninguna excepción y estar equivocado; calcular el residuo
+      cuesta una multiplicación matriz-vector y detecta el problema. La regla del programa es
+      que ningún resultado de un solver se acepta sin comprobar su residuo.
+
+      Un residuo pequeño no garantiza que la solución sea precisa: en un sistema mal
+      condicionado, un residuo minúsculo puede corresponder a una solución muy alejada de la
+      correcta. La relación entre ambos la da el número de condición (clase 035), y esa es la
+      razón por la que el residuo es necesario pero no suficiente.
+
+      Geométricamente, cada ecuación de un sistema 3×3 es un plano, y la solución es su punto
+      de intersección. Sin solución significa que no hay punto común; infinitas soluciones,
+      que los planos se cortan en una recta o coinciden.
+    ejemplo: |
+      Sistema 3×3 con solución única.
+
+      ```text
+      A = [[ 2,  1, −1],      b = ( 8,
+           [−3, −1,  2],           −11,
+           [−2,  1,  2]]            −3)
+
+      det(A) = −1 ≠ 0  →  solución única
+
+      x = (2, 3, −1)
+
+      Residuo: Ax − b = (0, 0, 0)     ✓
+      ‖r‖ = 0.0
+
+      Verificación por ecuación:
+        2·2 + 1·3 − 1·(−1) = 8        ✓
+      ```
+    errores:
+      - "Aceptar la salida de un solver sin calcular el residuo."
+      - "Suponer que un residuo pequeño implica una solución precisa en un sistema mal condicionado."
+      - "No distinguir entre sistema incompatible e indeterminado cuando el determinante es cero."
+    aplicacion: |
+      Ajuste de modelos lineales, equilibrio en circuitos y estructuras, interpolación,
+      balance de reacciones y cualquier problema con restricciones lineales.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 2](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "114":
+    concepto: "El pivoteo parcial evita dividir por pivotes casi nulos y hace estable la eliminación."
+    formulas:
+      - "coste: ~2n³/3 operaciones"
+      - "pivote = fila con el mayor |Aᵢⱼ| en la columna actual"
+    desarrollo: |
+      La eliminación de Gauss transforma el sistema en uno triangular mediante operaciones que
+      no cambian el conjunto solución: intercambiar filas, escalarlas y restarles múltiplos de
+      otras. Una vez triangular, la sustitución hacia atrás resuelve en `O(n²)`.
+
+      El **pivoteo parcial** no es un refinamiento opcional: es lo que hace el método
+      utilizable. Sin él, un pivote muy pequeño produce factores enormes que amplifican los
+      errores de redondeo y pueden destruir por completo la precisión. Con pivoteo, se elige
+      en cada columna la fila con el mayor valor absoluto, garantizando que los factores estén
+      acotados por 1.
+
+      El ejemplo clásico es un sistema de 2×2 con pivote 10⁻²⁰: sin pivoteo la solución
+      calculada es completamente errónea; con pivoteo es correcta. La diferencia no está en la
+      matemática —ambas eliminaciones son válidas en ℝ— sino en la aritmética finita.
+
+      El coste, `~2n³/3` operaciones, es el mismo que el de la factorización LU, y no es
+      casualidad: la eliminación de Gauss **es** la factorización LU, expresada de otra forma.
+      La ventaja de guardarla como LU (clase 129) es poder resolver muchos sistemas con la
+      misma matriz pagando `O(n²)` cada uno en lugar de `O(n³)`.
+    ejemplo: |
+      Eliminación con pivoteo sobre un sistema 3×3.
+
+      ```text
+      Matriz original:
+        [ 2  1 −1 |   8]
+        [−3 −1  2 | −11]
+        [−2  1  2 |  −3]
+
+      Pivoteo: la mayor |entrada| de la columna 1 es −3 → intercambiar filas
+      Intercambios realizados: 2
+
+      Triangular superior resultante:
+        [−3 −1.000  2.000]
+        [ 0  1.667  0.667]
+        [ 0  0      0.200]
+
+      Sustitución hacia atrás → x = (2, 3, −1)
+      Verificación: Ax = (8, −11, −3) = b     ✓
+
+      Coste: O(n³/3) ≈ 9 operaciones para n=3
+      ```
+    errores:
+      - "Implementar la eliminación sin pivoteo y sorprenderse con resultados erróneos."
+      - "Elegir el pivote por su valor y no por su valor absoluto."
+      - "Olvidar aplicar los intercambios de fila también al vector b."
+    aplicacion: |
+      Es el algoritmo que hay dentro de cualquier `solve` de biblioteca. Resolver circuitos,
+      estructuras, sistemas de equilibrio y ajustes lineales.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 20-22](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+
+  "115":
+    concepto: "El rango es la dimensión efectiva de la salida; rango más nulidad es siempre el número de columnas."
+    formulas:
+      - "rango(A) ≤ mín(m, n)"
+      - "rango + nulidad = número de columnas"
+    desarrollo: |
+      El rango de una matriz es la dimensión de su espacio columna, es decir, cuántas
+      direcciones independientes puede alcanzar la transformación. Es el número que realmente
+      describe una matriz, mucho más que su tamaño: una matriz 1000×1000 de rango 3 contiene
+      tanta información como una de 3×3.
+
+      El **teorema del rango-nulidad** —rango más nulidad igual al número de columnas— dice que
+      lo que no llega a la imagen se pierde en el núcleo. Si una transformación de ℝ⁵ en ℝ⁵
+      tiene rango 3, hay un subespacio de dimensión 2 que colapsa al cero: dos direcciones de
+      información desaparecen sin posibilidad de recuperación.
+
+      Numéricamente, el rango es delicado. Una matriz puede ser de rango completo en
+      aritmética exacta y comportarse como deficiente en punto flotante si sus valores
+      singulares más pequeños están cerca del ruido. Por eso el **rango numérico** se define
+      con una tolerancia —cuántos valores singulares superan un umbral— y se calcula con SVD,
+      no con eliminación.
+
+      En machine learning el rango bajo es a la vez un problema y una herramienta. Es un
+      problema cuando indica features redundantes; es una herramienta cuando se impone a
+      propósito para comprimir, como en LoRA, que adapta un modelo grande añadiendo matrices
+      de rango muy bajo.
+    ejemplo: |
+      Rango de tres matrices.
+
+      ```text
+      A = [[1,2],[3,4]]      rango 2 (completo)     det = −2 ≠ 0
+      B = [[1,2],[2,4]]      rango 1 (deficiente)   det = 0
+      C = [[1,2,3],[4,5,6]]  rango 2                máximo posible: mín(2,3) = 2
+
+      Teorema del rango-nulidad para B:
+        columnas = 2,  rango = 1  →  nulidad = 1
+        el núcleo es la recta generada por (2,−1)
+        B·(2,−1) = (0,0)                            ✓
+      ```
+    errores:
+      - "Calcular el rango con eliminación en datos ruidosos en lugar de con SVD y tolerancia."
+      - "Suponer que una matriz grande tiene rango alto."
+      - "Olvidar que el rango está acotado por el menor de los dos tamaños."
+    aplicacion: |
+      Detección de redundancia en features, compresión de bajo rango, LoRA, diagnóstico de
+      sistemas indeterminados y análisis de capacidad de una capa.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Hu, E. et al. *LoRA: Low-Rank Adaptation of Large Language Models*. ICLR, 2022](https://arxiv.org/abs/2106.09685)"
+
+  "116":
+    concepto: "La inversa existe si el determinante no es nulo, pero resolver un sistema casi nunca debe pasar por ella."
+    formulas:
+      - "A·A⁻¹ = I"
+      - "2×2: A⁻¹ = (1/det)·[[d,−b],[−c,a]]"
+      - "resolver Ax = b: usar factorización, no A⁻¹b"
+    desarrollo: |
+      La inversa de una matriz es la que deshace su transformación. Existe si y solo si la
+      matriz es cuadrada y de rango completo, condición equivalente a que su determinante sea
+      no nulo. Para 2×2 hay fórmula cerrada; para tamaños mayores se calcula con eliminación
+      de Gauss-Jordan.
+
+      El mensaje práctico de esta clase es una recomendación explícita: **no calcules la
+      inversa para resolver un sistema**. `A⁻¹b` cuesta unas tres veces más que resolver
+      directamente y es numéricamente peor, porque acumula error en cada entrada de la inversa
+      antes de multiplicar. Ninguna biblioteca seria lo hace, y ver `inv(A) @ b` en código es
+      señal de que quien lo escribió no conoce esta distinción.
+
+      Hay casos legítimos para calcular la inversa: cuando se necesita explícitamente, como en
+      la matriz de covarianza inversa (matriz de precisión) de un modelo gaussiano, o al
+      analizar la sensibilidad de un sistema. Incluso ahí, si la matriz está mal condicionada,
+      conviene usar la pseudoinversa vía SVD (clase 134).
+
+      La comprobación de que la inversa se calculó bien es directa: `A·A⁻¹` debe dar la
+      identidad dentro de una tolerancia. Que no dé exactamente la identidad es esperado, y la
+      magnitud de la desviación informa sobre el condicionamiento del problema.
+    ejemplo: |
+      Inversa de una matriz 2×2 y su verificación.
+
+      ```text
+      A = [[4,7],[2,6]]
+      det = 4·6 − 7·2 = 10 ≠ 0  →  invertible
+
+      A⁻¹ = (1/10)·[[6,−7],[−2,4]] = [[0.6,−0.7],[−0.2,0.4]]
+
+      A·A⁻¹ = [[1,0],[0,1]]                    ✓ identidad
+
+      Coste comparado para resolver Ax = b:
+        vía inversa:      ~n³ + n²  operaciones y peor precisión
+        vía factorización: ~n³/3    operaciones
+      ```
+    errores:
+      - "Escribir inv(A) @ b en lugar de solve(A, b)."
+      - "Invertir una matriz mal condicionada sin usar la pseudoinversa."
+      - "Suponer que A·A⁻¹ da exactamente la identidad en punto flotante."
+    aplicacion: |
+      Matriz de precisión en modelos gaussianos, análisis de sensibilidad y transformaciones
+      inversas en gráficos. Para resolver sistemas, siempre factorización.
+    referencias:
+      - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
+      - "[NumPy: por qué usar `solve` en lugar de `inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html)"
+
+  "117":
+    concepto: "El determinante mide cuánto escala el volumen la transformación; cero significa que la aplasta."
+    formulas:
+      - "det(AB) = det(A)·det(B)"
+      - "det(A) = 0 ⟺ A es singular"
+      - "|det| = factor de escalado del volumen"
+    desarrollo: |
+      El determinante tiene una definición algebraica engorrosa y una interpretación
+      geométrica limpia: es el factor —con signo— por el que la transformación multiplica el
+      volumen. En 2D es el área del paralelogramo de las columnas; en 3D, el volumen del
+      paralelepípedo; en n dimensiones, el volumen n-dimensional.
+
+      Desde esa lectura, las propiedades se vuelven evidentes. `det(AB) = det(A)det(B)` porque
+      aplicar dos transformaciones escala el volumen por el producto de sus factores. Un
+      determinante nulo significa que la transformación aplasta el espacio en una dimensión
+      menor, y por eso no es invertible: no se puede recuperar volumen de algo aplastado. Un
+      determinante negativo indica inversión de orientación.
+
+      Computacionalmente, el determinante **no** es un buen indicador de singularidad. Escalar
+      una matriz por 0.1 divide su determinante por 10ⁿ, así que un determinante minúsculo
+      puede corresponder a una matriz perfectamente bien condicionada. El indicador correcto
+      es el número de condición, cociente entre el mayor y el menor valor singular (clase 132).
+
+      Donde el determinante sí es imprescindible es en el **cambio de variable**: al
+      transformar una densidad de probabilidad, el jacobiano corrige el factor de volumen. Sin
+      esa corrección, la densidad transformada no integraría a 1. Esa es la base de los
+      normalizing flows.
+    ejemplo: |
+      Determinante de tres transformaciones.
+
+      ```text
+      A = [[2,0],[0,3]]   diagonal
+        det = 6  →  escala las áreas por 6
+
+      B = [[1,2],[2,4]]   fila2 = 2·fila1
+        det = 0  →  singular, aplasta el plano en una recta
+
+      F = [[0,1],[1,0]]   reflexión
+        det = −1 →  conserva el área, invierte la orientación
+
+      Producto: det(A·M) = det(A)·det(M)      ✓ verificado
+      ```
+    errores:
+      - "Usar el determinante como medida de condicionamiento."
+      - "Ignorar el signo y perder la información de orientación."
+      - "Calcular el determinante por la definición de Laplace: coste O(n!)."
+    aplicacion: |
+      Cambio de variable en integrales y en densidades, normalizing flows, detección de
+      degeneración geométrica y cálculo de volúmenes.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 5](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[3Blue1Brown. *The determinant*](https://www.3blue1brown.com/lessons/determinant)"
+
+  "118":
+    concepto: "Las matrices ortogonales preservan normas y ángulos, y su número de condición es 1."
+    formulas:
+      - "QᵀQ = I ⟹ Q⁻¹ = Qᵀ"
+      - "‖Qv‖ = ‖v‖"
+      - "κ(Q) = 1"
+    desarrollo: |
+      Una matriz ortogonal tiene columnas ortonormales: unitarias y perpendiculares entre sí.
+      La condición `QᵀQ = I` implica que su inversa es su transpuesta, lo que convierte una
+      operación cara `O(n³)` en una gratuita.
+
+      Su propiedad más valiosa es numérica: **preservan la norma**, `‖Qv‖ = ‖v‖`. Como no
+      estiran ni encogen ningún vector, su número de condición es exactamente 1, el mínimo
+      posible. Aplicar una transformación ortogonal **no amplifica el error relativo**, y esa
+      es la razón por la que el análisis numérico serio se construye sobre ellas.
+
+      De ahí que los algoritmos estables usen rotaciones de Givens y reflexiones de
+      Householder en lugar de transformaciones generales: la factorización QR es más estable
+      que las ecuaciones normales precisamente porque Q es ortogonal (clase 234). Y de ahí que
+      la SVD, cuya U y V son ortogonales, sea la herramienta más robusta del álgebra lineal
+      numérica.
+
+      Las rotaciones son ortogonales con determinante 1; las reflexiones, con determinante −1.
+      En deep learning se han propuesto capas con matrices ortogonales precisamente para evitar
+      que los gradientes se desvanezcan o exploten al propagarse por muchas capas: si la norma
+      se preserva en cada capa, se preserva en toda la red.
+    ejemplo: |
+      Verificar las propiedades de una rotación.
+
+      ```text
+      Q = rotación de 37°
+        [[0.7986, −0.6018],
+         [0.6018,  0.7986]]
+
+      QᵀQ = [[1,0],[0,1]]                     ✓ ortogonal
+      det Q = 1                               ✓ rotación (no reflexión)
+
+      v = (3,4),  ‖v‖ = 5
+      Qv = (0.0887, 4.9992),  ‖Qv‖ = 5.0      ✓ preserva la norma
+
+      Q⁻¹ = Qᵀ  →  invertir es transponer, coste O(n²) en lugar de O(n³)
+      ```
+    errores:
+      - "Confundir matriz ortogonal (QᵀQ = I) con matriz simétrica (A = Aᵀ)."
+      - "Invertir una matriz ortogonal en lugar de transponerla."
+      - "Suponer que cualquier matriz de columnas ortogonales es ortogonal: deben ser además unitarias."
+    aplicacion: |
+      Factorización QR, SVD, rotaciones en gráficos, capas ortogonales en redes profundas y
+      algoritmos numéricamente estables en general.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Arjovsky, Shah & Bengio. *Unitary Evolution Recurrent Neural Networks*. ICML, 2016](https://arxiv.org/abs/1511.06464)"
+
+  "119":
+    concepto: "La proyección ortogonal es la mejor aproximación dentro de un subespacio, y su residuo es ortogonal a él."
+    formulas:
+      - "p = A(AᵀA)⁻¹Aᵀb"
+      - "residuo r = b − p, con Aᵀr = 0"
+      - "‖b‖² = ‖p‖² + ‖r‖²"
+    desarrollo: |
+      Proyectar un vector sobre un subespacio es encontrar el punto del subespacio más cercano
+      a él. Ese punto es único y se caracteriza por una condición geométrica limpia: el
+      **residuo es ortogonal al subespacio**. Si no lo fuera, quedaría una componente en el
+      subespacio que se podría aprovechar para acercarse más.
+
+      Esa caracterización es la que se usa para calcular: exigir `Aᵀ(b − Ax) = 0` da las
+      **ecuaciones normales** `AᵀAx = Aᵀb`, que es exactamente el problema de mínimos cuadrados
+      de la clase 131. Ajustar una recta a unos datos es proyectar el vector de observaciones
+      sobre el espacio columna de la matriz de diseño.
+
+      El teorema de Pitágoras se cumple: `‖b‖² = ‖p‖² + ‖r‖²`. Esa identidad es la que aparece
+      en estadística como la descomposición de la varianza —total igual a explicada más
+      residual— y la que define el R² de una regresión (clase 214). No son tres resultados
+      distintos: es el mismo, escrito en tres lenguajes.
+
+      Verificar una proyección es barato y conviene hacerlo siempre: comprobar que el residuo
+      es ortogonal a todas las columnas de A. Si no lo es, el cálculo está mal. El motor del
+      programa lo comprueba explícitamente.
+    ejemplo: |
+      Proyectar (6,0,0) sobre el plano generado por dos columnas.
+
+      ```text
+      A = [[1,0],    b = (6, 0, 0)
+           [1,1],
+           [1,2]]
+
+      Ecuaciones normales: AᵀA·x = Aᵀb
+        [[3,3],[3,5]] x = (6, 0)
+        x = (5, −3)
+
+      proyección p = A·x = (5, 2, −1)
+      residuo    r = b − p = (1, −2, 1)
+
+      Verificaciones:
+        Aᵀr = (0, 0)                      ✓ ortogonal al subespacio
+        ‖b‖² = 36
+        ‖p‖² + ‖r‖² = 30 + 6 = 36         ✓ Pitágoras
+      ```
+    errores:
+      - "No comprobar que el residuo es ortogonal al subespacio."
+      - "Usar las ecuaciones normales con una matriz de diseño mal condicionada."
+      - "Confundir la proyección (dentro del subespacio) con el residuo (fuera de él)."
+    aplicacion: |
+      Mínimos cuadrados, R² de una regresión, PCA, descomposición de la varianza y
+      eliminación de componentes no deseadas de una señal.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 4](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 11](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+
+  "120":
+    concepto: "Un recomendador por filtrado colaborativo es producto punto normalizado y media ponderada; nada más."
+    formulas:
+      - "similitud(u,v) = u·v / (‖u‖‖v‖)"
+      - "puntuación(i) = Σ sim(u,w)·rᵥᵢ / Σ |sim(u,w)|"
+    desarrollo: |
+      El capstone construye un sistema de recomendación por filtrado colaborativo basado en
+      usuarios, y su interés está en lo que **no** usa: ninguna biblioteca de machine
+      learning, ningún modelo entrenado, ninguna red neuronal. Es producto punto, norma y
+      media ponderada.
+
+      El algoritmo tiene tres pasos. Calcular la similitud coseno entre el usuario objetivo y
+      todos los demás; usar esas similitudes como pesos para promediar las valoraciones de los
+      demás sobre los ítems que el objetivo no ha visto; recomendar el ítem con mayor
+      puntuación estimada. Los pesos se normalizan dividiendo por la suma de similitudes
+      absolutas para que la escala se conserve.
+
+      Las limitaciones son reales y conviene declararlas. El **arranque en frío**: un usuario
+      nuevo no tiene vector, así que no hay similitud que calcular. La **dispersión**: en un
+      catálogo real, cada usuario ha valorado una fracción minúscula de los ítems, y los
+      vectores son casi todo ceros. Y el **coste**: comparar con todos los usuarios es `O(n·d)`
+      por consulta, inviable con millones de usuarios sin índices aproximados.
+
+      Los sistemas industriales resuelven esas limitaciones con factorización matricial —que
+      es la parte 06— y con embeddings aprendidos, pero la métrica de comparación sigue siendo
+      la de esta clase. Entender el caso simple es lo que permite entender por qué las
+      soluciones complejas hacen lo que hacen.
+    ejemplo: |
+      Recomendar a «ana» entre cuatro usuarios.
+
+      ```text
+      valoraciones (0 = no visto):
+        ana    [5, 3, 0, 1]
+        beto   [4, 0, 0, 1]
+        cata   [1, 1, 0, 5]
+        dario  [0, 0, 5, 4]
+
+      similitud coseno con ana:
+        beto  0.9783    ← el más parecido
+        cata  0.4707
+        dario 0.0900
+
+      ítems no vistos por ana: índice 2
+
+      puntuación estimada del ítem 2:
+        (0.9783·0 + 0.4707·0 + 0.0900·5) / (0.9783+0.4707+0.0900) = 0.29
+
+      recomendación: ítem 2 (el único no visto)
+      ```
+    errores:
+      - "Comparar usuarios sin normalizar y dejar que el número de valoraciones domine."
+      - "Ignorar el problema del arranque en frío al desplegar."
+      - "Promediar sin normalizar por la suma de similitudes y romper la escala."
+    aplicacion: |
+      Sistemas de recomendación, búsqueda por similitud, agrupación de usuarios y motores de
+      contenido relacionado. El mismo cálculo, con embeddings en lugar de valoraciones, es la
+      base de la recuperación semántica.
+    referencias:
+      - "[Ricci, Rokach & Shapira. *Recommender Systems Handbook*, 3ª ed., Springer, 2022](https://link.springer.com/book/10.1007/978-1-0716-2197-4)"
+      - "[Koren, Bell & Volinsky. *Matrix Factorization Techniques for Recommender Systems*. IEEE Computer, 2009](https://ieeexplore.ieee.org/document/5197422)"

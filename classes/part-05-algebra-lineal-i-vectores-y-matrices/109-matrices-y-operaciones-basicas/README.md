@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Suma, escala y transpuesta operan elemento a elemento; la traza suma la diagonal.**
 
-Esta clase concreta ese objetivo sobre **Matrices y operaciones básicas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `matrix_basics`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar producto punto a vectores de escalas incomparables.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(A + B)ᵢⱼ = Aᵢⱼ + Bᵢⱼ
+(Aᵀ)ᵀ = A
+tr(A) = Σ Aᵢᵢ = suma de los autovalores
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,41 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> La proyección ortogonal es la mejor aproximación en norma euclídea.
+Las operaciones básicas con matrices son las que se esperan: suma y escala elemento a
+elemento, ambas definidas solo entre matrices del mismo shape. El producto matricial es
+la excepción: no es elemento a elemento, y por eso la clase 111 lo trata aparte.
+
+La **traza** —la suma de la diagonal— parece una definición arbitraria y tiene
+propiedades notables: es lineal, es invariante bajo transposición y cumple
+`tr(AB) = tr(BA)` aunque `AB ≠ BA`. Esa última propiedad la hace invariante bajo cambio
+de base, y de ahí que la traza sea igual a la suma de los autovalores (clase 125).
+
+En machine learning la traza aparece con frecuencia en formas cuadráticas y en el
+cálculo de gradientes matriciales: `∂tr(AᵀB)/∂A = B`. También es la que define la
+**norma de Frobenius**, `‖A‖_F = √tr(AᵀA)`, que es la norma euclídea de la matriz vista
+como un vector largo.
+
+La transposición cumple `(Aᵀ)ᵀ = A` y, lo más útil, `(AB)ᵀ = BᵀAᵀ` **con el orden
+invertido**. Ese cambio de orden es la causa de la mitad de los errores al derivar
+expresiones matriciales, y conviene comprobarlo numéricamente una vez para fijarlo.
+
+## 🧮 Ejemplo trabajado
+
+Operaciones básicas con matrices 2×2.
+
+```text
+A = [[1,2],[3,4]]      B = [[0,1],[−1,2]]
+
+A + B = [[1,3],[2,6]]
+3A    = [[3,6],[9,12]]
+
+Aᵀ    = [[1,3],[2,4]]
+(Aᵀ)ᵀ = A                            ✓
+
+traza(A) = 1 + 4 = 5
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +105,16 @@ compmath run 109
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Sumar matrices de shapes distintos.
+2. Olvidar invertir el orden en (AB)ᵀ = BᵀAᵀ.
+3. Confundir la traza con el determinante.
+
+## 🚀 Dónde se usa de verdad
+
+Norma de Frobenius, cálculo de gradientes matriciales, invariantes bajo cambio de base
+y regularización de matrices de pesos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

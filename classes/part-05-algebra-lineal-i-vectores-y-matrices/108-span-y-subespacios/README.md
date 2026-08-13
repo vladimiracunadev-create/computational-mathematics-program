@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**El span de un conjunto es siempre un subespacio, y su dimensión es el rango del conjunto.**
 
-Esta clase concreta ese objetivo sobre **Span y subespacios**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `span_subspaces`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir dimensión del espacio con número de vectores.
+
+## 🧩 Fórmulas de la clase
+
+```text
+span{v₁,...,vₖ} = {Σαᵢvᵢ}
+dim(span) = rango del conjunto
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> Resolver Ax=b casi nunca requiere calcular A⁻¹.
+El span de un conjunto de vectores es el conjunto de todas sus combinaciones lineales.
+Siempre es un **subespacio**: contiene el vector cero y es cerrado bajo suma y producto
+por escalar. Esa cerradura es lo que lo distingue de un subconjunto cualquiera.
+
+Su dimensión —el número de vectores independientes que contiene— determina qué tipo de
+objeto geométrico es. En ℝ³, el span de un vector no nulo es una recta por el origen; el
+de dos vectores independientes, un plano; el de tres, todo el espacio. Añadir un vector
+que ya está en el span no cambia nada, y esa es la definición operativa de redundancia.
+
+La conexión con datos es directa. Si las features de un conjunto de datos generan un
+subespacio de dimensión menor que el número de features, hay redundancia, y PCA
+(clase 135) encuentra una base de ese subespacio con menos vectores. La «dimensión
+intrínseca» de un conjunto de datos es la dimensión de su span aproximado.
+
+En redes neuronales, el espacio columna de la matriz de pesos determina qué salidas son
+alcanzables. Si `W` tiene rango deficiente, la capa proyecta sobre un subespacio y pierde
+información irrecuperablemente: dos entradas distintas pueden producir la misma salida.
+
+## 🧮 Ejemplo trabajado
+
+Span en ℝ³.
+
+```text
+v₁ = (1,0,0),  v₂ = (0,1,0)
+
+span{v₁, v₂}:  dimensión 2  →  el plano z = 0
+¿contiene (0,0,1)?  No
+
+Al añadir v₃ = (0,0,1):
+  rango pasa de 2 a 3  →  ahora genera todo ℝ³
+
+Propiedades del subespacio:
+  contiene el (0,0,0)                  ✓
+  cerrado bajo suma y escala           ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +106,16 @@ compmath run 108
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Suponer que el span de k vectores tiene dimensión k sin comprobar la independencia.
+2. Olvidar que todo subespacio contiene el vector cero.
+3. Confundir el span (infinito) con el conjunto generador (finito).
+
+## 🚀 Dónde se usa de verdad
+
+Dimensión intrínseca de un conjunto de datos, PCA, análisis de capacidad de una capa y
+compresión por reducción de rango.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 2](https://linear.axler.net/)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

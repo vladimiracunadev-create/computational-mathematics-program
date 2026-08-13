@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Comprimir con SVD es elegir cuántos valores singulares conservar y declarar el error que eso implica.**
 
-Esta clase concreta ese objetivo sobre **Capstone: PCA y compresión de imágenes**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_pca_compression`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+almacenamiento de rango k: k(m + n + 1) frente a mn
+error = √(Σᵢ₌ₖ₊₁ σᵢ²)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Broadcasting y einsum son notación, no algoritmos nuevos.
+El capstone aplica la truncación SVD a una matriz y mide, para cada rango, tres
+cantidades: cuántos números hay que guardar, qué error se comete y qué fracción de la
+energía se retiene. Ese informe es la forma honesta de presentar una compresión: no
+«comprime bien», sino «con rango 2 el error de Frobenius es X y se retiene el Y % de la
+energía».
+
+La matriz del ejemplo está construida para que dos de sus filas sean múltiplos de un
+mismo patrón, así que su **rango efectivo** es muy bajo y el primer valor singular
+concentra casi toda la energía. Eso es lo que ocurre en datos reales: las imágenes
+naturales, las matrices de valoraciones y las activaciones de una red tienen espectros
+que decaen rápido.
+
+El ahorro se calcula sin ambigüedad. Guardar `Aₖ` requiere las k columnas de `U`, los k
+valores singulares y las k columnas de `V`: `k(m + n + 1)` números frente a `mn`. La
+compresión es rentable cuando `k` es pequeño frente a `mn/(m+n)`.
+
+La conexión con LoRA cierra la parte: en lugar de ajustar una matriz de pesos `W` de
+millones de parámetros, se le suma un producto `BA` de rango muy bajo. La justificación
+teórica es exactamente Eckart-Young: si la actualización necesaria tiene rango
+intrínsecamente bajo, una aproximación de rango bajo la captura casi por completo.
+
+## 🧮 Ejemplo trabajado
+
+Informe de compresión de una matriz 4×4.
+
+```text
+valores singulares: 96.28, 1.87, 0.0004, 0.0000
+
+rango  valores guardados  error Frobenius  energía retenida
+  1           9              1.8734            99.98 %
+  2          18              0.0004           100.00 %
+  3          27              0.0000           100.00 %
+  4          36              0.0000           100.00 %
+
+matriz original: 16 valores
+rango efectivo (σ > 1e−8): 3
+
+Con rango 1 se guardan 9 números en lugar de 16
+y se conserva el 99.98 % de la energía.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 140
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Reportar una compresión sin declarar el error cometido.
+2. Elegir k por el número de componentes en lugar de por la energía retenida.
+3. Suponer que un espectro que decae rápido garantiza que la aproximación sirve para la tarea concreta.
+
+## 🚀 Dónde se usa de verdad
+
+Compresión de imágenes y modelos, reducción de dimensionalidad, eliminación de ruido,
+recomendación por factorización y LoRA.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Eckart, C.; Young, G. *The approximation of one matrix by another of lower rank*. Psychometrika, 1936](https://link.springer.com/article/10.1007/BF02288367)
+- [Halko, Martinsson & Tropp. *Finding Structure with Randomness*. SIAM Review, 2011](https://epubs.siam.org/doi/10.1137/090771806)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

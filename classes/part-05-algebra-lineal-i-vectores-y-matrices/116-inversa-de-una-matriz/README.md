@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**La inversa existe si el determinante no es nulo, pero resolver un sistema casi nunca debe pasar por ella.**
 
-Esta clase concreta ese objetivo sobre **Inversa de una matriz**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `matrix_inverse`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz mal condicionada en lugar de factorizar.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A·A⁻¹ = I
+2×2: A⁻¹ = (1/det)·[[d,−b],[−c,a]]
+resolver Ax = b: usar factorización, no A⁻¹b
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> Una matriz es una función lineal escrita en una base concreta.
+La inversa de una matriz es la que deshace su transformación. Existe si y solo si la
+matriz es cuadrada y de rango completo, condición equivalente a que su determinante sea
+no nulo. Para 2×2 hay fórmula cerrada; para tamaños mayores se calcula con eliminación
+de Gauss-Jordan.
+
+El mensaje práctico de esta clase es una recomendación explícita: **no calcules la
+inversa para resolver un sistema**. `A⁻¹b` cuesta unas tres veces más que resolver
+directamente y es numéricamente peor, porque acumula error en cada entrada de la inversa
+antes de multiplicar. Ninguna biblioteca seria lo hace, y ver `inv(A) @ b` en código es
+señal de que quien lo escribió no conoce esta distinción.
+
+Hay casos legítimos para calcular la inversa: cuando se necesita explícitamente, como en
+la matriz de covarianza inversa (matriz de precisión) de un modelo gaussiano, o al
+analizar la sensibilidad de un sistema. Incluso ahí, si la matriz está mal condicionada,
+conviene usar la pseudoinversa vía SVD (clase 134).
+
+La comprobación de que la inversa se calculó bien es directa: `A·A⁻¹` debe dar la
+identidad dentro de una tolerancia. Que no dé exactamente la identidad es esperado, y la
+magnitud de la desviación informa sobre el condicionamiento del problema.
+
+## 🧮 Ejemplo trabajado
+
+Inversa de una matriz 2×2 y su verificación.
+
+```text
+A = [[4,7],[2,6]]
+det = 4·6 − 7·2 = 10 ≠ 0  →  invertible
+
+A⁻¹ = (1/10)·[[6,−7],[−2,4]] = [[0.6,−0.7],[−0.2,0.4]]
+
+A·A⁻¹ = [[1,0],[0,1]]                    ✓ identidad
+
+Coste comparado para resolver Ax = b:
+  vía inversa:      ~n³ + n²  operaciones y peor precisión
+  vía factorización: ~n³/3    operaciones
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 116
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Escribir inv(A) @ b en lugar de solve(A, b).
+2. Invertir una matriz mal condicionada sin usar la pseudoinversa.
+3. Suponer que A·A⁻¹ da exactamente la identidad en punto flotante.
+
+## 🚀 Dónde se usa de verdad
+
+Matriz de precisión en modelos gaussianos, análisis de sensibilidad y transformaciones
+inversas en gráficos. Para resolver sistemas, siempre factorización.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
+- [NumPy: por qué usar `solve` en lugar de `inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

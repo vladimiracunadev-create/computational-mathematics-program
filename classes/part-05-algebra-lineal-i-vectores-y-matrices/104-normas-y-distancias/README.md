@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**La norma elegida determina qué se penaliza: L1 induce dispersión, L2 penaliza los valores grandes.**
 
-Esta clase concreta ese objetivo sobre **Normas y distancias**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `norms_distances`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz mal condicionada en lugar de factorizar.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L1 = Σ|xᵢ| · L2 = √Σxᵢ² · L∞ = máx|xᵢ|
+L∞ ≤ L2 ≤ L1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> La proyección ortogonal es la mejor aproximación en norma euclídea.
+Una norma asigna una magnitud a un vector cumpliendo tres condiciones: es positiva
+salvo en el cero, escala con el valor absoluto del escalar y satisface la desigualdad
+triangular. Hay infinitas normas; las tres de la familia Lp son las que se usan en la
+práctica.
+
+La elección no es estética: cambia qué se penaliza. La **L2** eleva al cuadrado, así que
+castiga desproporcionadamente los componentes grandes y tiende a repartir el valor
+entre todos. La **L1** trata todos los componentes por igual y, usada como penalización,
+empuja los pequeños exactamente a cero. Esa diferencia es la que separa Ridge de Lasso
+(clases 283 y 284) y es puramente geométrica: la bola L1 tiene vértices sobre los ejes
+y el óptimo tiende a caer en ellos.
+
+La **L∞** solo mira el peor componente. Es la norma adecuada cuando lo que importa es
+garantizar que ningún error individual supere un umbral, y aparece en robustez
+adversarial: un ataque «acotado en L∞» limita cuánto puede cambiar cada píxel.
+
+El orden `L∞ ≤ L2 ≤ L1` se cumple siempre y conviene verificarlo numéricamente una vez.
+Explica que la misma perturbación parezca grande o pequeña según la norma con la que se
+mida, y por qué comparar magnitudes exige declarar la norma.
+
+## 🧮 Ejemplo trabajado
+
+Tres normas del mismo vector.
+
+```text
+v = (3, −4, 12)
+
+L1  = 3 + 4 + 12 = 19
+L2  = √(9 + 16 + 144) = √169 = 13
+L∞  = máx(3, 4, 12) = 12
+
+Orden: 12 ≤ 13 ≤ 19          ✓
+
+Interpretación:
+  L1  penaliza la suma total de desviaciones → dispersión
+  L2  penaliza los componentes grandes      → reparto
+  L∞  solo mira el peor componente          → garantía
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 104
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Reportar una magnitud sin declarar la norma usada.
+2. Suponer que Ridge (L2) produce coeficientes exactamente cero.
+3. Comparar normas de vectores de dimensiones distintas sin normalizar por la dimensión.
+
+## 🚀 Dónde se usa de verdad
+
+Regularización Ridge y Lasso, funciones de pérdida MSE y MAE, robustez adversarial
+acotada en L∞ y criterios de convergencia.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Tibshirani, R. *Regression Shrinkage and Selection via the Lasso*. JRSS-B, 1996](https://www.jstor.org/stable/2346178)
+- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 2](https://web.stanford.edu/~boyd/cvxbook/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

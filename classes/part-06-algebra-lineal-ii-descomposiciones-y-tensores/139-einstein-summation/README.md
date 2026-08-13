@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**En notación de Einstein los índices repetidos se suman, y una sola expresión cubre producto, traza y contracción.**
 
-Esta clase concreta ese objetivo sobre **Einstein summation**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,15 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `einsum`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar pca sin centrar (ni escalar) los datos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+'ij,jk->ik'  producto matricial
+'ii->'       traza
+'ij,ij->'    producto de Frobenius
+'ij->ji'     transposición
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +48,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> El número de condición es el cociente entre el mayor y el menor valor singular.
+La notación de Einstein, introducida en 1916 para simplificar la escritura de la
+relatividad general, establece un convenio: los índices que aparecen repetidos se suman.
+Con esa única regla, operaciones que en notación matricial requieren nombres distintos se
+escriben de forma uniforme.
+
+La implementación moderna, `einsum`, hace explícitos los índices de entrada y de salida.
+`'ij,jk->ik'` dice: toma dos tensores con esos índices, suma sobre `j` —repetido— y deja
+`i` y `k`. Eso es el producto matricial. Cambiar la cadena a `'ij,ij->'` da el producto
+de Frobenius, y a `'ij->ji'`, la transpuesta.
+
+Su ventaja práctica es doble. Primero, **legibilidad**: en operaciones con tensores de
+orden 4 o 5 —habituales en atención multi-cabeza— la cadena de índices dice exactamente
+qué se contrae con qué, mientras que una secuencia de `transpose`, `reshape` y `matmul`
+no lo dice. Segundo, **optimización**: la implementación puede elegir el orden de
+contracción más barato, igual que el orden de evaluación de la clase 111.
+
+La atención escalada se escribe en una línea con einsum: `'bqd,bkd->bqk'` calcula todos
+los productos punto entre consultas y claves de un lote. Leer esa cadena es leer la
+operación.
+
+## 🧮 Ejemplo trabajado
+
+Cinco operaciones con la misma notación.
+
+```text
+A = [[1,2],[3,4]]      B = [[5,6],[7,8]]
+
+'ij,jk->ik'  producto     [[19,22],[43,50]]
+'ii->'       traza de A   5
+'ij,ij->ij'  Hadamard     [[5,12],[21,32]]
+'ij,ij->'    Frobenius    70
+'ij->ji'     transpuesta  [[1,3],[2,4]]
+
+Una sola notación para todas.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 139
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Repetir un índice que no se quiere sumar.
+2. Olvidar declarar el orden de los índices de salida y obtener una transposición inesperada.
+3. Usar einsum sin comprobar el resultado contra una implementación explícita.
+
+## 🚀 Dónde se usa de verdad
+
+Atención multi-cabeza, contracciones tensoriales, operaciones por lotes y cualquier
+manipulación de tensores de orden alto.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [NumPy: `einsum`](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html)
+- [Rocktäschel, T. *Einsum is All You Need*, 2018](https://rockt.ai/2018/04/30/einsum)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

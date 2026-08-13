@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**El producto de Kronecker construye matrices en bloques cuyo rango es el producto de los rangos.**
 
-Esta clase concreta ese objetivo sobre **Producto de Kronecker**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `kronecker`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar pca sin centrar (ni escalar) los datos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(A ⊗ B) shape = (m₁m₂, n₁n₂)
+rango(A ⊗ B) = rango(A) · rango(B)
+(A⊗B)(C⊗D) = (AC)⊗(BD)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Diagonalizar es elegir la base donde la transformación solo escala.
+El producto de Kronecker sustituye cada entrada de `A` por esa entrada multiplicada por
+toda la matriz `B`, generando una matriz en bloques mucho mayor. Su interés es que
+**estructura**: representa operaciones que actúan de forma independiente sobre dos
+factores de un problema.
+
+Aparece de forma natural en problemas separables. Discretizar una ecuación en derivadas
+parciales sobre una malla rectangular produce matrices de Kronecker, porque el operador
+actúa por separado en cada dirección. Lo mismo ocurre al modelar un sistema compuesto por
+dos subsistemas independientes.
+
+Las identidades que cumple son las que lo hacen útil computacionalmente: el rango del
+producto es el producto de los rangos, y `(A⊗B)(C⊗D) = (AC)⊗(BD)`. Esta última permite
+operar con los factores pequeños en lugar de con la matriz gigante, ahorrando memoria y
+tiempo.
+
+En machine learning aparece en K-FAC, un método de optimización de segundo orden que
+aproxima el Hessiano de una red como un producto de Kronecker de dos matrices pequeñas.
+Sin esa estructura, el Hessiano de una capa con un millón de parámetros sería una matriz
+de 10¹² entradas: inmanejable.
+
+## 🧮 Ejemplo trabajado
+
+Kronecker de dos matrices 2×2.
+
+```text
+A = [[1,2],[3,4]]      B = [[0,5],[6,7]]
+
+A⊗B (4×4):
+  [[ 0,  5,  0, 10],
+   [ 6,  7, 12, 14],
+   [ 0, 15,  0, 20],
+   [18, 21, 24, 28]]
+
+shape: (2·2, 2·2) = (4,4)                  ✓
+rango(A⊗B) = rango(A)·rango(B) = 2·2 = 4   ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 136
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Confundir el producto de Kronecker con el producto matricial ordinario.
+2. Construir explícitamente A⊗B cuando se puede operar con los factores.
+3. Olvidar que el orden importa: A⊗B ≠ B⊗A en general.
+
+## 🚀 Dónde se usa de verdad
+
+Discretización de PDE separables, sistemas compuestos, K-FAC en optimización de segundo
+orden y grafos producto.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Van Loan, C. *The ubiquitous Kronecker product*. J. Comput. Appl. Math., 2000](https://www.sciencedirect.com/science/article/pii/S0377042700003939)
+- [Martens, J.; Grosse, R. *Optimizing Neural Networks with Kronecker-factored Approximate Curvature*. ICML, 2015](https://arxiv.org/abs/1503.05671)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

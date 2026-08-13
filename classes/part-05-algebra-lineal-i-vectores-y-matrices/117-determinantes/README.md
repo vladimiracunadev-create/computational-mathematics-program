@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**El determinante mide cuánto escala el volumen la transformación; cero significa que la aplasta.**
 
-Esta clase concreta ese objetivo sobre **Determinantes**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `determinants`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir dimensión del espacio con número de vectores.
+
+## 🧩 Fórmulas de la clase
+
+```text
+det(AB) = det(A)·det(B)
+det(A) = 0 ⟺ A es singular
+|det| = factor de escalado del volumen
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El rango es la dimensión real de la salida, no el tamaño de la tabla.
+El determinante tiene una definición algebraica engorrosa y una interpretación
+geométrica limpia: es el factor —con signo— por el que la transformación multiplica el
+volumen. En 2D es el área del paralelogramo de las columnas; en 3D, el volumen del
+paralelepípedo; en n dimensiones, el volumen n-dimensional.
+
+Desde esa lectura, las propiedades se vuelven evidentes. `det(AB) = det(A)det(B)` porque
+aplicar dos transformaciones escala el volumen por el producto de sus factores. Un
+determinante nulo significa que la transformación aplasta el espacio en una dimensión
+menor, y por eso no es invertible: no se puede recuperar volumen de algo aplastado. Un
+determinante negativo indica inversión de orientación.
+
+Computacionalmente, el determinante **no** es un buen indicador de singularidad. Escalar
+una matriz por 0.1 divide su determinante por 10ⁿ, así que un determinante minúsculo
+puede corresponder a una matriz perfectamente bien condicionada. El indicador correcto
+es el número de condición, cociente entre el mayor y el menor valor singular (clase 132).
+
+Donde el determinante sí es imprescindible es en el **cambio de variable**: al
+transformar una densidad de probabilidad, el jacobiano corrige el factor de volumen. Sin
+esa corrección, la densidad transformada no integraría a 1. Esa es la base de los
+normalizing flows.
+
+## 🧮 Ejemplo trabajado
+
+Determinante de tres transformaciones.
+
+```text
+A = [[2,0],[0,3]]   diagonal
+  det = 6  →  escala las áreas por 6
+
+B = [[1,2],[2,4]]   fila2 = 2·fila1
+  det = 0  →  singular, aplasta el plano en una recta
+
+F = [[0,1],[1,0]]   reflexión
+  det = −1 →  conserva el área, invierte la orientación
+
+Producto: det(A·M) = det(A)·det(M)      ✓ verificado
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 117
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Usar el determinante como medida de condicionamiento.
+2. Ignorar el signo y perder la información de orientación.
+3. Calcular el determinante por la definición de Laplace: coste O(n!).
+
+## 🚀 Dónde se usa de verdad
+
+Cambio de variable en integrales y en densidades, normalizing flows, detección de
+degeneración geométrica y cálculo de volúmenes.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 5](https://math.mit.edu/~gs/linearalgebra/)
+- [3Blue1Brown. *The determinant*](https://www.3blue1brown.com/lessons/determinant)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

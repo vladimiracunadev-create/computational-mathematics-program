@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Mínimos cuadrados es la proyección de b sobre el espacio columna, y su residuo es ortogonal a él.**
 
-Esta clase concreta ese objetivo sobre **Mínimos cuadrados lineales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `least_squares`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+min ‖Ax − b‖²
+ecuaciones normales: AᵀAx = Aᵀb
+residuo ortogonal: Aᵀ(Ax − b) = 0
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Diagonalizar es elegir la base donde la transformación solo escala.
+Cuando un sistema tiene más ecuaciones que incógnitas, en general no hay solución exacta.
+Mínimos cuadrados busca la que minimiza la norma del residuo, y esa solución tiene una
+caracterización geométrica limpia: es la **proyección ortogonal** de `b` sobre el espacio
+columna de `A` (clase 119).
+
+Derivar el objetivo `‖Ax − b‖²` e igualar a cero da directamente las ecuaciones
+normales. La condición de ortogonalidad del residuo no es un requisito adicional: es
+equivalente a que el gradiente se anule. Álgebra y geometría dicen lo mismo.
+
+Por qué se minimiza el **cuadrado** del residuo y no su valor absoluto tiene dos razones.
+La analítica: el cuadrado es derivable en todas partes y da solución cerrada, mientras
+que el valor absoluto exige programación lineal. Y la estadística: bajo error gaussiano,
+minimizar el error cuadrático **es** maximizar la verosimilitud (clase 215). No es una
+elección arbitraria, es la consecuencia de un supuesto.
+
+La contrapartida es la sensibilidad a valores atípicos: elevar al cuadrado da mucho peso
+a los errores grandes. Cuando eso es un problema, se usan pérdidas robustas como Huber
+(clase 304), a costa de perder la solución cerrada.
+
+## 🧮 Ejemplo trabajado
+
+Ajustar una recta a cinco puntos.
+
+```text
+datos: (0,1.0) (1,3.1) (2,4.9) (3,7.2) (4,8.9)
+
+A = [[1,0],[1,1],[1,2],[1,3],[1,4]]
+b = (1.0, 3.1, 4.9, 7.2, 8.9)
+
+Ecuaciones normales AᵀA x = Aᵀb:
+  intercepto = 1.02,  pendiente = 2.00
+
+residuos: (−0.02, 0.08, −0.13, 0.16, −0.09)
+SSE = 0.058
+
+Verificación: Aᵀ·residuo = (0, 0)         ✓ ortogonal
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 131
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Usar mínimos cuadrados con valores atípicos sin considerar una pérdida robusta.
+2. Resolver por ecuaciones normales cuando la matriz está mal condicionada.
+3. Interpretar el SSE sin normalizar por el número de datos ni compararlo con una línea base.
+
+## 🚀 Dónde se usa de verdad
+
+Regresión lineal, calibración de sensores, ajuste de curvas, estimación de parámetros y
+resolución de sistemas sobredeterminados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Björck, Å. *Numerical Methods for Least Squares Problems*. SIAM, 1996](https://epubs.siam.org/doi/book/10.1137/1.9781611971484)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 4](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**QR produce una base ortonormal del espacio columna y es la vía estable para mínimos cuadrados.**
 
-Esta clase concreta ese objetivo sobre **Descomposición QR**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `qr_decomposition`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar pca sin centrar (ni escalar) los datos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A = QR,  QᵀQ = I,  R triangular superior
+resolver mínimos cuadrados: Rx = Qᵀb
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Broadcasting y einsum son notación, no algoritmos nuevos.
+La factorización QR escribe una matriz como el producto de una ortogonal y una
+triangular superior. Las columnas de `Q` son una base ortonormal del espacio columna de
+`A`, obtenida ortonormalizando sus columnas.
+
+Su importancia es numérica. Resolver mínimos cuadrados por las ecuaciones normales exige
+formar `AᵀA`, lo que **eleva al cuadrado el número de condición** (clase 112). Con QR no
+hace falta: el problema se reduce a `Rx = Qᵀb`, una sustitución triangular, y la
+condición se conserva. La diferencia es la que separa seis dígitos correctos de doce.
+
+El método de Gram-Schmidt que implementa el motor es el más legible pero no el más
+estable: la ortogonalidad se degrada con matrices mal condicionadas. Las bibliotecas
+usan reflexiones de Householder, que son ortogonales exactas salvo redondeo. La versión
+«modificada» de Gram-Schmidt es un punto intermedio.
+
+QR también es la base del algoritmo estándar para calcular autovalores: iterar
+`A ← RQ` converge a una forma triangular cuya diagonal son los autovalores. Es uno de los
+algoritmos más influyentes del siglo XX.
+
+## 🧮 Ejemplo trabajado
+
+QR de una matriz 3×2.
+
+```text
+A = [[1,1],
+     [1,0],
+     [0,1]]
+
+Q (3×2, columnas ortonormales):
+  [[0.7071,  0.4082],
+   [0.7071, −0.4082],
+   [0,       0.8165]]
+
+R = [[1.4142, 0.7071],
+     [0,      1.2247]]
+
+QᵀQ = I                                    ✓ ortonormal
+QR  = A                                    ✓ reconstruye
+R triangular superior                      ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 130
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Usar Gram-Schmidt clásico en matrices mal condicionadas.
+2. Formar AᵀA cuando QR resuelve el mismo problema mejor.
+3. Suponer que Q es cuadrada: en la QR reducida tiene el shape de A.
+
+## 🚀 Dónde se usa de verdad
+
+Mínimos cuadrados estables, cálculo de autovalores por el algoritmo QR,
+ortonormalización de bases y regresión numéricamente robusta.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 7-10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 5](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

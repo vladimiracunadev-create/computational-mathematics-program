@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Las matrices ortogonales preservan normas y ángulos, y su número de condición es 1.**
 
-Esta clase concreta ese objetivo sobre **Matrices ortogonales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `orthogonal_matrices`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar producto punto a vectores de escalas incomparables.
+
+## 🧩 Fórmulas de la clase
+
+```text
+QᵀQ = I ⟹ Q⁻¹ = Qᵀ
+‖Qv‖ = ‖v‖
+κ(Q) = 1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> Resolver Ax=b casi nunca requiere calcular A⁻¹.
+Una matriz ortogonal tiene columnas ortonormales: unitarias y perpendiculares entre sí.
+La condición `QᵀQ = I` implica que su inversa es su transpuesta, lo que convierte una
+operación cara `O(n³)` en una gratuita.
+
+Su propiedad más valiosa es numérica: **preservan la norma**, `‖Qv‖ = ‖v‖`. Como no
+estiran ni encogen ningún vector, su número de condición es exactamente 1, el mínimo
+posible. Aplicar una transformación ortogonal **no amplifica el error relativo**, y esa
+es la razón por la que el análisis numérico serio se construye sobre ellas.
+
+De ahí que los algoritmos estables usen rotaciones de Givens y reflexiones de
+Householder en lugar de transformaciones generales: la factorización QR es más estable
+que las ecuaciones normales precisamente porque Q es ortogonal (clase 234). Y de ahí que
+la SVD, cuya U y V son ortogonales, sea la herramienta más robusta del álgebra lineal
+numérica.
+
+Las rotaciones son ortogonales con determinante 1; las reflexiones, con determinante −1.
+En deep learning se han propuesto capas con matrices ortogonales precisamente para evitar
+que los gradientes se desvanezcan o exploten al propagarse por muchas capas: si la norma
+se preserva en cada capa, se preserva en toda la red.
+
+## 🧮 Ejemplo trabajado
+
+Verificar las propiedades de una rotación.
+
+```text
+Q = rotación de 37°
+  [[0.7986, −0.6018],
+   [0.6018,  0.7986]]
+
+QᵀQ = [[1,0],[0,1]]                     ✓ ortogonal
+det Q = 1                               ✓ rotación (no reflexión)
+
+v = (3,4),  ‖v‖ = 5
+Qv = (0.0887, 4.9992),  ‖Qv‖ = 5.0      ✓ preserva la norma
+
+Q⁻¹ = Qᵀ  →  invertir es transponer, coste O(n²) en lugar de O(n³)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 118
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Confundir matriz ortogonal (QᵀQ = I) con matriz simétrica (A = Aᵀ).
+2. Invertir una matriz ortogonal en lugar de transponerla.
+3. Suponer que cualquier matriz de columnas ortogonales es ortogonal: deben ser además unitarias.
+
+## 🚀 Dónde se usa de verdad
+
+Factorización QR, SVD, rotaciones en gráficos, capas ortogonales en redes profundas y
+algoritmos numéricamente estables en general.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Arjovsky, Shah & Bengio. *Unitary Evolution Recurrent Neural Networks*. ICML, 2016](https://arxiv.org/abs/1511.06464)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

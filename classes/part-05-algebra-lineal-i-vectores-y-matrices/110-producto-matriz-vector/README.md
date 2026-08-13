@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Ax es una combinación lineal de las columnas de A, y por eso vive en el espacio columna.**
 
-Esta clase concreta ese objetivo sobre **Producto matriz-vector**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `matrix_vector`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz mal condicionada en lugar de factorizar.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Ax = Σ xⱼ · (columna j de A)
+Ax = b tiene solución ⟺ b ∈ espacio columna de A
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El determinante mide cuánto escala el volumen una transformación.
+Hay dos formas de calcular `Ax` y una de entenderlo. La primera —fila por fila, cada
+componente del resultado es un producto punto— es la que se enseña para calcular a mano.
+La segunda —combinación lineal de las columnas de A con los coeficientes de x— es la que
+**explica** qué está ocurriendo.
+
+Esa segunda lectura tiene una consecuencia inmediata y muy útil: `Ax` siempre está en el
+span de las columnas de A, es decir, en el **espacio columna**. Y por tanto `Ax = b`
+tiene solución si y solo si `b` pertenece a ese espacio. La existencia de solución deja
+de ser un misterio y pasa a ser una pregunta sobre pertenencia a un subespacio.
+
+En deep learning, `Wx + b` es exactamente esto: cada fila de `W` define una combinación
+de las entradas, o equivalentemente, la salida es una combinación de las columnas de
+`W`. Si `W` tiene rango deficiente, la salida está confinada a un subespacio de dimensión
+menor que el número de neuronas: hay capacidad desperdiciada.
+
+El coste de `Ax` es `O(mn)`, lineal en el número de elementos de la matriz. Es la
+operación básica sobre la que se construye todo lo demás, y por eso las bibliotecas la
+implementan en BLAS de nivel 2 con optimizaciones de caché específicas.
+
+## 🧮 Ejemplo trabajado
+
+Ax como combinación de columnas.
+
+```text
+A = [[2,1],       x = (4, 5)
+     [0,3],
+     [1,−1]]
+
+Cálculo por filas:
+  (2·4 + 1·5, 0·4 + 3·5, 1·4 + (−1)·5) = (13, 15, −1)
+
+Cálculo por columnas:
+  4·(2,0,1) + 5·(1,3,−1) = (8,0,4) + (5,15,−5) = (13,15,−1)   ✓
+
+Ax vive en el span de {(2,0,1), (1,3,−1)}: un plano en ℝ³
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 110
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Multiplicar matrices con dimensiones incompatibles.
+2. Olvidar que Ax siempre está en el espacio columna de A.
+3. Suponer que Ax = b siempre tiene solución.
+
+## 🚀 Dónde se usa de verdad
+
+Capas densas, transformación de coordenadas, sistemas de ecuaciones y análisis de
+capacidad de una red.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 2](https://math.mit.edu/~gs/linearalgebra/)
+- [3Blue1Brown. *Matrices as linear transformations*](https://www.3blue1brown.com/lessons/linear-transformations)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

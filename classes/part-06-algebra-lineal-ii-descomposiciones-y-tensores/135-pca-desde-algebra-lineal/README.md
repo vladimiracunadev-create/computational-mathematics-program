@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**PCA es la autodescomposición de la covarianza, y equivale a la SVD de los datos centrados.**
 
-Esta clase concreta ese objetivo sobre **PCA desde álgebra lineal**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `pca`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir el orden de los índices al reordenar un tensor.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Σ = XᵀX/(n−1)  con X centrada
+componentes = autovectores de Σ
+varianza explicada = λᵢ / Σλⱼ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Broadcasting y einsum son notación, no algoritmos nuevos.
+PCA busca las direcciones de máxima varianza de un conjunto de datos. La primera
+componente es la dirección en la que los datos más se dispersan; la segunda, la de
+máxima varianza entre las ortogonales a la primera, y así sucesivamente. Esas direcciones
+son los autovectores de la matriz de covarianza, y sus autovalores son las varianzas
+correspondientes.
+
+**Centrar los datos es obligatorio**, no un preprocesado opcional. Sin centrar, la
+primera componente apunta hacia la media en lugar de hacia la dirección de máxima
+dispersión, y el resultado carece de sentido. Es el error más frecuente al implementar
+PCA a mano.
+
+Escalar es otra decisión, y esta sí es opcional pero consecuente. Si las variables están
+en unidades distintas —euros y kilómetros—, la de mayor magnitud domina la covarianza y
+la primera componente la sigue. Estandarizar antes de PCA equivale a hacer PCA sobre la
+matriz de correlación en lugar de sobre la de covarianza.
+
+PCA y SVD son el mismo cálculo. La SVD de la matriz de datos centrados da directamente
+las componentes en `V` y las varianzas en `σ²/(n−1)`, sin necesidad de formar la
+covarianza —que, como toda matriz `XᵀX`, eleva al cuadrado el número de condición—. Por
+eso las implementaciones profesionales usan SVD.
+
+Una advertencia que conviene repetir: PCA es **no supervisado**. Maximiza varianza, no
+capacidad discriminativa, y puede descartar precisamente la dirección que separa las
+clases. Para eso está el análisis discriminante lineal, que sí usa las etiquetas.
+
+## 🧮 Ejemplo trabajado
+
+PCA sobre diez observaciones bidimensionales.
+
+```text
+medias: (1.81, 1.91)
+
+matriz de covarianza:
+  [[0.6166, 0.6154],
+   [0.6154, 0.7166]]
+
+autovalores: 1.2840,  0.0491
+varianza explicada por PC1: 96.32 %
+
+PC1 = (0.6779, 0.7352)
+
+Proyecciones (primeras 5):
+  0.8280, −1.7776, 0.9922, 0.2742, 1.6759
+
+Conclusión: los datos son casi unidimensionales.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 135
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. No centrar los datos antes de calcular la covarianza.
+2. No estandarizar cuando las variables tienen unidades distintas.
+3. Esperar que PCA conserve la dirección que separa las clases: es no supervisado.
+
+## 🚀 Dónde se usa de verdad
+
+Reducción de dimensionalidad, visualización, eliminación de ruido, compresión y
+detección de multicolinealidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Jolliffe, I. T. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://link.springer.com/book/10.1007/b98835)
+- [Shlens, J. *A Tutorial on Principal Component Analysis*. arXiv, 2014](https://arxiv.org/abs/1404.1100)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

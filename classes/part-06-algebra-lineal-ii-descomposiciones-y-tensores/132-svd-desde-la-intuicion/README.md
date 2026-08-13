@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**La SVD existe para toda matriz y de ella se leen rango, condición y estructura.**
 
-Esta clase concreta ese objetivo sobre **SVD desde la intuición**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `svd_intuition`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir el orden de los índices al reordenar un tensor.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A = UΣVᵀ
+σᵢ = √(autovalores de AᵀA)
+κ(A) = σ_max / σ_min
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> La SVD existe para toda matriz, incluso no cuadrada y singular.
+La descomposición en valores singulares escribe cualquier matriz —cuadrada o no,
+invertible o no— como el producto de una rotación, un escalado por ejes y otra rotación.
+Esa universalidad es lo que la hace la herramienta más útil del álgebra lineal aplicada:
+donde la diagonalización falla, la SVD funciona.
+
+Los **valores singulares** son las cantidades por las que la matriz estira cada dirección
+principal, ordenados de mayor a menor. Su lectura es directa: el mayor es la norma
+espectral de la matriz, el número de no nulos es el rango, y el cociente entre el mayor y
+el menor es el **número de condición**. Tres diagnósticos de una sola descomposición.
+
+El número de condición es el indicador correcto de mal condicionamiento, no el
+determinante (clase 117). Una matriz puede tener determinante minúsculo y condición 1
+—si está simplemente escalada— o determinante razonable y condición 10¹² —si tiene una
+dirección casi degenerada—. Solo el segundo caso es problemático.
+
+El rango **numérico** se define con la SVD y una tolerancia: cuántos valores singulares
+superan un umbral relativo al mayor. Es la definición que usan las bibliotecas, porque
+en datos reales el rango exacto casi siempre es completo por culpa del ruido, aunque la
+estructura sea de rango bajo.
+
+## 🧮 Ejemplo trabajado
+
+SVD de una matriz 2×2.
+
+```text
+A = [[3,0],
+     [4,5]]
+
+valores singulares: σ₁ = 6.7082,  σ₂ = 2.2361
+
+norma espectral   = σ₁ = 6.7082
+número de condición = 6.7082/2.2361 = 3.0
+rango numérico    = 2  (ambos σ > tolerancia)
+
+A = UΣVᵀ reconstruye la matriz              ✓
+
+Existe para TODA matriz, incluso rectangular y singular.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 132
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Usar el determinante como indicador de condicionamiento.
+2. Calcular la SVD vía AᵀA con matrices mal condicionadas: eleva la condición al cuadrado.
+3. Suponer que los valores singulares son los autovalores: coinciden solo si A es simétrica semidefinida positiva.
+
+## 🚀 Dónde se usa de verdad
+
+Diagnóstico de condicionamiento, rango numérico, pseudoinversa, compresión, PCA,
+recomendación por factorización y regularización truncada.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 4-5](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 2](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

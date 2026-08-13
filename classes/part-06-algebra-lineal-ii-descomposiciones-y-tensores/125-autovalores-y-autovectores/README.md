@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Un autovector es una dirección que la transformación solo escala; su factor es el autovalor.**
 
-Esta clase concreta ese objetivo sobre **Autovalores y autovectores**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `eigen`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Av = λv,  v ≠ 0
+Σλᵢ = tr(A),   Πλᵢ = det(A)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Broadcasting y einsum son notación, no algoritmos nuevos.
+Casi todo vector cambia de dirección al aplicarle una transformación. Los **autovectores**
+son las excepciones: direcciones que solo se estiran o encogen, con factor el
+**autovalor**. Encontrarlas es encontrar los ejes naturales de la transformación.
+
+Las dos identidades que conectan autovalores con invariantes son muy útiles como
+verificación: su suma es la traza y su producto el determinante. Comprobarlas cuesta
+nada y detecta errores de cálculo de inmediato, que es por lo que el laboratorio las
+incluye.
+
+Para matrices **simétricas** —el caso que más importa aquí— los autovalores son reales y
+los autovectores ortogonales. Ese resultado, el teorema espectral, no vale para matrices
+generales: una rotación en el plano no tiene autovectores reales, porque ninguna
+dirección se conserva. Sus autovalores son complejos, y su parte imaginaria codifica el
+ángulo.
+
+El método de cálculo del motor es la **iteración de Jacobi**, que anula sistemáticamente
+los elementos fuera de la diagonal mediante rotaciones. Es estable, converge siempre
+para simétricas y es fácil de leer, aunque no sea el más rápido. En la práctica
+profesional se usa el algoritmo QR con desplazamientos.
+
+## 🧮 Ejemplo trabajado
+
+Autovalores de una matriz simétrica 2×2.
+
+```text
+A = [[4, 1],
+     [1, 3]]
+
+autovalores: λ₁ = 4.6180,  λ₂ = 2.3820
+autovector dominante: (0.8507, 0.5257)
+
+Verificación Av = λv:
+  A·v = (3.9284, 2.4272)
+  λ₁·v = (3.9284, 2.4272)                  ✓
+
+Invariantes:
+  suma  4.6180 + 2.3820 = 7 = tr(A)        ✓
+  producto 4.6180 · 2.3820 = 11 = det(A)   ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 125
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Buscar autovectores reales en matrices de rotación.
+2. Olvidar normalizar los autovectores al compararlos.
+3. No verificar con la traza y el determinante.
+
+## 🚀 Dónde se usa de verdad
+
+PCA, análisis de estabilidad de sistemas dinámicos, PageRank, modos de vibración y
+curvatura del Hessiano en optimización.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 24-29](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

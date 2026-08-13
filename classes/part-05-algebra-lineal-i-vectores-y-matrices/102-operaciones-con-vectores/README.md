@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**La suma de vectores es componente a componente, y la desigualdad triangular acota la norma del resultado.**
 
-Esta clase concreta ese objetivo sobre **Operaciones con vectores**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `vector_operations`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir dimensión del espacio con número de vectores.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(u + v)ᵢ = uᵢ + vᵢ
+‖u + v‖ ≤ ‖u‖ + ‖v‖
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El rango es la dimensión real de la salida, no el tamaño de la tabla.
+La suma de vectores tiene dos lecturas que conviene mantener a la vez. Algebraicamente
+se suman las componentes. Geométricamente se aplica la regla del paralelogramo: el
+resultado es la diagonal del paralelogramo que forman ambos vectores. Las dos describen
+la misma operación.
+
+La desigualdad triangular —`‖u+v‖ ≤ ‖u‖ + ‖v‖`— dice que el camino directo nunca es más
+largo que el rodeo, y es una de las tres condiciones que definen una norma. La igualdad
+se alcanza solo cuando los vectores son paralelos y del mismo sentido; en cualquier
+otro caso hay cancelación parcial.
+
+Esa desigualdad no es un tecnicismo: es la que permite acotar errores acumulados. Si el
+error de cada paso está acotado, el error total lo está por la suma, y de ahí salen las
+cotas de estabilidad de los métodos iterativos (parte 11) y las cotas de generalización
+(parte 17).
+
+Restar es sumar el opuesto, y `u − v` es el vector que va de `v` a `u`. Esa
+interpretación —la diferencia como desplazamiento— es la que convierte `‖u − v‖` en la
+distancia entre los dos puntos, conectando con la clase 061.
+
+## 🧮 Ejemplo trabajado
+
+Suma, resta y desigualdad triangular.
+
+```text
+u = (1, 2),  v = (3, −1)
+
+u + v = (4, 1)
+u − v = (−2, 3)
+2u − 3v = (2,4) − (9,−3) = (−7, 7)
+
+‖u+v‖ = √17 = 4.123
+‖u‖ + ‖v‖ = √5 + √10 = 2.236 + 3.162 = 5.398
+
+4.123 ≤ 5.398      ✓ desigualdad triangular
+
+La diferencia (5.398 − 4.123) mide cuánto se cancelan entre sí.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 102
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Sumar vectores de dimensiones distintas.
+2. Suponer que ‖u+v‖ = ‖u‖ + ‖v‖ en general: solo si son paralelos y del mismo sentido.
+3. Confundir u − v con v − u: son opuestos.
+
+## 🚀 Dónde se usa de verdad
+
+Composición de desplazamientos, acumulación de gradientes, cotas de error en métodos
+iterativos y agregación de vectores en sistemas de recomendación.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)
+- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024](https://linear.axler.net/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

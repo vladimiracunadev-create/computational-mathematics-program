@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**El rango es la dimensión efectiva de la salida; rango más nulidad es siempre el número de columnas.**
 
-Esta clase concreta ese objetivo sobre **Forma escalonada y rango**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `echelon_rank`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar producto punto a vectores de escalas incomparables.
+
+## 🧩 Fórmulas de la clase
+
+```text
+rango(A) ≤ mín(m, n)
+rango + nulidad = número de columnas
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El determinante mide cuánto escala el volumen una transformación.
+El rango de una matriz es la dimensión de su espacio columna, es decir, cuántas
+direcciones independientes puede alcanzar la transformación. Es el número que realmente
+describe una matriz, mucho más que su tamaño: una matriz 1000×1000 de rango 3 contiene
+tanta información como una de 3×3.
+
+El **teorema del rango-nulidad** —rango más nulidad igual al número de columnas— dice que
+lo que no llega a la imagen se pierde en el núcleo. Si una transformación de ℝ⁵ en ℝ⁵
+tiene rango 3, hay un subespacio de dimensión 2 que colapsa al cero: dos direcciones de
+información desaparecen sin posibilidad de recuperación.
+
+Numéricamente, el rango es delicado. Una matriz puede ser de rango completo en
+aritmética exacta y comportarse como deficiente en punto flotante si sus valores
+singulares más pequeños están cerca del ruido. Por eso el **rango numérico** se define
+con una tolerancia —cuántos valores singulares superan un umbral— y se calcula con SVD,
+no con eliminación.
+
+En machine learning el rango bajo es a la vez un problema y una herramienta. Es un
+problema cuando indica features redundantes; es una herramienta cuando se impone a
+propósito para comprimir, como en LoRA, que adapta un modelo grande añadiendo matrices
+de rango muy bajo.
+
+## 🧮 Ejemplo trabajado
+
+Rango de tres matrices.
+
+```text
+A = [[1,2],[3,4]]      rango 2 (completo)     det = −2 ≠ 0
+B = [[1,2],[2,4]]      rango 1 (deficiente)   det = 0
+C = [[1,2,3],[4,5,6]]  rango 2                máximo posible: mín(2,3) = 2
+
+Teorema del rango-nulidad para B:
+  columnas = 2,  rango = 1  →  nulidad = 1
+  el núcleo es la recta generada por (2,−1)
+  B·(2,−1) = (0,0)                            ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +106,16 @@ compmath run 115
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Calcular el rango con eliminación en datos ruidosos en lugar de con SVD y tolerancia.
+2. Suponer que una matriz grande tiene rango alto.
+3. Olvidar que el rango está acotado por el menor de los dos tamaños.
+
+## 🚀 Dónde se usa de verdad
+
+Detección de redundancia en features, compresión de bajo rango, LoRA, diagnóstico de
+sistemas indeterminados y análisis de capacidad de una capa.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/)
+- [Hu, E. et al. *LoRA: Low-Rank Adaptation of Large Language Models*. ICLR, 2022](https://arxiv.org/abs/2106.09685)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

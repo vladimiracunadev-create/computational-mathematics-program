@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Un sistema lineal tiene solución única si el determinante no es nulo; el residuo es el criterio de aceptación.**
 
-Esta clase concreta ese objetivo sobre **Sistemas lineales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_systems`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz mal condicionada en lugar de factorizar.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Ax = b
+residuo r = Ax − b, debe ser ≈ 0
+solución única ⟺ det(A) ≠ 0 ⟺ rango(A) = n
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> Resolver Ax=b casi nunca requiere calcular A⁻¹.
+Resolver `Ax = b` es el problema computacional más frecuente del álgebra lineal, y sus
+tres desenlaces posibles —solución única, ninguna o infinitas— se distinguen por el
+rango. Con determinante no nulo, la matriz es invertible y la solución es única; con
+determinante nulo, hay que comparar el rango de A con el de la matriz ampliada para
+distinguir los otros dos casos.
+
+El **residuo** `r = Ax − b` es el criterio de aceptación universal. Un solver puede
+devolver un vector sin lanzar ninguna excepción y estar equivocado; calcular el residuo
+cuesta una multiplicación matriz-vector y detecta el problema. La regla del programa es
+que ningún resultado de un solver se acepta sin comprobar su residuo.
+
+Un residuo pequeño no garantiza que la solución sea precisa: en un sistema mal
+condicionado, un residuo minúsculo puede corresponder a una solución muy alejada de la
+correcta. La relación entre ambos la da el número de condición (clase 035), y esa es la
+razón por la que el residuo es necesario pero no suficiente.
+
+Geométricamente, cada ecuación de un sistema 3×3 es un plano, y la solución es su punto
+de intersección. Sin solución significa que no hay punto común; infinitas soluciones,
+que los planos se cortan en una recta o coinciden.
+
+## 🧮 Ejemplo trabajado
+
+Sistema 3×3 con solución única.
+
+```text
+A = [[ 2,  1, −1],      b = ( 8,
+     [−3, −1,  2],           −11,
+     [−2,  1,  2]]            −3)
+
+det(A) = −1 ≠ 0  →  solución única
+
+x = (2, 3, −1)
+
+Residuo: Ax − b = (0, 0, 0)     ✓
+‖r‖ = 0.0
+
+Verificación por ecuación:
+  2·2 + 1·3 − 1·(−1) = 8        ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 113
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Aceptar la salida de un solver sin calcular el residuo.
+2. Suponer que un residuo pequeño implica una solución precisa en un sistema mal condicionado.
+3. No distinguir entre sistema incompatible e indeterminado cuando el determinante es cero.
+
+## 🚀 Dónde se usa de verdad
+
+Ajuste de modelos lineales, equilibrio en circuitos y estructuras, interpolación,
+balance de reacciones y cualquier problema con restricciones lineales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 2](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

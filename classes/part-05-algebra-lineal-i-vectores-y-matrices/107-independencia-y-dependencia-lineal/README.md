@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**La independencia lineal se detecta por el rango, no por inspección visual.**
 
-Esta clase concreta ese objetivo sobre **Independencia y dependencia lineal**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_independence`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz mal condicionada en lugar de factorizar.
+
+## 🧩 Fórmulas de la clase
+
+```text
+independientes ⟺ Σαᵢvᵢ = 0 solo con todos los αᵢ = 0
+k vectores en ℝⁿ con k > n son siempre dependientes
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,42 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El rango es la dimensión real de la salida, no el tamaño de la tabla.
+Un conjunto de vectores es linealmente independiente si ninguno se puede escribir como
+combinación de los demás. La definición formal —la única combinación que da el vector
+cero es la trivial— es la operativa, porque se traduce en un sistema homogéneo cuya
+única solución debe ser la nula.
+
+En la práctica no se comprueba a ojo: se calcula el **rango**. Si el rango del conjunto
+coincide con el número de vectores, son independientes; si es menor, hay al menos una
+relación de dependencia. Para conjuntos cuadrados, el determinante nulo es equivalente y
+más rápido de calcular.
+
+La dependencia lineal en datos tiene un nombre propio en estadística: **multicolinealidad**.
+Cuando dos features son casi combinación lineal una de otra, la matriz `XᵀX` se vuelve
+casi singular, los coeficientes de la regresión se disparan y pierden interpretabilidad.
+Ridge (clase 283) existe en buena parte para mitigar exactamente eso.
+
+Un hecho de conteo que conviene tener presente: en ℝⁿ no puede haber más de n vectores
+independientes. Si un conjunto de datos tiene más features que observaciones, las filas
+son necesariamente dependientes, y eso garantiza que el sistema esté indeterminado sin
+regularización.
+
+## 🧮 Ejemplo trabajado
+
+Dos conjuntos de tres vectores en ℝ³.
+
+```text
+A = base canónica         rango 3 = 3 vectores  → independientes ✓
+B = {(1,2,3), (2,4,6), (1,1,1)}
+
+  fila2 = 2 · fila1       → hay dependencia
+  rango(B) = 2 < 3        → dependientes       ✗
+  det(B) = 0                                   ✓ coherente
+
+En ℝ³ nunca puede haber 4 vectores independientes.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +105,16 @@ compmath run 107
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Juzgar la independencia por inspección en lugar de calcular el rango.
+2. Usar el determinante en matrices no cuadradas: no está definido.
+3. Ignorar la multicolinealidad al interpretar coeficientes de una regresión.
+
+## 🚀 Dónde se usa de verdad
+
+Detección de multicolinealidad, selección de features, diagnóstico de sistemas mal
+condicionados y reducción de dimensionalidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/)
+- [Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., 2009](https://hastie.su.domains/ElemStatLearn/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

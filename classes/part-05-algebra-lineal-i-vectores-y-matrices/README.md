@@ -10,6 +10,58 @@
 
 Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
+Si hubiera que elegir **una** parte del programa como la más rentable para alguien que
+quiere entender IA, sería esta. Todo modelo moderno —desde la regresión lineal hasta un
+Transformer de cien mil millones de parámetros— opera sobre vectores y matrices, y casi
+toda su computación es producto matricial. Quien no distingue un espacio columna de un
+espacio fila no puede depurar un error de dimensiones ni entender por qué una capa pierde
+información.
+
+El cambio de perspectiva que propone la parte es concreto: **dejar de ver una matriz como
+una tabla y verla como una función**. Una matriz `A` de tamaño m×n es una transformación
+lineal de ℝⁿ en ℝᵐ, y sus columnas son las imágenes de los vectores de la base. Con esa
+lectura, `Ax` deja de ser «filas por columnas» y pasa a ser una combinación lineal de las
+columnas de A con los coeficientes de x —que es exactamente lo que hace una capa densa
+con sus pesos—.
+
+Las clases 101 a 108 construyen el vocabulario vectorial: operaciones, producto punto,
+normas, independencia y span. El producto punto es el protagonista: mide alineación, define
+ortogonalidad y es la operación que ejecutan miles de millones de veces por segundo los
+aceleradores. La similitud coseno de un buscador semántico es un producto punto
+normalizado, ni más ni menos.
+
+Las clases 109 a 117 pasan a las matrices: producto, transpuesta, sistemas lineales,
+eliminación de Gauss, rango, inversa y determinante. Aquí aparece el mensaje práctico más
+importante de la parte: **resolver `Ax = b` casi nunca requiere calcular `A⁻¹`**. Invertir
+es más caro y numéricamente peor que factorizar; ninguna biblioteca seria invierte una
+matriz para resolver un sistema, y saber por qué distingue a quien entiende de quien
+recita.
+
+Las clases 118 y 119 introducen la ortogonalidad como propiedad numérica privilegiada: las
+transformaciones ortogonales no amplifican el error, y la proyección ortogonal es la mejor
+aproximación posible en norma euclídea. Ese resultado es el que sostiene los mínimos
+cuadrados (parte 06), PCA (clase 135) y la descomposición de la varianza en estadística.
+
+El capstone construye un sistema de recomendación por similitud coseno entre usuarios. No
+usa ninguna biblioteca de machine learning: es todo producto punto y norma. Ese es el
+punto de la parte.
+
+## 🗺️ Mapa conceptual
+
+```mermaid
+flowchart TD
+    A["Clases 101-108 · Vectores"] --> B["Clases 109-112 · Matrices y su producto"]
+    A --> C["Clases 103-105 · Producto punto y normas"]
+    B --> D["Clases 113-117 · Sistemas lineales, rango e inversa"]
+    C --> E["Clases 118-119 · Ortogonalidad y proyeccion"]
+    D --> E
+    E --> F["Clase 120 · Capstone recomendador lineal"]
+    D ==> G["Parte 06 · Descomposiciones y SVD"]
+    C -.-> H["Similitud coseno y atencion · Parte 16"]
+    B -.-> I["Capa densa y = Wx + b · Parte 15"]
+    E -.-> J["Minimos cuadrados y PCA · Parte 06"]
+```
+
 ## 🧠 Ideas centrales
 
 - Una matriz es una función lineal escrita en una base concreta.
@@ -90,26 +142,30 @@ flowchart LR
 
 | # | Clase | Demostración | Idea central |
 |---|---|---|---|
-| `101` | [Escalares, vectores y matrices](101-escalares-vectores-y-matrices/README.md) | `scalars_vectors_matrices` | Escalar, vector y matriz como objetos con forma y significado. |
-| `102` | [Operaciones con vectores](102-operaciones-con-vectores/README.md) | `vector_operations` | Suma, resta y combinación lineal con interpretación geométrica. |
-| `103` | [Producto punto y similitud](103-producto-punto-y-similitud/README.md) | `dot_product` | Producto punto: proyección, ángulo y similitud. |
-| `104` | [Normas y distancias](104-normas-y-distancias/README.md) | `norms_distances` | L1, L2 e L∞ sobre el mismo vector. |
-| `105` | [Vectores unitarios](105-vectores-unitarios/README.md) | `unit_vectors` | Normalizar separa dirección de magnitud. |
-| `106` | [Combinaciones lineales](106-combinaciones-lineales/README.md) | `linear_combinations` | Toda combinación lineal de la base canónica reconstruye el vector. |
-| `107` | [Independencia y dependencia lineal](107-independencia-y-dependencia-lineal/README.md) | `linear_independence` | Independencia detectada por el rango, no por inspección. |
-| `108` | [Span y subespacios](108-span-y-subespacios/README.md) | `span_subspaces` | El span de dos vectores en ℝ³ es un plano, no todo el espacio. |
-| `109` | [Matrices y operaciones básicas](109-matrices-y-operaciones-basicas/README.md) | `matrix_basics` | Suma, escala y transpuesta de matrices. |
-| `110` | [Producto matriz-vector](110-producto-matriz-vector/README.md) | `matrix_vector` | Ax como combinación lineal de las columnas de A. |
-| `111` | [Producto de matrices](111-producto-de-matrices/README.md) | `matrix_product` | AB ≠ BA y el coste cúbico del producto. |
-| `112` | [Transpuesta y simetría](112-transpuesta-y-simetria/README.md) | `transpose_symmetry` | Toda matriz cuadrada se descompone en parte simétrica y antisimétrica. |
-| `113` | [Sistemas lineales](113-sistemas-lineales/README.md) | `linear_systems` | Sistema 3x3: solución, residuo y unicidad. |
-| `114` | [Eliminación de Gauss](114-eliminacion-de-gauss/README.md) | `gaussian_elimination_demo` | Eliminación de Gauss con pivoteo parcial, paso a paso. |
-| `115` | [Forma escalonada y rango](115-forma-escalonada-y-rango/README.md) | `echelon_rank` | Rango: la dimensión efectiva de la transformación. |
-| `116` | [Inversa de una matriz](116-inversa-de-una-matriz/README.md) | `matrix_inverse` | La inversa existe, pero rara vez conviene calcularla. |
-| `117` | [Determinantes](117-determinantes/README.md) | `determinants` | El determinante mide el escalado de volumen y detecta singularidad. |
-| `118` | [Matrices ortogonales](118-matrices-ortogonales/README.md) | `orthogonal_matrices` | Matriz ortogonal: QᵀQ = I, preserva normas y ángulos. |
-| `119` | [Proyecciones ortogonales](119-proyecciones-ortogonales/README.md) | `orthogonal_projection` | Proyección sobre un subespacio y descomposición ortogonal. |
-| `120` | [Capstone: resolver un sistema de recomendación lineal](120-capstone-resolver-un-sistema-de-recomendacion-lineal/README.md) | `capstone_linear_recommender` | Capstone: recomendación lineal por similitud coseno entre usuarios. |
+| `101` | [Escalares, vectores y matrices](101-escalares-vectores-y-matrices/README.md) | `scalars_vectors_matrices` | Escalar, vector, matriz y tensor son el mismo objeto con distinto número de índices. |
+| `102` | [Operaciones con vectores](102-operaciones-con-vectores/README.md) | `vector_operations` | La suma de vectores es componente a componente, y la desigualdad triangular acota la norma del resultado. |
+| `103` | [Producto punto y similitud](103-producto-punto-y-similitud/README.md) | `dot_product` | El producto punto mide alineación; su normalización es la similitud coseno de los embeddings. |
+| `104` | [Normas y distancias](104-normas-y-distancias/README.md) | `norms_distances` | La norma elegida determina qué se penaliza: L1 induce dispersión, L2 penaliza los valores grandes. |
+| `105` | [Vectores unitarios](105-vectores-unitarios/README.md) | `unit_vectors` | Normalizar separa dirección de magnitud; el vector cero no tiene dirección definida. |
+| `106` | [Combinaciones lineales](106-combinaciones-lineales/README.md) | `linear_combinations` | Una combinación lineal es la operación fundamental del álgebra lineal, y una capa densa es exactamente eso. |
+| `107` | [Independencia y dependencia lineal](107-independencia-y-dependencia-lineal/README.md) | `linear_independence` | La independencia lineal se detecta por el rango, no por inspección visual. |
+| `108` | [Span y subespacios](108-span-y-subespacios/README.md) | `span_subspaces` | El span de un conjunto es siempre un subespacio, y su dimensión es el rango del conjunto. |
+| `109` | [Matrices y operaciones básicas](109-matrices-y-operaciones-basicas/README.md) | `matrix_basics` | Suma, escala y transpuesta operan elemento a elemento; la traza suma la diagonal. |
+| `110` | [Producto matriz-vector](110-producto-matriz-vector/README.md) | `matrix_vector` | Ax es una combinación lineal de las columnas de A, y por eso vive en el espacio columna. |
+| `111` | [Producto de matrices](111-producto-de-matrices/README.md) | `matrix_product` | El producto matricial compone transformaciones, es asociativo y no conmuta. |
+| `112` | [Transpuesta y simetría](112-transpuesta-y-simetria/README.md) | `transpose_symmetry` | Toda matriz cuadrada se descompone en parte simétrica y antisimétrica, y AᵀA es siempre simétrica. |
+| `113` | [Sistemas lineales](113-sistemas-lineales/README.md) | `linear_systems` | Un sistema lineal tiene solución única si el determinante no es nulo; el residuo es el criterio de aceptación. |
+| `114` | [Eliminación de Gauss](114-eliminacion-de-gauss/README.md) | `gaussian_elimination_demo` | El pivoteo parcial evita dividir por pivotes casi nulos y hace estable la eliminación. |
+| `115` | [Forma escalonada y rango](115-forma-escalonada-y-rango/README.md) | `echelon_rank` | El rango es la dimensión efectiva de la salida; rango más nulidad es siempre el número de columnas. |
+| `116` | [Inversa de una matriz](116-inversa-de-una-matriz/README.md) | `matrix_inverse` | La inversa existe si el determinante no es nulo, pero resolver un sistema casi nunca debe pasar por ella. |
+| `117` | [Determinantes](117-determinantes/README.md) | `determinants` | El determinante mide cuánto escala el volumen la transformación; cero significa que la aplasta. |
+| `118` | [Matrices ortogonales](118-matrices-ortogonales/README.md) | `orthogonal_matrices` | Las matrices ortogonales preservan normas y ángulos, y su número de condición es 1. |
+| `119` | [Proyecciones ortogonales](119-proyecciones-ortogonales/README.md) | `orthogonal_projection` | La proyección ortogonal es la mejor aproximación dentro de un subespacio, y su residuo es ortogonal a él. |
+| `120` | [Capstone: resolver un sistema de recomendación lineal](120-capstone-resolver-un-sistema-de-recomendacion-lineal/README.md) | `capstone_linear_recommender` | Un recomendador por filtrado colaborativo es producto punto normalizado y media ponderada; nada más. |
+
+## 📖 Glosario de la parte (19 términos)
+
+Definiciones precisas en [`GLOSARIO.md`](GLOSARIO.md).
 
 ## 🧰 Stack de referencia
 

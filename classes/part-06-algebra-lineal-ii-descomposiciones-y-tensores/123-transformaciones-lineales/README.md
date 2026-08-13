@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Una transformación es lineal si preserva sumas y escalados; sus columnas son las imágenes de la base.**
 
-Esta clase concreta ese objetivo sobre **Transformaciones lineales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_transformations`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir el orden de los índices al reordenar un tensor.
+
+## 🧩 Fórmulas de la clase
+
+```text
+T(u+v) = T(u) + T(v)
+T(ku) = k·T(u)
+T(0) = 0  (condición necesaria)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> PCA es la SVD de los datos centrados: no hay magia estadística adicional.
+Una transformación lineal es la que respeta la estructura del espacio vectorial:
+transformar una suma es sumar las transformaciones, y transformar un múltiplo es
+multiplicar la transformación. Ambas condiciones juntas equivalen a preservar
+combinaciones lineales.
+
+De ahí se deduce inmediatamente que `T(0) = 0`. Esa condición necesaria es la que
+excluye la traslación: mover el origen no es una transformación lineal, y por eso las
+coordenadas homogéneas de la clase 073 tuvieron que ampliar la dimensión.
+
+El resultado que hace todo esto operativo es que **toda transformación lineal está
+determinada por lo que hace con los vectores de la base**. Si se sabe a dónde va cada
+`eᵢ`, se sabe a dónde va cualquier vector, porque todo vector es combinación de la base.
+Y esas imágenes son precisamente las columnas de la matriz.
+
+La consecuencia práctica al leer código: para entender qué hace una matriz de pesos,
+mirar sus columnas dice a dónde manda cada entrada; mirar sus filas dice de qué depende
+cada salida. Las dos lecturas son útiles y responden preguntas distintas.
+
+## 🧮 Ejemplo trabajado
+
+Verificar linealidad de una escala.
+
+```text
+A = [[2,0],[0,3]]   (escala x2 en x, x3 en y)
+
+u = (1,2),  v = (3,−1),  k = 4
+
+Aditividad:
+  A(u+v) = A(4,1) = (8,3)
+  Au + Av = (2,6) + (6,−3) = (8,3)          ✓
+
+Homogeneidad:
+  A(4u) = A(4,8) = (8,24)
+  4·Au  = 4·(2,6) = (8,24)                  ✓
+
+T(0) = (0,0)                                ✓
+
+Columnas de A: (2,0) y (0,3)
+  son las imágenes de e₁ y e₂
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 123
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Llamar lineal a una transformación afín Wx + b.
+2. Verificar solo una de las dos condiciones.
+3. Olvidar que las columnas son las imágenes de la base, no las filas.
+
+## 🚀 Dónde se usa de verdad
+
+Capas densas, transformaciones geométricas, filtros lineales y cualquier operación que
+deba conmutar con la suma de sus entradas.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 3](https://linear.axler.net/)
+- [3Blue1Brown. *Linear transformations and matrices*](https://www.3blue1brown.com/lessons/linear-transformations)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

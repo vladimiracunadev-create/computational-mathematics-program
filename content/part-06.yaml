@@ -1,0 +1,1191 @@
+part: "06"
+titulo: "Álgebra lineal II: descomposiciones y tensores"
+
+resumen_extendido: |
+  Si la parte 05 enseñó qué es una matriz, esta enseña a **desarmarla**. Una descomposición
+  escribe una matriz como producto de matrices más simples, y esa reescritura convierte
+  problemas difíciles en fáciles: resolver muchos sistemas, calcular potencias, comprimir
+  datos, encontrar direcciones principales o diagnosticar mal condicionamiento.
+
+  Las clases 121 a 124 preparan el terreno con el concepto que más cuesta y más rinde: **la
+  base es una elección**. Un vector no cambia al cambiar de base; lo que cambia es su lista
+  de coordenadas. La matriz `A' = P⁻¹AP` representa la misma transformación vista desde otra
+  base, y toda la teoría de autovalores consiste en buscar la base donde la transformación se
+  ve lo más simple posible.
+
+  Las clases 125 a 128 son autovalores y diagonalización. Un autovector es una dirección que
+  la transformación solo escala, y en esa base la matriz se convierte en diagonal: aplicarla
+  cien veces cuesta elevar números a la centésima, no multiplicar cien matrices. Las matrices
+  simétricas —que incluyen toda covarianza y todo Hessiano— son siempre diagonalizables con
+  base ortonormal, resultado conocido como teorema espectral.
+
+  Las clases 129 a 134 son las descomposiciones de trabajo: LU para resolver muchos sistemas,
+  QR para mínimos cuadrados estables, y **SVD**, que es la más general y la más útil. La SVD
+  existe para toda matriz, incluso rectangular y singular, y de ella se leen el rango, el
+  número de condición, la mejor aproximación de rango bajo y la pseudoinversa. Si hubiera que
+  quedarse con un solo resultado de álgebra lineal aplicada, sería la SVD.
+
+  El teorema de Eckart-Young, que la clase 133 comprueba numéricamente, dice algo muy fuerte:
+  truncar la SVD da la **mejor** aproximación posible de rango k, no una buena. Ese resultado
+  es el que fundamenta PCA, la compresión de imágenes, los sistemas de recomendación por
+  factorización y LoRA.
+
+  El cierre (135 a 139) conecta con la práctica moderna: PCA como SVD de datos centrados,
+  producto de Kronecker, tensores, broadcasting y notación de Einstein. Broadcasting y einsum
+  no son algoritmos nuevos: son **notación** para expresar operaciones tensoriales sin bucles,
+  y saber leerlos es requisito para leer código de deep learning.
+
+mapa: |
+  flowchart TD
+      A["Clases 121-124 · Base, coordenadas y transformaciones"] --> B["Clases 125-128 · Autovalores y diagonalizacion"]
+      B --> C["Clases 129-131 · LU, QR y minimos cuadrados"]
+      B --> D["Clases 132-135 · SVD, pseudoinversa y PCA"]
+      C --> D
+      D --> E["Clases 136-139 · Tensores, Kronecker, broadcasting y einsum"]
+      E --> F["Clase 140 · Capstone compresion por SVD"]
+      D ==> G["Parte 14 · PCA aplicado a ML"]
+      D -.-> H["LoRA: adaptacion de rango bajo · Parte 16"]
+      B -.-> I["Hessiano y curvatura · Parte 08"]
+      E -.-> J["Atencion como contraccion tensorial · Parte 16"]
+
+glosario:
+  - termino: "Base"
+    definicion: "Conjunto independiente que genera todo el espacio. Las coordenadas de un vector dependen de la base elegida."
+    clase: "121"
+  - termino: "Cambio de base"
+    definicion: "Transformación A' = P⁻¹AP que expresa la misma aplicación lineal en otra base."
+    clase: "122"
+  - termino: "Matrices semejantes"
+    definicion: "A y P⁻¹AP. Representan la misma transformación y comparten traza, determinante y autovalores."
+    clase: "122"
+  - termino: "Núcleo"
+    definicion: "Conjunto de vectores que la transformación manda al cero. Su dimensión es la nulidad."
+    clase: "124"
+  - termino: "Autovalor"
+    definicion: "Factor λ por el que la transformación escala su autovector: Av = λv."
+    clase: "125"
+  - termino: "Teorema espectral"
+    definicion: "Toda matriz simétrica real es diagonalizable con autovectores ortonormales y autovalores reales."
+    clase: "126"
+  - termino: "Definida positiva"
+    definicion: "Matriz simétrica con todos los autovalores positivos; equivale a xᵀAx > 0 para todo x no nulo."
+    clase: "127"
+  - termino: "Forma cuadrática"
+    definicion: "q(x) = xᵀAx. Sus curvas de nivel son elipses si A es definida positiva."
+    clase: "128"
+  - termino: "Factorización LU"
+    definicion: "A = LU con L triangular inferior y U superior. Factoriza una vez, resuelve muchos sistemas."
+    clase: "129"
+  - termino: "Factorización QR"
+    definicion: "A = QR con Q ortogonal y R triangular superior. Numéricamente más estable que las ecuaciones normales."
+    clase: "130"
+  - termino: "Mínimos cuadrados"
+    definicion: "Solución que minimiza ‖Ax − b‖². Es la proyección de b sobre el espacio columna de A."
+    clase: "131"
+  - termino: "Valor singular"
+    definicion: "Raíz cuadrada de los autovalores de AᵀA. Miden cuánto estira A en cada dirección principal."
+    clase: "132"
+  - termino: "SVD"
+    definicion: "A = UΣVᵀ. Existe para toda matriz. De ella se leen rango, condición y mejor aproximación de rango bajo."
+    clase: "132"
+  - termino: "Teorema de Eckart-Young"
+    definicion: "La SVD truncada a rango k es la mejor aproximación de rango k en norma de Frobenius y espectral."
+    clase: "133"
+  - termino: "Pseudoinversa"
+    definicion: "A⁺, generalización de la inversa a matrices rectangulares o singulares. Da la solución de mínima norma."
+    clase: "134"
+  - termino: "PCA"
+    definicion: "Proyección sobre los autovectores de la covarianza. Es la SVD de los datos centrados."
+    clase: "135"
+  - termino: "Producto de Kronecker"
+    definicion: "A⊗B, matriz en bloques cuyo rango es el producto de los rangos."
+    clase: "136"
+  - termino: "Orden de un tensor"
+    definicion: "Número de índices necesarios para localizar un elemento. Un lote de imágenes es de orden 4."
+    clase: "137"
+  - termino: "Broadcasting"
+    definicion: "Regla que alinea shapes por la derecha y estira las dimensiones de tamaño 1 sin copiar memoria."
+    clase: "138"
+  - termino: "Notación de Einstein"
+    definicion: "Convenio en el que los índices repetidos se suman. Unifica producto, traza, contracción y transposición."
+    clase: "139"
+
+clases:
+  "121":
+    concepto: "Las coordenadas de un vector dependen de la base; el vector no."
+    formulas:
+      - "v = Σ cᵢ bᵢ  con bᵢ los vectores de la base"
+      - "coordenadas: c = B⁻¹v, donde B tiene las bᵢ por columnas"
+    desarrollo: |
+      La confusión más persistente del álgebra lineal es identificar un vector con su lista
+      de números. La lista son sus **coordenadas en una base concreta**, casi siempre la
+      canónica, y cambiar de base cambia la lista sin cambiar el objeto. El vector `(3,1)` es
+      el mismo punto del plano se mire desde donde se mire.
+
+      Calcular las coordenadas en otra base es resolver un sistema: si `B` es la matriz cuyas
+      columnas son los vectores de la nueva base, las coordenadas `c` cumplen `Bc = v`. Que
+      ese sistema tenga solución única es exactamente la condición de que los vectores formen
+      base: independientes y generadores.
+
+      La utilidad de cambiar de base es que **algunos problemas son triviales en la base
+      correcta**. Una matriz cualquiera es difícil de elevar a la centésima potencia; en la
+      base de sus autovectores es diagonal y basta elevar números. Ese es el programa completo
+      de las clases 125 y 126.
+
+      En machine learning el cambio de base es omnipresente aunque no se nombre: PCA cambia a
+      la base de componentes principales, la transformada de Fourier cambia a la base de
+      frecuencias, y una capa de embedding cambia de la base «one-hot» a una base densa
+      aprendida. Todas son la misma operación.
+    ejemplo: |
+      El mismo vector en dos bases.
+
+      ```text
+      base canónica: (3, 1)
+
+      nueva base: b₁ = (1,1),  b₂ = (1,−1)
+
+      Resolver B·c = v:
+        [[1, 1],  [c₁]   [3]
+         [1,−1]]  [c₂] = [1]
+
+        c = (2, 1)
+
+      Comprobación: 2·(1,1) + 1·(1,−1) = (3,1)    ✓
+
+      El vector no cambió; cambió su lista de coordenadas.
+      ```
+    errores:
+      - "Identificar el vector con su lista de coordenadas."
+      - "Olvidar declarar en qué base están expresadas unas coordenadas."
+      - "Suponer que cualquier conjunto de n vectores en ℝⁿ es base: deben ser independientes."
+    aplicacion: |
+      PCA, transformada de Fourier, embeddings, cambio de sistema de referencia en robótica y
+      cualquier representación alternativa de los mismos datos.
+    referencias:
+      - "[Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 2](https://linear.axler.net/)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "122":
+    concepto: "A y P⁻¹AP representan la misma transformación en bases distintas y comparten sus invariantes."
+    formulas:
+      - "A' = P⁻¹AP  (semejanza)"
+      - "tr(A') = tr(A),  det(A') = det(A),  autovalores iguales"
+    desarrollo: |
+      Si `P` es la matriz cuyas columnas son los vectores de la nueva base, entonces `P⁻¹AP`
+      es la misma transformación expresada en esa base. La lectura de la fórmula, de derecha a
+      izquierda, es literal: pasar de la nueva base a la canónica (`P`), aplicar la
+      transformación (`A`) y volver (`P⁻¹`).
+
+      Las matrices relacionadas así se llaman **semejantes**, y comparten todo lo que no
+      depende de la base: traza, determinante, rango, polinomio característico y autovalores.
+      Esos son los **invariantes** de la transformación, y son las magnitudes que describen la
+      transformación en sí, no su representación.
+
+      Que la traza y el determinante sean invariantes explica por qué son iguales a la suma y
+      al producto de los autovalores respectivamente: los autovalores tampoco dependen de la
+      base, y en la base diagonal la traza es su suma y el determinante su producto.
+
+      La diagonalización de la clase 126 es el caso particular en que la nueva base está
+      formada por autovectores y `A'` resulta diagonal. No siempre existe esa base —hay
+      matrices no diagonalizables— pero para las simétricas sí, y siempre ortonormal.
+    ejemplo: |
+      Cambio de base con P y su inversa.
+
+      ```text
+      P = [[1, 1],     P⁻¹ = [[0.5,  0.5],
+           [1,−1]]            [0.5, −0.5]]
+
+      P·P⁻¹ = I                                  ✓
+
+      v = (3,1) en base canónica
+      coordenadas nuevas: P⁻¹v = (2, 1)
+      vuelta:             P·(2,1) = (3,1)        ✓
+
+      Semejanza: A' = P⁻¹AP
+        misma transformación, otra representación
+        mismos autovalores, traza y determinante
+      ```
+    errores:
+      - "Escribir PAP⁻¹ cuando corresponde P⁻¹AP (o al revés) sin fijar la convención."
+      - "Suponer que matrices semejantes son iguales entrada a entrada."
+      - "Comparar matrices de transformaciones expresadas en bases distintas."
+    aplicacion: |
+      Diagonalización, análisis de sistemas dinámicos, cambio de sistema de referencia y
+      reducción de una forma cuadrática a ejes principales.
+    referencias:
+      - "[Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024](https://linear.axler.net/)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "123":
+    concepto: "Una transformación es lineal si preserva sumas y escalados; sus columnas son las imágenes de la base."
+    formulas:
+      - "T(u+v) = T(u) + T(v)"
+      - "T(ku) = k·T(u)"
+      - "T(0) = 0  (condición necesaria)"
+    desarrollo: |
+      Una transformación lineal es la que respeta la estructura del espacio vectorial:
+      transformar una suma es sumar las transformaciones, y transformar un múltiplo es
+      multiplicar la transformación. Ambas condiciones juntas equivalen a preservar
+      combinaciones lineales.
+
+      De ahí se deduce inmediatamente que `T(0) = 0`. Esa condición necesaria es la que
+      excluye la traslación: mover el origen no es una transformación lineal, y por eso las
+      coordenadas homogéneas de la clase 073 tuvieron que ampliar la dimensión.
+
+      El resultado que hace todo esto operativo es que **toda transformación lineal está
+      determinada por lo que hace con los vectores de la base**. Si se sabe a dónde va cada
+      `eᵢ`, se sabe a dónde va cualquier vector, porque todo vector es combinación de la base.
+      Y esas imágenes son precisamente las columnas de la matriz.
+
+      La consecuencia práctica al leer código: para entender qué hace una matriz de pesos,
+      mirar sus columnas dice a dónde manda cada entrada; mirar sus filas dice de qué depende
+      cada salida. Las dos lecturas son útiles y responden preguntas distintas.
+    ejemplo: |
+      Verificar linealidad de una escala.
+
+      ```text
+      A = [[2,0],[0,3]]   (escala x2 en x, x3 en y)
+
+      u = (1,2),  v = (3,−1),  k = 4
+
+      Aditividad:
+        A(u+v) = A(4,1) = (8,3)
+        Au + Av = (2,6) + (6,−3) = (8,3)          ✓
+
+      Homogeneidad:
+        A(4u) = A(4,8) = (8,24)
+        4·Au  = 4·(2,6) = (8,24)                  ✓
+
+      T(0) = (0,0)                                ✓
+
+      Columnas de A: (2,0) y (0,3)
+        son las imágenes de e₁ y e₂
+      ```
+    errores:
+      - "Llamar lineal a una transformación afín Wx + b."
+      - "Verificar solo una de las dos condiciones."
+      - "Olvidar que las columnas son las imágenes de la base, no las filas."
+    aplicacion: |
+      Capas densas, transformaciones geométricas, filtros lineales y cualquier operación que
+      deba conmutar con la suma de sus entradas.
+    referencias:
+      - "[Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 3](https://linear.axler.net/)"
+      - "[3Blue1Brown. *Linear transformations and matrices*](https://www.3blue1brown.com/lessons/linear-transformations)"
+
+  "124":
+    concepto: "Lo que no llega a la imagen se pierde en el núcleo: rango más nulidad es el número de columnas."
+    formulas:
+      - "núcleo = {x : Ax = 0}"
+      - "imagen = espacio columna"
+      - "rango + nulidad = n"
+    desarrollo: |
+      El **núcleo** de una transformación es el conjunto de vectores que manda al cero, y la
+      **imagen** es el conjunto de vectores alcanzables. Ambos son subespacios, y el teorema
+      del rango-nulidad los relaciona: la suma de sus dimensiones es el número de columnas.
+
+      La lectura es de conservación: cada dimensión de entrada o bien sobrevive en la imagen o
+      bien colapsa en el núcleo. No hay una tercera opción. Si una transformación de ℝ³ en ℝ²
+      tiene rango 2, su núcleo tiene dimensión 1: hay una recta entera de vectores distintos
+      que producen la misma salida.
+
+      Esa pérdida es irreversible. Si el núcleo no es trivial, la transformación no es
+      inyectiva y no se puede invertir: dada una salida, no se sabe de qué entrada vino. Es la
+      versión lineal de la inyectividad de la clase 086, y es la razón por la que una capa que
+      reduce dimensión pierde información necesariamente.
+
+      El núcleo también describe la **no unicidad** de la solución de un sistema: si `x₀`
+      resuelve `Ax = b`, entonces `x₀ + k` también lo resuelve para cualquier `k` del núcleo.
+      Por eso un sistema con núcleo no trivial tiene infinitas soluciones, y por eso la
+      pseudoinversa (clase 134) elige entre ellas la de norma mínima.
+    ejemplo: |
+      Núcleo e imagen de una matriz 2×3 de rango 1.
+
+      ```text
+      A = [[1, 2, 3],
+           [2, 4, 6]]        (fila2 = 2·fila1)
+
+      rango = 1     (dimensión de la imagen)
+      columnas = 3
+      nulidad = 3 − 1 = 2                        ✓ teorema
+
+      Un vector del núcleo: (2, −1, 0)
+        A·(2,−1,0) = (2−2+0, 4−4+0) = (0,0)      ✓
+
+      Consecuencia: A no es inyectiva.
+      Infinitos vectores distintos dan la misma salida.
+      ```
+    errores:
+      - "Confundir el núcleo (en el dominio) con la imagen (en el codominio)."
+      - "Suponer que núcleo trivial implica sobreyectividad."
+      - "Olvidar que el teorema cuenta las columnas, no las filas."
+    aplicacion: |
+      Unicidad de soluciones, pérdida de información en capas con reducción de dimensión,
+      análisis de identificabilidad de modelos y espacios nulos en optimización con
+      restricciones.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024](https://linear.axler.net/)"
+
+  "125":
+    concepto: "Un autovector es una dirección que la transformación solo escala; su factor es el autovalor."
+    formulas:
+      - "Av = λv,  v ≠ 0"
+      - "Σλᵢ = tr(A),   Πλᵢ = det(A)"
+    desarrollo: |
+      Casi todo vector cambia de dirección al aplicarle una transformación. Los **autovectores**
+      son las excepciones: direcciones que solo se estiran o encogen, con factor el
+      **autovalor**. Encontrarlas es encontrar los ejes naturales de la transformación.
+
+      Las dos identidades que conectan autovalores con invariantes son muy útiles como
+      verificación: su suma es la traza y su producto el determinante. Comprobarlas cuesta
+      nada y detecta errores de cálculo de inmediato, que es por lo que el laboratorio las
+      incluye.
+
+      Para matrices **simétricas** —el caso que más importa aquí— los autovalores son reales y
+      los autovectores ortogonales. Ese resultado, el teorema espectral, no vale para matrices
+      generales: una rotación en el plano no tiene autovectores reales, porque ninguna
+      dirección se conserva. Sus autovalores son complejos, y su parte imaginaria codifica el
+      ángulo.
+
+      El método de cálculo del motor es la **iteración de Jacobi**, que anula sistemáticamente
+      los elementos fuera de la diagonal mediante rotaciones. Es estable, converge siempre
+      para simétricas y es fácil de leer, aunque no sea el más rápido. En la práctica
+      profesional se usa el algoritmo QR con desplazamientos.
+    ejemplo: |
+      Autovalores de una matriz simétrica 2×2.
+
+      ```text
+      A = [[4, 1],
+           [1, 3]]
+
+      autovalores: λ₁ = 4.6180,  λ₂ = 2.3820
+      autovector dominante: (0.8507, 0.5257)
+
+      Verificación Av = λv:
+        A·v = (3.9284, 2.4272)
+        λ₁·v = (3.9284, 2.4272)                  ✓
+
+      Invariantes:
+        suma  4.6180 + 2.3820 = 7 = tr(A)        ✓
+        producto 4.6180 · 2.3820 = 11 = det(A)   ✓
+      ```
+    errores:
+      - "Buscar autovectores reales en matrices de rotación."
+      - "Olvidar normalizar los autovectores al compararlos."
+      - "No verificar con la traza y el determinante."
+    aplicacion: |
+      PCA, análisis de estabilidad de sistemas dinámicos, PageRank, modos de vibración y
+      curvatura del Hessiano en optimización.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 24-29](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "126":
+    concepto: "Diagonalizar es elegir la base donde la transformación solo escala, y ahí las potencias son triviales."
+    formulas:
+      - "A = PDP⁻¹,  D diagonal de autovalores"
+      - "simétrica: A = QDQᵀ con Q ortogonal"
+      - "Aᵏ = PDᵏP⁻¹"
+    desarrollo: |
+      Si una matriz tiene una base completa de autovectores, se puede escribir como `PDP⁻¹`
+      con `D` diagonal. Esa factorización es un cambio de base: pasar a la base de
+      autovectores, escalar cada eje por su autovalor y volver.
+
+      La ganancia práctica más visible está en las potencias. `A¹⁰⁰ = PD¹⁰⁰P⁻¹`, y elevar una
+      diagonal a la centésima es elevar sus entradas. De multiplicar cien matrices se pasa a
+      elevar n números. Es lo que permite analizar el comportamiento a largo plazo de una
+      cadena de Markov (clase 199) sin simularla.
+
+      Para matrices simétricas el resultado es aún mejor: la base de autovectores puede
+      elegirse **ortonormal**, así que `P` es ortogonal y `P⁻¹ = Pᵀ`. La factorización queda
+      `A = QDQᵀ`, sin necesidad de invertir nada. Es el teorema espectral, y es la razón por la
+      que las matrices simétricas son tan cómodas.
+
+      No toda matriz es diagonalizable. Las que tienen autovalores repetidos sin suficientes
+      autovectores independientes no lo son, y para ellas existe la forma de Jordan. En la
+      práctica numérica ese caso es inestable y se prefiere la SVD, que siempre existe.
+    ejemplo: |
+      Diagonalizar una simétrica y elevarla a la décima.
+
+      ```text
+      A = [[4,1],[1,3]]
+
+      D = diag(4.6180, 2.3820)
+      Q = matriz ortogonal de autovectores
+
+      QDQᵀ reconstruye A                         ✓
+
+      A¹⁰ vía diagonalización:
+        Q·diag(4.6180¹⁰, 2.3820¹⁰)·Qᵀ
+        = [[ 4 259 552, 2 632 158],
+           [ 2 632 158, 1 627 394]]
+
+      Coste: 2 exponenciaciones frente a 10 productos de matrices
+      ```
+    errores:
+      - "Suponer que toda matriz es diagonalizable."
+      - "Invertir P cuando la matriz es simétrica y bastaría transponer."
+      - "Usar diagonalización en matrices no simétricas mal condicionadas: preferir SVD."
+    aplicacion: |
+      Potencias de matrices, cadenas de Markov, análisis modal, PCA y ecuaciones diferenciales
+      lineales.
+    referencias:
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)"
+      - "[Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)"
+
+  "127":
+    concepto: "Definida positiva significa todos los autovalores positivos, y equivale a que xᵀAx sea siempre positivo."
+    formulas:
+      - "A ≻ 0 ⟺ xᵀAx > 0 para todo x ≠ 0 ⟺ todos los λᵢ > 0"
+      - "criterio de Sylvester: todos los menores principales positivos"
+    desarrollo: |
+      Una matriz simétrica es definida positiva si su forma cuadrática es siempre positiva
+      salvo en el origen. Las tres caracterizaciones —forma cuadrática, autovalores y menores
+      principales— son equivalentes, y cada una es la más cómoda en un contexto distinto.
+
+      Esta propiedad es la que hace «bien portados» a los objetos donde aparece. Una **matriz
+      de covarianza** es siempre semidefinida positiva, porque su forma cuadrática es la
+      varianza de una combinación lineal, que no puede ser negativa. Un **Hessiano definido
+      positivo** en un punto crítico garantiza que es un mínimo (clase 169). Una **matriz de
+      Gram** de un kernel válido debe ser semidefinida positiva, y esa es la condición de
+      Mercer (clase 290).
+
+      La distinción entre definida y semidefinida importa: semidefinida permite autovalores
+      nulos, lo que significa direcciones planas. Una covarianza semidefinida pero no definida
+      indica que hay una combinación lineal de las variables con varianza cero, es decir,
+      dependencia lineal exacta entre features.
+
+      Numéricamente, la comprobación robusta no es calcular autovalores sino intentar la
+      **factorización de Cholesky**: existe si y solo si la matriz es definida positiva, y
+      cuesta la mitad que una LU. Es lo que hacen las bibliotecas para comprobar la condición.
+    ejemplo: |
+      Una definida positiva y una indefinida.
+
+      ```text
+      A = [[4,1],[1,3]]        autovalores 4.618, 2.382   → todos > 0  ✓ definida positiva
+      B = [[1,2],[2,1]]        autovalores 3, −1          → signos mixtos ✗ indefinida
+
+      Forma cuadrática con x = (1,−1):
+        xᵀBx = 1 − 2 − 2 + 1 = −2 < 0          ✗ confirma que B no es definida positiva
+
+      Criterio de Sylvester para A:
+        menor 1×1: 4 > 0                       ✓
+        menor 2×2: det = 11 > 0                ✓
+      ```
+    errores:
+      - "Comprobar la condición solo en algunos vectores x en lugar de usar los autovalores."
+      - "Confundir definida positiva con «todas las entradas positivas»."
+      - "Olvidar que la propiedad solo está definida para matrices simétricas."
+    aplicacion: |
+      Matrices de covarianza, condición de mínimo en optimización, kernels válidos, métodos de
+      Newton y muestreo de gaussianas multivariantes por Cholesky.
+    referencias:
+      - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, apéndice A](https://web.stanford.edu/~boyd/cvxbook/)"
+      - "[Horn & Johnson. *Matrix Analysis*, 2ª ed., Cambridge, 2012](https://www.cambridge.org/core/books/matrix-analysis/8C8B0C4A0C8E4B9C0C0C0C0C0C0C0C0C)"
+
+  "128":
+    concepto: "Una forma cuadrática tiene curvas de nivel elípticas cuando su matriz es definida positiva, y los ejes son los autovectores."
+    formulas:
+      - "q(x) = xᵀAx"
+      - "∇q = 2Ax  (A simétrica)"
+      - "máx y mín sobre ‖x‖=1: mayor y menor autovalor"
+    desarrollo: |
+      Una forma cuadrática es un polinomio homogéneo de grado dos escrito matricialmente. Su
+      geometría la determinan los autovalores de `A`: si todos son positivos, las curvas de
+      nivel son elipses; si hay signos mixtos, hiperbolas; si alguno es cero, la forma es
+      degenerada en esa dirección.
+
+      Los **ejes de las elipses son los autovectores** y sus longitudes dependen de los
+      autovalores. Cuanto más dispares sean los autovalores, más alargadas son las elipses, y
+      esa excentricidad es exactamente el número de condición. Ese es el vínculo entre álgebra
+      lineal y velocidad de convergencia: el descenso de gradiente zigzaguea en valles
+      alargados (clase 244).
+
+      El gradiente de una forma cuadrática es `2Ax` cuando A es simétrica, y ese es el ejemplo
+      canónico de derivada matricial (clase 177). Igualar a cero da `Ax = 0`, lo que confirma
+      que el único punto crítico de una forma definida positiva es el origen, y es un mínimo.
+
+      Los valores extremos sobre la esfera unitaria son el mayor y el menor autovalor,
+      resultado conocido como cociente de Rayleigh. Es lo que hace que la primera componente
+      principal maximice la varianza proyectada (clase 135): maximizar `xᵀΣx` con `‖x‖=1` da
+      el autovector dominante.
+    ejemplo: |
+      Forma cuadrática con matriz definida positiva.
+
+      ```text
+      A = [[4,1],[1,3]]
+      q(x) = 4x₁² + 2x₁x₂ + 3x₂²
+
+      valores en cuatro direcciones unitarias:
+        (1,0)  → 4
+        (0,1)  → 3
+        (1,1)  → 10
+        (1,−1) → 6
+
+      Extremos sobre ‖x‖ = 1:
+        mínimo = λ_min = 2.3820
+        máximo = λ_max = 4.6180
+
+      Gradiente en (1,1): 2A(1,1) = (10, 8)
+
+      Curvas de nivel: elipses (A es definida positiva)
+      ```
+    errores:
+      - "Escribir la forma cuadrática con una matriz no simétrica sin simetrizarla."
+      - "Olvidar el factor 2 en el gradiente."
+      - "Suponer que las curvas de nivel son circulares cuando los autovalores difieren."
+    aplicacion: |
+      Función objetivo de mínimos cuadrados, energía en física, análisis de curvatura y
+      diagnóstico de velocidad de convergencia en optimización.
+    referencias:
+      - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "129":
+    concepto: "LU factoriza una vez y resuelve muchos sistemas: O(n³) una sola vez, O(n²) por cada b."
+    formulas:
+      - "A = LU"
+      - "resolver: Ly = b (hacia delante), luego Ux = y (hacia atrás)"
+      - "det(A) = Π uᵢᵢ"
+    desarrollo: |
+      La factorización LU descompone una matriz en el producto de una triangular inferior con
+      unos en la diagonal y una triangular superior. No es un algoritmo nuevo: es la
+      eliminación de Gauss guardando los multiplicadores en lugar de descartarlos.
+
+      Su valor está en la reutilización. Factorizar cuesta `O(n³/3)`, pero una vez hecho,
+      resolver `Ax = b` para cada nuevo `b` cuesta solo `O(n²)`: dos sustituciones
+      triangulares. Si hay que resolver mil sistemas con la misma matriz —caso frecuente en
+      simulación y en métodos implícitos— la diferencia es de tres órdenes de magnitud.
+
+      Como subproducto, el determinante sale gratis: es el producto de la diagonal de `U`,
+      corregido por el signo de los intercambios de fila. Calcularlo así cuesta `O(n³)` en
+      lugar del `O(n!)` de la definición de Laplace.
+
+      La versión sin pivoteo que implementa el motor —Doolittle— falla si aparece un pivote
+      nulo, y es numéricamente frágil con pivotes pequeños. Las bibliotecas reales usan LU con
+      pivoteo parcial (`PA = LU`), y por eso `scipy.linalg.lu` devuelve también una matriz de
+      permutación.
+    ejemplo: |
+      Factorizar una matriz 2×2.
+
+      ```text
+      A = [[4,3],[6,3]]
+
+      L = [[1,   0],      U = [[4,  3],
+           [1.5, 1]]           [0, −1.5]]
+
+      L·U = [[4,3],[6,3]] = A                    ✓
+
+      det(A) = 4 · (−1.5) = −6                   ✓
+
+      Coste:
+        factorizar:               O(n³/3)
+        cada sistema adicional:   O(n²)
+      ```
+    errores:
+      - "Usar LU sin pivoteo con matrices que lo requieren."
+      - "Refactorizar la matriz para cada nuevo lado derecho."
+      - "Olvidar el signo de los intercambios al calcular el determinante."
+    aplicacion: |
+      Solvers de sistemas lineales, métodos implícitos en EDO, simulación con la misma matriz
+      y muchos lados derechos, y cálculo eficiente de determinantes.
+    referencias:
+      - "[Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 3](https://jhupbooks.press.jhu.edu/title/matrix-computations)"
+      - "[SciPy: `scipy.linalg.lu`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lu.html)"
+
+  "130":
+    concepto: "QR produce una base ortonormal del espacio columna y es la vía estable para mínimos cuadrados."
+    formulas:
+      - "A = QR,  QᵀQ = I,  R triangular superior"
+      - "resolver mínimos cuadrados: Rx = Qᵀb"
+    desarrollo: |
+      La factorización QR escribe una matriz como el producto de una ortogonal y una
+      triangular superior. Las columnas de `Q` son una base ortonormal del espacio columna de
+      `A`, obtenida ortonormalizando sus columnas.
+
+      Su importancia es numérica. Resolver mínimos cuadrados por las ecuaciones normales exige
+      formar `AᵀA`, lo que **eleva al cuadrado el número de condición** (clase 112). Con QR no
+      hace falta: el problema se reduce a `Rx = Qᵀb`, una sustitución triangular, y la
+      condición se conserva. La diferencia es la que separa seis dígitos correctos de doce.
+
+      El método de Gram-Schmidt que implementa el motor es el más legible pero no el más
+      estable: la ortogonalidad se degrada con matrices mal condicionadas. Las bibliotecas
+      usan reflexiones de Householder, que son ortogonales exactas salvo redondeo. La versión
+      «modificada» de Gram-Schmidt es un punto intermedio.
+
+      QR también es la base del algoritmo estándar para calcular autovalores: iterar
+      `A ← RQ` converge a una forma triangular cuya diagonal son los autovalores. Es uno de los
+      algoritmos más influyentes del siglo XX.
+    ejemplo: |
+      QR de una matriz 3×2.
+
+      ```text
+      A = [[1,1],
+           [1,0],
+           [0,1]]
+
+      Q (3×2, columnas ortonormales):
+        [[0.7071,  0.4082],
+         [0.7071, −0.4082],
+         [0,       0.8165]]
+
+      R = [[1.4142, 0.7071],
+           [0,      1.2247]]
+
+      QᵀQ = I                                    ✓ ortonormal
+      QR  = A                                    ✓ reconstruye
+      R triangular superior                      ✓
+      ```
+    errores:
+      - "Usar Gram-Schmidt clásico en matrices mal condicionadas."
+      - "Formar AᵀA cuando QR resuelve el mismo problema mejor."
+      - "Suponer que Q es cuadrada: en la QR reducida tiene el shape de A."
+    aplicacion: |
+      Mínimos cuadrados estables, cálculo de autovalores por el algoritmo QR,
+      ortonormalización de bases y regresión numéricamente robusta.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 7-10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 5](https://jhupbooks.press.jhu.edu/title/matrix-computations)"
+
+  "131":
+    concepto: "Mínimos cuadrados es la proyección de b sobre el espacio columna, y su residuo es ortogonal a él."
+    formulas:
+      - "min ‖Ax − b‖²"
+      - "ecuaciones normales: AᵀAx = Aᵀb"
+      - "residuo ortogonal: Aᵀ(Ax − b) = 0"
+    desarrollo: |
+      Cuando un sistema tiene más ecuaciones que incógnitas, en general no hay solución exacta.
+      Mínimos cuadrados busca la que minimiza la norma del residuo, y esa solución tiene una
+      caracterización geométrica limpia: es la **proyección ortogonal** de `b` sobre el espacio
+      columna de `A` (clase 119).
+
+      Derivar el objetivo `‖Ax − b‖²` e igualar a cero da directamente las ecuaciones
+      normales. La condición de ortogonalidad del residuo no es un requisito adicional: es
+      equivalente a que el gradiente se anule. Álgebra y geometría dicen lo mismo.
+
+      Por qué se minimiza el **cuadrado** del residuo y no su valor absoluto tiene dos razones.
+      La analítica: el cuadrado es derivable en todas partes y da solución cerrada, mientras
+      que el valor absoluto exige programación lineal. Y la estadística: bajo error gaussiano,
+      minimizar el error cuadrático **es** maximizar la verosimilitud (clase 215). No es una
+      elección arbitraria, es la consecuencia de un supuesto.
+
+      La contrapartida es la sensibilidad a valores atípicos: elevar al cuadrado da mucho peso
+      a los errores grandes. Cuando eso es un problema, se usan pérdidas robustas como Huber
+      (clase 304), a costa de perder la solución cerrada.
+    ejemplo: |
+      Ajustar una recta a cinco puntos.
+
+      ```text
+      datos: (0,1.0) (1,3.1) (2,4.9) (3,7.2) (4,8.9)
+
+      A = [[1,0],[1,1],[1,2],[1,3],[1,4]]
+      b = (1.0, 3.1, 4.9, 7.2, 8.9)
+
+      Ecuaciones normales AᵀA x = Aᵀb:
+        intercepto = 1.02,  pendiente = 2.00
+
+      residuos: (−0.02, 0.08, −0.13, 0.16, −0.09)
+      SSE = 0.058
+
+      Verificación: Aᵀ·residuo = (0, 0)         ✓ ortogonal
+      ```
+    errores:
+      - "Usar mínimos cuadrados con valores atípicos sin considerar una pérdida robusta."
+      - "Resolver por ecuaciones normales cuando la matriz está mal condicionada."
+      - "Interpretar el SSE sin normalizar por el número de datos ni compararlo con una línea base."
+    aplicacion: |
+      Regresión lineal, calibración de sensores, ajuste de curvas, estimación de parámetros y
+      resolución de sistemas sobredeterminados.
+    referencias:
+      - "[Björck, Å. *Numerical Methods for Least Squares Problems*. SIAM, 1996](https://epubs.siam.org/doi/book/10.1137/1.9781611971484)"
+      - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 4](https://math.mit.edu/~gs/linearalgebra/)"
+
+  "132":
+    concepto: "La SVD existe para toda matriz y de ella se leen rango, condición y estructura."
+    formulas:
+      - "A = UΣVᵀ"
+      - "σᵢ = √(autovalores de AᵀA)"
+      - "κ(A) = σ_max / σ_min"
+    desarrollo: |
+      La descomposición en valores singulares escribe cualquier matriz —cuadrada o no,
+      invertible o no— como el producto de una rotación, un escalado por ejes y otra rotación.
+      Esa universalidad es lo que la hace la herramienta más útil del álgebra lineal aplicada:
+      donde la diagonalización falla, la SVD funciona.
+
+      Los **valores singulares** son las cantidades por las que la matriz estira cada dirección
+      principal, ordenados de mayor a menor. Su lectura es directa: el mayor es la norma
+      espectral de la matriz, el número de no nulos es el rango, y el cociente entre el mayor y
+      el menor es el **número de condición**. Tres diagnósticos de una sola descomposición.
+
+      El número de condición es el indicador correcto de mal condicionamiento, no el
+      determinante (clase 117). Una matriz puede tener determinante minúsculo y condición 1
+      —si está simplemente escalada— o determinante razonable y condición 10¹² —si tiene una
+      dirección casi degenerada—. Solo el segundo caso es problemático.
+
+      El rango **numérico** se define con la SVD y una tolerancia: cuántos valores singulares
+      superan un umbral relativo al mayor. Es la definición que usan las bibliotecas, porque
+      en datos reales el rango exacto casi siempre es completo por culpa del ruido, aunque la
+      estructura sea de rango bajo.
+    ejemplo: |
+      SVD de una matriz 2×2.
+
+      ```text
+      A = [[3,0],
+           [4,5]]
+
+      valores singulares: σ₁ = 6.7082,  σ₂ = 2.2361
+
+      norma espectral   = σ₁ = 6.7082
+      número de condición = 6.7082/2.2361 = 3.0
+      rango numérico    = 2  (ambos σ > tolerancia)
+
+      A = UΣVᵀ reconstruye la matriz              ✓
+
+      Existe para TODA matriz, incluso rectangular y singular.
+      ```
+    errores:
+      - "Usar el determinante como indicador de condicionamiento."
+      - "Calcular la SVD vía AᵀA con matrices mal condicionadas: eleva la condición al cuadrado."
+      - "Suponer que los valores singulares son los autovalores: coinciden solo si A es simétrica semidefinida positiva."
+    aplicacion: |
+      Diagnóstico de condicionamiento, rango numérico, pseudoinversa, compresión, PCA,
+      recomendación por factorización y regularización truncada.
+    referencias:
+      - "[Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 4-5](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)"
+      - "[Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 2](https://jhupbooks.press.jhu.edu/title/matrix-computations)"
+
+  "133":
+    concepto: "Truncar la SVD da la mejor aproximación de rango k que existe, no una buena."
+    formulas:
+      - "Aₖ = Σᵢ₌₁ᵏ σᵢ uᵢ vᵢᵀ"
+      - "‖A − Aₖ‖_F = √(Σᵢ₌ₖ₊₁ σᵢ²)"
+      - "energía retenida = Σᵢ₌₁ᵏ σᵢ² / Σ σᵢ²"
+    desarrollo: |
+      El teorema de Eckart-Young (1936) es de los resultados más fuertes del álgebra lineal
+      aplicada: entre **todas** las matrices de rango k, la que mejor aproxima a `A` es la SVD
+      truncada, y el error cometido es exactamente la raíz de la suma de los cuadrados de los
+      valores singulares descartados.
+
+      «La mejor» es una afirmación de optimalidad, no una recomendación heurística. No existe
+      ninguna otra matriz de rango k más cercana, ni en norma de Frobenius ni en norma
+      espectral. Eso convierte la truncación SVD en el estándar contra el que se comparan
+      todos los métodos de compresión y reducción de dimensionalidad.
+
+      La **energía retenida** —la fracción de la suma de cuadrados de los valores singulares
+      que conservan los k primeros— es el criterio habitual para elegir k. En PCA se llama
+      «varianza explicada» y es exactamente la misma cantidad. Un salto brusco en el espectro
+      indica el rango natural de los datos.
+
+      El ahorro de almacenamiento es real: guardar `Aₖ` requiere `k(m + n + 1)` números en
+      lugar de `mn`. Para una matriz 1000×1000 aproximada con rango 10, son 20 010 números
+      frente a un millón. Esa es la aritmética que hace viable LoRA, que adapta modelos
+      gigantes añadiendo matrices de rango muy bajo.
+    ejemplo: |
+      Aproximación de rango 1 de una matriz 2×2.
+
+      ```text
+      A = [[4, 0],
+           [3,−5]]
+
+      valores singulares: σ₁ = 6.0644,  σ₂ = 3.2977
+
+      Aproximación de rango 1:
+        error de Frobenius = 3.2977 = σ₂          ✓ coincide con la teoría
+        energía retenida = σ₁²/(σ₁²+σ₂²) = 77.2 %
+
+      Teorema de Eckart-Young:
+        ninguna otra matriz de rango 1 se acerca más.
+      ```
+    errores:
+      - "Elegir k sin mirar el espectro de valores singulares."
+      - "Confundir energía retenida (cuadrados) con la fracción de valores singulares."
+      - "Suponer que otra factorización de rango k podría aproximar mejor."
+    aplicacion: |
+      Compresión de imágenes, PCA, sistemas de recomendación por factorización, eliminación de
+      ruido y LoRA.
+    referencias:
+      - "[Eckart, C.; Young, G. *The approximation of one matrix by another of lower rank*. Psychometrika, 1936](https://link.springer.com/article/10.1007/BF02288367)"
+      - "[Hu, E. et al. *LoRA: Low-Rank Adaptation of Large Language Models*. ICLR, 2022](https://arxiv.org/abs/2106.09685)"
+
+  "134":
+    concepto: "La pseudoinversa generaliza la inversa y da la solución de mínima norma."
+    formulas:
+      - "A⁺ = VΣ⁺Uᵀ"
+      - "sobredeterminado: A⁺b = solución de mínimos cuadrados"
+      - "indeterminado: A⁺b = solución de norma mínima"
+    desarrollo: |
+      La pseudoinversa de Moore-Penrose extiende la inversa a matrices que no la tienen:
+      rectangulares o singulares. Se construye desde la SVD invirtiendo los valores singulares
+      no nulos y dejando en cero los demás.
+
+      Su comportamiento depende del caso. Si el sistema está **sobredeterminado** —más
+      ecuaciones que incógnitas—, `A⁺b` da la solución de mínimos cuadrados. Si está
+      **indeterminado** —infinitas soluciones—, da la de **norma mínima** entre todas ellas.
+      Esa elección no es arbitraria: es la solución sin componente en el núcleo, la más
+      «económica».
+
+      El detalle numérico que importa: al invertir los valores singulares, los más pequeños se
+      convierten en los más grandes y amplifican el ruido. Por eso la pseudoinversa práctica
+      **trunca**: descarta los valores singulares por debajo de una tolerancia relativa. Ese
+      truncamiento es una forma de regularización, emparentada con Ridge.
+
+      Cuando `A` tiene rango completo por columnas, `A⁺ = (AᵀA)⁻¹Aᵀ` y coincide con las
+      ecuaciones normales. La versión SVD es preferible porque funciona también cuando el
+      rango es deficiente, donde las ecuaciones normales fallan.
+    ejemplo: |
+      Pseudoinversa de un sistema sobredeterminado.
+
+      ```text
+      A = [[1,0],      b = (1, 2, 4)
+           [1,1],
+           [1,2]]
+
+      3 ecuaciones, 2 incógnitas → sobredeterminado
+
+      A⁺ = [[ 0.8333,  0.3333, −0.1667],
+            [−0.5,     0,       0.5   ]]
+
+      A⁺b = (0.8333, 1.5)
+
+      Coincide con las ecuaciones normales        ✓
+      A⁺A = I (rango completo por columnas)       ✓
+      ```
+    errores:
+      - "Usar la pseudoinversa sin truncar valores singulares minúsculos."
+      - "Suponer que A⁺A siempre es la identidad: solo si el rango es completo por columnas."
+      - "Confundir la solución de mínima norma con «la» solución cuando hay infinitas."
+    aplicacion: |
+      Mínimos cuadrados con rango deficiente, regularización truncada, cinemática inversa en
+      robótica y resolución de sistemas indeterminados.
+    referencias:
+      - "[Penrose, R. *A generalized inverse for matrices*. Math. Proc. Cambridge Phil. Soc., 1955](https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/generalized-inverse-for-matrices/5F4516D6D3B34D0E8F7E7C7F0F7E7C7F)"
+      - "[NumPy: `numpy.linalg.pinv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.pinv.html)"
+
+  "135":
+    concepto: "PCA es la autodescomposición de la covarianza, y equivale a la SVD de los datos centrados."
+    formulas:
+      - "Σ = XᵀX/(n−1)  con X centrada"
+      - "componentes = autovectores de Σ"
+      - "varianza explicada = λᵢ / Σλⱼ"
+    desarrollo: |
+      PCA busca las direcciones de máxima varianza de un conjunto de datos. La primera
+      componente es la dirección en la que los datos más se dispersan; la segunda, la de
+      máxima varianza entre las ortogonales a la primera, y así sucesivamente. Esas direcciones
+      son los autovectores de la matriz de covarianza, y sus autovalores son las varianzas
+      correspondientes.
+
+      **Centrar los datos es obligatorio**, no un preprocesado opcional. Sin centrar, la
+      primera componente apunta hacia la media en lugar de hacia la dirección de máxima
+      dispersión, y el resultado carece de sentido. Es el error más frecuente al implementar
+      PCA a mano.
+
+      Escalar es otra decisión, y esta sí es opcional pero consecuente. Si las variables están
+      en unidades distintas —euros y kilómetros—, la de mayor magnitud domina la covarianza y
+      la primera componente la sigue. Estandarizar antes de PCA equivale a hacer PCA sobre la
+      matriz de correlación en lugar de sobre la de covarianza.
+
+      PCA y SVD son el mismo cálculo. La SVD de la matriz de datos centrados da directamente
+      las componentes en `V` y las varianzas en `σ²/(n−1)`, sin necesidad de formar la
+      covarianza —que, como toda matriz `XᵀX`, eleva al cuadrado el número de condición—. Por
+      eso las implementaciones profesionales usan SVD.
+
+      Una advertencia que conviene repetir: PCA es **no supervisado**. Maximiza varianza, no
+      capacidad discriminativa, y puede descartar precisamente la dirección que separa las
+      clases. Para eso está el análisis discriminante lineal, que sí usa las etiquetas.
+    ejemplo: |
+      PCA sobre diez observaciones bidimensionales.
+
+      ```text
+      medias: (1.81, 1.91)
+
+      matriz de covarianza:
+        [[0.6166, 0.6154],
+         [0.6154, 0.7166]]
+
+      autovalores: 1.2840,  0.0491
+      varianza explicada por PC1: 96.32 %
+
+      PC1 = (0.6779, 0.7352)
+
+      Proyecciones (primeras 5):
+        0.8280, −1.7776, 0.9922, 0.2742, 1.6759
+
+      Conclusión: los datos son casi unidimensionales.
+      ```
+    errores:
+      - "No centrar los datos antes de calcular la covarianza."
+      - "No estandarizar cuando las variables tienen unidades distintas."
+      - "Esperar que PCA conserve la dirección que separa las clases: es no supervisado."
+    aplicacion: |
+      Reducción de dimensionalidad, visualización, eliminación de ruido, compresión y
+      detección de multicolinealidad.
+    referencias:
+      - "[Jolliffe, I. T. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://link.springer.com/book/10.1007/b98835)"
+      - "[Shlens, J. *A Tutorial on Principal Component Analysis*. arXiv, 2014](https://arxiv.org/abs/1404.1100)"
+
+  "136":
+    concepto: "El producto de Kronecker construye matrices en bloques cuyo rango es el producto de los rangos."
+    formulas:
+      - "(A ⊗ B) shape = (m₁m₂, n₁n₂)"
+      - "rango(A ⊗ B) = rango(A) · rango(B)"
+      - "(A⊗B)(C⊗D) = (AC)⊗(BD)"
+    desarrollo: |
+      El producto de Kronecker sustituye cada entrada de `A` por esa entrada multiplicada por
+      toda la matriz `B`, generando una matriz en bloques mucho mayor. Su interés es que
+      **estructura**: representa operaciones que actúan de forma independiente sobre dos
+      factores de un problema.
+
+      Aparece de forma natural en problemas separables. Discretizar una ecuación en derivadas
+      parciales sobre una malla rectangular produce matrices de Kronecker, porque el operador
+      actúa por separado en cada dirección. Lo mismo ocurre al modelar un sistema compuesto por
+      dos subsistemas independientes.
+
+      Las identidades que cumple son las que lo hacen útil computacionalmente: el rango del
+      producto es el producto de los rangos, y `(A⊗B)(C⊗D) = (AC)⊗(BD)`. Esta última permite
+      operar con los factores pequeños en lugar de con la matriz gigante, ahorrando memoria y
+      tiempo.
+
+      En machine learning aparece en K-FAC, un método de optimización de segundo orden que
+      aproxima el Hessiano de una red como un producto de Kronecker de dos matrices pequeñas.
+      Sin esa estructura, el Hessiano de una capa con un millón de parámetros sería una matriz
+      de 10¹² entradas: inmanejable.
+    ejemplo: |
+      Kronecker de dos matrices 2×2.
+
+      ```text
+      A = [[1,2],[3,4]]      B = [[0,5],[6,7]]
+
+      A⊗B (4×4):
+        [[ 0,  5,  0, 10],
+         [ 6,  7, 12, 14],
+         [ 0, 15,  0, 20],
+         [18, 21, 24, 28]]
+
+      shape: (2·2, 2·2) = (4,4)                  ✓
+      rango(A⊗B) = rango(A)·rango(B) = 2·2 = 4   ✓
+      ```
+    errores:
+      - "Confundir el producto de Kronecker con el producto matricial ordinario."
+      - "Construir explícitamente A⊗B cuando se puede operar con los factores."
+      - "Olvidar que el orden importa: A⊗B ≠ B⊗A en general."
+    aplicacion: |
+      Discretización de PDE separables, sistemas compuestos, K-FAC en optimización de segundo
+      orden y grafos producto.
+    referencias:
+      - "[Van Loan, C. *The ubiquitous Kronecker product*. J. Comput. Appl. Math., 2000](https://www.sciencedirect.com/science/article/pii/S0377042700003939)"
+      - "[Martens, J.; Grosse, R. *Optimizing Neural Networks with Kronecker-factored Approximate Curvature*. ICML, 2015](https://arxiv.org/abs/1503.05671)"
+
+  "137":
+    concepto: "El orden de un tensor es su número de índices; el shape y el orden de aplanado determinan cómo se recorre."
+    formulas:
+      - "orden = número de índices"
+      - "índice lineal (row-major) = i·(d₂d₃) + j·d₃ + k"
+      - "lote de imágenes: (N, C, H, W)"
+    desarrollo: |
+      Un tensor generaliza escalar, vector y matriz a un número arbitrario de índices. En
+      computación no es más que un array multidimensional con un shape, y el trabajo real está
+      en no perderse entre los índices.
+
+      El **orden de aplanado** determina cómo se recorre en memoria. En *row-major* —el de C,
+      Python y NumPy por defecto— el último índice varía más rápido; en *column-major* —el de
+      Fortran, MATLAB y las rutinas BLAS— es el primero. Recorrer en el orden equivocado
+      destruye la localidad de caché y puede costar un orden de magnitud de rendimiento sin
+      cambiar el resultado.
+
+      Las convenciones de shape importan porque no son universales. Un lote de imágenes es
+      `(N, C, H, W)` en PyTorch y `(N, H, W, C)` en TensorFlow. Confundirlas produce errores
+      silenciosos: el código corre y el modelo no aprende. Anotar el shape esperado en cada
+      punto del código es la práctica que evita esa clase de bug.
+
+      Las operaciones de reordenamiento —`transpose`, `permute`, `reshape`, `view`— no mueven
+      datos necesariamente: cambian la interpretación de los índices. Esa distinción entre
+      vista y copia es la que explica los errores de contigüidad que aparecen al encadenar
+      operaciones en PyTorch.
+    ejemplo: |
+      Tensor de orden 3 y su aplanado.
+
+      ```text
+      shape (2,2,2), 8 elementos
+
+      T[0] = [[0,1],[2,3]]
+      T[1] = [[4,5],[6,7]]
+
+      aplanado row-major: [0,1,2,3,4,5,6,7]
+
+      elemento T[1][0][1] = 5
+      índice lineal: 1·4 + 0·2 + 1 = 5           ✓
+
+      Convenciones reales:
+        PyTorch:    (N, C, H, W)
+        TensorFlow: (N, H, W, C)
+      ```
+    errores:
+      - "Confundir el orden del tensor con el tamaño de sus dimensiones."
+      - "Mezclar convenciones de shape entre frameworks."
+      - "Suponer que reshape siempre puede hacerse sin copiar: depende de la contigüidad."
+    aplicacion: |
+      Representación de lotes de imágenes, secuencias y vídeo; interoperabilidad entre
+      frameworks; optimización de recorridos por localidad de caché.
+    referencias:
+      - "[NumPy: indexación y orden en memoria](https://numpy.org/doc/stable/reference/arrays.ndarray.html#internal-memory-layout-of-an-ndarray)"
+      - "[Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009](https://epubs.siam.org/doi/10.1137/07070111X)"
+
+  "138":
+    concepto: "Broadcasting alinea shapes por la derecha y estira las dimensiones de tamaño 1 sin copiar memoria."
+    formulas:
+      - "las dimensiones se alinean por la derecha"
+      - "compatibles si son iguales o alguna vale 1"
+      - "(2,3) + (3,) → (2,3);  (2,3) + (2,1) → (2,3)"
+    desarrollo: |
+      Broadcasting es la regla que permite operar arrays de shapes distintos sin escribir
+      bucles ni replicar datos. Las dimensiones se alinean por la derecha y se consideran
+      compatibles si coinciden o si una de ellas vale 1; en ese caso, la de tamaño 1 se
+      «estira» conceptualmente.
+
+      La clave es que el estiramiento **no copia memoria**: la implementación recorre el array
+      pequeño repetidamente con stride cero. Por eso sumar un vector de sesgos a una matriz de
+      activaciones es prácticamente gratis, y por eso normalizar por columna no requiere
+      construir una matriz de medias.
+
+      Las reglas son estrictas y su violación produce uno de dos resultados. El bueno: un error
+      de shape que detiene el programa. El malo: una operación que «funciona» pero no es la
+      pretendida, típicamente por confundir `(n,)` con `(n,1)`. Un vector `(3,)` sumado a una
+      matriz `(3,3)` se suma por filas; si se quería por columnas, hay que escribir `(3,1)`
+      explícitamente.
+
+      Ese matiz es la fuente de un error clásico al calcular distancias o normalizaciones. La
+      defensa es anotar los shapes y usar `None`/`np.newaxis` de forma explícita en lugar de
+      confiar en que la regla haga lo esperado.
+    ejemplo: |
+      Sumar una fila y una columna a la misma matriz.
+
+      ```text
+      matriz  shape (2,3):  [[1,2,3],[4,5,6]]
+
+      + fila  shape (3,):   [10,20,30]
+        alinea por la derecha: (2,3) y (3,) → (2,3)
+        resultado: [[11,22,33],[14,25,36]]      suma por filas
+
+      + columna shape (2,1): [[100],[200]]
+        (2,3) y (2,1) → (2,3)
+        resultado: [[101,102,103],[204,205,206]]  suma por columnas
+
+      Incompatible: (2,3) + (2,) → error
+      ```
+    errores:
+      - "Confundir shape (n,) con (n,1) y sumar en el eje equivocado."
+      - "Suponer que broadcasting copia memoria y evitarlo por rendimiento."
+      - "No anotar los shapes esperados en operaciones encadenadas."
+    aplicacion: |
+      Suma de sesgos, normalización por eje, cálculo de matrices de distancias, aplicación de
+      máscaras y prácticamente cualquier operación vectorizada.
+    referencias:
+      - "[NumPy: broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html)"
+      - "[PyTorch: broadcasting semantics](https://pytorch.org/docs/stable/notes/broadcasting.html)"
+
+  "139":
+    concepto: "En notación de Einstein los índices repetidos se suman, y una sola expresión cubre producto, traza y contracción."
+    formulas:
+      - "'ij,jk->ik'  producto matricial"
+      - "'ii->'       traza"
+      - "'ij,ij->'    producto de Frobenius"
+      - "'ij->ji'     transposición"
+    desarrollo: |
+      La notación de Einstein, introducida en 1916 para simplificar la escritura de la
+      relatividad general, establece un convenio: los índices que aparecen repetidos se suman.
+      Con esa única regla, operaciones que en notación matricial requieren nombres distintos se
+      escriben de forma uniforme.
+
+      La implementación moderna, `einsum`, hace explícitos los índices de entrada y de salida.
+      `'ij,jk->ik'` dice: toma dos tensores con esos índices, suma sobre `j` —repetido— y deja
+      `i` y `k`. Eso es el producto matricial. Cambiar la cadena a `'ij,ij->'` da el producto
+      de Frobenius, y a `'ij->ji'`, la transpuesta.
+
+      Su ventaja práctica es doble. Primero, **legibilidad**: en operaciones con tensores de
+      orden 4 o 5 —habituales en atención multi-cabeza— la cadena de índices dice exactamente
+      qué se contrae con qué, mientras que una secuencia de `transpose`, `reshape` y `matmul`
+      no lo dice. Segundo, **optimización**: la implementación puede elegir el orden de
+      contracción más barato, igual que el orden de evaluación de la clase 111.
+
+      La atención escalada se escribe en una línea con einsum: `'bqd,bkd->bqk'` calcula todos
+      los productos punto entre consultas y claves de un lote. Leer esa cadena es leer la
+      operación.
+    ejemplo: |
+      Cinco operaciones con la misma notación.
+
+      ```text
+      A = [[1,2],[3,4]]      B = [[5,6],[7,8]]
+
+      'ij,jk->ik'  producto     [[19,22],[43,50]]
+      'ii->'       traza de A   5
+      'ij,ij->ij'  Hadamard     [[5,12],[21,32]]
+      'ij,ij->'    Frobenius    70
+      'ij->ji'     transpuesta  [[1,3],[2,4]]
+
+      Una sola notación para todas.
+      ```
+    errores:
+      - "Repetir un índice que no se quiere sumar."
+      - "Olvidar declarar el orden de los índices de salida y obtener una transposición inesperada."
+      - "Usar einsum sin comprobar el resultado contra una implementación explícita."
+    aplicacion: |
+      Atención multi-cabeza, contracciones tensoriales, operaciones por lotes y cualquier
+      manipulación de tensores de orden alto.
+    referencias:
+      - "[NumPy: `einsum`](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html)"
+      - "[Rocktäschel, T. *Einsum is All You Need*, 2018](https://rockt.ai/2018/04/30/einsum)"
+
+  "140":
+    concepto: "Comprimir con SVD es elegir cuántos valores singulares conservar y declarar el error que eso implica."
+    formulas:
+      - "almacenamiento de rango k: k(m + n + 1) frente a mn"
+      - "error = √(Σᵢ₌ₖ₊₁ σᵢ²)"
+    desarrollo: |
+      El capstone aplica la truncación SVD a una matriz y mide, para cada rango, tres
+      cantidades: cuántos números hay que guardar, qué error se comete y qué fracción de la
+      energía se retiene. Ese informe es la forma honesta de presentar una compresión: no
+      «comprime bien», sino «con rango 2 el error de Frobenius es X y se retiene el Y % de la
+      energía».
+
+      La matriz del ejemplo está construida para que dos de sus filas sean múltiplos de un
+      mismo patrón, así que su **rango efectivo** es muy bajo y el primer valor singular
+      concentra casi toda la energía. Eso es lo que ocurre en datos reales: las imágenes
+      naturales, las matrices de valoraciones y las activaciones de una red tienen espectros
+      que decaen rápido.
+
+      El ahorro se calcula sin ambigüedad. Guardar `Aₖ` requiere las k columnas de `U`, los k
+      valores singulares y las k columnas de `V`: `k(m + n + 1)` números frente a `mn`. La
+      compresión es rentable cuando `k` es pequeño frente a `mn/(m+n)`.
+
+      La conexión con LoRA cierra la parte: en lugar de ajustar una matriz de pesos `W` de
+      millones de parámetros, se le suma un producto `BA` de rango muy bajo. La justificación
+      teórica es exactamente Eckart-Young: si la actualización necesaria tiene rango
+      intrínsecamente bajo, una aproximación de rango bajo la captura casi por completo.
+    ejemplo: |
+      Informe de compresión de una matriz 4×4.
+
+      ```text
+      valores singulares: 96.28, 1.87, 0.0004, 0.0000
+
+      rango  valores guardados  error Frobenius  energía retenida
+        1           9              1.8734            99.98 %
+        2          18              0.0004           100.00 %
+        3          27              0.0000           100.00 %
+        4          36              0.0000           100.00 %
+
+      matriz original: 16 valores
+      rango efectivo (σ > 1e−8): 3
+
+      Con rango 1 se guardan 9 números en lugar de 16
+      y se conserva el 99.98 % de la energía.
+      ```
+    errores:
+      - "Reportar una compresión sin declarar el error cometido."
+      - "Elegir k por el número de componentes en lugar de por la energía retenida."
+      - "Suponer que un espectro que decae rápido garantiza que la aproximación sirve para la tarea concreta."
+    aplicacion: |
+      Compresión de imágenes y modelos, reducción de dimensionalidad, eliminación de ruido,
+      recomendación por factorización y LoRA.
+    referencias:
+      - "[Eckart, C.; Young, G. *The approximation of one matrix by another of lower rank*. Psychometrika, 1936](https://link.springer.com/article/10.1007/BF02288367)"
+      - "[Halko, Martinsson & Tropp. *Finding Structure with Randomness*. SIAM Review, 2011](https://epubs.siam.org/doi/10.1137/090771806)"

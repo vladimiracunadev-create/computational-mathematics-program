@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**El producto punto mide alineación; su normalización es la similitud coseno de los embeddings.**
 
-Esta clase concreta ese objetivo sobre **Producto punto y similitud**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `dot_product`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar producto punto a vectores de escalas incomparables.
+
+## 🧩 Fórmulas de la clase
+
+```text
+u·v = Σuᵢvᵢ = ‖u‖‖v‖cos θ
+cos θ = u·v / (‖u‖‖v‖)
+u·u = ‖u‖²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> Resolver Ax=b casi nunca requiere calcular A⁻¹.
+El producto punto es la operación más importante de esta parte y probablemente de todo
+el programa. Definido como suma de productos componente a componente, resulta ser
+`‖u‖‖v‖cos θ`, lo que le da una interpretación geométrica: mide cuánto apuntan dos
+vectores en la misma dirección, escalado por sus magnitudes.
+
+Tres lecturas del signo: positivo significa ángulo agudo, cero significa
+**ortogonalidad**, negativo significa ángulo obtuso. La ortogonalidad definida como
+«producto punto nulo» es la que se generaliza a dimensión arbitraria, donde no se puede
+dibujar un ángulo recto.
+
+La **similitud coseno** normaliza por las magnitudes y deja solo el ángulo. Es la
+métrica estándar entre embeddings porque la magnitud de un embedding suele codificar
+frecuencia o longitud del texto, no significado: dos documentos sobre el mismo tema,
+uno largo y otro corto, tienen coseno alto y distancia euclídea grande.
+
+Computacionalmente, el producto punto es la operación que domina el coste de un modelo
+moderno. Una capa densa es un conjunto de productos punto; la atención calcula un
+producto punto por cada par consulta-clave. Los TFLOPS de una GPU miden, en esencia,
+cuántos productos punto por segundo puede hacer.
+
+## 🧮 Ejemplo trabajado
+
+Ángulos entre tres vectores.
+
+```text
+u = (1, 0),  v = (1, 1),  w = (0, 1)
+
+u·v = 1        cos = 1/(1·√2) = 0.7071   →  45°
+u·w = 0        cos = 0                   →  90°  ortogonales
+u·u = 1 = ‖u‖²                            ✓
+
+Similitud coseno en embeddings:
+  misma fórmula, dimensión 768 o 1536
+  la magnitud se descarta a propósito
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 103
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Comparar vectores por producto punto sin normalizar cuando importa solo la dirección.
+2. Calcular acos sin acotar el argumento a [−1,1]: el redondeo puede sacarlo del dominio.
+3. Confundir el producto punto con el producto componente a componente (Hadamard).
+
+## 🚀 Dónde se usa de verdad
+
+Similitud coseno en búsqueda semántica y RAG, capas densas, atención escalada, y
+cálculo de proyecciones e iluminación en gráficos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)
+- [Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

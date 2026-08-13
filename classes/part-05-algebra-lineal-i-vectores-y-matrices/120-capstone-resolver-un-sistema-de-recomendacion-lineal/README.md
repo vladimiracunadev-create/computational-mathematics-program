@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Un recomendador por filtrado colaborativo es producto punto normalizado y media ponderada; nada más.**
 
-Esta clase concreta ese objetivo sobre **Capstone: resolver un sistema de recomendación lineal**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_linear_recommender`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir dimensión del espacio con número de vectores.
+
+## 🧩 Fórmulas de la clase
+
+```text
+similitud(u,v) = u·v / (‖u‖‖v‖)
+puntuación(i) = Σ sim(u,w)·rᵥᵢ / Σ |sim(u,w)|
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,53 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El determinante mide cuánto escala el volumen una transformación.
+El capstone construye un sistema de recomendación por filtrado colaborativo basado en
+usuarios, y su interés está en lo que **no** usa: ninguna biblioteca de machine
+learning, ningún modelo entrenado, ninguna red neuronal. Es producto punto, norma y
+media ponderada.
+
+El algoritmo tiene tres pasos. Calcular la similitud coseno entre el usuario objetivo y
+todos los demás; usar esas similitudes como pesos para promediar las valoraciones de los
+demás sobre los ítems que el objetivo no ha visto; recomendar el ítem con mayor
+puntuación estimada. Los pesos se normalizan dividiendo por la suma de similitudes
+absolutas para que la escala se conserve.
+
+Las limitaciones son reales y conviene declararlas. El **arranque en frío**: un usuario
+nuevo no tiene vector, así que no hay similitud que calcular. La **dispersión**: en un
+catálogo real, cada usuario ha valorado una fracción minúscula de los ítems, y los
+vectores son casi todo ceros. Y el **coste**: comparar con todos los usuarios es `O(n·d)`
+por consulta, inviable con millones de usuarios sin índices aproximados.
+
+Los sistemas industriales resuelven esas limitaciones con factorización matricial —que
+es la parte 06— y con embeddings aprendidos, pero la métrica de comparación sigue siendo
+la de esta clase. Entender el caso simple es lo que permite entender por qué las
+soluciones complejas hacen lo que hacen.
+
+## 🧮 Ejemplo trabajado
+
+Recomendar a «ana» entre cuatro usuarios.
+
+```text
+valoraciones (0 = no visto):
+  ana    [5, 3, 0, 1]
+  beto   [4, 0, 0, 1]
+  cata   [1, 1, 0, 5]
+  dario  [0, 0, 5, 4]
+
+similitud coseno con ana:
+  beto  0.9783    ← el más parecido
+  cata  0.4707
+  dario 0.0900
+
+ítems no vistos por ana: índice 2
+
+puntuación estimada del ítem 2:
+  (0.9783·0 + 0.4707·0 + 0.0900·5) / (0.9783+0.4707+0.0900) = 0.29
+
+recomendación: ítem 2 (el único no visto)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,17 @@ compmath run 120
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Comparar usuarios sin normalizar y dejar que el número de valoraciones domine.
+2. Ignorar el problema del arranque en frío al desplegar.
+3. Promediar sin normalizar por la suma de similitudes y romper la escala.
+
+## 🚀 Dónde se usa de verdad
+
+Sistemas de recomendación, búsqueda por similitud, agrupación de usuarios y motores de
+contenido relacionado. El mismo cálculo, con embeddings en lugar de valoraciones, es la
+base de la recuperación semántica.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Ricci, Rokach & Shapira. *Recommender Systems Handbook*, 3ª ed., Springer, 2022](https://link.springer.com/book/10.1007/978-1-0716-2197-4)
+- [Koren, Bell & Volinsky. *Matrix Factorization Techniques for Recommender Systems*. IEEE Computer, 2009](https://ieeexplore.ieee.org/document/5197422)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

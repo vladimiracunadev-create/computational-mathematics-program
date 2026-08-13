@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**La proyección ortogonal es la mejor aproximación dentro de un subespacio, y su residuo es ortogonal a él.**
 
-Esta clase concreta ese objetivo sobre **Proyecciones ortogonales**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `orthogonal_projection`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz mal condicionada en lugar de factorizar.
+
+## 🧩 Fórmulas de la clase
+
+```text
+p = A(AᵀA)⁻¹Aᵀb
+residuo r = b − p, con Aᵀr = 0
+‖b‖² = ‖p‖² + ‖r‖²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,48 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> La proyección ortogonal es la mejor aproximación en norma euclídea.
+Proyectar un vector sobre un subespacio es encontrar el punto del subespacio más cercano
+a él. Ese punto es único y se caracteriza por una condición geométrica limpia: el
+**residuo es ortogonal al subespacio**. Si no lo fuera, quedaría una componente en el
+subespacio que se podría aprovechar para acercarse más.
+
+Esa caracterización es la que se usa para calcular: exigir `Aᵀ(b − Ax) = 0` da las
+**ecuaciones normales** `AᵀAx = Aᵀb`, que es exactamente el problema de mínimos cuadrados
+de la clase 131. Ajustar una recta a unos datos es proyectar el vector de observaciones
+sobre el espacio columna de la matriz de diseño.
+
+El teorema de Pitágoras se cumple: `‖b‖² = ‖p‖² + ‖r‖²`. Esa identidad es la que aparece
+en estadística como la descomposición de la varianza —total igual a explicada más
+residual— y la que define el R² de una regresión (clase 214). No son tres resultados
+distintos: es el mismo, escrito en tres lenguajes.
+
+Verificar una proyección es barato y conviene hacerlo siempre: comprobar que el residuo
+es ortogonal a todas las columnas de A. Si no lo es, el cálculo está mal. El motor del
+programa lo comprueba explícitamente.
+
+## 🧮 Ejemplo trabajado
+
+Proyectar (6,0,0) sobre el plano generado por dos columnas.
+
+```text
+A = [[1,0],    b = (6, 0, 0)
+     [1,1],
+     [1,2]]
+
+Ecuaciones normales: AᵀA·x = Aᵀb
+  [[3,3],[3,5]] x = (6, 0)
+  x = (5, −3)
+
+proyección p = A·x = (5, 2, −1)
+residuo    r = b − p = (1, −2, 1)
+
+Verificaciones:
+  Aᵀr = (0, 0)                      ✓ ortogonal al subespacio
+  ‖b‖² = 36
+  ‖p‖² + ‖r‖² = 30 + 6 = 36         ✓ Pitágoras
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +112,16 @@ compmath run 119
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. No comprobar que el residuo es ortogonal al subespacio.
+2. Usar las ecuaciones normales con una matriz de diseño mal condicionada.
+3. Confundir la proyección (dentro del subespacio) con el residuo (fuera de él).
+
+## 🚀 Dónde se usa de verdad
+
+Mínimos cuadrados, R² de una regresión, PCA, descomposición de la varianza y
+eliminación de componentes no deseadas de una señal.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 4](https://math.mit.edu/~gs/linearalgebra/)
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 11](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

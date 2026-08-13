@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**El producto matricial compone transformaciones, es asociativo y no conmuta.**
 
-Esta clase concreta ese objetivo sobre **Producto de matrices**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `matrix_product`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir dimensión del espacio con número de vectores.
+
+## 🧩 Fórmulas de la clase
+
+```text
+(AB)ᵢⱼ = Σₖ AᵢₖBₖⱼ
+(AB)C = A(BC)  pero  AB ≠ BA
+(AB)ᵀ = BᵀAᵀ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> Una matriz es una función lineal escrita en una base concreta.
+El producto matricial no se define elemento a elemento porque no representa una suma:
+representa una **composición**. Aplicar B y luego A es aplicar la matriz `AB`, y de esa
+definición se deduce la fórmula «filas por columnas», no al revés.
+
+Que sea asociativo pero no conmutativo tiene consecuencias prácticas. La
+asociatividad permite elegir el orden de evaluación, y esa elección puede cambiar
+radicalmente el coste: calcular `(AB)C` con A de (1000,1000), B de (1000,1) y C de
+(1,1000) cuesta muchísimo más que `A(BC)`. Es una optimización real que hacen los
+compiladores de grafos de cómputo.
+
+La no conmutatividad es la que hace que el orden de las capas importe, que rotar y luego
+escalar difiera de escalar y luego rotar (clase 073), y que las derivadas matriciales
+tengan que respetar el orden.
+
+El coste del algoritmo ingenuo es `O(n³)`. Strassen redujo el exponente a 2.807 en 1969,
+y el récord teórico actual está por debajo de 2.372, aunque esos algoritmos no son
+prácticos por sus constantes. En la práctica, el rendimiento lo determinan la localidad
+de caché y el paralelismo, no el exponente asintótico, y esa es la razón de existir de
+BLAS y de las unidades tensoriales de las GPU.
+
+## 🧮 Ejemplo trabajado
+
+El producto no conmuta.
+
+```text
+A = [[1,2],[3,4]]      B = [[0,1],[1,0]]   (intercambia columnas)
+
+AB = [[2,1],[4,3]]
+BA = [[3,4],[1,2]]
+¿AB = BA?  No                              ✗
+
+Transpuesta del producto:
+  (AB)ᵀ = [[2,4],[1,3]]
+  BᵀAᵀ  = [[2,4],[1,3]]                    ✓ con el orden invertido
+
+Coste ingenuo n×n: O(n³)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 111
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Suponer que el producto matricial conmuta.
+2. Escribir (AB)ᵀ = AᵀBᵀ sin invertir el orden.
+3. Elegir el orden de evaluación sin considerar el coste en cadenas de matrices.
+
+## 🚀 Dónde se usa de verdad
+
+Composición de capas, pipelines de transformación gráfica, optimización del orden de
+evaluación en grafos de cómputo y atención multi-cabeza.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Golub & Van Loan. *Matrix Computations*, 4ª ed., Johns Hopkins, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+- [Strassen, V. *Gaussian elimination is not optimal*. Numer. Math., 1969](https://link.springer.com/article/10.1007/BF02165411)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

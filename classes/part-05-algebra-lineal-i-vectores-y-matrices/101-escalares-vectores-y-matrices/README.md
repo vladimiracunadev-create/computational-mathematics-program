@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Escalar, vector, matriz y tensor son el mismo objeto con distinto número de índices.**
 
-Esta clase concreta ese objetivo sobre **Escalares, vectores y matrices**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `scalars_vectors_matrices`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz mal condicionada en lugar de factorizar.
+
+## 🧩 Fórmulas de la clase
+
+```text
+escalar: orden 0 · vector: orden 1 · matriz: orden 2
+shape de una matriz m×n: (m, n)
+(Aᵀ)ᵢⱼ = Aⱼᵢ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> Una matriz es una función lineal escrita en una base concreta.
+La jerarquía escalar → vector → matriz → tensor no es una lista de objetos distintos:
+es el mismo objeto con distinto número de índices. Un escalar necesita cero índices
+para localizar su valor, un vector uno, una matriz dos y un tensor de orden n, n
+índices. Esa lectura unifica lo que en muchos cursos se presenta por separado.
+
+El **shape** es el dato operativo: la tupla de tamaños de cada dimensión. La mayoría de
+los errores al programar con arrays son errores de shape, y la disciplina más rentable
+al escribir código numérico es anotar el shape esperado de cada variable. Un comentario
+`# (batch, seq, d_model)` ahorra horas de depuración.
+
+Multiplicar un vector por un escalar escala su magnitud sin cambiar su dirección —salvo
+que el escalar sea negativo, que la invierte—. Es la operación más simple y ya contiene
+la idea central: las operaciones lineales respetan la estructura del espacio.
+
+La transposición intercambia filas y columnas, y su efecto sobre el shape es invertir
+la tupla: una matriz (3,2) transpuesta es (2,3). En deep learning la transposición
+aparece constantemente al calcular gradientes, porque la derivada de `Wx` respecto a `x`
+involucra `Wᵀ`.
+
+## 🧮 Ejemplo trabajado
+
+Los cuatro objetos y sus shapes.
+
+```text
+escalar   3.0                      shape ()      orden 0
+vector    [1, 2, 3]                shape (3,)    orden 1
+matriz    [[1,2],[3,4],[5,6]]      shape (3,2)   orden 2
+tensor    imágenes de un lote      shape (N,C,H,W)  orden 4
+
+escalar × vector:  3·[1,2,3] = [3,6,9]
+
+transpuesta de la matriz (3,2) → shape (2,3)
+  [[1,3,5],
+   [2,4,6]]
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,17 @@ compmath run 101
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Confundir el orden del tensor con el tamaño de sus dimensiones.
+2. No anotar el shape esperado de cada variable en código numérico.
+3. Suponer que un vector es una matriz columna: en NumPy, (3,) y (3,1) no son lo mismo.
+
+## 🚀 Dónde se usa de verdad
+
+Toda representación de datos en machine learning: un lote de imágenes es un tensor de
+orden 4, un lote de secuencias uno de orden 3. Los errores de shape son la categoría de
+bug más frecuente al entrenar modelos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 2](https://www.deeplearningbook.org/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Broadcasting alinea shapes por la derecha y estira las dimensiones de tamaño 1 sin copiar memoria.**
 
-Esta clase concreta ese objetivo sobre **Broadcasting como operación tensorial**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `broadcasting`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir el orden de los índices al reordenar un tensor.
+
+## 🧩 Fórmulas de la clase
+
+```text
+las dimensiones se alinean por la derecha
+compatibles si son iguales o alguna vale 1
+(2,3) + (3,) → (2,3);  (2,3) + (2,1) → (2,3)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> PCA es la SVD de los datos centrados: no hay magia estadística adicional.
+Broadcasting es la regla que permite operar arrays de shapes distintos sin escribir
+bucles ni replicar datos. Las dimensiones se alinean por la derecha y se consideran
+compatibles si coinciden o si una de ellas vale 1; en ese caso, la de tamaño 1 se
+«estira» conceptualmente.
+
+La clave es que el estiramiento **no copia memoria**: la implementación recorre el array
+pequeño repetidamente con stride cero. Por eso sumar un vector de sesgos a una matriz de
+activaciones es prácticamente gratis, y por eso normalizar por columna no requiere
+construir una matriz de medias.
+
+Las reglas son estrictas y su violación produce uno de dos resultados. El bueno: un error
+de shape que detiene el programa. El malo: una operación que «funciona» pero no es la
+pretendida, típicamente por confundir `(n,)` con `(n,1)`. Un vector `(3,)` sumado a una
+matriz `(3,3)` se suma por filas; si se quería por columnas, hay que escribir `(3,1)`
+explícitamente.
+
+Ese matiz es la fuente de un error clásico al calcular distancias o normalizaciones. La
+defensa es anotar los shapes y usar `None`/`np.newaxis` de forma explícita en lugar de
+confiar en que la regla haga lo esperado.
+
+## 🧮 Ejemplo trabajado
+
+Sumar una fila y una columna a la misma matriz.
+
+```text
+matriz  shape (2,3):  [[1,2,3],[4,5,6]]
+
++ fila  shape (3,):   [10,20,30]
+  alinea por la derecha: (2,3) y (3,) → (2,3)
+  resultado: [[11,22,33],[14,25,36]]      suma por filas
+
++ columna shape (2,1): [[100],[200]]
+  (2,3) y (2,1) → (2,3)
+  resultado: [[101,102,103],[204,205,206]]  suma por columnas
+
+Incompatible: (2,3) + (2,) → error
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 138
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Confundir shape (n,) con (n,1) y sumar en el eje equivocado.
+2. Suponer que broadcasting copia memoria y evitarlo por rendimiento.
+3. No anotar los shapes esperados en operaciones encadenadas.
+
+## 🚀 Dónde se usa de verdad
+
+Suma de sesgos, normalización por eje, cálculo de matrices de distancias, aplicación de
+máscaras y prácticamente cualquier operación vectorizada.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [NumPy: broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html)
+- [PyTorch: broadcasting semantics](https://pytorch.org/docs/stable/notes/broadcasting.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

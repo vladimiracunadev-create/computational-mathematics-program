@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Truncar la SVD da la mejor aproximación de rango k que existe, no una buena.**
 
-Esta clase concreta ese objetivo sobre **SVD y compresión**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `svd_compression`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar pca sin centrar (ni escalar) los datos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+Aₖ = Σᵢ₌₁ᵏ σᵢ uᵢ vᵢᵀ
+‖A − Aₖ‖_F = √(Σᵢ₌ₖ₊₁ σᵢ²)
+energía retenida = Σᵢ₌₁ᵏ σᵢ² / Σ σᵢ²
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> PCA es la SVD de los datos centrados: no hay magia estadística adicional.
+El teorema de Eckart-Young (1936) es de los resultados más fuertes del álgebra lineal
+aplicada: entre **todas** las matrices de rango k, la que mejor aproxima a `A` es la SVD
+truncada, y el error cometido es exactamente la raíz de la suma de los cuadrados de los
+valores singulares descartados.
+
+«La mejor» es una afirmación de optimalidad, no una recomendación heurística. No existe
+ninguna otra matriz de rango k más cercana, ni en norma de Frobenius ni en norma
+espectral. Eso convierte la truncación SVD en el estándar contra el que se comparan
+todos los métodos de compresión y reducción de dimensionalidad.
+
+La **energía retenida** —la fracción de la suma de cuadrados de los valores singulares
+que conservan los k primeros— es el criterio habitual para elegir k. En PCA se llama
+«varianza explicada» y es exactamente la misma cantidad. Un salto brusco en el espectro
+indica el rango natural de los datos.
+
+El ahorro de almacenamiento es real: guardar `Aₖ` requiere `k(m + n + 1)` números en
+lugar de `mn`. Para una matriz 1000×1000 aproximada con rango 10, son 20 010 números
+frente a un millón. Esa es la aritmética que hace viable LoRA, que adapta modelos
+gigantes añadiendo matrices de rango muy bajo.
+
+## 🧮 Ejemplo trabajado
+
+Aproximación de rango 1 de una matriz 2×2.
+
+```text
+A = [[4, 0],
+     [3,−5]]
+
+valores singulares: σ₁ = 6.0644,  σ₂ = 3.2977
+
+Aproximación de rango 1:
+  error de Frobenius = 3.2977 = σ₂          ✓ coincide con la teoría
+  energía retenida = σ₁²/(σ₁²+σ₂²) = 77.2 %
+
+Teorema de Eckart-Young:
+  ninguna otra matriz de rango 1 se acerca más.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 133
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Elegir k sin mirar el espectro de valores singulares.
+2. Confundir energía retenida (cuadrados) con la fracción de valores singulares.
+3. Suponer que otra factorización de rango k podría aproximar mejor.
+
+## 🚀 Dónde se usa de verdad
+
+Compresión de imágenes, PCA, sistemas de recomendación por factorización, eliminación de
+ruido y LoRA.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Eckart, C.; Young, G. *The approximation of one matrix by another of lower rank*. Psychometrika, 1936](https://link.springer.com/article/10.1007/BF02288367)
+- [Hu, E. et al. *LoRA: Low-Rank Adaptation of Large Language Models*. ICLR, 2022](https://arxiv.org/abs/2106.09685)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

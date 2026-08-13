@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Las coordenadas de un vector dependen de la base; el vector no.**
 
-Esta clase concreta ese objetivo sobre **Bases y coordenadas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `bases_coordinates`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar pca sin centrar (ni escalar) los datos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+v = Σ cᵢ bᵢ  con bᵢ los vectores de la base
+coordenadas: c = B⁻¹v, donde B tiene las bᵢ por columnas
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Diagonalizar es elegir la base donde la transformación solo escala.
+La confusión más persistente del álgebra lineal es identificar un vector con su lista
+de números. La lista son sus **coordenadas en una base concreta**, casi siempre la
+canónica, y cambiar de base cambia la lista sin cambiar el objeto. El vector `(3,1)` es
+el mismo punto del plano se mire desde donde se mire.
+
+Calcular las coordenadas en otra base es resolver un sistema: si `B` es la matriz cuyas
+columnas son los vectores de la nueva base, las coordenadas `c` cumplen `Bc = v`. Que
+ese sistema tenga solución única es exactamente la condición de que los vectores formen
+base: independientes y generadores.
+
+La utilidad de cambiar de base es que **algunos problemas son triviales en la base
+correcta**. Una matriz cualquiera es difícil de elevar a la centésima potencia; en la
+base de sus autovectores es diagonal y basta elevar números. Ese es el programa completo
+de las clases 125 y 126.
+
+En machine learning el cambio de base es omnipresente aunque no se nombre: PCA cambia a
+la base de componentes principales, la transformada de Fourier cambia a la base de
+frecuencias, y una capa de embedding cambia de la base «one-hot» a una base densa
+aprendida. Todas son la misma operación.
+
+## 🧮 Ejemplo trabajado
+
+El mismo vector en dos bases.
+
+```text
+base canónica: (3, 1)
+
+nueva base: b₁ = (1,1),  b₂ = (1,−1)
+
+Resolver B·c = v:
+  [[1, 1],  [c₁]   [3]
+   [1,−1]]  [c₂] = [1]
+
+  c = (2, 1)
+
+Comprobación: 2·(1,1) + 1·(1,−1) = (3,1)    ✓
+
+El vector no cambió; cambió su lista de coordenadas.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 121
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Identificar el vector con su lista de coordenadas.
+2. Olvidar declarar en qué base están expresadas unas coordenadas.
+3. Suponer que cualquier conjunto de n vectores en ℝⁿ es base: deben ser independientes.
+
+## 🚀 Dónde se usa de verdad
+
+PCA, transformada de Fourier, embeddings, cambio de sistema de referencia en robótica y
+cualquier representación alternativa de los mismos datos.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 2](https://linear.axler.net/)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Toda matriz cuadrada se descompone en parte simétrica y antisimétrica, y AᵀA es siempre simétrica.**
 
-Esta clase concreta ese objetivo sobre **Transpuesta y simetría**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `transpose_symmetry`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar producto punto a vectores de escalas incomparables.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A = (A+Aᵀ)/2 + (A−Aᵀ)/2
+AᵀA es simétrica y semidefinida positiva
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El rango es la dimensión real de la salida, no el tamaño de la tabla.
+Una matriz es simétrica si coincide con su transpuesta. Las simétricas tienen
+propiedades excepcionales que la parte 06 desarrolla: sus autovalores son **reales**,
+sus autovectores son **ortogonales** y siempre son diagonalizables. Nada de eso está
+garantizado para una matriz general.
+
+Toda matriz cuadrada se descompone de forma única en una parte simétrica y una
+antisimétrica, y esa descomposición es un ejemplo de una idea general: separar un objeto
+en componentes con propiedades distintas para tratar cada una por separado. En física,
+esa separación distingue deformación de rotación.
+
+El hecho más útil de esta clase es que `AᵀA` es **siempre** simétrica, sea A cuadrada o
+no, y además semidefinida positiva. Esa propiedad es la que hace que las ecuaciones
+normales de mínimos cuadrados (clase 131) tengan solución, que la matriz de covarianza
+(clase 191) sea diagonalizable con autovalores no negativos, y que la SVD exista para
+toda matriz (clase 132).
+
+La contrapartida numérica es que `AᵀA` **eleva al cuadrado el número de condición** de A.
+Por eso, aunque las ecuaciones normales son correctas en teoría, en la práctica se
+prefiere QR o SVD: la clase 234 mide esa diferencia.
+
+## 🧮 Ejemplo trabajado
+
+Descomposición y simetría de AᵀA.
+
+```text
+A = [[1,2],[4,5]]
+
+parte simétrica    = (A + Aᵀ)/2 = [[1,3],[3,5]]
+parte antisimétrica = (A − Aᵀ)/2 = [[0,−1],[1,0]]
+suma = A                                   ✓
+
+simétrica = su transpuesta                 ✓
+antisimétrica: diagonal nula, opuestos fuera
+
+AᵀA = [[17,22],[22,29]]
+¿es simétrica?  Sí                         ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 112
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Suponer que una matriz general tiene autovalores reales.
+2. Usar las ecuaciones normales con matrices mal condicionadas sin considerar QR.
+3. Confundir simétrica (A = Aᵀ) con ortogonal (AᵀA = I).
+
+## 🚀 Dónde se usa de verdad
+
+Matriz de covarianza, ecuaciones normales, Hessiano (siempre simétrico si f es dos
+veces derivable con continuidad) y matriz de Gram en métodos kernel.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

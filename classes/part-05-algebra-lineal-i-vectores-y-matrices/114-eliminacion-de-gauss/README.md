@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**El pivoteo parcial evita dividir por pivotes casi nulos y hace estable la eliminación.**
 
-Esta clase concreta ese objetivo sobre **Eliminación de Gauss**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `gaussian_elimination_demo`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir dimensión del espacio con número de vectores.
+
+## 🧩 Fórmulas de la clase
+
+```text
+coste: ~2n³/3 operaciones
+pivote = fila con el mayor |Aᵢⱼ| en la columna actual
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> La proyección ortogonal es la mejor aproximación en norma euclídea.
+La eliminación de Gauss transforma el sistema en uno triangular mediante operaciones que
+no cambian el conjunto solución: intercambiar filas, escalarlas y restarles múltiplos de
+otras. Una vez triangular, la sustitución hacia atrás resuelve en `O(n²)`.
+
+El **pivoteo parcial** no es un refinamiento opcional: es lo que hace el método
+utilizable. Sin él, un pivote muy pequeño produce factores enormes que amplifican los
+errores de redondeo y pueden destruir por completo la precisión. Con pivoteo, se elige
+en cada columna la fila con el mayor valor absoluto, garantizando que los factores estén
+acotados por 1.
+
+El ejemplo clásico es un sistema de 2×2 con pivote 10⁻²⁰: sin pivoteo la solución
+calculada es completamente errónea; con pivoteo es correcta. La diferencia no está en la
+matemática —ambas eliminaciones son válidas en ℝ— sino en la aritmética finita.
+
+El coste, `~2n³/3` operaciones, es el mismo que el de la factorización LU, y no es
+casualidad: la eliminación de Gauss **es** la factorización LU, expresada de otra forma.
+La ventaja de guardarla como LU (clase 129) es poder resolver muchos sistemas con la
+misma matriz pagando `O(n²)` cada uno en lugar de `O(n³)`.
+
+## 🧮 Ejemplo trabajado
+
+Eliminación con pivoteo sobre un sistema 3×3.
+
+```text
+Matriz original:
+  [ 2  1 −1 |   8]
+  [−3 −1  2 | −11]
+  [−2  1  2 |  −3]
+
+Pivoteo: la mayor |entrada| de la columna 1 es −3 → intercambiar filas
+Intercambios realizados: 2
+
+Triangular superior resultante:
+  [−3 −1.000  2.000]
+  [ 0  1.667  0.667]
+  [ 0  0      0.200]
+
+Sustitución hacia atrás → x = (2, 3, −1)
+Verificación: Ax = (8, −11, −3) = b     ✓
+
+Coste: O(n³/3) ≈ 9 operaciones para n=3
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 114
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Implementar la eliminación sin pivoteo y sorprenderse con resultados erróneos.
+2. Elegir el pivote por su valor y no por su valor absoluto.
+3. Olvidar aplicar los intercambios de fila también al vector b.
+
+## 🚀 Dónde se usa de verdad
+
+Es el algoritmo que hay dentro de cualquier `solve` de biblioteca. Resolver circuitos,
+estructuras, sistemas de equilibrio y ajustes lineales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 20-22](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

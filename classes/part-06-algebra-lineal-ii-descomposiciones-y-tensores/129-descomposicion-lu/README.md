@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**LU factoriza una vez y resuelve muchos sistemas: O(n³) una sola vez, O(n²) por cada b.**
 
-Esta clase concreta ese objetivo sobre **Descomposición LU**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `lu_decomposition`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir el orden de los índices al reordenar un tensor.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A = LU
+resolver: Ly = b (hacia delante), luego Ux = y (hacia atrás)
+det(A) = Π uᵢᵢ
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> El número de condición es el cociente entre el mayor y el menor valor singular.
+La factorización LU descompone una matriz en el producto de una triangular inferior con
+unos en la diagonal y una triangular superior. No es un algoritmo nuevo: es la
+eliminación de Gauss guardando los multiplicadores en lugar de descartarlos.
+
+Su valor está en la reutilización. Factorizar cuesta `O(n³/3)`, pero una vez hecho,
+resolver `Ax = b` para cada nuevo `b` cuesta solo `O(n²)`: dos sustituciones
+triangulares. Si hay que resolver mil sistemas con la misma matriz —caso frecuente en
+simulación y en métodos implícitos— la diferencia es de tres órdenes de magnitud.
+
+Como subproducto, el determinante sale gratis: es el producto de la diagonal de `U`,
+corregido por el signo de los intercambios de fila. Calcularlo así cuesta `O(n³)` en
+lugar del `O(n!)` de la definición de Laplace.
+
+La versión sin pivoteo que implementa el motor —Doolittle— falla si aparece un pivote
+nulo, y es numéricamente frágil con pivotes pequeños. Las bibliotecas reales usan LU con
+pivoteo parcial (`PA = LU`), y por eso `scipy.linalg.lu` devuelve también una matriz de
+permutación.
+
+## 🧮 Ejemplo trabajado
+
+Factorizar una matriz 2×2.
+
+```text
+A = [[4,3],[6,3]]
+
+L = [[1,   0],      U = [[4,  3],
+     [1.5, 1]]           [0, −1.5]]
+
+L·U = [[4,3],[6,3]] = A                    ✓
+
+det(A) = 4 · (−1.5) = −6                   ✓
+
+Coste:
+  factorizar:               O(n³/3)
+  cada sistema adicional:   O(n²)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +108,16 @@ compmath run 129
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Usar LU sin pivoteo con matrices que lo requieren.
+2. Refactorizar la matriz para cada nuevo lado derecho.
+3. Olvidar el signo de los intercambios al calcular el determinante.
+
+## 🚀 Dónde se usa de verdad
+
+Solvers de sistemas lineales, métodos implícitos en EDO, simulación con la misma matriz
+y muchos lados derechos, y cálculo eficiente de determinantes.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 3](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+- [SciPy: `scipy.linalg.lu`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lu.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**A y P⁻¹AP representan la misma transformación en bases distintas y comparten sus invariantes.**
 
-Esta clase concreta ese objetivo sobre **Cambio de base**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `change_of_basis`.
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A' = P⁻¹AP  (semejanza)
+tr(A') = tr(A),  det(A') = det(A),  autovalores iguales
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> La SVD existe para toda matriz, incluso no cuadrada y singular.
+Si `P` es la matriz cuyas columnas son los vectores de la nueva base, entonces `P⁻¹AP`
+es la misma transformación expresada en esa base. La lectura de la fórmula, de derecha a
+izquierda, es literal: pasar de la nueva base a la canónica (`P`), aplicar la
+transformación (`A`) y volver (`P⁻¹`).
+
+Las matrices relacionadas así se llaman **semejantes**, y comparten todo lo que no
+depende de la base: traza, determinante, rango, polinomio característico y autovalores.
+Esos son los **invariantes** de la transformación, y son las magnitudes que describen la
+transformación en sí, no su representación.
+
+Que la traza y el determinante sean invariantes explica por qué son iguales a la suma y
+al producto de los autovalores respectivamente: los autovalores tampoco dependen de la
+base, y en la base diagonal la traza es su suma y el determinante su producto.
+
+La diagonalización de la clase 126 es el caso particular en que la nueva base está
+formada por autovectores y `A'` resulta diagonal. No siempre existe esa base —hay
+matrices no diagonalizables— pero para las simétricas sí, y siempre ortonormal.
+
+## 🧮 Ejemplo trabajado
+
+Cambio de base con P y su inversa.
+
+```text
+P = [[1, 1],     P⁻¹ = [[0.5,  0.5],
+     [1,−1]]            [0.5, −0.5]]
+
+P·P⁻¹ = I                                  ✓
+
+v = (3,1) en base canónica
+coordenadas nuevas: P⁻¹v = (2, 1)
+vuelta:             P·(2,1) = (3,1)        ✓
+
+Semejanza: A' = P⁻¹AP
+  misma transformación, otra representación
+  mismos autovalores, traza y determinante
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 122
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Escribir PAP⁻¹ cuando corresponde P⁻¹AP (o al revés) sin fijar la convención.
+2. Suponer que matrices semejantes son iguales entrada a entrada.
+3. Comparar matrices de transformaciones expresadas en bases distintas.
+
+## 🚀 Dónde se usa de verdad
+
+Diagonalización, análisis de sistemas dinámicos, cambio de sistema de referencia y
+reducción de una forma cuadrática a ejes principales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024](https://linear.axler.net/)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Una forma cuadrática tiene curvas de nivel elípticas cuando su matriz es definida positiva, y los ejes son los autovectores.**
 
-Esta clase concreta ese objetivo sobre **Formas cuadráticas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `quadratic_forms`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+q(x) = xᵀAx
+∇q = 2Ax  (A simétrica)
+máx y mín sobre ‖x‖=1: mayor y menor autovalor
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> PCA es la SVD de los datos centrados: no hay magia estadística adicional.
+Una forma cuadrática es un polinomio homogéneo de grado dos escrito matricialmente. Su
+geometría la determinan los autovalores de `A`: si todos son positivos, las curvas de
+nivel son elipses; si hay signos mixtos, hiperbolas; si alguno es cero, la forma es
+degenerada en esa dirección.
+
+Los **ejes de las elipses son los autovectores** y sus longitudes dependen de los
+autovalores. Cuanto más dispares sean los autovalores, más alargadas son las elipses, y
+esa excentricidad es exactamente el número de condición. Ese es el vínculo entre álgebra
+lineal y velocidad de convergencia: el descenso de gradiente zigzaguea en valles
+alargados (clase 244).
+
+El gradiente de una forma cuadrática es `2Ax` cuando A es simétrica, y ese es el ejemplo
+canónico de derivada matricial (clase 177). Igualar a cero da `Ax = 0`, lo que confirma
+que el único punto crítico de una forma definida positiva es el origen, y es un mínimo.
+
+Los valores extremos sobre la esfera unitaria son el mayor y el menor autovalor,
+resultado conocido como cociente de Rayleigh. Es lo que hace que la primera componente
+principal maximice la varianza proyectada (clase 135): maximizar `xᵀΣx` con `‖x‖=1` da
+el autovector dominante.
+
+## 🧮 Ejemplo trabajado
+
+Forma cuadrática con matriz definida positiva.
+
+```text
+A = [[4,1],[1,3]]
+q(x) = 4x₁² + 2x₁x₂ + 3x₂²
+
+valores en cuatro direcciones unitarias:
+  (1,0)  → 4
+  (0,1)  → 3
+  (1,1)  → 10
+  (1,−1) → 6
+
+Extremos sobre ‖x‖ = 1:
+  mínimo = λ_min = 2.3820
+  máximo = λ_max = 4.6180
+
+Gradiente en (1,1): 2A(1,1) = (10, 8)
+
+Curvas de nivel: elipses (A es definida positiva)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 128
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Escribir la forma cuadrática con una matriz no simétrica sin simetrizarla.
+2. Olvidar el factor 2 en el gradiente.
+3. Suponer que las curvas de nivel son circulares cuando los autovalores difieren.
+
+## 🚀 Dónde se usa de verdad
+
+Función objetivo de mínimos cuadrados, energía en física, análisis de curvatura y
+diagnóstico de velocidad de convergencia en optimización.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

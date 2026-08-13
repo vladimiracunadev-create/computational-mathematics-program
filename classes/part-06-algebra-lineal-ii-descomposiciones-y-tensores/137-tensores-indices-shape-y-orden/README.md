@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**El orden de un tensor es su número de índices; el shape y el orden de aplanado determinan cómo se recorre.**
 
-Esta clase concreta ese objetivo sobre **Tensores: índices, shape y orden**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `tensors`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+orden = número de índices
+índice lineal (row-major) = i·(d₂d₃) + j·d₃ + k
+lote de imágenes: (N, C, H, W)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> La SVD existe para toda matriz, incluso no cuadrada y singular.
+Un tensor generaliza escalar, vector y matriz a un número arbitrario de índices. En
+computación no es más que un array multidimensional con un shape, y el trabajo real está
+en no perderse entre los índices.
+
+El **orden de aplanado** determina cómo se recorre en memoria. En *row-major* —el de C,
+Python y NumPy por defecto— el último índice varía más rápido; en *column-major* —el de
+Fortran, MATLAB y las rutinas BLAS— es el primero. Recorrer en el orden equivocado
+destruye la localidad de caché y puede costar un orden de magnitud de rendimiento sin
+cambiar el resultado.
+
+Las convenciones de shape importan porque no son universales. Un lote de imágenes es
+`(N, C, H, W)` en PyTorch y `(N, H, W, C)` en TensorFlow. Confundirlas produce errores
+silenciosos: el código corre y el modelo no aprende. Anotar el shape esperado en cada
+punto del código es la práctica que evita esa clase de bug.
+
+Las operaciones de reordenamiento —`transpose`, `permute`, `reshape`, `view`— no mueven
+datos necesariamente: cambian la interpretación de los índices. Esa distinción entre
+vista y copia es la que explica los errores de contigüidad que aparecen al encadenar
+operaciones en PyTorch.
+
+## 🧮 Ejemplo trabajado
+
+Tensor de orden 3 y su aplanado.
+
+```text
+shape (2,2,2), 8 elementos
+
+T[0] = [[0,1],[2,3]]
+T[1] = [[4,5],[6,7]]
+
+aplanado row-major: [0,1,2,3,4,5,6,7]
+
+elemento T[1][0][1] = 5
+índice lineal: 1·4 + 0·2 + 1 = 5           ✓
+
+Convenciones reales:
+  PyTorch:    (N, C, H, W)
+  TensorFlow: (N, H, W, C)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 137
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Confundir el orden del tensor con el tamaño de sus dimensiones.
+2. Mezclar convenciones de shape entre frameworks.
+3. Suponer que reshape siempre puede hacerse sin copiar: depende de la contigüidad.
+
+## 🚀 Dónde se usa de verdad
+
+Representación de lotes de imágenes, secuencias y vídeo; interoperabilidad entre
+frameworks; optimización de recorridos por localidad de caché.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [NumPy: indexación y orden en memoria](https://numpy.org/doc/stable/reference/arrays.ndarray.html#internal-memory-layout-of-an-ndarray)
+- [Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009](https://epubs.siam.org/doi/10.1137/07070111X)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

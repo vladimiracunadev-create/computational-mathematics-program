@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
+**Normalizar separa dirección de magnitud; el vector cero no tiene dirección definida.**
 
-Esta clase concreta ese objetivo sobre **Vectores unitarios**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Vectores, normas, producto punto, independencia, span, sistemas lineales, eliminación de Gauss, rango, inversa, determinante y proyección ortogonal.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `unit_vectors`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir dimensión del espacio con número de vectores.
+
+## 🧩 Fórmulas de la clase
+
+```text
+û = v / ‖v‖,  ‖û‖ = 1
+v = ‖v‖ · û   (reconstrucción)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,44 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
-## 🧠 Idea rectora de la parte 05
+## 📖 Fundamentos
 
-> El determinante mide cuánto escala el volumen una transformación.
+Un vector codifica dos informaciones: hacia dónde apunta y cuánto mide. Normalizar
+—dividir por la norma— conserva la primera y descarta la segunda. La reconstrucción es
+inmediata: `v = ‖v‖·û`, lo que muestra que la descomposición no pierde nada, solo separa.
+
+La operación tiene una excepción que hay que tratar: el vector cero no se puede
+normalizar, porque no tiene dirección. En una implementación, dividir por su norma da
+`NaN` o `inf` (clase 033), así que hay que comprobar el caso explícitamente. El motor
+del programa devuelve el vector cero sin modificar, decisión que hay que declarar
+porque no es la única razonable.
+
+Normalizar es lo que hace que la comparación entre embeddings sea justa. También es lo
+que hace la **normalización de capa** (clase 308), aunque allí se normaliza por media y
+desviación en lugar de solo por norma. En ambos casos el objetivo es el mismo: que la
+escala no domine la comparación.
+
+Un detalle numérico: normalizar un vector de norma muy pequeña amplifica su error
+relativo, porque se divide por un número cercano a cero. En cálculos sensibles conviene
+comprobar que la norma supera un umbral antes de dividir.
+
+## 🧮 Ejemplo trabajado
+
+Normalizar y reconstruir.
+
+```text
+v = (6, 8)
+‖v‖ = √(36 + 64) = 10
+
+û = (0.6, 0.8)
+‖û‖ = √(0.36 + 0.64) = 1.0        ✓
+
+Reconstrucción: 10 · (0.6, 0.8) = (6, 8)    ✓
+
+Caso límite:
+  normalizar (0, 0) → división por cero
+  el motor devuelve (0, 0) y lo declara
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +107,16 @@ compmath run 105
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Invertir una matriz mal condicionada en lugar de factorizar.
-- Confundir dimensión del espacio con número de vectores.
-- Aplicar producto punto a vectores de escalas incomparables.
+1. Normalizar sin comprobar que la norma es no nula.
+2. Normalizar vectores de norma muy pequeña y amplificar su error relativo.
+3. Suponer que normalizar conserva toda la información: descarta la magnitud a propósito.
+
+## 🚀 Dónde se usa de verdad
+
+Comparación de embeddings, normalización de gradientes (gradient clipping), vectores
+normales en gráficos y preparación de datos para similitud coseno.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
-- Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)
+- [Ba, Kiros & Hinton. *Layer Normalization*. arXiv, 2016](https://arxiv.org/abs/1607.06450)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

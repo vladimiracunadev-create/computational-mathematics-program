@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Diagonalizar es elegir la base donde la transformación solo escala, y ahí las potencias son triviales.**
 
-Esta clase concreta ese objetivo sobre **Diagonalización**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `diagonalization`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir el orden de los índices al reordenar un tensor.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A = PDP⁻¹,  D diagonal de autovalores
+simétrica: A = QDQᵀ con Q ortogonal
+Aᵏ = PDᵏP⁻¹
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,45 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> Diagonalizar es elegir la base donde la transformación solo escala.
+Si una matriz tiene una base completa de autovectores, se puede escribir como `PDP⁻¹`
+con `D` diagonal. Esa factorización es un cambio de base: pasar a la base de
+autovectores, escalar cada eje por su autovalor y volver.
+
+La ganancia práctica más visible está en las potencias. `A¹⁰⁰ = PD¹⁰⁰P⁻¹`, y elevar una
+diagonal a la centésima es elevar sus entradas. De multiplicar cien matrices se pasa a
+elevar n números. Es lo que permite analizar el comportamiento a largo plazo de una
+cadena de Markov (clase 199) sin simularla.
+
+Para matrices simétricas el resultado es aún mejor: la base de autovectores puede
+elegirse **ortonormal**, así que `P` es ortogonal y `P⁻¹ = Pᵀ`. La factorización queda
+`A = QDQᵀ`, sin necesidad de invertir nada. Es el teorema espectral, y es la razón por la
+que las matrices simétricas son tan cómodas.
+
+No toda matriz es diagonalizable. Las que tienen autovalores repetidos sin suficientes
+autovectores independientes no lo son, y para ellas existe la forma de Jordan. En la
+práctica numérica ese caso es inestable y se prefiere la SVD, que siempre existe.
+
+## 🧮 Ejemplo trabajado
+
+Diagonalizar una simétrica y elevarla a la décima.
+
+```text
+A = [[4,1],[1,3]]
+
+D = diag(4.6180, 2.3820)
+Q = matriz ortogonal de autovectores
+
+QDQᵀ reconstruye A                         ✓
+
+A¹⁰ vía diagonalización:
+  Q·diag(4.6180¹⁰, 2.3820¹⁰)·Qᵀ
+  = [[ 4 259 552, 2 632 158],
+     [ 2 632 158, 1 627 394]]
+
+Coste: 2 exponenciaciones frente a 10 productos de matrices
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +109,16 @@ compmath run 126
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Suponer que toda matriz es diagonalizable.
+2. Invertir P cuando la matriz es simétrica y bastaría transponer.
+3. Usar diagonalización en matrices no simétricas mal condicionadas: preferir SVD.
+
+## 🚀 Dónde se usa de verdad
+
+Potencias de matrices, cadenas de Markov, análisis modal, PCA y ecuaciones diferenciales
+lineales.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 6](https://math.mit.edu/~gs/linearalgebra/)
+- [Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

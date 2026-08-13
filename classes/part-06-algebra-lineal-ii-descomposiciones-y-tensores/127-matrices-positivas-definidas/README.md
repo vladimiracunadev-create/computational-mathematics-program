@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**Definida positiva significa todos los autovalores positivos, y equivale a que xᵀAx sea siempre positivo.**
 
-Esta clase concreta ese objetivo sobre **Matrices positivas definidas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,13 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `positive_definite`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar pca sin centrar (ni escalar) los datos.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A ≻ 0 ⟺ xᵀAx > 0 para todo x ≠ 0 ⟺ todos los λᵢ > 0
+criterio de Sylvester: todos los menores principales positivos
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +46,43 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> La SVD existe para toda matriz, incluso no cuadrada y singular.
+Una matriz simétrica es definida positiva si su forma cuadrática es siempre positiva
+salvo en el origen. Las tres caracterizaciones —forma cuadrática, autovalores y menores
+principales— son equivalentes, y cada una es la más cómoda en un contexto distinto.
+
+Esta propiedad es la que hace «bien portados» a los objetos donde aparece. Una **matriz
+de covarianza** es siempre semidefinida positiva, porque su forma cuadrática es la
+varianza de una combinación lineal, que no puede ser negativa. Un **Hessiano definido
+positivo** en un punto crítico garantiza que es un mínimo (clase 169). Una **matriz de
+Gram** de un kernel válido debe ser semidefinida positiva, y esa es la condición de
+Mercer (clase 290).
+
+La distinción entre definida y semidefinida importa: semidefinida permite autovalores
+nulos, lo que significa direcciones planas. Una covarianza semidefinida pero no definida
+indica que hay una combinación lineal de las variables con varianza cero, es decir,
+dependencia lineal exacta entre features.
+
+Numéricamente, la comprobación robusta no es calcular autovalores sino intentar la
+**factorización de Cholesky**: existe si y solo si la matriz es definida positiva, y
+cuesta la mitad que una LU. Es lo que hacen las bibliotecas para comprobar la condición.
+
+## 🧮 Ejemplo trabajado
+
+Una definida positiva y una indefinida.
+
+```text
+A = [[4,1],[1,3]]        autovalores 4.618, 2.382   → todos > 0  ✓ definida positiva
+B = [[1,2],[2,1]]        autovalores 3, −1          → signos mixtos ✗ indefinida
+
+Forma cuadrática con x = (1,−1):
+  xᵀBx = 1 − 2 − 2 + 1 = −2 < 0          ✗ confirma que B no es definida positiva
+
+Criterio de Sylvester para A:
+  menor 1×1: 4 > 0                       ✓
+  menor 2×2: det = 11 > 0                ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +106,16 @@ compmath run 127
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Comprobar la condición solo en algunos vectores x en lugar de usar los autovalores.
+2. Confundir definida positiva con «todas las entradas positivas».
+3. Olvidar que la propiedad solo está definida para matrices simétricas.
+
+## 🚀 Dónde se usa de verdad
+
+Matrices de covarianza, condición de mínimo en optimización, kernels válidos, métodos de
+Newton y muestreo de gaussianas multivariantes por Cholesky.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, apéndice A](https://web.stanford.edu/~boyd/cvxbook/)
+- [Horn & Johnson. *Matrix Analysis*, 2ª ed., Cambridge, 2012](https://www.cambridge.org/core/books/matrix-analysis/8C8B0C4A0C8E4B9C0C0C0C0C0C0C0C0C)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

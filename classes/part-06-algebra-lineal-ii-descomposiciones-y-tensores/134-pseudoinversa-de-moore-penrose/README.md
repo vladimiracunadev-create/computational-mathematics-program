@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
+**La pseudoinversa generaliza la inversa y da la solución de mínima norma.**
 
-Esta clase concreta ese objetivo sobre **Pseudoinversa de Moore-Penrose**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, pseudoinversa, PCA y álgebra tensorial.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `pseudoinverse`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🧩 Fórmulas de la clase
+
+```text
+A⁺ = VΣ⁺Uᵀ
+sobredeterminado: A⁺b = solución de mínimos cuadrados
+indeterminado: A⁺b = solución de norma mínima
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,46 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
-## 🧠 Idea rectora de la parte 06
+## 📖 Fundamentos
 
-> El número de condición es el cociente entre el mayor y el menor valor singular.
+La pseudoinversa de Moore-Penrose extiende la inversa a matrices que no la tienen:
+rectangulares o singulares. Se construye desde la SVD invirtiendo los valores singulares
+no nulos y dejando en cero los demás.
+
+Su comportamiento depende del caso. Si el sistema está **sobredeterminado** —más
+ecuaciones que incógnitas—, `A⁺b` da la solución de mínimos cuadrados. Si está
+**indeterminado** —infinitas soluciones—, da la de **norma mínima** entre todas ellas.
+Esa elección no es arbitraria: es la solución sin componente en el núcleo, la más
+«económica».
+
+El detalle numérico que importa: al invertir los valores singulares, los más pequeños se
+convierten en los más grandes y amplifican el ruido. Por eso la pseudoinversa práctica
+**trunca**: descarta los valores singulares por debajo de una tolerancia relativa. Ese
+truncamiento es una forma de regularización, emparentada con Ridge.
+
+Cuando `A` tiene rango completo por columnas, `A⁺ = (AᵀA)⁻¹Aᵀ` y coincide con las
+ecuaciones normales. La versión SVD es preferible porque funciona también cuando el
+rango es deficiente, donde las ecuaciones normales fallan.
+
+## 🧮 Ejemplo trabajado
+
+Pseudoinversa de un sistema sobredeterminado.
+
+```text
+A = [[1,0],      b = (1, 2, 4)
+     [1,1],
+     [1,2]]
+
+3 ecuaciones, 2 incógnitas → sobredeterminado
+
+A⁺ = [[ 0.8333,  0.3333, −0.1667],
+      [−0.5,     0,       0.5   ]]
+
+A⁺b = (0.8333, 1.5)
+
+Coincide con las ecuaciones normales        ✓
+A⁺A = I (rango completo por columnas)       ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +110,16 @@ compmath run 134
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Aplicar PCA sin centrar (ni escalar) los datos.
-- Interpretar autovalores complejos como error de cálculo.
-- Confundir el orden de los índices al reordenar un tensor.
+1. Usar la pseudoinversa sin truncar valores singulares minúsculos.
+2. Suponer que A⁺A siempre es la identidad: solo si el rango es completo por columnas.
+3. Confundir la solución de mínima norma con «la» solución cuando hay infinitas.
+
+## 🚀 Dónde se usa de verdad
+
+Mínimos cuadrados con rango deficiente, regularización truncada, cinemática inversa en
+robótica y resolución de sistemas indeterminados.
 
 ## 🤖 Conexión con IA
 
@@ -114,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
-- Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
-- Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+- [Penrose, R. *A generalized inverse for matrices*. Math. Proc. Cambridge Phil. Soc., 1955](https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/generalized-inverse-for-matrices/5F4516D6D3B34D0E8F7E7C7F0F7E7C7F)
+- [NumPy: `numpy.linalg.pinv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.pinv.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
