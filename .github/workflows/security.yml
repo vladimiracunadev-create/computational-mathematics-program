@@ -81,7 +81,10 @@ jobs:
           persist-credentials: false
       - name: Todas las acciones deben estar fijadas por SHA
         run: |
-          sin_pin=$(grep -rhoE "uses: [^@]+@[^ ]+" .github/workflows | grep -vE "@[0-9a-f]{40}$" || true)
+          # Anclado a inicio de línea: sin el ancla, el patrón se encuentra a sí mismo
+          # dentro de este mismo bloque `run` y el paso falla siempre.
+          usos=$(grep -rhE "^[[:space:]]*(- )?uses:" .github/workflows || true)
+          sin_pin=$(echo "$usos" | grep -vE "@[0-9a-f]{40}([[:space:]]|$)" | grep -v "^$" || true)
           if [ -n "$sin_pin" ]; then
             echo "Acciones sin fijar por SHA de 40 caracteres:"
             echo "$sin_pin"
