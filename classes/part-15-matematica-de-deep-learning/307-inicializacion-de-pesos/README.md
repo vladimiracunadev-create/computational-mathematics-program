@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["306<br/>Computational graphs"] --> C
-    subgraph C["307 · Inicialización de pesos"]
+    P["Clase 306 · Computational graphs"] --> D
+    subgraph CLASE["Clase 307 · Inicialización de pesos"]
         direction TB
-        D["Demostración<br/><code>weight_initialization</code>"] --> R["Resultados numéricos<br/>capas<br/>neuronas_por_capa<br/>semilla"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>escala_muy_pequeña_0.01_tanh<br/>xavier_tanh_(1/√n)<br/>he_relu_(√(2/n))<br/>… +4 más"]
+        D["Demostracion weight_initialization"]
+        D --> R["Resultados 3: capas +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 7: escala_muy_pequeña_0.… +6"]
     end
-    C --> N["308<br/>Batch normalization y<br/>layer normalization"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 308 · Batch normalization y…"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

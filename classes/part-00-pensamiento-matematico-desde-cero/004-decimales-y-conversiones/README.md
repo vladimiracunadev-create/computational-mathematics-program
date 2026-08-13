@@ -34,15 +34,16 @@ a/b tiene desarrollo finito ⟺ b (reducido) solo tiene factores 2 y 5
 
 ```mermaid
 flowchart LR
-    P["003<br/>Fracciones y números<br/>racionales"] --> C
-    subgraph C["004 · Decimales y conversiones"]
+    P["Clase 003 · Fracciones y números…"] --> D
+    subgraph CLASE["Clase 004 · Decimales y conversiones"]
         direction TB
-        D["Demostración<br/><code>decimal_conversion</code>"] --> R["Resultados numéricos<br/>3/8"]
-        D --> V["Verificaciones<br/>3/8_es_finito<br/>coincide_con_1/7"]
-        D --> O["Contexto y estructura<br/>1/7_primeros_12_digitos<br/>1/7_periodo<br/>1/7_reconstruido"]
+        D["Demostracion decimal_conversion"]
+        D --> R["Resultados 1: 3/8"]
+        D --> V["Comprobaciones 2: 3/8_es_finito +1"]
+        D --> O["Contexto 3: 1/7_primeros_12_digit… +2"]
     end
-    C --> N["005<br/>Porcentajes desde cero"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 005 · Porcentajes desde cero"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

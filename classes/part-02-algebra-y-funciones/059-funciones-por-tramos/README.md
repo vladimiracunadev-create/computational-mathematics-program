@@ -34,15 +34,16 @@ continuidad en el corte: límite por la izquierda = límite por la derecha = val
 
 ```mermaid
 flowchart LR
-    P["058<br/>Funciones inversas"] --> C
-    subgraph C["059 · Funciones por tramos"]
+    P["Clase 058 · Funciones inversas"] --> D
+    subgraph CLASE["Clase 059 · Funciones por tramos"]
         direction TB
-        D["Demostración<br/><code>piecewise_function</code>"] --> R["Resultados numéricos<br/>f(-3)<br/>f(0)<br/>f(1.999)<br/>… +1 más"]
-        D --> V["Verificaciones<br/>continua_en_0<br/>continua_en_2<br/>relu_es_por_tramos"]
-        D --> O["Contexto y estructura<br/>definicion"]
+        D["Demostracion piecewise_function"]
+        D --> R["Resultados 4: f-3 +3"]
+        D --> V["Comprobaciones 3: continua_en_0 +2"]
+        D --> O["Contexto 1: definicion"]
     end
-    C --> N["060<br/>Capstone: construir y<br/>comparar modelos<br/>funcionales"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 060 · Capstone: construir y…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

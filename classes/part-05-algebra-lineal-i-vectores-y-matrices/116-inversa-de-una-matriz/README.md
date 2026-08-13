@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["115<br/>Forma escalonada y<br/>rango"] --> C
-    subgraph C["116 · Inversa de una matriz"]
+    P["Clase 115 · Forma escalonada y rango"] --> D
+    subgraph CLASE["Clase 116 · Inversa de una matriz"]
         direction TB
-        D["Demostración<br/><code>matrix_inverse</code>"] --> R["Resultados numéricos<br/>determinante"]
-        D --> V["Verificaciones<br/>es_identidad"]
-        D --> O["Contexto y estructura<br/>A<br/>A⁻¹<br/>A·A⁻¹<br/>… +2 más"]
+        D["Demostracion matrix_inverse"]
+        D --> R["Resultados 1: determinante"]
+        D --> V["Comprobaciones 1: es_identidad"]
+        D --> O["Contexto 5: A +4"]
     end
-    C --> N["117<br/>Determinantes"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 117 · Determinantes"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

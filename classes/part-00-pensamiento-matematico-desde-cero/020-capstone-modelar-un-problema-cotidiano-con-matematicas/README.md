@@ -34,15 +34,16 @@ descuadre = ingreso − Σ redondeo(ingreso · pᵢ)
 
 ```mermaid
 flowchart LR
-    P["019<br/>Comprobación y<br/>contraejemplos"] --> C
-    subgraph C["020 · Capstone: modelar un<br/>problema cotidiano con<br/>matemáticas"]
+    P["Clase 019 · Comprobación y…"] --> D
+    subgraph CLASE["Clase 020 · Capstone: modelar un…"]
         direction TB
-        D["Demostración<br/><code>capstone_budget_model</code>"] --> R["Resultados numéricos<br/>ingreso<br/>total_asignado<br/>descuadre_por_redondeo<br/>… +1 más"]
-        D --> V["Verificaciones<br/>porcentajes_suman_1"]
-        D --> O["Contexto y estructura<br/>montos"]
+        D["Demostracion capstone_budget_model"]
+        D --> R["Resultados 4: ingreso +3"]
+        D --> V["Comprobaciones 1: porcentajes_suman_1"]
+        D --> O["Contexto 1: montos"]
     end
-    C --> N["021<br/>Bits, bytes y sistemas<br/>de numeración"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 021 · Bits, bytes y sistemas…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

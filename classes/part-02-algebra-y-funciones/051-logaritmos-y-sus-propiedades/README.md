@@ -36,15 +36,16 @@ log_b(a) = ln a / ln b
 
 ```mermaid
 flowchart LR
-    P["050<br/>Exponentes algebraicos"] --> C
-    subgraph C["051 · Logaritmos y sus<br/>propiedades"]
+    P["Clase 050 · Exponentes algebraicos"] --> D
+    subgraph CLASE["Clase 051 · Logaritmos y sus propiedades"]
         direction TB
-        D["Demostración<br/><code>logarithm_laws</code>"] --> R["Resultados numéricos<br/>log(a*b)<br/>log(a)+log(b)<br/>log(a/b)<br/>… +5 más"]
-        D --> V["Verificaciones<br/>ley_producto"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion logarithm_laws"]
+        D --> R["Resultados 8: loga*b +7"]
+        D --> V["Comprobaciones 1: ley_producto"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["052<br/>Funciones: dominio y<br/>rango"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 052 · Funciones: dominio y rango"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

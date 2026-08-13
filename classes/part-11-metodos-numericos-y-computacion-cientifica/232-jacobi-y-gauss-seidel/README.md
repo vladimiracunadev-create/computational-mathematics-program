@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["231<br/>Sistemas lineales<br/>directos"] --> C
-    subgraph C["232 · Jacobi y Gauss-Seidel"]
+    P["Clase 231 · Sistemas lineales directos"] --> D
+    subgraph CLASE["Clase 232 · Jacobi y Gauss-Seidel"]
         direction TB
-        D["Demostración<br/><code>jacobi_gauss_seidel</code>"] --> R["Resultados numéricos<br/>jacobi_iteraciones<br/>gauss_seidel_iteraciones"]
-        D --> V["Verificaciones<br/>diagonalmente_dominante<br/>gauss_seidel_es_mas_rapido<br/>jacobi_es_paralelizable"]
-        D --> O["Contexto y estructura<br/>A<br/>jacobi_solucion<br/>gauss_seidel_solucion"]
+        D["Demostracion jacobi_gauss_seidel"]
+        D --> R["Resultados 2: jacobi_iteraciones +1"]
+        D --> V["Comprobaciones 3: diagonalmente_dominan… +2"]
+        D --> O["Contexto 3: A +2"]
     end
-    C --> N["233<br/>Métodos iterativos y<br/>tolerancias"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 233 · Métodos iterativos y…"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

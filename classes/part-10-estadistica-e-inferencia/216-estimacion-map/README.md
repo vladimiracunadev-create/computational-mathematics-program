@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["215<br/>Máxima verosimilitud"] --> C
-    subgraph C["216 · Estimación MAP"]
+    P["Clase 215 · Máxima verosimilitud"] --> D
+    subgraph CLASE["Clase 216 · Estimación MAP"]
         direction TB
-        D["Demostración<br/><code>map_estimation</code>"] --> R["Resultados numéricos<br/>parametro_real"]
-        D --> V["Verificaciones<br/>MAP_converge_al_MLE<br/>el_prior_domina_con_pocos_datos<br/>MAP_con_prior_uniforme_es_MLE"]
-        D --> O["Contexto y estructura<br/>prior<br/>informe"]
+        D["Demostracion map_estimation"]
+        D --> R["Resultados 1: parametro_real"]
+        D --> V["Comprobaciones 3: MAP_converge_al_MLE +2"]
+        D --> O["Contexto 2: prior +1"]
     end
-    C --> N["217<br/>Inferencia bayesiana"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 217 · Inferencia bayesiana"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

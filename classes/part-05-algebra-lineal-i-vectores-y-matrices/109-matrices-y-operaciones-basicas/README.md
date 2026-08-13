@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["108<br/>Span y subespacios"] --> C
-    subgraph C["109 · Matrices y operaciones<br/>básicas"]
+    P["Clase 108 · Span y subespacios"] --> D
+    subgraph CLASE["Clase 109 · Matrices y operaciones básicas"]
         direction TB
-        D["Demostración<br/><code>matrix_basics</code>"] --> R["Resultados numéricos<br/>traza_A"]
-        D --> V["Verificaciones<br/>(Aᵀ)ᵀ=A"]
-        D --> O["Contexto y estructura<br/>A<br/>B<br/>A+B<br/>… +2 más"]
+        D["Demostracion matrix_basics"]
+        D --> R["Resultados 1: traza_A"]
+        D --> V["Comprobaciones 1: Aᵀᵀ=A"]
+        D --> O["Contexto 5: A +4"]
     end
-    C --> N["110<br/>Producto matriz-vector"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 110 · Producto matriz-vector"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

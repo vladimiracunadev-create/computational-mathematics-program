@@ -16,15 +16,15 @@ compmath run 325      # ejecutar su demostración
 
 ```mermaid
 flowchart TD
-    T["Token"] --> E["Embedding<br/>clase 317, 322"]
-    E --> P["Positional encoding<br/>clase 323"]
-    P --> QKV["Q, K, V<br/>clase 324"]
-    QKV --> A["softmax(QKᵀ/√d)V<br/>clase 325"]
-    A --> MH["Multi-head<br/>clase 327"]
-    MH --> R["Residual + LayerNorm<br/>clase 308"]
-    R --> FF["Feed-forward<br/>clase 302"]
-    FF --> L["Logits → softmax<br/>clase 321"]
-    L --> S["Sampling<br/>clase 330"]
+    T["Token de entrada"] --> E["Embedding · clases 317 y 322"]
+    E --> P["Positional encoding · clase 323"]
+    P --> QKV["Query, Key y Value · clase 324"]
+    QKV --> A["Atencion escalada · clase 325"]
+    A --> MH["Multi-head · clase 327"]
+    MH --> R["Residual y LayerNorm · clase 308"]
+    R --> FF["Feed-forward · clase 302"]
+    FF --> L["Logits y softmax · clase 321"]
+    L --> S["Muestreo · clase 330"]
 ```
 
 | Componente | Matemática | Clases |

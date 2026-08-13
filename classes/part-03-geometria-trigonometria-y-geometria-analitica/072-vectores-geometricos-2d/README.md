@@ -35,15 +35,16 @@ u ⊥ v  ⟺  u·v = 0
 
 ```mermaid
 flowchart LR
-    P["071<br/>Circunferencias y<br/>cónicas"] --> C
-    subgraph C["072 · Vectores geométricos 2D"]
+    P["Clase 071 · Circunferencias y cónicas"] --> D
+    subgraph CLASE["Clase 072 · Vectores geométricos 2D"]
         direction TB
-        D["Demostración<br/><code>vectors_2d</code>"] --> R["Resultados numéricos<br/>|u|<br/>|v|<br/>u·v<br/>… +2 más"]
-        D --> V["Verificaciones<br/>son_ortogonales"]
-        D --> O["Contexto y estructura<br/>u<br/>v<br/>u_normalizado"]
+        D["Demostracion vectors_2d"]
+        D --> R["Resultados 5: u +4"]
+        D --> V["Comprobaciones 1: son_ortogonales"]
+        D --> O["Contexto 3: u +2"]
     end
-    C --> N["073<br/>Transformaciones:<br/>traslación y escala"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 073 · Transformaciones:…"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

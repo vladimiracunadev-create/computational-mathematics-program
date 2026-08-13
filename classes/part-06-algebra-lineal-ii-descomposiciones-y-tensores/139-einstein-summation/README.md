@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["138<br/>Broadcasting como<br/>operación tensorial"] --> C
-    subgraph C["139 · Einstein summation"]
+    P["Clase 138 · Broadcasting como…"] --> D
+    subgraph CLASE["Clase 139 · Einstein summation"]
         direction TB
-        D["Demostración<br/><code>einsum</code>"] --> R["Resultados numéricos<br/>'ii->' (traza)<br/>'ij,ij->' (Frobenius)"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>'ij,jk->ik' (producto)<br/>'ij,ij->ij' (Hadamard)<br/>'ij->ji' (transpuesta)<br/>… +1 más"]
+        D["Demostracion einsum"]
+        D --> R["Resultados 2: 'ii-' traza +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: 'ij,jk-ik' producto +3"]
     end
-    C --> N["140<br/>Capstone: PCA y<br/>compresión de imágenes"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 140 · Capstone: PCA y…"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

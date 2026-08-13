@@ -34,15 +34,16 @@ tasa = cantidad/unidad de referencia (km/h, €/kg, tokens/s)
 
 ```mermaid
 flowchart LR
-    P["005<br/>Porcentajes desde cero"] --> C
-    subgraph C["006 · Razones, tasas y<br/>proporciones"]
+    P["Clase 005 · Porcentajes desde cero"] --> D
+    subgraph CLASE["Clase 006 · Razones, tasas y proporciones"]
         direction TB
-        D["Demostración<br/><code>ratios</code>"] --> R["Resultados numéricos<br/>distancia_km<br/>tiempo_h<br/>razon_km_por_h<br/>… +1 más"]
-        D --> V["Verificaciones<br/>razon_es_adimensional"]
-        D --> O["Contexto y estructura<br/>unidad"]
+        D["Demostracion ratios"]
+        D --> R["Resultados 4: distancia_km +3"]
+        D --> V["Comprobaciones 1: razon_es_adimensional"]
+        D --> O["Contexto 1: unidad"]
     end
-    C --> N["007<br/>Regla de tres y<br/>escalas"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 007 · Regla de tres y escalas"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

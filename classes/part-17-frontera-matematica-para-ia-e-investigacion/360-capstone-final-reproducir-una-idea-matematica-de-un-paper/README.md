@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["359<br/>Approximation theory y<br/>scaling"] --> C
-    subgraph C["360 · Capstone final: reproducir<br/>una idea matemática de un<br/>paper"]
+    P["Clase 359 · Approximation theory y…"] --> D
+    subgraph CLASE["Clase 360 · Capstone final: reproducir…"]
         direction TB
-        D["Demostración<br/><code>capstone_reproduce_paper_idea</code>"] --> R["Resultados numéricos<br/>optimo_exacto_por_barrido<br/>peor_plan_extremo<br/>simetria_ida_A_a_B<br/>… +3 más"]
-        D --> V["Verificaciones<br/>el_problema_no_es_degenerado<br/>el_error_decrece_monotonamente<br/>el_error_es_siempre_positivo<br/>… +3 más"]
-        D --> O["Contexto y estructura<br/>resultado_reproducido<br/>fuente<br/>protocolo<br/>… +7 más"]
+        D["Demostracion capstone_reproduce_paper_idea"]
+        D --> R["Resultados 6: optimo_exacto_por_bar… +5"]
+        D --> V["Comprobaciones 6: el_problema_no_es_deg… +5"]
+        D --> O["Contexto 10: resultado_reproducido +9"]
     end
-    C --> N["Fin del<br/>programa"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Fin del programa"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

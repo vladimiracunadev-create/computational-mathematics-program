@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["342<br/>Kernel methods<br/>avanzados"] --> C
-    subgraph C["343 · MCMC avanzado"]
+    P["Clase 342 · Kernel methods avanzados"] --> D
+    subgraph CLASE["Clase 343 · MCMC avanzado"]
         direction TB
-        D["Demostración<br/><code>advanced_mcmc</code>"] --> R["Resultados numéricos<br/>iteraciones<br/>burn_in<br/>semilla"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>objetivo<br/>resultados<br/>aceptacion_optima_1D<br/>… +3 más"]
+        D["Demostracion advanced_mcmc"]
+        D --> R["Resultados 3: iteraciones +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: objetivo +5"]
     end
-    C --> N["344<br/>Hamiltonian Monte<br/>Carlo"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 344 · Hamiltonian Monte Carlo"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

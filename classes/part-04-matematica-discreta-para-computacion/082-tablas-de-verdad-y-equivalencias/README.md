@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Las leyes de De Morgan rigen cómo se niega una condición compuesta.**
 
-Esta clase concreta ese objetivo sobre **Tablas de verdad y equivalencias**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,72 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
 
+## 🧩 Fórmulas de la clase
+
+```text
+¬(p ∧ q) ≡ ¬p ∨ ¬q
+¬(p ∨ q) ≡ ¬p ∧ ¬q
+p ⊕ q ≡ (p ∨ q) ∧ ¬(p ∧ q)
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["081<br/>Lógica proposicional"] --> C
-    subgraph C["082 · Tablas de verdad y<br/>equivalencias"]
+    P["Clase 081 · Lógica proposicional"] --> D
+    subgraph CLASE["Clase 082 · Tablas de verdad y…"]
         direction TB
-        D["Demostración<br/><code>truth_tables</code>"] --> R["Resultados numéricos<br/>casos_evaluados"]
-        D --> V["Verificaciones<br/>¬(p∧q) ≡ ¬p∨¬q<br/>¬(p∨q) ≡ ¬p∧¬q<br/>tautologia_p∨¬p<br/>… +1 más"]
-        D --> O["Contexto y estructura<br/>xor"]
+        D["Demostracion truth_tables"]
+        D --> R["Resultados 1: casos_evaluados"]
+        D --> V["Comprobaciones 4: ¬p∧q ≡ ¬p∨¬q +3"]
+        D --> O["Contexto 1: xor"]
     end
-    C --> N["083<br/>Lógica de predicados y<br/>cuantificadores"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 083 · Lógica de predicados y…"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Permutación cuenta orden; combinación cuenta selección.
+Una tabla de verdad decide cualquier equivalencia proposicional por fuerza bruta: se
+evalúan las dos fórmulas en las 2ⁿ asignaciones posibles y se comparan. Es un método
+completo —siempre da respuesta— y de coste exponencial, lo que anticipa por qué SAT es
+un problema difícil (clase 097).
+
+Las leyes de De Morgan son las que más se usan sin nombrarlas. Al negar una condición
+compuesta, la conjunción se convierte en disyunción y viceversa, y cada término se
+niega. En código: la negación de `edad >= 18 and tiene_permiso` es
+`edad < 18 or not tiene_permiso`, **no** `edad < 18 and not tiene_permiso`. Ese error
+produce condiciones que parecen razonables y filtran mal.
+
+Una tautología es verdadera bajo toda asignación; una contradicción, falsa bajo todas.
+Detectarlas importa porque señalan código muerto: una condición tautológica siempre se
+cumple y su rama alternativa nunca se ejecuta.
+
+El XOR merece mención aparte: es verdadero cuando los operandos difieren, y tiene la
+propiedad de ser su propia inversa, `(a ⊕ b) ⊕ b = a`. Esa propiedad lo hace
+omnipresente en criptografía, en sumas de comprobación y en el intercambio de variables
+sin memoria auxiliar.
+
+## 🧮 Ejemplo trabajado
+
+Verificar De Morgan exhaustivamente.
+
+```text
+4 casos evaluados (2² asignaciones)
+
+p  q  | ¬(p∧q)  ¬p∨¬q  | ¬(p∨q)  ¬p∧¬q
+V  V  |   F       F    |   F       F
+V  F  |   V       V    |   F       F
+F  V  |   V       V    |   F       F
+F  F  |   V       V    |   V       V
+
+Ambas leyes: columnas idénticas    ✓
+
+Tautología:    p ∨ ¬p  → V en las 4 filas
+Contradicción: p ∧ ¬p  → F en las 4 filas
+
+XOR: (V,V)→F  (V,F)→V  (F,V)→V  (F,F)→F
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +112,16 @@ compmath run 082
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Negar una conjunción sin cambiarla por disyunción.
+2. Olvidar negar todos los términos al aplicar De Morgan.
+3. Usar & y | (bit a bit) donde correspondía and y or (lógicos) en Python.
+
+## 🚀 Dónde se usa de verdad
+
+Simplificación de condiciones, optimización de consultas SQL, diseño de circuitos
+digitales y refactorización de código con lógica compleja.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
+- [Knuth, D. *The Art of Computer Programming*, vol. 4A, 2011](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["204<br/>Estimadores y<br/>propiedades"] --> C
-    subgraph C["205 · Intervalos de confianza"]
+    P["Clase 204 · Estimadores y propiedades"] --> D
+    subgraph CLASE["Clase 205 · Intervalos de confianza"]
         direction TB
-        D["Demostración<br/><code>confidence_intervals</code>"] --> R["Resultados numéricos<br/>cobertura_simulada_%<br/>cobertura_nominal_%<br/>replicas<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>IC_95%<br/>lectura_correcta<br/>lectura_incorrecta"]
+        D["Demostracion confidence_intervals"]
+        D --> R["Resultados 5: cobertura_simulada_% +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: IC_95% +2"]
     end
-    C --> N["206<br/>Pruebas de hipótesis"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 206 · Pruebas de hipótesis"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

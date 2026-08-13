@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["331<br/>Variational<br/>Autoencoders"] --> C
-    subgraph C["332 · ELBO y variational<br/>inference"]
+    P["Clase 331 · Variational Autoencoders"] --> D
+    subgraph CLASE["Clase 332 · ELBO y variational inference"]
         direction TB
-        D["Demostración<br/><code>elbo</code>"] --> R["Resultados numéricos<br/>termino_de_reconstruccion<br/>termino_KL<br/>ELBO"]
-        D --> V["Verificaciones<br/>log_p(x)_>=_ELBO"]
-        D --> O["Contexto y estructura<br/>formula<br/>brecha<br/>maximizar_ELBO<br/>… +3 más"]
+        D["Demostracion elbo"]
+        D --> R["Resultados 3: termino_de_reconstruc… +2"]
+        D --> V["Comprobaciones 1: log_px_=_ELBO"]
+        D --> O["Contexto 6: formula +5"]
     end
-    C --> N["333<br/>GAN y juegos minimax"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 333 · GAN y juegos minimax"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

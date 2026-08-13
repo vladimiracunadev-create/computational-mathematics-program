@@ -34,15 +34,16 @@ residuo = ax + b − c = 0
 
 ```mermaid
 flowchart LR
-    P["042<br/>Propiedades<br/>distributiva,<br/>asociativa y<br/>conmutativa"] --> C
-    subgraph C["043 · Ecuaciones lineales de una<br/>variable"]
+    P["Clase 042 · Propiedades…"] --> D
+    subgraph CLASE["Clase 043 · Ecuaciones lineales de una…"]
         direction TB
-        D["Demostración<br/><code>linear_equation</code>"] --> R["Resultados numéricos<br/>x<br/>residuo"]
-        D --> V["Verificaciones<br/>sin_solucion_si_a_es_0"]
-        D --> O["Contexto y estructura<br/>ecuacion<br/>caso_0x=0<br/>caso_0x=5"]
+        D["Demostracion linear_equation"]
+        D --> R["Resultados 2: x +1"]
+        D --> V["Comprobaciones 1: sin_solucion_si_a_es_0"]
+        D --> O["Contexto 3: ecuacion +2"]
     end
-    C --> N["044<br/>Desigualdades lineales"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 044 · Desigualdades lineales"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

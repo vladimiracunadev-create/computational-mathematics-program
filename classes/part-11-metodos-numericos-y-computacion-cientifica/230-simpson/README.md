@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["229<br/>Regla del trapecio"] --> C
-    subgraph C["230 · Simpson"]
+    P["Clase 229 · Regla del trapecio"] --> D
+    subgraph CLASE["Clase 230 · Simpson"]
         direction TB
-        D["Demostración<br/><code>simpson_rule</code>"] --> R["Resultados numéricos<br/>valor_exacto"]
-        D --> V["Verificaciones<br/>requiere_n_par<br/>duplicar_n_divide_el_error_por_16<br/>exacta_para_polinomios_de_grado_3"]
-        D --> O["Contexto y estructura<br/>integrando<br/>informe"]
+        D["Demostracion simpson_rule"]
+        D --> R["Resultados 1: valor_exacto"]
+        D --> V["Comprobaciones 3: requiere_n_par +2"]
+        D --> O["Contexto 2: integrando +1"]
     end
-    C --> N["231<br/>Sistemas lineales<br/>directos"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 231 · Sistemas lineales directos"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

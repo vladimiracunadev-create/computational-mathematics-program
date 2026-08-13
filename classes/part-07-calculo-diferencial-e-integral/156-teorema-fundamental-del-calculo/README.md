@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["155<br/>Antiderivadas"] --> C
-    subgraph C["156 · Teorema fundamental del<br/>cálculo"]
+    P["Clase 155 · Antiderivadas"] --> D
+    subgraph CLASE["Clase 156 · Teorema fundamental del…"]
         direction TB
-        D["Demostración<br/><code>fundamental_theorem</code>"] --> R["Resultados numéricos<br/>F(x)=∫₀ˣcos<br/>sin(x)<br/>dF/dx_numerica<br/>… +1 más"]
-        D --> V["Verificaciones<br/>primera_parte_ok<br/>segunda_parte_ok"]
-        D --> O["Contexto y estructura<br/>f"]
+        D["Demostracion fundamental_theorem"]
+        D --> R["Resultados 4: Fx=∫₀ˣcos +3"]
+        D --> V["Comprobaciones 2: primera_parte_ok +1"]
+        D --> O["Contexto 1: f"]
     end
-    C --> N["157<br/>Integración por<br/>sustitución"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 157 · Integración por…"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

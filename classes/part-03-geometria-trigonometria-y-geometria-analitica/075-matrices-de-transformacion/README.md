@@ -34,15 +34,16 @@ det R = 1 (rotación),  det S = sx·sy (escala),  det F = −1 (reflexión)
 
 ```mermaid
 flowchart LR
-    P["074<br/>Rotaciones 2D"] --> C
-    subgraph C["075 · Matrices de transformación"]
+    P["Clase 074 · Rotaciones 2D"] --> D
+    subgraph CLASE["Clase 075 · Matrices de transformación"]
         direction TB
-        D["Demostración<br/><code>transform_matrices</code>"] --> R["Resultados numéricos<br/>det_rotacion<br/>det_escala<br/>det_reflexion"]
-        D --> V["Verificaciones<br/>reflexion_invierte_orientacion"]
-        D --> O["Contexto y estructura<br/>rotacion_45<br/>escala_2x<br/>reflexion_en_x<br/>… +1 más"]
+        D["Demostracion transform_matrices"]
+        D --> R["Resultados 3: det_rotacion +2"]
+        D --> V["Comprobaciones 1: reflexion_invierte_or…"]
+        D --> O["Contexto 4: rotacion_45 +3"]
     end
-    C --> N["076<br/>Coordenadas polares"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 076 · Coordenadas polares"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

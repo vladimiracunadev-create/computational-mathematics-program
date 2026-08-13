@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**La criba encuentra todos los primos hasta n, y mcd·mcm = a·b relaciona ambos conceptos.**
 
-Esta clase concreta ese objetivo sobre **Números primos y máximo común divisor**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,72 @@ Al terminar podrás:
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: contar dos veces al aplicar el principio de inclusión-exclusión.
 
+## 🧩 Fórmulas de la clase
+
+```text
+criba: tachar múltiplos desde i² con i ≤ √n
+mcd(a,b)·mcm(a,b) = a·b
+Euclides: mcd(a,b) = mcd(b, a mod b)
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["098<br/>Aritmética modular"] --> C
-    subgraph C["099 · Números primos y máximo<br/>común divisor"]
+    P["Clase 098 · Aritmética modular"] --> D
+    subgraph CLASE["Clase 099 · Números primos y máximo…"]
         direction TB
-        D["Demostración<br/><code>primes_gcd</code>"] --> R["Resultados numéricos<br/>cantidad<br/>a<br/>b<br/>… +2 más"]
-        D --> V["Verificaciones<br/>mcd*mcm=a*b"]
-        D --> O["Contexto y estructura<br/>primos_hasta_50<br/>factorizacion_de_252"]
+        D["Demostracion primes_gcd"]
+        D --> R["Resultados 5: cantidad +4"]
+        D --> V["Comprobaciones 1: mcd*mcm=a*b"]
+        D --> O["Contexto 2: primos_hasta_50 +1"]
     end
-    C --> N["100<br/>Capstone: modelar<br/>dependencias con<br/>grafos"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 100 · Capstone: modelar…"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> La aritmética modular es la base de hashing, criptografía y checksums.
+La criba de Eratóstenes, del siglo III a.C., sigue siendo el método práctico para
+listar todos los primos hasta n. Su eficiencia viene de dos optimizaciones: basta
+recorrer hasta `√n`, porque todo compuesto tiene un factor menor o igual a su raíz; y
+basta empezar a tachar desde `i²`, porque los múltiplos menores ya fueron tachados por
+primos anteriores. El coste es `O(n log log n)`, prácticamente lineal.
+
+El algoritmo de Euclides para el máximo común divisor es aún más antiguo y es un
+candidato al algoritmo no trivial más antiguo que se sigue usando. Su idea —`mcd(a,b) =
+mcd(b, a mod b)`— reduce el problema en cada paso y termina en `O(log min(a,b))`.
+
+La identidad `mcd·mcm = a·b` permite calcular el mínimo común múltiplo sin factorizar,
+que es importante porque **factorizar es difícil** mientras que calcular el mcd es
+fácil. Esa asimetría es la que sostiene RSA: multiplicar dos primos grandes es
+inmediato, recuperarlos del producto no se sabe hacer eficientemente.
+
+El teorema fundamental de la aritmética —toda factorización en primos es única— es lo
+que da sentido a todo esto. Y el hecho de que los primos sean infinitos, demostrado por
+Euclides con un argumento por contradicción de tres líneas, garantiza que siempre hay
+primos suficientemente grandes para la criptografía.
+
+## 🧮 Ejemplo trabajado
+
+Criba hasta 50 y mcd de dos números.
+
+```text
+Primos ≤ 50 (15 en total):
+  2 3 5 7 11 13 17 19 23 29 31 37 41 43 47
+
+mcd(252, 198) por Euclides:
+  252 = 1·198 + 54
+  198 = 3·54  + 36
+   54 = 1·36  + 18
+   36 = 2·18  + 0     → mcd = 18
+
+mcm = 252·198/18 = 2772
+
+Verificación: 18 · 2772 = 49 896 = 252 · 198    ✓
+
+Factorización de 252 = 2²·3²·7
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +112,16 @@ compmath run 099
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Recorrer la criba hasta n en lugar de hasta √n.
+2. Calcular el mcm factorizando en lugar de usar la identidad con el mcd.
+3. Suponer que factorizar es tan fácil como multiplicar.
+
+## 🚀 Dónde se usa de verdad
+
+Generación de claves criptográficas, simplificación de fracciones, tests de primalidad
+y hashing con módulos primos.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)
+- [Python: `math.gcd` y `math.lcm`](https://docs.python.org/3/library/math.html#math.gcd)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

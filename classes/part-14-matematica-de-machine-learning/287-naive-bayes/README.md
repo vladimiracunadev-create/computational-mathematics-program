@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["286<br/>Cross-entropy en<br/>clasificación"] --> C
-    subgraph C["287 · Naive Bayes"]
+    P["Clase 286 · Cross-entropy en…"] --> D
+    subgraph CLASE["Clase 287 · Naive Bayes"]
         direction TB
-        D["Demostración<br/><code>naive_bayes</code>"] --> R["Resultados numéricos<br/>accuracy"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>clases<br/>supuesto<br/>se_cumple_aqui<br/>… +2 más"]
+        D["Demostracion naive_bayes"]
+        D --> R["Resultados 1: accuracy"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 5: clases +4"]
     end
-    C --> N["288<br/>k-Nearest Neighbors y<br/>métricas"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 288 · k-Nearest Neighbors y…"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

@@ -34,15 +34,16 @@ a < b  y  k < 0  ⟹  ka > kb
 
 ```mermaid
 flowchart LR
-    P["043<br/>Ecuaciones lineales de<br/>una variable"] --> C
-    subgraph C["044 · Desigualdades lineales"]
+    P["Clase 043 · Ecuaciones lineales de…"] --> D
+    subgraph CLASE["Clase 044 · Desigualdades lineales"]
         direction TB
-        D["Demostración<br/><code>linear_inequality</code>"] --> R["Resultados numéricos<br/>frontera"]
-        D --> V["Verificaciones<br/>verifica_x=-5<br/>verifica_x=0"]
-        D --> O["Contexto y estructura<br/>desigualdad<br/>solucion<br/>regla"]
+        D["Demostracion linear_inequality"]
+        D --> R["Resultados 1: frontera"]
+        D --> V["Comprobaciones 2: verifica_x=-5 +1"]
+        D --> O["Contexto 3: desigualdad +2"]
     end
-    C --> N["045<br/>Sistemas de ecuaciones<br/>2x2"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 045 · Sistemas de ecuaciones 2x2"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

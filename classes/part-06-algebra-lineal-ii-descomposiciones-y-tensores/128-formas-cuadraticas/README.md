@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["127<br/>Matrices positivas<br/>definidas"] --> C
-    subgraph C["128 · Formas cuadráticas"]
+    P["Clase 127 · Matrices positivas…"] --> D
+    subgraph CLASE["Clase 128 · Formas cuadráticas"]
         direction TB
-        D["Demostración<br/><code>quadratic_forms</code>"] --> R["Resultados numéricos<br/>minimo_en_la_esfera_unitaria<br/>maximo_en_la_esfera_unitaria"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>A<br/>forma<br/>valores<br/>… +2 más"]
+        D["Demostracion quadratic_forms"]
+        D --> R["Resultados 2: minimo_en_la_esfera_u… +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 5: A +4"]
     end
-    C --> N["129<br/>Descomposición LU"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 129 · Descomposición LU"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

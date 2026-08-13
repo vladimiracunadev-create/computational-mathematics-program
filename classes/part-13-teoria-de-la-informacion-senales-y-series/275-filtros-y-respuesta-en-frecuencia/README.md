@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["274<br/>FFT"] --> C
-    subgraph C["275 · Filtros y respuesta en<br/>frecuencia"]
+    P["Clase 274 · FFT"] --> D
+    subgraph CLASE["Clase 275 · Filtros y respuesta en…"]
         direction TB
-        D["Demostración<br/><code>filters</code>"] --> R["Resultados numéricos<br/>muestras<br/>ventana_del_filtro<br/>RMSE_antes_del_filtro<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>tipo<br/>coste<br/>compromiso"]
+        D["Demostracion filters"]
+        D --> R["Resultados 5: muestras +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: tipo +2"]
     end
-    C --> N["276<br/>Procesos estacionarios"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 276 · Procesos estacionarios"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["348<br/>Manifold learning"] --> C
-    subgraph C["349 · Geometría diferencial para<br/>ML"]
+    P["Clase 348 · Manifold learning"] --> D
+    subgraph CLASE["Clase 349 · Geometría diferencial para ML"]
         direction TB
-        D["Demostración<br/><code>differential_geometry</code>"] --> R["Resultados numéricos<br/>rapidez<br/>rapidez_teorica_√(1+0.09)<br/>longitud_de_arco_0_a_2π<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>curva<br/>velocidad_en_t=1<br/>metrica_riemanniana<br/>… +1 más"]
+        D["Demostracion differential_geometry"]
+        D --> R["Resultados 6: rapidez +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: curva +3"]
     end
-    C --> N["350<br/>Information geometry"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 350 · Information geometry"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

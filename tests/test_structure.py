@@ -108,6 +108,51 @@ class TestLaboratorios(unittest.TestCase):
                     self.assertIn(archivo, texto)
 
 
+class TestDiagramas(unittest.TestCase):
+    """Los diagramas Mermaid deben leerse igual con o sin `htmlLabels`."""
+
+    BLOQUE = re.compile("```mermaid\n(.*?)```", re.DOTALL)
+
+    def _bloques(self):
+        archivos = [ROOT / "README.md", *sorted((ROOT / "docs").rglob("*.md")),
+                    *sorted((ROOT / "classes").rglob("*.md")),
+                    *sorted((ROOT / "learning-paths").glob("*.md"))]
+        for archivo in archivos:
+            for bloque in self.BLOQUE.findall(archivo.read_text(encoding="utf-8")):
+                yield archivo, bloque
+
+    def test_hay_diagramas(self):
+        self.assertGreater(sum(1 for _ in self._bloques()), 380)
+
+    def test_ningun_diagrama_usa_html(self):
+        # Un renderizador con htmlLabels desactivado descarta las etiquetas HTML
+        # y pega las palabras: "081Lógica" en lugar de "081 · Lógica".
+        culpables = []
+        for archivo, bloque in self._bloques():
+            for etiqueta in ("<br", "<code", "</", "&nbsp;"):
+                if etiqueta in bloque:
+                    culpables.append(f"{archivo.relative_to(ROOT).as_posix()}: {etiqueta}")
+        self.assertEqual(culpables, [], f"HTML en diagramas: {culpables[:5]}")
+
+    def test_las_etiquetas_separan_numero_y_texto(self):
+        # Toda etiqueta que empiece por un número debe llevar separador después.
+        malas = []
+        patron = re.compile(r'\["(\d{3})([^\s·])')
+        for archivo, bloque in self._bloques():
+            for coincidencia in patron.finditer(bloque):
+                malas.append(f"{archivo.relative_to(ROOT).as_posix()}: {coincidencia.group(0)}")
+        self.assertEqual(malas, [], f"número pegado al texto: {malas[:5]}")
+
+    def test_los_diagramas_declaran_su_tipo(self):
+        for archivo, bloque in self._bloques():
+            primera = bloque.strip().splitlines()[0].strip()
+            with self.subTest(archivo=archivo.name):
+                self.assertTrue(
+                    primera.startswith(("flowchart", "graph", "sequenceDiagram", "classDiagram")),
+                    f"{archivo.name}: primera línea {primera!r}",
+                )
+
+
 class TestDocumentacion(unittest.TestCase):
     def test_readme_declara_los_conteos_reales(self):
         readme = (ROOT / "README.md").read_text(encoding="utf-8")

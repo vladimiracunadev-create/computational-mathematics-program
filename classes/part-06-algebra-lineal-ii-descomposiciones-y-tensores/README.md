@@ -35,11 +35,11 @@ Cambio de base, autovalores, diagonalización, LU, QR, mínimos cuadrados, SVD, 
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L121["121<br/>Bases y coordenadas"]
-        L122["122<br/>Cambio de base"]
-        L123["123<br/>Transformaciones<br/>lineales"]
-        L124["124<br/>Núcleo e imagen"]
-        L125["125<br/>Autovalores y<br/>autovectores"]
+        L121["121 · Bases y coordenadas"]
+        L122["122 · Cambio de base"]
+        L123["123 · Transformaciones lineales"]
+        L124["124 · Núcleo e imagen"]
+        L125["125 · Autovalores y autovectores"]
         L121 --> L122
         L122 --> L123
         L123 --> L124
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L126["126<br/>Diagonalización"]
-        L127["127<br/>Matrices positivas<br/>definidas"]
-        L128["128<br/>Formas cuadráticas"]
-        L129["129<br/>Descomposición LU"]
-        L130["130<br/>Descomposición QR"]
+        L126["126 · Diagonalización"]
+        L127["127 · Matrices positivas definidas"]
+        L128["128 · Formas cuadráticas"]
+        L129["129 · Descomposición LU"]
+        L130["130 · Descomposición QR"]
         L126 --> L127
         L127 --> L128
         L128 --> L129
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L131["131<br/>Mínimos cuadrados<br/>lineales"]
-        L132["132<br/>SVD desde la intuición"]
-        L133["133<br/>SVD y compresión"]
-        L134["134<br/>Pseudoinversa de<br/>Moore-Penrose"]
-        L135["135<br/>PCA desde álgebra lineal"]
+        L131["131 · Mínimos cuadrados lineales"]
+        L132["132 · SVD desde la intuición"]
+        L133["133 · SVD y compresión"]
+        L134["134 · Pseudoinversa de Moore-Penrose"]
+        L135["135 · PCA desde álgebra lineal"]
         L131 --> L132
         L132 --> L133
         L133 --> L134
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L136["136<br/>Producto de Kronecker"]
-        L137["137<br/>Tensores: índices, shape<br/>y orden"]
-        L138["138<br/>Broadcasting como<br/>operación tensorial"]
-        L139["139<br/>Einstein summation"]
-        L140["140<br/>Capstone: PCA y<br/>compresión de imágenes"]
+        L136["136 · Producto de Kronecker"]
+        L137["137 · Tensores: índices, shape y…"]
+        L138["138 · Broadcasting como operación…"]
+        L139["139 · Einstein summation"]
+        L140["140 · Capstone: PCA y compresión…"]
         L136 --> L137
         L137 --> L138
         L138 --> L139

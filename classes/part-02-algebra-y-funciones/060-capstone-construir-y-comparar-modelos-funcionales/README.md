@@ -34,15 +34,16 @@ linealizar exponencial: ln y = ln a + b·x
 
 ```mermaid
 flowchart LR
-    P["059<br/>Funciones por tramos"] --> C
-    subgraph C["060 · Capstone: construir y<br/>comparar modelos<br/>funcionales"]
+    P["Clase 059 · Funciones por tramos"] --> D
+    subgraph CLASE["Clase 060 · Capstone: construir y…"]
         direction TB
-        D["Demostración<br/><code>capstone_model_fitting</code>"] --> R["Resultados numéricos<br/>modelo_lineal_SSE<br/>modelo_exponencial_SSE<br/>razon_de_crecimiento"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>datos<br/>modelo_exponencial<br/>modelo_elegido<br/>… +1 más"]
+        D["Demostracion capstone_model_fitting"]
+        D --> R["Resultados 3: modelo_lineal_SSE +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: datos +3"]
     end
-    C --> N["061<br/>Puntos, segmentos y<br/>distancias"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 061 · Puntos, segmentos y…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

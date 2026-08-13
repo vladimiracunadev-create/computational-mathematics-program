@@ -34,15 +34,16 @@ restos de n/2 leídos de abajo arriba = representación binaria
 
 ```mermaid
 flowchart LR
-    P["021<br/>Bits, bytes y sistemas<br/>de numeración"] --> C
-    subgraph C["022 · Conversión decimal a<br/>binario"]
+    P["Clase 021 · Bits, bytes y sistemas…"] --> D
+    subgraph CLASE["Clase 022 · Conversión decimal a binario"]
         direction TB
-        D["Demostración<br/><code>decimal_to_binary</code>"] --> R["Resultados numéricos<br/>decimal<br/>reconstruido"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>restos_en_orden_de_calculo<br/>binario_manual<br/>binario_builtin"]
+        D["Demostracion decimal_to_binary"]
+        D --> R["Resultados 2: decimal +1"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto 3: restos_en_orden_de_ca… +2"]
     end
-    C --> N["023<br/>Binario, octal y<br/>hexadecimal"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 023 · Binario, octal y…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

@@ -35,15 +35,16 @@ la potenciación asocia por la derecha: a**b**c = a**(b**c)
 
 ```mermaid
 flowchart LR
-    P["009<br/>Raíces y radicales"] --> C
-    subgraph C["010 · Orden de operaciones y<br/>paréntesis"]
+    P["Clase 009 · Raíces y radicales"] --> D
+    subgraph CLASE["Clase 010 · Orden de operaciones y…"]
         direction TB
-        D["Demostración<br/><code>operator_precedence</code>"] --> R["Resultados numéricos<br/>2+3*4<br/>(2+3)*4<br/>2**3**2 (asocia derecha)<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion operator_precedence"]
+        D --> R["Resultados 6: 2+3*4 +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["011<br/>Notación científica"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 011 · Notación científica"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

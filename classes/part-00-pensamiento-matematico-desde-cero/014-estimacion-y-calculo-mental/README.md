@@ -34,15 +34,16 @@ mismo orden de magnitud ⟺ ⌊log₁₀ a⌋ = ⌊log₁₀ b⌋
 
 ```mermaid
 flowchart LR
-    P["013<br/>Aproximación, redondeo<br/>y cifras<br/>significativas"] --> C
-    subgraph C["014 · Estimación y cálculo<br/>mental"]
+    P["Clase 013 · Aproximación, redondeo y…"] --> D
+    subgraph CLASE["Clase 014 · Estimación y cálculo mental"]
         direction TB
-        D["Demostración<br/><code>estimation</code>"] --> R["Resultados numéricos<br/>exacto<br/>estimado<br/>error_relativo_%"]
-        D --> V["Verificaciones<br/>mismo_orden_de_magnitud"]
-        D --> O["Contexto y estructura<br/>operacion"]
+        D["Demostracion estimation"]
+        D --> R["Resultados 3: exacto +2"]
+        D --> V["Comprobaciones 1: mismo_orden_de_magnit…"]
+        D --> O["Contexto 1: operacion"]
     end
-    C --> N["015<br/>Variables como<br/>cantidades<br/>desconocidas"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 015 · Variables como…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

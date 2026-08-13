@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["144<br/>Derivada como tasa de<br/>cambio"] --> C
-    subgraph C["145 · Reglas de derivación"]
+    P["Clase 144 · Derivada como tasa de…"] --> D
+    subgraph CLASE["Clase 145 · Reglas de derivación"]
         direction TB
-        D["Demostración<br/><code>derivative_rules</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>x³ en 2<br/>5x en 7<br/>x³+5x en 2<br/>… +1 más"]
+        D["Demostracion derivative_rules"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: x³ en 2 +3"]
     end
-    C --> N["146<br/>Regla del producto y<br/>cociente"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 146 · Regla del producto y…"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

@@ -34,15 +34,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["Diagnóstico<br/>inicial"] --> C
-    subgraph C["001 · Números naturales y conteo"]
+    P["Diagnostico inicial"] --> D
+    subgraph CLASE["Clase 001 · Números naturales y conteo"]
         direction TB
-        D["Demostración<br/><code>counting</code>"] --> R["Resultados numéricos<br/>n<br/>suma_iterativa<br/>suma_formula_cerrada<br/>… +2 más"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion counting"]
+        D --> R["Resultados 5: n +4"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["002<br/>Enteros, signo y recta<br/>numérica"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 002 · Enteros, signo y recta…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

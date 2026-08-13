@@ -34,15 +34,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["011<br/>Notación científica"] --> C
-    subgraph C["012 · Unidades y análisis<br/>dimensional"]
+    P["Clase 011 · Notación científica"] --> D
+    subgraph CLASE["Clase 012 · Unidades y análisis…"]
         direction TB
-        D["Demostración<br/><code>dimensional_analysis</code>"] --> R["Resultados numéricos<br/>velocidad_km/h<br/>velocidad_m/s<br/>vuelta_a_km/h"]
-        D --> V["Verificaciones<br/>consistente"]
-        D --> O["Contexto y estructura<br/>factor_1<br/>factor_2"]
+        D["Demostracion dimensional_analysis"]
+        D --> R["Resultados 3: velocidad_km/h +2"]
+        D --> V["Comprobaciones 1: consistente"]
+        D --> O["Contexto 2: factor_1 +1"]
     end
-    C --> N["013<br/>Aproximación, redondeo<br/>y cifras<br/>significativas"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 013 · Aproximación, redondeo y…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

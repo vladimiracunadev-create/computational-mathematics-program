@@ -35,11 +35,11 @@ Derivadas parciales, gradiente, Jacobiano, Hessiano, Taylor multivariable, multi
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L161["161<br/>Funciones de varias<br/>variables"]
-        L162["162<br/>Superficies y curvas de<br/>nivel"]
-        L163["163<br/>Derivadas parciales"]
-        L164["164<br/>Gradiente"]
-        L165["165<br/>Derivada direccional"]
+        L161["161 · Funciones de varias variables"]
+        L162["162 · Superficies y curvas de nivel"]
+        L163["163 · Derivadas parciales"]
+        L164["164 · Gradiente"]
+        L165["165 · Derivada direccional"]
         L161 --> L162
         L162 --> L163
         L163 --> L164
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L166["166<br/>Plano tangente"]
-        L167["167<br/>Regla de la cadena<br/>multivariable"]
-        L168["168<br/>Jacobiano"]
-        L169["169<br/>Hessiano"]
-        L170["170<br/>Taylor multivariable"]
+        L166["166 · Plano tangente"]
+        L167["167 · Regla de la cadena…"]
+        L168["168 · Jacobiano"]
+        L169["169 · Hessiano"]
+        L170["170 · Taylor multivariable"]
         L166 --> L167
         L167 --> L168
         L168 --> L169
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L171["171<br/>Optimización sin<br/>restricciones"]
-        L172["172<br/>Multiplicadores de<br/>Lagrange"]
-        L173["173<br/>Integrales dobles"]
-        L174["174<br/>Integrales triples"]
-        L175["175<br/>Campos vectoriales"]
+        L171["171 · Optimización sin restricciones"]
+        L172["172 · Multiplicadores de Lagrange"]
+        L173["173 · Integrales dobles"]
+        L174["174 · Integrales triples"]
+        L175["175 · Campos vectoriales"]
         L171 --> L172
         L172 --> L173
         L173 --> L174
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L176["176<br/>Divergencia y rotacional"]
-        L177["177<br/>Cálculo matricial"]
-        L178["178<br/>Derivadas respecto de<br/>vectores y matrices"]
-        L179["179<br/>Automatic<br/>differentiation y<br/>computational graphs"]
-        L180["180<br/>Capstone:<br/>backpropagation manual y<br/>automática"]
+        L176["176 · Divergencia y rotacional"]
+        L177["177 · Cálculo matricial"]
+        L178["178 · Derivadas respecto de…"]
+        L179["179 · Automatic differentiation y…"]
+        L180["180 · Capstone: backpropagation…"]
         L176 --> L177
         L177 --> L178
         L178 --> L179

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["169<br/>Hessiano"] --> C
-    subgraph C["170 · Taylor multivariable"]
+    P["Clase 169 · Hessiano"] --> D
+    subgraph CLASE["Clase 170 · Taylor multivariable"]
         direction TB
-        D["Demostración<br/><code>multivariable_taylor</code>"] --> R["Resultados numéricos<br/>valor_exacto<br/>orden_0<br/>orden_1<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>punto_base<br/>desplazamiento"]
+        D["Demostracion multivariable_taylor"]
+        D --> R["Resultados 6: valor_exacto +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: punto_base +1"]
     end
-    C --> N["171<br/>Optimización sin<br/>restricciones"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 171 · Optimización sin…"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

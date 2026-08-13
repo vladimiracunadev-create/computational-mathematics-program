@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["285<br/>Regresión logística y<br/>sigmoid"] --> C
-    subgraph C["286 · Cross-entropy en<br/>clasificación"]
+    P["Clase 285 · Regresión logística y…"] --> D
+    subgraph CLASE["Clase 286 · Cross-entropy en clasificación"]
         direction TB
-        D["Demostración<br/><code>classification_loss</code>"] --> R["Resultados numéricos<br/>razon_CE_seguro_vs_dudoso<br/>razon_MSE_seguro_vs_dudoso"]
-        D --> V["Verificaciones<br/>CE_castiga_mucho_mas"]
-        D --> O["Contexto y estructura<br/>correcto_seguro<br/>correcto_dudoso<br/>incorrecto_dudoso<br/>… +2 más"]
+        D["Demostracion classification_loss"]
+        D --> R["Resultados 2: razon_CE_seguro_vs_du… +1"]
+        D --> V["Comprobaciones 1: CE_castiga_mucho_mas"]
+        D --> O["Contexto 5: correcto_seguro +4"]
     end
-    C --> N["287<br/>Naive Bayes"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 287 · Naive Bayes"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

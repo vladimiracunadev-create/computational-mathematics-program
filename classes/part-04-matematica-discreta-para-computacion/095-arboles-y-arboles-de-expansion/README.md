@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Un árbol con n vértices tiene exactamente n−1 aristas; añadir una crea un ciclo.**
 
-Esta clase concreta ese objetivo sobre **Árboles y árboles de expansión**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,71 @@ Al terminar podrás:
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir que un grafo dirigido es acíclico sin verificarlo.
 
+## 🧩 Fórmulas de la clase
+
+```text
+|E| = |V| − 1
+existe un único camino entre cada par de vértices
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["094<br/>Caminos, ciclos y<br/>conectividad"] --> C
-    subgraph C["095 · Árboles y árboles de<br/>expansión"]
+    P["Clase 094 · Caminos, ciclos y…"] --> D
+    subgraph CLASE["Clase 095 · Árboles y árboles de expansión"]
         direction TB
-        D["Demostración<br/><code>trees</code>"] --> R["Resultados numéricos<br/>nodos<br/>aristas<br/>n-1<br/>… +1 más"]
-        D --> V["Verificaciones<br/>es_arbol"]
-        D --> O["Contexto y estructura<br/>hojas<br/>profundidades"]
+        D["Demostracion trees"]
+        D --> R["Resultados 4: nodos +3"]
+        D --> V["Comprobaciones 1: es_arbol"]
+        D --> O["Contexto 2: hojas +1"]
     end
-    C --> N["096<br/>DAG y orden topológico"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 096 · DAG y orden topológico"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> El principio del palomar demuestra colisiones sin construir un ejemplo.
+Un árbol es un grafo conexo sin ciclos, y esa doble condición tiene una consecuencia
+numérica exacta: con n vértices tiene exactamente n−1 aristas. Ni una más —eso crearía
+un ciclo— ni una menos —eso lo desconectaría—. Es la estructura conexa mínima.
+
+La unicidad del camino entre cualquier par de vértices se sigue de la ausencia de
+ciclos, y es la propiedad que hace útiles a los árboles: no hay ambigüedad sobre cómo
+llegar de un nodo a otro. De ahí que se usen para jerarquías, sistemas de archivos,
+índices de bases de datos y estructuras de decisión.
+
+La **altura** de un árbol determina el coste de las operaciones. Un árbol binario
+equilibrado con n nodos tiene altura `log₂ n`, y por eso las búsquedas cuestan
+logarítmicamente; uno degenerado en lista tiene altura n y el coste se vuelve lineal.
+Todo el diseño de árboles balanceados (AVL, rojo-negro, B-tree) existe para garantizar
+esa altura logarítmica.
+
+En machine learning, los árboles de decisión (clase 291) usan esta estructura para
+particionar el espacio de features, y su profundidad es el hiperparámetro que controla
+directamente el compromiso sesgo-varianza: más profundo, menos sesgo y más varianza.
+
+## 🧮 Ejemplo trabajado
+
+Verificar la relación en un árbol de seis nodos.
+
+```text
+        raiz
+       /    \
+      a      b
+     / \      \
+    c   d      e
+
+vértices: 6   (raiz, a, b, c, d, e)
+aristas:  5
+n − 1 = 5                              ✓ es un árbol
+
+hojas: c, d, e
+altura: 2
+
+profundidades:
+  raiz 0,  a 1,  b 1,  c 2,  d 2,  e 2
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 095
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Llamar árbol a un grafo con ciclos.
+2. Suponer que un árbol binario está equilibrado sin garantizarlo.
+3. Confundir altura (aristas del camino más largo) con número de nodos.
+
+## 🚀 Dónde se usa de verdad
+
+Sistemas de archivos, índices de bases de datos, árboles de decisión, parseo sintáctico
+y árboles de expansión mínima.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
+- [Knuth, D. *The Art of Computer Programming*, vol. 1, 3ª ed., 1997, secc. 2.3](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

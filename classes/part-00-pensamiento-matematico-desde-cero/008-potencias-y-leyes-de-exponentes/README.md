@@ -35,15 +35,16 @@ a⁰ = 1 (a ≠ 0),   a⁻ⁿ = 1/aⁿ
 
 ```mermaid
 flowchart LR
-    P["007<br/>Regla de tres y<br/>escalas"] --> C
-    subgraph C["008 · Potencias y leyes de<br/>exponentes"]
+    P["Clase 007 · Regla de tres y escalas"] --> D
+    subgraph CLASE["Clase 008 · Potencias y leyes de…"]
         direction TB
-        D["Demostración<br/><code>exponent_laws</code>"] --> R["Resultados numéricos<br/>a^m * a^n<br/>a^(m+n)<br/>(a^m)^n<br/>… +3 más"]
-        D --> V["Verificaciones<br/>ley_producto_ok<br/>ley_potencia_ok"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion exponent_laws"]
+        D --> R["Resultados 6: a^m * a^n +5"]
+        D --> V["Comprobaciones 2: ley_producto_ok +1"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["009<br/>Raíces y radicales"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 009 · Raíces y radicales"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

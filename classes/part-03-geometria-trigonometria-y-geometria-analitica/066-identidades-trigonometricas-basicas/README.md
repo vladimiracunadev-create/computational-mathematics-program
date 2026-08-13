@@ -35,15 +35,16 @@ cos(2θ) = cos²θ − sin²θ
 
 ```mermaid
 flowchart LR
-    P["065<br/>Seno, coseno y<br/>tangente"] --> C
-    subgraph C["066 · Identidades<br/>trigonométricas básicas"]
+    P["Clase 065 · Seno, coseno y tangente"] --> D
+    subgraph CLASE["Clase 066 · Identidades trigonométricas…"]
         direction TB
-        D["Demostración<br/><code>trig_identities</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>0°<br/>30°<br/>45°<br/>… +2 más"]
+        D["Demostracion trig_identities"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 5: 0° +4"]
     end
-    C --> N["067<br/>Círculo unitario"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 067 · Círculo unitario"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

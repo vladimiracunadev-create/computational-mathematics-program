@@ -34,15 +34,16 @@ H_n = Σ 1/k  (número armónico)
 
 ```mermaid
 flowchart LR
-    P["037<br/>Precisión arbitraria y<br/>Decimal"] --> C
-    subgraph C["038 · Racional exacto y Fraction"]
+    P["Clase 037 · Precisión arbitraria y…"] --> D
+    subgraph CLASE["Clase 038 · Racional exacto y Fraction"]
         direction TB
-        D["Demostración<br/><code>exact_rationals</code>"] --> R["Resultados numéricos<br/>H_10_float<br/>H_10_exacto_como_float<br/>error<br/>… +1 más"]
-        D --> V["Verificaciones<br/>float_desde_fraction"]
-        D --> O["Contexto y estructura<br/>H_10_exacto"]
+        D["Demostracion exact_rationals"]
+        D --> R["Resultados 4: H_10_float +3"]
+        D --> V["Comprobaciones 1: float_desde_fraction"]
+        D --> O["Contexto 1: H_10_exacto"]
     end
-    C --> N["039<br/>Reproducibilidad<br/>numérica entre<br/>plataformas"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 039 · Reproducibilidad…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

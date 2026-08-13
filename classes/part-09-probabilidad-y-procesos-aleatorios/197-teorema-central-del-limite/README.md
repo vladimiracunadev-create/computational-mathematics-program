@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["196<br/>Ley de los grandes<br/>números"] --> C
-    subgraph C["197 · Teorema central del límite"]
+    P["Clase 196 · Ley de los grandes números"] --> D
+    subgraph CLASE["Clase 197 · Teorema central del límite"]
         direction TB
-        D["Demostración<br/><code>central_limit</code>"] --> R["Resultados numéricos<br/>tamaño_de_muestra<br/>replicas<br/>media_de_las_medias<br/>… +4 más"]
-        D --> V["Verificaciones<br/>la_distribucion_de_medias_es_casi_normal"]
-        D --> O["Contexto y estructura<br/>poblacion"]
+        D["Demostracion central_limit"]
+        D --> R["Resultados 7: tamaño_de_muestra +6"]
+        D --> V["Comprobaciones 1: la_distribucion_de_me…"]
+        D --> O["Contexto 1: poblacion"]
     end
-    C --> N["198<br/>Métodos Monte Carlo"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 198 · Métodos Monte Carlo"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

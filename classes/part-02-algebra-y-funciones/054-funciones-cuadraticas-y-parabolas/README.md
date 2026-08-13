@@ -34,15 +34,16 @@ xᵥ = −b/2a;  a > 0 ⟹ mínimo,  a < 0 ⟹ máximo
 
 ```mermaid
 flowchart LR
-    P["053<br/>Funciones lineales y<br/>pendiente"] --> C
-    subgraph C["054 · Funciones cuadráticas y<br/>parábolas"]
+    P["Clase 053 · Funciones lineales y…"] --> D
+    subgraph CLASE["Clase 054 · Funciones cuadráticas y…"]
         direction TB
-        D["Demostración<br/><code>quadratic_function</code>"] --> R["Resultados numéricos<br/>eje_de_simetria<br/>f(xv-2)<br/>f(xv+2)"]
-        D --> V["Verificaciones<br/>es_maximo<br/>simetria_verificada"]
-        D --> O["Contexto y estructura<br/>funcion<br/>concavidad<br/>vertice"]
+        D["Demostracion quadratic_function"]
+        D --> R["Resultados 3: eje_de_simetria +2"]
+        D --> V["Comprobaciones 2: es_maximo +1"]
+        D --> O["Contexto 3: funcion +2"]
     end
-    C --> N["055<br/>Funciones<br/>exponenciales"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 055 · Funciones exponenciales"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

@@ -1,0 +1,1213 @@
+part: "04"
+titulo: "Matemática discreta para computación"
+
+resumen_extendido: |
+  La matemática discreta es la que trata objetos separados y contables —proposiciones,
+  conjuntos, grafos, enteros— frente a la continua, que trata magnitudes que fluyen. Es la
+  matemática nativa de la computación, porque un ordenador es un objeto discreto: estados
+  finitos, memoria numerable, pasos separados.
+
+  Las clases 081 a 083 son lógica. Su valor no es filosófico sino operativo: una implicación
+  es equivalente a su contrarrecíproca pero **no** a su recíproca, y confundirlas es el error
+  de razonamiento más caro que existe —en matemáticas y fuera de ellas—. El orden de los
+  cuantificadores cambia el significado: «para todo x existe un y» y «existe un y para todo
+  x» son afirmaciones distintas, y esa distinción reaparece en las definiciones de
+  convergencia (parte 07) y en las cotas de aprendizaje (parte 17).
+
+  Las clases 084 a 090 construyen el conteo. El principio del producto, las permutaciones,
+  las combinaciones y el principio del palomar son la base sobre la que la parte 09 define
+  la probabilidad: un espacio muestral equiprobable convierte cada probabilidad en un
+  cociente de conteos. El palomar (clase 090) merece atención especial porque demuestra que
+  las colisiones de hash **existen** sin construir ninguna.
+
+  Las clases 091 y 092 son inducción y recurrencias: cómo demostrar algo sobre infinitos
+  casos con dos pasos, y cómo analizar un algoritmo que se llama a sí mismo. La inducción es
+  literalmente un bucle `for` con garantía, y la recurrencia es lo que hace que Fibonacci
+  ingenuo tarde exponencialmente y memoizado tarde linealmente.
+
+  Las clases 093 a 096 son teoría de grafos. Un grafo es la estructura más versátil de la
+  computación: modela dependencias, redes, rutas, jerarquías y —esto importa— los **grafos
+  de cómputo** sobre los que se ejecuta la autodiferenciación. El orden topológico de la
+  clase 096 es exactamente el orden en que un framework de deep learning recorre las
+  operaciones al propagar gradientes.
+
+  El cierre (097 a 099) es álgebra booleana y aritmética modular, la base del hardware
+  digital y de la criptografía. El capstone monta un planificador de dependencias que
+  detecta ciclos y calcula qué tareas pueden ejecutarse en paralelo, que es el problema real
+  de cualquier sistema de construcción.
+
+mapa: |
+  flowchart TD
+      A["Clases 081-083 · Logica y cuantificadores"] --> B["Clases 084-086 · Conjuntos y relaciones"]
+      B --> C["Clases 087-090 · Conteo y palomar"]
+      A --> D["Clases 091-092 · Induccion y recurrencias"]
+      C --> D
+      B --> E["Clases 093-096 · Grafos y orden topologico"]
+      A --> F["Clases 097-099 · Booleana, modular y primos"]
+      D --> G["Clase 100 · Capstone planificador"]
+      E --> G
+      C ==> H["Parte 09 · Probabilidad como conteo normalizado"]
+      E -.-> I["Grafo de computo y autodiff · Parte 08"]
+      E -.-> J["GNN y Laplaciano · Parte 16"]
+      F -.-> K["Hashing y criptografia"]
+
+glosario:
+  - termino: "Implicación"
+    definicion: "p → q, falsa solo cuando p es verdadera y q falsa. Equivale a su contrarrecíproca, no a su recíproca."
+    clase: "081"
+  - termino: "Contrarrecíproca"
+    definicion: "¬q → ¬p. Lógicamente equivalente a p → q, y a menudo más fácil de demostrar."
+    clase: "081"
+  - termino: "Tautología"
+    definicion: "Fórmula verdadera bajo toda asignación de valores de verdad."
+    clase: "082"
+  - termino: "Leyes de De Morgan"
+    definicion: "¬(p∧q) ≡ ¬p∨¬q y ¬(p∨q) ≡ ¬p∧¬q. Rigen la negación de condiciones compuestas."
+    clase: "082"
+  - termino: "Cuantificador universal"
+    definicion: "∀x P(x): P se cumple para todo elemento del universo. Su negación es ∃x ¬P(x)."
+    clase: "083"
+  - termino: "Inclusión-exclusión"
+    definicion: "|A∪B| = |A| + |B| − |A∩B|. Corrige el doble conteo de la intersección."
+    clase: "084"
+  - termino: "Relación de equivalencia"
+    definicion: "Relación reflexiva, simétrica y transitiva. Particiona el conjunto en clases disjuntas."
+    clase: "085"
+  - termino: "Función inyectiva"
+    definicion: "Entradas distintas dan salidas distintas. Condición necesaria para que exista inversa."
+    clase: "086"
+  - termino: "Regla del producto"
+    definicion: "Si una decisión tiene m opciones y otra n, hay m·n combinaciones."
+    clase: "087"
+  - termino: "Permutación"
+    definicion: "Selección ordenada. P(n,k) = n!/(n−k)!"
+    clase: "088"
+  - termino: "Combinación"
+    definicion: "Selección sin orden. C(n,k) = n!/(k!(n−k)!). Simétrica: C(n,k) = C(n,n−k)."
+    clase: "089"
+  - termino: "Principio del palomar"
+    definicion: "Si n objetos se reparten en m cajas con n > m, alguna caja tiene al menos dos. Demuestra colisiones sin construirlas."
+    clase: "090"
+  - termino: "Inducción matemática"
+    definicion: "Método de demostración con caso base y paso inductivo. Cubre infinitos casos con dos argumentos."
+    clase: "091"
+  - termino: "Recurrencia"
+    definicion: "Definición de un término en función de los anteriores. Su coste depende de si se memoiza."
+    clase: "092"
+  - termino: "Grado de un vértice"
+    definicion: "Número de aristas incidentes. La suma de los grados es el doble del número de aristas."
+    clase: "093"
+  - termino: "BFS"
+    definicion: "Recorrido en anchura. Encuentra el camino con menos aristas en un grafo no ponderado. Coste O(V+E)."
+    clase: "094"
+  - termino: "Árbol"
+    definicion: "Grafo conexo sin ciclos. Con n vértices tiene exactamente n−1 aristas."
+    clase: "095"
+  - termino: "DAG"
+    definicion: "Grafo dirigido acíclico. Admite orden topológico; su ausencia delata un ciclo."
+    clase: "096"
+  - termino: "Orden topológico"
+    definicion: "Ordenación de los vértices de un DAG tal que toda arista va de un vértice anterior a uno posterior."
+    clase: "096"
+  - termino: "Aritmética modular"
+    definicion: "Aritmética de los restos respecto a un módulo. Base de hashing, criptografía y checksums."
+    clase: "098"
+  - termino: "Criba de Eratóstenes"
+    definicion: "Algoritmo que encuentra todos los primos hasta n tachando múltiplos. Coste O(n log log n)."
+    clase: "099"
+
+clases:
+  "081":
+    concepto: "Una implicación equivale a su contrarrecíproca, nunca a su recíproca."
+    formulas:
+      - "p → q ≡ ¬p ∨ q"
+      - "p → q ≡ ¬q → ¬p   (contrarrecíproca)"
+      - "p → q ≢ q → p     (recíproca)"
+    desarrollo: |
+      La lógica proposicional asigna un valor de verdad a cada enunciado y define cómo se
+      combinan. El conector que causa más problemas es la implicación, porque su definición
+      formal no coincide con el uso coloquial: `p → q` es **falsa únicamente** cuando p es
+      verdadera y q falsa. Si p es falsa, la implicación es verdadera sea cual sea q, lo que
+      se llama verdad vacua.
+
+      Esa definición tiene una consecuencia práctica inmediata: «todos los elementos de la
+      lista vacía cumplen la condición» es cierto, y por eso `all([])` devuelve `True` en
+      Python. No es una rareza del lenguaje: es la lógica correcta.
+
+      La equivalencia con la contrarrecíproca es la herramienta de demostración más útil de
+      toda la matemática. Probar «si n² es par entonces n es par» directamente es incómodo;
+      probar «si n es impar entonces n² es impar» es inmediato. Ambas afirmaciones son la
+      misma, y elegir la más fácil es legítimo.
+
+      Confundir una implicación con su recíproca es la falacia más extendida. «Si llueve, el
+      suelo está mojado» no permite concluir «si el suelo está mojado, llovió». En estadística
+      la misma confusión es la falacia del fiscal: `P(evidencia | inocente)` pequeña no
+      implica `P(inocente | evidencia)` pequeña, tema de la clase 186.
+    ejemplo: |
+      Tabla de verdad de las tres formas.
+
+      ```text
+      p      q      p→q    q→p (recíproca)   ¬q→¬p (contrarrecíproca)
+      V      V       V           V                    V
+      V      F       F           V                    F
+      F      V       V           F                    V
+      F      F       V           V                    V
+
+      ¿p→q ≡ contrarrecíproca?  Sí, columnas idénticas      ✓
+      ¿p→q ≡ recíproca?         No, difieren en 2 filas     ✗
+
+      Verdad vacua: si p es falsa, p→q es verdadera siempre.
+      Por eso all([]) == True.
+      ```
+    errores:
+      - "Concluir la recíproca a partir de una implicación demostrada."
+      - "Interpretar la verdad vacua como un error del sistema formal."
+      - "Leer «si p entonces q» como «p si y solo si q»."
+    aplicacion: |
+      Demostración por contrarrecíproca, diseño de condiciones en código, especificación de
+      contratos y la lógica de las pruebas de hipótesis (parte 10).
+    referencias:
+      - "[Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., McGraw-Hill, 2019, cap. 1](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)"
+      - "[Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A)"
+
+  "082":
+    concepto: "Las leyes de De Morgan rigen cómo se niega una condición compuesta."
+    formulas:
+      - "¬(p ∧ q) ≡ ¬p ∨ ¬q"
+      - "¬(p ∨ q) ≡ ¬p ∧ ¬q"
+      - "p ⊕ q ≡ (p ∨ q) ∧ ¬(p ∧ q)"
+    desarrollo: |
+      Una tabla de verdad decide cualquier equivalencia proposicional por fuerza bruta: se
+      evalúan las dos fórmulas en las 2ⁿ asignaciones posibles y se comparan. Es un método
+      completo —siempre da respuesta— y de coste exponencial, lo que anticipa por qué SAT es
+      un problema difícil (clase 097).
+
+      Las leyes de De Morgan son las que más se usan sin nombrarlas. Al negar una condición
+      compuesta, la conjunción se convierte en disyunción y viceversa, y cada término se
+      niega. En código: la negación de `edad >= 18 and tiene_permiso` es
+      `edad < 18 or not tiene_permiso`, **no** `edad < 18 and not tiene_permiso`. Ese error
+      produce condiciones que parecen razonables y filtran mal.
+
+      Una tautología es verdadera bajo toda asignación; una contradicción, falsa bajo todas.
+      Detectarlas importa porque señalan código muerto: una condición tautológica siempre se
+      cumple y su rama alternativa nunca se ejecuta.
+
+      El XOR merece mención aparte: es verdadero cuando los operandos difieren, y tiene la
+      propiedad de ser su propia inversa, `(a ⊕ b) ⊕ b = a`. Esa propiedad lo hace
+      omnipresente en criptografía, en sumas de comprobación y en el intercambio de variables
+      sin memoria auxiliar.
+    ejemplo: |
+      Verificar De Morgan exhaustivamente.
+
+      ```text
+      4 casos evaluados (2² asignaciones)
+
+      p  q  | ¬(p∧q)  ¬p∨¬q  | ¬(p∨q)  ¬p∧¬q
+      V  V  |   F       F    |   F       F
+      V  F  |   V       V    |   F       F
+      F  V  |   V       V    |   F       F
+      F  F  |   V       V    |   V       V
+
+      Ambas leyes: columnas idénticas    ✓
+
+      Tautología:    p ∨ ¬p  → V en las 4 filas
+      Contradicción: p ∧ ¬p  → F en las 4 filas
+
+      XOR: (V,V)→F  (V,F)→V  (F,V)→V  (F,F)→F
+      ```
+    errores:
+      - "Negar una conjunción sin cambiarla por disyunción."
+      - "Olvidar negar todos los términos al aplicar De Morgan."
+      - "Usar & y | (bit a bit) donde correspondía and y or (lógicos) en Python."
+    aplicacion: |
+      Simplificación de condiciones, optimización de consultas SQL, diseño de circuitos
+      digitales y refactorización de código con lógica compleja.
+    referencias:
+      - "[Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)"
+      - "[Knuth, D. *The Art of Computer Programming*, vol. 4A, 2011](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)"
+
+  "083":
+    concepto: "Intercambiar dos cuantificadores cambia el significado de la afirmación."
+    formulas:
+      - "¬(∀x P(x)) ≡ ∃x ¬P(x)"
+      - "∀x ∃y Q(x,y)   ≢   ∃y ∀x Q(x,y)"
+    desarrollo: |
+      La lógica de predicados añade a la proposicional la capacidad de hablar sobre objetos
+      de un universo. `∀x P(x)` afirma que P vale para todos; `∃x P(x)`, que vale para al
+      menos uno. La negación intercambia los cuantificadores y niega el predicado, que es la
+      forma general de la regla que la clase 019 aplicó al contraejemplo.
+
+      El punto delicado es el **orden**. `∀x ∃y (y > x)` dice que para cada x existe alguien
+      mayor —cierto en los naturales—. `∃y ∀x (y > x)` dice que existe un número mayor que
+      todos —falso—. Las mismas palabras en distinto orden afirman cosas distintas, y en un
+      conjunto finito la segunda puede ser cierta mientras que en uno infinito no.
+
+      Esta distinción no es académica. La definición de límite —«para todo ε existe un δ»—
+      tiene ese orden y no el contrario: δ puede depender de ε. La convergencia uniforme
+      exige el orden inverso —«existe un δ que sirve para todo ε»— y por eso es una condición
+      más fuerte. Toda la parte 07 se apoya en leer esos cuantificadores correctamente.
+
+      En teoría del aprendizaje (parte 17) los enunciados PAC tienen la misma estructura: para
+      todo ε y δ, existe un tamaño muestral m tal que... Leer mal el orden convierte una
+      garantía útil en una afirmación trivial o imposible.
+    ejemplo: |
+      El orden de los cuantificadores en {1,...,6}.
+
+      ```text
+      Universo: {1, 2, 3, 4, 5, 6}
+
+      ∀x par(x)   → Falso  (1 no es par)
+      ∃x par(x)   → Verdadero
+
+      Negación: ¬(∀x par(x)) ≡ ∃x ¬par(x)  → Verdadero  ✓
+
+      ∀x ∃y (y > x):  ¿para cada x hay alguien mayor?
+        x=6 → no hay ninguno mayor en el universo → Falso
+
+      ∃y ∀x (y > x):  ¿hay uno mayor que todos?
+        ningún y supera a sí mismo → Falso
+
+      En ℕ (infinito): el primero sería Verdadero y el segundo Falso.
+      El orden importa.
+      ```
+    errores:
+      - "Intercambiar cuantificadores al reescribir una definición."
+      - "Negar un cuantificador sin cambiarlo por el otro."
+      - "Olvidar declarar el universo sobre el que se cuantifica."
+    aplicacion: |
+      Definiciones de límite y continuidad, especificación formal de sistemas, cotas de
+      aprendizaje PAC y verificación de programas.
+    referencias:
+      - "[Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A)"
+      - "[Shalev-Shwartz & Ben-David. *Understanding Machine Learning*. Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)"
+
+  "084":
+    concepto: "Inclusión-exclusión corrige el doble conteo al unir conjuntos que se solapan."
+    formulas:
+      - "|A ∪ B| = |A| + |B| − |A ∩ B|"
+      - "|P(A)| = 2^|A|"
+    desarrollo: |
+      Un conjunto es una colección sin orden y sin repeticiones. Esa doble propiedad lo
+      distingue de una lista y determina qué operaciones tienen sentido: unión, intersección,
+      diferencia y diferencia simétrica, todas con implementación directa y eficiente en
+      Python mediante `set`.
+
+      El principio de inclusión-exclusión responde a una pregunta que la suma ingenua
+      contesta mal: al contar los elementos de una unión, los que están en ambos conjuntos se
+      cuentan dos veces, y hay que restarlos una. Con tres conjuntos la fórmula alterna signos
+      —se suman los individuales, se restan las intersecciones dos a dos y se suma la triple—,
+      patrón que generaliza a n conjuntos.
+
+      El conjunto de partes de un conjunto de n elementos tiene 2ⁿ elementos, porque cada
+      elemento está o no está: es la regla del producto aplicada n veces. Esa cifra explica
+      por qué la búsqueda exhaustiva sobre subconjuntos es inviable salvo para n pequeño, y
+      por qué la selección de características es un problema difícil.
+
+      En probabilidad (parte 09), inclusión-exclusión reaparece intacta como la regla de la
+      suma: `P(A∪B) = P(A) + P(B) − P(A∩B)`. Los conjuntos se convierten en eventos y los
+      cardinales en probabilidades, pero la estructura es la misma.
+    ejemplo: |
+      Operaciones e inclusión-exclusión con dos conjuntos.
+
+      ```text
+      A = {1,2,3,4,5}       |A| = 5
+      B = {4,5,6,7}         |B| = 4
+
+      A ∪ B = {1,2,3,4,5,6,7}    |A∪B| = 7
+      A ∩ B = {4,5}              |A∩B| = 2
+      A − B = {1,2,3}
+      A △ B = {1,2,3,6,7}        (diferencia simétrica)
+
+      Inclusión-exclusión: 5 + 4 − 2 = 7 = |A∪B|      ✓
+      Suma ingenua:        5 + 4     = 9              ✗ cuenta 4 y 5 dos veces
+
+      Partes de A: 2⁵ = 32 subconjuntos
+      ```
+    errores:
+      - "Sumar cardinales de conjuntos que se solapan sin restar la intersección."
+      - "Tratar un conjunto como una lista y esperar orden o repeticiones."
+      - "Olvidar el conjunto vacío y el total al contar subconjuntos."
+    aplicacion: |
+      Consultas con condiciones múltiples, deduplicación, conteo de casos favorables en
+      probabilidad y análisis de solapamiento entre poblaciones.
+    referencias:
+      - "[Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 2](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)"
+      - "[Python: tipo `set`](https://docs.python.org/3/library/stdtypes.html#set)"
+
+  "085":
+    concepto: "Reflexiva, simétrica y transitiva son las tres condiciones que hacen de una relación una equivalencia, y toda equivalencia particiona el conjunto."
+    formulas:
+      - "reflexiva: ∀a, aRa"
+      - "simétrica: aRb ⟹ bRa"
+      - "transitiva: aRb ∧ bRc ⟹ aRc"
+    desarrollo: |
+      Una relación es un conjunto de pares. Las tres propiedades clásicas se comprueban por
+      separado y su combinación tiene consecuencias muy fuertes: si una relación es
+      reflexiva, simétrica y transitiva, **particiona** el conjunto en clases disjuntas cuya
+      unión es el total. No hay que demostrar la partición: se sigue de las tres propiedades.
+
+      El ejemplo canónico es la congruencia módulo n: `x ≡ y (mod 3)` si `x − y` es múltiplo
+      de 3. Sus clases de equivalencia son los restos {0,1,2}, y esa partición es
+      exactamente la estructura sobre la que se define la aritmética modular de la clase 098.
+
+      La utilidad práctica es de modelado. Cuando se decide que dos objetos son «el mismo» a
+      efectos de un sistema —dos URLs que apuntan al mismo recurso, dos registros del mismo
+      cliente, dos representaciones del mismo número racional—, se está definiendo una
+      relación de equivalencia, y conviene comprobar que cumple las tres propiedades. Una
+      relación de «similitud» que no es transitiva produce agrupamientos inconsistentes.
+
+      Ese fallo es real y frecuente: la deduplicación por umbral de similitud no es
+      transitiva —A parecido a B y B parecido a C no implica A parecido a C— y por eso los
+      algoritmos de agrupamiento por similitud necesitan una definición explícita de
+      transitividad, como el cierre transitivo o el enlace completo.
+    ejemplo: |
+      Congruencia módulo 3 sobre {0,...,5}.
+
+      ```text
+      Relación: x ~ y  si  (x − y) mod 3 == 0
+
+      reflexiva:  (x−x) mod 3 = 0                    ✓
+      simétrica:  si (x−y)≡0 entonces (y−x)≡0        ✓
+      transitiva: (x−y)≡0 y (y−z)≡0 ⟹ (x−z)≡0        ✓
+
+      → es una relación de equivalencia
+
+      Clases de equivalencia:
+        [0] = {0, 3}
+        [1] = {1, 4}
+        [2] = {2, 5}
+
+      Disjuntas y su unión es todo el conjunto        ✓
+      ```
+    errores:
+      - "Suponer transitividad en relaciones de similitud por umbral."
+      - "Comprobar solo una o dos de las tres propiedades."
+      - "Confundir relación de equivalencia con relación de orden (que es antisimétrica, no simétrica)."
+    aplicacion: |
+      Deduplicación de registros, normalización de datos, particiones de un conjunto,
+      aritmética modular y clases de equivalencia de fracciones.
+    referencias:
+      - "[Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 9](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)"
+      - "[Halmos, P. *Naive Set Theory*. Springer, 1974](https://link.springer.com/book/10.1007/978-1-4757-1645-0)"
+
+  "086":
+    concepto: "Inyectiva, sobreyectiva y biyectiva describen qué información conserva una función."
+    formulas:
+      - "funciones totales de A a B: |B|^|A|"
+      - "biyecciones de A en A: |A|!"
+    desarrollo: |
+      Sobre conjuntos finitos, las tres propiedades se cuentan. Una función es **inyectiva**
+      si no repite salidas, **sobreyectiva** si alcanza todo el codominio y **biyectiva** si
+      ambas. Entre conjuntos del mismo tamaño finito, inyectiva y sobreyectiva son
+      equivalentes —hecho que falla en conjuntos infinitos y da lugar a las paradojas de
+      Hilbert—.
+
+      El conteo de funciones ilustra la regla del producto: cada uno de los `|A|` elementos
+      puede ir a cualquiera de los `|B|` destinos, luego hay `|B|^|A|` funciones. Las
+      biyecciones de un conjunto en sí mismo son `|A|!`, que es el conteo de permutaciones de
+      la clase 088.
+
+      La inyectividad es la condición que hace invertible una función (clase 058) y la que
+      define una función hash **perfecta**. Como una función hash mapea un dominio enorme en
+      un rango pequeño, no puede ser inyectiva, y de ahí las colisiones que el palomar
+      garantiza en la clase 090.
+
+      En machine learning, la pérdida de inyectividad es lo que hace que una capa no sea
+      invertible: si la dimensión de salida es menor que la de entrada, información se pierde
+      irremediablemente. Los *normalizing flows* se construyen precisamente con capas
+      biyectivas para poder invertirlas y calcular densidades exactas.
+    ejemplo: |
+      Dos funciones sobre un dominio de tres elementos.
+
+      ```text
+      dominio = {1,2,3},  codominio = {a,b,c}
+
+      f = {1→a, 2→b, 3→c}
+        inyectiva:   3 salidas distintas         ✓
+        sobreyectiva: alcanza a, b y c           ✓
+        biyectiva                                ✓
+
+      g = {1→a, 2→a, 3→b}
+        inyectiva:   1 y 2 comparten salida      ✗
+        sobreyectiva: no alcanza c               ✗
+
+      Conteo:
+        funciones totales posibles: 3³ = 27
+        biyecciones posibles:       3! = 6
+      ```
+    errores:
+      - "Suponer que inyectiva implica sobreyectiva en conjuntos de distinto tamaño."
+      - "Extender a conjuntos infinitos la equivalencia entre inyectiva y sobreyectiva."
+      - "Esperar que una función hash sea inyectiva."
+    aplicacion: |
+      Funciones hash y colisiones, invertibilidad de capas, codificación sin pérdida y
+      normalizing flows.
+    referencias:
+      - "[Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)"
+      - "[Papamakarios, G. et al. *Normalizing Flows for Probabilistic Modeling and Inference*. JMLR, 2021](https://jmlr.org/papers/v22/19-1028.html)"
+
+  "087":
+    concepto: "La regla del producto multiplica opciones independientes; la de la suma las suma cuando son excluyentes."
+    formulas:
+      - "producto: |A × B| = |A| · |B|"
+      - "suma (excluyentes): |A ∪ B| = |A| + |B|"
+      - "entropía de una contraseña: log₂(espacio)"
+    desarrollo: |
+      Los dos principios básicos del conteo se distinguen por una palabra: si las decisiones
+      son **sucesivas** (esto **y** aquello), se multiplican; si son **alternativas**
+      excluyentes (esto **o** aquello), se suman. Casi todo error de conteo viene de aplicar
+      uno donde correspondía el otro.
+
+      La aplicación más ilustrativa es el espacio de contraseñas. Con un alfabeto de 36
+      caracteres y longitud 8, hay 36⁸ ≈ 2.8·10¹² combinaciones; con solo 10 dígitos, 10⁸.
+      La razón entre ambos es de más de 28 000, y ese factor es lo que separa una contraseña
+      débil de una razonable frente a fuerza bruta.
+
+      Medir el espacio en **bits de entropía** —`log₂` del número de combinaciones— es más
+      informativo que dar el número, porque los bits se suman al añadir caracteres. Cada
+      carácter adicional de un alfabeto de 36 símbolos añade `log₂36 ≈ 5.17` bits. Esa es la
+      cuenta que hace un estimador de fortaleza de contraseñas.
+
+      La misma regla es la que da 2ⁿ estados para n bits (clase 021), `|B|^|A|` funciones
+      (clase 086) y el tamaño del espacio de búsqueda de cualquier problema combinatorio. En
+      machine learning aparece al contar configuraciones de hiperparámetros: cinco parámetros
+      con diez valores cada uno dan 10⁵ combinaciones, que es por lo que la búsqueda
+      exhaustiva se abandona en favor de la aleatoria o bayesiana.
+    ejemplo: |
+      Espacio de contraseñas de 8 caracteres.
+
+      ```text
+      Alfanumérico (26 letras + 10 dígitos = 36 símbolos):
+        36⁸ = 2 821 109 907 456 ≈ 2.8·10¹²
+        entropía = 8·log₂(36) = 41.4 bits
+
+      Solo dígitos (10 símbolos):
+        10⁸ = 100 000 000 = 10⁸
+        entropía = 8·log₂(10) = 26.6 bits
+
+      Factor de ventaja: 2.8·10¹² / 10⁸ = 28 211
+
+      Regla del producto:  3 camisas × 4 pantalones = 12 conjuntos
+      Regla de la suma:    3 camisas o 4 pantalones = 7 prendas
+      ```
+    errores:
+      - "Sumar cuando las decisiones son sucesivas o multiplicar cuando son excluyentes."
+      - "Contar dos veces casos que pertenecen a ambas alternativas."
+      - "Reportar el tamaño del espacio en lugar de su logaritmo al comparar órdenes de magnitud."
+    aplicacion: |
+      Estimación de fortaleza de contraseñas, tamaño de espacios de búsqueda, conteo de
+      configuraciones de hiperparámetros y cardinalidad de esquemas de datos.
+    referencias:
+      - "[NIST SP 800-63B: Digital Identity Guidelines — Authentication](https://pages.nist.gov/800-63-3/sp800-63b.html)"
+      - "[Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 6](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)"
+
+  "088":
+    concepto: "Una permutación cuenta selecciones donde el orden importa."
+    formulas:
+      - "P(n) = n!"
+      - "P(n,k) = n!/(n−k)!"
+      - "con repetición: nᵏ"
+    desarrollo: |
+      Permutar es ordenar. El número de ordenaciones completas de n objetos distintos es
+      `n!`, y el argumento es la regla del producto: hay n opciones para la primera posición,
+      n−1 para la segunda —ya se usó una— y así sucesivamente.
+
+      Las permutaciones **parciales** `P(n,k)` cuentan las formas de elegir k objetos en
+      orden entre n disponibles: `n!/(n−k)!`. Si además se permite repetir, el conteo es
+      `nᵏ`, porque cada posición vuelve a tener n opciones. Distinguir los tres casos —total,
+      parcial sin repetición, parcial con repetición— es la mitad de la combinatoria
+      elemental.
+
+      El factorial crece brutalmente: `10! ≈ 3.6·10⁶`, `20! ≈ 2.4·10¹⁸`, `70!` ya supera el
+      mayor float64 representable. Ese crecimiento es la razón por la que el problema del
+      viajante no se resuelve por fuerza bruta y por la que cualquier algoritmo con coste
+      factorial es inviable más allá de una veintena de elementos.
+
+      En deep learning las permutaciones aparecen de forma indirecta pero relevante: la
+      atención es **permutación-equivariante**, es decir, permutar los tokens de entrada
+      permuta la salida de la misma forma. Esa propiedad es la que hace necesario el
+      positional encoding (clase 323), porque sin él el modelo no distinguiría el orden.
+    ejemplo: |
+      Permutaciones de cuatro elementos.
+
+      ```text
+      elementos: A, B, C, D
+
+      permutaciones totales:  4! = 24
+      P(4,2) = 4!/2! = 12     (elegir 2 en orden)
+        AB AC AD BA BC BD CA CB CD DA DB DC
+
+      con repetición: 4² = 16   (AA, AB, ..., DD)
+
+      Crecimiento del factorial:
+        10! = 3 628 800
+        20! = 2.43·10¹⁸
+        70! > 1.8·10³⁰⁸ → desborda float64
+      ```
+    errores:
+      - "Usar permutaciones donde el orden no importa (corresponde combinación)."
+      - "Olvidar si se permite repetición al elegir la fórmula."
+      - "Calcular factoriales grandes en float en lugar de en entero exacto."
+    aplicacion: |
+      Barajado y muestreo sin reemplazo, problemas de ordenación y planificación, y
+      equivarianza a permutaciones en arquitecturas de atención y GNN.
+    referencias:
+      - "[Python: `math.perm` e `itertools.permutations`](https://docs.python.org/3/library/math.html#math.perm)"
+      - "[Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)"
+
+  "089":
+    concepto: "Una combinación cuenta selecciones donde el orden no importa; su simetría refleja que elegir k es descartar n−k."
+    formulas:
+      - "C(n,k) = n!/(k!(n−k)!)"
+      - "C(n,k) = C(n,n−k)"
+      - "Σₖ C(n,k) = 2ⁿ"
+    desarrollo: |
+      Una combinación es una permutación a la que se le ha quitado el orden: hay `k!`
+      ordenaciones de cada selección, así que `C(n,k) = P(n,k)/k!`. Esa deducción es la forma
+      correcta de recordar la fórmula, en lugar de memorizarla.
+
+      La simetría `C(n,k) = C(n,n−k)` tiene una lectura inmediata: elegir k elementos es lo
+      mismo que decidir cuáles n−k se descartan. Es un ejemplo de **biyección** como técnica
+      de demostración: dos conteos coinciden porque existe una correspondencia uno a uno
+      entre lo que cuentan.
+
+      La suma de toda una fila del triángulo de Pascal es 2ⁿ, y también tiene lectura
+      combinatoria: sumar sobre todos los tamaños posibles de subconjunto es contar todos los
+      subconjuntos, que son 2ⁿ. Este tipo de argumentos —contar lo mismo de dos formas— es la
+      herramienta central de la combinatoria.
+
+      En probabilidad, `C(n,k)` es el coeficiente de la distribución binomial (clase 192): el
+      número de secuencias con exactamente k éxitos en n ensayos. Y en machine learning
+      aparece al contar particiones de un conjunto de datos y al calcular el número de
+      comparaciones en un test estadístico múltiple.
+    ejemplo: |
+      Combinaciones de 3 entre 5.
+
+      ```text
+      elementos: A B C D E
+
+      C(5,3) = 5!/(3!·2!) = 120/(6·2) = 10
+        ABC ABD ABE ACD ACE ADE BCD BCE BDE CDE
+
+      Simetría: C(5,3) = C(5,2) = 10          ✓
+        (elegir 3 ≡ descartar 2)
+
+      Fila de Pascal para n=5:
+        C(5,0..5) = 1, 5, 10, 10, 5, 1
+        suma = 32 = 2⁵                        ✓
+      ```
+    errores:
+      - "Usar combinaciones donde el orden sí importa."
+      - "Calcular el factorial completo en lugar de usar math.comb, que evita desbordar."
+      - "Confundir C(n,k) con P(n,k): difieren en el factor k!."
+    aplicacion: |
+      Distribución binomial, número de comparaciones en tests múltiples, muestreo de
+      subconjuntos y conteo de particiones en validación cruzada.
+    referencias:
+      - "[Python: `math.comb` e `itertools.combinations`](https://docs.python.org/3/library/math.html#math.comb)"
+      - "[Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 5](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)"
+
+  "090":
+    concepto: "El principio del palomar demuestra que existe una colisión sin construir ninguna."
+    formulas:
+      - "n objetos en m cajas con n > m ⟹ alguna caja tiene ≥ ⌈n/m⌉"
+      - "colisión de hash garantizada si entradas > tamaño del espacio"
+    desarrollo: |
+      El principio del palomar es de una simplicidad desarmante: si se reparten n objetos en
+      m cajas y n > m, alguna caja recibe al menos dos. Su potencia está en que demuestra una
+      **existencia** sin ofrecer un método para encontrarla, y ese tipo de argumento —no
+      constructivo— es habitual en matemáticas y muy útil en informática.
+
+      La aplicación directa es a las funciones hash. Una función que mapea un dominio infinito
+      —o simplemente mayor— en un espacio de 2ⁿ valores **tiene** colisiones necesariamente.
+      No es un defecto de la función: es una consecuencia lógica. Por eso la pregunta correcta
+      sobre una función hash criptográfica no es «¿tiene colisiones?» sino «¿es
+      computacionalmente factible encontrarlas?».
+
+      La forma generalizada da una cota más fina: alguna caja tiene al menos `⌈n/m⌉` objetos.
+      Con 400 personas y 365 días del año, alguna fecha tiene al menos dos cumpleaños; con
+      800, al menos tres.
+
+      Conviene no confundirlo con la **paradoja del cumpleaños**, que es un resultado
+      probabilístico distinto: con solo 23 personas la probabilidad de coincidencia supera el
+      50 %. El palomar da certeza con 366; la paradoja da probabilidad alta con 23. La segunda
+      es la que determina la seguridad real de un hash frente a ataques de colisión, y aparece
+      en la clase 090 como contraste.
+    ejemplo: |
+      Cumpleaños y colisiones de hash.
+
+      ```text
+      400 personas, 365 días:
+        400 > 365 → coincidencia GARANTIZADA
+        mínimo de repeticiones: ⌈400/365⌉ = 2
+
+      Hash de 16 bits (65 536 valores), 100 000 entradas:
+        100 000 > 65 536 → colisión GARANTIZADA
+
+      Contraste con la paradoja del cumpleaños:
+        con 23 personas, P(coincidencia) > 0.5
+        el palomar da certeza; la paradoja da probabilidad
+
+      Lección: no hace falta encontrar la colisión
+               para demostrar que existe.
+      ```
+    errores:
+      - "Confundir el principio del palomar (certeza) con la paradoja del cumpleaños (probabilidad)."
+      - "Suponer que una función hash bien diseñada no tiene colisiones."
+      - "Aplicar la cota ⌈n/m⌉ como si fuera el máximo en lugar del mínimo garantizado."
+    aplicacion: |
+      Análisis de funciones hash, límites de compresión sin pérdida, diseño de tablas hash y
+      argumentos de existencia en teoría de la complejidad.
+    referencias:
+      - "[Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 6](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)"
+      - "[Stinson & Paterson. *Cryptography: Theory and Practice*, 4ª ed., CRC, 2018](https://www.routledge.com/Cryptography-Theory-and-Practice/Stinson-Paterson/p/book/9781138197015)"
+
+  "091":
+    concepto: "La inducción demuestra infinitos casos con un caso base y un paso que hereda la propiedad."
+    formulas:
+      - "base: P(1) es cierta"
+      - "paso: P(k) ⟹ P(k+1)"
+      - "conclusión: P(n) para todo n ≥ 1"
+    desarrollo: |
+      La inducción resuelve un problema que parece imposible: demostrar algo sobre infinitos
+      números en dos pasos. El caso base establece que la propiedad vale en el primer valor;
+      el paso inductivo demuestra que **si** vale en k, entonces vale en k+1. La combinación
+      de ambos hace caer todas las fichas de dominó.
+
+      La analogía con un bucle es exacta: el caso base es la inicialización y el paso
+      inductivo es el invariante que se mantiene en cada iteración. Demostrar la corrección
+      de un bucle es demostrar por inducción que su invariante se preserva, y esa es la base
+      de la verificación formal de programas.
+
+      El paso inductivo es donde vive la demostración, y su estructura es siempre la misma:
+      escribir `P(k+1)`, identificar dentro de ella la parte que es `P(k)`, aplicar la
+      hipótesis y simplificar. Para la suma de Gauss:
+      `S(k+1) = S(k) + (k+1) = k(k+1)/2 + (k+1) = (k+1)(k+2)/2`, que es exactamente la
+      fórmula con k+1.
+
+      Es importante no confundir inducción con verificación. Comprobar los primeros 50 casos
+      no demuestra nada, como la clase 019 mostró con el polinomio de Euler. La verificación
+      empírica es un control de sanidad previo a la demostración, no un sustituto.
+    ejemplo: |
+      Demostrar la suma de Gauss por inducción.
+
+      ```text
+      Proposición: 1 + 2 + ... + n = n(n+1)/2
+
+      Caso base (n=1):
+        izquierda = 1
+        derecha   = 1·2/2 = 1              ✓
+
+      Paso inductivo: suponemos S(k) = k(k+1)/2
+        S(k+1) = S(k) + (k+1)
+               = k(k+1)/2 + (k+1)
+               = (k+1)(k/2 + 1)
+               = (k+1)(k+2)/2              ✓ es la fórmula con k+1
+
+      Verificación empírica (control de sanidad):
+        50 valores comprobados, 0 contraejemplos
+        → NO es la demostración, es una comprobación previa
+      ```
+    errores:
+      - "Omitir el caso base: sin él, el paso inductivo no arranca."
+      - "Usar la conclusión como hipótesis dentro del paso inductivo."
+      - "Confundir verificar los primeros n casos con demostrar."
+    aplicacion: |
+      Corrección de algoritmos recursivos, invariantes de bucle, análisis de estructuras de
+      datos y demostración de cotas de complejidad.
+    referencias:
+      - "[Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019, cap. 6](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A)"
+      - "[Gries, D. *The Science of Programming*. Springer, 1981](https://link.springer.com/book/10.1007/978-1-4612-5983-1)"
+
+  "092":
+    concepto: "Una recurrencia define cada término desde los anteriores; su coste depende radicalmente de si se memoiza."
+    formulas:
+      - "F(n) = F(n−1) + F(n−2),  F(0)=0, F(1)=1"
+      - "Binet: F(n) = (φⁿ − (−1/φ)ⁿ)/√5,  φ = (1+√5)/2"
+    desarrollo: |
+      Una recurrencia es una definición autorreferente con casos base. Fibonacci es el
+      ejemplo canónico, y sirve para ilustrar la diferencia más importante del análisis de
+      algoritmos: la implementación recursiva ingenua recalcula los mismos valores una y otra
+      vez y tarda `O(φⁿ)`; la iterativa —o la memoizada— tarda `O(n)`.
+
+      La diferencia no es de constante: para n = 50, la ingenua hace del orden de 10¹⁰
+      llamadas y la iterativa 50 pasos. Es la demostración más clara de que la complejidad
+      asintótica no es una abstracción académica.
+
+      Fibonacci tiene además una fórmula cerrada, la de Binet, que involucra la razón áurea
+      φ. Que una recurrencia de enteros se exprese con irracionales es notable, y su
+      deducción —resolver la ecuación característica `x² = x + 1`— es el método general para
+      recurrencias lineales homogéneas, análogo al de las ecuaciones diferenciales lineales
+      de la parte 11.
+
+      Una precaución numérica: la fórmula de Binet en punto flotante deja de dar el entero
+      exacto para n grande, porque φⁿ crece y la precisión relativa se agota. Para n = 71 el
+      redondeo ya falla. Es un buen recordatorio de que una fórmula cerrada no siempre es
+      preferible a una iteración.
+    ejemplo: |
+      Fibonacci por tres caminos.
+
+      ```text
+      F(30):
+        iterativo:  832040        30 pasos
+        Binet:      832040        1 evaluación
+        coinciden                            ✓
+
+      recursivo ingenuo: 2 692 537 llamadas
+        coste O(φⁿ) ≈ O(1.618ⁿ)
+
+      Razón entre consecutivos:
+        F(31)/F(30) = 1.6180339...
+        φ           = 1.6180339...           ✓ converge
+
+      Límite de Binet en float64: falla a partir de n ≈ 71
+      ```
+    errores:
+      - "Implementar una recurrencia recursivamente sin memoización."
+      - "Confiar en la fórmula de Binet para n grande en punto flotante."
+      - "Olvidar los casos base al definir la recurrencia."
+    aplicacion: |
+      Análisis de algoritmos divide y vencerás, programación dinámica, modelos
+      autorregresivos y recurrencias en RNN (clase 313).
+    referencias:
+      - "[Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 6](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)"
+      - "[Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., MIT Press, 2022, cap. 4](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)"
+
+  "093":
+    concepto: "Un grafo modela relaciones; el lema del apretón de manos relaciona grados y aristas."
+    formulas:
+      - "no dirigido: Σ grados = 2|E|"
+      - "dirigido: Σ grados de salida = Σ grados de entrada = |E|"
+      - "densidad = |E| / (|V|(|V|−1))"
+    desarrollo: |
+      Un grafo es un conjunto de vértices y un conjunto de aristas que los conectan. Es la
+      estructura más versátil de la computación porque casi cualquier relación se modela así:
+      dependencias entre tareas, enlaces entre páginas, amistades, rutas, y —lo que importa
+      en este programa— **operaciones de un cálculo**.
+
+      El lema del apretón de manos dice que la suma de los grados es el doble del número de
+      aristas, porque cada arista contribuye 1 a cada uno de sus dos extremos. De ahí se
+      deduce inmediatamente que el número de vértices de grado impar es par, resultado que
+      parece anecdótico y aparece en problemas de emparejamiento.
+
+      La representación importa para el rendimiento. Una **matriz de adyacencia** ocupa
+      `O(V²)` y responde «¿hay arista?» en tiempo constante; una **lista de adyacencia**
+      ocupa `O(V+E)` y es preferible en grafos dispersos, que son la mayoría de los reales.
+      Los grafos de redes sociales tienen densidad ínfima, y usar matriz sería inviable.
+
+      El grafo del laboratorio es un pipeline de machine learning —entrada, limpieza,
+      features, split, entrenamiento, evaluación—, y ese ejemplo no es decorativo: la
+      ejecución de un pipeline, de un sistema de construcción y de un grafo de cómputo de
+      autodiferenciación son el mismo problema sobre la misma estructura.
+    ejemplo: |
+      Grafo de un pipeline de ML.
+
+      ```text
+      entrada → limpieza → features    → entrenamiento → evaluacion
+                        ↘ split       ↗
+
+      vértices: 6
+      aristas dirigidas: 6
+
+      grados de salida:
+        entrada 1, limpieza 2, features 1,
+        split 1, entrenamiento 1, evaluacion 0
+      suma = 6 = |E|                        ✓
+
+      densidad = 6/(6·5) = 0.2
+      ```
+    errores:
+      - "Usar matriz de adyacencia en grafos grandes y dispersos."
+      - "Aplicar el lema del apretón de manos (2|E|) a grafos dirigidos."
+      - "Olvidar si el grafo es dirigido al contar grados."
+    aplicacion: |
+      Grafos de cómputo y autodiferenciación, sistemas de construcción, redes sociales,
+      rutas y GNN.
+    referencias:
+      - "[Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022, cap. 20](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)"
+      - "[Newman, M. *Networks*, 2ª ed., Oxford University Press, 2018](https://global.oup.com/academic/product/networks-9780198805090)"
+
+  "094":
+    concepto: "BFS recorre por niveles y encuentra el camino con menos aristas en tiempo O(V+E)."
+    formulas:
+      - "coste BFS: O(V + E)"
+      - "distancia BFS = número mínimo de aristas"
+      - "excentricidad = máxima distancia desde un vértice"
+    desarrollo: |
+      El recorrido en anchura visita primero todos los vecinos, luego los vecinos de los
+      vecinos, y así sucesivamente. Esa disciplina por niveles garantiza que la primera vez
+      que se alcanza un vértice se ha hecho por el camino con **menos aristas**, que es el
+      camino más corto en un grafo no ponderado.
+
+      La implementación necesita una cola (FIFO) y un conjunto de visitados. Cambiar la cola
+      por una pila convierte el algoritmo en DFS, con propiedades muy distintas: DFS no
+      garantiza caminos mínimos pero sirve para detectar ciclos y para ordenar
+      topológicamente. La estructura de datos determina el comportamiento.
+
+      El coste `O(V + E)` es óptimo: cada vértice y cada arista se procesan una vez. Con
+      pesos en las aristas, BFS deja de servir y hace falta Dijkstra, cuyo coste sube a
+      `O((V+E) log V)` por la cola de prioridad.
+
+      La **excentricidad** de un vértice —la mayor distancia a cualquier otro— y el diámetro
+      del grafo se calculan con BFS desde cada vértice. En redes sociales esas métricas dan
+      lugar al fenómeno de los «seis grados de separación», y en un pipeline indican cuántas
+      etapas secuenciales hay como mínimo.
+    ejemplo: |
+      BFS desde «entrada» en el pipeline.
+
+      ```text
+      orden de visita:
+        entrada → limpieza → features → split → entrenamiento → evaluacion
+
+      distancias (en aristas):
+        entrada       0
+        limpieza      1
+        features      2
+        split         2
+        entrenamiento 3
+        evaluacion    4
+
+      todos alcanzables: 6/6                ✓
+      excentricidad de entrada: 4
+      coste: O(V + E) = O(6 + 6)
+      ```
+    errores:
+      - "Usar una pila en lugar de una cola y obtener DFS sin darse cuenta."
+      - "Aplicar BFS a un grafo con pesos esperando el camino de coste mínimo."
+      - "No marcar los vértices como visitados y entrar en bucle infinito."
+    aplicacion: |
+      Camino más corto en grafos no ponderados, detección de componentes conexas, análisis de
+      alcance en redes y niveles de un pipeline.
+    referencias:
+      - "[Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022, cap. 20](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)"
+      - "[Python: `collections.deque`](https://docs.python.org/3/library/collections.html#collections.deque)"
+
+  "095":
+    concepto: "Un árbol con n vértices tiene exactamente n−1 aristas; añadir una crea un ciclo."
+    formulas:
+      - "|E| = |V| − 1"
+      - "existe un único camino entre cada par de vértices"
+    desarrollo: |
+      Un árbol es un grafo conexo sin ciclos, y esa doble condición tiene una consecuencia
+      numérica exacta: con n vértices tiene exactamente n−1 aristas. Ni una más —eso crearía
+      un ciclo— ni una menos —eso lo desconectaría—. Es la estructura conexa mínima.
+
+      La unicidad del camino entre cualquier par de vértices se sigue de la ausencia de
+      ciclos, y es la propiedad que hace útiles a los árboles: no hay ambigüedad sobre cómo
+      llegar de un nodo a otro. De ahí que se usen para jerarquías, sistemas de archivos,
+      índices de bases de datos y estructuras de decisión.
+
+      La **altura** de un árbol determina el coste de las operaciones. Un árbol binario
+      equilibrado con n nodos tiene altura `log₂ n`, y por eso las búsquedas cuestan
+      logarítmicamente; uno degenerado en lista tiene altura n y el coste se vuelve lineal.
+      Todo el diseño de árboles balanceados (AVL, rojo-negro, B-tree) existe para garantizar
+      esa altura logarítmica.
+
+      En machine learning, los árboles de decisión (clase 291) usan esta estructura para
+      particionar el espacio de features, y su profundidad es el hiperparámetro que controla
+      directamente el compromiso sesgo-varianza: más profundo, menos sesgo y más varianza.
+    ejemplo: |
+      Verificar la relación en un árbol de seis nodos.
+
+      ```text
+              raiz
+             /    \
+            a      b
+           / \      \
+          c   d      e
+
+      vértices: 6   (raiz, a, b, c, d, e)
+      aristas:  5
+      n − 1 = 5                              ✓ es un árbol
+
+      hojas: c, d, e
+      altura: 2
+
+      profundidades:
+        raiz 0,  a 1,  b 1,  c 2,  d 2,  e 2
+      ```
+    errores:
+      - "Llamar árbol a un grafo con ciclos."
+      - "Suponer que un árbol binario está equilibrado sin garantizarlo."
+      - "Confundir altura (aristas del camino más largo) con número de nodos."
+    aplicacion: |
+      Sistemas de archivos, índices de bases de datos, árboles de decisión, parseo sintáctico
+      y árboles de expansión mínima.
+    referencias:
+      - "[Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)"
+      - "[Knuth, D. *The Art of Computer Programming*, vol. 1, 3ª ed., 1997, secc. 2.3](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)"
+
+  "096":
+    concepto: "El orden topológico existe si y solo si el grafo es acíclico; su ausencia localiza el ciclo."
+    formulas:
+      - "algoritmo de Kahn: repetir «tomar vértice de grado de entrada 0»"
+      - "si quedan vértices sin ordenar ⟹ hay ciclo"
+    desarrollo: |
+      Un orden topológico es una ordenación lineal de los vértices tal que toda arista va de
+      un vértice anterior a uno posterior. Existe **si y solo si** el grafo es acíclico, y
+      esa equivalencia convierte el algoritmo en un detector de ciclos: si al terminar quedan
+      vértices sin ordenar, esos vértices forman —o dependen de— al menos un ciclo.
+
+      El algoritmo de Kahn es directo: se toman repetidamente los vértices con grado de
+      entrada cero (los que no dependen de nada pendiente), se emiten y se decrementan los
+      grados de sus sucesores. Coste `O(V + E)`, el mismo que BFS.
+
+      Este algoritmo es el que ejecuta todo sistema de construcción —`make`, Bazel, un DAG de
+      Airflow— para decidir en qué orden ejecutar tareas. El mensaje «dependencia circular
+      detectada» que emiten esos sistemas es literalmente el caso en que Kahn no consigue
+      ordenar todos los nodos.
+
+      Y aquí está la conexión que da sentido a esta clase dentro del programa: la
+      autodiferenciación en modo reverso recorre el grafo de cómputo en **orden topológico
+      inverso**. La clase 306 lo hace explícito, y la clase 179 lo implementa: `backward()`
+      construye el orden topológico y luego lo recorre al revés propagando gradientes. Sin
+      esta clase, esa implementación parecería magia.
+    ejemplo: |
+      Orden topológico del pipeline y detección de ciclo.
+
+      ```text
+      Grafo (DAG):
+        entrada → limpieza → {features, split} → entrenamiento → evaluacion
+
+      Grados de entrada iniciales:
+        entrada 0, limpieza 1, features 1, split 1,
+        entrenamiento 2, evaluacion 1
+
+      Orden de Kahn:
+        entrada, limpieza, features, split, entrenamiento, evaluacion
+      6 de 6 vértices ordenados → es un DAG            ✓
+
+      Con una arista extra evaluacion → limpieza:
+        ningún vértice queda con grado 0 tras entrada
+        vértices ordenados: 1 de 6
+        → hay un ciclo, y los 5 restantes están dentro o dependen de él
+      ```
+    errores:
+      - "Suponer que un grafo de dependencias es acíclico sin comprobarlo."
+      - "Interpretar el fallo del orden topológico como un error del algoritmo en lugar de como un diagnóstico."
+      - "Olvidar que puede haber varios órdenes topológicos válidos."
+    aplicacion: |
+      Sistemas de construcción, planificadores de tareas, resolución de dependencias de
+      paquetes, evaluación de hojas de cálculo y autodiferenciación en modo reverso.
+    referencias:
+      - "[Kahn, A. B. *Topological sorting of large networks*. CACM, 1962](https://dl.acm.org/doi/10.1145/368996.369025)"
+      - "[Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)"
+
+  "097":
+    concepto: "Simplificar una expresión booleana reduce puertas físicas sin cambiar su comportamiento."
+    formulas:
+      - "absorción: a ∨ (a ∧ b) ≡ a"
+      - "distributiva: a ∧ (b ∨ c) ≡ (a∧b) ∨ (a∧c)"
+      - "complemento: a ∨ ¬a ≡ 1,  a ∧ ¬a ≡ 0"
+    desarrollo: |
+      El álgebra de Boole, publicada en 1854, describió las leyes del razonamiento con
+      símbolos. Ochenta años después, Claude Shannon mostró en su tesis de máster —una de las
+      más influyentes de la historia— que esas mismas leyes describen los circuitos de
+      conmutación. Ese puente es el fundamento del hardware digital.
+
+      Simplificar una expresión booleana tiene una consecuencia física directa: menos
+      términos significan menos puertas lógicas, menos área de silicio, menos consumo y menor
+      retardo de propagación. La expresión `(a∧b) ∨ (a∧¬b) ∨ (a∧c)` se reduce a `a` por
+      absorción y complemento, eliminando cuatro puertas.
+
+      La verificación por tabla de verdad es exhaustiva y por tanto concluyente para pocas
+      variables, pero su coste es 2ⁿ. Con veinte variables ya es un millón de filas, y ahí
+      empieza el terreno del problema SAT, el primer problema que se demostró NP-completo
+      (Cook, 1971). Que la verificación sea fácil y la búsqueda difícil es la esencia de esa
+      clase de complejidad.
+
+      En machine learning el álgebra booleana aparece de forma menos visible pero real: las
+      máscaras de atención son matrices booleanas, los filtros de datos son expresiones
+      booleanas, y la cuantización binaria de redes (BNN) opera con estas mismas leyes.
+    ejemplo: |
+      Simplificar una expresión de tres términos.
+
+      ```text
+      original:     (a∧b) ∨ (a∧¬b) ∨ (a∧c)
+
+      paso 1: (a∧b) ∨ (a∧¬b) = a∧(b ∨ ¬b) = a∧1 = a
+      paso 2: a ∨ (a∧c) = a                (absorción)
+
+      simplificada: a
+
+      Verificación exhaustiva: 8 casos (2³)
+        todas las asignaciones coinciden               ✓
+
+      Puertas ahorradas: 4
+      ```
+    errores:
+      - "Simplificar sin verificar con tabla de verdad."
+      - "Aplicar la distributiva de la conjunción como si fuera la de los números."
+      - "Suponer que la verificación exhaustiva escala a muchas variables."
+    aplicacion: |
+      Diseño de circuitos digitales, optimización de condiciones y consultas, máscaras de
+      atención y verificación formal de propiedades.
+    referencias:
+      - "[Shannon, C. *A Symbolic Analysis of Relay and Switching Circuits*. MIT, 1937](https://dspace.mit.edu/handle/1721.1/11173)"
+      - "[Cook, S. *The Complexity of Theorem-Proving Procedures*. STOC, 1971](https://dl.acm.org/doi/10.1145/800157.805047)"
+
+  "098":
+    concepto: "La aritmética modular opera con restos y hace factible exponenciar números enormes."
+    formulas:
+      - "(a + b) mod n = ((a mod n) + (b mod n)) mod n"
+      - "pequeño teorema de Fermat: a^(p−1) ≡ 1 (mod p) si p es primo y p ∤ a"
+      - "inverso modular: a·a⁻¹ ≡ 1 (mod n), existe si mcd(a,n) = 1"
+    desarrollo: |
+      La aritmética modular trabaja con las clases de equivalencia que la clase 085 definió:
+      dos números son «el mismo» si difieren en un múltiplo de n. Sobre esas clases, la suma
+      y el producto están bien definidos, y esa buena definición es lo que permite reducir en
+      cada paso en lugar de al final.
+
+      Esa reducción es lo que hace viable la exponenciación modular. Calcular `7¹²⁸ mod 13`
+      sin reducir exigiría un número de 108 dígitos; con exponenciación binaria y reducción
+      en cada paso, son siete multiplicaciones de números pequeños. `pow(base, exp, mod)` en
+      Python implementa exactamente eso.
+
+      El pequeño teorema de Fermat —`a^(p−1) ≡ 1 (mod p)` para p primo— es la base de los
+      tests de primalidad probabilísticos y de RSA. El **inverso modular** existe cuando
+      `mcd(a, n) = 1` y se calcula con el algoritmo de Euclides extendido; Python lo expone
+      como `pow(a, -1, n)` desde la versión 3.8.
+
+      Estas operaciones sostienen buena parte de la infraestructura digital: RSA, Diffie-
+      Hellman, curvas elípticas, funciones hash, sumas de comprobación y generadores
+      congruenciales de números pseudoaleatorios. La seguridad de varios de esos sistemas
+      descansa en que la operación inversa —el logaritmo discreto— es computacionalmente
+      difícil.
+    ejemplo: |
+      Exponenciación e inverso modular.
+
+      ```text
+      7¹²⁸ mod 13 = 3
+        (sin reducir, 7¹²⁸ tendría 109 dígitos)
+
+      Pequeño teorema de Fermat (p = 13 primo):
+        7¹² mod 13 = 1                        ✓
+
+      Inverso de 7 módulo 13:
+        pow(7, -1, 13) = 2
+        verificación: 7·2 = 14 ≡ 1 (mod 13)   ✓
+
+      Suma modular: (25 + 30) mod 13 = 55 mod 13 = 3
+      ```
+    errores:
+      - "Calcular la potencia completa antes de reducir módulo n."
+      - "Buscar el inverso modular cuando mcd(a,n) ≠ 1: no existe."
+      - "Usar el operador % con negativos esperando el comportamiento de C: Python devuelve resto no negativo."
+    aplicacion: |
+      RSA y Diffie-Hellman, funciones hash, sumas de comprobación, generadores
+      pseudoaleatorios y aritmética de campos finitos.
+    referencias:
+      - "[Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)"
+      - "[Python: `pow` con módulo e inverso](https://docs.python.org/3/library/functions.html#pow)"
+
+  "099":
+    concepto: "La criba encuentra todos los primos hasta n, y mcd·mcm = a·b relaciona ambos conceptos."
+    formulas:
+      - "criba: tachar múltiplos desde i² con i ≤ √n"
+      - "mcd(a,b)·mcm(a,b) = a·b"
+      - "Euclides: mcd(a,b) = mcd(b, a mod b)"
+    desarrollo: |
+      La criba de Eratóstenes, del siglo III a.C., sigue siendo el método práctico para
+      listar todos los primos hasta n. Su eficiencia viene de dos optimizaciones: basta
+      recorrer hasta `√n`, porque todo compuesto tiene un factor menor o igual a su raíz; y
+      basta empezar a tachar desde `i²`, porque los múltiplos menores ya fueron tachados por
+      primos anteriores. El coste es `O(n log log n)`, prácticamente lineal.
+
+      El algoritmo de Euclides para el máximo común divisor es aún más antiguo y es un
+      candidato al algoritmo no trivial más antiguo que se sigue usando. Su idea —`mcd(a,b) =
+      mcd(b, a mod b)`— reduce el problema en cada paso y termina en `O(log min(a,b))`.
+
+      La identidad `mcd·mcm = a·b` permite calcular el mínimo común múltiplo sin factorizar,
+      que es importante porque **factorizar es difícil** mientras que calcular el mcd es
+      fácil. Esa asimetría es la que sostiene RSA: multiplicar dos primos grandes es
+      inmediato, recuperarlos del producto no se sabe hacer eficientemente.
+
+      El teorema fundamental de la aritmética —toda factorización en primos es única— es lo
+      que da sentido a todo esto. Y el hecho de que los primos sean infinitos, demostrado por
+      Euclides con un argumento por contradicción de tres líneas, garantiza que siempre hay
+      primos suficientemente grandes para la criptografía.
+    ejemplo: |
+      Criba hasta 50 y mcd de dos números.
+
+      ```text
+      Primos ≤ 50 (15 en total):
+        2 3 5 7 11 13 17 19 23 29 31 37 41 43 47
+
+      mcd(252, 198) por Euclides:
+        252 = 1·198 + 54
+        198 = 3·54  + 36
+         54 = 1·36  + 18
+         36 = 2·18  + 0     → mcd = 18
+
+      mcm = 252·198/18 = 2772
+
+      Verificación: 18 · 2772 = 49 896 = 252 · 198    ✓
+
+      Factorización de 252 = 2²·3²·7
+      ```
+    errores:
+      - "Recorrer la criba hasta n en lugar de hasta √n."
+      - "Calcular el mcm factorizando en lugar de usar la identidad con el mcd."
+      - "Suponer que factorizar es tan fácil como multiplicar."
+    aplicacion: |
+      Generación de claves criptográficas, simplificación de fracciones, tests de primalidad
+      y hashing con módulos primos.
+    referencias:
+      - "[Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)"
+      - "[Python: `math.gcd` y `math.lcm`](https://docs.python.org/3/library/math.html#math.gcd)"
+
+  "100":
+    concepto: "Planificar dependencias es ordenar topológicamente y agrupar por niveles para paralelizar."
+    formulas:
+      - "nivel(v) = 1 + máx(nivel(u)) sobre los predecesores u"
+      - "pasos secuenciales mínimos = máximo nivel + 1"
+    desarrollo: |
+      El capstone monta el problema real que resuelve cualquier sistema de construcción o de
+      orquestación: dado un grafo de dependencias, decidir en qué orden ejecutar las tareas,
+      cuáles pueden ir en paralelo y qué hacer si hay un ciclo.
+
+      El orden topológico da la secuencia válida. Agrupar por **niveles** —donde el nivel de
+      una tarea es uno más que el máximo de sus predecesores— da algo más útil: todas las
+      tareas del mismo nivel son independientes entre sí y pueden ejecutarse simultáneamente.
+      El número de niveles es el número mínimo de pasos secuenciales, sin importar cuántos
+      trabajadores haya.
+
+      Ese número es el **camino crítico**, y es la cota que ninguna cantidad de paralelismo
+      puede superar. Si un pipeline tiene cinco niveles, tardará al menos cinco pasos aunque
+      se disponga de mil máquinas. Es la versión discreta de la ley de Amdahl.
+
+      La detección de ciclos completa la herramienta. Un grafo con ciclo no admite orden
+      topológico, y el algoritmo lo detecta contando cuántos vértices consiguió emitir. Los
+      vértices no emitidos son exactamente los que están en el ciclo o dependen de él, lo que
+      convierte el fallo en un **diagnóstico útil** en lugar de en un error opaco.
+    ejemplo: |
+      Planificar el pipeline y detectar un ciclo.
+
+      ```text
+      Orden de ejecución:
+        entrada, limpieza, features, split, entrenamiento, evaluacion
+
+      Niveles paralelizables:
+        nivel 0: entrada
+        nivel 1: limpieza
+        nivel 2: features, split      ← pueden ir en paralelo
+        nivel 3: entrenamiento
+        nivel 4: evaluacion
+
+      Tareas: 6
+      Pasos secuenciales mínimos: 5    (camino crítico)
+      Con 2 trabajadores: sigue siendo 5 pasos
+
+      Con arista evaluacion → limpieza:
+        ciclo detectado, 5 nodos bloqueados
+      ```
+    errores:
+      - "Suponer que más trabajadores reducen el tiempo por debajo del camino crítico."
+      - "No detectar ciclos antes de intentar ejecutar el plan."
+      - "Confundir el número de tareas con el número de pasos secuenciales."
+    aplicacion: |
+      Sistemas de construcción, orquestadores de flujos (Airflow, Dagster), resolución de
+      dependencias de paquetes, planificación de proyectos y ejecución de grafos de cómputo.
+    referencias:
+      - "[Kahn, A. B. *Topological sorting of large networks*. CACM, 1962](https://dl.acm.org/doi/10.1145/368996.369025)"
+      - "[Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022, cap. 20](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)"

@@ -34,15 +34,16 @@ half-up (aritmético): 0.5 → 1, 1.5 → 2, 2.5 → 3
 
 ```mermaid
 flowchart LR
-    P["012<br/>Unidades y análisis<br/>dimensional"] --> C
-    subgraph C["013 · Aproximación, redondeo y<br/>cifras significativas"]
+    P["Clase 012 · Unidades y análisis…"] --> D
+    subgraph CLASE["Clase 013 · Aproximación, redondeo y…"]
         direction TB
-        D["Demostración<br/><code>rounding</code>"] --> R["Resultados numéricos<br/>sesgo_half_even<br/>sesgo_half_up"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>valores<br/>ROUND_HALF_EVEN<br/>ROUND_HALF_UP<br/>… +1 más"]
+        D["Demostracion rounding"]
+        D --> R["Resultados 2: sesgo_half_even +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: valores +3"]
     end
-    C --> N["014<br/>Estimación y cálculo<br/>mental"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 014 · Estimación y cálculo…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

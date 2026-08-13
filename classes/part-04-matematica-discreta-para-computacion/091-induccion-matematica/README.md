@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**La inducción demuestra infinitos casos con un caso base y un paso que hereda la propiedad.**
 
-Esta clase concreta ese objetivo sobre **Inducción matemática**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,73 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
 
+## 🧩 Fórmulas de la clase
+
+```text
+base: P(1) es cierta
+paso: P(k) ⟹ P(k+1)
+conclusión: P(n) para todo n ≥ 1
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["090<br/>Principio del palomar"] --> C
-    subgraph C["091 · Inducción matemática"]
+    P["Clase 090 · Principio del palomar"] --> D
+    subgraph CLASE["Clase 091 · Inducción matemática"]
         direction TB
-        D["Demostración<br/><code>induction</code>"] --> R["Resultados numéricos<br/>verificado_hasta"]
-        D --> V["Verificaciones<br/>caso_base_n=1<br/>la_verificacion_no_es_demostracion"]
-        D --> O["Contexto y estructura<br/>proposicion<br/>paso_inductivo<br/>contraejemplos"]
+        D["Demostracion induction"]
+        D --> R["Resultados 1: verificado_hasta"]
+        D --> V["Comprobaciones 2: caso_base_n=1 +1"]
+        D --> O["Contexto 3: proposicion +2"]
     end
-    C --> N["092<br/>Recurrencias"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 092 · Recurrencias"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Una demostración por inducción es un bucle `for` con garantía.
+La inducción resuelve un problema que parece imposible: demostrar algo sobre infinitos
+números en dos pasos. El caso base establece que la propiedad vale en el primer valor;
+el paso inductivo demuestra que **si** vale en k, entonces vale en k+1. La combinación
+de ambos hace caer todas las fichas de dominó.
+
+La analogía con un bucle es exacta: el caso base es la inicialización y el paso
+inductivo es el invariante que se mantiene en cada iteración. Demostrar la corrección
+de un bucle es demostrar por inducción que su invariante se preserva, y esa es la base
+de la verificación formal de programas.
+
+El paso inductivo es donde vive la demostración, y su estructura es siempre la misma:
+escribir `P(k+1)`, identificar dentro de ella la parte que es `P(k)`, aplicar la
+hipótesis y simplificar. Para la suma de Gauss:
+`S(k+1) = S(k) + (k+1) = k(k+1)/2 + (k+1) = (k+1)(k+2)/2`, que es exactamente la
+fórmula con k+1.
+
+Es importante no confundir inducción con verificación. Comprobar los primeros 50 casos
+no demuestra nada, como la clase 019 mostró con el polinomio de Euler. La verificación
+empírica es un control de sanidad previo a la demostración, no un sustituto.
+
+## 🧮 Ejemplo trabajado
+
+Demostrar la suma de Gauss por inducción.
+
+```text
+Proposición: 1 + 2 + ... + n = n(n+1)/2
+
+Caso base (n=1):
+  izquierda = 1
+  derecha   = 1·2/2 = 1              ✓
+
+Paso inductivo: suponemos S(k) = k(k+1)/2
+  S(k+1) = S(k) + (k+1)
+         = k(k+1)/2 + (k+1)
+         = (k+1)(k/2 + 1)
+         = (k+1)(k+2)/2              ✓ es la fórmula con k+1
+
+Verificación empírica (control de sanidad):
+  50 valores comprobados, 0 contraejemplos
+  → NO es la demostración, es una comprobación previa
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +113,16 @@ compmath run 091
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Omitir el caso base: sin él, el paso inductivo no arranca.
+2. Usar la conclusión como hipótesis dentro del paso inductivo.
+3. Confundir verificar los primeros n casos con demostrar.
+
+## 🚀 Dónde se usa de verdad
+
+Corrección de algoritmos recursivos, invariantes de bucle, análisis de estructuras de
+datos y demostración de cotas de complejidad.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019, cap. 6](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A)
+- [Gries, D. *The Science of Programming*. Springer, 1981](https://link.springer.com/book/10.1007/978-1-4612-5983-1)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

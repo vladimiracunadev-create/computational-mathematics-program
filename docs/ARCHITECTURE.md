@@ -8,13 +8,18 @@ artefacto derivado y se regenera con un comando.
 
 ```mermaid
 flowchart TD
-    Y["curriculum.yaml<br/>18 partes · 360 clases · metadata"] --> G
-    E["src/computational_math/engines/<br/>18 motores · 360 demostraciones"] --> G
-    G["scripts/generate_classes.py"] --> C["classes/<br/>360 × 12 archivos"]
+    Y["curriculum.yaml · 18 partes y 360 clases"] --> G
+    K["content/part-NN.yaml · contenido pedagogico"] --> G
+    E["engines/ · 18 motores y 360 demostraciones"] --> G
+    G["scripts/generate_classes.py"] --> C["classes/ · 360 clases de 12 archivos"]
     G --> J["catalog.json"]
     Y --> S["scripts/generate_site.py"]
     E --> S
-    S --> W["site/<br/>portal HTML estático"]
+    K --> M["scripts/build_manual.py"]
+    E --> M
+    M --> P["manual/ · HTML y PDF"]
+    P --> W
+    S --> W["site/ · portal HTML estatico"]
     C --> V["scripts/validate_repository.py --strict"]
     J --> V
     W --> VS["scripts/validate_site.py"]
@@ -26,11 +31,13 @@ flowchart TD
 
 ```text
 curriculum.yaml                 fuente de verdad del currículo
+content/part-NN.yaml            contenido pedagógico: fundamentos, ejemplos y glosario
 catalog.json                    catálogo derivado (verificado contra el currículo)
 
 src/computational_math/
 ├── __init__.py                 versión y reexportaciones
 ├── curriculum.py               acceso al currículo, catálogo y rutas de clase
+├── content.py                  acceso al contenido pedagógico y su cobertura real
 ├── cli.py                      CLI `compmath`
 ├── helpers.py                  utilidades numéricas de biblioteca estándar
 └── engines/
@@ -43,27 +50,41 @@ classes/part-NN-<slug>/
 └── NNN-<slug>/                 una clase: 12 archivos generados
 
 scripts/
-├── generate_classes.py         currículo + motores → clases y catálogo
-├── generate_site.py            currículo + motores → site/
+├── generate_classes.py         currículo + contenido + motores → clases y catálogo
+├── generate_site.py            → site/ (incluye el manual descargable)
+├── build_manual.py             → manual/ en HTML y PDF
+├── run_capstone_labs.py        ejecuta los 18 capstone como procesos independientes
 ├── validate_repository.py      coherencia global (modo --strict en CI)
 ├── validate_site.py            artefacto de Pages antes de publicar
 └── validate_pages.py           sitio ya publicado, tras el despliegue
 
-tests/                          currículo, motores, estructura, CLI y sitio
+tests/                          currículo, contenido, motores, estructura, CLI, sitio y manual
 docs/                           documentación del programa
 learning-paths/                 12 rutas por perfil profesional
-site/                           portal estático publicado en GitHub Pages
+site/                           portal estático (generado, no versionado)
+manual/                         manual completo HTML y PDF (generado, no versionado)
 ```
 
 ## Las tres capas
 
-### 1. Declaración — `curriculum.yaml`
+### 1. Declaración — `curriculum.yaml` y `content/`
 
 Contiene, por cada una de las 18 partes: identificador, slug, título, nivel, motor
 asociado, resumen, aplicaciones, conexión con IA, ideas centrales, errores frecuentes,
 stack de referencia, bibliografía primaria y la lista ordenada de sus 20 clases.
 
-No contiene prosa de clase. La prosa vive en el generador; la metadata, aquí.
+No contiene prosa de clase. La metadata vive aquí; la **prosa pedagógica** vive en
+`content/part-NN.yaml`, que aporta por parte un resumen extendido, un mapa conceptual y
+un glosario, y por clase concepto, fórmulas, fundamentos, ejemplo trabajado, errores
+conceptuales, aplicación y referencias con enlace.
+
+El contenido es **opcional por clase**: si una clase no tiene registro, el generador usa
+el material base en lugar de dejar un hueco. `compmath stats` y el manual declaran la
+cobertura real, sin redondearla al alza.
+
+Los diagramas Mermaid de todo el repositorio se escriben **sin HTML**: un renderizador
+con `htmlLabels` desactivado descarta las etiquetas y pega las palabras, así que las
+etiquetas usan el separador `·` y se recortan por palabra. Un test lo verifica.
 
 ### 2. Cálculo — `src/computational_math/engines/`
 

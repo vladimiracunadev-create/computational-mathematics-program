@@ -34,15 +34,16 @@ A' = |det M| · A
 
 ```mermaid
 flowchart LR
-    P["079<br/>Aplicaciones en<br/>visión, robótica y<br/>videojuegos"] --> C
-    subgraph C["080 · Capstone: motor geométrico<br/>2D"]
+    P["Clase 079 · Aplicaciones en visión,…"] --> D
+    subgraph CLASE["Clase 080 · Capstone: motor geométrico 2D"]
         direction TB
-        D["Demostración<br/><code>capstone_geometry_engine</code>"] --> R["Resultados numéricos<br/>area_original<br/>area_transformada<br/>determinante"]
-        D --> V["Verificaciones<br/>area_escala_como_|det|"]
-        D --> O["Contexto y estructura<br/>poligono_original<br/>matriz_compuesta<br/>poligono_transformado"]
+        D["Demostracion capstone_geometry_engine"]
+        D --> R["Resultados 3: area_original +2"]
+        D --> V["Comprobaciones 1: area_escala_como_det"]
+        D --> O["Contexto 3: poligono_original +2"]
     end
-    C --> N["081<br/>Lógica proposicional"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 081 · Lógica proposicional"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

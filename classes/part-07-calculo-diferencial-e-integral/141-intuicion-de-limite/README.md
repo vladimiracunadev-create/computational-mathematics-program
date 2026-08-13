@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["140<br/>Capstone: PCA y<br/>compresión de imágenes"] --> C
-    subgraph C["141 · Intuición de límite"]
+    P["Clase 140 · Capstone: PCA y…"] --> D
+    subgraph CLASE["Clase 141 · Intuición de límite"]
         direction TB
-        D["Demostración<br/><code>limit_intuition</code>"] --> R["Resultados numéricos<br/>limite<br/>error_en_1e-6<br/>por_la_izquierda"]
-        D --> V["Verificaciones<br/>definida_en_0<br/>limites_laterales_coinciden"]
-        D --> O["Contexto y estructura<br/>funcion<br/>tabla_de_aproximacion"]
+        D["Demostracion limit_intuition"]
+        D --> R["Resultados 3: limite +2"]
+        D --> V["Comprobaciones 2: definida_en_0 +1"]
+        D --> O["Contexto 2: funcion +1"]
     end
-    C --> N["142<br/>Límites algebraicos"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 142 · Límites algebraicos"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["237<br/>Runge-Kutta"] --> C
-    subgraph C["238 · Introducción a PDE y<br/>discretización"]
+    P["Clase 237 · Runge-Kutta"] --> D
+    subgraph CLASE["Clase 238 · Introducción a PDE y…"]
         direction TB
-        D["Demostración<br/><code>pde_discretization</code>"] --> R["Resultados numéricos<br/>nodos<br/>dx<br/>dt<br/>… +5 más"]
-        D --> V["Verificaciones<br/>estable_si_alpha<=0.5"]
-        D --> O["Contexto y estructura<br/>ecuacion"]
+        D["Demostracion pde_discretization"]
+        D --> R["Resultados 8: nodos +7"]
+        D --> V["Comprobaciones 1: estable_si_alpha=0.5"]
+        D --> O["Contexto 1: ecuacion"]
     end
-    C --> N["239<br/>Computación científica<br/>con SciPy"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 239 · Computación científica…"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

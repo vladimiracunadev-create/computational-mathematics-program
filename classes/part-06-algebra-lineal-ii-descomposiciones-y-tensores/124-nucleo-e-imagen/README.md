@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["123<br/>Transformaciones<br/>lineales"] --> C
-    subgraph C["124 · Núcleo e imagen"]
+    P["Clase 123 · Transformaciones lineales"] --> D
+    subgraph CLASE["Clase 124 · Núcleo e imagen"]
         direction TB
-        D["Demostración<br/><code>kernel_image</code>"] --> R["Resultados numéricos<br/>columnas<br/>rango_(dim_imagen)<br/>nulidad_(dim_nucleo)<br/>… +1 más"]
-        D --> V["Verificaciones<br/>teorema_verificado"]
-        D --> O["Contexto y estructura<br/>A<br/>vector_del_nucleo<br/>A·nucleo"]
+        D["Demostracion kernel_image"]
+        D --> R["Resultados 4: columnas +3"]
+        D --> V["Comprobaciones 1: teorema_verificado"]
+        D --> O["Contexto 3: A +2"]
     end
-    C --> N["125<br/>Autovalores y<br/>autovectores"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 125 · Autovalores y autovectores"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

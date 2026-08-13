@@ -34,15 +34,16 @@ P = 2πr  ⟹  A/P = r/2
 
 ```mermaid
 flowchart LR
-    P["015<br/>Variables como<br/>cantidades<br/>desconocidas"] --> C
-    subgraph C["016 · Expresiones y fórmulas"]
+    P["Clase 015 · Variables como…"] --> D
+    subgraph CLASE["Clase 016 · Expresiones y fórmulas"]
         direction TB
-        D["Demostración<br/><code>formula_evaluation</code>"] --> R["Resultados numéricos<br/>radio_m<br/>area_m2<br/>perimetro_m<br/>… +2 más"]
-        D --> V["Verificaciones<br/>dominio_valido"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion formula_evaluation"]
+        D --> R["Resultados 5: radio_m +4"]
+        D --> V["Comprobaciones 1: dominio_valido"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["017<br/>Patrones, secuencias y<br/>regularidades"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 017 · Patrones, secuencias y…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

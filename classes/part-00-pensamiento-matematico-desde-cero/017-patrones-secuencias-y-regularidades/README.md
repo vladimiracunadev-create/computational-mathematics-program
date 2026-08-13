@@ -35,15 +35,16 @@ Fibonacci:   Fₙ = Fₙ₋₁ + Fₙ₋₂,  Fₙ₊₁/Fₙ → φ = (1+√5)/
 
 ```mermaid
 flowchart LR
-    P["016<br/>Expresiones y fórmulas"] --> C
-    subgraph C["017 · Patrones, secuencias y<br/>regularidades"]
+    P["Clase 016 · Expresiones y fórmulas"] --> D
+    subgraph CLASE["Clase 017 · Patrones, secuencias y…"]
         direction TB
-        D["Demostración<br/><code>sequences</code>"] --> R["Resultados numéricos<br/>diferencia_comun<br/>siguiente_aritmetica<br/>razon_comun<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>aritmetica<br/>geometrica<br/>fibonacci_10"]
+        D["Demostracion sequences"]
+        D --> R["Resultados 5: diferencia_comun +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: aritmetica +2"]
     end
-    C --> N["018<br/>Problemas verbales a<br/>lenguaje matemático"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 018 · Problemas verbales a…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

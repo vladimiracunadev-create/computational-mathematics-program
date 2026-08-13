@@ -35,11 +35,11 @@ Descriptiva, muestreo, estimadores, intervalos de confianza, pruebas de hipótes
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L201["201<br/>Estadística descriptiva"]
-        L202["202<br/>Población, muestra y<br/>sesgo de selección"]
-        L203["203<br/>Muestreo y<br/>distribuciones<br/>muestrales"]
-        L204["204<br/>Estimadores y<br/>propiedades"]
-        L205["205<br/>Intervalos de confianza"]
+        L201["201 · Estadística descriptiva"]
+        L202["202 · Población, muestra y sesgo…"]
+        L203["203 · Muestreo y distribuciones…"]
+        L204["204 · Estimadores y propiedades"]
+        L205["205 · Intervalos de confianza"]
         L201 --> L202
         L202 --> L203
         L203 --> L204
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L206["206<br/>Pruebas de hipótesis"]
-        L207["207<br/>p-value correctamente<br/>interpretado"]
-        L208["208<br/>Errores tipo I y II"]
-        L209["209<br/>Potencia estadística"]
-        L210["210<br/>t-test y comparación de<br/>medias"]
+        L206["206 · Pruebas de hipótesis"]
+        L207["207 · p-value correctamente…"]
+        L208["208 · Errores tipo I y II"]
+        L209["209 · Potencia estadística"]
+        L210["210 · t-test y comparación de medias"]
         L206 --> L207
         L207 --> L208
         L208 --> L209
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L211["211<br/>Chi-cuadrado y tablas de<br/>contingencia"]
-        L212["212<br/>ANOVA"]
-        L213["213<br/>Correlación frente a<br/>causalidad"]
-        L214["214<br/>Regresión lineal<br/>estadística"]
-        L215["215<br/>Máxima verosimilitud"]
+        L211["211 · Chi-cuadrado y tablas de…"]
+        L212["212 · ANOVA"]
+        L213["213 · Correlación frente a…"]
+        L214["214 · Regresión lineal estadística"]
+        L215["215 · Máxima verosimilitud"]
         L211 --> L212
         L212 --> L213
         L213 --> L214
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L216["216<br/>Estimación MAP"]
-        L217["217<br/>Inferencia bayesiana"]
-        L218["218<br/>Bootstrap y remuestreo"]
-        L219["219<br/>A/B testing y diseño<br/>experimental"]
-        L220["220<br/>Capstone: estudio<br/>estadístico reproducible"]
+        L216["216 · Estimación MAP"]
+        L217["217 · Inferencia bayesiana"]
+        L218["218 · Bootstrap y remuestreo"]
+        L219["219 · A/B testing y diseño…"]
+        L220["220 · Capstone: estudio…"]
         L216 --> L217
         L217 --> L218
         L218 --> L219

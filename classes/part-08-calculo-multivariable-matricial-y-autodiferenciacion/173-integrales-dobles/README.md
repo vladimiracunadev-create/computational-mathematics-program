@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["172<br/>Multiplicadores de<br/>Lagrange"] --> C
-    subgraph C["173 · Integrales dobles"]
+    P["Clase 172 · Multiplicadores de…"] --> D
+    subgraph CLASE["Clase 173 · Integrales dobles"]
         direction TB
-        D["Demostración<br/><code>double_integrals</code>"] --> R["Resultados numéricos<br/>aproximacion<br/>valor_exacto<br/>error<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>integrando<br/>region<br/>teorema_de_Fubini"]
+        D["Demostracion double_integrals"]
+        D --> R["Resultados 4: aproximacion +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: integrando +2"]
     end
-    C --> N["174<br/>Integrales triples"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 174 · Integrales triples"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

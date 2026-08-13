@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["142<br/>Límites algebraicos"] --> C
-    subgraph C["143 · Continuidad"]
+    P["Clase 142 · Límites algebraicos"] --> D
+    subgraph CLASE["Clase 143 · Continuidad"]
         direction TB
-        D["Demostración<br/><code>continuity</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>derivable_implica_continua"]
-        D --> O["Contexto y estructura<br/>funcion_con_salto<br/>discontinuidad_removible<br/>requisitos<br/>… +1 más"]
+        D["Demostracion continuity"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: derivable_implica_con…"]
+        D --> O["Contexto 4: funcion_con_salto +3"]
     end
-    C --> N["144<br/>Derivada como tasa de<br/>cambio"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 144 · Derivada como tasa de…"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

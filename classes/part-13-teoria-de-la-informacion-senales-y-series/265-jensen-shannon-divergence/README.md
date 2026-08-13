@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["264<br/>Divergencia KL"] --> C
-    subgraph C["265 · Jensen-Shannon divergence"]
+    P["Clase 264 · Divergencia KL"] --> D
+    subgraph CLASE["Clase 265 · Jensen-Shannon divergence"]
         direction TB
-        D["Demostración<br/><code>js_divergence</code>"] --> R["Resultados numéricos<br/>JS(p,q)_bits<br/>JS(q,p)_bits<br/>distribuciones_disjuntas<br/>… +1 más"]
-        D --> V["Verificaciones<br/>simetrica<br/>sqrt(JS)_es_una_metrica"]
-        D --> O["Contexto y estructura<br/>p<br/>q<br/>mezcla_M"]
+        D["Demostracion js_divergence"]
+        D --> R["Resultados 4: JSp,q_bits +3"]
+        D --> V["Comprobaciones 2: simetrica +1"]
+        D --> O["Contexto 3: p +2"]
     end
-    C --> N["266<br/>Información mutua"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 266 · Información mutua"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

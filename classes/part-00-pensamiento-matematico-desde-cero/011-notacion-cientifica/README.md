@@ -34,15 +34,16 @@ orden de magnitud = ⌊log₁₀|x|⌋
 
 ```mermaid
 flowchart LR
-    P["010<br/>Orden de operaciones y<br/>paréntesis"] --> C
-    subgraph C["011 · Notación científica"]
+    P["Clase 010 · Orden de operaciones y…"] --> D
+    subgraph CLASE["Clase 011 · Notación científica"]
         direction TB
-        D["Demostración<br/><code>scientific_notation</code>"] --> R["Resultados numéricos<br/>valor<br/>mantisa<br/>exponente<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>notacion"]
+        D["Demostracion scientific_notation"]
+        D --> R["Resultados 5: valor +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: notacion"]
     end
-    C --> N["012<br/>Unidades y análisis<br/>dimensional"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 012 · Unidades y análisis…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

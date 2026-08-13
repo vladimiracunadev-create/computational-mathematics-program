@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["278<br/>Series temporales y<br/>ventanas"] --> C
-    subgraph C["279 · Espectro y densidad<br/>espectral"]
+    P["Clase 278 · Series temporales y…"] --> D
+    subgraph CLASE["Clase 279 · Espectro y densidad espectral"]
         direction TB
-        D["Demostración<br/><code>power_spectrum</code>"] --> R["Resultados numéricos<br/>muestras<br/>potencia_relativa_5Hz_%<br/>potencia_relativa_20Hz_%<br/>… +4 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>componentes<br/>bins_dominantes"]
+        D["Demostracion power_spectrum"]
+        D --> R["Resultados 7: muestras +6"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: componentes +1"]
     end
-    C --> N["280<br/>Capstone: analizar<br/>señal y construir<br/>features"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 280 · Capstone: analizar señal…"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

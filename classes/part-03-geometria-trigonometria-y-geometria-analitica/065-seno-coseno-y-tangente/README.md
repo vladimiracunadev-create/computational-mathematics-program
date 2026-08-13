@@ -35,15 +35,16 @@ atan2(y, x) devuelve el ángulo en el cuadrante correcto
 
 ```mermaid
 flowchart LR
-    P["064<br/>Teorema de Pitágoras"] --> C
-    subgraph C["065 · Seno, coseno y tangente"]
+    P["Clase 064 · Teorema de Pitágoras"] --> D
+    subgraph CLASE["Clase 065 · Seno, coseno y tangente"]
         direction TB
-        D["Demostración<br/><code>trig_ratios</code>"] --> R["Resultados numéricos<br/>opuesto<br/>adyacente<br/>hipotenusa<br/>… +5 más"]
-        D --> V["Verificaciones<br/>tan_es_sin/cos"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion trig_ratios"]
+        D --> R["Resultados 8: opuesto +7"]
+        D --> V["Comprobaciones 1: tan_es_sin/cos"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["066<br/>Identidades<br/>trigonométricas<br/>básicas"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 066 · Identidades…"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

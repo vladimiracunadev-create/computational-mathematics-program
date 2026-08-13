@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["346<br/>Optimal transport"] --> C
-    subgraph C["347 · Wasserstein distance"]
+    P["Clase 346 · Optimal transport"] --> D
+    subgraph CLASE["Clase 347 · Wasserstein distance"]
         direction TB
-        D["Demostración<br/><code>wasserstein_distance</code>"] --> R["Resultados numéricos<br/>muestras<br/>W1(N(0,1), N(0.5,1))<br/>diferencia_de_medias_teorica<br/>… +4 más"]
-        D --> V["Verificaciones<br/>W1_crece_de_forma_proporcional<br/>KL_no_informa_cuando_no_hay_solape"]
-        D --> O["Contexto y estructura<br/>por_que_importa_en_GAN<br/>formula_1D"]
+        D["Demostracion wasserstein_distance"]
+        D --> R["Resultados 7: muestras +6"]
+        D --> V["Comprobaciones 2: W1_crece_de_forma_pro… +1"]
+        D --> O["Contexto 2: por_que_importa_en_GAN +1"]
     end
-    C --> N["348<br/>Manifold learning"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 348 · Manifold learning"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["239<br/>Computación científica<br/>con SciPy"] --> C
-    subgraph C["240 · Capstone: solver numérico<br/>con informe de error"]
+    P["Clase 239 · Computación científica…"] --> D
+    subgraph CLASE["Clase 240 · Capstone: solver numérico…"]
         direction TB
-        D["Demostración<br/><code>capstone_numerical_solver</code>"] --> R["Resultados numéricos<br/>tolerancia_declarada<br/>max_iteraciones_declarado"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>problema_1<br/>informe_edo<br/>mejor_relacion_error_por_evaluacion<br/>… +4 más"]
+        D["Demostracion capstone_numerical_solver"]
+        D --> R["Resultados 2: tolerancia_declarada +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 7: problema_1 +6"]
     end
-    C --> N["241<br/>Problemas de<br/>optimización y función<br/>objetivo"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 241 · Problemas de…"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

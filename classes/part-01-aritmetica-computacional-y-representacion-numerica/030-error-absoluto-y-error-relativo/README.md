@@ -35,15 +35,16 @@ dígitos significativos correctos ≈ −log₁₀(error relativo)
 
 ```mermaid
 flowchart LR
-    P["029<br/>Por qué 0.1 + 0.2 no<br/>es exactamente 0.3"] --> C
-    subgraph C["030 · Error absoluto y error<br/>relativo"]
+    P["Clase 029 · Por qué 0.1 + 0.2 no es…"] --> D
+    subgraph CLASE["Clase 030 · Error absoluto y error…"]
         direction TB
-        D["Demostración<br/><code>absolute_relative_error</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>exacto=1.0<br/>exacto=1000000.0<br/>conclusion"]
+        D["Demostracion absolute_relative_error"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: exacto=1.0 +2"]
     end
-    C --> N["031<br/>ULP y machine epsilon"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 031 · ULP y machine epsilon"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

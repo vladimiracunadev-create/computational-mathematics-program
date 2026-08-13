@@ -35,15 +35,16 @@ perpendicular: m⊥ = −1/m
 
 ```mermaid
 flowchart LR
-    P["068<br/>Coordenadas<br/>cartesianas"] --> C
-    subgraph C["069 · Pendiente y ecuación de la<br/>recta"]
+    P["Clase 068 · Coordenadas cartesianas"] --> D
+    subgraph CLASE["Clase 069 · Pendiente y ecuación de la…"]
         direction TB
-        D["Demostración<br/><code>line_equation</code>"] --> R["Resultados numéricos<br/>pendiente<br/>intercepto<br/>verifica_p<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>puntos<br/>forma_explicita<br/>forma_general"]
+        D["Demostracion line_equation"]
+        D --> R["Resultados 4: pendiente +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: puntos +2"]
     end
-    C --> N["070<br/>Distancia punto-recta"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 070 · Distancia punto-recta"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

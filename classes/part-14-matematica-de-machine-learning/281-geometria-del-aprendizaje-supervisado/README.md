@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["280<br/>Capstone: analizar<br/>señal y construir<br/>features"] --> C
-    subgraph C["281 · Geometría del aprendizaje<br/>supervisado"]
+    P["Clase 280 · Capstone: analizar señal…"] --> D
+    subgraph CLASE["Clase 281 · Geometría del aprendizaje…"]
         direction TB
-        D["Demostración<br/><code>supervised_geometry</code>"] --> R["Resultados numéricos<br/>observaciones<br/>dimension<br/>distancia_entre_centroides<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>centroide_clase_1<br/>centroide_clase_0<br/>direccion_discriminante<br/>… +1 más"]
+        D["Demostracion supervised_geometry"]
+        D --> R["Resultados 4: observaciones +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: centroide_clase_1 +3"]
     end
-    C --> N["282<br/>Regresión lineal desde<br/>mínimos cuadrados"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 282 · Regresión lineal desde…"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

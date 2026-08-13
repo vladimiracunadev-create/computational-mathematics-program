@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["166<br/>Plano tangente"] --> C
-    subgraph C["167 · Regla de la cadena<br/>multivariable"]
+    P["Clase 166 · Plano tangente"] --> D
+    subgraph CLASE["Clase 167 · Regla de la cadena…"]
         direction TB
-        D["Demostración<br/><code>multivariable_chain_rule</code>"] --> R["Resultados numéricos<br/>t<br/>∂f/∂x·dx/dt + ∂f/∂y·dy/dt<br/>dh/dt_numerica"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>composicion<br/>estructura"]
+        D["Demostracion multivariable_chain_rule"]
+        D --> R["Resultados 3: t +2"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto 2: composicion +1"]
     end
-    C --> N["168<br/>Jacobiano"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 168 · Jacobiano"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

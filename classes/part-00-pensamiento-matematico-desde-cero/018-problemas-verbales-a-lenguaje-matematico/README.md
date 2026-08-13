@@ -34,15 +34,16 @@ solución:  y = (M − p₁T)/(p₂ − p₁),  x = T − y
 
 ```mermaid
 flowchart LR
-    P["017<br/>Patrones, secuencias y<br/>regularidades"] --> C
-    subgraph C["018 · Problemas verbales a<br/>lenguaje matemático"]
+    P["Clase 017 · Patrones, secuencias y…"] --> D
+    subgraph CLASE["Clase 018 · Problemas verbales a…"]
         direction TB
-        D["Demostración<br/><code>word_problem</code>"] --> R["Resultados numéricos<br/>unidades_producto_a<br/>unidades_producto_b<br/>verificacion_unidades<br/>… +1 más"]
-        D --> V["Verificaciones<br/>solucion_valida"]
-        D --> O["Contexto y estructura<br/>enunciado"]
+        D["Demostracion word_problem"]
+        D --> R["Resultados 4: unidades_producto_a +3"]
+        D --> V["Comprobaciones 1: solucion_valida"]
+        D --> O["Contexto 1: enunciado"]
     end
-    C --> N["019<br/>Comprobación y<br/>contraejemplos"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 019 · Comprobación y…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

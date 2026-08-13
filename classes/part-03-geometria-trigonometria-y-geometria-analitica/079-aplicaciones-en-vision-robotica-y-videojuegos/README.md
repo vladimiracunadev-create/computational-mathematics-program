@@ -34,15 +34,16 @@ perspectiva final: (f·x/z, f·y/z)
 
 ```mermaid
 flowchart LR
-    P["078<br/>Proyecciones y<br/>perspectiva"] --> C
-    subgraph C["079 · Aplicaciones en visión,<br/>robótica y videojuegos"]
+    P["Clase 078 · Proyecciones y perspectiva"] --> D
+    subgraph CLASE["Clase 079 · Aplicaciones en visión,…"]
         direction TB
-        D["Demostración<br/><code>applications_pipeline</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>espacio_modelo<br/>tras_rotacion_30<br/>espacio_camara<br/>… +3 más"]
+        D["Demostracion applications_pipeline"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: espacio_modelo +5"]
     end
-    C --> N["080<br/>Capstone: motor<br/>geométrico 2D"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 080 · Capstone: motor…"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

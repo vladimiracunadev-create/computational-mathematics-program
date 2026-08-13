@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["161<br/>Funciones de varias<br/>variables"] --> C
-    subgraph C["162 · Superficies y curvas de<br/>nivel"]
+    P["Clase 161 · Funciones de varias…"] --> D
+    subgraph CLASE["Clase 162 · Superficies y curvas de nivel"]
         direction TB
-        D["Demostración<br/><code>level_curves</code>"] --> R["Resultados numéricos<br/>nivel"]
-        D --> V["Verificaciones<br/>gradiente_perpendicular_a_la_curva"]
-        D --> O["Contexto y estructura<br/>funcion<br/>puntos_del_nivel<br/>forma_geometrica<br/>… +2 más"]
+        D["Demostracion level_curves"]
+        D --> R["Resultados 1: nivel"]
+        D --> V["Comprobaciones 1: gradiente_perpendicul…"]
+        D --> O["Contexto 5: funcion +4"]
     end
-    C --> N["163<br/>Derivadas parciales"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 163 · Derivadas parciales"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

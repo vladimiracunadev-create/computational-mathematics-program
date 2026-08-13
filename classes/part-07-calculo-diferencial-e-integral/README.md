@@ -35,11 +35,11 @@ Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de 
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L141["141<br/>Intuición de límite"]
-        L142["142<br/>Límites algebraicos"]
-        L143["143<br/>Continuidad"]
-        L144["144<br/>Derivada como tasa de<br/>cambio"]
-        L145["145<br/>Reglas de derivación"]
+        L141["141 · Intuición de límite"]
+        L142["142 · Límites algebraicos"]
+        L143["143 · Continuidad"]
+        L144["144 · Derivada como tasa de cambio"]
+        L145["145 · Reglas de derivación"]
         L141 --> L142
         L142 --> L143
         L143 --> L144
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L146["146<br/>Regla del producto y<br/>cociente"]
-        L147["147<br/>Regla de la cadena"]
-        L148["148<br/>Derivadas de<br/>exponenciales y<br/>logaritmos"]
-        L149["149<br/>Derivadas<br/>trigonométricas"]
-        L150["150<br/>Derivación implícita"]
+        L146["146 · Regla del producto y cociente"]
+        L147["147 · Regla de la cadena"]
+        L148["148 · Derivadas de exponenciales y…"]
+        L149["149 · Derivadas trigonométricas"]
+        L150["150 · Derivación implícita"]
         L146 --> L147
         L147 --> L148
         L148 --> L149
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L151["151<br/>Aproximación lineal y<br/>Taylor"]
-        L152["152<br/>Máximos y mínimos"]
-        L153["153<br/>Integral como<br/>acumulación"]
-        L154["154<br/>Integral definida"]
-        L155["155<br/>Antiderivadas"]
+        L151["151 · Aproximación lineal y Taylor"]
+        L152["152 · Máximos y mínimos"]
+        L153["153 · Integral como acumulación"]
+        L154["154 · Integral definida"]
+        L155["155 · Antiderivadas"]
         L151 --> L152
         L152 --> L153
         L153 --> L154
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L156["156<br/>Teorema fundamental del<br/>cálculo"]
-        L157["157<br/>Integración por<br/>sustitución"]
-        L158["158<br/>Integración por partes"]
-        L159["159<br/>Integración numérica<br/>introductoria"]
-        L160["160<br/>Capstone: optimizar y<br/>acumular una señal"]
+        L156["156 · Teorema fundamental del…"]
+        L157["157 · Integración por sustitución"]
+        L158["158 · Integración por partes"]
+        L159["159 · Integración numérica…"]
+        L160["160 · Capstone: optimizar y…"]
         L156 --> L157
         L157 --> L158
         L158 --> L159

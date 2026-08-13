@@ -35,15 +35,16 @@ grado(p·q) = grado(p) + grado(q)
 
 ```mermaid
 flowchart LR
-    P["045<br/>Sistemas de ecuaciones<br/>2x2"] --> C
-    subgraph C["046 · Polinomios y operaciones"]
+    P["Clase 045 · Sistemas de ecuaciones 2x2"] --> D
+    subgraph CLASE["Clase 046 · Polinomios y operaciones"]
         direction TB
-        D["Demostración<br/><code>polynomial_ops</code>"] --> R["Resultados numéricos<br/>grado_p<br/>grado_producto<br/>p(3)_horner<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>p<br/>q<br/>coeficientes_producto"]
+        D["Demostracion polynomial_ops"]
+        D --> R["Resultados 5: grado_p +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: p +2"]
     end
-    C --> N["047<br/>Factorización<br/>elemental"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 047 · Factorización elemental"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

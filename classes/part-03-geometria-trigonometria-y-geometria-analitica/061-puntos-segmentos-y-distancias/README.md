@@ -35,15 +35,16 @@ L∞: d(p,q) = máx|pᵢ−qᵢ|
 
 ```mermaid
 flowchart LR
-    P["060<br/>Capstone: construir y<br/>comparar modelos<br/>funcionales"] --> C
-    subgraph C["061 · Puntos, segmentos y<br/>distancias"]
+    P["Clase 060 · Capstone: construir y…"] --> D
+    subgraph CLASE["Clase 061 · Puntos, segmentos y distancias"]
         direction TB
-        D["Demostración<br/><code>distances</code>"] --> R["Resultados numéricos<br/>euclidea_L2<br/>manhattan_L1<br/>chebyshev_Linf"]
-        D --> V["Verificaciones<br/>orden_L1>=L2>=Linf"]
-        D --> O["Contexto y estructura<br/>p<br/>q<br/>punto_medio"]
+        D["Demostracion distances"]
+        D --> R["Resultados 3: euclidea_L2 +2"]
+        D --> V["Comprobaciones 1: orden_L1=L2=Linf"]
+        D --> O["Contexto 3: p +2"]
     end
-    C --> N["062<br/>Ángulos y radianes"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 062 · Ángulos y radianes"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

@@ -35,15 +35,16 @@ volúmenes: V' = k³·V
 
 ```mermaid
 flowchart LR
-    P["062<br/>Ángulos y radianes"] --> C
-    subgraph C["063 · Triángulos y semejanza"]
+    P["Clase 062 · Ángulos y radianes"] --> D
+    subgraph CLASE["Clase 063 · Triángulos y semejanza"]
         direction TB
-        D["Demostración<br/><code>similar_triangles</code>"] --> R["Resultados numéricos<br/>factor_de_escala<br/>razon_de_perimetros<br/>razon_de_areas<br/>… +2 más"]
-        D --> V["Verificaciones<br/>angulos_invariantes"]
-        D --> O["Contexto y estructura<br/>triangulo_original<br/>triangulo_semejante"]
+        D["Demostracion similar_triangles"]
+        D --> R["Resultados 5: factor_de_escala +4"]
+        D --> V["Comprobaciones 1: angulos_invariantes"]
+        D --> O["Contexto 2: triangulo_original +1"]
     end
-    C --> N["064<br/>Teorema de Pitágoras"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 064 · Teorema de Pitágoras"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

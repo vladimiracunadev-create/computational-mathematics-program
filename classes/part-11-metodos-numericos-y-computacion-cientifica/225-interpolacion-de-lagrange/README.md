@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["224<br/>Método de la secante"] --> C
-    subgraph C["225 · Interpolación de Lagrange"]
+    P["Clase 224 · Método de la secante"] --> D
+    subgraph CLASE["Clase 225 · Interpolación de Lagrange"]
         direction TB
-        D["Demostración<br/><code>lagrange_interpolation</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>el_error_crece_con_el_grado"]
-        D --> O["Contexto y estructura<br/>polinomio_por_3_puntos<br/>pasa_por_los_nodos<br/>error_maximo_de_Runge_por_grado<br/>… +1 más"]
+        D["Demostracion lagrange_interpolation"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: el_error_crece_con_el…"]
+        D --> O["Contexto 4: polinomio_por_3_puntos +3"]
     end
-    C --> N["226<br/>Splines"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 226 · Splines"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

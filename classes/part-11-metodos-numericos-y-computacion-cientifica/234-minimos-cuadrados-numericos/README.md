@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["233<br/>Métodos iterativos y<br/>tolerancias"] --> C
-    subgraph C["234 · Mínimos cuadrados<br/>numéricos"]
+    P["Clase 233 · Métodos iterativos y…"] --> D
+    subgraph CLASE["Clase 234 · Mínimos cuadrados numéricos"]
         direction TB
-        D["Demostración<br/><code>numerical_least_squares</code>"] --> R["Resultados numéricos<br/>datos<br/>condicion_de_AᵀA<br/>SSE"]
-        D --> V["Verificaciones<br/>coinciden<br/>las_normales_elevan_al_cuadrado_la_condicion"]
-        D --> O["Contexto y estructura<br/>coeficientes_ecuaciones_normales<br/>coeficientes_QR<br/>recomendacion"]
+        D["Demostracion numerical_least_squares"]
+        D --> R["Resultados 3: datos +2"]
+        D --> V["Comprobaciones 2: coinciden +1"]
+        D --> O["Contexto 3: coeficientes_ecuacion… +2"]
     end
-    C --> N["235<br/>Ecuaciones<br/>diferenciales<br/>ordinarias"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 235 · Ecuaciones diferenciales…"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

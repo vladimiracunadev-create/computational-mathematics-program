@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["151<br/>Aproximación lineal y<br/>Taylor"] --> C
-    subgraph C["152 · Máximos y mínimos"]
+    P["Clase 151 · Aproximación lineal y…"] --> D
+    subgraph CLASE["Clase 152 · Máximos y mínimos"]
         direction TB
-        D["Demostración<br/><code>extrema</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>x=-1.0<br/>x=1.0<br/>extremos_globales_en_R"]
+        D["Demostracion extrema"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: x=-1.0 +2"]
     end
-    C --> N["153<br/>Integral como<br/>acumulación"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 153 · Integral como acumulación"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["262<br/>Entropía de Shannon"] --> C
-    subgraph C["263 · Entropía cruzada"]
+    P["Clase 262 · Entropía de Shannon"] --> D
+    subgraph CLASE["Clase 263 · Entropía cruzada"]
         direction TB
-        D["Demostración<br/><code>cross_entropy</code>"] --> R["Resultados numéricos<br/>prediccion_perfecta<br/>H(p)"]
-        D --> V["Verificaciones<br/>CE = H(p) + KL(p||q)<br/>es_la_perdida_de_todo_clasificador"]
-        D --> O["Contexto y estructura<br/>etiqueta_real<br/>perdidas<br/>por_que_hace_falta_epsilon"]
+        D["Demostracion cross_entropy"]
+        D --> R["Resultados 2: prediccion_perfecta +1"]
+        D --> V["Comprobaciones 2: CE = Hp + KLpq +1"]
+        D --> O["Contexto 3: etiqueta_real +2"]
     end
-    C --> N["264<br/>Divergencia KL"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 264 · Divergencia KL"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

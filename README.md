@@ -112,21 +112,21 @@ notebook_solution.ipynb   solución de referencia con verificaciones
 
 ```mermaid
 flowchart LR
-    A["🔢 00–01 Aritmética<br/>y representación"] --> B["📐 02–03 Álgebra<br/>y geometría"]
-    B --> C["🧩 04 Matemática<br/>discreta"]
-    B --> D["🟪 05–06 Álgebra<br/>lineal"]
-    C --> E["📈 07–08 Cálculo y<br/>autodiferenciación"]
+    A["Partes 00-01 · Aritmetica y representacion"] --> B["Partes 02-03 · Algebra y geometria"]
+    B --> C["Parte 04 · Matematica discreta"]
+    B --> D["Partes 05-06 · Algebra lineal"]
+    C --> E["Partes 07-08 · Calculo y autodiferenciacion"]
     D --> E
-    E --> F["🎲 09–10 Probabilidad<br/>y estadística"]
-    D --> G["🧮 11 Métodos<br/>numéricos"]
-    E --> H["⚙️ 12 Optimización"]
-    F --> I["📡 13 Información<br/>y señales"]
-    F --> J["📊 14 Matemática<br/>de ML"]
+    E --> F["Partes 09-10 · Probabilidad y estadistica"]
+    D --> G["Parte 11 · Metodos numericos"]
+    E --> H["Parte 12 · Optimizacion"]
+    F --> I["Parte 13 · Informacion y senales"]
+    F --> J["Parte 14 · Matematica de ML"]
     H --> J
-    J --> K["🧠 15 Matemática<br/>de Deep Learning"]
+    J --> K["Parte 15 · Matematica de Deep Learning"]
     I --> K
-    K --> L["🤖 16 Transformers,<br/>generativos, grafos y RL"]
-    L --> M["🔭 17 Frontera<br/>e investigación"]
+    K --> L["Parte 16 · Transformers, generativos, grafos y RL"]
+    L --> M["Parte 17 · Frontera e investigacion"]
 ```
 
 ## 🗂️ Las 18 partes

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["293<br/>Boosting y descenso<br/>funcional"] --> C
-    subgraph C["294 · k-means como optimización"]
+    P["Clase 293 · Boosting y descenso…"] --> D
+    subgraph CLASE["Clase 294 · k-means como optimización"]
         direction TB
-        D["Demostración<br/><code>kmeans</code>"] --> R["Resultados numéricos<br/>k<br/>iteraciones_hasta_converger<br/>semilla"]
-        D --> V["Verificaciones<br/>la_inercia_nunca_sube<br/>converge_a_un_optimo_local"]
-        D --> O["Contexto y estructura<br/>centroides<br/>historial_de_inercia<br/>objetivo<br/>… +1 más"]
+        D["Demostracion kmeans"]
+        D --> R["Resultados 3: k +2"]
+        D --> V["Comprobaciones 2: la_inercia_nunca_sube +1"]
+        D --> O["Contexto 4: centroides +3"]
     end
-    C --> N["295<br/>Gaussian Mixture<br/>Models"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 295 · Gaussian Mixture Models"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

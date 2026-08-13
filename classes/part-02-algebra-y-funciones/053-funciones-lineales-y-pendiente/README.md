@@ -34,15 +34,16 @@ m = (y₂ − y₁)/(x₂ − x₁)
 
 ```mermaid
 flowchart LR
-    P["052<br/>Funciones: dominio y<br/>rango"] --> C
-    subgraph C["053 · Funciones lineales y<br/>pendiente"]
+    P["Clase 052 · Funciones: dominio y rango"] --> D
+    subgraph CLASE["Clase 053 · Funciones lineales y pendiente"]
         direction TB
-        D["Demostración<br/><code>linear_function</code>"] --> R["Resultados numéricos<br/>pendiente<br/>intercepto<br/>predice_tercer_punto"]
-        D --> V["Verificaciones<br/>es_lineal"]
-        D --> O["Contexto y estructura<br/>puntos<br/>ecuacion"]
+        D["Demostracion linear_function"]
+        D --> R["Resultados 3: pendiente +2"]
+        D --> V["Comprobaciones 1: es_lineal"]
+        D --> O["Contexto 2: puntos +1"]
     end
-    C --> N["054<br/>Funciones cuadráticas<br/>y parábolas"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 054 · Funciones cuadráticas y…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

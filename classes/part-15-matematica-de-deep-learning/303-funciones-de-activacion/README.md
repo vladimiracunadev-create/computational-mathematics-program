@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["302<br/>MLP como composición<br/>de funciones"] --> C
-    subgraph C["303 · Funciones de activación"]
+    P["Clase 302 · MLP como composición de…"] --> D
+    subgraph CLASE["Clase 303 · Funciones de activación"]
         direction TB
-        D["Demostración<br/><code>activations</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>sigmoid_se_satura<br/>relu_no_se_satura_en_positivos<br/>relu_muere_en_negativos"]
-        D --> O["Contexto y estructura<br/>sigmoid<br/>tanh<br/>relu<br/>… +3 más"]
+        D["Demostracion activations"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 3: sigmoid_se_satura +2"]
+        D --> O["Contexto 6: sigmoid +5"]
     end
-    C --> N["304<br/>Funciones de pérdida"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 304 · Funciones de pérdida"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

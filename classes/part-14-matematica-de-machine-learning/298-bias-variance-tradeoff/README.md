@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["297<br/>PCA aplicado a ML"] --> C
-    subgraph C["298 · Bias-variance tradeoff"]
+    P["Clase 297 · PCA aplicado a ML"] --> D
+    subgraph CLASE["Clase 298 · Bias-variance tradeoff"]
         direction TB
-        D["Demostración<br/><code>bias_variance</code>"] --> R["Resultados numéricos<br/>punto_de_prueba<br/>valor_real<br/>replicas<br/>… +1 más"]
-        D --> V["Verificaciones<br/>grado_1_alto_sesgo<br/>grado_9_alta_varianza"]
-        D --> O["Contexto y estructura<br/>funcion_real<br/>resultados"]
+        D["Demostracion bias_variance"]
+        D --> R["Resultados 4: punto_de_prueba +3"]
+        D --> V["Comprobaciones 2: grado_1_alto_sesgo +1"]
+        D --> O["Contexto 2: funcion_real +1"]
     end
-    C --> N["299<br/>Generalización,<br/>validación y leakage"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 299 · Generalización,…"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

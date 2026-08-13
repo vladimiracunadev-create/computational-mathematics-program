@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["335<br/>Diffusion models:<br/>reverse process"] --> C
-    subgraph C["336 · Graph Laplacian"]
+    P["Clase 335 · Diffusion models:…"] --> D
+    subgraph CLASE["Clase 336 · Graph Laplacian"]
         direction TB
-        D["Demostración<br/><code>graph_laplacian</code>"] --> R["Resultados numéricos<br/>nodos<br/>aristas<br/>autovalores_nulos<br/>… +2 más"]
-        D --> V["Verificaciones<br/>es_semidefinido_positivo"]
-        D --> O["Contexto y estructura<br/>grados<br/>matriz_de_adyacencia<br/>laplaciano<br/>… +3 más"]
+        D["Demostracion graph_laplacian"]
+        D --> R["Resultados 5: nodos +4"]
+        D --> V["Comprobaciones 1: es_semidefinido_posit…"]
+        D --> O["Contexto 6: grados +5"]
     end
-    C --> N["337<br/>Message passing en GNN"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 337 · Message passing en GNN"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

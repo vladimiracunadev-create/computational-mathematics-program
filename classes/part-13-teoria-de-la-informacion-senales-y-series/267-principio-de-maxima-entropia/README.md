@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["266<br/>Información mutua"] --> C
-    subgraph C["267 · Principio de máxima<br/>entropía"]
+    P["Clase 266 · Información mutua"] --> D
+    subgraph CLASE["Clase 267 · Principio de máxima entropía"]
         direction TB
-        D["Demostración<br/><code>max_entropy</code>"] --> R["Resultados numéricos<br/>entropia_maxima_teorica"]
-        D --> V["Verificaciones<br/>sin_restricciones_gana_la_uniforme"]
-        D --> O["Contexto y estructura<br/>candidatas<br/>medias<br/>maxima_entropia<br/>… +2 más"]
+        D["Demostracion max_entropy"]
+        D --> R["Resultados 1: entropia_maxima_teori…"]
+        D --> V["Comprobaciones 1: sin_restricciones_gan…"]
+        D --> O["Contexto 5: candidatas +4"]
     end
-    C --> N["268<br/>Codificación y<br/>compresión"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 268 · Codificación y compresión"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

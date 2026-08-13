@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["282<br/>Regresión lineal desde<br/>mínimos cuadrados"] --> C
-    subgraph C["283 · Ridge y regularización L2"]
+    P["Clase 282 · Regresión lineal desde…"] --> D
+    subgraph CLASE["Clase 283 · Ridge y regularización L2"]
         direction TB
-        D["Demostración<br/><code>ridge</code>"] --> R["Resultados numéricos<br/>condicion_sin_regularizar<br/>condicion_con_λ=1"]
-        D --> V["Verificaciones<br/>ridge_nunca_anula_coeficientes"]
-        D --> O["Contexto y estructura<br/>λ=0.0<br/>λ=0.1<br/>λ=1.0<br/>… +2 más"]
+        D["Demostracion ridge"]
+        D --> R["Resultados 2: condicion_sin_regular… +1"]
+        D --> V["Comprobaciones 1: ridge_nunca_anula_coe…"]
+        D --> O["Contexto 5: λ=0.0 +4"]
     end
-    C --> N["284<br/>Lasso y regularización<br/>L1"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 284 · Lasso y regularización L1"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

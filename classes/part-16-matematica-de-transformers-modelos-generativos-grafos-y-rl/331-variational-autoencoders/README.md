@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["330<br/>Sampling, temperatura,<br/>top-k y top-p"] --> C
-    subgraph C["331 · Variational Autoencoders"]
+    P["Clase 330 · Sampling, temperatura,…"] --> D
+    subgraph CLASE["Clase 331 · Variational Autoencoders"]
         direction TB
-        D["Demostración<br/><code>variational_autoencoder</code>"] --> R["Resultados numéricos<br/>dimension_latente<br/>KL(q||N(0,I))<br/>KL_si_q=prior"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>mu<br/>log_var<br/>sigma<br/>… +6 más"]
+        D["Demostracion variational_autoencoder"]
+        D --> R["Resultados 3: dimension_latente +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 9: mu +8"]
     end
-    C --> N["332<br/>ELBO y variational<br/>inference"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 332 · ELBO y variational…"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

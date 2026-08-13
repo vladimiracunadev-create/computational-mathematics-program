@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["131<br/>Mínimos cuadrados<br/>lineales"] --> C
-    subgraph C["132 · SVD desde la intuición"]
+    P["Clase 131 · Mínimos cuadrados lineales"] --> D
+    subgraph CLASE["Clase 132 · SVD desde la intuición"]
         direction TB
-        D["Demostración<br/><code>svd_intuition</code>"] --> R["Resultados numéricos<br/>sigma1_es_la_norma_espectral<br/>numero_de_condicion<br/>rango_numerico"]
-        D --> V["Verificaciones<br/>existe_para_toda_matriz"]
-        D --> O["Contexto y estructura<br/>A<br/>valores_singulares<br/>U<br/>… +1 más"]
+        D["Demostracion svd_intuition"]
+        D --> R["Resultados 3: sigma1_es_la_norma_es… +2"]
+        D --> V["Comprobaciones 1: existe_para_toda_matr…"]
+        D --> O["Contexto 4: A +3"]
     end
-    C --> N["133<br/>SVD y compresión"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 133 · SVD y compresión"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

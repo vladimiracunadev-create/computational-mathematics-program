@@ -35,15 +35,16 @@ simetría respecto al origen: (a, b) → (−a, −b)
 
 ```mermaid
 flowchart LR
-    P["067<br/>Círculo unitario"] --> C
-    subgraph C["068 · Coordenadas cartesianas"]
+    P["Clase 067 · Círculo unitario"] --> D
+    subgraph CLASE["Clase 068 · Coordenadas cartesianas"]
         direction TB
-        D["Demostración<br/><code>cartesian_coordinates</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>puntos<br/>cuadrantes<br/>simetrico_respecto_a_x<br/>… +3 más"]
+        D["Demostracion cartesian_coordinates"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: puntos +5"]
     end
-    C --> N["069<br/>Pendiente y ecuación<br/>de la recta"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 069 · Pendiente y ecuación de…"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

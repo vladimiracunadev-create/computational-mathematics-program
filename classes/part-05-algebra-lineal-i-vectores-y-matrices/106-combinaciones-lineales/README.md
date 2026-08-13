@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["105<br/>Vectores unitarios"] --> C
-    subgraph C["106 · Combinaciones lineales"]
+    P["Clase 105 · Vectores unitarios"] --> D
+    subgraph CLASE["Clase 106 · Combinaciones lineales"]
         direction TB
-        D["Demostración<br/><code>linear_combinations</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>coincide_con_los_coeficientes<br/>una_capa_densa_es_una_combinacion_lineal"]
-        D --> O["Contexto y estructura<br/>base_canonica<br/>coeficientes<br/>combinacion<br/>… +1 más"]
+        D["Demostracion linear_combinations"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 2: coincide_con_los_coef… +1"]
+        D --> O["Contexto 4: base_canonica +3"]
     end
-    C --> N["107<br/>Independencia y<br/>dependencia lineal"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 107 · Independencia y…"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

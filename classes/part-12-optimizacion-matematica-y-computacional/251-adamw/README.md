@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["250<br/>Adam"] --> C
-    subgraph C["251 · AdamW"]
+    P["Clase 250 · Adam"] --> D
+    subgraph CLASE["Clase 251 · AdamW"]
         direction TB
-        D["Demostración<br/><code>adamw</code>"] --> R["Resultados numéricos<br/>weight_decay<br/>norma_adam_L2<br/>norma_adamw"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>objetivo<br/>optimo_sin_regularizacion<br/>adam_con_L2_en_el_gradiente<br/>… +3 más"]
+        D["Demostracion adamw"]
+        D --> R["Resultados 3: weight_decay +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: objetivo +5"]
     end
-    C --> N["252<br/>Método de Newton"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 252 · Método de Newton"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

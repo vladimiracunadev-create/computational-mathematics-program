@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["258<br/>Optimización<br/>cuadrática"] --> C
-    subgraph C["259 · Optimización evolutiva"]
+    P["Clase 258 · Optimización cuadrática"] --> D
+    subgraph CLASE["Clase 259 · Optimización evolutiva"]
         direction TB
-        D["Demostración<br/><code>evolutionary_optimization</code>"] --> R["Resultados numéricos<br/>poblacion<br/>generaciones<br/>elitismo<br/>… +1 más"]
-        D --> V["Verificaciones<br/>sin_gradiente"]
-        D --> O["Contexto y estructura<br/>funcion<br/>historial<br/>mejor_solucion<br/>… +2 más"]
+        D["Demostracion evolutionary_optimization"]
+        D --> R["Resultados 4: poblacion +3"]
+        D --> V["Comprobaciones 1: sin_gradiente"]
+        D --> O["Contexto 5: funcion +4"]
     end
-    C --> N["260<br/>Capstone: banco de<br/>optimizadores<br/>comparables"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 260 · Capstone: banco de…"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

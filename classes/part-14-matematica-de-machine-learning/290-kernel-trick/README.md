@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["289<br/>SVM y margen máximo"] --> C
-    subgraph C["290 · Kernel trick"]
+    P["Clase 289 · SVM y margen máximo"] --> D
+    subgraph CLASE["Clase 290 · Kernel trick"]
         direction TB
-        D["Demostración<br/><code>kernel_trick</code>"] --> R["Resultados numéricos<br/>producto_en_el_espacio_expandido<br/>kernel_polinomico_(aᵀb)²<br/>dimension_explicita<br/>… +2 más"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>a<br/>b<br/>phi(a)<br/>… +2 más"]
+        D["Demostracion kernel_trick"]
+        D --> R["Resultados 5: producto_en_el_espaci… +4"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto 5: a +4"]
     end
-    C --> N["291<br/>Árboles: entropía y<br/>Gini"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 291 · Árboles: entropía y Gini"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

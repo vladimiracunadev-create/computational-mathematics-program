@@ -34,15 +34,16 @@ pie de perpendicular: p − ((Ap₁+Bp₂+C)/(A²+B²))·(A,B)
 
 ```mermaid
 flowchart LR
-    P["069<br/>Pendiente y ecuación<br/>de la recta"] --> C
-    subgraph C["070 · Distancia punto-recta"]
+    P["Clase 069 · Pendiente y ecuación de…"] --> D
+    subgraph CLASE["Clase 070 · Distancia punto-recta"]
         direction TB
-        D["Demostración<br/><code>point_line_distance</code>"] --> R["Resultados numéricos<br/>distancia<br/>distancia_al_pie"]
-        D --> V["Verificaciones<br/>el_pie_pertenece_a_la_recta"]
-        D --> O["Contexto y estructura<br/>recta<br/>punto<br/>pie_de_perpendicular"]
+        D["Demostracion point_line_distance"]
+        D --> R["Resultados 2: distancia +1"]
+        D --> V["Comprobaciones 1: el_pie_pertenece_a_la…"]
+        D --> O["Contexto 3: recta +2"]
     end
-    C --> N["071<br/>Circunferencias y<br/>cónicas"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 071 · Circunferencias y cónicas"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

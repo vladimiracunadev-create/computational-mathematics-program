@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["218<br/>Bootstrap y remuestreo"] --> C
-    subgraph C["219 · A/B testing y diseño<br/>experimental"]
+    P["Clase 218 · Bootstrap y remuestreo"] --> D
+    subgraph CLASE["Clase 219 · A/B testing y diseño…"]
         direction TB
-        D["Demostración<br/><code>ab_testing</code>"] --> R["Resultados numéricos<br/>conversion_A<br/>conversion_B<br/>lift_relativo_%<br/>… +4 más"]
-        D --> V["Verificaciones<br/>significativo_al_5%"]
-        D --> O["Contexto y estructura<br/>peligro"]
+        D["Demostracion ab_testing"]
+        D --> R["Resultados 7: conversion_A +6"]
+        D --> V["Comprobaciones 1: significativo_al_5%"]
+        D --> O["Contexto 1: peligro"]
     end
-    C --> N["220<br/>Capstone: estudio<br/>estadístico<br/>reproducible"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 220 · Capstone: estudio…"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

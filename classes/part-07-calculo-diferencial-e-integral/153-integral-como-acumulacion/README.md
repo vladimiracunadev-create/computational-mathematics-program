@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["152<br/>Máximos y mínimos"] --> C
-    subgraph C["153 · Integral como acumulación"]
+    P["Clase 152 · Máximos y mínimos"] --> D
+    subgraph CLASE["Clase 153 · Integral como acumulación"]
         direction TB
-        D["Demostración<br/><code>integral_as_accumulation</code>"] --> R["Resultados numéricos<br/>valor_exacto_1/3"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>integrando<br/>intervalo<br/>sumas_de_riemann<br/>… +1 más"]
+        D["Demostracion integral_as_accumulation"]
+        D --> R["Resultados 1: valor_exacto_1/3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: integrando +3"]
     end
-    C --> N["154<br/>Integral definida"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 154 · Integral definida"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["132<br/>SVD desde la intuición"] --> C
-    subgraph C["133 · SVD y compresión"]
+    P["Clase 132 · SVD desde la intuición"] --> D
+    subgraph CLASE["Clase 133 · SVD y compresión"]
         direction TB
-        D["Demostración<br/><code>svd_compression</code>"] --> R["Resultados numéricos<br/>error_de_frobenius<br/>error_teorico_sigma2<br/>energia_retenida_%"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>A<br/>valores_singulares<br/>aproximacion_rango_1<br/>… +1 más"]
+        D["Demostracion svd_compression"]
+        D --> R["Resultados 3: error_de_frobenius +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: A +3"]
     end
-    C --> N["134<br/>Pseudoinversa de<br/>Moore-Penrose"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 134 · Pseudoinversa de…"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

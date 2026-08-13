@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["149<br/>Derivadas<br/>trigonométricas"] --> C
-    subgraph C["150 · Derivación implícita"]
+    P["Clase 149 · Derivadas trigonométricas"] --> D
+    subgraph CLASE["Clase 150 · Derivación implícita"]
         direction TB
-        D["Demostración<br/><code>implicit_differentiation</code>"] --> R["Resultados numéricos<br/>dy/dx_implicita<br/>dy/dx_numerica"]
-        D --> V["Verificaciones<br/>coinciden<br/>tangente_perpendicular_al_radio"]
-        D --> O["Contexto y estructura<br/>ecuacion<br/>punto<br/>recta_tangente"]
+        D["Demostracion implicit_differentiation"]
+        D --> R["Resultados 2: dy/dx_implicita +1"]
+        D --> V["Comprobaciones 2: coinciden +1"]
+        D --> O["Contexto 3: ecuacion +2"]
     end
-    C --> N["151<br/>Aproximación lineal y<br/>Taylor"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 151 · Aproximación lineal y…"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

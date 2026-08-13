@@ -35,11 +35,11 @@ Derivación matemática de los algoritmos clásicos: regresión, regularización
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L281["281<br/>Geometría del<br/>aprendizaje supervisado"]
-        L282["282<br/>Regresión lineal desde<br/>mínimos cuadrados"]
-        L283["283<br/>Ridge y regularización<br/>L2"]
-        L284["284<br/>Lasso y regularización<br/>L1"]
-        L285["285<br/>Regresión logística y<br/>sigmoid"]
+        L281["281 · Geometría del aprendizaje…"]
+        L282["282 · Regresión lineal desde…"]
+        L283["283 · Ridge y regularización L2"]
+        L284["284 · Lasso y regularización L1"]
+        L285["285 · Regresión logística y sigmoid"]
         L281 --> L282
         L282 --> L283
         L283 --> L284
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L286["286<br/>Cross-entropy en<br/>clasificación"]
-        L287["287<br/>Naive Bayes"]
-        L288["288<br/>k-Nearest Neighbors y<br/>métricas"]
-        L289["289<br/>SVM y margen máximo"]
-        L290["290<br/>Kernel trick"]
+        L286["286 · Cross-entropy en clasificación"]
+        L287["287 · Naive Bayes"]
+        L288["288 · k-Nearest Neighbors y métricas"]
+        L289["289 · SVM y margen máximo"]
+        L290["290 · Kernel trick"]
         L286 --> L287
         L287 --> L288
         L288 --> L289
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L291["291<br/>Árboles: entropía y Gini"]
-        L292["292<br/>Random Forest desde<br/>probabilidad"]
-        L293["293<br/>Boosting y descenso<br/>funcional"]
-        L294["294<br/>k-means como<br/>optimización"]
-        L295["295<br/>Gaussian Mixture Models"]
+        L291["291 · Árboles: entropía y Gini"]
+        L292["292 · Random Forest desde…"]
+        L293["293 · Boosting y descenso funcional"]
+        L294["294 · k-means como optimización"]
+        L295["295 · Gaussian Mixture Models"]
         L291 --> L292
         L292 --> L293
         L293 --> L294
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L296["296<br/>EM algorithm"]
-        L297["297<br/>PCA aplicado a ML"]
-        L298["298<br/>Bias-variance tradeoff"]
-        L299["299<br/>Generalización,<br/>validación y leakage"]
-        L300["300<br/>Capstone: derivar y<br/>comparar 6 algoritmos ML"]
+        L296["296 · EM algorithm"]
+        L297["297 · PCA aplicado a ML"]
+        L298["298 · Bias-variance tradeoff"]
+        L299["299 · Generalización, validación y…"]
+        L300["300 · Capstone: derivar y comparar…"]
         L296 --> L297
         L297 --> L298
         L298 --> L299

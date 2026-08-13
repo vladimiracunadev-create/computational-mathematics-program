@@ -34,15 +34,16 @@ forma estable:  1 / (√(x²+1) + x)
 
 ```mermaid
 flowchart LR
-    P["031<br/>ULP y machine epsilon"] --> C
-    subgraph C["032 · Cancelación catastrófica"]
+    P["Clase 031 · ULP y machine epsilon"] --> D
+    subgraph CLASE["Clase 032 · Cancelación catastrófica"]
         direction TB
-        D["Demostración<br/><code>catastrophic_cancellation</code>"] --> R["Resultados numéricos<br/>x<br/>formula_ingenua_sqrt(x^2+1)-x<br/>formula_estable_1/(sqrt(x^2+1)+x)<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>causa"]
+        D["Demostracion catastrophic_cancellation"]
+        D --> R["Resultados 5: x +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: causa"]
     end
-    C --> N["033<br/>Overflow y underflow<br/>flotante"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 033 · Overflow y underflow…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

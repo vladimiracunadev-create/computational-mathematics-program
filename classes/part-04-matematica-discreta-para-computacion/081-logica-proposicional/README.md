@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Una implicación equivale a su contrarrecíproca, nunca a su recíproca.**
 
-Esta clase concreta ese objetivo sobre **Lógica proposicional**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,69 @@ Al terminar podrás:
 4. Interpretar las 4 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: contar dos veces al aplicar el principio de inclusión-exclusión.
 
+## 🧩 Fórmulas de la clase
+
+```text
+p → q ≡ ¬p ∨ q
+p → q ≡ ¬q → ¬p   (contrarrecíproca)
+p → q ≢ q → p     (recíproca)
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["080<br/>Capstone: motor<br/>geométrico 2D"] --> C
-    subgraph C["081 · Lógica proposicional"]
+    P["Clase 080 · Capstone: motor…"] --> D
+    subgraph CLASE["Clase 081 · Lógica proposicional"]
         direction TB
-        D["Demostración<br/><code>propositional_logic</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>implicacion_equivale_a_contrarreciproca<br/>implicacion_equivale_a_reciproca"]
-        D --> O["Contexto y estructura<br/>tabla<br/>vacuamente_verdadera"]
+        D["Demostracion propositional_logic"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 2: implicacion_equivale_… +1"]
+        D --> O["Contexto 2: tabla +1"]
     end
-    C --> N["082<br/>Tablas de verdad y<br/>equivalencias"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 082 · Tablas de verdad y…"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Una demostración por inducción es un bucle `for` con garantía.
+La lógica proposicional asigna un valor de verdad a cada enunciado y define cómo se
+combinan. El conector que causa más problemas es la implicación, porque su definición
+formal no coincide con el uso coloquial: `p → q` es **falsa únicamente** cuando p es
+verdadera y q falsa. Si p es falsa, la implicación es verdadera sea cual sea q, lo que
+se llama verdad vacua.
+
+Esa definición tiene una consecuencia práctica inmediata: «todos los elementos de la
+lista vacía cumplen la condición» es cierto, y por eso `all([])` devuelve `True` en
+Python. No es una rareza del lenguaje: es la lógica correcta.
+
+La equivalencia con la contrarrecíproca es la herramienta de demostración más útil de
+toda la matemática. Probar «si n² es par entonces n es par» directamente es incómodo;
+probar «si n es impar entonces n² es impar» es inmediato. Ambas afirmaciones son la
+misma, y elegir la más fácil es legítimo.
+
+Confundir una implicación con su recíproca es la falacia más extendida. «Si llueve, el
+suelo está mojado» no permite concluir «si el suelo está mojado, llovió». En estadística
+la misma confusión es la falacia del fiscal: `P(evidencia | inocente)` pequeña no
+implica `P(inocente | evidencia)` pequeña, tema de la clase 186.
+
+## 🧮 Ejemplo trabajado
+
+Tabla de verdad de las tres formas.
+
+```text
+p      q      p→q    q→p (recíproca)   ¬q→¬p (contrarrecíproca)
+V      V       V           V                    V
+V      F       F           V                    F
+F      V       V           F                    V
+F      F       V           V                    V
+
+¿p→q ≡ contrarrecíproca?  Sí, columnas idénticas      ✓
+¿p→q ≡ recíproca?         No, difieren en 2 filas     ✗
+
+Verdad vacua: si p es falsa, p→q es verdadera siempre.
+Por eso all([]) == True.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 081
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Concluir la recíproca a partir de una implicación demostrada.
+2. Interpretar la verdad vacua como un error del sistema formal.
+3. Leer «si p entonces q» como «p si y solo si q».
+
+## 🚀 Dónde se usa de verdad
+
+Demostración por contrarrecíproca, diseño de condiciones en código, especificación de
+contratos y la lógica de las pruebas de hipótesis (parte 10).
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., McGraw-Hill, 2019, cap. 1](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
+- [Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

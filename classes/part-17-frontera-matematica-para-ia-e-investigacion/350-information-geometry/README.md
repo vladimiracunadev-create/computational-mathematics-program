@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["349<br/>Geometría diferencial<br/>para ML"] --> C
-    subgraph C["350 · Information geometry"]
+    P["Clase 349 · Geometría diferencial…"] --> D
+    subgraph CLASE["Clase 350 · Information geometry"]
         direction TB
-        D["Demostración<br/><code>information_geometry</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>la_informacion_es_maxima_en_los_extremos"]
-        D --> O["Contexto y estructura<br/>informacion_de_Fisher_Bernoulli<br/>informacion_de_Fisher_Normal<br/>KL_localmente_es_una_metrica<br/>… +3 más"]
+        D["Demostracion information_geometry"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: la_informacion_es_max…"]
+        D --> O["Contexto 6: informacion_de_Fisher… +5"]
     end
-    C --> N["351<br/>Stochastic<br/>differential equations"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 351 · Stochastic differential…"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

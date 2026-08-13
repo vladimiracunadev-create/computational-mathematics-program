@@ -34,15 +34,16 @@ asíntota vertical en x = 2, horizontal en y = 0
 
 ```mermaid
 flowchart LR
-    P["051<br/>Logaritmos y sus<br/>propiedades"] --> C
-    subgraph C["052 · Funciones: dominio y rango"]
+    P["Clase 051 · Logaritmos y sus…"] --> D
+    subgraph CLASE["Clase 052 · Funciones: dominio y rango"]
         direction TB
-        D["Demostración<br/><code>domain_range</code>"] --> R["Resultados numéricos<br/>asintota_vertical<br/>asintota_horizontal"]
-        D --> V["Verificaciones<br/>x=2_definido"]
-        D --> O["Contexto y estructura<br/>funcion<br/>dominio<br/>imagen<br/>… +1 más"]
+        D["Demostracion domain_range"]
+        D --> R["Resultados 2: asintota_vertical +1"]
+        D --> V["Comprobaciones 1: x=2_definido"]
+        D --> O["Contexto 4: funcion +3"]
     end
-    C --> N["053<br/>Funciones lineales y<br/>pendiente"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 053 · Funciones lineales y…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

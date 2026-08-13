@@ -34,15 +34,16 @@ dominio de g∘f: {x ∈ dom f : f(x) ∈ dom g}
 
 ```mermaid
 flowchart LR
-    P["056<br/>Funciones logarítmicas"] --> C
-    subgraph C["057 · Composición de funciones"]
+    P["Clase 056 · Funciones logarítmicas"] --> D
+    subgraph CLASE["Clase 057 · Composición de funciones"]
         direction TB
-        D["Demostración<br/><code>function_composition</code>"] --> R["Resultados numéricos<br/>(g∘f)(3)<br/>(f∘g)(3)<br/>cadena_de_3"]
-        D --> V["Verificaciones<br/>conmutan"]
-        D --> O["Contexto y estructura<br/>f<br/>g<br/>analogia"]
+        D["Demostracion function_composition"]
+        D --> R["Resultados 3: g∘f3 +2"]
+        D --> V["Comprobaciones 1: conmutan"]
+        D --> O["Contexto 3: f +2"]
     end
-    C --> N["058<br/>Funciones inversas"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 058 · Funciones inversas"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

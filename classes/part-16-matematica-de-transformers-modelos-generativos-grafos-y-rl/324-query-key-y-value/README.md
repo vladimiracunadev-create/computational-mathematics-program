@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["323<br/>Positional encoding"] --> C
-    subgraph C["324 · Query, Key y Value"]
+    P["Clase 323 · Positional encoding"] --> D
+    subgraph CLASE["Clase 324 · Query, Key y Value"]
         direction TB
-        D["Demostración<br/><code>query_key_value</code>"] --> R["Resultados numéricos<br/>d_model<br/>d_k<br/>parametros_por_cabeza"]
-        D --> V["Verificaciones<br/>son_proyecciones_lineales"]
-        D --> O["Contexto y estructura<br/>token_de_entrada<br/>query<br/>key<br/>… +4 más"]
+        D["Demostracion query_key_value"]
+        D --> R["Resultados 3: d_model +2"]
+        D --> V["Comprobaciones 1: son_proyecciones_line…"]
+        D --> O["Contexto 7: token_de_entrada +6"]
     end
-    C --> N["325<br/>Scaled dot-product<br/>attention"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 325 · Scaled dot-product…"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

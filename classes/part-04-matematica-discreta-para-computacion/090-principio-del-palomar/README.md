@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**El principio del palomar demuestra que existe una colisión sin construir ninguna.**
 
-Esta clase concreta ese objetivo sobre **Principio del palomar**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,71 @@ Al terminar podrás:
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: contar dos veces al aplicar el principio de inclusión-exclusión.
 
+## 🧩 Fórmulas de la clase
+
+```text
+n objetos en m cajas con n > m ⟹ alguna caja tiene ≥ ⌈n/m⌉
+colisión de hash garantizada si entradas > tamaño del espacio
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["089<br/>Combinaciones"] --> C
-    subgraph C["090 · Principio del palomar"]
+    P["Clase 089 · Combinaciones"] --> D
+    subgraph CLASE["Clase 090 · Principio del palomar"]
         direction TB
-        D["Demostración<br/><code>pigeonhole</code>"] --> R["Resultados numéricos<br/>personas<br/>dias_del_año<br/>minimo_repeticiones<br/>… +2 más"]
-        D --> V["Verificaciones<br/>coincidencia_de_cumpleaños_garantizada<br/>colision_garantizada"]
-        D --> O["Contexto y estructura<br/>leccion"]
+        D["Demostracion pigeonhole"]
+        D --> R["Resultados 5: personas +4"]
+        D --> V["Comprobaciones 2: coincidencia_de_cumpl… +1"]
+        D --> O["Contexto 1: leccion"]
     end
-    C --> N["091<br/>Inducción matemática"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 091 · Inducción matemática"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> El principio del palomar demuestra colisiones sin construir un ejemplo.
+El principio del palomar es de una simplicidad desarmante: si se reparten n objetos en
+m cajas y n > m, alguna caja recibe al menos dos. Su potencia está en que demuestra una
+**existencia** sin ofrecer un método para encontrarla, y ese tipo de argumento —no
+constructivo— es habitual en matemáticas y muy útil en informática.
+
+La aplicación directa es a las funciones hash. Una función que mapea un dominio infinito
+—o simplemente mayor— en un espacio de 2ⁿ valores **tiene** colisiones necesariamente.
+No es un defecto de la función: es una consecuencia lógica. Por eso la pregunta correcta
+sobre una función hash criptográfica no es «¿tiene colisiones?» sino «¿es
+computacionalmente factible encontrarlas?».
+
+La forma generalizada da una cota más fina: alguna caja tiene al menos `⌈n/m⌉` objetos.
+Con 400 personas y 365 días del año, alguna fecha tiene al menos dos cumpleaños; con
+800, al menos tres.
+
+Conviene no confundirlo con la **paradoja del cumpleaños**, que es un resultado
+probabilístico distinto: con solo 23 personas la probabilidad de coincidencia supera el
+50 %. El palomar da certeza con 366; la paradoja da probabilidad alta con 23. La segunda
+es la que determina la seguridad real de un hash frente a ataques de colisión, y aparece
+en la clase 090 como contraste.
+
+## 🧮 Ejemplo trabajado
+
+Cumpleaños y colisiones de hash.
+
+```text
+400 personas, 365 días:
+  400 > 365 → coincidencia GARANTIZADA
+  mínimo de repeticiones: ⌈400/365⌉ = 2
+
+Hash de 16 bits (65 536 valores), 100 000 entradas:
+  100 000 > 65 536 → colisión GARANTIZADA
+
+Contraste con la paradoja del cumpleaños:
+  con 23 personas, P(coincidencia) > 0.5
+  el palomar da certeza; la paradoja da probabilidad
+
+Lección: no hace falta encontrar la colisión
+         para demostrar que existe.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 090
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Confundir el principio del palomar (certeza) con la paradoja del cumpleaños (probabilidad).
+2. Suponer que una función hash bien diseñada no tiene colisiones.
+3. Aplicar la cota ⌈n/m⌉ como si fuera el máximo en lugar del mínimo garantizado.
+
+## 🚀 Dónde se usa de verdad
+
+Análisis de funciones hash, límites de compresión sin pérdida, diseño de tablas hash y
+argumentos de existencia en teoría de la complejidad.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 6](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
+- [Stinson & Paterson. *Cryptography: Theory and Practice*, 4ª ed., CRC, 2018](https://www.routledge.com/Cryptography-Theory-and-Practice/Stinson-Paterson/p/book/9781138197015)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

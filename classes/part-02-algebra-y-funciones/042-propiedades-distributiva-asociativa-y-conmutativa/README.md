@@ -35,15 +35,16 @@ distributiva: a(b+c) = ab + ac
 
 ```mermaid
 flowchart LR
-    P["041<br/>Expresiones<br/>algebraicas y términos"] --> C
-    subgraph C["042 · Propiedades distributiva,<br/>asociativa y conmutativa"]
+    P["Clase 041 · Expresiones algebraicas…"] --> D
+    subgraph CLASE["Clase 042 · Propiedades distributiva,…"]
         direction TB
-        D["Demostración<br/><code>algebra_properties</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>conmutativa_suma<br/>conmutativa_producto<br/>asociativa_suma_en_R<br/>… +3 más"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion algebra_properties"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 6: conmutativa_suma +5"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["043<br/>Ecuaciones lineales de<br/>una variable"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 043 · Ecuaciones lineales de…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["221<br/>Errores numéricos y<br/>convergencia"] --> C
-    subgraph C["222 · Bisección"]
+    P["Clase 221 · Errores numéricos y…"] --> D
+    subgraph CLASE["Clase 222 · Bisección"]
         direction TB
-        D["Demostración<br/><code>bisection</code>"] --> R["Resultados numéricos<br/>raiz<br/>residuo<br/>iteraciones_totales"]
-        D --> V["Verificaciones<br/>cambio_de_signo"]
-        D --> O["Contexto y estructura<br/>funcion<br/>intervalo_inicial<br/>iteraciones_registradas<br/>… +1 más"]
+        D["Demostracion bisection"]
+        D --> R["Resultados 3: raiz +2"]
+        D --> V["Comprobaciones 1: cambio_de_signo"]
+        D --> O["Contexto 4: funcion +3"]
     end
-    C --> N["223<br/>Newton-Raphson"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 223 · Newton-Raphson"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

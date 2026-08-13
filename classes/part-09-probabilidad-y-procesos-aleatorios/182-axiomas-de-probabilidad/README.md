@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["181<br/>Experimentos, espacio<br/>muestral y eventos"] --> C
-    subgraph C["182 · Axiomas de probabilidad"]
+    P["Clase 181 · Experimentos, espacio…"] --> D
+    subgraph CLASE["Clase 182 · Axiomas de probabilidad"]
         direction TB
-        D["Demostración<br/><code>axioms</code>"] --> R["Resultados numéricos<br/>P(∅)<br/>P(Aᶜ)"]
-        D --> V["Verificaciones<br/>axioma_1_no_negatividad<br/>axioma_2_P(Ω)=1<br/>axioma_3_aditividad<br/>… +2 más"]
-        D --> O["Contexto y estructura<br/>distribucion"]
+        D["Demostracion axioms"]
+        D --> R["Resultados 2: P∅ +1"]
+        D --> V["Comprobaciones 5: axioma_1_no_negativid… +4"]
+        D --> O["Contexto 1: distribucion"]
     end
-    C --> N["183<br/>Reglas de suma y<br/>producto"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 183 · Reglas de suma y producto"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["173<br/>Integrales dobles"] --> C
-    subgraph C["174 · Integrales triples"]
+    P["Clase 173 · Integrales dobles"] --> D
+    subgraph CLASE["Clase 174 · Integrales triples"]
         direction TB
-        D["Demostración<br/><code>triple_integrals</code>"] --> R["Resultados numéricos<br/>volumen_aproximado<br/>volumen_exacto<br/>masa_aproximada<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>region<br/>densidad<br/>coste"]
+        D["Demostracion triple_integrals"]
+        D --> R["Resultados 5: volumen_aproximado +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: region +2"]
     end
-    C --> N["175<br/>Campos vectoriales"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 175 · Campos vectoriales"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

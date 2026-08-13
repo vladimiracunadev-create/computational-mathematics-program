@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["310<br/>Convolución discreta"] --> C
-    subgraph C["311 · CNN y receptive fields"]
+    P["Clase 310 · Convolución discreta"] --> D
+    subgraph CLASE["Clase 311 · CNN y receptive fields"]
         direction TB
-        D["Demostración<br/><code>cnn_receptive_fields</code>"] --> R["Resultados numéricos<br/>campo_receptivo_final<br/>parametros_2x(3x3)<br/>parametros_1x(5x5)"]
-        D --> V["Verificaciones<br/>dos_conv_3x3_equivalen_a_una_5x5"]
-        D --> O["Contexto y estructura<br/>arquitectura<br/>traza<br/>formula<br/>… +1 más"]
+        D["Demostracion cnn_receptive_fields"]
+        D --> R["Resultados 3: campo_receptivo_final +2"]
+        D --> V["Comprobaciones 1: dos_conv_3x3_equivale…"]
+        D --> O["Contexto 4: arquitectura +3"]
     end
-    C --> N["312<br/>Pooling y downsampling"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 312 · Pooling y downsampling"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

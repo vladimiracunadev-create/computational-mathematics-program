@@ -35,11 +35,11 @@ Raíces, interpolación, splines, diferenciación y cuadratura numérica, sistem
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L221["221<br/>Errores numéricos y<br/>convergencia"]
-        L222["222<br/>Bisección"]
-        L223["223<br/>Newton-Raphson"]
-        L224["224<br/>Método de la secante"]
-        L225["225<br/>Interpolación de<br/>Lagrange"]
+        L221["221 · Errores numéricos y…"]
+        L222["222 · Bisección"]
+        L223["223 · Newton-Raphson"]
+        L224["224 · Método de la secante"]
+        L225["225 · Interpolación de Lagrange"]
         L221 --> L222
         L222 --> L223
         L223 --> L224
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L226["226<br/>Splines"]
-        L227["227<br/>Diferenciación numérica"]
-        L228["228<br/>Cuadratura numérica"]
-        L229["229<br/>Regla del trapecio"]
-        L230["230<br/>Simpson"]
+        L226["226 · Splines"]
+        L227["227 · Diferenciación numérica"]
+        L228["228 · Cuadratura numérica"]
+        L229["229 · Regla del trapecio"]
+        L230["230 · Simpson"]
         L226 --> L227
         L227 --> L228
         L228 --> L229
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L231["231<br/>Sistemas lineales<br/>directos"]
-        L232["232<br/>Jacobi y Gauss-Seidel"]
-        L233["233<br/>Métodos iterativos y<br/>tolerancias"]
-        L234["234<br/>Mínimos cuadrados<br/>numéricos"]
-        L235["235<br/>Ecuaciones diferenciales<br/>ordinarias"]
+        L231["231 · Sistemas lineales directos"]
+        L232["232 · Jacobi y Gauss-Seidel"]
+        L233["233 · Métodos iterativos y…"]
+        L234["234 · Mínimos cuadrados numéricos"]
+        L235["235 · Ecuaciones diferenciales…"]
         L231 --> L232
         L232 --> L233
         L233 --> L234
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L236["236<br/>Método de Euler"]
-        L237["237<br/>Runge-Kutta"]
-        L238["238<br/>Introducción a PDE y<br/>discretización"]
-        L239["239<br/>Computación científica<br/>con SciPy"]
-        L240["240<br/>Capstone: solver<br/>numérico con informe de<br/>error"]
+        L236["236 · Método de Euler"]
+        L237["237 · Runge-Kutta"]
+        L238["238 · Introducción a PDE y…"]
+        L239["239 · Computación científica con…"]
+        L240["240 · Capstone: solver numérico…"]
         L236 --> L237
         L237 --> L238
         L238 --> L239

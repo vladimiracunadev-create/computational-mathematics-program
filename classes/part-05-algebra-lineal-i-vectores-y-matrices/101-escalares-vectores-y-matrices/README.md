@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["100<br/>Capstone: modelar<br/>dependencias con<br/>grafos"] --> C
-    subgraph C["101 · Escalares, vectores y<br/>matrices"]
+    P["Clase 100 · Capstone: modelar…"] --> D
+    subgraph CLASE["Clase 101 · Escalares, vectores y matrices"]
         direction TB
-        D["Demostración<br/><code>scalars_vectors_matrices</code>"] --> R["Resultados numéricos<br/>escalar"]
-        D --> V["Verificaciones<br/>un_tensor_de_orden_0_es_un_escalar"]
-        D --> O["Contexto y estructura<br/>vector<br/>shape_vector<br/>matriz<br/>… +3 más"]
+        D["Demostracion scalars_vectors_matrices"]
+        D --> R["Resultados 1: escalar"]
+        D --> V["Comprobaciones 1: un_tensor_de_orden_0_…"]
+        D --> O["Contexto 6: vector +5"]
     end
-    C --> N["102<br/>Operaciones con<br/>vectores"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 102 · Operaciones con vectores"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

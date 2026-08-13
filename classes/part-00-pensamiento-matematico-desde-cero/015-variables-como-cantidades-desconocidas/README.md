@@ -34,15 +34,16 @@ residuo = a·x + b − c  (debe ser 0)
 
 ```mermaid
 flowchart LR
-    P["014<br/>Estimación y cálculo<br/>mental"] --> C
-    subgraph C["015 · Variables como cantidades<br/>desconocidas"]
+    P["Clase 014 · Estimación y cálculo…"] --> D
+    subgraph CLASE["Clase 015 · Variables como cantidades…"]
         direction TB
-        D["Demostración<br/><code>variables</code>"] --> R["Resultados numéricos<br/>x<br/>verificacion<br/>residuo"]
-        D --> V["Verificaciones<br/>resuelta"]
-        D --> O["Contexto y estructura<br/>ecuacion"]
+        D["Demostracion variables"]
+        D --> R["Resultados 3: x +2"]
+        D --> V["Comprobaciones 1: resuelta"]
+        D --> O["Contexto 1: ecuacion"]
     end
-    C --> N["016<br/>Expresiones y fórmulas"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 016 · Expresiones y fórmulas"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

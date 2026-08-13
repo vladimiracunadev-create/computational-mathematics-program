@@ -34,15 +34,16 @@ formas estables: expm1, log1p, conjugado
 
 ```mermaid
 flowchart LR
-    P["039<br/>Reproducibilidad<br/>numérica entre<br/>plataformas"] --> C
-    subgraph C["040 · Capstone: auditor de<br/>precisión numérica"]
+    P["Clase 039 · Reproducibilidad…"] --> D
+    subgraph CLASE["Clase 040 · Capstone: auditor de…"]
         direction TB
-        D["Demostración<br/><code>capstone_precision_auditor</code>"] --> R["Resultados numéricos<br/>expresiones_auditadas"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>informe<br/>regla"]
+        D["Demostracion capstone_precision_auditor"]
+        D --> R["Resultados 1: expresiones_auditadas"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: informe +1"]
     end
-    C --> N["041<br/>Expresiones<br/>algebraicas y términos"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 041 · Expresiones algebraicas…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

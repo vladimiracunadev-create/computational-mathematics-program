@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["160<br/>Capstone: optimizar y<br/>acumular una señal"] --> C
-    subgraph C["161 · Funciones de varias<br/>variables"]
+    P["Clase 160 · Capstone: optimizar y…"] --> D
+    subgraph CLASE["Clase 161 · Funciones de varias variables"]
         direction TB
-        D["Demostración<br/><code>multivariable_functions</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>no_conmuta_en_x_y"]
-        D --> O["Contexto y estructura<br/>funcion<br/>dominio<br/>codominio<br/>… +2 más"]
+        D["Demostracion multivariable_functions"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: no_conmuta_en_x_y"]
+        D --> O["Contexto 5: funcion +4"]
     end
-    C --> N["162<br/>Superficies y curvas<br/>de nivel"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 162 · Superficies y curvas de…"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

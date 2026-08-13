@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["252<br/>Método de Newton"] --> C
-    subgraph C["253 · Quasi-Newton y BFGS"]
+    P["Clase 252 · Método de Newton"] --> D
+    subgraph CLASE["Clase 253 · Quasi-Newton y BFGS"]
         direction TB
-        D["Demostración<br/><code>quasi_newton</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>no_calcula_el_hessiano"]
-        D --> O["Contexto y estructura<br/>metodo<br/>historial<br/>x_final<br/>… +3 más"]
+        D["Demostracion quasi_newton"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: no_calcula_el_hessiano"]
+        D --> O["Contexto 6: metodo +5"]
     end
-    C --> N["254<br/>Line search"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 254 · Line search"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

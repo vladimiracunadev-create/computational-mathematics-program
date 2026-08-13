@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["147<br/>Regla de la cadena"] --> C
-    subgraph C["148 · Derivadas de exponenciales<br/>y logaritmos"]
+    P["Clase 147 · Regla de la cadena"] --> D
+    subgraph CLASE["Clase 148 · Derivadas de exponenciales y…"]
         direction TB
-        D["Demostración<br/><code>exp_log_derivatives</code>"] --> R["Resultados numéricos<br/>d(e^x)/dx_numerica<br/>e^x<br/>d(ln x)/dx_numerica<br/>… +3 más"]
-        D --> V["Verificaciones<br/>es_su_propia_derivada"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion exp_log_derivatives"]
+        D --> R["Resultados 6: de^x/dx_numerica +5"]
+        D --> V["Comprobaciones 1: es_su_propia_derivada"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["149<br/>Derivadas<br/>trigonométricas"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 149 · Derivadas trigonométricas"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

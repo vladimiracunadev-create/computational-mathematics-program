@@ -34,15 +34,16 @@ r₁ + r₂ = −b,   r₁·r₂ = c
 
 ```mermaid
 flowchart LR
-    P["046<br/>Polinomios y<br/>operaciones"] --> C
-    subgraph C["047 · Factorización elemental"]
+    P["Clase 046 · Polinomios y operaciones"] --> D
+    subgraph CLASE["Clase 047 · Factorización elemental"]
         direction TB
-        D["Demostración<br/><code>factoring</code>"] --> R["Resultados numéricos<br/>suma_de_raices<br/>suma_teorica_-b<br/>producto_de_raices<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>polinomio<br/>raices<br/>factorizacion"]
+        D["Demostracion factoring"]
+        D --> R["Resultados 4: suma_de_raices +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: polinomio +2"]
     end
-    C --> N["048<br/>Ecuaciones cuadráticas"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 048 · Ecuaciones cuadráticas"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["299<br/>Generalización,<br/>validación y leakage"] --> C
-    subgraph C["300 · Capstone: derivar y<br/>comparar 6 algoritmos ML"]
+    P["Clase 299 · Generalización,…"] --> D
+    subgraph CLASE["Clase 300 · Capstone: derivar y comparar…"]
         direction TB
-        D["Demostración<br/><code>capstone_six_algorithms</code>"] --> R["Resultados numéricos<br/>linea_base_por_azar"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>protocolo<br/>accuracy_en_test<br/>mejor<br/>… +3 más"]
+        D["Demostracion capstone_six_algorithms"]
+        D --> R["Resultados 1: linea_base_por_azar"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: protocolo +5"]
     end
-    C --> N["301<br/>Perceptrón y<br/>separabilidad"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 301 · Perceptrón y separabilidad"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

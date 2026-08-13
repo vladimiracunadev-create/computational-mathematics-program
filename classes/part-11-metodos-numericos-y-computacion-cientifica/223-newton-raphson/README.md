@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["222<br/>Bisección"] --> C
-    subgraph C["223 · Newton-Raphson"]
+    P["Clase 222 · Bisección"] --> D
+    subgraph CLASE["Clase 223 · Newton-Raphson"]
         direction TB
-        D["Demostración<br/><code>newton_raphson</code>"] --> R["Resultados numéricos<br/>punto_inicial<br/>raiz<br/>iteraciones<br/>… +1 más"]
-        D --> V["Verificaciones<br/>duplica_digitos_por_iteracion"]
-        D --> O["Contexto y estructura<br/>funcion<br/>historial<br/>riesgo"]
+        D["Demostracion newton_raphson"]
+        D --> R["Resultados 4: punto_inicial +3"]
+        D --> V["Comprobaciones 1: duplica_digitos_por_i…"]
+        D --> O["Contexto 3: funcion +2"]
     end
-    C --> N["224<br/>Método de la secante"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 224 · Método de la secante"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

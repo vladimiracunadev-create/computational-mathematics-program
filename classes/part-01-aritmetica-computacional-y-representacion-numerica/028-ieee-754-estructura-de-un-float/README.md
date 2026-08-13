@@ -34,15 +34,16 @@ float64: 1 bit de signo + 11 de exponente + 52 de mantisa = 64
 
 ```mermaid
 flowchart LR
-    P["027<br/>Punto fijo frente a<br/>punto flotante"] --> C
-    subgraph C["028 · IEEE 754: estructura de un<br/>float"]
+    P["Clase 027 · Punto fijo frente a…"] --> D
+    subgraph CLASE["Clase 028 · IEEE 754: estructura de un…"]
         direction TB
-        D["Demostración<br/><code>ieee754_layout</code>"] --> R["Resultados numéricos<br/>valor<br/>exponente_bruto<br/>sesgo<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>bits<br/>signo<br/>mantisa_bits"]
+        D["Demostracion ieee754_layout"]
+        D --> R["Resultados 5: valor +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: bits +2"]
     end
-    C --> N["029<br/>Por qué 0.1 + 0.2 no<br/>es exactamente 0.3"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 029 · Por qué 0.1 + 0.2 no es…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

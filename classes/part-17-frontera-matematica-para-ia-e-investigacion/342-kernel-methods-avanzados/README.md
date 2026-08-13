@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["341<br/>Gaussian Processes"] --> C
-    subgraph C["342 · Kernel methods avanzados"]
+    P["Clase 341 · Gaussian Processes"] --> D
+    subgraph CLASE["Clase 342 · Kernel methods avanzados"]
         direction TB
-        D["Demostración<br/><code>advanced_kernels</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>es_semidefinida_positiva<br/>suma_de_kernels_es_kernel<br/>producto_de_kernels_es_kernel"]
-        D --> O["Contexto y estructura<br/>kernels<br/>matriz_de_Gram_RBF<br/>autovalores_de_Gram<br/>… +2 más"]
+        D["Demostracion advanced_kernels"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 3: es_semidefinida_posit… +2"]
+        D --> O["Contexto 5: kernels +4"]
     end
-    C --> N["343<br/>MCMC avanzado"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 343 · MCMC avanzado"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

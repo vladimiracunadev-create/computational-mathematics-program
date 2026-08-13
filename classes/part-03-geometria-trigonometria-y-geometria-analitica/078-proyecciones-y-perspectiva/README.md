@@ -34,15 +34,16 @@ perspectiva: x' = f·x/z,  y' = f·y/z
 
 ```mermaid
 flowchart LR
-    P["077<br/>Geometría 3D y planos"] --> C
-    subgraph C["078 · Proyecciones y perspectiva"]
+    P["Clase 077 · Geometría 3D y planos"] --> D
+    subgraph CLASE["Clase 078 · Proyecciones y perspectiva"]
         direction TB
-        D["Demostración<br/><code>projection</code>"] --> R["Resultados numéricos<br/>perspectiva_x'_con_f=2_z=5"]
-        D --> V["Verificaciones<br/>residuo_ortogonal_a_u<br/>pitagoras<br/>objetos_lejanos_se_encogen"]
-        D --> O["Contexto y estructura<br/>v<br/>direccion_u<br/>proyeccion<br/>… +1 más"]
+        D["Demostracion projection"]
+        D --> R["Resultados 1: perspectiva_x'_con_f=…"]
+        D --> V["Comprobaciones 3: residuo_ortogonal_a_u +2"]
+        D --> O["Contexto 4: v +3"]
     end
-    C --> N["079<br/>Aplicaciones en<br/>visión, robótica y<br/>videojuegos"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 079 · Aplicaciones en visión,…"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

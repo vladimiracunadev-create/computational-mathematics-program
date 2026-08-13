@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["129<br/>Descomposición LU"] --> C
-    subgraph C["130 · Descomposición QR"]
+    P["Clase 129 · Descomposición LU"] --> D
+    subgraph CLASE["Clase 130 · Descomposición QR"]
         direction TB
-        D["Demostración<br/><code>qr_decomposition</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>Q_es_ortonormal<br/>R_es_triangular_superior"]
-        D --> O["Contexto y estructura<br/>A<br/>Q<br/>R<br/>… +2 más"]
+        D["Demostracion qr_decomposition"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 2: Q_es_ortonormal +1"]
+        D --> O["Contexto 5: A +4"]
     end
-    C --> N["131<br/>Mínimos cuadrados<br/>lineales"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 131 · Mínimos cuadrados lineales"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

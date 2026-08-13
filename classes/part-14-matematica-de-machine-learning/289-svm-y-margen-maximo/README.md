@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["288<br/>k-Nearest Neighbors y<br/>métricas"] --> C
-    subgraph C["289 · SVM y margen máximo"]
+    P["Clase 288 · k-Nearest Neighbors y…"] --> D
+    subgraph CLASE["Clase 289 · SVM y margen máximo"]
         direction TB
-        D["Demostración<br/><code>svm_margin</code>"] --> R["Resultados numéricos<br/>b<br/>norma_de_w<br/>ancho_del_margen_2/|w|<br/>… +3 más"]
-        D --> V["Verificaciones<br/>solo_los_vectores_de_soporte_definen_la_frontera"]
-        D --> O["Contexto y estructura<br/>w<br/>objetivo"]
+        D["Demostracion svm_margin"]
+        D --> R["Resultados 6: b +5"]
+        D --> V["Comprobaciones 1: solo_los_vectores_de_…"]
+        D --> O["Contexto 2: w +1"]
     end
-    C --> N["290<br/>Kernel trick"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 290 · Kernel trick"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

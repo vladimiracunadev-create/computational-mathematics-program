@@ -35,15 +35,16 @@ paridad: sin(−θ) = −sin θ,  cos(−θ) = cos θ
 
 ```mermaid
 flowchart LR
-    P["066<br/>Identidades<br/>trigonométricas<br/>básicas"] --> C
-    subgraph C["067 · Círculo unitario"]
+    P["Clase 066 · Identidades…"] --> D
+    subgraph CLASE["Clase 067 · Círculo unitario"]
         direction TB
-        D["Demostración<br/><code>unit_circle</code>"] --> R["Resultados numéricos<br/>radio<br/>periodo_sin"]
-        D --> V["Verificaciones<br/>sin_es_impar<br/>cos_es_par"]
-        D --> O["Contexto y estructura<br/>coordenadas"]
+        D["Demostracion unit_circle"]
+        D --> R["Resultados 2: radio +1"]
+        D --> V["Comprobaciones 2: sin_es_impar +1"]
+        D --> O["Contexto 1: coordenadas"]
     end
-    C --> N["068<br/>Coordenadas<br/>cartesianas"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 068 · Coordenadas cartesianas"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

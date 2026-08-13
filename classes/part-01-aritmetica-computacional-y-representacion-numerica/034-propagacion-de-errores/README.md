@@ -34,15 +34,16 @@ error de la suma compensada (Kahan): O(ε)
 
 ```mermaid
 flowchart LR
-    P["033<br/>Overflow y underflow<br/>flotante"] --> C
-    subgraph C["034 · Propagación de errores"]
+    P["Clase 033 · Overflow y underflow…"] --> D
+    subgraph CLASE["Clase 034 · Propagación de errores"]
         direction TB
-        D["Demostración<br/><code>error_propagation</code>"] --> R["Resultados numéricos<br/>n_sumas<br/>suma_acumulada<br/>valor_exacto<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>recomendacion"]
+        D["Demostracion error_propagation"]
+        D --> R["Resultados 6: n_sumas +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: recomendacion"]
     end
-    C --> N["035<br/>Condicionamiento de<br/>problemas"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 035 · Condicionamiento de…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

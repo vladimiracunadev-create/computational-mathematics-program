@@ -39,16 +39,16 @@ resumen_extendido: |
 
 mapa: |
   flowchart TD
-      A["041-045<br/>Manipulación simbólica<br/>términos · propiedades · ecuaciones · sistemas"] --> B["046-049<br/>Polinomios<br/>operaciones · factorización · cuadráticas"]
-      A --> C["050-051<br/>Exponentes y logaritmos<br/>leyes · cambio de base"]
-      B --> D["052-056<br/>Familias de funciones<br/>lineal · cuadrática · exponencial · logarítmica"]
+      A["Clases 041-045 · Manipulacion simbolica"] --> B["Clases 046-049 · Polinomios y cuadraticas"]
+      A --> C["Clases 050-051 · Exponentes y logaritmos"]
+      B --> D["Clases 052-056 · Familias de funciones"]
       C --> D
-      D --> E["057-059<br/>Operaciones con funciones<br/>composición · inversa · por tramos"]
-      E --> F["060<br/>Capstone<br/>elegir modelo por residuos"]
-      E ==> G["Parte 07<br/>Cálculo: derivada de la composición"]
-      E -.-> H["Red neuronal = composición<br/>Parte 15"]
-      C -.-> I["Log-verosimilitud y cross-entropy<br/>Partes 10 y 13"]
-      E -.-> J["ReLU es una función por tramos<br/>Parte 15"]
+      D --> E["Clases 057-059 · Composicion, inversa y tramos"]
+      E --> F["Clase 060 · Capstone eleccion de modelo"]
+      E ==> G["Parte 07 · Derivada de la composicion"]
+      E -.-> H["Red neuronal como composicion · Parte 15"]
+      C -.-> I["Log-verosimilitud y cross-entropy · Partes 10 y 13"]
+      E -.-> J["ReLU es una funcion por tramos · Parte 15"]
 
 glosario:
   - termino: "Término semejante"

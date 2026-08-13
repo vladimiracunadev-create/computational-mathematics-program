@@ -34,15 +34,16 @@ la suma es conmutativa pero no asociativa
 
 ```mermaid
 flowchart LR
-    P["038<br/>Racional exacto y<br/>Fraction"] --> C
-    subgraph C["039 · Reproducibilidad numérica<br/>entre plataformas"]
+    P["Clase 038 · Racional exacto y Fraction"] --> D
+    subgraph CLASE["Clase 039 · Reproducibilidad numérica…"]
         direction TB
-        D["Demostración<br/><code>reproducibility</code>"] --> R["Resultados numéricos<br/>suma_de_izquierda_a_derecha<br/>suma_de_derecha_a_izquierda<br/>suma_compensada"]
-        D --> V["Verificaciones<br/>coinciden<br/>suma_es_asociativa_en_R<br/>suma_es_asociativa_en_float64"]
-        D --> O["Contexto y estructura<br/>valores"]
+        D["Demostracion reproducibility"]
+        D --> R["Resultados 3: suma_de_izquierda_a_d… +2"]
+        D --> V["Comprobaciones 3: coinciden +2"]
+        D --> O["Contexto 1: valores"]
     end
-    C --> N["040<br/>Capstone: auditor de<br/>precisión numérica"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 040 · Capstone: auditor de…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

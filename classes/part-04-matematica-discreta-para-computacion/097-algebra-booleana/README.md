@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Simplificar una expresión booleana reduce puertas físicas sin cambiar su comportamiento.**
 
-Esta clase concreta ese objetivo sobre **Álgebra booleana**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,69 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
 
+## 🧩 Fórmulas de la clase
+
+```text
+absorción: a ∨ (a ∧ b) ≡ a
+distributiva: a ∧ (b ∨ c) ≡ (a∧b) ∨ (a∧c)
+complemento: a ∨ ¬a ≡ 1,  a ∧ ¬a ≡ 0
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["096<br/>DAG y orden topológico"] --> C
-    subgraph C["097 · Álgebra booleana"]
+    P["Clase 096 · DAG y orden topológico"] --> D
+    subgraph CLASE["Clase 097 · Álgebra booleana"]
         direction TB
-        D["Demostración<br/><code>boolean_algebra</code>"] --> R["Resultados numéricos<br/>casos<br/>puertas_ahorradas"]
-        D --> V["Verificaciones<br/>equivalentes<br/>absorcion_a∨(a∧b)"]
-        D --> O["Contexto y estructura<br/>expresion<br/>simplificada"]
+        D["Demostracion boolean_algebra"]
+        D --> R["Resultados 2: casos +1"]
+        D --> V["Comprobaciones 2: equivalentes +1"]
+        D --> O["Contexto 2: expresion +1"]
     end
-    C --> N["098<br/>Aritmética modular"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 098 · Aritmética modular"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Permutación cuenta orden; combinación cuenta selección.
+El álgebra de Boole, publicada en 1854, describió las leyes del razonamiento con
+símbolos. Ochenta años después, Claude Shannon mostró en su tesis de máster —una de las
+más influyentes de la historia— que esas mismas leyes describen los circuitos de
+conmutación. Ese puente es el fundamento del hardware digital.
+
+Simplificar una expresión booleana tiene una consecuencia física directa: menos
+términos significan menos puertas lógicas, menos área de silicio, menos consumo y menor
+retardo de propagación. La expresión `(a∧b) ∨ (a∧¬b) ∨ (a∧c)` se reduce a `a` por
+absorción y complemento, eliminando cuatro puertas.
+
+La verificación por tabla de verdad es exhaustiva y por tanto concluyente para pocas
+variables, pero su coste es 2ⁿ. Con veinte variables ya es un millón de filas, y ahí
+empieza el terreno del problema SAT, el primer problema que se demostró NP-completo
+(Cook, 1971). Que la verificación sea fácil y la búsqueda difícil es la esencia de esa
+clase de complejidad.
+
+En machine learning el álgebra booleana aparece de forma menos visible pero real: las
+máscaras de atención son matrices booleanas, los filtros de datos son expresiones
+booleanas, y la cuantización binaria de redes (BNN) opera con estas mismas leyes.
+
+## 🧮 Ejemplo trabajado
+
+Simplificar una expresión de tres términos.
+
+```text
+original:     (a∧b) ∨ (a∧¬b) ∨ (a∧c)
+
+paso 1: (a∧b) ∨ (a∧¬b) = a∧(b ∨ ¬b) = a∧1 = a
+paso 2: a ∨ (a∧c) = a                (absorción)
+
+simplificada: a
+
+Verificación exhaustiva: 8 casos (2³)
+  todas las asignaciones coinciden               ✓
+
+Puertas ahorradas: 4
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 097
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Simplificar sin verificar con tabla de verdad.
+2. Aplicar la distributiva de la conjunción como si fuera la de los números.
+3. Suponer que la verificación exhaustiva escala a muchas variables.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de circuitos digitales, optimización de condiciones y consultas, máscaras de
+atención y verificación formal de propiedades.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Shannon, C. *A Symbolic Analysis of Relay and Switching Circuits*. MIT, 1937](https://dspace.mit.edu/handle/1721.1/11173)
+- [Cook, S. *The Complexity of Theorem-Proving Procedures*. STOC, 1971](https://dl.acm.org/doi/10.1145/800157.805047)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

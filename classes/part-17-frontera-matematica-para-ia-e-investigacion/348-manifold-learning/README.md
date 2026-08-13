@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["347<br/>Wasserstein distance"] --> C
-    subgraph C["348 · Manifold learning"]
+    P["Clase 347 · Wasserstein distance"] --> D
+    subgraph CLASE["Clase 348 · Manifold learning"]
         direction TB
-        D["Demostración<br/><code>manifold_learning</code>"] --> R["Resultados numéricos<br/>puntos<br/>dimension_ambiente<br/>dimension_intrinseca<br/>… +3 más"]
-        D --> V["Verificaciones<br/>PCA_no_detecta_1_dimension"]
-        D --> O["Contexto y estructura<br/>autovalores_de_la_covarianza<br/>varianza_explicada_%<br/>por_que_falla_PCA<br/>… +1 más"]
+        D["Demostracion manifold_learning"]
+        D --> R["Resultados 6: puntos +5"]
+        D --> V["Comprobaciones 1: PCA_no_detecta_1_dime…"]
+        D --> O["Contexto 4: autovalores_de_la_cov… +3"]
     end
-    C --> N["349<br/>Geometría diferencial<br/>para ML"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 349 · Geometría diferencial…"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

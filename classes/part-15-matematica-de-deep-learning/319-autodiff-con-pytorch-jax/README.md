@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["318<br/>Optimización de redes<br/>profundas"] --> C
-    subgraph C["319 · Autodiff con PyTorch/JAX"]
+    P["Clase 318 · Optimización de redes…"] --> D
+    subgraph CLASE["Clase 319 · Autodiff con PyTorch/JAX"]
         direction TB
-        D["Demostración<br/><code>autodiff_frameworks</code>"] --> R["Resultados numéricos<br/>loss<br/>dloss/dw<br/>dloss/db<br/>… +1 más"]
-        D --> V["Verificaciones<br/>este_motor_no_requiere_torch"]
-        D --> O["Contexto y estructura<br/>expresion<br/>frameworks_disponibles<br/>lo_que_añaden_los_frameworks<br/>… +1 más"]
+        D["Demostracion autodiff_frameworks"]
+        D --> R["Resultados 4: loss +3"]
+        D --> V["Comprobaciones 1: este_motor_no_requier…"]
+        D --> O["Contexto 4: expresion +3"]
     end
-    C --> N["320<br/>Capstone: red neuronal<br/>desde cero en Python<br/>puro"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 320 · Capstone: red neuronal…"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

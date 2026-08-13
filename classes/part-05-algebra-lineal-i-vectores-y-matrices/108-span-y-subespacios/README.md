@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["107<br/>Independencia y<br/>dependencia lineal"] --> C
-    subgraph C["108 · Span y subespacios"]
+    P["Clase 107 · Independencia y…"] --> D
+    subgraph CLASE["Clase 108 · Span y subespacios"]
         direction TB
-        D["Demostración<br/><code>span_subspaces</code>"] --> R["Resultados numéricos<br/>dimension_del_span<br/>rango_al_añadirlo"]
-        D --> V["Verificaciones<br/>es_un_plano<br/>ahora_genera_R3<br/>subespacio_contiene_al_cero"]
-        D --> O["Contexto y estructura<br/>generadores<br/>vector_fuera_del_span"]
+        D["Demostracion span_subspaces"]
+        D --> R["Resultados 2: dimension_del_span +1"]
+        D --> V["Comprobaciones 3: es_un_plano +2"]
+        D --> O["Contexto 2: generadores +1"]
     end
-    C --> N["109<br/>Matrices y operaciones<br/>básicas"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 109 · Matrices y operaciones…"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

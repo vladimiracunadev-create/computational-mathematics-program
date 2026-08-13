@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["320<br/>Capstone: red neuronal<br/>desde cero en Python<br/>puro"] --> C
-    subgraph C["321 · Softmax y distribuciones<br/>categóricas"]
+    P["Clase 320 · Capstone: red neuronal…"] --> D
+    subgraph CLASE["Clase 321 · Softmax y distribuciones…"]
         direction TB
-        D["Demostración<br/><code>softmax_distributions</code>"] --> R["Resultados numéricos<br/>suman_1"]
-        D --> V["Verificaciones<br/>el_orden_se_conserva"]
-        D --> O["Contexto y estructura<br/>logits<br/>probabilidades<br/>invariante_a_desplazamiento<br/>… +4 más"]
+        D["Demostracion softmax_distributions"]
+        D --> R["Resultados 1: suman_1"]
+        D --> V["Comprobaciones 1: el_orden_se_conserva"]
+        D --> O["Contexto 7: logits +6"]
     end
-    C --> N["322<br/>Embeddings y similitud<br/>coseno"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 322 · Embeddings y similitud…"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["170<br/>Taylor multivariable"] --> C
-    subgraph C["171 · Optimización sin<br/>restricciones"]
+    P["Clase 170 · Taylor multivariable"] --> D
+    subgraph CLASE["Clase 171 · Optimización sin restricciones"]
         direction TB
-        D["Demostración<br/><code>unconstrained_optimization</code>"] --> R["Resultados numéricos<br/>learning_rate"]
-        D --> V["Verificaciones<br/>convergio"]
-        D --> O["Contexto y estructura<br/>funcion<br/>minimo_teorico<br/>historial<br/>… +2 más"]
+        D["Demostracion unconstrained_optimization"]
+        D --> R["Resultados 1: learning_rate"]
+        D --> V["Comprobaciones 1: convergio"]
+        D --> O["Contexto 5: funcion +4"]
     end
-    C --> N["172<br/>Multiplicadores de<br/>Lagrange"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 172 · Multiplicadores de…"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

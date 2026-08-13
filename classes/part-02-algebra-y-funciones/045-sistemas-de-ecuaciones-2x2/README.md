@@ -34,15 +34,16 @@ x = (c₁b₂ − c₂b₁)/det,   y = (a₁c₂ − a₂c₁)/det
 
 ```mermaid
 flowchart LR
-    P["044<br/>Desigualdades lineales"] --> C
-    subgraph C["045 · Sistemas de ecuaciones 2x2"]
+    P["Clase 044 · Desigualdades lineales"] --> D
+    subgraph CLASE["Clase 045 · Sistemas de ecuaciones 2x2"]
         direction TB
-        D["Demostración<br/><code>system_2x2</code>"] --> R["Resultados numéricos<br/>determinante<br/>x<br/>y<br/>… +2 más"]
-        D --> V["Verificaciones<br/>unica_solucion"]
-        D --> O["Contexto y estructura<br/>sistema"]
+        D["Demostracion system_2x2"]
+        D --> R["Resultados 5: determinante +4"]
+        D --> V["Comprobaciones 1: unica_solucion"]
+        D --> O["Contexto 1: sistema"]
     end
-    C --> N["046<br/>Polinomios y<br/>operaciones"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 046 · Polinomios y operaciones"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

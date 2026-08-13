@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["273<br/>Series y transformada<br/>de Fourier"] --> C
-    subgraph C["274 · FFT"]
+    P["Clase 273 · Series y transformada de…"] --> D
+    subgraph CLASE["Clase 274 · FFT"]
         direction TB
-        D["Demostración<br/><code>fft</code>"] --> R["Resultados numéricos<br/>muestras<br/>operaciones_DFT<br/>operaciones_FFT<br/>… +1 más"]
-        D --> V["Verificaciones<br/>coinciden<br/>fft_y_dft_coinciden"]
-        D --> O["Contexto y estructura<br/>picos_detectados<br/>frecuencias_reales<br/>requisito_del_algoritmo_radix2"]
+        D["Demostracion fft"]
+        D --> R["Resultados 4: muestras +3"]
+        D --> V["Comprobaciones 2: coinciden +1"]
+        D --> O["Contexto 3: picos_detectados +2"]
     end
-    C --> N["275<br/>Filtros y respuesta en<br/>frecuencia"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 275 · Filtros y respuesta en…"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

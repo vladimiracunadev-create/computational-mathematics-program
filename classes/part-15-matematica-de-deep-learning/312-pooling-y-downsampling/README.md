@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["311<br/>CNN y receptive fields"] --> C
-    subgraph C["312 · Pooling y downsampling"]
+    P["Clase 311 · CNN y receptive fields"] --> D
+    subgraph CLASE["Clase 312 · Pooling y downsampling"]
         direction TB
-        D["Demostración<br/><code>pooling</code>"] --> R["Resultados numéricos<br/>parametros_aprendidos"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>entrada_shape<br/>max_pool_2x2<br/>avg_pool_2x2<br/>… +5 más"]
+        D["Demostracion pooling"]
+        D --> R["Resultados 1: parametros_aprendidos"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 8: entrada_shape +7"]
     end
-    C --> N["313<br/>RNN y recurrencia"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 313 · RNN y recurrencia"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

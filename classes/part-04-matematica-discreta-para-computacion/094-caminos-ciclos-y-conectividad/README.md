@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**BFS recorre por niveles y encuentra el camino con menos aristas en tiempo O(V+E).**
 
-Esta clase concreta ese objetivo sobre **Caminos, ciclos y conectividad**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,71 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
 
+## 🧩 Fórmulas de la clase
+
+```text
+coste BFS: O(V + E)
+distancia BFS = número mínimo de aristas
+excentricidad = máxima distancia desde un vértice
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["093<br/>Grafos: vértices y<br/>aristas"] --> C
-    subgraph C["094 · Caminos, ciclos y<br/>conectividad"]
+    P["Clase 093 · Grafos: vértices y aristas"] --> D
+    subgraph CLASE["Clase 094 · Caminos, ciclos y conectividad"]
         direction TB
-        D["Demostración<br/><code>paths_connectivity</code>"] --> R["Resultados numéricos<br/>excentricidad"]
-        D --> V["Verificaciones<br/>todos_alcanzables"]
-        D --> O["Contexto y estructura<br/>origen<br/>orden_de_visita<br/>distancias<br/>… +1 más"]
+        D["Demostracion paths_connectivity"]
+        D --> R["Resultados 1: excentricidad"]
+        D --> V["Comprobaciones 1: todos_alcanzables"]
+        D --> O["Contexto 4: origen +3"]
     end
-    C --> N["095<br/>Árboles y árboles de<br/>expansión"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 095 · Árboles y árboles de…"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> La aritmética modular es la base de hashing, criptografía y checksums.
+El recorrido en anchura visita primero todos los vecinos, luego los vecinos de los
+vecinos, y así sucesivamente. Esa disciplina por niveles garantiza que la primera vez
+que se alcanza un vértice se ha hecho por el camino con **menos aristas**, que es el
+camino más corto en un grafo no ponderado.
+
+La implementación necesita una cola (FIFO) y un conjunto de visitados. Cambiar la cola
+por una pila convierte el algoritmo en DFS, con propiedades muy distintas: DFS no
+garantiza caminos mínimos pero sirve para detectar ciclos y para ordenar
+topológicamente. La estructura de datos determina el comportamiento.
+
+El coste `O(V + E)` es óptimo: cada vértice y cada arista se procesan una vez. Con
+pesos en las aristas, BFS deja de servir y hace falta Dijkstra, cuyo coste sube a
+`O((V+E) log V)` por la cola de prioridad.
+
+La **excentricidad** de un vértice —la mayor distancia a cualquier otro— y el diámetro
+del grafo se calculan con BFS desde cada vértice. En redes sociales esas métricas dan
+lugar al fenómeno de los «seis grados de separación», y en un pipeline indican cuántas
+etapas secuenciales hay como mínimo.
+
+## 🧮 Ejemplo trabajado
+
+BFS desde «entrada» en el pipeline.
+
+```text
+orden de visita:
+  entrada → limpieza → features → split → entrenamiento → evaluacion
+
+distancias (en aristas):
+  entrada       0
+  limpieza      1
+  features      2
+  split         2
+  entrenamiento 3
+  evaluacion    4
+
+todos alcanzables: 6/6                ✓
+excentricidad de entrada: 4
+coste: O(V + E) = O(6 + 6)
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 094
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Usar una pila en lugar de una cola y obtener DFS sin darse cuenta.
+2. Aplicar BFS a un grafo con pesos esperando el camino de coste mínimo.
+3. No marcar los vértices como visitados y entrar en bucle infinito.
+
+## 🚀 Dónde se usa de verdad
+
+Camino más corto en grafos no ponderados, detección de componentes conexas, análisis de
+alcance en redes y niveles de un pipeline.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022, cap. 20](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
+- [Python: `collections.deque`](https://docs.python.org/3/library/collections.html#collections.deque)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -35,11 +35,11 @@ Entropía, entropía cruzada, divergencias, información mutua, codificación, m
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L261["261<br/>Información y sorpresa"]
-        L262["262<br/>Entropía de Shannon"]
-        L263["263<br/>Entropía cruzada"]
-        L264["264<br/>Divergencia KL"]
-        L265["265<br/>Jensen-Shannon<br/>divergence"]
+        L261["261 · Información y sorpresa"]
+        L262["262 · Entropía de Shannon"]
+        L263["263 · Entropía cruzada"]
+        L264["264 · Divergencia KL"]
+        L265["265 · Jensen-Shannon divergence"]
         L261 --> L262
         L262 --> L263
         L263 --> L264
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L266["266<br/>Información mutua"]
-        L267["267<br/>Principio de máxima<br/>entropía"]
-        L268["268<br/>Codificación y<br/>compresión"]
-        L269["269<br/>Señales discretas y<br/>continuas"]
-        L270["270<br/>Muestreo y aliasing"]
+        L266["266 · Información mutua"]
+        L267["267 · Principio de máxima entropía"]
+        L268["268 · Codificación y compresión"]
+        L269["269 · Señales discretas y continuas"]
+        L270["270 · Muestreo y aliasing"]
         L266 --> L267
         L267 --> L268
         L268 --> L269
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L271["271<br/>Convolución"]
-        L272["272<br/>Correlación de señales"]
-        L273["273<br/>Series y transformada de<br/>Fourier"]
-        L274["274<br/>FFT"]
-        L275["275<br/>Filtros y respuesta en<br/>frecuencia"]
+        L271["271 · Convolución"]
+        L272["272 · Correlación de señales"]
+        L273["273 · Series y transformada de…"]
+        L274["274 · FFT"]
+        L275["275 · Filtros y respuesta en…"]
         L271 --> L272
         L272 --> L273
         L273 --> L274
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L276["276<br/>Procesos estacionarios"]
-        L277["277<br/>Autocorrelación"]
-        L278["278<br/>Series temporales y<br/>ventanas"]
-        L279["279<br/>Espectro y densidad<br/>espectral"]
-        L280["280<br/>Capstone: analizar señal<br/>y construir features"]
+        L276["276 · Procesos estacionarios"]
+        L277["277 · Autocorrelación"]
+        L278["278 · Series temporales y ventanas"]
+        L279["279 · Espectro y densidad espectral"]
+        L280["280 · Capstone: analizar señal y…"]
         L276 --> L277
         L277 --> L278
         L278 --> L279

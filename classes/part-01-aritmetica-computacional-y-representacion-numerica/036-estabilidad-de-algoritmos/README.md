@@ -35,15 +35,16 @@ invariante: r₁·r₂ = c/a
 
 ```mermaid
 flowchart LR
-    P["035<br/>Condicionamiento de<br/>problemas"] --> C
-    subgraph C["036 · Estabilidad de algoritmos"]
+    P["Clase 035 · Condicionamiento de…"] --> D
+    subgraph CLASE["Clase 036 · Estabilidad de algoritmos"]
         direction TB
-        D["Demostración<br/><code>stability</code>"] --> R["Resultados numéricos<br/>raiz_pequena_ingenua<br/>raiz_pequena_estable<br/>raiz_grande<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>coeficientes"]
+        D["Demostracion stability"]
+        D --> R["Resultados 6: raiz_pequena_ingenua +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: coeficientes"]
     end
-    C --> N["037<br/>Precisión arbitraria y<br/>Decimal"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 037 · Precisión arbitraria y…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

@@ -35,15 +35,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["008<br/>Potencias y leyes de<br/>exponentes"] --> C
-    subgraph C["009 · Raíces y radicales"]
+    P["Clase 008 · Potencias y leyes de…"] --> D
+    subgraph CLASE["Clase 009 · Raíces y radicales"]
         direction TB
-        D["Demostración<br/><code>radicals</code>"] --> R["Resultados numéricos<br/>sqrt(2)<br/>2**0.5<br/>cuadrado_de_la_raiz<br/>… +2 más"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>raiz_par_de_negativo_en_R"]
+        D["Demostracion radicals"]
+        D --> R["Resultados 5: sqrt2 +4"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto 1: raiz_par_de_negativo_…"]
     end
-    C --> N["010<br/>Orden de operaciones y<br/>paréntesis"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 010 · Orden de operaciones y…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

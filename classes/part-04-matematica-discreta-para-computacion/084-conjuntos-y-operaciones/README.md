@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Inclusión-exclusión corrige el doble conteo al unir conjuntos que se solapan.**
 
-Esta clase concreta ese objetivo sobre **Conjuntos y operaciones**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,69 @@ Al terminar podrás:
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: contar dos veces al aplicar el principio de inclusión-exclusión.
 
+## 🧩 Fórmulas de la clase
+
+```text
+|A ∪ B| = |A| + |B| − |A ∩ B|
+|P(A)| = 2^|A|
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["083<br/>Lógica de predicados y<br/>cuantificadores"] --> C
-    subgraph C["084 · Conjuntos y operaciones"]
+    P["Clase 083 · Lógica de predicados y…"] --> D
+    subgraph CLASE["Clase 084 · Conjuntos y operaciones"]
         direction TB
-        D["Demostración<br/><code>sets</code>"] --> R["Resultados numéricos<br/>|A|+|B|-|A∩B|<br/>|A∪B|<br/>partes_de_A"]
-        D --> V["Verificaciones<br/>inclusion_exclusion_ok"]
-        D --> O["Contexto y estructura<br/>A<br/>B<br/>union<br/>… +3 más"]
+        D["Demostracion sets"]
+        D --> R["Resultados 3: A+B-A∩B +2"]
+        D --> V["Comprobaciones 1: inclusion_exclusion_ok"]
+        D --> O["Contexto 6: A +5"]
     end
-    C --> N["085<br/>Relaciones y<br/>propiedades"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 085 · Relaciones y propiedades"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> La aritmética modular es la base de hashing, criptografía y checksums.
+Un conjunto es una colección sin orden y sin repeticiones. Esa doble propiedad lo
+distingue de una lista y determina qué operaciones tienen sentido: unión, intersección,
+diferencia y diferencia simétrica, todas con implementación directa y eficiente en
+Python mediante `set`.
+
+El principio de inclusión-exclusión responde a una pregunta que la suma ingenua
+contesta mal: al contar los elementos de una unión, los que están en ambos conjuntos se
+cuentan dos veces, y hay que restarlos una. Con tres conjuntos la fórmula alterna signos
+—se suman los individuales, se restan las intersecciones dos a dos y se suma la triple—,
+patrón que generaliza a n conjuntos.
+
+El conjunto de partes de un conjunto de n elementos tiene 2ⁿ elementos, porque cada
+elemento está o no está: es la regla del producto aplicada n veces. Esa cifra explica
+por qué la búsqueda exhaustiva sobre subconjuntos es inviable salvo para n pequeño, y
+por qué la selección de características es un problema difícil.
+
+En probabilidad (parte 09), inclusión-exclusión reaparece intacta como la regla de la
+suma: `P(A∪B) = P(A) + P(B) − P(A∩B)`. Los conjuntos se convierten en eventos y los
+cardinales en probabilidades, pero la estructura es la misma.
+
+## 🧮 Ejemplo trabajado
+
+Operaciones e inclusión-exclusión con dos conjuntos.
+
+```text
+A = {1,2,3,4,5}       |A| = 5
+B = {4,5,6,7}         |B| = 4
+
+A ∪ B = {1,2,3,4,5,6,7}    |A∪B| = 7
+A ∩ B = {4,5}              |A∩B| = 2
+A − B = {1,2,3}
+A △ B = {1,2,3,6,7}        (diferencia simétrica)
+
+Inclusión-exclusión: 5 + 4 − 2 = 7 = |A∪B|      ✓
+Suma ingenua:        5 + 4     = 9              ✗ cuenta 4 y 5 dos veces
+
+Partes de A: 2⁵ = 32 subconjuntos
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +109,16 @@ compmath run 084
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Sumar cardinales de conjuntos que se solapan sin restar la intersección.
+2. Tratar un conjunto como una lista y esperar orden o repeticiones.
+3. Olvidar el conjunto vacío y el total al contar subconjuntos.
+
+## 🚀 Dónde se usa de verdad
+
+Consultas con condiciones múltiples, deduplicación, conteo de casos favorables en
+probabilidad y análisis de solapamiento entre poblaciones.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 2](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
+- [Python: tipo `set`](https://docs.python.org/3/library/stdtypes.html#set)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

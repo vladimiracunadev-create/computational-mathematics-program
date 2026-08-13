@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["240<br/>Capstone: solver<br/>numérico con informe<br/>de error"] --> C
-    subgraph C["241 · Problemas de optimización<br/>y función objetivo"]
+    P["Clase 240 · Capstone: solver…"] --> D
+    subgraph CLASE["Clase 241 · Problemas de optimización y…"]
         direction TB
-        D["Demostración<br/><code>objective_function</code>"] --> R["Resultados numéricos<br/>f(X0)<br/>valor_minimo"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>variables_de_decision<br/>funcion_objetivo<br/>sentido<br/>… +4 más"]
+        D["Demostracion objective_function"]
+        D --> R["Resultados 2: fX0 +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 7: variables_de_decision +6"]
     end
-    C --> N["242<br/>Convexidad"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 242 · Convexidad"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["243<br/>Gradiente y<br/>direcciones de<br/>descenso"] --> C
-    subgraph C["244 · Gradient descent"]
+    P["Clase 243 · Gradiente y direcciones…"] --> D
+    subgraph CLASE["Clase 244 · Gradient descent"]
         direction TB
-        D["Demostración<br/><code>gradient_descent</code>"] --> R["Resultados numéricos<br/>iteraciones<br/>lr_maximo_estable"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>funcion<br/>punto_inicial<br/>resultados<br/>… +1 más"]
+        D["Demostracion gradient_descent"]
+        D --> R["Resultados 2: iteraciones +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: funcion +3"]
     end
-    C --> N["245<br/>Stochastic gradient<br/>descent"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 245 · Stochastic gradient…"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

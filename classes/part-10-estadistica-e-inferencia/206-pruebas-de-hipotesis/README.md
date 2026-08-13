@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["205<br/>Intervalos de<br/>confianza"] --> C
-    subgraph C["206 · Pruebas de hipótesis"]
+    P["Clase 205 · Intervalos de confianza"] --> D
+    subgraph CLASE["Clase 206 · Pruebas de hipótesis"]
         direction TB
-        D["Demostración<br/><code>hypothesis_testing</code>"] --> R["Resultados numéricos<br/>alfa<br/>media_muestral<br/>error_estandar<br/>… +2 más"]
-        D --> V["Verificaciones<br/>no_rechazar_no_es_aceptar"]
-        D --> O["Contexto y estructura<br/>H0<br/>H1<br/>decision"]
+        D["Demostracion hypothesis_testing"]
+        D --> R["Resultados 5: alfa +4"]
+        D --> V["Comprobaciones 1: no_rechazar_no_es_ace…"]
+        D --> O["Contexto 3: H0 +2"]
     end
-    C --> N["207<br/>p-value correctamente<br/>interpretado"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 207 · p-value correctamente…"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

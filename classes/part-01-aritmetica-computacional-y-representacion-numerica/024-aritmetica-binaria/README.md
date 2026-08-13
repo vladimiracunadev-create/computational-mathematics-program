@@ -35,15 +35,16 @@ x & (x−1) apaga el bit menos significativo encendido
 
 ```mermaid
 flowchart LR
-    P["023<br/>Binario, octal y<br/>hexadecimal"] --> C
-    subgraph C["024 · Aritmética binaria"]
+    P["Clase 023 · Binario, octal y…"] --> D
+    subgraph CLASE["Clase 024 · Aritmética binaria"]
         direction TB
-        D["Demostración<br/><code>binary_arithmetic</code>"] --> R["Resultados numéricos<br/>a<<2 (multiplica por 4)<br/>a>>1 (divide por 2)"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>a<br/>b<br/>a+b<br/>… +3 más"]
+        D["Demostracion binary_arithmetic"]
+        D --> R["Resultados 2: a2 multiplica por 4 +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: a +5"]
     end
-    C --> N["025<br/>Enteros con signo y<br/>complemento a dos"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 025 · Enteros con signo y…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

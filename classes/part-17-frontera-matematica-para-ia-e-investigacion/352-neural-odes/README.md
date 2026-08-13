@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["351<br/>Stochastic<br/>differential equations"] --> C
-    subgraph C["352 · Neural ODEs"]
+    P["Clase 351 · Stochastic differential…"] --> D
+    subgraph CLASE["Clase 352 · Neural ODEs"]
         direction TB
-        D["Demostración<br/><code>neural_odes</code>"] --> R["Resultados numéricos<br/>z(T)_exacto<br/>dL/dθ_por_metodo_adjunto<br/>dL/dθ_analitico"]
-        D --> V["Verificaciones<br/>coinciden_aproximadamente"]
-        D --> O["Contexto y estructura<br/>ODE<br/>solucion_analitica<br/>convergencia_de_Euler<br/>… +4 más"]
+        D["Demostracion neural_odes"]
+        D --> R["Resultados 3: zT_exacto +2"]
+        D --> V["Comprobaciones 1: coinciden_aproximadam…"]
+        D --> O["Contexto 7: ODE +6"]
     end
-    C --> N["353<br/>Score matching"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 353 · Score matching"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

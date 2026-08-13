@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Intercambiar dos cuantificadores cambia el significado de la afirmación.**
 
-Esta clase concreta ese objetivo sobre **Lógica de predicados y cuantificadores**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,71 @@ Al terminar podrás:
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir que un grafo dirigido es acíclico sin verificarlo.
 
+## 🧩 Fórmulas de la clase
+
+```text
+¬(∀x P(x)) ≡ ∃x ¬P(x)
+∀x ∃y Q(x,y)   ≢   ∃y ∀x Q(x,y)
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["082<br/>Tablas de verdad y<br/>equivalencias"] --> C
-    subgraph C["083 · Lógica de predicados y<br/>cuantificadores"]
+    P["Clase 082 · Tablas de verdad y…"] --> D
+    subgraph CLASE["Clase 083 · Lógica de predicados y…"]
         direction TB
-        D["Demostración<br/><code>predicate_logic</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>∀x par(x)<br/>∃x par(x)<br/>negacion_de_∀_es_∃¬<br/>… +3 más"]
-        D --> O["Contexto y estructura<br/>universo"]
+        D["Demostracion predicate_logic"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 6: ∀x parx +5"]
+        D --> O["Contexto 1: universo"]
     end
-    C --> N["084<br/>Conjuntos y<br/>operaciones"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 084 · Conjuntos y operaciones"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Un DAG sin orden topológico contiene un ciclo: es un diagnóstico, no un error.
+La lógica de predicados añade a la proposicional la capacidad de hablar sobre objetos
+de un universo. `∀x P(x)` afirma que P vale para todos; `∃x P(x)`, que vale para al
+menos uno. La negación intercambia los cuantificadores y niega el predicado, que es la
+forma general de la regla que la clase 019 aplicó al contraejemplo.
+
+El punto delicado es el **orden**. `∀x ∃y (y > x)` dice que para cada x existe alguien
+mayor —cierto en los naturales—. `∃y ∀x (y > x)` dice que existe un número mayor que
+todos —falso—. Las mismas palabras en distinto orden afirman cosas distintas, y en un
+conjunto finito la segunda puede ser cierta mientras que en uno infinito no.
+
+Esta distinción no es académica. La definición de límite —«para todo ε existe un δ»—
+tiene ese orden y no el contrario: δ puede depender de ε. La convergencia uniforme
+exige el orden inverso —«existe un δ que sirve para todo ε»— y por eso es una condición
+más fuerte. Toda la parte 07 se apoya en leer esos cuantificadores correctamente.
+
+En teoría del aprendizaje (parte 17) los enunciados PAC tienen la misma estructura: para
+todo ε y δ, existe un tamaño muestral m tal que... Leer mal el orden convierte una
+garantía útil en una afirmación trivial o imposible.
+
+## 🧮 Ejemplo trabajado
+
+El orden de los cuantificadores en {1,...,6}.
+
+```text
+Universo: {1, 2, 3, 4, 5, 6}
+
+∀x par(x)   → Falso  (1 no es par)
+∃x par(x)   → Verdadero
+
+Negación: ¬(∀x par(x)) ≡ ∃x ¬par(x)  → Verdadero  ✓
+
+∀x ∃y (y > x):  ¿para cada x hay alguien mayor?
+  x=6 → no hay ninguno mayor en el universo → Falso
+
+∃y ∀x (y > x):  ¿hay uno mayor que todos?
+  ningún y supera a sí mismo → Falso
+
+En ℕ (infinito): el primero sería Verdadero y el segundo Falso.
+El orden importa.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 083
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Intercambiar cuantificadores al reescribir una definición.
+2. Negar un cuantificador sin cambiarlo por el otro.
+3. Olvidar declarar el universo sobre el que se cuantifica.
+
+## 🚀 Dónde se usa de verdad
+
+Definiciones de límite y continuidad, especificación formal de sistemas, cotas de
+aprendizaje PAC y verificación de programas.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A)
+- [Shalev-Shwartz & Ben-David. *Understanding Machine Learning*. Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

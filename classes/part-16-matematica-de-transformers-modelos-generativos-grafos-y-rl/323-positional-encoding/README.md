@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["322<br/>Embeddings y similitud<br/>coseno"] --> C
-    subgraph C["323 · Positional encoding"]
+    P["Clase 322 · Embeddings y similitud…"] --> D
+    subgraph CLASE["Clase 323 · Positional encoding"]
         direction TB
-        D["Demostración<br/><code>positional_encoding</code>"] --> R["Resultados numéricos<br/>dimension<br/>producto_pos0_pos1<br/>producto_pos0_pos5<br/>… +1 más"]
-        D --> V["Verificaciones<br/>la_similitud_decae_con_la_distancia<br/>extrapola_a_secuencias_mas_largas"]
-        D --> O["Contexto y estructura<br/>codificaciones<br/>normas<br/>alternativas"]
+        D["Demostracion positional_encoding"]
+        D --> R["Resultados 4: dimension +3"]
+        D --> V["Comprobaciones 2: la_similitud_decae_co… +1"]
+        D --> O["Contexto 3: codificaciones +2"]
     end
-    C --> N["324<br/>Query, Key y Value"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 324 · Query, Key y Value"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

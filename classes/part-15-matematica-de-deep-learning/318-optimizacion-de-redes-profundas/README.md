@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["317<br/>Embeddings como<br/>espacios vectoriales"] --> C
-    subgraph C["318 · Optimización de redes<br/>profundas"]
+    P["Clase 317 · Embeddings como espacios…"] --> D
+    subgraph CLASE["Clase 318 · Optimización de redes…"]
         direction TB
-        D["Demostración<br/><code>deep_optimization</code>"] --> R["Resultados numéricos<br/>semilla"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>objetivo<br/>lr_alto_sin_clipping<br/>lr_alto_con_clipping<br/>… +5 más"]
+        D["Demostracion deep_optimization"]
+        D --> R["Resultados 1: semilla"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 8: objetivo +7"]
     end
-    C --> N["319<br/>Autodiff con<br/>PyTorch/JAX"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 319 · Autodiff con PyTorch/JAX"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

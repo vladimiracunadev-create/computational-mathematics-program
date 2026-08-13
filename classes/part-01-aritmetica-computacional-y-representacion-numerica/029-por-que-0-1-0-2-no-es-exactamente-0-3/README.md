@@ -34,15 +34,16 @@ comparación correcta: math.isclose(a, b, rel_tol=...)
 
 ```mermaid
 flowchart LR
-    P["028<br/>IEEE 754: estructura<br/>de un float"] --> C
-    subgraph C["029 · Por qué 0.1 + 0.2 no es<br/>exactamente 0.3"]
+    P["Clase 028 · IEEE 754: estructura de…"] --> D
+    subgraph CLASE["Clase 029 · Por qué 0.1 + 0.2 no es…"]
         direction TB
-        D["Demostración<br/><code>why_point_one</code>"] --> R["Resultados numéricos<br/>0.1+0.2<br/>0.3<br/>diferencia"]
-        D --> V["Verificaciones<br/>iguales<br/>comparacion_correcta"]
-        D --> O["Contexto y estructura<br/>0.1_como_fraccion_exacta<br/>0.1_con_50_digitos"]
+        D["Demostracion why_point_one"]
+        D --> R["Resultados 3: 0.1+0.2 +2"]
+        D --> V["Comprobaciones 2: iguales +1"]
+        D --> O["Contexto 2: 0.1_como_fraccion_exa… +1"]
     end
-    C --> N["030<br/>Error absoluto y error<br/>relativo"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 030 · Error absoluto y error…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

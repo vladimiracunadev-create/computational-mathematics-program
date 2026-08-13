@@ -34,15 +34,16 @@ Decimal('0.1') · 3 == Decimal('0.3')  → True
 
 ```mermaid
 flowchart LR
-    P["036<br/>Estabilidad de<br/>algoritmos"] --> C
-    subgraph C["037 · Precisión arbitraria y<br/>Decimal"]
+    P["Clase 036 · Estabilidad de algoritmos"] --> D
+    subgraph CLASE["Clase 037 · Precisión arbitraria y Decimal"]
         direction TB
-        D["Demostración<br/><code>arbitrary_precision</code>"] --> R["Resultados numéricos<br/>precision_configurada<br/>1/3_float"]
-        D --> V["Verificaciones<br/>es_exactamente_0.3"]
-        D --> O["Contexto y estructura<br/>1/3_decimal<br/>suma_0.1x3_decimal<br/>coste"]
+        D["Demostracion arbitrary_precision"]
+        D --> R["Resultados 2: precision_configurada +1"]
+        D --> V["Comprobaciones 1: es_exactamente_0.3"]
+        D --> O["Contexto 3: 1/3_decimal +2"]
     end
-    C --> N["038<br/>Racional exacto y<br/>Fraction"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 038 · Racional exacto y Fraction"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

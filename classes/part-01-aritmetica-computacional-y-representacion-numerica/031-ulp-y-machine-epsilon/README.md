@@ -34,15 +34,16 @@ ulp(x) ≈ ε · 2^⌊log₂|x|⌋
 
 ```mermaid
 flowchart LR
-    P["030<br/>Error absoluto y error<br/>relativo"] --> C
-    subgraph C["031 · ULP y machine epsilon"]
+    P["Clase 030 · Error absoluto y error…"] --> D
+    subgraph CLASE["Clase 031 · ULP y machine epsilon"]
         direction TB
-        D["Demostración<br/><code>ulp_epsilon</code>"] --> R["Resultados numéricos<br/>sys.float_info.epsilon<br/>2**-52<br/>ulp_en_1.0<br/>… +3 más"]
-        D --> V["Verificaciones<br/>1.0 + eps != 1.0<br/>1.0 + eps/2 == 1.0"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion ulp_epsilon"]
+        D --> R["Resultados 6: sys.float_info.epsilon +5"]
+        D --> V["Comprobaciones 2: 1.0 + eps != 1.0 +1"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["032<br/>Cancelación<br/>catastrófica"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 032 · Cancelación catastrófica"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

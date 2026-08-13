@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["304<br/>Funciones de pérdida"] --> C
-    subgraph C["305 · Backpropagation paso a<br/>paso"]
+    P["Clase 304 · Funciones de pérdida"] --> D
+    subgraph CLASE["Clase 305 · Backpropagation paso a paso"]
         direction TB
-        D["Demostración<br/><code>backpropagation</code>"] --> R["Resultados numéricos<br/>objetivo<br/>dL/da2<br/>dL/dz2_simplificado<br/>… +3 más"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>entrada<br/>forward<br/>dL/dW2<br/>… +3 más"]
+        D["Demostracion backpropagation"]
+        D --> R["Resultados 6: objetivo +5"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto 6: entrada +5"]
     end
-    C --> N["306<br/>Computational graphs"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 306 · Computational graphs"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

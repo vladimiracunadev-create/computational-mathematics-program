@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["253<br/>Quasi-Newton y BFGS"] --> C
-    subgraph C["254 · Line search"]
+    P["Clase 253 · Quasi-Newton y BFGS"] --> D
+    subgraph CLASE["Clase 254 · Line search"]
         direction TB
-        D["Demostración<br/><code>line_search</code>"] --> R["Resultados numéricos<br/>f(x)<br/>c1<br/>alpha_aceptado"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>punto<br/>direccion<br/>intentos<br/>… +2 más"]
+        D["Demostracion line_search"]
+        D --> R["Resultados 3: fx +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 5: punto +4"]
     end
-    C --> N["255<br/>Regularización como<br/>optimización"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 255 · Regularización como…"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["185<br/>Independencia"] --> C
-    subgraph C["186 · Teorema de Bayes"]
+    P["Clase 185 · Independencia"] --> D
+    subgraph CLASE["Clase 186 · Teorema de Bayes"]
         direction TB
-        D["Demostración<br/><code>bayes</code>"] --> R["Resultados numéricos<br/>prevalencia_previa<br/>sensibilidad_P(+|enfermo)<br/>especificidad_P(-|sano)<br/>… +4 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>error_comun"]
+        D["Demostracion bayes"]
+        D --> R["Resultados 7: prevalencia_previa +6"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: error_comun"]
     end
-    C --> N["187<br/>Variables aleatorias<br/>discretas"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 187 · Variables aleatorias…"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

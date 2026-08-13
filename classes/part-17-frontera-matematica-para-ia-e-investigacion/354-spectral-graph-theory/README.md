@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["353<br/>Score matching"] --> C
-    subgraph C["354 · Spectral graph theory"]
+    P["Clase 353 · Score matching"] --> D
+    subgraph CLASE["Clase 354 · Spectral graph theory"]
         direction TB
-        D["Demostración<br/><code>spectral_graph_theory</code>"] --> R["Resultados numéricos<br/>nodos<br/>aristas<br/>conectividad_algebraica<br/>… +2 más"]
-        D --> V["Verificaciones<br/>grafo_conexo<br/>particion_correcta"]
-        D --> O["Contexto y estructura<br/>autovalores_ordenados<br/>vector_de_Fiedler<br/>particion<br/>… +1 más"]
+        D["Demostracion spectral_graph_theory"]
+        D --> R["Resultados 5: nodos +4"]
+        D --> V["Comprobaciones 2: grafo_conexo +1"]
+        D --> O["Contexto 4: autovalores_ordenados +3"]
     end
-    C --> N["355<br/>Causal inference"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 355 · Causal inference"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

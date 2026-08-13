@@ -34,15 +34,16 @@ inf − inf = NaN,  0/0 = NaN,  NaN != NaN
 
 ```mermaid
 flowchart LR
-    P["032<br/>Cancelación<br/>catastrófica"] --> C
-    subgraph C["033 · Overflow y underflow<br/>flotante"]
+    P["Clase 032 · Cancelación catastrófica"] --> D
+    subgraph CLASE["Clase 033 · Overflow y underflow flotante"]
         direction TB
-        D["Demostración<br/><code>float_overflow_underflow</code>"] --> R["Resultados numéricos<br/>max_float<br/>max*2_da_inf<br/>min_normal<br/>… +2 más"]
-        D --> V["Verificaciones<br/>underflow_a_cero<br/>inf-inf_es_nan"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion float_overflow_underflow"]
+        D --> R["Resultados 5: max_float +4"]
+        D --> V["Comprobaciones 2: underflow_a_cero +1"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["034<br/>Propagación de errores"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 034 · Propagación de errores"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

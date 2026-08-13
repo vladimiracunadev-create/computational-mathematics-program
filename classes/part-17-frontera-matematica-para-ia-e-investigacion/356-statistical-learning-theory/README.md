@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["355<br/>Causal inference"] --> C
-    subgraph C["356 · Statistical learning<br/>theory"]
+    P["Clase 355 · Causal inference"] --> D
+    subgraph CLASE["Clase 356 · Statistical learning theory"]
         direction TB
-        D["Demostración<br/><code>statistical_learning_theory</code>"] --> R["Resultados numéricos<br/>accuracy_esperada<br/>semilla"]
-        D --> V["Verificaciones<br/>mas_parametros_que_datos_memoriza<br/>el_riesgo_empirico_solo_no_basta"]
-        D --> O["Contexto y estructura<br/>señal_real_en_los_datos<br/>resultados<br/>descomposicion<br/>… +1 más"]
+        D["Demostracion statistical_learning_theory"]
+        D --> R["Resultados 2: accuracy_esperada +1"]
+        D --> V["Comprobaciones 2: mas_parametros_que_da… +1"]
+        D --> O["Contexto 4: señal_real_en_los_dat… +3"]
     end
-    C --> N["357<br/>VC dimension"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 357 · VC dimension"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

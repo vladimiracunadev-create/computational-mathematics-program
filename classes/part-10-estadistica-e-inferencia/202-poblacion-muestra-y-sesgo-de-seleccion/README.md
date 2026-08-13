@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["201<br/>Estadística<br/>descriptiva"] --> C
-    subgraph C["202 · Población, muestra y sesgo<br/>de selección"]
+    P["Clase 201 · Estadística descriptiva"] --> D
+    subgraph CLASE["Clase 202 · Población, muestra y sesgo…"]
         direction TB
-        D["Demostración<br/><code>population_sample</code>"] --> R["Resultados numéricos<br/>media_poblacional<br/>media_muestra_aleatoria<br/>error_muestra_aleatoria<br/>… +2 más"]
-        D --> V["Verificaciones<br/>el_tamaño_no_corrige_el_sesgo"]
-        D --> O["Contexto y estructura<br/>leccion"]
+        D["Demostracion population_sample"]
+        D --> R["Resultados 5: media_poblacional +4"]
+        D --> V["Comprobaciones 1: el_tamaño_no_corrige_…"]
+        D --> O["Contexto 1: leccion"]
     end
-    C --> N["203<br/>Muestreo y<br/>distribuciones<br/>muestrales"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 203 · Muestreo y…"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

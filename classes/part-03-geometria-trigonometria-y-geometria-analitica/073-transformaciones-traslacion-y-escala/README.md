@@ -35,15 +35,16 @@ escala: [[sx,0,0],[0,sy,0],[0,0,1]]
 
 ```mermaid
 flowchart LR
-    P["072<br/>Vectores geométricos<br/>2D"] --> C
-    subgraph C["073 · Transformaciones:<br/>traslación y escala"]
+    P["Clase 072 · Vectores geométricos 2D"] --> D
+    subgraph CLASE["Clase 073 · Transformaciones: traslación…"]
         direction TB
-        D["Demostración<br/><code>translation_scale</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>el_orden_importa"]
-        D --> O["Contexto y estructura<br/>punto_homogeneo<br/>trasladado<br/>escalado<br/>… +2 más"]
+        D["Demostracion translation_scale"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: el_orden_importa"]
+        D --> O["Contexto 5: punto_homogeneo +4"]
     end
-    C --> N["074<br/>Rotaciones 2D"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 074 · Rotaciones 2D"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

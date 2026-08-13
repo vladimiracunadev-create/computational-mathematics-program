@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["125<br/>Autovalores y<br/>autovectores"] --> C
-    subgraph C["126 · Diagonalización"]
+    P["Clase 125 · Autovalores y autovectores"] --> D
+    subgraph CLASE["Clase 126 · Diagonalización"]
         direction TB
-        D["Demostración<br/><code>diagonalization</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>reconstruccion_ok"]
-        D --> O["Contexto y estructura<br/>A<br/>D_diagonal<br/>P_ortogonal<br/>… +3 más"]
+        D["Demostracion diagonalization"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: reconstruccion_ok"]
+        D --> O["Contexto 6: A +5"]
     end
-    C --> N["127<br/>Matrices positivas<br/>definidas"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 127 · Matrices positivas…"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

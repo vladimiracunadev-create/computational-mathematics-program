@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["255<br/>Regularización como<br/>optimización"] --> C
-    subgraph C["256 · Restricciones y<br/>Lagrangianos"]
+    P["Clase 255 · Regularización como…"] --> D
+    subgraph CLASE["Clase 256 · Restricciones y Lagrangianos"]
         direction TB
-        D["Demostración<br/><code>constraints_lagrangian</code>"] --> R["Resultados numéricos<br/>valor_optimo<br/>lambda"]
-        D --> V["Verificaciones<br/>es_el_minimo"]
-        D --> O["Contexto y estructura<br/>objetivo<br/>restriccion<br/>lagrangiano<br/>… +4 más"]
+        D["Demostracion constraints_lagrangian"]
+        D --> R["Resultados 2: valor_optimo +1"]
+        D --> V["Comprobaciones 1: es_el_minimo"]
+        D --> O["Contexto 7: objetivo +6"]
     end
-    C --> N["257<br/>Condiciones KKT"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 257 · Condiciones KKT"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

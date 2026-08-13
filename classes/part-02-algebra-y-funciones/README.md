@@ -49,16 +49,16 @@ aplican sus piezas.
 
 ```mermaid
 flowchart TD
-    A["041-045<br/>Manipulación simbólica<br/>términos · propiedades · ecuaciones · sistemas"] --> B["046-049<br/>Polinomios<br/>operaciones · factorización · cuadráticas"]
-    A --> C["050-051<br/>Exponentes y logaritmos<br/>leyes · cambio de base"]
-    B --> D["052-056<br/>Familias de funciones<br/>lineal · cuadrática · exponencial · logarítmica"]
+    A["Clases 041-045 · Manipulacion simbolica"] --> B["Clases 046-049 · Polinomios y cuadraticas"]
+    A --> C["Clases 050-051 · Exponentes y logaritmos"]
+    B --> D["Clases 052-056 · Familias de funciones"]
     C --> D
-    D --> E["057-059<br/>Operaciones con funciones<br/>composición · inversa · por tramos"]
-    E --> F["060<br/>Capstone<br/>elegir modelo por residuos"]
-    E ==> G["Parte 07<br/>Cálculo: derivada de la composición"]
-    E -.-> H["Red neuronal = composición<br/>Parte 15"]
-    C -.-> I["Log-verosimilitud y cross-entropy<br/>Partes 10 y 13"]
-    E -.-> J["ReLU es una función por tramos<br/>Parte 15"]
+    D --> E["Clases 057-059 · Composicion, inversa y tramos"]
+    E --> F["Clase 060 · Capstone eleccion de modelo"]
+    E ==> G["Parte 07 · Derivada de la composicion"]
+    E -.-> H["Red neuronal como composicion · Parte 15"]
+    C -.-> I["Log-verosimilitud y cross-entropy · Partes 10 y 13"]
+    E -.-> J["ReLU es una funcion por tramos · Parte 15"]
 ```
 
 ## 🧠 Ideas centrales
@@ -86,11 +86,11 @@ flowchart TD
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L041["041<br/>Expresiones algebraicas<br/>y términos"]
-        L042["042<br/>Propiedades<br/>distributiva, asociativa<br/>y conmutativa"]
-        L043["043<br/>Ecuaciones lineales de<br/>una variable"]
-        L044["044<br/>Desigualdades lineales"]
-        L045["045<br/>Sistemas de ecuaciones<br/>2x2"]
+        L041["041 · Expresiones algebraicas y…"]
+        L042["042 · Propiedades distributiva,…"]
+        L043["043 · Ecuaciones lineales de una…"]
+        L044["044 · Desigualdades lineales"]
+        L045["045 · Sistemas de ecuaciones 2x2"]
         L041 --> L042
         L042 --> L043
         L043 --> L044
@@ -98,11 +98,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L046["046<br/>Polinomios y operaciones"]
-        L047["047<br/>Factorización elemental"]
-        L048["048<br/>Ecuaciones cuadráticas"]
-        L049["049<br/>Fórmula cuadrática y<br/>discriminante"]
-        L050["050<br/>Exponentes algebraicos"]
+        L046["046 · Polinomios y operaciones"]
+        L047["047 · Factorización elemental"]
+        L048["048 · Ecuaciones cuadráticas"]
+        L049["049 · Fórmula cuadrática y…"]
+        L050["050 · Exponentes algebraicos"]
         L046 --> L047
         L047 --> L048
         L048 --> L049
@@ -110,11 +110,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L051["051<br/>Logaritmos y sus<br/>propiedades"]
-        L052["052<br/>Funciones: dominio y<br/>rango"]
-        L053["053<br/>Funciones lineales y<br/>pendiente"]
-        L054["054<br/>Funciones cuadráticas y<br/>parábolas"]
-        L055["055<br/>Funciones exponenciales"]
+        L051["051 · Logaritmos y sus propiedades"]
+        L052["052 · Funciones: dominio y rango"]
+        L053["053 · Funciones lineales y pendiente"]
+        L054["054 · Funciones cuadráticas y…"]
+        L055["055 · Funciones exponenciales"]
         L051 --> L052
         L052 --> L053
         L053 --> L054
@@ -122,11 +122,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L056["056<br/>Funciones logarítmicas"]
-        L057["057<br/>Composición de funciones"]
-        L058["058<br/>Funciones inversas"]
-        L059["059<br/>Funciones por tramos"]
-        L060["060<br/>Capstone: construir y<br/>comparar modelos<br/>funcionales"]
+        L056["056 · Funciones logarítmicas"]
+        L057["057 · Composición de funciones"]
+        L058["058 · Funciones inversas"]
+        L059["059 · Funciones por tramos"]
+        L060["060 · Capstone: construir y…"]
         L056 --> L057
         L057 --> L058
         L058 --> L059

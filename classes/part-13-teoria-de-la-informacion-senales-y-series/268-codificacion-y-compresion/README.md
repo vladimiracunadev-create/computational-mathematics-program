@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["267<br/>Principio de máxima<br/>entropía"] --> C
-    subgraph C["268 · Codificación y compresión"]
+    P["Clase 267 · Principio de máxima…"] --> D
+    subgraph CLASE["Clase 268 · Codificación y compresión"]
         direction TB
-        D["Demostración<br/><code>coding_compression</code>"] --> R["Resultados numéricos<br/>longitud_media_bits<br/>entropia_bits<br/>longitud_fija_necesaria<br/>… +1 más"]
-        D --> V["Verificaciones<br/>cumple_la_cota_de_Shannon<br/>codigo_libre_de_prefijos"]
-        D --> O["Contexto y estructura<br/>frecuencias<br/>codigos_huffman"]
+        D["Demostracion coding_compression"]
+        D --> R["Resultados 4: longitud_media_bits +3"]
+        D --> V["Comprobaciones 2: cumple_la_cota_de_Sha… +1"]
+        D --> O["Contexto 2: frecuencias +1"]
     end
-    C --> N["269<br/>Señales discretas y<br/>continuas"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 269 · Señales discretas y…"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

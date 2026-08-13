@@ -35,11 +35,11 @@ Vectores, normas, producto punto, independencia, span, sistemas lineales, elimin
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L101["101<br/>Escalares, vectores y<br/>matrices"]
-        L102["102<br/>Operaciones con vectores"]
-        L103["103<br/>Producto punto y<br/>similitud"]
-        L104["104<br/>Normas y distancias"]
-        L105["105<br/>Vectores unitarios"]
+        L101["101 · Escalares, vectores y matrices"]
+        L102["102 · Operaciones con vectores"]
+        L103["103 · Producto punto y similitud"]
+        L104["104 · Normas y distancias"]
+        L105["105 · Vectores unitarios"]
         L101 --> L102
         L102 --> L103
         L103 --> L104
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L106["106<br/>Combinaciones lineales"]
-        L107["107<br/>Independencia y<br/>dependencia lineal"]
-        L108["108<br/>Span y subespacios"]
-        L109["109<br/>Matrices y operaciones<br/>básicas"]
-        L110["110<br/>Producto matriz-vector"]
+        L106["106 · Combinaciones lineales"]
+        L107["107 · Independencia y dependencia…"]
+        L108["108 · Span y subespacios"]
+        L109["109 · Matrices y operaciones básicas"]
+        L110["110 · Producto matriz-vector"]
         L106 --> L107
         L107 --> L108
         L108 --> L109
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L111["111<br/>Producto de matrices"]
-        L112["112<br/>Transpuesta y simetría"]
-        L113["113<br/>Sistemas lineales"]
-        L114["114<br/>Eliminación de Gauss"]
-        L115["115<br/>Forma escalonada y rango"]
+        L111["111 · Producto de matrices"]
+        L112["112 · Transpuesta y simetría"]
+        L113["113 · Sistemas lineales"]
+        L114["114 · Eliminación de Gauss"]
+        L115["115 · Forma escalonada y rango"]
         L111 --> L112
         L112 --> L113
         L113 --> L114
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L116["116<br/>Inversa de una matriz"]
-        L117["117<br/>Determinantes"]
-        L118["118<br/>Matrices ortogonales"]
-        L119["119<br/>Proyecciones ortogonales"]
-        L120["120<br/>Capstone: resolver un<br/>sistema de recomendación<br/>lineal"]
+        L116["116 · Inversa de una matriz"]
+        L117["117 · Determinantes"]
+        L118["118 · Matrices ortogonales"]
+        L119["119 · Proyecciones ortogonales"]
+        L120["120 · Capstone: resolver un…"]
         L116 --> L117
         L117 --> L118
         L118 --> L119

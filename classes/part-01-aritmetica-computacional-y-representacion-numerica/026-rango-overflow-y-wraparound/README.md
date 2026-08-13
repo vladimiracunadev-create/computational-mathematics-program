@@ -34,15 +34,16 @@ int8: 127 + 1 = −128
 
 ```mermaid
 flowchart LR
-    P["025<br/>Enteros con signo y<br/>complemento a dos"] --> C
-    subgraph C["026 · Rango, overflow y<br/>wraparound"]
+    P["Clase 025 · Enteros con signo y…"] --> D
+    subgraph CLASE["Clase 026 · Rango, overflow y wraparound"]
         direction TB
-        D["Demostración<br/><code>overflow_wraparound</code>"] --> R["Resultados numéricos<br/>maximo_int8<br/>maximo+1_con_wraparound<br/>maximo+2_con_wraparound<br/>… +2 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>leccion"]
+        D["Demostracion overflow_wraparound"]
+        D --> R["Resultados 5: maximo_int8 +4"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: leccion"]
     end
-    C --> N["027<br/>Punto fijo frente a<br/>punto flotante"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 027 · Punto fijo frente a…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

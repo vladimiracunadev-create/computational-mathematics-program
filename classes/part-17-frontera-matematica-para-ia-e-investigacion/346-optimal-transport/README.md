@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["345<br/>Variational inference<br/>avanzada"] --> C
-    subgraph C["346 · Optimal transport"]
+    P["Clase 345 · Variational inference…"] --> D
+    subgraph CLASE["Clase 346 · Optimal transport"]
         direction TB
-        D["Demostración<br/><code>optimal_transport</code>"] --> R["Resultados numéricos<br/>regularizacion_entropica<br/>coste_de_transporte"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>distribucion_origen<br/>distribucion_destino<br/>matriz_de_coste<br/>… +6 más"]
+        D["Demostracion optimal_transport"]
+        D --> R["Resultados 2: regularizacion_entrop… +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 9: distribucion_origen +8"]
     end
-    C --> N["347<br/>Wasserstein distance"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 347 · Wasserstein distance"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

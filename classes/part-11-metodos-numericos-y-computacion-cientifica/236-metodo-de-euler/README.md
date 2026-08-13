@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["235<br/>Ecuaciones<br/>diferenciales<br/>ordinarias"] --> C
-    subgraph C["236 · Método de Euler"]
+    P["Clase 235 · Ecuaciones diferenciales…"] --> D
+    subgraph CLASE["Clase 236 · Método de Euler"]
         direction TB
-        D["Demostración<br/><code>euler_method</code>"] --> R["Resultados numéricos<br/>orden"]
-        D --> V["Verificaciones<br/>duplicar_pasos_divide_el_error_por_2"]
-        D --> O["Contexto y estructura<br/>metodo<br/>informe<br/>coste_por_paso<br/>… +1 más"]
+        D["Demostracion euler_method"]
+        D --> R["Resultados 1: orden"]
+        D --> V["Comprobaciones 1: duplicar_pasos_divide…"]
+        D --> O["Contexto 4: metodo +3"]
     end
-    C --> N["237<br/>Runge-Kutta"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 237 · Runge-Kutta"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

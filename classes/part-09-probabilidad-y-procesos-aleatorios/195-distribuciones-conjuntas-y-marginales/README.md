@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["194<br/>Distribución normal"] --> C
-    subgraph C["195 · Distribuciones conjuntas y<br/>marginales"]
+    P["Clase 194 · Distribución normal"] --> D
+    subgraph CLASE["Clase 195 · Distribuciones conjuntas y…"]
         direction TB
-        D["Demostración<br/><code>joint_marginal</code>"] --> R["Resultados numéricos<br/>suma<br/>P(Y=1|X=1)<br/>producto_de_marginales_(1,1)"]
-        D --> V["Verificaciones<br/>independientes"]
-        D --> O["Contexto y estructura<br/>conjunta<br/>marginal_X<br/>marginal_Y"]
+        D["Demostracion joint_marginal"]
+        D --> R["Resultados 3: suma +2"]
+        D --> V["Comprobaciones 1: independientes"]
+        D --> O["Contexto 3: conjunta +2"]
     end
-    C --> N["196<br/>Ley de los grandes<br/>números"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 196 · Ley de los grandes números"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

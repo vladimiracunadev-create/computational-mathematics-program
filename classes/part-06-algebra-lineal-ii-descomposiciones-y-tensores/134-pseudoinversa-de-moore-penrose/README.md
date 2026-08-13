@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["133<br/>SVD y compresión"] --> C
-    subgraph C["134 · Pseudoinversa de<br/>Moore-Penrose"]
+    P["Clase 133 · SVD y compresión"] --> D
+    subgraph CLASE["Clase 134 · Pseudoinversa de Moore-Penrose"]
         direction TB
-        D["Demostración<br/><code>pseudoinverse</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>sistema_sobredeterminado<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>A_shape<br/>A⁺<br/>A⁺b<br/>… +2 más"]
+        D["Demostracion pseudoinverse"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 2: sistema_sobredetermin… +1"]
+        D --> O["Contexto 5: A_shape +4"]
     end
-    C --> N["135<br/>PCA desde álgebra<br/>lineal"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 135 · PCA desde álgebra lineal"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

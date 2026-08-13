@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["113<br/>Sistemas lineales"] --> C
-    subgraph C["114 · Eliminación de Gauss"]
+    P["Clase 113 · Sistemas lineales"] --> D
+    subgraph CLASE["Clase 114 · Eliminación de Gauss"]
         direction TB
-        D["Demostración<br/><code>gaussian_elimination_demo</code>"] --> R["Resultados numéricos<br/>intercambios_de_fila"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>matriz_original<br/>triangular_superior<br/>solucion<br/>… +3 más"]
+        D["Demostracion gaussian_elimination_demo"]
+        D --> R["Resultados 1: intercambios_de_fila"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: matriz_original +5"]
     end
-    C --> N["115<br/>Forma escalonada y<br/>rango"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 115 · Forma escalonada y rango"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

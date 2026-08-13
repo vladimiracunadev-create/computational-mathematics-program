@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["292<br/>Random Forest desde<br/>probabilidad"] --> C
-    subgraph C["293 · Boosting y descenso<br/>funcional"]
+    P["Clase 292 · Random Forest desde…"] --> D
+    subgraph CLASE["Clase 293 · Boosting y descenso funcional"]
         direction TB
-        D["Demostración<br/><code>boosting</code>"] --> R["Resultados numéricos<br/>observaciones<br/>learning_rate<br/>MSE_inicial"]
-        D --> V["Verificaciones<br/>el_error_baja_monotonamente"]
-        D --> O["Contexto y estructura<br/>aprendiz_debil<br/>historial<br/>interpretacion<br/>… +1 más"]
+        D["Demostracion boosting"]
+        D --> R["Resultados 3: observaciones +2"]
+        D --> V["Comprobaciones 1: el_error_baja_monoton…"]
+        D --> O["Contexto 4: aprendiz_debil +3"]
     end
-    C --> N["294<br/>k-means como<br/>optimización"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 294 · k-means como optimización"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Un grafo modela relaciones; el lema del apretón de manos relaciona grados y aristas.**
 
-Esta clase concreta ese objetivo sobre **Grafos: vértices y aristas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,70 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: contar dos veces al aplicar el principio de inclusión-exclusión.
 
+## 🧩 Fórmulas de la clase
+
+```text
+no dirigido: Σ grados = 2|E|
+dirigido: Σ grados de salida = Σ grados de entrada = |E|
+densidad = |E| / (|V|(|V|−1))
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["092<br/>Recurrencias"] --> C
-    subgraph C["093 · Grafos: vértices y aristas"]
+    P["Clase 092 · Recurrencias"] --> D
+    subgraph CLASE["Clase 093 · Grafos: vértices y aristas"]
         direction TB
-        D["Demostración<br/><code>graphs</code>"] --> R["Resultados numéricos<br/>aristas_dirigidas<br/>suma_de_grados<br/>densidad"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>nodos<br/>grado_de_salida<br/>lema_apreton_de_manos_no_dirigido"]
+        D["Demostracion graphs"]
+        D --> R["Resultados 3: aristas_dirigidas +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: nodos +2"]
     end
-    C --> N["094<br/>Caminos, ciclos y<br/>conectividad"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 094 · Caminos, ciclos y…"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Un DAG sin orden topológico contiene un ciclo: es un diagnóstico, no un error.
+Un grafo es un conjunto de vértices y un conjunto de aristas que los conectan. Es la
+estructura más versátil de la computación porque casi cualquier relación se modela así:
+dependencias entre tareas, enlaces entre páginas, amistades, rutas, y —lo que importa
+en este programa— **operaciones de un cálculo**.
+
+El lema del apretón de manos dice que la suma de los grados es el doble del número de
+aristas, porque cada arista contribuye 1 a cada uno de sus dos extremos. De ahí se
+deduce inmediatamente que el número de vértices de grado impar es par, resultado que
+parece anecdótico y aparece en problemas de emparejamiento.
+
+La representación importa para el rendimiento. Una **matriz de adyacencia** ocupa
+`O(V²)` y responde «¿hay arista?» en tiempo constante; una **lista de adyacencia**
+ocupa `O(V+E)` y es preferible en grafos dispersos, que son la mayoría de los reales.
+Los grafos de redes sociales tienen densidad ínfima, y usar matriz sería inviable.
+
+El grafo del laboratorio es un pipeline de machine learning —entrada, limpieza,
+features, split, entrenamiento, evaluación—, y ese ejemplo no es decorativo: la
+ejecución de un pipeline, de un sistema de construcción y de un grafo de cómputo de
+autodiferenciación son el mismo problema sobre la misma estructura.
+
+## 🧮 Ejemplo trabajado
+
+Grafo de un pipeline de ML.
+
+```text
+entrada → limpieza → features    → entrenamiento → evaluacion
+                  ↘ split       ↗
+
+vértices: 6
+aristas dirigidas: 6
+
+grados de salida:
+  entrada 1, limpieza 2, features 1,
+  split 1, entrenamiento 1, evaluacion 0
+suma = 6 = |E|                        ✓
+
+densidad = 6/(6·5) = 0.2
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 093
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Usar matriz de adyacencia en grafos grandes y dispersos.
+2. Aplicar el lema del apretón de manos (2|E|) a grafos dirigidos.
+3. Olvidar si el grafo es dirigido al contar grados.
+
+## 🚀 Dónde se usa de verdad
+
+Grafos de cómputo y autodiferenciación, sistemas de construcción, redes sociales,
+rutas y GNN.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022, cap. 20](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
+- [Newman, M. *Networks*, 2ª ed., Oxford University Press, 2018](https://global.oup.com/academic/product/networks-9780198805090)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

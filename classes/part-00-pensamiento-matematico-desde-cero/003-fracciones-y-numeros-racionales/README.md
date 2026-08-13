@@ -34,15 +34,16 @@ a/b = c/d ⟺ ad = bc
 
 ```mermaid
 flowchart LR
-    P["002<br/>Enteros, signo y recta<br/>numérica"] --> C
-    subgraph C["003 · Fracciones y números<br/>racionales"]
+    P["Clase 002 · Enteros, signo y recta…"] --> D
+    subgraph CLASE["Clase 003 · Fracciones y números…"]
         direction TB
-        D["Demostración<br/><code>rational_arithmetic</code>"] --> R["Resultados numéricos<br/>1/3 + 1/6 float<br/>error_absoluto<br/>denominador_reducido"]
-        D --> V["Verificaciones<br/>es_igual_a_1/2_exacto<br/>es_igual_a_0.5_float"]
-        D --> O["Contexto y estructura<br/>1/3 + 1/6 exacto"]
+        D["Demostracion rational_arithmetic"]
+        D --> R["Resultados 3: 1/3 + 1/6 float +2"]
+        D --> V["Comprobaciones 2: es_igual_a_1/2_exacto +1"]
+        D --> O["Contexto 1: 1/3 + 1/6 exacto"]
     end
-    C --> N["004<br/>Decimales y<br/>conversiones"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 004 · Decimales y conversiones"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

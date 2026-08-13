@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["227<br/>Diferenciación<br/>numérica"] --> C
-    subgraph C["228 · Cuadratura numérica"]
+    P["Clase 227 · Diferenciación numérica"] --> D
+    subgraph CLASE["Clase 228 · Cuadratura numérica"]
         direction TB
-        D["Demostración<br/><code>quadrature</code>"] --> R["Resultados numéricos<br/>referencia<br/>gauss_3_nodos<br/>error_gauss<br/>… +4 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>integrando"]
+        D["Demostracion quadrature"]
+        D --> R["Resultados 7: referencia +6"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: integrando"]
     end
-    C --> N["229<br/>Regla del trapecio"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 229 · Regla del trapecio"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

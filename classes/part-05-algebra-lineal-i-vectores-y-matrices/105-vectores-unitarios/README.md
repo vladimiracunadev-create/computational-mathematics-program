@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["104<br/>Normas y distancias"] --> C
-    subgraph C["105 · Vectores unitarios"]
+    P["Clase 104 · Normas y distancias"] --> D
+    subgraph CLASE["Clase 105 · Vectores unitarios"]
         direction TB
-        D["Demostración<br/><code>unit_vectors</code>"] --> R["Resultados numéricos<br/>|v|<br/>|v_normalizado|"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>v<br/>v_normalizado<br/>reconstruccion<br/>… +2 más"]
+        D["Demostracion unit_vectors"]
+        D --> R["Resultados 2: v +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 5: v +4"]
     end
-    C --> N["106<br/>Combinaciones lineales"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 106 · Combinaciones lineales"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

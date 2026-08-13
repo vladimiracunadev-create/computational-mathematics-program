@@ -35,15 +35,16 @@ dominio de a^(1/2): a ≥ 0 en ℝ
 
 ```mermaid
 flowchart LR
-    P["049<br/>Fórmula cuadrática y<br/>discriminante"] --> C
-    subgraph C["050 · Exponentes algebraicos"]
+    P["Clase 049 · Fórmula cuadrática y…"] --> D
+    subgraph CLASE["Clase 050 · Exponentes algebraicos"]
         direction TB
-        D["Demostración<br/><code>algebraic_exponents</code>"] --> R["Resultados numéricos<br/>x^(1/3)<br/>x^(2/3)<br/>x^(-1)<br/>… +2 más"]
-        D --> V["Verificaciones<br/>es_x"]
-        D --> O["Contexto y estructura<br/>dominio_de_x^(1/2)"]
+        D["Demostracion algebraic_exponents"]
+        D --> R["Resultados 5: x^1/3 +4"]
+        D --> V["Comprobaciones 1: es_x"]
+        D --> O["Contexto 1: dominio_de_x^1/2"]
     end
-    C --> N["051<br/>Logaritmos y sus<br/>propiedades"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 051 · Logaritmos y sus…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

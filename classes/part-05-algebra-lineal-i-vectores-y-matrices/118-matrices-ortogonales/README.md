@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["117<br/>Determinantes"] --> C
-    subgraph C["118 · Matrices ortogonales"]
+    P["Clase 117 · Determinantes"] --> D
+    subgraph CLASE["Clase 118 · Matrices ortogonales"]
         direction TB
-        D["Demostración<br/><code>orthogonal_matrices</code>"] --> R["Resultados numéricos<br/>det_Q<br/>|v|<br/>|Qv|"]
-        D --> V["Verificaciones<br/>preserva_norma<br/>inversa_es_la_transpuesta"]
-        D --> O["Contexto y estructura<br/>Q<br/>QᵀQ<br/>por_que_importa"]
+        D["Demostracion orthogonal_matrices"]
+        D --> R["Resultados 3: det_Q +2"]
+        D --> V["Comprobaciones 2: preserva_norma +1"]
+        D --> O["Contexto 3: Q +2"]
     end
-    C --> N["119<br/>Proyecciones<br/>ortogonales"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 119 · Proyecciones ortogonales"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

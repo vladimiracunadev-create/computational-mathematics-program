@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["270<br/>Muestreo y aliasing"] --> C
-    subgraph C["271 · Convolución"]
+    P["Clase 270 · Muestreo y aliasing"] --> D
+    subgraph CLASE["Clase 271 · Convolución"]
         direction TB
-        D["Demostración<br/><code>convolution</code>"] --> R["Resultados numéricos<br/>longitud_valida<br/>longitud_completa"]
-        D --> V["Verificaciones<br/>es_conmutativa<br/>en_frecuencia_es_multiplicacion"]
-        D --> O["Contexto y estructura<br/>señal<br/>kernel_media_movil<br/>suavizada<br/>… +2 más"]
+        D["Demostracion convolution"]
+        D --> R["Resultados 2: longitud_valida +1"]
+        D --> V["Comprobaciones 2: es_conmutativa +1"]
+        D --> O["Contexto 5: señal +4"]
     end
-    C --> N["272<br/>Correlación de señales"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 272 · Correlación de señales"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

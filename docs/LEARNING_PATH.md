@@ -18,17 +18,17 @@ esenciales para quien no.
 
 ```mermaid
 flowchart LR
-    F["00–01<br/>Fundamentos"] --> A["02–04<br/>Álgebra, geometría<br/>y discreta"]
-    A --> L["05–06<br/>Álgebra lineal"]
-    A --> C["07–08<br/>Cálculo"]
+    F["Partes 00-01 · Fundamentos"] --> A["Partes 02-04 · Algebra, geometria y discreta"]
+    A --> L["Partes 05-06 · Algebra lineal"]
+    A --> C["Partes 07-08 · Calculo"]
     L --> C
-    C --> P["09–10<br/>Probabilidad<br/>y estadística"]
-    L --> N["11–12<br/>Numérico<br/>y optimización"]
-    P --> I["13<br/>Información<br/>y señales"]
-    P --> M["14–15<br/>ML y DL"]
+    C --> P["Partes 09-10 · Probabilidad y estadistica"]
+    L --> N["Partes 11-12 · Numerico y optimizacion"]
+    P --> I["Parte 13 · Informacion y senales"]
+    P --> M["Partes 14-15 · ML y Deep Learning"]
     N --> M
     I --> M
-    M --> X["16–17<br/>Frontera"]
+    M --> X["Partes 16-17 · Frontera"]
 ```
 
 | Bloque | Partes | Clases | Qué desbloquea |

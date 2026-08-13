@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Una combinación cuenta selecciones donde el orden no importa; su simetría refleja que elegir k es descartar n−k.**
 
-Esta clase concreta ese objetivo sobre **Combinaciones**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,68 @@ Al terminar podrás:
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir que un grafo dirigido es acíclico sin verificarlo.
 
+## 🧩 Fórmulas de la clase
+
+```text
+C(n,k) = n!/(k!(n−k)!)
+C(n,k) = C(n,n−k)
+Σₖ C(n,k) = 2ⁿ
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["088<br/>Permutaciones"] --> C
-    subgraph C["089 · Combinaciones"]
+    P["Clase 088 · Permutaciones"] --> D
+    subgraph CLASE["Clase 089 · Combinaciones"]
         direction TB
-        D["Demostración<br/><code>combinations_demo</code>"] --> R["Resultados numéricos<br/>C(5,3)<br/>math.comb<br/>suma_fila_de_pascal<br/>… +1 más"]
-        D --> V["Verificaciones<br/>simetria_C(5,3)=C(5,2)"]
-        D --> O["Contexto y estructura<br/>elementos<br/>todas"]
+        D["Demostracion combinations_demo"]
+        D --> R["Resultados 4: C5,3 +3"]
+        D --> V["Comprobaciones 1: simetria_C5,3=C5,2"]
+        D --> O["Contexto 2: elementos +1"]
     end
-    C --> N["090<br/>Principio del palomar"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 090 · Principio del palomar"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> La aritmética modular es la base de hashing, criptografía y checksums.
+Una combinación es una permutación a la que se le ha quitado el orden: hay `k!`
+ordenaciones de cada selección, así que `C(n,k) = P(n,k)/k!`. Esa deducción es la forma
+correcta de recordar la fórmula, en lugar de memorizarla.
+
+La simetría `C(n,k) = C(n,n−k)` tiene una lectura inmediata: elegir k elementos es lo
+mismo que decidir cuáles n−k se descartan. Es un ejemplo de **biyección** como técnica
+de demostración: dos conteos coinciden porque existe una correspondencia uno a uno
+entre lo que cuentan.
+
+La suma de toda una fila del triángulo de Pascal es 2ⁿ, y también tiene lectura
+combinatoria: sumar sobre todos los tamaños posibles de subconjunto es contar todos los
+subconjuntos, que son 2ⁿ. Este tipo de argumentos —contar lo mismo de dos formas— es la
+herramienta central de la combinatoria.
+
+En probabilidad, `C(n,k)` es el coeficiente de la distribución binomial (clase 192): el
+número de secuencias con exactamente k éxitos en n ensayos. Y en machine learning
+aparece al contar particiones de un conjunto de datos y al calcular el número de
+comparaciones en un test estadístico múltiple.
+
+## 🧮 Ejemplo trabajado
+
+Combinaciones de 3 entre 5.
+
+```text
+elementos: A B C D E
+
+C(5,3) = 5!/(3!·2!) = 120/(6·2) = 10
+  ABC ABD ABE ACD ACE ADE BCD BCE BDE CDE
+
+Simetría: C(5,3) = C(5,2) = 10          ✓
+  (elegir 3 ≡ descartar 2)
+
+Fila de Pascal para n=5:
+  C(5,0..5) = 1, 5, 10, 10, 5, 1
+  suma = 32 = 2⁵                        ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +108,16 @@ compmath run 089
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Usar combinaciones donde el orden sí importa.
+2. Calcular el factorial completo en lugar de usar math.comb, que evita desbordar.
+3. Confundir C(n,k) con P(n,k): difieren en el factor k!.
+
+## 🚀 Dónde se usa de verdad
+
+Distribución binomial, número de comparaciones en tests múltiples, muestreo de
+subconjuntos y conteo de particiones en validación cruzada.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Python: `math.comb` e `itertools.combinations`](https://docs.python.org/3/library/math.html#math.comb)
+- [Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 5](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

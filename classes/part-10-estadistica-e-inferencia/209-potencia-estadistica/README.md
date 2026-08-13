@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["208<br/>Errores tipo I y II"] --> C
-    subgraph C["209 · Potencia estadística"]
+    P["Clase 208 · Errores tipo I y II"] --> D
+    subgraph CLASE["Clase 209 · Potencia estadística"]
         direction TB
-        D["Demostración<br/><code>statistical_power</code>"] --> R["Resultados numéricos<br/>tamaño_del_efecto_d<br/>alfa<br/>n_para_potencia_80%"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>informe<br/>regla_practica<br/>estudio_sin_potencia"]
+        D["Demostracion statistical_power"]
+        D --> R["Resultados 3: tamaño_del_efecto_d +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: informe +2"]
     end
-    C --> N["210<br/>t-test y comparación<br/>de medias"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 210 · t-test y comparación de…"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

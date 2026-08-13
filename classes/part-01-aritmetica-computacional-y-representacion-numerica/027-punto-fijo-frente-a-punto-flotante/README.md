@@ -34,15 +34,16 @@ punto flotante: valor = mantisa · 2^exponente (precisión relativa constante)
 
 ```mermaid
 flowchart LR
-    P["026<br/>Rango, overflow y<br/>wraparound"] --> C
-    subgraph C["027 · Punto fijo frente a punto<br/>flotante"]
+    P["Clase 026 · Rango, overflow y…"] --> D
+    subgraph CLASE["Clase 027 · Punto fijo frente a punto…"]
         direction TB
-        D["Demostración<br/><code>fixed_vs_floating</code>"] --> R["Resultados numéricos<br/>suma_float_de_0.1_x10<br/>error<br/>suma_en_centavos_enteros<br/>… +1 más"]
-        D --> V["Verificaciones<br/>es_exactamente_1.0<br/>punto_fijo_exacto"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion fixed_vs_floating"]
+        D --> R["Resultados 4: suma_float_de_0.1_x10 +3"]
+        D --> V["Comprobaciones 2: es_exactamente_1.0 +1"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["028<br/>IEEE 754: estructura<br/>de un float"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 028 · IEEE 754: estructura de…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

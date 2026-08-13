@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["110<br/>Producto matriz-vector"] --> C
-    subgraph C["111 · Producto de matrices"]
+    P["Clase 110 · Producto matriz-vector"] --> D
+    subgraph CLASE["Clase 111 · Producto de matrices"]
         direction TB
-        D["Demostración<br/><code>matrix_product</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>conmutan<br/>identidad_de_transpuesta"]
-        D --> O["Contexto y estructura<br/>A<br/>B<br/>AB<br/>… +4 más"]
+        D["Demostracion matrix_product"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 2: conmutan +1"]
+        D --> O["Contexto 7: A +6"]
     end
-    C --> N["112<br/>Transpuesta y simetría"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 112 · Transpuesta y simetría"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

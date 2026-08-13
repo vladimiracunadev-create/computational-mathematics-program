@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["247<br/>Nesterov accelerated<br/>gradient"] --> C
-    subgraph C["248 · AdaGrad"]
+    P["Clase 247 · Nesterov accelerated…"] --> D
+    subgraph CLASE["Clase 248 · AdaGrad"]
         direction TB
-        D["Demostración<br/><code>adagrad</code>"] --> R["Resultados numéricos<br/>learning_rate_base"]
-        D --> V["Verificaciones<br/>el_paso_decrece_monotonamente"]
-        D --> O["Contexto y estructura<br/>resultado<br/>tamaño_de_paso_por_iteracion<br/>problema<br/>… +1 más"]
+        D["Demostracion adagrad"]
+        D --> R["Resultados 1: learning_rate_base"]
+        D --> V["Comprobaciones 1: el_paso_decrece_monot…"]
+        D --> O["Contexto 4: resultado +3"]
     end
-    C --> N["249<br/>RMSProp"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 249 · RMSProp"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["232<br/>Jacobi y Gauss-Seidel"] --> C
-    subgraph C["233 · Métodos iterativos y<br/>tolerancias"]
+    P["Clase 232 · Jacobi y Gauss-Seidel"] --> D
+    subgraph CLASE["Clase 233 · Métodos iterativos y…"]
         direction TB
-        D["Demostración<br/><code>iterative_tolerances</code>"] --> R["Resultados numéricos<br/>iteraciones_hasta_1e-14"]
-        D --> V["Verificaciones<br/>siempre_declarar_max_iter"]
-        D --> O["Contexto y estructura<br/>informe<br/>solucion<br/>criterio_recomendado<br/>… +1 más"]
+        D["Demostracion iterative_tolerances"]
+        D --> R["Resultados 1: iteraciones_hasta_1e-…"]
+        D --> V["Comprobaciones 1: siempre_declarar_max_…"]
+        D --> O["Contexto 4: informe +3"]
     end
-    C --> N["234<br/>Mínimos cuadrados<br/>numéricos"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 234 · Mínimos cuadrados…"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["178<br/>Derivadas respecto de<br/>vectores y matrices"] --> C
-    subgraph C["179 · Automatic differentiation<br/>y computational graphs"]
+    P["Clase 178 · Derivadas respecto de…"] --> D
+    subgraph CLASE["Clase 179 · Automatic differentiation y…"]
         direction TB
-        D["Demostración<br/><code>autodiff</code>"] --> R["Resultados numéricos<br/>valor<br/>dz/dx_autodiff<br/>dz/dx_numerico<br/>… +2 más"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>expresion<br/>barridos_necesarios<br/>coste_del_numerico"]
+        D["Demostracion autodiff"]
+        D --> R["Resultados 5: valor +4"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto 3: expresion +2"]
     end
-    C --> N["180<br/>Capstone:<br/>backpropagation manual<br/>y automática"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 180 · Capstone:…"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

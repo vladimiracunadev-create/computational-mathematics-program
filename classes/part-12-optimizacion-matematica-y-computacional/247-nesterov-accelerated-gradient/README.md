@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["246<br/>Momentum"] --> C
-    subgraph C["247 · Nesterov accelerated<br/>gradient"]
+    P["Clase 246 · Momentum"] --> D
+    subgraph CLASE["Clase 247 · Nesterov accelerated gradient"]
         direction TB
-        D["Demostración<br/><code>nesterov</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>nesterov_mejor"]
-        D --> O["Contexto y estructura<br/>momentum_clasico<br/>nesterov<br/>diferencia<br/>… +1 más"]
+        D["Demostracion nesterov"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: nesterov_mejor"]
+        D --> O["Contexto 4: momentum_clasico +3"]
     end
-    C --> N["248<br/>AdaGrad"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 248 · AdaGrad"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

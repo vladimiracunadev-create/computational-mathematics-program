@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["116<br/>Inversa de una matriz"] --> C
-    subgraph C["117 · Determinantes"]
+    P["Clase 116 · Inversa de una matriz"] --> D
+    subgraph CLASE["Clase 117 · Determinantes"]
         direction TB
-        D["Demostración<br/><code>determinants</code>"] --> R["Resultados numéricos<br/>det_A<br/>escala_areas_por<br/>det_B"]
-        D --> V["Verificaciones<br/>B_es_singular<br/>det(AB)=det(A)det(B)<br/>det_negativo_invierte_orientacion"]
-        D --> O["Contexto y estructura<br/>A_diagonal<br/>B_singular"]
+        D["Demostracion determinants"]
+        D --> R["Resultados 3: det_A +2"]
+        D --> V["Comprobaciones 3: B_es_singular +2"]
+        D --> O["Contexto 2: A_diagonal +1"]
     end
-    C --> N["118<br/>Matrices ortogonales"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 118 · Matrices ortogonales"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

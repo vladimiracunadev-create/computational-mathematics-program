@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["287<br/>Naive Bayes"] --> C
-    subgraph C["288 · k-Nearest Neighbors y<br/>métricas"]
+    P["Clase 287 · Naive Bayes"] --> D
+    subgraph CLASE["Clase 288 · k-Nearest Neighbors y métricas"]
         direction TB
-        D["Demostración<br/><code>knn</code>"] --> R["Resultados numéricos<br/>prediccion_k=1<br/>prediccion_k=5<br/>prediccion_k=21<br/>… +1 más"]
-        D --> V["Verificaciones<br/>el_escalado_cambia_la_respuesta<br/>k_par_puede_empatar"]
-        D --> O["Contexto y estructura<br/>consulta<br/>coste_de_prediccion<br/>maldicion_de_la_dimension"]
+        D["Demostracion knn"]
+        D --> R["Resultados 4: prediccion_k=1 +3"]
+        D --> V["Comprobaciones 2: el_escalado_cambia_la… +1"]
+        D --> O["Contexto 3: consulta +2"]
     end
-    C --> N["289<br/>SVM y margen máximo"]
-    C -.-> IA["Uso en IA<br/>parte 14"]
+    R --> N["Clase 289 · SVM y margen máximo"]
+    V -.-> IA["Aplicacion en IA · parte 14"]
 ```
 
 ## 🧠 Idea rectora de la parte 14

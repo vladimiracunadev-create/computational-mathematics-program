@@ -34,15 +34,16 @@ n² + n + 41 es primo para n = 0..39, compuesto para n = 40
 
 ```mermaid
 flowchart LR
-    P["018<br/>Problemas verbales a<br/>lenguaje matemático"] --> C
-    subgraph C["019 · Comprobación y<br/>contraejemplos"]
+    P["Clase 018 · Problemas verbales a…"] --> D
+    subgraph CLASE["Clase 019 · Comprobación y contraejemplos"]
         direction TB
-        D["Demostración<br/><code>counterexample</code>"] --> R["Resultados numéricos<br/>casos_favorables_consecutivos<br/>primer_contraejemplo_n<br/>valor_en_el_contraejemplo<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>conjetura<br/>leccion"]
+        D["Demostracion counterexample"]
+        D --> R["Resultados 4: casos_favorables_cons… +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: conjetura +1"]
     end
-    C --> N["020<br/>Capstone: modelar un<br/>problema cotidiano con<br/>matemáticas"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 020 · Capstone: modelar un…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

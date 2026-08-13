@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["327<br/>Multi-head attention"] --> C
-    subgraph C["328 · Transformer completo"]
+    P["Clase 327 · Multi-head attention"] --> D
+    subgraph CLASE["Clase 328 · Transformer completo"]
         direction TB
-        D["Demostración<br/><code>transformer_block</code>"] --> R["Resultados numéricos<br/>d_model<br/>d_ff<br/>razon_d_ff/d_model<br/>… +5 más"]
-        D --> V["Verificaciones<br/>shape_preservada<br/>el_FFN_tiene_mas_parametros"]
-        D --> O["Contexto y estructura<br/>arquitectura<br/>por_que_residual"]
+        D["Demostracion transformer_block"]
+        D --> R["Resultados 8: d_model +7"]
+        D --> V["Comprobaciones 2: shape_preservada +1"]
+        D --> O["Contexto 2: arquitectura +1"]
     end
-    C --> N["329<br/>Modelado autoregresivo"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 329 · Modelado autoregresivo"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

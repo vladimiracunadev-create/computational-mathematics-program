@@ -46,16 +46,16 @@ es el área original multiplicada por el valor absoluto del determinante.
 
 ```mermaid
 flowchart TD
-    A["061-064<br/>Geometría métrica<br/>distancia · ángulo · semejanza · Pitágoras"] --> B["065-067<br/>Trigonometría<br/>razones · identidades · círculo unitario"]
-    A --> C["068-071<br/>Geometría analítica<br/>coordenadas · rectas · cónicas"]
-    B --> D["072-076<br/>Vectores y transformaciones<br/>rotación · escala · matrices · polares"]
+    A["Clases 061-064 · Geometria metrica"] --> B["Clases 065-067 · Trigonometria"]
+    A --> C["Clases 068-071 · Geometria analitica"]
+    B --> D["Clases 072-076 · Vectores y transformaciones"]
     C --> D
-    D --> E["077-078<br/>Tres dimensiones<br/>planos · proyección · perspectiva"]
-    E --> F["079-080<br/>Pipeline y capstone<br/>modelo → mundo → cámara → pantalla"]
-    D ==> G["Parte 05<br/>Álgebra lineal:<br/>la matriz como transformación"]
-    B -.-> H["Positional encoding<br/>Parte 16"]
-    D -.-> I["Similitud coseno<br/>Parte 05"]
-    C -.-> J["Frontera de decisión wᵀx+b=0<br/>Parte 14"]
+    D --> E["Clases 077-078 · Tres dimensiones y proyeccion"]
+    E --> F["Clases 079-080 · Pipeline grafico y capstone"]
+    D ==> G["Parte 05 · La matriz como transformacion"]
+    B -.-> H["Positional encoding · Parte 16"]
+    D -.-> I["Similitud coseno · Parte 05"]
+    C -.-> J["Frontera de decision wx + b = 0 · Parte 14"]
 ```
 
 ## 🧠 Ideas centrales
@@ -83,11 +83,11 @@ flowchart TD
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L061["061<br/>Puntos, segmentos y<br/>distancias"]
-        L062["062<br/>Ángulos y radianes"]
-        L063["063<br/>Triángulos y semejanza"]
-        L064["064<br/>Teorema de Pitágoras"]
-        L065["065<br/>Seno, coseno y tangente"]
+        L061["061 · Puntos, segmentos y distancias"]
+        L062["062 · Ángulos y radianes"]
+        L063["063 · Triángulos y semejanza"]
+        L064["064 · Teorema de Pitágoras"]
+        L065["065 · Seno, coseno y tangente"]
         L061 --> L062
         L062 --> L063
         L063 --> L064
@@ -95,11 +95,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L066["066<br/>Identidades<br/>trigonométricas básicas"]
-        L067["067<br/>Círculo unitario"]
-        L068["068<br/>Coordenadas cartesianas"]
-        L069["069<br/>Pendiente y ecuación de<br/>la recta"]
-        L070["070<br/>Distancia punto-recta"]
+        L066["066 · Identidades trigonométricas…"]
+        L067["067 · Círculo unitario"]
+        L068["068 · Coordenadas cartesianas"]
+        L069["069 · Pendiente y ecuación de la…"]
+        L070["070 · Distancia punto-recta"]
         L066 --> L067
         L067 --> L068
         L068 --> L069
@@ -107,11 +107,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L071["071<br/>Circunferencias y<br/>cónicas"]
-        L072["072<br/>Vectores geométricos 2D"]
-        L073["073<br/>Transformaciones:<br/>traslación y escala"]
-        L074["074<br/>Rotaciones 2D"]
-        L075["075<br/>Matrices de<br/>transformación"]
+        L071["071 · Circunferencias y cónicas"]
+        L072["072 · Vectores geométricos 2D"]
+        L073["073 · Transformaciones: traslación…"]
+        L074["074 · Rotaciones 2D"]
+        L075["075 · Matrices de transformación"]
         L071 --> L072
         L072 --> L073
         L073 --> L074
@@ -119,11 +119,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L076["076<br/>Coordenadas polares"]
-        L077["077<br/>Geometría 3D y planos"]
-        L078["078<br/>Proyecciones y<br/>perspectiva"]
-        L079["079<br/>Aplicaciones en visión,<br/>robótica y videojuegos"]
-        L080["080<br/>Capstone: motor<br/>geométrico 2D"]
+        L076["076 · Coordenadas polares"]
+        L077["077 · Geometría 3D y planos"]
+        L078["078 · Proyecciones y perspectiva"]
+        L079["079 · Aplicaciones en visión,…"]
+        L080["080 · Capstone: motor geométrico 2D"]
         L076 --> L077
         L077 --> L078
         L078 --> L079

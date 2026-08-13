@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["191<br/>Covarianza y<br/>correlación"] --> C
-    subgraph C["192 · Bernoulli y binomial"]
+    P["Clase 191 · Covarianza y correlación"] --> D
+    subgraph CLASE["Clase 192 · Bernoulli y binomial"]
         direction TB
-        D["Demostración<br/><code>bernoulli_binomial</code>"] --> R["Resultados numéricos<br/>p<br/>n<br/>media_teorica_np<br/>… +6 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion bernoulli_binomial"]
+        D --> R["Resultados 9: p +8"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["193<br/>Poisson y exponencial"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 193 · Poisson y exponencial"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

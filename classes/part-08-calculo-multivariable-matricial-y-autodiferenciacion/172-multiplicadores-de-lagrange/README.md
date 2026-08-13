@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["171<br/>Optimización sin<br/>restricciones"] --> C
-    subgraph C["172 · Multiplicadores de<br/>Lagrange"]
+    P["Clase 171 · Optimización sin…"] --> D
+    subgraph CLASE["Clase 172 · Multiplicadores de Lagrange"]
         direction TB
-        D["Demostración<br/><code>lagrange_multipliers</code>"] --> R["Resultados numéricos<br/>valor_optimo<br/>multiplicador_lambda"]
-        D --> V["Verificaciones<br/>es_el_maximo"]
-        D --> O["Contexto y estructura<br/>objetivo<br/>restriccion<br/>solucion<br/>… +2 más"]
+        D["Demostracion lagrange_multipliers"]
+        D --> R["Resultados 2: valor_optimo +1"]
+        D --> V["Comprobaciones 1: es_el_maximo"]
+        D --> O["Contexto 5: objetivo +4"]
     end
-    C --> N["173<br/>Integrales dobles"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 173 · Integrales dobles"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

@@ -39,14 +39,14 @@ resumen_extendido: |
 
 mapa: |
   flowchart TD
-      A["021-026<br/>Enteros<br/>bits · bases · complemento a dos · overflow"] --> B["027-033<br/>Punto flotante IEEE 754<br/>mantisa · exponente · ULP · cancelación"]
-      B --> C["034-036<br/>Error y su propagación<br/>condicionamiento vs estabilidad"]
-      C --> D["037-039<br/>Salidas exactas<br/>Decimal · Fraction · reproducibilidad"]
-      D --> E["040<br/>Capstone<br/>auditor de precisión"]
-      E ==> F["Parte 11<br/>Métodos numéricos"]
-      B -.-> G["float32 · bfloat16 · int8<br/>Parte 15"]
-      C -.-> H["Número de condición<br/>Parte 06"]
-      B -.-> I["NaN en el entrenamiento<br/>Parte 15"]
+      A["Clases 021-026 · Enteros y complemento a dos"] --> B["Clases 027-033 · Punto flotante IEEE 754"]
+      B --> C["Clases 034-036 · Error, condicionamiento y estabilidad"]
+      C --> D["Clases 037-039 · Salidas exactas y reproducibilidad"]
+      D --> E["Clase 040 · Capstone auditor de precision"]
+      E ==> F["Parte 11 · Metodos numericos"]
+      B -.-> G["float32, bfloat16 e int8 · Parte 15"]
+      C -.-> H["Numero de condicion · Parte 06"]
+      B -.-> I["NaN en el entrenamiento · Parte 15"]
 
 glosario:
   - termino: "Bit"

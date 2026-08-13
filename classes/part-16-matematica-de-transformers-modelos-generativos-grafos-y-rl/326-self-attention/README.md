@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["325<br/>Scaled dot-product<br/>attention"] --> C
-    subgraph C["326 · Self-attention"]
+    P["Clase 325 · Scaled dot-product…"] --> D
+    subgraph CLASE["Clase 326 · Self-attention"]
         direction TB
-        D["Demostración<br/><code>self_attention</code>"] --> R["Resultados numéricos<br/>d_model"]
-        D --> V["Verificaciones<br/>el_token_0_solo_se_ve_a_si_mismo"]
-        D --> O["Contexto y estructura<br/>tokens<br/>matriz_de_atencion<br/>cada_fila_suma_1<br/>… +5 más"]
+        D["Demostracion self_attention"]
+        D --> R["Resultados 1: d_model"]
+        D --> V["Comprobaciones 1: el_token_0_solo_se_ve…"]
+        D --> O["Contexto 8: tokens +7"]
     end
-    C --> N["327<br/>Multi-head attention"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 327 · Multi-head attention"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["164<br/>Gradiente"] --> C
-    subgraph C["165 · Derivada direccional"]
+    P["Clase 164 · Gradiente"] --> D
+    subgraph CLASE["Clase 165 · Derivada direccional"]
         direction TB
-        D["Demostración<br/><code>directional_derivative</code>"] --> R["Resultados numéricos<br/>maxima_posible<br/>minima_posible<br/>nula_en_direccion_perpendicular"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>punto<br/>gradiente<br/>derivadas_direccionales"]
+        D["Demostracion directional_derivative"]
+        D --> R["Resultados 3: maxima_posible +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: punto +2"]
     end
-    C --> N["166<br/>Plano tangente"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 166 · Plano tangente"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

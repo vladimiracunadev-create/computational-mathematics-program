@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["265<br/>Jensen-Shannon<br/>divergence"] --> C
-    subgraph C["266 · Información mutua"]
+    P["Clase 265 · Jensen-Shannon divergence"] --> D
+    subgraph CLASE["Clase 266 · Información mutua"]
         direction TB
-        D["Demostración<br/><code>mutual_information</code>"] --> R["Resultados numéricos<br/>H(X)<br/>H(Y)<br/>I(X;Y)<br/>… +1 más"]
-        D --> V["Verificaciones<br/>I=0_sii_independientes<br/>I(X;Y)=H(X)-H(X|Y)"]
-        D --> O["Contexto y estructura<br/>conjunta_dependiente<br/>detecta_relaciones_no_lineales"]
+        D["Demostracion mutual_information"]
+        D --> R["Resultados 4: HX +3"]
+        D --> V["Comprobaciones 2: I=0_sii_independientes +1"]
+        D --> O["Contexto 2: conjunta_dependiente +1"]
     end
-    C --> N["267<br/>Principio de máxima<br/>entropía"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 267 · Principio de máxima…"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

@@ -34,15 +34,16 @@ bits necesarios para k valores = ⌈log₂ k⌉
 
 ```mermaid
 flowchart LR
-    P["020<br/>Capstone: modelar un<br/>problema cotidiano con<br/>matemáticas"] --> C
-    subgraph C["021 · Bits, bytes y sistemas de<br/>numeración"]
+    P["Clase 020 · Capstone: modelar un…"] --> D
+    subgraph CLASE["Clase 021 · Bits, bytes y sistemas de…"]
         direction TB
-        D["Demostración<br/><code>bits_and_bytes</code>"] --> R["Resultados numéricos<br/>valores_por_bit<br/>valores_en_1_byte<br/>valores_en_16_bits<br/>… +4 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion bits_and_bytes"]
+        D --> R["Resultados 7: valores_por_bit +6"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["022<br/>Conversión decimal a<br/>binario"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 022 · Conversión decimal a…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

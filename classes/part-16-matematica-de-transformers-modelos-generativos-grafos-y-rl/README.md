@@ -35,11 +35,11 @@ Softmax, embeddings, positional encoding, atención escalada, multi-head, Transf
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L321["321<br/>Softmax y distribuciones<br/>categóricas"]
-        L322["322<br/>Embeddings y similitud<br/>coseno"]
-        L323["323<br/>Positional encoding"]
-        L324["324<br/>Query, Key y Value"]
-        L325["325<br/>Scaled dot-product<br/>attention"]
+        L321["321 · Softmax y distribuciones…"]
+        L322["322 · Embeddings y similitud coseno"]
+        L323["323 · Positional encoding"]
+        L324["324 · Query, Key y Value"]
+        L325["325 · Scaled dot-product attention"]
         L321 --> L322
         L322 --> L323
         L323 --> L324
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L326["326<br/>Self-attention"]
-        L327["327<br/>Multi-head attention"]
-        L328["328<br/>Transformer completo"]
-        L329["329<br/>Modelado autoregresivo"]
-        L330["330<br/>Sampling, temperatura,<br/>top-k y top-p"]
+        L326["326 · Self-attention"]
+        L327["327 · Multi-head attention"]
+        L328["328 · Transformer completo"]
+        L329["329 · Modelado autoregresivo"]
+        L330["330 · Sampling, temperatura, top-k…"]
         L326 --> L327
         L327 --> L328
         L328 --> L329
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L331["331<br/>Variational Autoencoders"]
-        L332["332<br/>ELBO y variational<br/>inference"]
-        L333["333<br/>GAN y juegos minimax"]
-        L334["334<br/>Diffusion models:<br/>forward process"]
-        L335["335<br/>Diffusion models:<br/>reverse process"]
+        L331["331 · Variational Autoencoders"]
+        L332["332 · ELBO y variational inference"]
+        L333["333 · GAN y juegos minimax"]
+        L334["334 · Diffusion models: forward…"]
+        L335["335 · Diffusion models: reverse…"]
         L331 --> L332
         L332 --> L333
         L333 --> L334
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L336["336<br/>Graph Laplacian"]
-        L337["337<br/>Message passing en GNN"]
-        L338["338<br/>Bellman equations"]
-        L339["339<br/>Policy gradients"]
-        L340["340<br/>Capstone:<br/>mini-Transformer<br/>matemático"]
+        L336["336 · Graph Laplacian"]
+        L337["337 · Message passing en GNN"]
+        L338["338 · Bellman equations"]
+        L339["339 · Policy gradients"]
+        L340["340 · Capstone: mini-Transformer…"]
         L336 --> L337
         L337 --> L338
         L338 --> L339

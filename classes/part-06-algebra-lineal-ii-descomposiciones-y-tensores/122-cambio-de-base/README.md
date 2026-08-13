@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["121<br/>Bases y coordenadas"] --> C
-    subgraph C["122 · Cambio de base"]
+    P["Clase 121 · Bases y coordenadas"] --> D
+    subgraph CLASE["Clase 122 · Cambio de base"]
         direction TB
-        D["Demostración<br/><code>change_of_basis</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>P<br/>P⁻¹<br/>coordenadas_nuevas_P⁻¹v<br/>… +3 más"]
+        D["Demostracion change_of_basis"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: P +5"]
     end
-    C --> N["123<br/>Transformaciones<br/>lineales"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 123 · Transformaciones lineales"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

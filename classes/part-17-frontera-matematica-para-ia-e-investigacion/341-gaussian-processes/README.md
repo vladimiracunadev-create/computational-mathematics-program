@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["340<br/>Capstone:<br/>mini-Transformer<br/>matemático"] --> C
-    subgraph C["341 · Gaussian Processes"]
+    P["Clase 340 · Capstone:…"] --> D
+    subgraph CLASE["Clase 341 · Gaussian Processes"]
         direction TB
-        D["Demostración<br/><code>gaussian_processes</code>"] --> R["Resultados numéricos<br/>observaciones<br/>ruido<br/>lejos_de_los_datos_vuelve_al_prior"]
-        D --> V["Verificaciones<br/>en_un_punto_observado_la_varianza_es_minima"]
-        D --> O["Contexto y estructura<br/>kernel<br/>predicciones<br/>coste<br/>… +2 más"]
+        D["Demostracion gaussian_processes"]
+        D --> R["Resultados 3: observaciones +2"]
+        D --> V["Comprobaciones 1: en_un_punto_observado…"]
+        D --> O["Contexto 5: kernel +4"]
     end
-    C --> N["342<br/>Kernel methods<br/>avanzados"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 342 · Kernel methods avanzados"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

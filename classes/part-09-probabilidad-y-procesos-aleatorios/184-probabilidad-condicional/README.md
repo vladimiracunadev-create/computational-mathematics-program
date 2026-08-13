@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["183<br/>Reglas de suma y<br/>producto"] --> C
-    subgraph C["184 · Probabilidad condicional"]
+    P["Clase 183 · Reglas de suma y producto"] --> D
+    subgraph CLASE["Clase 184 · Probabilidad condicional"]
         direction TB
-        D["Demostración<br/><code>conditional</code>"] --> R["Resultados numéricos<br/>P(suma>9)<br/>P(primer_dado=6)<br/>P(suma>9 | primer=6)<br/>… +2 más"]
-        D --> V["Verificaciones<br/>la_informacion_cambia_la_probabilidad"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion conditional"]
+        D --> R["Resultados 5: Psuma9 +4"]
+        D --> V["Comprobaciones 1: la_informacion_cambia…"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["185<br/>Independencia"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 185 · Independencia"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

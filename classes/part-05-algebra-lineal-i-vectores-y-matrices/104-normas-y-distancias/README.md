@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["103<br/>Producto punto y<br/>similitud"] --> C
-    subgraph C["104 · Normas y distancias"]
+    P["Clase 103 · Producto punto y similitud"] --> D
+    subgraph CLASE["Clase 104 · Normas y distancias"]
         direction TB
-        D["Demostración<br/><code>norms_distances</code>"] --> R["Resultados numéricos<br/>L1<br/>L2<br/>Linf"]
-        D --> V["Verificaciones<br/>L2_es_la_hipotenusa"]
-        D --> O["Contexto y estructura<br/>v<br/>orden<br/>L1_induce_sparsidad"]
+        D["Demostracion norms_distances"]
+        D --> R["Resultados 3: L1 +2"]
+        D --> V["Comprobaciones 1: L2_es_la_hipotenusa"]
+        D --> O["Contexto 3: v +2"]
     end
-    C --> N["105<br/>Vectores unitarios"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 105 · Vectores unitarios"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

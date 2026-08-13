@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["357<br/>VC dimension"] --> C
-    subgraph C["358 · PAC learning"]
+    P["Clase 357 · VC dimension"] --> D
+    subgraph CLASE["Clase 358 · PAC learning"]
         direction TB
-        D["Demostración<br/><code>pac_learning</code>"] --> R["Resultados numéricos<br/>delta"]
-        D --> V["Verificaciones<br/>el_coste_crece_como_1/ε<br/>es_una_cota_del_peor_caso"]
-        D --> O["Contexto y estructura<br/>definicion<br/>muestras_necesarias<br/>el_coste_crece_como_log(1/δ)<br/>… +3 más"]
+        D["Demostracion pac_learning"]
+        D --> R["Resultados 1: delta"]
+        D --> V["Comprobaciones 2: el_coste_crece_como_1… +1"]
+        D --> O["Contexto 6: definicion +5"]
     end
-    C --> N["359<br/>Approximation theory y<br/>scaling"]
-    C -.-> IA["Uso en IA<br/>parte 17"]
+    R --> N["Clase 359 · Approximation theory y…"]
+    V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
 ## 🧠 Idea rectora de la parte 17

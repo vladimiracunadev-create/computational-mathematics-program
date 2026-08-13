@@ -34,15 +34,16 @@ rango: [−2ⁿ⁻¹, 2ⁿ⁻¹ − 1]
 
 ```mermaid
 flowchart LR
-    P["024<br/>Aritmética binaria"] --> C
-    subgraph C["025 · Enteros con signo y<br/>complemento a dos"]
+    P["Clase 024 · Aritmética binaria"] --> D
+    subgraph CLASE["Clase 025 · Enteros con signo y…"]
         direction TB
-        D["Demostración<br/><code>twos_complement</code>"] --> R["Resultados numéricos<br/>ancho_bits<br/>decodifica_11111011<br/>minimo_representable<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>5<br/>-5<br/>suma_5_y_-5<br/>… +1 más"]
+        D["Demostracion twos_complement"]
+        D --> R["Resultados 4: ancho_bits +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: 5 +3"]
     end
-    C --> N["026<br/>Rango, overflow y<br/>wraparound"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 026 · Rango, overflow y…"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

@@ -35,15 +35,16 @@ regla del 72: t ≈ 72 / (porcentaje anual)
 
 ```mermaid
 flowchart LR
-    P["054<br/>Funciones cuadráticas<br/>y parábolas"] --> C
-    subgraph C["055 · Funciones exponenciales"]
+    P["Clase 054 · Funciones cuadráticas y…"] --> D
+    subgraph CLASE["Clase 055 · Funciones exponenciales"]
         direction TB
-        D["Demostración<br/><code>exponential_function</code>"] --> R["Resultados numéricos<br/>razon_entre_años_consecutivos<br/>tiempo_de_duplicacion<br/>regla_del_72_aproximada"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>modelo<br/>valores"]
+        D["Demostracion exponential_function"]
+        D --> R["Resultados 3: razon_entre_años_cons… +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: modelo +1"]
     end
-    C --> N["056<br/>Funciones logarítmicas"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 056 · Funciones logarítmicas"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

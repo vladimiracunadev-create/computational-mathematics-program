@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["134<br/>Pseudoinversa de<br/>Moore-Penrose"] --> C
-    subgraph C["135 · PCA desde álgebra lineal"]
+    P["Clase 134 · Pseudoinversa de…"] --> D
+    subgraph CLASE["Clase 135 · PCA desde álgebra lineal"]
         direction TB
-        D["Demostración<br/><code>pca</code>"] --> R["Resultados numéricos<br/>observaciones<br/>varianza_explicada_PC1_%"]
-        D --> V["Verificaciones<br/>PCA_es_SVD_de_los_datos_centrados"]
-        D --> O["Contexto y estructura<br/>medias<br/>covarianza<br/>autovalores<br/>… +2 más"]
+        D["Demostracion pca"]
+        D --> R["Resultados 2: observaciones +1"]
+        D --> V["Comprobaciones 1: PCA_es_SVD_de_los_dat…"]
+        D --> O["Contexto 5: medias +4"]
     end
-    C --> N["136<br/>Producto de Kronecker"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 136 · Producto de Kronecker"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

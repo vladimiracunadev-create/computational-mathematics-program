@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**La regla del producto multiplica opciones independientes; la de la suma las suma cuando son excluyentes.**
 
-Esta clase concreta ese objetivo sobre **Principios de conteo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,71 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: contar dos veces al aplicar el principio de inclusión-exclusión.
 
+## 🧩 Fórmulas de la clase
+
+```text
+producto: |A × B| = |A| · |B|
+suma (excluyentes): |A ∪ B| = |A| + |B|
+entropía de una contraseña: log₂(espacio)
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["086<br/>Funciones discretas"] --> C
-    subgraph C["087 · Principios de conteo"]
+    P["Clase 086 · Funciones discretas"] --> D
+    subgraph CLASE["Clase 087 · Principios de conteo"]
         direction TB
-        D["Demostración<br/><code>counting_principles</code>"] --> R["Resultados numéricos<br/>regla_del_producto_3x4<br/>regla_de_la_suma_3+4<br/>contraseñas_alfanumericas_8<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion counting_principles"]
+        D --> R["Resultados 6: regla_del_producto_3x4 +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["088<br/>Permutaciones"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 088 · Permutaciones"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Permutación cuenta orden; combinación cuenta selección.
+Los dos principios básicos del conteo se distinguen por una palabra: si las decisiones
+son **sucesivas** (esto **y** aquello), se multiplican; si son **alternativas**
+excluyentes (esto **o** aquello), se suman. Casi todo error de conteo viene de aplicar
+uno donde correspondía el otro.
+
+La aplicación más ilustrativa es el espacio de contraseñas. Con un alfabeto de 36
+caracteres y longitud 8, hay 36⁸ ≈ 2.8·10¹² combinaciones; con solo 10 dígitos, 10⁸.
+La razón entre ambos es de más de 28 000, y ese factor es lo que separa una contraseña
+débil de una razonable frente a fuerza bruta.
+
+Medir el espacio en **bits de entropía** —`log₂` del número de combinaciones— es más
+informativo que dar el número, porque los bits se suman al añadir caracteres. Cada
+carácter adicional de un alfabeto de 36 símbolos añade `log₂36 ≈ 5.17` bits. Esa es la
+cuenta que hace un estimador de fortaleza de contraseñas.
+
+La misma regla es la que da 2ⁿ estados para n bits (clase 021), `|B|^|A|` funciones
+(clase 086) y el tamaño del espacio de búsqueda de cualquier problema combinatorio. En
+machine learning aparece al contar configuraciones de hiperparámetros: cinco parámetros
+con diez valores cada uno dan 10⁵ combinaciones, que es por lo que la búsqueda
+exhaustiva se abandona en favor de la aleatoria o bayesiana.
+
+## 🧮 Ejemplo trabajado
+
+Espacio de contraseñas de 8 caracteres.
+
+```text
+Alfanumérico (26 letras + 10 dígitos = 36 símbolos):
+  36⁸ = 2 821 109 907 456 ≈ 2.8·10¹²
+  entropía = 8·log₂(36) = 41.4 bits
+
+Solo dígitos (10 símbolos):
+  10⁸ = 100 000 000 = 10⁸
+  entropía = 8·log₂(10) = 26.6 bits
+
+Factor de ventaja: 2.8·10¹² / 10⁸ = 28 211
+
+Regla del producto:  3 camisas × 4 pantalones = 12 conjuntos
+Regla de la suma:    3 camisas o 4 pantalones = 7 prendas
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +111,16 @@ compmath run 087
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Sumar cuando las decisiones son sucesivas o multiplicar cuando son excluyentes.
+2. Contar dos veces casos que pertenecen a ambas alternativas.
+3. Reportar el tamaño del espacio en lugar de su logaritmo al comparar órdenes de magnitud.
+
+## 🚀 Dónde se usa de verdad
+
+Estimación de fortaleza de contraseñas, tamaño de espacios de búsqueda, conteo de
+configuraciones de hiperparámetros y cardinalidad de esquemas de datos.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [NIST SP 800-63B: Digital Identity Guidelines — Authentication](https://pages.nist.gov/800-63-3/sp800-63b.html)
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 6](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

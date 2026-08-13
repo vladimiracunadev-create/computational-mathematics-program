@@ -34,15 +34,16 @@ f inyectiva ⟺ f(a) = f(b) ⟹ a = b
 
 ```mermaid
 flowchart LR
-    P["057<br/>Composición de<br/>funciones"] --> C
-    subgraph C["058 · Funciones inversas"]
+    P["Clase 057 · Composición de funciones"] --> D
+    subgraph CLASE["Clase 058 · Funciones inversas"]
         direction TB
-        D["Demostración<br/><code>inverse_function</code>"] --> R["Resultados numéricos<br/>f(5)<br/>f_inv(f(5))<br/>reciproco_1/f(5)"]
-        D --> V["Verificaciones<br/>roundtrip_ok<br/>inversa_es_reciproco"]
-        D --> O["Contexto y estructura<br/>f<br/>f_inversa<br/>condicion_de_existencia"]
+        D["Demostracion inverse_function"]
+        D --> R["Resultados 3: f5 +2"]
+        D --> V["Comprobaciones 2: roundtrip_ok +1"]
+        D --> O["Contexto 3: f +2"]
     end
-    C --> N["059<br/>Funciones por tramos"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 059 · Funciones por tramos"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

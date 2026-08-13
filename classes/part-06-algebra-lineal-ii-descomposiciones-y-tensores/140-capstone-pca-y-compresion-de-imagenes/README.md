@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["139<br/>Einstein summation"] --> C
-    subgraph C["140 · Capstone: PCA y compresión<br/>de imágenes"]
+    P["Clase 139 · Einstein summation"] --> D
+    subgraph CLASE["Clase 140 · Capstone: PCA y compresión…"]
         direction TB
-        D["Demostración<br/><code>capstone_pca_compression</code>"] --> R["Resultados numéricos<br/>valores_originales<br/>rango_efectivo"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>matriz_original_shape<br/>valores_singulares<br/>informe_por_rango<br/>… +1 más"]
+        D["Demostracion capstone_pca_compression"]
+        D --> R["Resultados 2: valores_originales +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: matriz_original_shape +3"]
     end
-    C --> N["141<br/>Intuición de límite"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 141 · Intuición de límite"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

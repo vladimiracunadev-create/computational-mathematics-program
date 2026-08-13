@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Inyectiva, sobreyectiva y biyectiva describen qué información conserva una función.**
 
-Esta clase concreta ese objetivo sobre **Funciones discretas**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,72 @@ Al terminar podrás:
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir que un grafo dirigido es acíclico sin verificarlo.
 
+## 🧩 Fórmulas de la clase
+
+```text
+funciones totales de A a B: |B|^|A|
+biyecciones de A en A: |A|!
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["085<br/>Relaciones y<br/>propiedades"] --> C
-    subgraph C["086 · Funciones discretas"]
+    P["Clase 085 · Relaciones y propiedades"] --> D
+    subgraph CLASE["Clase 086 · Funciones discretas"]
         direction TB
-        D["Demostración<br/><code>discrete_functions</code>"] --> R["Resultados numéricos<br/>funciones_totales_posibles<br/>biyecciones_posibles"]
-        D --> V["Verificaciones<br/>f_inyectiva<br/>f_sobreyectiva<br/>f_biyectiva<br/>… +1 más"]
-        D --> O["Contexto y estructura<br/>f<br/>g"]
+        D["Demostracion discrete_functions"]
+        D --> R["Resultados 2: funciones_totales_pos… +1"]
+        D --> V["Comprobaciones 4: f_inyectiva +3"]
+        D --> O["Contexto 2: f +1"]
     end
-    C --> N["087<br/>Principios de conteo"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 087 · Principios de conteo"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Una demostración por inducción es un bucle `for` con garantía.
+Sobre conjuntos finitos, las tres propiedades se cuentan. Una función es **inyectiva**
+si no repite salidas, **sobreyectiva** si alcanza todo el codominio y **biyectiva** si
+ambas. Entre conjuntos del mismo tamaño finito, inyectiva y sobreyectiva son
+equivalentes —hecho que falla en conjuntos infinitos y da lugar a las paradojas de
+Hilbert—.
+
+El conteo de funciones ilustra la regla del producto: cada uno de los `|A|` elementos
+puede ir a cualquiera de los `|B|` destinos, luego hay `|B|^|A|` funciones. Las
+biyecciones de un conjunto en sí mismo son `|A|!`, que es el conteo de permutaciones de
+la clase 088.
+
+La inyectividad es la condición que hace invertible una función (clase 058) y la que
+define una función hash **perfecta**. Como una función hash mapea un dominio enorme en
+un rango pequeño, no puede ser inyectiva, y de ahí las colisiones que el palomar
+garantiza en la clase 090.
+
+En machine learning, la pérdida de inyectividad es lo que hace que una capa no sea
+invertible: si la dimensión de salida es menor que la de entrada, información se pierde
+irremediablemente. Los *normalizing flows* se construyen precisamente con capas
+biyectivas para poder invertirlas y calcular densidades exactas.
+
+## 🧮 Ejemplo trabajado
+
+Dos funciones sobre un dominio de tres elementos.
+
+```text
+dominio = {1,2,3},  codominio = {a,b,c}
+
+f = {1→a, 2→b, 3→c}
+  inyectiva:   3 salidas distintas         ✓
+  sobreyectiva: alcanza a, b y c           ✓
+  biyectiva                                ✓
+
+g = {1→a, 2→a, 3→b}
+  inyectiva:   1 y 2 comparten salida      ✗
+  sobreyectiva: no alcanza c               ✗
+
+Conteo:
+  funciones totales posibles: 3³ = 27
+  biyecciones posibles:       3! = 6
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +112,16 @@ compmath run 086
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Suponer que inyectiva implica sobreyectiva en conjuntos de distinto tamaño.
+2. Extender a conjuntos infinitos la equivalencia entre inyectiva y sobreyectiva.
+3. Esperar que una función hash sea inyectiva.
+
+## 🚀 Dónde se usa de verdad
+
+Funciones hash y colisiones, invertibilidad de capas, codificación sin pérdida y
+normalizing flows.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
+- [Papamakarios, G. et al. *Normalizing Flows for Probabilistic Modeling and Inference*. JMLR, 2021](https://jmlr.org/papers/v22/19-1028.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

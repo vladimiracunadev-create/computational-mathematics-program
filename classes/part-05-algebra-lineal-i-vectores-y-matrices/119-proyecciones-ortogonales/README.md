@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["118<br/>Matrices ortogonales"] --> C
-    subgraph C["119 · Proyecciones ortogonales"]
+    P["Clase 118 · Matrices ortogonales"] --> D
+    subgraph CLASE["Clase 119 · Proyecciones ortogonales"]
         direction TB
-        D["Demostración<br/><code>orthogonal_projection</code>"] --> R["Resultados numéricos<br/>norma_del_residuo"]
-        D --> V["Verificaciones<br/>residuo_ortogonal<br/>es_la_mejor_aproximacion_en_L2"]
-        D --> O["Contexto y estructura<br/>columnas_del_subespacio<br/>b<br/>coeficientes<br/>… +2 más"]
+        D["Demostracion orthogonal_projection"]
+        D --> R["Resultados 1: norma_del_residuo"]
+        D --> V["Comprobaciones 2: residuo_ortogonal +1"]
+        D --> O["Contexto 5: columnas_del_subespac… +4"]
     end
-    C --> N["120<br/>Capstone: resolver un<br/>sistema de<br/>recomendación lineal"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 120 · Capstone: resolver un…"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

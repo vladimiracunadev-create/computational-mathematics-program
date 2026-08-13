@@ -34,15 +34,16 @@ d(a, b) = |a − b| = |b − a|
 
 ```mermaid
 flowchart LR
-    P["001<br/>Números naturales y<br/>conteo"] --> C
-    subgraph C["002 · Enteros, signo y recta<br/>numérica"]
+    P["Clase 001 · Números naturales y conteo"] --> D
+    subgraph CLASE["Clase 002 · Enteros, signo y recta…"]
         direction TB
-        D["Demostración<br/><code>integers_number_line</code>"] --> R["Resultados numéricos<br/>a<br/>b<br/>distancia_|a-b|<br/>… +3 más"]
-        D --> V["Verificaciones<br/>simetrica"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion integers_number_line"]
+        D --> R["Resultados 6: a +5"]
+        D --> V["Comprobaciones 1: simetrica"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["003<br/>Fracciones y números<br/>racionales"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 003 · Fracciones y números…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

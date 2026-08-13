@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["153<br/>Integral como<br/>acumulación"] --> C
-    subgraph C["154 · Integral definida"]
+    P["Clase 153 · Integral como acumulación"] --> D
+    subgraph CLASE["Clase 154 · Integral definida"]
         direction TB
-        D["Demostración<br/><code>definite_integral</code>"] --> R["Resultados numéricos<br/>∫₀¹x²<br/>∫₁²x²<br/>∫₀²x²<br/>… +3 más"]
-        D --> V["Verificaciones<br/>aditividad"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion definite_integral"]
+        D --> R["Resultados 6: ∫₀¹x² +5"]
+        D --> V["Comprobaciones 1: aditividad"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["155<br/>Antiderivadas"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 155 · Antiderivadas"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

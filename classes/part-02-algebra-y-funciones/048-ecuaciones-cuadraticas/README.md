@@ -34,15 +34,16 @@ vértice: xᵥ = −b/2a,  yᵥ = a·xᵥ² + b·xᵥ + c
 
 ```mermaid
 flowchart LR
-    P["047<br/>Factorización<br/>elemental"] --> C
-    subgraph C["048 · Ecuaciones cuadráticas"]
+    P["Clase 047 · Factorización elemental"] --> D
+    subgraph CLASE["Clase 048 · Ecuaciones cuadráticas"]
         direction TB
-        D["Demostración<br/><code>quadratic_equation</code>"] --> R["Resultados numéricos<br/>discriminante<br/>vertice_x<br/>vertice_y"]
-        D --> V["Verificaciones<br/>vertice_es_punto_medio_de_raices"]
-        D --> O["Contexto y estructura<br/>ecuacion<br/>raices"]
+        D["Demostracion quadratic_equation"]
+        D --> R["Resultados 3: discriminante +2"]
+        D --> V["Comprobaciones 1: vertice_es_punto_medi…"]
+        D --> O["Contexto 2: ecuacion +1"]
     end
-    C --> N["049<br/>Fórmula cuadrática y<br/>discriminante"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 049 · Fórmula cuadrática y…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

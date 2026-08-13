@@ -35,15 +35,16 @@ producto cruzado: a/b = c/d ⟺ ad = bc
 
 ```mermaid
 flowchart LR
-    P["006<br/>Razones, tasas y<br/>proporciones"] --> C
-    subgraph C["007 · Regla de tres y escalas"]
+    P["Clase 006 · Razones, tasas y…"] --> D
+    subgraph CLASE["Clase 007 · Regla de tres y escalas"]
         direction TB
-        D["Demostración<br/><code>rule_of_three</code>"] --> R["Resultados numéricos<br/>proporcion_directa<br/>proporcion_inversa"]
-        D --> V["Verificaciones<br/>producto_cruzado_directa<br/>producto_constante_inversa"]
-        D --> O["Contexto y estructura<br/>si_4_cuesta_10"]
+        D["Demostracion rule_of_three"]
+        D --> R["Resultados 2: proporcion_directa +1"]
+        D --> V["Comprobaciones 2: producto_cruzado_dire… +1"]
+        D --> O["Contexto 1: si_4_cuesta_10"]
     end
-    C --> N["008<br/>Potencias y leyes de<br/>exponentes"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 008 · Potencias y leyes de…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

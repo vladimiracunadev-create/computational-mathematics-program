@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["272<br/>Correlación de señales"] --> C
-    subgraph C["273 · Series y transformada de<br/>Fourier"]
+    P["Clase 272 · Correlación de señales"] --> D
+    subgraph CLASE["Clase 273 · Series y transformada de…"]
         direction TB
-        D["Demostración<br/><code>fourier_series</code>"] --> R["Resultados numéricos<br/>muestras<br/>energia_en_el_tiempo<br/>energia_en_frecuencia"]
-        D --> V["Verificaciones<br/>teorema_de_Parseval<br/>cualquier_periodica_es_suma_de_senoidales"]
-        D --> O["Contexto y estructura<br/>componentes_reales<br/>picos_detectados_Hz<br/>magnitudes_de_los_picos"]
+        D["Demostracion fourier_series"]
+        D --> R["Resultados 3: muestras +2"]
+        D --> V["Comprobaciones 2: teorema_de_Parseval +1"]
+        D --> O["Contexto 3: componentes_reales +2"]
     end
-    C --> N["274<br/>FFT"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 274 · FFT"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

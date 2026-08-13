@@ -34,15 +34,16 @@ error relativo de salida ≈ κ · error relativo de entrada
 
 ```mermaid
 flowchart LR
-    P["034<br/>Propagación de errores"] --> C
-    subgraph C["035 · Condicionamiento de<br/>problemas"]
+    P["Clase 034 · Propagación de errores"] --> D
+    subgraph CLASE["Clase 035 · Condicionamiento de problemas"]
         direction TB
-        D["Demostración<br/><code>conditioning</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>x=0.5<br/>x=0.99<br/>x=1e-08<br/>… +1 más"]
+        D["Demostracion conditioning"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: x=0.5 +3"]
     end
-    C --> N["036<br/>Estabilidad de<br/>algoritmos"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 036 · Estabilidad de algoritmos"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

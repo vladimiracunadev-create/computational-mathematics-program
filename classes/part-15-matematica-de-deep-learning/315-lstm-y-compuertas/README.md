@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["314<br/>Vanishing y exploding<br/>gradients"] --> C
-    subgraph C["315 · LSTM y compuertas"]
+    P["Clase 314 · Vanishing y exploding…"] --> D
+    subgraph CLASE["Clase 315 · LSTM y compuertas"]
         direction TB
-        D["Demostración<br/><code>lstm</code>"] --> R["Resultados numéricos<br/>parametros_por_celda"]
-        D --> V["Verificaciones<br/>si_f≈1_el_gradiente_no_se_atenua"]
-        D --> O["Contexto y estructura<br/>puertas<br/>traza<br/>bf_inicializado_en_1<br/>… +2 más"]
+        D["Demostracion lstm"]
+        D --> R["Resultados 1: parametros_por_celda"]
+        D --> V["Comprobaciones 1: si_f≈1_el_gradiente_n…"]
+        D --> O["Contexto 5: puertas +4"]
     end
-    C --> N["316<br/>GRU"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 316 · GRU"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["248<br/>AdaGrad"] --> C
-    subgraph C["249 · RMSProp"]
+    P["Clase 248 · AdaGrad"] --> D
+    subgraph CLASE["Clase 249 · RMSProp"]
         direction TB
-        D["Demostración<br/><code>rmsprop</code>"] --> R["Resultados numéricos<br/>rho<br/>epsilon"]
-        D --> V["Verificaciones<br/>rmsprop_mejor<br/>el_paso_no_se_apaga"]
-        D --> O["Contexto y estructura<br/>rmsprop<br/>adagrad_mismo_lr<br/>diferencia"]
+        D["Demostracion rmsprop"]
+        D --> R["Resultados 2: rho +1"]
+        D --> V["Comprobaciones 2: rmsprop_mejor +1"]
+        D --> O["Contexto 3: rmsprop +2"]
     end
-    C --> N["250<br/>Adam"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 250 · Adam"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

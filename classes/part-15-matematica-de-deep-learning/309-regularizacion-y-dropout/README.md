@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["308<br/>Batch normalization y<br/>layer normalization"] --> C
-    subgraph C["309 · Regularización y dropout"]
+    P["Clase 308 · Batch normalization y…"] --> D
+    subgraph CLASE["Clase 309 · Regularización y dropout"]
         direction TB
-        D["Demostración<br/><code>dropout_regularization</code>"] --> R["Resultados numéricos<br/>neuronas<br/>probabilidad_de_apagado<br/>media_sin_dropout<br/>… +2 más"]
-        D --> V["Verificaciones<br/>la_esperanza_se_conserva"]
-        D --> O["Contexto y estructura<br/>en_inferencia<br/>interpretacion<br/>no_combinar_a_ciegas_con_batchnorm"]
+        D["Demostracion dropout_regularization"]
+        D --> R["Resultados 5: neuronas +4"]
+        D --> V["Comprobaciones 1: la_esperanza_se_conse…"]
+        D --> O["Contexto 3: en_inferencia +2"]
     end
-    C --> N["310<br/>Convolución discreta"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 310 · Convolución discreta"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

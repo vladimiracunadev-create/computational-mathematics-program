@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["230<br/>Simpson"] --> C
-    subgraph C["231 · Sistemas lineales directos"]
+    P["Clase 230 · Simpson"] --> D
+    subgraph CLASE["Clase 231 · Sistemas lineales directos"]
         direction TB
-        D["Demostración<br/><code>direct_linear_solvers</code>"] --> R["Resultados numéricos<br/>intercambios<br/>determinante"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>A<br/>b<br/>solucion<br/>… +5 más"]
+        D["Demostracion direct_linear_solvers"]
+        D --> R["Resultados 2: intercambios +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 8: A +7"]
     end
-    C --> N["232<br/>Jacobi y Gauss-Seidel"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 232 · Jacobi y Gauss-Seidel"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

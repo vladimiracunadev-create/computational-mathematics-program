@@ -34,15 +34,16 @@ generador: a = m²−n²,  b = 2mn,  c = m²+n²  (m > n > 0)
 
 ```mermaid
 flowchart LR
-    P["063<br/>Triángulos y semejanza"] --> C
-    subgraph C["064 · Teorema de Pitágoras"]
+    P["Clase 063 · Triángulos y semejanza"] --> D
+    subgraph CLASE["Clase 064 · Teorema de Pitágoras"]
         direction TB
-        D["Demostración<br/><code>pythagoras</code>"] --> R["Resultados numéricos<br/>hipotenusa<br/>a²+b²<br/>c²"]
-        D --> V["Verificaciones<br/>es_rectangulo<br/>triangulo_5_5_7_es_rectangulo"]
-        D --> O["Contexto y estructura<br/>catetos<br/>generador_(m,n)"]
+        D["Demostracion pythagoras"]
+        D --> R["Resultados 3: hipotenusa +2"]
+        D --> V["Comprobaciones 2: es_rectangulo +1"]
+        D --> O["Contexto 2: catetos +1"]
     end
-    C --> N["065<br/>Seno, coseno y<br/>tangente"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 065 · Seno, coseno y tangente"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

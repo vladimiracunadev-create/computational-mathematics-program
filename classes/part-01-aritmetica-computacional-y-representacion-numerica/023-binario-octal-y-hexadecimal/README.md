@@ -34,15 +34,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["022<br/>Conversión decimal a<br/>binario"] --> C
-    subgraph C["023 · Binario, octal y<br/>hexadecimal"]
+    P["Clase 022 · Conversión decimal a…"] --> D
+    subgraph CLASE["Clase 023 · Binario, octal y hexadecimal"]
         direction TB
-        D["Demostración<br/><code>bases</code>"] --> R["Resultados numéricos<br/>decimal<br/>digitos_binarios<br/>un_hex_equivale_a_bits<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>binario<br/>octal<br/>hexadecimal"]
+        D["Demostracion bases"]
+        D --> R["Resultados 4: decimal +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: binario +2"]
     end
-    C --> N["024<br/>Aritmética binaria"]
-    C -.-> IA["Uso en IA<br/>parte 01"]
+    R --> N["Clase 024 · Aritmética binaria"]
+    V -.-> IA["Aplicacion en IA · parte 01"]
 ```
 
 ## 📖 Fundamentos

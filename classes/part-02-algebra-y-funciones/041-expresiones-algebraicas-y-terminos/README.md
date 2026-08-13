@@ -34,15 +34,16 @@ términos semejantes ⟺ misma parte literal con los mismos exponentes
 
 ```mermaid
 flowchart LR
-    P["040<br/>Capstone: auditor de<br/>precisión numérica"] --> C
-    subgraph C["041 · Expresiones algebraicas y<br/>términos"]
+    P["Clase 040 · Capstone: auditor de…"] --> D
+    subgraph CLASE["Clase 041 · Expresiones algebraicas y…"]
         direction TB
-        D["Demostración<br/><code>algebraic_terms</code>"] --> R["Resultados numéricos<br/>evaluada_original<br/>evaluada_simplificada<br/>terminos_originales<br/>… +1 más"]
-        D --> V["Verificaciones<br/>equivalentes"]
-        D --> O["Contexto y estructura<br/>expresion<br/>simplificada"]
+        D["Demostracion algebraic_terms"]
+        D --> R["Resultados 4: evaluada_original +3"]
+        D --> V["Comprobaciones 1: equivalentes"]
+        D --> O["Contexto 2: expresion +1"]
     end
-    C --> N["042<br/>Propiedades<br/>distributiva,<br/>asociativa y<br/>conmutativa"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 042 · Propiedades…"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

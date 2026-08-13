@@ -35,11 +35,11 @@ Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, 
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L341["341<br/>Gaussian Processes"]
-        L342["342<br/>Kernel methods avanzados"]
-        L343["343<br/>MCMC avanzado"]
-        L344["344<br/>Hamiltonian Monte Carlo"]
-        L345["345<br/>Variational inference<br/>avanzada"]
+        L341["341 · Gaussian Processes"]
+        L342["342 · Kernel methods avanzados"]
+        L343["343 · MCMC avanzado"]
+        L344["344 · Hamiltonian Monte Carlo"]
+        L345["345 · Variational inference avanzada"]
         L341 --> L342
         L342 --> L343
         L343 --> L344
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L346["346<br/>Optimal transport"]
-        L347["347<br/>Wasserstein distance"]
-        L348["348<br/>Manifold learning"]
-        L349["349<br/>Geometría diferencial<br/>para ML"]
-        L350["350<br/>Information geometry"]
+        L346["346 · Optimal transport"]
+        L347["347 · Wasserstein distance"]
+        L348["348 · Manifold learning"]
+        L349["349 · Geometría diferencial para ML"]
+        L350["350 · Information geometry"]
         L346 --> L347
         L347 --> L348
         L348 --> L349
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L351["351<br/>Stochastic differential<br/>equations"]
-        L352["352<br/>Neural ODEs"]
-        L353["353<br/>Score matching"]
-        L354["354<br/>Spectral graph theory"]
-        L355["355<br/>Causal inference"]
+        L351["351 · Stochastic differential…"]
+        L352["352 · Neural ODEs"]
+        L353["353 · Score matching"]
+        L354["354 · Spectral graph theory"]
+        L355["355 · Causal inference"]
         L351 --> L352
         L352 --> L353
         L353 --> L354
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L356["356<br/>Statistical learning<br/>theory"]
-        L357["357<br/>VC dimension"]
-        L358["358<br/>PAC learning"]
-        L359["359<br/>Approximation theory y<br/>scaling"]
-        L360["360<br/>Capstone final:<br/>reproducir una idea<br/>matemática de un paper"]
+        L356["356 · Statistical learning theory"]
+        L357["357 · VC dimension"]
+        L358["358 · PAC learning"]
+        L359["359 · Approximation theory y scaling"]
+        L360["360 · Capstone final: reproducir…"]
         L356 --> L357
         L357 --> L358
         L358 --> L359

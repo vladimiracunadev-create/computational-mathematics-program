@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["256<br/>Restricciones y<br/>Lagrangianos"] --> C
-    subgraph C["257 · Condiciones KKT"]
+    P["Clase 256 · Restricciones y…"] --> D
+    subgraph CLASE["Clase 257 · Condiciones KKT"]
         direction TB
-        D["Demostración<br/><code>kkt_conditions</code>"] --> R["Resultados numéricos<br/>holgura_complementaria_activo<br/>holgura_complementaria_inactivo"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>condiciones_KKT<br/>caso_restriccion_activa<br/>caso_restriccion_inactiva<br/>… +1 más"]
+        D["Demostracion kkt_conditions"]
+        D --> R["Resultados 2: holgura_complementari… +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 4: condiciones_KKT +3"]
     end
-    C --> N["258<br/>Optimización<br/>cuadrática"]
-    C -.-> IA["Uso en IA<br/>parte 12"]
+    R --> N["Clase 258 · Optimización cuadrática"]
+    V -.-> IA["Aplicacion en IA · parte 12"]
 ```
 
 ## 🧠 Idea rectora de la parte 12

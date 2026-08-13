@@ -41,15 +41,15 @@ resumen_extendido: |
 
 mapa: |
   flowchart TD
-      A["001-004<br/>Tipos de número<br/>natural · entero · racional · decimal"] --> B["005-007<br/>Proporcionalidad<br/>porcentaje · razón · regla de tres"]
-      A --> C["008-011<br/>Órdenes de magnitud<br/>potencias · raíces · notación científica"]
-      B --> D["012-014<br/>Medida y aproximación<br/>unidades · redondeo · estimación"]
+      A["Clases 001-004 · Tipos de numero"] --> B["Clases 005-007 · Proporcionalidad"]
+      A --> C["Clases 008-011 · Ordenes de magnitud"]
+      B --> D["Clases 012-014 · Medida y aproximacion"]
       C --> D
-      D --> E["015-018<br/>Lenguaje algebraico<br/>variables · fórmulas · patrones"]
-      E --> F["019-020<br/>Verificación<br/>contraejemplo · capstone"]
-      F ==> G["Parte 01<br/>Representación numérica<br/>en la máquina"]
-      B -.-> H["Capa densa y = Wx<br/>Parte 05"]
-      C -.-> I["Escalas logarítmicas<br/>Parte 02"]
+      D --> E["Clases 015-018 · Lenguaje algebraico"]
+      E --> F["Clases 019-020 · Verificacion y capstone"]
+      F ==> G["Parte 01 · Representacion numerica en la maquina"]
+      B -.-> H["Capa densa y = Wx · Parte 05"]
+      C -.-> I["Escalas logaritmicas · Parte 02"]
 
 glosario:
   - termino: "Número natural"

@@ -34,15 +34,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["048<br/>Ecuaciones cuadráticas"] --> C
-    subgraph C["049 · Fórmula cuadrática y<br/>discriminante"]
+    P["Clase 048 · Ecuaciones cuadráticas"] --> D
+    subgraph CLASE["Clase 049 · Fórmula cuadrática y…"]
         direction TB
-        D["Demostración<br/><code>discriminant</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>dos_reales<br/>una_doble<br/>complejas"]
+        D["Demostracion discriminant"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: dos_reales +2"]
     end
-    C --> N["050<br/>Exponentes algebraicos"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 050 · Exponentes algebraicos"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["198<br/>Métodos Monte Carlo"] --> C
-    subgraph C["199 · Cadenas de Markov"]
+    P["Clase 198 · Métodos Monte Carlo"] --> D
+    subgraph CLASE["Clase 199 · Cadenas de Markov"]
         direction TB
-        D["Demostración<br/><code>markov_chains</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>filas_suman_1<br/>converge<br/>olvida_el_estado_inicial"]
-        D --> O["Contexto y estructura<br/>matriz_de_transicion<br/>estado_inicial<br/>trayectoria<br/>… +2 más"]
+        D["Demostracion markov_chains"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 3: filas_suman_1 +2"]
+        D --> O["Contexto 5: matriz_de_transicion +4"]
     end
-    C --> N["200<br/>Capstone: simulador<br/>probabilístico y<br/>bayesiano"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 200 · Capstone: simulador…"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

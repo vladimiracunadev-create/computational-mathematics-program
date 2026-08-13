@@ -35,15 +35,16 @@ plano: n·(x − p₀) = 0
 
 ```mermaid
 flowchart LR
-    P["076<br/>Coordenadas polares"] --> C
-    subgraph C["077 · Geometría 3D y planos"]
+    P["Clase 076 · Coordenadas polares"] --> D
+    subgraph CLASE["Clase 077 · Geometría 3D y planos"]
         direction TB
-        D["Demostración<br/><code>planes_3d</code>"] --> R["Resultados numéricos<br/>distancia_al_plano<br/>norma_del_producto_cruz_es_el_area"]
-        D --> V["Verificaciones<br/>normal_es_ortogonal_a_a"]
-        D --> O["Contexto y estructura<br/>vector_a<br/>vector_b<br/>normal_axb<br/>… +2 más"]
+        D["Demostracion planes_3d"]
+        D --> R["Resultados 2: distancia_al_plano +1"]
+        D --> V["Comprobaciones 1: normal_es_ortogonal_a…"]
+        D --> O["Contexto 5: vector_a +4"]
     end
-    C --> N["078<br/>Proyecciones y<br/>perspectiva"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 078 · Proyecciones y perspectiva"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

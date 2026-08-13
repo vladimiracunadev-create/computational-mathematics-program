@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["338<br/>Bellman equations"] --> C
-    subgraph C["339 · Policy gradients"]
+    P["Clase 338 · Bellman equations"] --> D
+    subgraph CLASE["Clase 339 · Policy gradients"]
         direction TB
-        D["Demostración<br/><code>policy_gradients</code>"] --> R["Resultados numéricos<br/>brazos<br/>mejor_brazo<br/>brazo_preferido<br/>… +2 más"]
-        D --> V["Verificaciones<br/>encuentra_el_mejor"]
-        D --> O["Contexto y estructura<br/>probabilidades_reales_de_recompensa<br/>historial<br/>politica_final<br/>… +2 más"]
+        D["Demostracion policy_gradients"]
+        D --> R["Resultados 5: brazos +4"]
+        D --> V["Comprobaciones 1: encuentra_el_mejor"]
+        D --> O["Contexto 5: probabilidades_reales… +4"]
     end
-    C --> N["340<br/>Capstone:<br/>mini-Transformer<br/>matemático"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 340 · Capstone:…"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

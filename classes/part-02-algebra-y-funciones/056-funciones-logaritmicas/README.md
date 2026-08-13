@@ -34,15 +34,16 @@ escala logarítmica: distancias iguales ⟹ factores iguales
 
 ```mermaid
 flowchart LR
-    P["055<br/>Funciones<br/>exponenciales"] --> C
-    subgraph C["056 · Funciones logarítmicas"]
+    P["Clase 055 · Funciones exponenciales"] --> D
+    subgraph CLASE["Clase 056 · Funciones logarítmicas"]
         direction TB
-        D["Demostración<br/><code>logarithmic_function</code>"] --> R["Resultados numéricos<br/>log10(1000)<br/>10^3<br/>escala_decibel_de_1e-3<br/>… +1 más"]
-        D --> V["Verificaciones<br/>inversa_verificada"]
-        D --> O["Contexto y estructura<br/>dominio"]
+        D["Demostracion logarithmic_function"]
+        D --> R["Resultados 4: log101000 +3"]
+        D --> V["Comprobaciones 1: inversa_verificada"]
+        D --> O["Contexto 1: dominio"]
     end
-    C --> N["057<br/>Composición de<br/>funciones"]
-    C -.-> IA["Uso en IA<br/>parte 02"]
+    R --> N["Clase 057 · Composición de funciones"]
+    V -.-> IA["Aplicacion en IA · parte 02"]
 ```
 
 ## 📖 Fundamentos

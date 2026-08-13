@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["150<br/>Derivación implícita"] --> C
-    subgraph C["151 · Aproximación lineal y<br/>Taylor"]
+    P["Clase 150 · Derivación implícita"] --> D
+    subgraph CLASE["Clase 151 · Aproximación lineal y Taylor"]
         direction TB
-        D["Demostración<br/><code>taylor_approximation</code>"] --> R["Resultados numéricos<br/>valor_exacto<br/>aproximacion_lineal<br/>cota_de_error_grado_5"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>funcion<br/>informe<br/>uso"]
+        D["Demostracion taylor_approximation"]
+        D --> R["Resultados 3: valor_exacto +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: funcion +2"]
     end
-    C --> N["152<br/>Máximos y mínimos"]
-    C -.-> IA["Uso en IA<br/>parte 07"]
+    R --> N["Clase 152 · Máximos y mínimos"]
+    V -.-> IA["Aplicacion en IA · parte 07"]
 ```
 
 ## 🧠 Idea rectora de la parte 07

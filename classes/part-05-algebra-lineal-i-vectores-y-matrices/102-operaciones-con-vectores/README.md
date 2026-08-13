@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["101<br/>Escalares, vectores y<br/>matrices"] --> C
-    subgraph C["102 · Operaciones con vectores"]
+    P["Clase 101 · Escalares, vectores y…"] --> D
+    subgraph CLASE["Clase 102 · Operaciones con vectores"]
         direction TB
-        D["Demostración<br/><code>vector_operations</code>"] --> R["Resultados numéricos<br/>|u+v|<br/>|u|+|v|"]
-        D --> V["Verificaciones<br/>desigualdad_triangular"]
-        D --> O["Contexto y estructura<br/>u<br/>v<br/>u+v<br/>… +2 más"]
+        D["Demostracion vector_operations"]
+        D --> R["Resultados 2: u+v +1"]
+        D --> V["Comprobaciones 1: desigualdad_triangular"]
+        D --> O["Contexto 5: u +4"]
     end
-    C --> N["103<br/>Producto punto y<br/>similitud"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 103 · Producto punto y similitud"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

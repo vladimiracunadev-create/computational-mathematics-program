@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["336<br/>Graph Laplacian"] --> C
-    subgraph C["337 · Message passing en GNN"]
+    P["Clase 336 · Graph Laplacian"] --> D
+    subgraph CLASE["Clase 337 · Message passing en GNN"]
         direction TB
-        D["Demostración<br/><code>message_passing</code>"] --> R["Resultados numéricos<br/>nodos"]
-        D --> V["Verificaciones<br/>el_nodo_4_solo_tiene_1_vecino<br/>permutacion_equivariante"]
-        D --> O["Contexto y estructura<br/>features_iniciales<br/>tras_1_capa<br/>tras_2_capas<br/>… +4 más"]
+        D["Demostracion message_passing"]
+        D --> R["Resultados 1: nodos"]
+        D --> V["Comprobaciones 2: el_nodo_4_solo_tiene_… +1"]
+        D --> O["Contexto 7: features_iniciales +6"]
     end
-    C --> N["338<br/>Bellman equations"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 338 · Bellman equations"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

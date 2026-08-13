@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["176<br/>Divergencia y<br/>rotacional"] --> C
-    subgraph C["177 · Cálculo matricial"]
+    P["Clase 176 · Divergencia y rotacional"] --> D
+    subgraph CLASE["Clase 177 · Cálculo matricial"]
         direction TB
-        D["Demostración<br/><code>matrix_calculus</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>d(aᵀx)/dx<br/>gradiente_numerico_lineal<br/>d(xᵀAx)/dx = (A+Aᵀ)x<br/>… +3 más"]
+        D["Demostracion matrix_calculus"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 6: daᵀx/dx +5"]
     end
-    C --> N["178<br/>Derivadas respecto de<br/>vectores y matrices"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 178 · Derivadas respecto de…"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

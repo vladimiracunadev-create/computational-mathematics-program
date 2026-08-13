@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["210<br/>t-test y comparación<br/>de medias"] --> C
-    subgraph C["211 · Chi-cuadrado y tablas de<br/>contingencia"]
+    P["Clase 210 · t-test y comparación de…"] --> D
+    subgraph CLASE["Clase 211 · Chi-cuadrado y tablas de…"]
         direction TB
-        D["Demostración<br/><code>chi_square</code>"] --> R["Resultados numéricos<br/>chi_cuadrado<br/>grados_de_libertad<br/>valor_critico_5%"]
-        D --> V["Verificaciones<br/>rechaza_independencia"]
-        D --> O["Contexto y estructura<br/>tabla_observada<br/>totales_fila<br/>totales_columna<br/>… +2 más"]
+        D["Demostracion chi_square"]
+        D --> R["Resultados 3: chi_cuadrado +2"]
+        D --> V["Comprobaciones 1: rechaza_independencia"]
+        D --> O["Contexto 5: tabla_observada +4"]
     end
-    C --> N["212<br/>ANOVA"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 212 · ANOVA"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

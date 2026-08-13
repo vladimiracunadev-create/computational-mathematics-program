@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**El orden topológico existe si y solo si el grafo es acíclico; su ausencia localiza el ciclo.**
 
-Esta clase concreta ese objetivo sobre **DAG y orden topológico**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,72 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: contar dos veces al aplicar el principio de inclusión-exclusión.
 
+## 🧩 Fórmulas de la clase
+
+```text
+algoritmo de Kahn: repetir «tomar vértice de grado de entrada 0»
+si quedan vértices sin ordenar ⟹ hay ciclo
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["095<br/>Árboles y árboles de<br/>expansión"] --> C
-    subgraph C["096 · DAG y orden topológico"]
+    P["Clase 095 · Árboles y árboles de…"] --> D
+    subgraph CLASE["Clase 096 · DAG y orden topológico"]
         direction TB
-        D["Demostración<br/><code>topological_order</code>"] --> R["Resultados numéricos<br/>nodos_ordenados"]
-        D --> V["Verificaciones<br/>es_DAG"]
-        D --> O["Contexto y estructura<br/>grafo<br/>orden_topologico<br/>diagnostico_si_falla<br/>… +1 más"]
+        D["Demostracion topological_order"]
+        D --> R["Resultados 1: nodos_ordenados"]
+        D --> V["Comprobaciones 1: es_DAG"]
+        D --> O["Contexto 4: grafo +3"]
     end
-    C --> N["097<br/>Álgebra booleana"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 097 · Álgebra booleana"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Una demostración por inducción es un bucle `for` con garantía.
+Un orden topológico es una ordenación lineal de los vértices tal que toda arista va de
+un vértice anterior a uno posterior. Existe **si y solo si** el grafo es acíclico, y
+esa equivalencia convierte el algoritmo en un detector de ciclos: si al terminar quedan
+vértices sin ordenar, esos vértices forman —o dependen de— al menos un ciclo.
+
+El algoritmo de Kahn es directo: se toman repetidamente los vértices con grado de
+entrada cero (los que no dependen de nada pendiente), se emiten y se decrementan los
+grados de sus sucesores. Coste `O(V + E)`, el mismo que BFS.
+
+Este algoritmo es el que ejecuta todo sistema de construcción —`make`, Bazel, un DAG de
+Airflow— para decidir en qué orden ejecutar tareas. El mensaje «dependencia circular
+detectada» que emiten esos sistemas es literalmente el caso en que Kahn no consigue
+ordenar todos los nodos.
+
+Y aquí está la conexión que da sentido a esta clase dentro del programa: la
+autodiferenciación en modo reverso recorre el grafo de cómputo en **orden topológico
+inverso**. La clase 306 lo hace explícito, y la clase 179 lo implementa: `backward()`
+construye el orden topológico y luego lo recorre al revés propagando gradientes. Sin
+esta clase, esa implementación parecería magia.
+
+## 🧮 Ejemplo trabajado
+
+Orden topológico del pipeline y detección de ciclo.
+
+```text
+Grafo (DAG):
+  entrada → limpieza → {features, split} → entrenamiento → evaluacion
+
+Grados de entrada iniciales:
+  entrada 0, limpieza 1, features 1, split 1,
+  entrenamiento 2, evaluacion 1
+
+Orden de Kahn:
+  entrada, limpieza, features, split, entrenamiento, evaluacion
+6 de 6 vértices ordenados → es un DAG            ✓
+
+Con una arista extra evaluacion → limpieza:
+  ningún vértice queda con grado 0 tras entrada
+  vértices ordenados: 1 de 6
+  → hay un ciclo, y los 5 restantes están dentro o dependen de él
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +112,16 @@ compmath run 096
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Suponer que un grafo de dependencias es acíclico sin comprobarlo.
+2. Interpretar el fallo del orden topológico como un error del algoritmo en lugar de como un diagnóstico.
+3. Olvidar que puede haber varios órdenes topológicos válidos.
+
+## 🚀 Dónde se usa de verdad
+
+Sistemas de construcción, planificadores de tareas, resolución de dependencias de
+paquetes, evaluación de hojas de cálculo y autodiferenciación en modo reverso.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Kahn, A. B. *Topological sorting of large networks*. CACM, 1962](https://dl.acm.org/doi/10.1145/368996.369025)
+- [Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

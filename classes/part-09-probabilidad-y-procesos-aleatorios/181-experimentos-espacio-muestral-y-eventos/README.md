@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["180<br/>Capstone:<br/>backpropagation manual<br/>y automática"] --> C
-    subgraph C["181 · Experimentos, espacio<br/>muestral y eventos"]
+    P["Clase 180 · Capstone:…"] --> D
+    subgraph CLASE["Clase 181 · Experimentos, espacio…"]
         direction TB
-        D["Demostración<br/><code>sample_space</code>"] --> R["Resultados numéricos<br/>|Ω|<br/>evento_suma_7<br/>P(suma=7)<br/>… +4 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>experimento"]
+        D["Demostracion sample_space"]
+        D --> R["Resultados 7: Ω +6"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 1: experimento"]
     end
-    C --> N["182<br/>Axiomas de<br/>probabilidad"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 182 · Axiomas de probabilidad"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

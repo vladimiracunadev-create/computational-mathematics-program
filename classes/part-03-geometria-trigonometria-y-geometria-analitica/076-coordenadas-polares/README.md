@@ -34,15 +34,16 @@ x = r·cos θ,  y = r·sin θ
 
 ```mermaid
 flowchart LR
-    P["075<br/>Matrices de<br/>transformación"] --> C
-    subgraph C["076 · Coordenadas polares"]
+    P["Clase 075 · Matrices de transformación"] --> D
+    subgraph CLASE["Clase 076 · Coordenadas polares"]
         direction TB
-        D["Demostración<br/><code>polar_coordinates</code>"] --> R["Resultados numéricos<br/>r<br/>theta_rad<br/>theta_grados"]
-        D --> V["Verificaciones<br/>roundtrip_ok<br/>atan2_maneja_cuadrantes"]
-        D --> O["Contexto y estructura<br/>cartesianas<br/>vuelta_a_cartesianas"]
+        D["Demostracion polar_coordinates"]
+        D --> R["Resultados 3: r +2"]
+        D --> V["Comprobaciones 2: roundtrip_ok +1"]
+        D --> O["Contexto 2: cartesianas +1"]
     end
-    C --> N["077<br/>Geometría 3D y planos"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 077 · Geometría 3D y planos"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

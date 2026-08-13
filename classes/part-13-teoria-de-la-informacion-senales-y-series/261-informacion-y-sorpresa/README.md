@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["260<br/>Capstone: banco de<br/>optimizadores<br/>comparables"] --> C
-    subgraph C["261 · Información y sorpresa"]
+    P["Clase 260 · Capstone: banco de…"] --> D
+    subgraph CLASE["Clase 261 · Información y sorpresa"]
         direction TB
-        D["Demostración<br/><code>surprise</code>"] --> R["Resultados numéricos<br/>un_evento_de_p=1_no_sorprende<br/>aditiva_para_independientes<br/>suma_de_sorpresas"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>sorpresa_en_bits<br/>por_que_logaritmo<br/>unidad"]
+        D["Demostracion surprise"]
+        D --> R["Resultados 3: un_evento_de_p=1_no_s… +2"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: sorpresa_en_bits +2"]
     end
-    C --> N["262<br/>Entropía de Shannon"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 262 · Entropía de Shannon"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

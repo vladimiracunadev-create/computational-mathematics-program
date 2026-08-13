@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["119<br/>Proyecciones<br/>ortogonales"] --> C
-    subgraph C["120 · Capstone: resolver un<br/>sistema de recomendación<br/>lineal"]
+    P["Clase 119 · Proyecciones ortogonales"] --> D
+    subgraph CLASE["Clase 120 · Capstone: resolver un…"]
         direction TB
-        D["Demostración<br/><code>capstone_linear_recommender</code>"] --> R["Resultados numéricos<br/>recomendacion"]
-        D --> V["Verificaciones<br/>todo_es_producto_punto"]
-        D --> O["Contexto y estructura<br/>usuarios<br/>objetivo<br/>similitudes<br/>… +3 más"]
+        D["Demostracion capstone_linear_recommender"]
+        D --> R["Resultados 1: recomendacion"]
+        D --> V["Comprobaciones 1: todo_es_producto_punto"]
+        D --> O["Contexto 6: usuarios +5"]
     end
-    C --> N["121<br/>Bases y coordenadas"]
-    C -.-> IA["Uso en IA<br/>parte 05"]
+    R --> N["Clase 121 · Bases y coordenadas"]
+    V -.-> IA["Aplicacion en IA · parte 05"]
 ```
 
 ## 🧠 Idea rectora de la parte 05

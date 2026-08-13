@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Planificar dependencias es ordenar topológicamente y agrupar por niveles para paralelizar.**
 
-Esta clase concreta ese objetivo sobre **Capstone: modelar dependencias con grafos**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,72 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
 
+## 🧩 Fórmulas de la clase
+
+```text
+nivel(v) = 1 + máx(nivel(u)) sobre los predecesores u
+pasos secuenciales mínimos = máximo nivel + 1
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["099<br/>Números primos y<br/>máximo común divisor"] --> C
-    subgraph C["100 · Capstone: modelar<br/>dependencias con grafos"]
+    P["Clase 099 · Números primos y máximo…"] --> D
+    subgraph CLASE["Clase 100 · Capstone: modelar…"]
         direction TB
-        D["Demostración<br/><code>capstone_dependency_graph</code>"] --> R["Resultados numéricos<br/>pasos_secuenciales_minimos<br/>tareas<br/>nodos_bloqueados_por_el_ciclo"]
-        D --> V["Verificaciones<br/>grafo_con_ciclo_detectado"]
-        D --> O["Contexto y estructura<br/>orden_de_ejecucion<br/>niveles_paralelizables"]
+        D["Demostracion capstone_dependency_graph"]
+        D --> R["Resultados 3: pasos_secuenciales_mi… +2"]
+        D --> V["Comprobaciones 1: grafo_con_ciclo_detec…"]
+        D --> O["Contexto 2: orden_de_ejecucion +1"]
     end
-    C --> N["101<br/>Escalares, vectores y<br/>matrices"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 101 · Escalares, vectores y…"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> El principio del palomar demuestra colisiones sin construir un ejemplo.
+El capstone monta el problema real que resuelve cualquier sistema de construcción o de
+orquestación: dado un grafo de dependencias, decidir en qué orden ejecutar las tareas,
+cuáles pueden ir en paralelo y qué hacer si hay un ciclo.
+
+El orden topológico da la secuencia válida. Agrupar por **niveles** —donde el nivel de
+una tarea es uno más que el máximo de sus predecesores— da algo más útil: todas las
+tareas del mismo nivel son independientes entre sí y pueden ejecutarse simultáneamente.
+El número de niveles es el número mínimo de pasos secuenciales, sin importar cuántos
+trabajadores haya.
+
+Ese número es el **camino crítico**, y es la cota que ninguna cantidad de paralelismo
+puede superar. Si un pipeline tiene cinco niveles, tardará al menos cinco pasos aunque
+se disponga de mil máquinas. Es la versión discreta de la ley de Amdahl.
+
+La detección de ciclos completa la herramienta. Un grafo con ciclo no admite orden
+topológico, y el algoritmo lo detecta contando cuántos vértices consiguió emitir. Los
+vértices no emitidos son exactamente los que están en el ciclo o dependen de él, lo que
+convierte el fallo en un **diagnóstico útil** en lugar de en un error opaco.
+
+## 🧮 Ejemplo trabajado
+
+Planificar el pipeline y detectar un ciclo.
+
+```text
+Orden de ejecución:
+  entrada, limpieza, features, split, entrenamiento, evaluacion
+
+Niveles paralelizables:
+  nivel 0: entrada
+  nivel 1: limpieza
+  nivel 2: features, split      ← pueden ir en paralelo
+  nivel 3: entrenamiento
+  nivel 4: evaluacion
+
+Tareas: 6
+Pasos secuenciales mínimos: 5    (camino crítico)
+Con 2 trabajadores: sigue siendo 5 pasos
+
+Con arista evaluacion → limpieza:
+  ciclo detectado, 5 nodos bloqueados
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +112,16 @@ compmath run 100
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Suponer que más trabajadores reducen el tiempo por debajo del camino crítico.
+2. No detectar ciclos antes de intentar ejecutar el plan.
+3. Confundir el número de tareas con el número de pasos secuenciales.
+
+## 🚀 Dónde se usa de verdad
+
+Sistemas de construcción, orquestadores de flujos (Airflow, Dagster), resolución de
+dependencias de paquetes, planificación de proyectos y ejecución de grafos de cómputo.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Kahn, A. B. *Topological sorting of large networks*. CACM, 1962](https://dl.acm.org/doi/10.1145/368996.369025)
+- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022, cap. 20](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

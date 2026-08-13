@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["277<br/>Autocorrelación"] --> C
-    subgraph C["278 · Series temporales y<br/>ventanas"]
+    P["Clase 277 · Autocorrelación"] --> D
+    subgraph CLASE["Clase 278 · Series temporales y ventanas"]
         direction TB
-        D["Demostración<br/><code>windowing</code>"] --> R["Resultados numéricos<br/>muestras<br/>frecuencia_real<br/>pico_con_ventana_rectangular<br/>… +3 más"]
-        D --> V["Verificaciones<br/>hann_reduce_la_fuga"]
-        D --> O["Contexto y estructura<br/>coste"]
+        D["Demostracion windowing"]
+        D --> R["Resultados 6: muestras +5"]
+        D --> V["Comprobaciones 1: hann_reduce_la_fuga"]
+        D --> O["Contexto 1: coste"]
     end
-    C --> N["279<br/>Espectro y densidad<br/>espectral"]
-    C -.-> IA["Uso en IA<br/>parte 13"]
+    R --> N["Clase 279 · Espectro y densidad…"]
+    V -.-> IA["Aplicacion en IA · parte 13"]
 ```
 
 ## 🧠 Idea rectora de la parte 13

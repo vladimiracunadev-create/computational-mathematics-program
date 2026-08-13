@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["217<br/>Inferencia bayesiana"] --> C
-    subgraph C["218 · Bootstrap y remuestreo"]
+    P["Clase 217 · Inferencia bayesiana"] --> D
+    subgraph CLASE["Clase 218 · Bootstrap y remuestreo"]
         direction TB
-        D["Demostración<br/><code>bootstrap</code>"] --> R["Resultados numéricos<br/>n<br/>replicas<br/>media_observada<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>IC_95%_percentil_media<br/>ventaja"]
+        D["Demostracion bootstrap"]
+        D --> R["Resultados 6: n +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: IC_95%_percentil_media +1"]
     end
-    C --> N["219<br/>A/B testing y diseño<br/>experimental"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 219 · A/B testing y diseño…"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

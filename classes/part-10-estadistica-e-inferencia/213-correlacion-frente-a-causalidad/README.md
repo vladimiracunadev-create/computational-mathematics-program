@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["212<br/>ANOVA"] --> C
-    subgraph C["213 · Correlación frente a<br/>causalidad"]
+    P["Clase 212 · ANOVA"] --> D
+    subgraph CLASE["Clase 213 · Correlación frente a…"]
         direction TB
-        D["Demostración<br/><code>correlation_causation</code>"] --> R["Resultados numéricos<br/>corr(helados, ahogamientos)<br/>corr(temperatura, helados)<br/>corr(temperatura, ahogamientos)"]
-        D --> V["Verificaciones<br/>hay_flecha_causal_helados→ahogamientos"]
-        D --> O["Contexto y estructura<br/>confusor<br/>como_se_detecta"]
+        D["Demostracion correlation_causation"]
+        D --> R["Resultados 3: corrhelados,… +2"]
+        D --> V["Comprobaciones 1: hay_flecha_causal_hel…"]
+        D --> O["Contexto 2: confusor +1"]
     end
-    C --> N["214<br/>Regresión lineal<br/>estadística"]
-    C -.-> IA["Uso en IA<br/>parte 10"]
+    R --> N["Clase 214 · Regresión lineal…"]
+    V -.-> IA["Aplicacion en IA · parte 10"]
 ```
 
 ## 🧠 Idea rectora de la parte 10

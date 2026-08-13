@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["332<br/>ELBO y variational<br/>inference"] --> C
-    subgraph C["333 · GAN y juegos minimax"]
+    P["Clase 332 · ELBO y variational…"] --> D
+    subgraph CLASE["Clase 333 · GAN y juegos minimax"]
         direction TB
-        D["Demostración<br/><code>gan_minimax</code>"] --> R["Resultados numéricos<br/>perdida_teorica_en_equilibrio"]
-        D --> V["Verificaciones<br/>en_el_equilibrio_D=0.5"]
-        D --> O["Contexto y estructura<br/>objetivo<br/>escenarios<br/>D_optimo<br/>… +4 más"]
+        D["Demostracion gan_minimax"]
+        D --> R["Resultados 1: perdida_teorica_en_eq…"]
+        D --> V["Comprobaciones 1: en_el_equilibrio_D=0.5"]
+        D --> O["Contexto 7: objetivo +6"]
     end
-    C --> N["334<br/>Diffusion models:<br/>forward process"]
-    C -.-> IA["Uso en IA<br/>parte 16"]
+    R --> N["Clase 334 · Diffusion models:…"]
+    V -.-> IA["Aplicacion en IA · parte 16"]
 ```
 
 ## 🧠 Idea rectora de la parte 16

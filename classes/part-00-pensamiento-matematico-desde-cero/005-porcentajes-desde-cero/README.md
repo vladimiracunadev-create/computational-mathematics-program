@@ -34,15 +34,16 @@ aumento de p % seguido de descuento de p %: A · (1+p)(1−p) = A(1 − p²)
 
 ```mermaid
 flowchart LR
-    P["004<br/>Decimales y<br/>conversiones"] --> C
-    subgraph C["005 · Porcentajes desde cero"]
+    P["Clase 004 · Decimales y conversiones"] --> D
+    subgraph CLASE["Clase 005 · Porcentajes desde cero"]
         direction TB
-        D["Demostración<br/><code>percentage</code>"] --> R["Resultados numéricos<br/>precio_inicial<br/>tras_+20%<br/>tras_-20%<br/>… +2 más"]
-        D --> V["Verificaciones<br/>vuelve_al_inicial"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion percentage"]
+        D --> R["Resultados 5: precio_inicial +4"]
+        D --> V["Comprobaciones 1: vuelve_al_inicial"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["006<br/>Razones, tasas y<br/>proporciones"]
-    C -.-> IA["Uso en IA<br/>parte 00"]
+    R --> N["Clase 006 · Razones, tasas y…"]
+    V -.-> IA["Aplicacion en IA · parte 00"]
 ```
 
 ## 📖 Fundamentos

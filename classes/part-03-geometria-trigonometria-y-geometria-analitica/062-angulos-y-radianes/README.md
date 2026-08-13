@@ -35,15 +35,16 @@ d(sin x)/dx = cos x   solo si x está en radianes
 
 ```mermaid
 flowchart LR
-    P["061<br/>Puntos, segmentos y<br/>distancias"] --> C
-    subgraph C["062 · Ángulos y radianes"]
+    P["Clase 061 · Puntos, segmentos y…"] --> D
+    subgraph CLASE["Clase 062 · Ángulos y radianes"]
         direction TB
-        D["Demostración<br/><code>angles_radians</code>"] --> R["Resultados numéricos<br/>grados<br/>radianes<br/>pi/6<br/>… +3 más"]
-        D --> V["Verificaciones<br/>coinciden"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion angles_radians"]
+        D --> R["Resultados 6: grados +5"]
+        D --> V["Comprobaciones 1: coinciden"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["063<br/>Triángulos y semejanza"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 063 · Triángulos y semejanza"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

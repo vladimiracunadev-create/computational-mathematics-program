@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["189<br/>Esperanza matemática"] --> C
-    subgraph C["190 · Varianza y desviación<br/>estándar"]
+    P["Clase 189 · Esperanza matemática"] --> D
+    subgraph CLASE["Clase 190 · Varianza y desviación estándar"]
         direction TB
-        D["Demostración<br/><code>variance</code>"] --> R["Resultados numéricos<br/>media<br/>varianza_poblacional_/n<br/>varianza_muestral_/(n-1)<br/>… +4 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>datos<br/>correccion_de_Bessel"]
+        D["Demostracion variance"]
+        D --> R["Resultados 7: media +6"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: datos +1"]
     end
-    C --> N["191<br/>Covarianza y<br/>correlación"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 191 · Covarianza y correlación"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

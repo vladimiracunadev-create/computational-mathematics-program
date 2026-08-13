@@ -35,11 +35,11 @@ Perceptrón, MLP, activaciones, pérdidas, backpropagation paso a paso, grafos d
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L301["301<br/>Perceptrón y<br/>separabilidad"]
-        L302["302<br/>MLP como composición de<br/>funciones"]
-        L303["303<br/>Funciones de activación"]
-        L304["304<br/>Funciones de pérdida"]
-        L305["305<br/>Backpropagation paso a<br/>paso"]
+        L301["301 · Perceptrón y separabilidad"]
+        L302["302 · MLP como composición de…"]
+        L303["303 · Funciones de activación"]
+        L304["304 · Funciones de pérdida"]
+        L305["305 · Backpropagation paso a paso"]
         L301 --> L302
         L302 --> L303
         L303 --> L304
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L306["306<br/>Computational graphs"]
-        L307["307<br/>Inicialización de pesos"]
-        L308["308<br/>Batch normalization y<br/>layer normalization"]
-        L309["309<br/>Regularización y dropout"]
-        L310["310<br/>Convolución discreta"]
+        L306["306 · Computational graphs"]
+        L307["307 · Inicialización de pesos"]
+        L308["308 · Batch normalization y layer…"]
+        L309["309 · Regularización y dropout"]
+        L310["310 · Convolución discreta"]
         L306 --> L307
         L307 --> L308
         L308 --> L309
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L311["311<br/>CNN y receptive fields"]
-        L312["312<br/>Pooling y downsampling"]
-        L313["313<br/>RNN y recurrencia"]
-        L314["314<br/>Vanishing y exploding<br/>gradients"]
-        L315["315<br/>LSTM y compuertas"]
+        L311["311 · CNN y receptive fields"]
+        L312["312 · Pooling y downsampling"]
+        L313["313 · RNN y recurrencia"]
+        L314["314 · Vanishing y exploding…"]
+        L315["315 · LSTM y compuertas"]
         L311 --> L312
         L312 --> L313
         L313 --> L314
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L316["316<br/>GRU"]
-        L317["317<br/>Embeddings como espacios<br/>vectoriales"]
-        L318["318<br/>Optimización de redes<br/>profundas"]
-        L319["319<br/>Autodiff con PyTorch/JAX"]
-        L320["320<br/>Capstone: red neuronal<br/>desde cero en Python<br/>puro"]
+        L316["316 · GRU"]
+        L317["317 · Embeddings como espacios…"]
+        L318["318 · Optimización de redes…"]
+        L319["319 · Autodiff con PyTorch/JAX"]
+        L320["320 · Capstone: red neuronal desde…"]
         L316 --> L317
         L317 --> L318
         L318 --> L319

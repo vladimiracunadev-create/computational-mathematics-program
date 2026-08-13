@@ -51,15 +51,15 @@ otra máquina, otro día, con otros datos.
 
 ```mermaid
 flowchart TD
-    A["001-004<br/>Tipos de número<br/>natural · entero · racional · decimal"] --> B["005-007<br/>Proporcionalidad<br/>porcentaje · razón · regla de tres"]
-    A --> C["008-011<br/>Órdenes de magnitud<br/>potencias · raíces · notación científica"]
-    B --> D["012-014<br/>Medida y aproximación<br/>unidades · redondeo · estimación"]
+    A["Clases 001-004 · Tipos de numero"] --> B["Clases 005-007 · Proporcionalidad"]
+    A --> C["Clases 008-011 · Ordenes de magnitud"]
+    B --> D["Clases 012-014 · Medida y aproximacion"]
     C --> D
-    D --> E["015-018<br/>Lenguaje algebraico<br/>variables · fórmulas · patrones"]
-    E --> F["019-020<br/>Verificación<br/>contraejemplo · capstone"]
-    F ==> G["Parte 01<br/>Representación numérica<br/>en la máquina"]
-    B -.-> H["Capa densa y = Wx<br/>Parte 05"]
-    C -.-> I["Escalas logarítmicas<br/>Parte 02"]
+    D --> E["Clases 015-018 · Lenguaje algebraico"]
+    E --> F["Clases 019-020 · Verificacion y capstone"]
+    F ==> G["Parte 01 · Representacion numerica en la maquina"]
+    B -.-> H["Capa densa y = Wx · Parte 05"]
+    C -.-> I["Escalas logaritmicas · Parte 02"]
 ```
 
 ## 🧠 Ideas centrales
@@ -87,11 +87,11 @@ flowchart TD
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L001["001<br/>Números naturales y<br/>conteo"]
-        L002["002<br/>Enteros, signo y recta<br/>numérica"]
-        L003["003<br/>Fracciones y números<br/>racionales"]
-        L004["004<br/>Decimales y conversiones"]
-        L005["005<br/>Porcentajes desde cero"]
+        L001["001 · Números naturales y conteo"]
+        L002["002 · Enteros, signo y recta…"]
+        L003["003 · Fracciones y números…"]
+        L004["004 · Decimales y conversiones"]
+        L005["005 · Porcentajes desde cero"]
         L001 --> L002
         L002 --> L003
         L003 --> L004
@@ -99,11 +99,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L006["006<br/>Razones, tasas y<br/>proporciones"]
-        L007["007<br/>Regla de tres y escalas"]
-        L008["008<br/>Potencias y leyes de<br/>exponentes"]
-        L009["009<br/>Raíces y radicales"]
-        L010["010<br/>Orden de operaciones y<br/>paréntesis"]
+        L006["006 · Razones, tasas y proporciones"]
+        L007["007 · Regla de tres y escalas"]
+        L008["008 · Potencias y leyes de…"]
+        L009["009 · Raíces y radicales"]
+        L010["010 · Orden de operaciones y…"]
         L006 --> L007
         L007 --> L008
         L008 --> L009
@@ -111,11 +111,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L011["011<br/>Notación científica"]
-        L012["012<br/>Unidades y análisis<br/>dimensional"]
-        L013["013<br/>Aproximación, redondeo y<br/>cifras significativas"]
-        L014["014<br/>Estimación y cálculo<br/>mental"]
-        L015["015<br/>Variables como<br/>cantidades desconocidas"]
+        L011["011 · Notación científica"]
+        L012["012 · Unidades y análisis…"]
+        L013["013 · Aproximación, redondeo y…"]
+        L014["014 · Estimación y cálculo mental"]
+        L015["015 · Variables como cantidades…"]
         L011 --> L012
         L012 --> L013
         L013 --> L014
@@ -123,11 +123,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L016["016<br/>Expresiones y fórmulas"]
-        L017["017<br/>Patrones, secuencias y<br/>regularidades"]
-        L018["018<br/>Problemas verbales a<br/>lenguaje matemático"]
-        L019["019<br/>Comprobación y<br/>contraejemplos"]
-        L020["020<br/>Capstone: modelar un<br/>problema cotidiano con<br/>matemáticas"]
+        L016["016 · Expresiones y fórmulas"]
+        L017["017 · Patrones, secuencias y…"]
+        L018["018 · Problemas verbales a…"]
+        L019["019 · Comprobación y contraejemplos"]
+        L020["020 · Capstone: modelar un…"]
         L016 --> L017
         L017 --> L018
         L018 --> L019

@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["167<br/>Regla de la cadena<br/>multivariable"] --> C
-    subgraph C["168 · Jacobiano"]
+    P["Clase 167 · Regla de la cadena…"] --> D
+    subgraph CLASE["Clase 168 · Jacobiano"]
         direction TB
-        D["Demostración<br/><code>jacobian</code>"] --> R["Resultados numéricos<br/>—"]
-        D --> V["Verificaciones<br/>fila_i_es_el_gradiente_de_Fi"]
-        D --> O["Contexto y estructura<br/>F<br/>punto<br/>shape_del_jacobiano<br/>… +4 más"]
+        D["Demostracion jacobian"]
+        D --> R["Resultados: ninguna"]
+        D --> V["Comprobaciones 1: fila_i_es_el_gradient…"]
+        D --> O["Contexto 7: F +6"]
     end
-    C --> N["169<br/>Hessiano"]
-    C -.-> IA["Uso en IA<br/>parte 08"]
+    R --> N["Clase 169 · Hessiano"]
+    V -.-> IA["Aplicacion en IA · parte 08"]
 ```
 
 ## 🧠 Idea rectora de la parte 08

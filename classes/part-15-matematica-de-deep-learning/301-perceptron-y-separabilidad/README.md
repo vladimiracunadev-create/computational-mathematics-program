@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["300<br/>Capstone: derivar y<br/>comparar 6 algoritmos<br/>ML"] --> C
-    subgraph C["301 · Perceptrón y separabilidad"]
+    P["Clase 300 · Capstone: derivar y…"] --> D
+    subgraph CLASE["Clase 301 · Perceptrón y separabilidad"]
         direction TB
-        D["Demostración<br/><code>perceptron</code>"] --> R["Resultados numéricos<br/>AND_sesgo<br/>AND_errores_tras_100_epocas<br/>XOR_errores_tras_100_epocas"]
-        D --> V["Verificaciones<br/>AND_es_separable<br/>XOR_es_separable"]
-        D --> O["Contexto y estructura<br/>AND_pesos<br/>teorema_de_convergencia<br/>limite_historico<br/>… +1 más"]
+        D["Demostracion perceptron"]
+        D --> R["Resultados 3: AND_sesgo +2"]
+        D --> V["Comprobaciones 2: AND_es_separable +1"]
+        D --> O["Contexto 4: AND_pesos +3"]
     end
-    C --> N["302<br/>MLP como composición<br/>de funciones"]
-    C -.-> IA["Uso en IA<br/>parte 15"]
+    R --> N["Clase 302 · MLP como composición de…"]
+    V -.-> IA["Aplicacion en IA · parte 15"]
 ```
 
 ## 🧠 Idea rectora de la parte 15

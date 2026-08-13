@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
+**Una permutación cuenta selecciones donde el orden importa.**
 
-Esta clase concreta ese objetivo sobre **Permutaciones**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Lógica, conjuntos, conteo, inducción, recurrencias, grafos y aritmética modular: la matemática que hace demostrable un programa.
 
 ## ✅ Resultados de aprendizaje
 
@@ -25,24 +23,70 @@ Al terminar podrás:
 4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
 
+## 🧩 Fórmulas de la clase
+
+```text
+P(n) = n!
+P(n,k) = n!/(n−k)!
+con repetición: nᵏ
+```
+
 ## 🗺️ Ubicación en el programa
 
 ```mermaid
 flowchart LR
-    P["087<br/>Principios de conteo"] --> C
-    subgraph C["088 · Permutaciones"]
+    P["Clase 087 · Principios de conteo"] --> D
+    subgraph CLASE["Clase 088 · Permutaciones"]
         direction TB
-        D["Demostración<br/><code>permutations_demo</code>"] --> R["Resultados numéricos<br/>permutaciones_totales_4!<br/>P(4,2)<br/>formula_n!/(n-k)!<br/>… +1 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>elementos<br/>primeras_5"]
+        D["Demostracion permutations_demo"]
+        D --> R["Resultados 4: permutaciones_totales… +3"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 2: elementos +1"]
     end
-    C --> N["089<br/>Combinaciones"]
-    C -.-> IA["Uso en IA<br/>parte 04"]
+    R --> N["Clase 089 · Combinaciones"]
+    V -.-> IA["Aplicacion en IA · parte 04"]
 ```
 
-## 🧠 Idea rectora de la parte 04
+## 📖 Fundamentos
 
-> Un DAG sin orden topológico contiene un ciclo: es un diagnóstico, no un error.
+Permutar es ordenar. El número de ordenaciones completas de n objetos distintos es
+`n!`, y el argumento es la regla del producto: hay n opciones para la primera posición,
+n−1 para la segunda —ya se usó una— y así sucesivamente.
+
+Las permutaciones **parciales** `P(n,k)` cuentan las formas de elegir k objetos en
+orden entre n disponibles: `n!/(n−k)!`. Si además se permite repetir, el conteo es
+`nᵏ`, porque cada posición vuelve a tener n opciones. Distinguir los tres casos —total,
+parcial sin repetición, parcial con repetición— es la mitad de la combinatoria
+elemental.
+
+El factorial crece brutalmente: `10! ≈ 3.6·10⁶`, `20! ≈ 2.4·10¹⁸`, `70!` ya supera el
+mayor float64 representable. Ese crecimiento es la razón por la que el problema del
+viajante no se resuelve por fuerza bruta y por la que cualquier algoritmo con coste
+factorial es inviable más allá de una veintena de elementos.
+
+En deep learning las permutaciones aparecen de forma indirecta pero relevante: la
+atención es **permutación-equivariante**, es decir, permutar los tokens de entrada
+permuta la salida de la misma forma. Esa propiedad es la que hace necesario el
+positional encoding (clase 323), porque sin él el modelo no distinguiría el orden.
+
+## 🧮 Ejemplo trabajado
+
+Permutaciones de cuatro elementos.
+
+```text
+elementos: A, B, C, D
+
+permutaciones totales:  4! = 24
+P(4,2) = 4!/2! = 12     (elegir 2 en orden)
+  AB AC AD BA BC BD CA CB CD DA DB DC
+
+con repetición: 4² = 16   (AA, AB, ..., DD)
+
+Crecimiento del factorial:
+  10! = 3 628 800
+  20! = 2.43·10¹⁸
+  70! > 1.8·10³⁰⁸ → desborda float64
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -66,11 +110,16 @@ compmath run 088
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Contar dos veces al aplicar el principio de inclusión-exclusión.
-- Confundir implicación con equivalencia lógica.
-- Asumir que un grafo dirigido es acíclico sin verificarlo.
+1. Usar permutaciones donde el orden no importa (corresponde combinación).
+2. Olvidar si se permite repetición al elegir la fórmula.
+3. Calcular factoriales grandes en float en lugar de en entero exacto.
+
+## 🚀 Dónde se usa de verdad
+
+Barajado y muestreo sin reemplazo, problemas de ordenación y planificación, y
+equivarianza a permutaciones en arquitecturas de atención y GNN.
 
 ## 🤖 Conexión con IA
 
@@ -113,9 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
-- Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
-- Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+- [Python: `math.perm` e `itertools.permutations`](https://docs.python.org/3/library/math.html#math.perm)
+- [Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

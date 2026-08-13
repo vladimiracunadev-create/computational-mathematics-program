@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["135<br/>PCA desde álgebra<br/>lineal"] --> C
-    subgraph C["136 · Producto de Kronecker"]
+    P["Clase 135 · PCA desde álgebra lineal"] --> D
+    subgraph CLASE["Clase 136 · Producto de Kronecker"]
         direction TB
-        D["Demostración<br/><code>kronecker</code>"] --> R["Resultados numéricos<br/>rango<br/>rango_A_por_rango_B"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>A_shape<br/>B_shape<br/>A⊗B_shape<br/>… +2 más"]
+        D["Demostracion kronecker"]
+        D --> R["Resultados 2: rango +1"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 5: A_shape +4"]
     end
-    C --> N["137<br/>Tensores: índices,<br/>shape y orden"]
-    C -.-> IA["Uso en IA<br/>parte 06"]
+    R --> N["Clase 137 · Tensores: índices, shape…"]
+    V -.-> IA["Aplicacion en IA · parte 06"]
 ```
 
 ## 🧠 Idea rectora de la parte 06

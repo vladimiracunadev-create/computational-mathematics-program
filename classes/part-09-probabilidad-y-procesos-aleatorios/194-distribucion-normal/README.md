@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["193<br/>Poisson y exponencial"] --> C
-    subgraph C["194 · Distribución normal"]
+    P["Clase 193 · Poisson y exponencial"] --> D
+    subgraph CLASE["Clase 194 · Distribución normal"]
         direction TB
-        D["Demostración<br/><code>normal_distribution</code>"] --> R["Resultados numéricos<br/>μ<br/>σ<br/>P(μ-σ < X < μ+σ)<br/>… +5 más"]
-        D --> V["Verificaciones<br/>simetrica"]
-        D --> O["Contexto y estructura<br/>—"]
+        D["Demostracion normal_distribution"]
+        D --> R["Resultados 8: μ +7"]
+        D --> V["Comprobaciones 1: simetrica"]
+        D --> O["Contexto: ninguna"]
     end
-    C --> N["195<br/>Distribuciones<br/>conjuntas y marginales"]
-    C -.-> IA["Uso en IA<br/>parte 09"]
+    R --> N["Clase 195 · Distribuciones conjuntas…"]
+    V -.-> IA["Aplicacion en IA · parte 09"]
 ```
 
 ## 🧠 Idea rectora de la parte 09

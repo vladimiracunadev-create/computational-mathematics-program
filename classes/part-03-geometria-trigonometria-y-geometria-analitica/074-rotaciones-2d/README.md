@@ -35,15 +35,16 @@ R(α)·R(β) = R(α+β)
 
 ```mermaid
 flowchart LR
-    P["073<br/>Transformaciones:<br/>traslación y escala"] --> C
-    subgraph C["074 · Rotaciones 2D"]
+    P["Clase 073 · Transformaciones:…"] --> D
+    subgraph CLASE["Clase 074 · Rotaciones 2D"]
         direction TB
-        D["Demostración<br/><code>rotation_2d</code>"] --> R["Resultados numéricos<br/>angulo_grados<br/>determinante"]
-        D --> V["Verificaciones<br/>preserva_la_norma<br/>cuatro_rotaciones_vuelven_al_origen"]
-        D --> O["Contexto y estructura<br/>matriz<br/>R·(1,0)<br/>RᵀR_es_identidad"]
+        D["Demostracion rotation_2d"]
+        D --> R["Resultados 2: angulo_grados +1"]
+        D --> V["Comprobaciones 2: preserva_la_norma +1"]
+        D --> O["Contexto 3: matriz +2"]
     end
-    C --> N["075<br/>Matrices de<br/>transformación"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 075 · Matrices de transformación"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

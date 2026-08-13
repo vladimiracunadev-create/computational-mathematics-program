@@ -49,14 +49,14 @@ distintos en GPU. Todo eso es esta parte.
 
 ```mermaid
 flowchart TD
-    A["021-026<br/>Enteros<br/>bits · bases · complemento a dos · overflow"] --> B["027-033<br/>Punto flotante IEEE 754<br/>mantisa · exponente · ULP · cancelación"]
-    B --> C["034-036<br/>Error y su propagación<br/>condicionamiento vs estabilidad"]
-    C --> D["037-039<br/>Salidas exactas<br/>Decimal · Fraction · reproducibilidad"]
-    D --> E["040<br/>Capstone<br/>auditor de precisión"]
-    E ==> F["Parte 11<br/>Métodos numéricos"]
-    B -.-> G["float32 · bfloat16 · int8<br/>Parte 15"]
-    C -.-> H["Número de condición<br/>Parte 06"]
-    B -.-> I["NaN en el entrenamiento<br/>Parte 15"]
+    A["Clases 021-026 · Enteros y complemento a dos"] --> B["Clases 027-033 · Punto flotante IEEE 754"]
+    B --> C["Clases 034-036 · Error, condicionamiento y estabilidad"]
+    C --> D["Clases 037-039 · Salidas exactas y reproducibilidad"]
+    D --> E["Clase 040 · Capstone auditor de precision"]
+    E ==> F["Parte 11 · Metodos numericos"]
+    B -.-> G["float32, bfloat16 e int8 · Parte 15"]
+    C -.-> H["Numero de condicion · Parte 06"]
+    B -.-> I["NaN en el entrenamiento · Parte 15"]
 ```
 
 ## 🧠 Ideas centrales
@@ -84,11 +84,11 @@ flowchart TD
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L021["021<br/>Bits, bytes y sistemas<br/>de numeración"]
-        L022["022<br/>Conversión decimal a<br/>binario"]
-        L023["023<br/>Binario, octal y<br/>hexadecimal"]
-        L024["024<br/>Aritmética binaria"]
-        L025["025<br/>Enteros con signo y<br/>complemento a dos"]
+        L021["021 · Bits, bytes y sistemas de…"]
+        L022["022 · Conversión decimal a binario"]
+        L023["023 · Binario, octal y hexadecimal"]
+        L024["024 · Aritmética binaria"]
+        L025["025 · Enteros con signo y…"]
         L021 --> L022
         L022 --> L023
         L023 --> L024
@@ -96,11 +96,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L026["026<br/>Rango, overflow y<br/>wraparound"]
-        L027["027<br/>Punto fijo frente a<br/>punto flotante"]
-        L028["028<br/>IEEE 754: estructura de<br/>un float"]
-        L029["029<br/>Por qué 0.1 + 0.2 no es<br/>exactamente 0.3"]
-        L030["030<br/>Error absoluto y error<br/>relativo"]
+        L026["026 · Rango, overflow y wraparound"]
+        L027["027 · Punto fijo frente a punto…"]
+        L028["028 · IEEE 754: estructura de un…"]
+        L029["029 · Por qué 0.1 + 0.2 no es…"]
+        L030["030 · Error absoluto y error…"]
         L026 --> L027
         L027 --> L028
         L028 --> L029
@@ -108,11 +108,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L031["031<br/>ULP y machine epsilon"]
-        L032["032<br/>Cancelación catastrófica"]
-        L033["033<br/>Overflow y underflow<br/>flotante"]
-        L034["034<br/>Propagación de errores"]
-        L035["035<br/>Condicionamiento de<br/>problemas"]
+        L031["031 · ULP y machine epsilon"]
+        L032["032 · Cancelación catastrófica"]
+        L033["033 · Overflow y underflow flotante"]
+        L034["034 · Propagación de errores"]
+        L035["035 · Condicionamiento de problemas"]
         L031 --> L032
         L032 --> L033
         L033 --> L034
@@ -120,11 +120,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L036["036<br/>Estabilidad de<br/>algoritmos"]
-        L037["037<br/>Precisión arbitraria y<br/>Decimal"]
-        L038["038<br/>Racional exacto y<br/>Fraction"]
-        L039["039<br/>Reproducibilidad<br/>numérica entre<br/>plataformas"]
-        L040["040<br/>Capstone: auditor de<br/>precisión numérica"]
+        L036["036 · Estabilidad de algoritmos"]
+        L037["037 · Precisión arbitraria y Decimal"]
+        L038["038 · Racional exacto y Fraction"]
+        L039["039 · Reproducibilidad numérica…"]
+        L040["040 · Capstone: auditor de…"]
         L036 --> L037
         L037 --> L038
         L038 --> L039

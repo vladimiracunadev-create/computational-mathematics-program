@@ -240,43 +240,54 @@ def _diagrama_clase(clase, parte, demo) -> str:
     """Diagrama del flujo del laboratorio, construido con sus salidas reales."""
     verificaciones, numericos, otros = _clasifica_salidas(demo)
     anterior, siguiente = _vecinos(clase)
-    prev = f"{anterior['id']}<br/>{_wrap(anterior['title'], 22)}" if anterior else "Diagnóstico<br/>inicial"
-    nxt = f"{siguiente['id']}<br/>{_wrap(siguiente['title'], 22)}" if siguiente else "Fin del<br/>programa"
+    prev = (f"Clase {anterior['id']} · {_etiqueta(anterior['title'], 26)}"
+            if anterior else "Diagnostico inicial")
+    nxt = (f"Clase {siguiente['id']} · {_etiqueta(siguiente['title'], 26)}"
+           if siguiente else "Fin del programa")
 
-    def muestra(claves, n=3):
+    def cuenta(claves, etiqueta):
         if not claves:
-            return "—"
-        visibles = [c.replace('"', "'") for c in claves[:n]]
-        extra = f"<br/>… +{len(claves) - n} más" if len(claves) > n else ""
-        return "<br/>".join(visibles) + extra
+            return f"{etiqueta}: ninguna"
+        primera = _etiqueta(claves[0], 22)
+        resto = f" +{len(claves) - 1}" if len(claves) > 1 else ""
+        return f"{etiqueta} {len(claves)}: {primera}{resto}"
 
     return f"""```mermaid
 flowchart LR
-    P["{prev}"] --> C
-    subgraph C["{clase['id']} · {_wrap(clase['title'], 26)}"]
+    P["{prev}"] --> D
+    subgraph CLASE["Clase {clase['id']} · {_etiqueta(clase['title'], 30)}"]
         direction TB
-        D["Demostración<br/><code>{demo['name']}</code>"] --> R["Resultados numéricos<br/>{muestra(numericos)}"]
-        D --> V["Verificaciones<br/>{muestra(verificaciones)}"]
-        D --> O["Contexto y estructura<br/>{muestra(otros)}"]
+        D["Demostracion {demo['name']}"]
+        D --> R["{cuenta(numericos, 'Resultados')}"]
+        D --> V["{cuenta(verificaciones, 'Comprobaciones')}"]
+        D --> O["{cuenta(otros, 'Contexto')}"]
     end
-    C --> N["{nxt}"]
-    C -.-> IA["Uso en IA<br/>parte {parte['id']}"]
+    R --> N["{nxt}"]
+    V -.-> IA["Aplicacion en IA · parte {parte['id']}"]
 ```"""
 
 
-def _wrap(texto, ancho):
-    """Parte un texto en líneas para que quepa dentro de un nodo Mermaid."""
-    palabras = texto.replace('"', "").replace("(", "").replace(")", "").split()
-    lineas, actual = [], ""
-    for palabra in palabras:
-        if len(actual) + len(palabra) + 1 > ancho and actual:
-            lineas.append(actual)
-            actual = palabra
-        else:
-            actual = f"{actual} {palabra}".strip()
-    if actual:
-        lineas.append(actual)
-    return "<br/>".join(lineas)
+def _etiqueta(texto, ancho=34):
+    """Etiqueta segura para un nodo Mermaid.
+
+    Sin HTML: los renderizadores con `htmlLabels` desactivado descartan `<br/>`
+    y pegan las palabras, así que las etiquetas se mantienen en una sola línea
+    y se recortan por palabra cuando exceden el ancho.
+    """
+    limpio = " ".join(
+        texto.replace('"', "").replace("(", "").replace(")", "")
+        .replace("[", "").replace("]", "").replace("{", "").replace("}", "")
+        .replace("<", "").replace(">", "").replace("|", "").split()
+    )
+    if len(limpio) <= ancho:
+        return limpio
+    recorte, total = [], 0
+    for palabra in limpio.split():
+        if total + len(palabra) + 1 > ancho - 1:
+            break
+        recorte.append(palabra)
+        total += len(palabra) + 1
+    return (" ".join(recorte) or limpio[: ancho - 1]) + "…"
 
 
 def _readme(clase, parte, demo) -> str:
@@ -1015,7 +1026,7 @@ def _mermaid_secuencia(parte, clases) -> str:
         lineas.append(f'    subgraph B{indice}["Bloque {indice}"]')
         lineas.append("        direction TB")
         for clase in grupo:
-            lineas.append(f'        L{clase["id"]}["{clase["id"]}<br/>{_wrap(clase["title"], 24)}"]')
+            lineas.append(f'        L{clase["id"]}["{clase["id"]} · {_etiqueta(clase["title"], 30)}"]')
         for a, b in zip(grupo, grupo[1:]):
             lineas.append(f'        L{a["id"]} --> L{b["id"]}')
         lineas.append("    end")

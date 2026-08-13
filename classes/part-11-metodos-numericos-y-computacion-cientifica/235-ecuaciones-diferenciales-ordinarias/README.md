@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["234<br/>Mínimos cuadrados<br/>numéricos"] --> C
-    subgraph C["235 · Ecuaciones diferenciales<br/>ordinarias"]
+    P["Clase 234 · Mínimos cuadrados…"] --> D
+    subgraph CLASE["Clase 235 · Ecuaciones diferenciales…"]
         direction TB
-        D["Demostración<br/><code>odes</code>"] --> R["Resultados numéricos<br/>y(0)<br/>y(1)_exacta<br/>condicion_inicial<br/>… +1 más"]
-        D --> V["Verificaciones<br/>es_lineal_de_primer_orden<br/>estable"]
-        D --> O["Contexto y estructura<br/>edo<br/>solucion_analitica"]
+        D["Demostracion odes"]
+        D --> R["Resultados 4: y0 +3"]
+        D --> V["Comprobaciones 2: es_lineal_de_primer_o… +1"]
+        D --> O["Contexto 2: edo +1"]
     end
-    C --> N["236<br/>Método de Euler"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 236 · Método de Euler"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

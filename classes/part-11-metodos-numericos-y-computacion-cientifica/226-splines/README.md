@@ -29,15 +29,16 @@ Al terminar podrás:
 
 ```mermaid
 flowchart LR
-    P["225<br/>Interpolación de<br/>Lagrange"] --> C
-    subgraph C["226 · Splines"]
+    P["Clase 225 · Interpolación de Lagrange"] --> D
+    subgraph CLASE["Clase 226 · Splines"]
         direction TB
-        D["Demostración<br/><code>splines</code>"] --> R["Resultados numéricos<br/>spline_en_0.5<br/>spline_en_1.5<br/>spline_en_2.25"]
-        D --> V["Verificaciones<br/>pasa_por_todos_los_nodos<br/>acotado_entre_min_y_max"]
-        D --> O["Contexto y estructura<br/>nodos<br/>valores<br/>ventaja_sobre_polinomio_global<br/>… +1 más"]
+        D["Demostracion splines"]
+        D --> R["Resultados 3: spline_en_0.5 +2"]
+        D --> V["Comprobaciones 2: pasa_por_todos_los_no… +1"]
+        D --> O["Contexto 4: nodos +3"]
     end
-    C --> N["227<br/>Diferenciación<br/>numérica"]
-    C -.-> IA["Uso en IA<br/>parte 11"]
+    R --> N["Clase 227 · Diferenciación numérica"]
+    V -.-> IA["Aplicacion en IA · parte 11"]
 ```
 
 ## 🧠 Idea rectora de la parte 11

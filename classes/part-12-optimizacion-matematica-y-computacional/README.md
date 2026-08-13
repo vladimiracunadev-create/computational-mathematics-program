@@ -35,11 +35,11 @@ Función objetivo, convexidad, descenso de gradiente y su familia completa de op
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L241["241<br/>Problemas de<br/>optimización y función<br/>objetivo"]
-        L242["242<br/>Convexidad"]
-        L243["243<br/>Gradiente y direcciones<br/>de descenso"]
-        L244["244<br/>Gradient descent"]
-        L245["245<br/>Stochastic gradient<br/>descent"]
+        L241["241 · Problemas de optimización y…"]
+        L242["242 · Convexidad"]
+        L243["243 · Gradiente y direcciones de…"]
+        L244["244 · Gradient descent"]
+        L245["245 · Stochastic gradient descent"]
         L241 --> L242
         L242 --> L243
         L243 --> L244
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L246["246<br/>Momentum"]
-        L247["247<br/>Nesterov accelerated<br/>gradient"]
-        L248["248<br/>AdaGrad"]
-        L249["249<br/>RMSProp"]
-        L250["250<br/>Adam"]
+        L246["246 · Momentum"]
+        L247["247 · Nesterov accelerated gradient"]
+        L248["248 · AdaGrad"]
+        L249["249 · RMSProp"]
+        L250["250 · Adam"]
         L246 --> L247
         L247 --> L248
         L248 --> L249
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L251["251<br/>AdamW"]
-        L252["252<br/>Método de Newton"]
-        L253["253<br/>Quasi-Newton y BFGS"]
-        L254["254<br/>Line search"]
-        L255["255<br/>Regularización como<br/>optimización"]
+        L251["251 · AdamW"]
+        L252["252 · Método de Newton"]
+        L253["253 · Quasi-Newton y BFGS"]
+        L254["254 · Line search"]
+        L255["255 · Regularización como…"]
         L251 --> L252
         L252 --> L253
         L253 --> L254
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L256["256<br/>Restricciones y<br/>Lagrangianos"]
-        L257["257<br/>Condiciones KKT"]
-        L258["258<br/>Optimización cuadrática"]
-        L259["259<br/>Optimización evolutiva"]
-        L260["260<br/>Capstone: banco de<br/>optimizadores<br/>comparables"]
+        L256["256 · Restricciones y Lagrangianos"]
+        L257["257 · Condiciones KKT"]
+        L258["258 · Optimización cuadrática"]
+        L259["259 · Optimización evolutiva"]
+        L260["260 · Capstone: banco de…"]
         L256 --> L257
         L257 --> L258
         L258 --> L259

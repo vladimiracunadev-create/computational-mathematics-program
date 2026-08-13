@@ -35,15 +35,16 @@ parábola y = x²: foco en (0, 1/4)
 
 ```mermaid
 flowchart LR
-    P["070<br/>Distancia punto-recta"] --> C
-    subgraph C["071 · Circunferencias y cónicas"]
+    P["Clase 070 · Distancia punto-recta"] --> D
+    subgraph CLASE["Clase 071 · Circunferencias y cónicas"]
         direction TB
-        D["Demostración<br/><code>conics</code>"] --> R["Resultados numéricos<br/>radio<br/>area_circulo<br/>semieje_mayor<br/>… +3 más"]
-        D --> V["Verificaciones<br/>—"]
-        D --> O["Contexto y estructura<br/>circunferencia<br/>elipse<br/>parabola_y=x²_foco"]
+        D["Demostracion conics"]
+        D --> R["Resultados 6: radio +5"]
+        D --> V["Comprobaciones: ninguna"]
+        D --> O["Contexto 3: circunferencia +2"]
     end
-    C --> N["072<br/>Vectores geométricos<br/>2D"]
-    C -.-> IA["Uso en IA<br/>parte 03"]
+    R --> N["Clase 072 · Vectores geométricos 2D"]
+    V -.-> IA["Aplicacion en IA · parte 03"]
 ```
 
 ## 📖 Fundamentos

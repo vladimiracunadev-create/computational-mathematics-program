@@ -35,11 +35,11 @@ Axiomas, probabilidad condicional, Bayes, variables aleatorias, esperanza, varia
 flowchart LR
     subgraph B1["Bloque 1"]
         direction TB
-        L181["181<br/>Experimentos, espacio<br/>muestral y eventos"]
-        L182["182<br/>Axiomas de probabilidad"]
-        L183["183<br/>Reglas de suma y<br/>producto"]
-        L184["184<br/>Probabilidad condicional"]
-        L185["185<br/>Independencia"]
+        L181["181 · Experimentos, espacio…"]
+        L182["182 · Axiomas de probabilidad"]
+        L183["183 · Reglas de suma y producto"]
+        L184["184 · Probabilidad condicional"]
+        L185["185 · Independencia"]
         L181 --> L182
         L182 --> L183
         L183 --> L184
@@ -47,11 +47,11 @@ flowchart LR
     end
     subgraph B2["Bloque 2"]
         direction TB
-        L186["186<br/>Teorema de Bayes"]
-        L187["187<br/>Variables aleatorias<br/>discretas"]
-        L188["188<br/>Variables aleatorias<br/>continuas"]
-        L189["189<br/>Esperanza matemática"]
-        L190["190<br/>Varianza y desviación<br/>estándar"]
+        L186["186 · Teorema de Bayes"]
+        L187["187 · Variables aleatorias discretas"]
+        L188["188 · Variables aleatorias continuas"]
+        L189["189 · Esperanza matemática"]
+        L190["190 · Varianza y desviación estándar"]
         L186 --> L187
         L187 --> L188
         L188 --> L189
@@ -59,11 +59,11 @@ flowchart LR
     end
     subgraph B3["Bloque 3"]
         direction TB
-        L191["191<br/>Covarianza y correlación"]
-        L192["192<br/>Bernoulli y binomial"]
-        L193["193<br/>Poisson y exponencial"]
-        L194["194<br/>Distribución normal"]
-        L195["195<br/>Distribuciones conjuntas<br/>y marginales"]
+        L191["191 · Covarianza y correlación"]
+        L192["192 · Bernoulli y binomial"]
+        L193["193 · Poisson y exponencial"]
+        L194["194 · Distribución normal"]
+        L195["195 · Distribuciones conjuntas y…"]
         L191 --> L192
         L192 --> L193
         L193 --> L194
@@ -71,11 +71,11 @@ flowchart LR
     end
     subgraph B4["Bloque 4"]
         direction TB
-        L196["196<br/>Ley de los grandes<br/>números"]
-        L197["197<br/>Teorema central del<br/>límite"]
-        L198["198<br/>Métodos Monte Carlo"]
-        L199["199<br/>Cadenas de Markov"]
-        L200["200<br/>Capstone: simulador<br/>probabilístico y<br/>bayesiano"]
+        L196["196 · Ley de los grandes números"]
+        L197["197 · Teorema central del límite"]
+        L198["198 · Métodos Monte Carlo"]
+        L199["199 · Cadenas de Markov"]
+        L200["200 · Capstone: simulador…"]
         L196 --> L197
         L197 --> L198
         L198 --> L199
