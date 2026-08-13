@@ -1,9 +1,11 @@
 # 214 — Regresión lineal estadística
 
-**Parte:** 10 — Estadística e inferencia
-**Nivel:** universitario-avanzado
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part10` · demostración `linear_regression_stats`
+> [⬅️ 213 Correlación frente a causalidad](../213-correlacion-frente-a-causalidad/README.md) · [📚 Parte 10](../README.md) · [🏠 Programa](../../../README.md) · [215 Máxima verosimilitud ➡️](../215-maxima-verosimilitud/README.md)
+
+**Parte:** 10 — Estadística e inferencia · **Nivel:** `universitario-avanzado` · **Horas estimadas:** 4
+**Motor:** `engines.part10` · **Demostración:** `linear_regression_stats` · **Clase 14 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,45 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Regresión lineal estadística** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_regression_stats` del motor de la parte.
-4. Interpretar las 9 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `linear_regression_stats`.
+4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["213<br/>Correlación frente a<br/>causalidad"] --> C
+    subgraph C["214 · Regresión lineal<br/>estadística"]
+        direction TB
+        D["Demostración<br/><code>linear_regression_stats</code>"] --> R["Resultados numéricos<br/>n<br/>intercepto<br/>pendiente<br/>… +4 más"]
+        D --> V["Verificaciones<br/>significativa"]
+        D --> O["Contexto y estructura<br/>residuos"]
+    end
+    C --> N["215<br/>Máxima verosimilitud"]
+    C -.-> IA["Uso en IA<br/>parte 10"]
+```
 
 ## 🧠 Idea rectora de la parte 10
 
 > Correlación no implica causalidad, pero causalidad sí restringe la correlación.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `linear_regression_stats` — Regresión lineal con R², error estándar y significancia.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (7) | `n`, `intercepto`, `pendiente`, `R²`, `SS_residual`, `error_estandar_pendiente`, `t_de_la_pendiente` |
+| ✅ Comprobaciones de invariante (1) | `significativa` |
 
-- `n`
-- `intercepto`
-- `pendiente`
-- `R²`
-- `SS_residual`
-- `error_estandar_pendiente`
-- `t_de_la_pendiente`
-- `significativa`
-- `residuos`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-10-estadistica-e-inferencia/214-regresion-lineal-estadistica/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 214
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -69,19 +76,51 @@ existía antes del resultado.
 
 Evaluar un modelo es inferencia estadística: métricas con intervalo, comparaciones múltiples corregidas y detección de leakage.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en experimentación de producto?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Wasserman, L. *All of Statistics*. Springer, 2004.
 - Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
 - Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 213 Correlación frente a causalidad](../213-correlacion-frente-a-causalidad/README.md) · [📚 Parte 10](../README.md) · [🏠 Programa](../../../README.md) · [215 Máxima verosimilitud ➡️](../215-maxima-verosimilitud/README.md)

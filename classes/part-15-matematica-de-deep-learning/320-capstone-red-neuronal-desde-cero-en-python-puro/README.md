@@ -1,9 +1,11 @@
 # 320 — Capstone: red neuronal desde cero en Python puro
 
-**Parte:** 15 — Matemática de Deep Learning
-**Nivel:** deep-learning
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part15` · demostración `capstone_neural_network`
+> [⬅️ 319 Autodiff con PyTorch/JAX](../319-autodiff-con-pytorch-jax/README.md) · [📚 Parte 15](../README.md) · [🏠 Programa](../../../README.md) · [321 Softmax y distribuciones categóricas ➡️](../../part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/321-softmax-y-distribuciones-categoricas/README.md)
+
+**Parte:** 15 — Matemática de Deep Learning · **Nivel:** `deep-learning` · **Horas estimadas:** 4
+**Motor:** `engines.part15` · **Demostración:** `capstone_neural_network` · **Clase 20 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,50 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Capstone: red neuronal desde cero en Python puro** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_neural_network` del motor de la parte.
-4. Interpretar las 14 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_neural_network`.
+4. Interpretar las 14 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: aplicar softmax sin restar el máximo y provocar overflow.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["319<br/>Autodiff con<br/>PyTorch/JAX"] --> C
+    subgraph C["320 · Capstone: red neuronal<br/>desde cero en Python puro"]
+        direction TB
+        D["Demostración<br/><code>capstone_neural_network</code>"] --> R["Resultados numéricos<br/>parametros<br/>learning_rate<br/>epocas<br/>… +5 más"]
+        D --> V["Verificaciones<br/>—"]
+        D --> O["Contexto y estructura<br/>problema<br/>arquitectura<br/>inicializacion<br/>… +3 más"]
+    end
+    C --> N["321<br/>Softmax y<br/>distribuciones<br/>categóricas"]
+    C -.-> IA["Uso en IA<br/>parte 15"]
+```
 
 ## 🧠 Idea rectora de la parte 15
 
 > El gradiente que se desvanece es un producto de derivadas menores que uno.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `capstone_neural_network` — Capstone: red neuronal completa desde cero, entrenada y evaluada.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (8) | `parametros`, `learning_rate`, `epocas`, `accuracy_train`, `accuracy_test`, `brecha_train_test`, `linea_base_por_azar`, `semilla` |
+| ✅ Comprobaciones de invariante (0) | — |
 
-- `problema`
-- `arquitectura`
-- `parametros`
-- `inicializacion`
-- `optimizador`
-- `learning_rate`
-- `epocas`
-- `historial`
-- `accuracy_train`
-- `accuracy_test`
-- `brecha_train_test`
-- `linea_base_por_azar`
-- `dependencias_externas`
-- `semilla`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-15-matematica-de-deep-learning/320-capstone-red-neuronal-desde-cero-en-python-puro/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 320
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -74,19 +76,51 @@ existía antes del resultado.
 
 Toda arquitectura moderna, incluido el Transformer, se construye sobre estos bloques y sobre este mismo mecanismo de derivación.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en visión?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
 - Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
 - He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 319 Autodiff con PyTorch/JAX](../319-autodiff-con-pytorch-jax/README.md) · [📚 Parte 15](../README.md) · [🏠 Programa](../../../README.md) · [321 Softmax y distribuciones categóricas ➡️](../../part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/321-softmax-y-distribuciones-categoricas/README.md)

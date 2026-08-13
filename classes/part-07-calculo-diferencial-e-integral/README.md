@@ -1,9 +1,12 @@
-# Parte 07 — Cálculo diferencial e integral
+# 📈 Parte 07 — Cálculo diferencial e integral
 
-**Nivel:** universitario
-**Clases:** 20
-**Horas estimadas:** 80
-**Motor ejecutable:** `src/computational_math/engines/part07.py`
+> [⬅️ Parte 06 — Álgebra lineal II: descomposiciones y tensores](../part-06-algebra-lineal-ii-descomposiciones-y-tensores/README.md) · [🏠 Programa](../../README.md) · [📇 Catálogo](../README.md) · [Parte 08 — Cálculo multivariable, matricial y autodiferenciación ➡️](../part-08-calculo-multivariable-matricial-y-autodiferenciacion/README.md)
+
+**Nivel:** `universitario` · **Clases:** 20 · **Horas estimadas:** 80 · **Motor:** [`part07.py`](../../src/computational_math/engines/part07.py)
+
+---
+
+## 🎯 De qué trata esta parte
 
 Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de una variable, integral definida y teorema fundamental del cálculo.
 
@@ -17,48 +20,109 @@ Límite, continuidad, derivada, reglas de derivación, Taylor, optimización de 
 
 ## 🤖 Por qué importa en IA
 
-Sin regla de la cadena no hay entrenamiento por gradiente; sin Taylor no hay métodos de segundo orden ni análisis de convergencia.
+> [!IMPORTANT]
+> Sin regla de la cadena no hay entrenamiento por gradiente; sin Taylor no hay métodos de segundo orden ni análisis de convergencia.
 
-## ⚠️ Errores frecuentes
+## ⚠️ Errores frecuentes de esta parte
 
 - Usar diferencias finitas con h demasiado pequeño y amplificar el error de redondeo.
 - Derivar en un punto donde la función no es continua.
 - Confundir punto crítico con extremo global.
 
+## 🧭 Secuencia de la parte
+
+```mermaid
+flowchart LR
+    subgraph B1["Bloque 1"]
+        direction TB
+        L141["141<br/>Intuición de límite"]
+        L142["142<br/>Límites algebraicos"]
+        L143["143<br/>Continuidad"]
+        L144["144<br/>Derivada como tasa de<br/>cambio"]
+        L145["145<br/>Reglas de derivación"]
+        L141 --> L142
+        L142 --> L143
+        L143 --> L144
+        L144 --> L145
+    end
+    subgraph B2["Bloque 2"]
+        direction TB
+        L146["146<br/>Regla del producto y<br/>cociente"]
+        L147["147<br/>Regla de la cadena"]
+        L148["148<br/>Derivadas de<br/>exponenciales y<br/>logaritmos"]
+        L149["149<br/>Derivadas<br/>trigonométricas"]
+        L150["150<br/>Derivación implícita"]
+        L146 --> L147
+        L147 --> L148
+        L148 --> L149
+        L149 --> L150
+    end
+    subgraph B3["Bloque 3"]
+        direction TB
+        L151["151<br/>Aproximación lineal y<br/>Taylor"]
+        L152["152<br/>Máximos y mínimos"]
+        L153["153<br/>Integral como<br/>acumulación"]
+        L154["154<br/>Integral definida"]
+        L155["155<br/>Antiderivadas"]
+        L151 --> L152
+        L152 --> L153
+        L153 --> L154
+        L154 --> L155
+    end
+    subgraph B4["Bloque 4"]
+        direction TB
+        L156["156<br/>Teorema fundamental del<br/>cálculo"]
+        L157["157<br/>Integración por<br/>sustitución"]
+        L158["158<br/>Integración por partes"]
+        L159["159<br/>Integración numérica<br/>introductoria"]
+        L160["160<br/>Capstone: optimizar y<br/>acumular una señal"]
+        L156 --> L157
+        L157 --> L158
+        L158 --> L159
+        L159 --> L160
+    end
+    L145 --> L146
+    L150 --> L151
+    L155 --> L156
+```
+
+## 📚 Las clases
+
+| # | Clase | Demostración | Idea central |
+|---|---|---|---|
+| `141` | [Intuición de límite](141-intuicion-de-limite/README.md) | `limit_intuition` | sin(x)/x cuando x→0: indeterminado en el punto, definido en el límite. |
+| `142` | [Límites algebraicos](142-limites-algebraicos/README.md) | `algebraic_limits` | Indeterminación 0/0 resuelta por factorización. |
+| `143` | [Continuidad](143-continuidad/README.md) | `continuity` | Los tres requisitos de continuidad en un punto. |
+| `144` | [Derivada como tasa de cambio](144-derivada-como-tasa-de-cambio/README.md) | `derivative_as_rate` | Derivada como límite del cociente incremental. |
+| `145` | [Reglas de derivación](145-reglas-de-derivacion/README.md) | `derivative_rules` | Reglas de potencia, suma y constante verificadas numéricamente. |
+| `146` | [Regla del producto y cociente](146-regla-del-producto-y-cociente/README.md) | `product_quotient_rule` | Regla del producto y del cociente. |
+| `147` | [Regla de la cadena](147-regla-de-la-cadena/README.md) | `chain_rule` | La regla de la cadena: el mecanismo entero de backpropagation. |
+| `148` | [Derivadas de exponenciales y logaritmos](148-derivadas-de-exponenciales-y-logaritmos/README.md) | `exp_log_derivatives` | e^x es su propia derivada; log tiene derivada 1/x. |
+| `149` | [Derivadas trigonométricas](149-derivadas-trigonometricas/README.md) | `trig_derivatives` | Derivadas trigonométricas y su ciclo de periodo 4. |
+| `150` | [Derivación implícita](150-derivacion-implicita/README.md) | `implicit_differentiation` | Derivación implícita sobre la circunferencia x²+y²=25. |
+| `151` | [Aproximación lineal y Taylor](151-aproximacion-lineal-y-taylor/README.md) | `taylor_approximation` | Taylor de e^x en 0: el error cae con el grado. |
+| `152` | [Máximos y mínimos](152-maximos-y-minimos/README.md) | `extrema` | Máximos y mínimos por derivada y criterio de la segunda derivada. |
+| `153` | [Integral como acumulación](153-integral-como-acumulacion/README.md) | `integral_as_accumulation` | Sumas de Riemann convergiendo a la integral. |
+| `154` | [Integral definida](154-integral-definida/README.md) | `definite_integral` | Propiedades de la integral definida. |
+| `155` | [Antiderivadas](155-antiderivadas/README.md) | `antiderivatives` | La antiderivada no es única: difiere en una constante. |
+| `156` | [Teorema fundamental del cálculo](156-teorema-fundamental-del-calculo/README.md) | `fundamental_theorem` | Teorema fundamental: derivar deshace integrar. |
+| `157` | [Integración por sustitución](157-integracion-por-sustitucion/README.md) | `substitution` | Integración por sustitución: la regla de la cadena al revés. |
+| `158` | [Integración por partes](158-integracion-por-partes/README.md) | `integration_by_parts` | Integración por partes: la regla del producto al revés. |
+| `159` | [Integración numérica introductoria](159-integracion-numerica-introductoria/README.md) | `numerical_integration_intro` | Trapecio frente a Simpson sobre la misma integral. |
+| `160` | [Capstone: optimizar y acumular una señal](160-capstone-optimizar-y-acumular-una-senal/README.md) | `capstone_optimize_and_accumulate` | Capstone: derivar para optimizar e integrar para acumular una señal. |
+
 ## 🧰 Stack de referencia
 
 `math`, `sympy (opcional)`, `scipy (opcional)`
 
-Los laboratorios se ejecutan con biblioteca estándar; estas herramientas
-aparecen como contraste profesional, no como requisito.
-
-## 📚 Secuencia
-
-1. [141 — Intuición de límite](141-intuicion-de-limite/README.md)
-2. [142 — Límites algebraicos](142-limites-algebraicos/README.md)
-3. [143 — Continuidad](143-continuidad/README.md)
-4. [144 — Derivada como tasa de cambio](144-derivada-como-tasa-de-cambio/README.md)
-5. [145 — Reglas de derivación](145-reglas-de-derivacion/README.md)
-6. [146 — Regla del producto y cociente](146-regla-del-producto-y-cociente/README.md)
-7. [147 — Regla de la cadena](147-regla-de-la-cadena/README.md)
-8. [148 — Derivadas de exponenciales y logaritmos](148-derivadas-de-exponenciales-y-logaritmos/README.md)
-9. [149 — Derivadas trigonométricas](149-derivadas-trigonometricas/README.md)
-10. [150 — Derivación implícita](150-derivacion-implicita/README.md)
-11. [151 — Aproximación lineal y Taylor](151-aproximacion-lineal-y-taylor/README.md)
-12. [152 — Máximos y mínimos](152-maximos-y-minimos/README.md)
-13. [153 — Integral como acumulación](153-integral-como-acumulacion/README.md)
-14. [154 — Integral definida](154-integral-definida/README.md)
-15. [155 — Antiderivadas](155-antiderivadas/README.md)
-16. [156 — Teorema fundamental del cálculo](156-teorema-fundamental-del-calculo/README.md)
-17. [157 — Integración por sustitución](157-integracion-por-sustitucion/README.md)
-18. [158 — Integración por partes](158-integracion-por-partes/README.md)
-19. [159 — Integración numérica introductoria](159-integracion-numerica-introductoria/README.md)
-20. [160 — Capstone: optimizar y acumular una señal](160-capstone-optimizar-y-acumular-una-senal/README.md)
+Los laboratorios se ejecutan con biblioteca estándar; estas herramientas aparecen
+como contraste profesional, no como requisito.
 
 ## 🧪 Ejecutar toda la parte
 
 ```bash
 compmath run --part 07
+compmath catalog --part 07
 ```
 
 ## 📊 Evaluación de la parte
@@ -68,10 +132,14 @@ compmath run --part 07
 | Clases y ejercicios | 40 % |
 | Laboratorios y notebooks | 25 % |
 | Explicación oral o escrita | 15 % |
-| Capstone de la parte | 20 % |
+| Capstone ([160](160-capstone-optimizar-y-acumular-una-senal/README.md)) | 20 % |
 
 ## 📖 Bibliografía
 
 - Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
 - Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
 - Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+
+---
+
+> [⬅️ Parte 06 — Álgebra lineal II: descomposiciones y tensores](../part-06-algebra-lineal-ii-descomposiciones-y-tensores/README.md) · [🏠 Programa](../../README.md) · [📇 Catálogo](../README.md) · [Parte 08 — Cálculo multivariable, matricial y autodiferenciación ➡️](../part-08-calculo-multivariable-matricial-y-autodiferenciacion/README.md)

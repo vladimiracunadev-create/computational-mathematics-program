@@ -1,9 +1,11 @@
 # 212 — ANOVA
 
-**Parte:** 10 — Estadística e inferencia
-**Nivel:** universitario-avanzado
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part10` · demostración `anova`
+> [⬅️ 211 Chi-cuadrado y tablas de contingencia](../211-chi-cuadrado-y-tablas-de-contingencia/README.md) · [📚 Parte 10](../README.md) · [🏠 Programa](../../../README.md) · [213 Correlación frente a causalidad ➡️](../213-correlacion-frente-a-causalidad/README.md)
+
+**Parte:** 10 — Estadística e inferencia · **Nivel:** `universitario-avanzado` · **Horas estimadas:** 4
+**Motor:** `engines.part10` · **Demostración:** `anova` · **Clase 12 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,47 +21,50 @@ Al terminar podrás:
 
 1. Explicar **ANOVA** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `anova` del motor de la parte.
-4. Interpretar las 11 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `anova`.
+4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: evaluar sobre datos que participaron en la selección del modelo.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["211<br/>Chi-cuadrado y tablas<br/>de contingencia"] --> C
+    subgraph C["212 · ANOVA"]
+        direction TB
+        D["Demostración<br/><code>anova</code>"] --> R["Resultados numéricos<br/>grupos<br/>gran_media<br/>SS_entre<br/>… +5 más"]
+        D --> V["Verificaciones<br/>significativo"]
+        D --> O["Contexto y estructura<br/>medias<br/>gl"]
+    end
+    C --> N["213<br/>Correlación frente a<br/>causalidad"]
+    C -.-> IA["Uso en IA<br/>parte 10"]
+```
 
 ## 🧠 Idea rectora de la parte 10
 
 > Un intervalo de confianza describe el procedimiento, no una probabilidad del parámetro.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `anova` — ANOVA de un factor: descomposición de la variabilidad.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (8) | `grupos`, `gran_media`, `SS_entre`, `SS_dentro`, `SS_total`, `estadistico_F`, `valor_critico_aprox_3.16`, `eta_cuadrado` |
+| ✅ Comprobaciones de invariante (1) | `significativo` |
 
-- `grupos`
-- `medias`
-- `gran_media`
-- `SS_entre`
-- `SS_dentro`
-- `SS_total`
-- `estadistico_F`
-- `gl`
-- `valor_critico_aprox_3.16`
-- `significativo`
-- `eta_cuadrado`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-10-estadistica-e-inferencia/212-anova/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 212
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -71,19 +76,51 @@ existía antes del resultado.
 
 Evaluar un modelo es inferencia estadística: métricas con intervalo, comparaciones múltiples corregidas y detección de leakage.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en experimentación de producto?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Wasserman, L. *All of Statistics*. Springer, 2004.
 - Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
 - Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 211 Chi-cuadrado y tablas de contingencia](../211-chi-cuadrado-y-tablas-de-contingencia/README.md) · [📚 Parte 10](../README.md) · [🏠 Programa](../../../README.md) · [213 Correlación frente a causalidad ➡️](../213-correlacion-frente-a-causalidad/README.md)

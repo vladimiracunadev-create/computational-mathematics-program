@@ -1,9 +1,12 @@
-# Parte 14 — Matemática de Machine Learning
+# 🤖 Parte 14 — Matemática de Machine Learning
 
-**Nivel:** ml-avanzado
-**Clases:** 20
-**Horas estimadas:** 80
-**Motor ejecutable:** `src/computational_math/engines/part14.py`
+> [⬅️ Parte 13 — Teoría de la información, señales y series](../part-13-teoria-de-la-informacion-senales-y-series/README.md) · [🏠 Programa](../../README.md) · [📇 Catálogo](../README.md) · [Parte 15 — Matemática de Deep Learning ➡️](../part-15-matematica-de-deep-learning/README.md)
+
+**Nivel:** `ml-avanzado` · **Clases:** 20 · **Horas estimadas:** 80 · **Motor:** [`part14.py`](../../src/computational_math/engines/part14.py)
+
+---
+
+## 🎯 De qué trata esta parte
 
 Derivación matemática de los algoritmos clásicos: regresión, regularización, clasificación, kernels, árboles, ensambles, clustering, EM y compromiso sesgo-varianza.
 
@@ -17,48 +20,109 @@ Derivación matemática de los algoritmos clásicos: regresión, regularización
 
 ## 🤖 Por qué importa en IA
 
-Estos algoritmos siguen siendo la línea base honesta contra la que se debe comparar cualquier modelo profundo.
+> [!IMPORTANT]
+> Estos algoritmos siguen siendo la línea base honesta contra la que se debe comparar cualquier modelo profundo.
 
-## ⚠️ Errores frecuentes
+## ⚠️ Errores frecuentes de esta parte
 
 - No estandarizar antes de aplicar regularización o k-NN.
 - Elegir hiperparámetros con el conjunto de test.
 - Interpretar coeficientes de un modelo con features correlacionadas.
 
+## 🧭 Secuencia de la parte
+
+```mermaid
+flowchart LR
+    subgraph B1["Bloque 1"]
+        direction TB
+        L281["281<br/>Geometría del<br/>aprendizaje supervisado"]
+        L282["282<br/>Regresión lineal desde<br/>mínimos cuadrados"]
+        L283["283<br/>Ridge y regularización<br/>L2"]
+        L284["284<br/>Lasso y regularización<br/>L1"]
+        L285["285<br/>Regresión logística y<br/>sigmoid"]
+        L281 --> L282
+        L282 --> L283
+        L283 --> L284
+        L284 --> L285
+    end
+    subgraph B2["Bloque 2"]
+        direction TB
+        L286["286<br/>Cross-entropy en<br/>clasificación"]
+        L287["287<br/>Naive Bayes"]
+        L288["288<br/>k-Nearest Neighbors y<br/>métricas"]
+        L289["289<br/>SVM y margen máximo"]
+        L290["290<br/>Kernel trick"]
+        L286 --> L287
+        L287 --> L288
+        L288 --> L289
+        L289 --> L290
+    end
+    subgraph B3["Bloque 3"]
+        direction TB
+        L291["291<br/>Árboles: entropía y Gini"]
+        L292["292<br/>Random Forest desde<br/>probabilidad"]
+        L293["293<br/>Boosting y descenso<br/>funcional"]
+        L294["294<br/>k-means como<br/>optimización"]
+        L295["295<br/>Gaussian Mixture Models"]
+        L291 --> L292
+        L292 --> L293
+        L293 --> L294
+        L294 --> L295
+    end
+    subgraph B4["Bloque 4"]
+        direction TB
+        L296["296<br/>EM algorithm"]
+        L297["297<br/>PCA aplicado a ML"]
+        L298["298<br/>Bias-variance tradeoff"]
+        L299["299<br/>Generalización,<br/>validación y leakage"]
+        L300["300<br/>Capstone: derivar y<br/>comparar 6 algoritmos ML"]
+        L296 --> L297
+        L297 --> L298
+        L298 --> L299
+        L299 --> L300
+    end
+    L285 --> L286
+    L290 --> L291
+    L295 --> L296
+```
+
+## 📚 Las clases
+
+| # | Clase | Demostración | Idea central |
+|---|---|---|---|
+| `281` | [Geometría del aprendizaje supervisado](281-geometria-del-aprendizaje-supervisado/README.md) | `supervised_geometry` | Aprendizaje supervisado como búsqueda de una frontera en el espacio. |
+| `282` | [Regresión lineal desde mínimos cuadrados](282-regresion-lineal-desde-minimos-cuadrados/README.md) | `linear_regression` | Regresión lineal: solución cerrada y descenso de gradiente. |
+| `283` | [Ridge y regularización L2](283-ridge-y-regularizacion-l2/README.md) | `ridge` | Ridge: L2 encoge los coeficientes y estabiliza el mal condicionamiento. |
+| `284` | [Lasso y regularización L1](284-lasso-y-regularizacion-l1/README.md) | `lasso` | Lasso: L1 produce ceros exactos gracias a su geometría. |
+| `285` | [Regresión logística y sigmoid](285-regresion-logistica-y-sigmoid/README.md) | `logistic_regression` | Regresión logística derivada desde la log-verosimilitud. |
+| `286` | [Cross-entropy en clasificación](286-cross-entropy-en-clasificacion/README.md) | `classification_loss` | Cross-entropy penaliza la confianza equivocada de forma no acotada. |
+| `287` | [Naive Bayes](287-naive-bayes/README.md) | `naive_bayes` | Naive Bayes gaussiano: independencia condicional como supuesto explícito. |
+| `288` | [k-Nearest Neighbors y métricas](288-k-nearest-neighbors-y-metricas/README.md) | `knn` | k-NN: la métrica y el escalado deciden el resultado. |
+| `289` | [SVM y margen máximo](289-svm-y-margen-maximo/README.md) | `svm_margin` | SVM: maximizar el margen equivale a minimizar ‖w‖. |
+| `290` | [Kernel trick](290-kernel-trick/README.md) | `kernel_trick` | El kernel calcula el producto punto sin construir el espacio. |
+| `291` | [Árboles: entropía y Gini](291-arboles-entropia-y-gini/README.md) | `tree_impurity` | Entropía y Gini: dos medidas de impureza para elegir el corte. |
+| `292` | [Random Forest desde probabilidad](292-random-forest-desde-probabilidad/README.md) | `random_forest` | Bagging: promediar modelos decorrelacionados reduce la varianza. |
+| `293` | [Boosting y descenso funcional](293-boosting-y-descenso-funcional/README.md) | `boosting` | Boosting: cada modelo corrige el residuo del anterior (descenso funcional). |
+| `294` | [k-means como optimización](294-k-means-como-optimizacion/README.md) | `kmeans` | k-means como minimización de la inercia (Lloyd). |
+| `295` | [Gaussian Mixture Models](295-gaussian-mixture-models/README.md) | `gmm` | Mezcla de gaussianas: asignación blanda en lugar de dura. |
+| `296` | [EM algorithm](296-em-algorithm/README.md) | `em_algorithm` | EM: E-step y M-step sobre datos con una variable latente. |
+| `297` | [PCA aplicado a ML](297-pca-aplicado-a-ml/README.md) | `pca_ml` | PCA como preprocesamiento: cuánta varianza se conserva. |
+| `298` | [Bias-variance tradeoff](298-bias-variance-tradeoff/README.md) | `bias_variance` | Descomposición sesgo-varianza medida por simulación. |
+| `299` | [Generalización, validación y leakage](299-generalizacion-validacion-y-leakage/README.md) | `generalization` | Validación honesta frente a leakage: la misma métrica, dos verdades. |
+| `300` | [Capstone: derivar y comparar 6 algoritmos ML](300-capstone-derivar-y-comparar-6-algoritmos-ml/README.md) | `capstone_six_algorithms` | Capstone: seis algoritmos derivados y comparados sobre los mismos datos. |
+
 ## 🧰 Stack de referencia
 
 `math`, `random`, `numpy (opcional)`, `scikit-learn (opcional)`
 
-Los laboratorios se ejecutan con biblioteca estándar; estas herramientas
-aparecen como contraste profesional, no como requisito.
-
-## 📚 Secuencia
-
-1. [281 — Geometría del aprendizaje supervisado](281-geometria-del-aprendizaje-supervisado/README.md)
-2. [282 — Regresión lineal desde mínimos cuadrados](282-regresion-lineal-desde-minimos-cuadrados/README.md)
-3. [283 — Ridge y regularización L2](283-ridge-y-regularizacion-l2/README.md)
-4. [284 — Lasso y regularización L1](284-lasso-y-regularizacion-l1/README.md)
-5. [285 — Regresión logística y sigmoid](285-regresion-logistica-y-sigmoid/README.md)
-6. [286 — Cross-entropy en clasificación](286-cross-entropy-en-clasificacion/README.md)
-7. [287 — Naive Bayes](287-naive-bayes/README.md)
-8. [288 — k-Nearest Neighbors y métricas](288-k-nearest-neighbors-y-metricas/README.md)
-9. [289 — SVM y margen máximo](289-svm-y-margen-maximo/README.md)
-10. [290 — Kernel trick](290-kernel-trick/README.md)
-11. [291 — Árboles: entropía y Gini](291-arboles-entropia-y-gini/README.md)
-12. [292 — Random Forest desde probabilidad](292-random-forest-desde-probabilidad/README.md)
-13. [293 — Boosting y descenso funcional](293-boosting-y-descenso-funcional/README.md)
-14. [294 — k-means como optimización](294-k-means-como-optimizacion/README.md)
-15. [295 — Gaussian Mixture Models](295-gaussian-mixture-models/README.md)
-16. [296 — EM algorithm](296-em-algorithm/README.md)
-17. [297 — PCA aplicado a ML](297-pca-aplicado-a-ml/README.md)
-18. [298 — Bias-variance tradeoff](298-bias-variance-tradeoff/README.md)
-19. [299 — Generalización, validación y leakage](299-generalizacion-validacion-y-leakage/README.md)
-20. [300 — Capstone: derivar y comparar 6 algoritmos ML](300-capstone-derivar-y-comparar-6-algoritmos-ml/README.md)
+Los laboratorios se ejecutan con biblioteca estándar; estas herramientas aparecen
+como contraste profesional, no como requisito.
 
 ## 🧪 Ejecutar toda la parte
 
 ```bash
 compmath run --part 14
+compmath catalog --part 14
 ```
 
 ## 📊 Evaluación de la parte
@@ -68,10 +132,14 @@ compmath run --part 14
 | Clases y ejercicios | 40 % |
 | Laboratorios y notebooks | 25 % |
 | Explicación oral o escrita | 15 % |
-| Capstone de la parte | 20 % |
+| Capstone ([300](300-capstone-derivar-y-comparar-6-algoritmos-ml/README.md)) | 20 % |
 
 ## 📖 Bibliografía
 
 - Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
 - Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
 - Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+
+---
+
+> [⬅️ Parte 13 — Teoría de la información, señales y series](../part-13-teoria-de-la-informacion-senales-y-series/README.md) · [🏠 Programa](../../README.md) · [📇 Catálogo](../README.md) · [Parte 15 — Matemática de Deep Learning ➡️](../part-15-matematica-de-deep-learning/README.md)

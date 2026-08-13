@@ -1,9 +1,11 @@
 # 181 — Experimentos, espacio muestral y eventos
 
-**Parte:** 09 — Probabilidad y procesos aleatorios
-**Nivel:** universitario
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part09` · demostración `sample_space`
+> [⬅️ 180 Capstone: backpropagation manual y automática](../../part-08-calculo-multivariable-matricial-y-autodiferenciacion/180-capstone-backpropagation-manual-y-automatica/README.md) · [📚 Parte 09](../README.md) · [🏠 Programa](../../../README.md) · [182 Axiomas de probabilidad ➡️](../182-axiomas-de-probabilidad/README.md)
+
+**Parte:** 09 — Probabilidad y procesos aleatorios · **Nivel:** `universitario` · **Horas estimadas:** 4
+**Motor:** `engines.part09` · **Demostración:** `sample_space` · **Clase 1 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,44 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Experimentos, espacio muestral y eventos** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `sample_space` del motor de la parte.
-4. Interpretar las 8 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `sample_space`.
+4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: asumir independencia sin justificarla.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["180<br/>Capstone:<br/>backpropagation manual<br/>y automática"] --> C
+    subgraph C["181 · Experimentos, espacio<br/>muestral y eventos"]
+        direction TB
+        D["Demostración<br/><code>sample_space</code>"] --> R["Resultados numéricos<br/>|Ω|<br/>evento_suma_7<br/>P(suma=7)<br/>… +4 más"]
+        D --> V["Verificaciones<br/>—"]
+        D --> O["Contexto y estructura<br/>experimento"]
+    end
+    C --> N["182<br/>Axiomas de<br/>probabilidad"]
+    C -.-> IA["Uso en IA<br/>parte 09"]
+```
 
 ## 🧠 Idea rectora de la parte 09
 
 > P(A|B) y P(B|A) no son intercambiables: confundirlas es la falacia del fiscal.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `sample_space` — Espacio muestral, eventos y su probabilidad en un modelo equiprobable.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (7) | `|Ω|`, `evento_suma_7`, `P(suma=7)`, `evento_ambos_pares`, `P(ambos_pares)`, `P(complemento_suma_7)`, `suma_mas_probable` |
+| ✅ Comprobaciones de invariante (0) | — |
 
-- `experimento`
-- `|Ω|`
-- `evento_suma_7`
-- `P(suma=7)`
-- `evento_ambos_pares`
-- `P(ambos_pares)`
-- `P(complemento_suma_7)`
-- `suma_mas_probable`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-09-probabilidad-y-procesos-aleatorios/181-experimentos-espacio-muestral-y-eventos/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 181
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -68,19 +76,51 @@ existía antes del resultado.
 
 Un modelo de lenguaje es una distribución condicional sobre el siguiente token; la difusión es un proceso estocástico con reverso aprendido.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en riesgo?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
 - Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
 - Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 180 Capstone: backpropagation manual y automática](../../part-08-calculo-multivariable-matricial-y-autodiferenciacion/180-capstone-backpropagation-manual-y-automatica/README.md) · [📚 Parte 09](../README.md) · [🏠 Programa](../../../README.md) · [182 Axiomas de probabilidad ➡️](../182-axiomas-de-probabilidad/README.md)

@@ -1,9 +1,11 @@
 # 329 — Modelado autoregresivo
 
-**Parte:** 16 — Matemática de Transformers, modelos generativos, grafos y RL
-**Nivel:** experto
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part16` · demostración `autoregressive_modeling`
+> [⬅️ 328 Transformer completo](../328-transformer-completo/README.md) · [📚 Parte 16](../README.md) · [🏠 Programa](../../../README.md) · [330 Sampling, temperatura, top-k y top-p ➡️](../330-sampling-temperatura-top-k-y-top-p/README.md)
+
+**Parte:** 16 — Matemática de Transformers, modelos generativos, grafos y RL · **Nivel:** `experto` · **Horas estimadas:** 4
+**Motor:** `engines.part16` · **Demostración:** `autoregressive_modeling` · **Clase 9 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,45 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Modelado autoregresivo** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `autoregressive_modeling` del motor de la parte.
-4. Interpretar las 9 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `autoregressive_modeling`.
+4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: normalizar el laplaciano de un grafo con nodos aislados sin tratar la división por cero.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["328<br/>Transformer completo"] --> C
+    subgraph C["329 · Modelado autoregresivo"]
+        direction TB
+        D["Demostración<br/><code>autoregressive_modeling</code>"] --> R["Resultados numéricos<br/>probabilidad_conjunta<br/>log_probabilidad<br/>perplejidad"]
+        D --> V["Verificaciones<br/>—"]
+        D --> O["Contexto y estructura<br/>secuencia<br/>descomposicion<br/>detalle<br/>… +3 más"]
+    end
+    C --> N["330<br/>Sampling, temperatura,<br/>top-k y top-p"]
+    C -.-> IA["Uso en IA<br/>parte 16"]
+```
 
 ## 🧠 Idea rectora de la parte 16
 
 > El ELBO acota inferiormente la log-verosimilitud con un término de reconstrucción y uno KL.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `autoregressive_modeling` — Modelado autoregresivo: la regla de la cadena de la probabilidad.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (3) | `probabilidad_conjunta`, `log_probabilidad`, `perplejidad` |
+| ✅ Comprobaciones de invariante (0) | — |
 
-- `secuencia`
-- `descomposicion`
-- `detalle`
-- `probabilidad_conjunta`
-- `log_probabilidad`
-- `perplejidad`
-- `por_que_en_log`
-- `entrenamiento`
-- `inferencia`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/329-modelado-autoregresivo/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 329
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -69,20 +76,52 @@ existía antes del resultado.
 
 Esta parte es la traducción matemática directa de los papers que definen el estado del arte actual.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en LLM?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
 - Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
 - Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
 - Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 328 Transformer completo](../328-transformer-completo/README.md) · [📚 Parte 16](../README.md) · [🏠 Programa](../../../README.md) · [330 Sampling, temperatura, top-k y top-p ➡️](../330-sampling-temperatura-top-k-y-top-p/README.md)

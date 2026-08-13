@@ -1,9 +1,11 @@
 # 345 — Variational inference avanzada
 
-**Parte:** 17 — Frontera matemática para IA e investigación
-**Nivel:** frontera-investigacion
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part17` · demostración `advanced_variational_inference`
+> [⬅️ 344 Hamiltonian Monte Carlo](../344-hamiltonian-monte-carlo/README.md) · [📚 Parte 17](../README.md) · [🏠 Programa](../../../README.md) · [346 Optimal transport ➡️](../346-optimal-transport/README.md)
+
+**Parte:** 17 — Frontera matemática para IA e investigación · **Nivel:** `frontera-investigacion` · **Horas estimadas:** 4
+**Motor:** `engines.part17` · **Demostración:** `advanced_variational_inference` · **Clase 5 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,45 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Variational inference avanzada** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `advanced_variational_inference` del motor de la parte.
-4. Interpretar las 9 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `advanced_variational_inference`.
+4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["344<br/>Hamiltonian Monte<br/>Carlo"] --> C
+    subgraph C["345 · Variational inference<br/>avanzada"]
+        direction TB
+        D["Demostración<br/><code>advanced_variational_inference</code>"] --> R["Resultados numéricos<br/>KL_final"]
+        D --> V["Verificaciones<br/>converge_al_posterior"]
+        D --> O["Contexto y estructura<br/>posterior_real<br/>familia_variacional<br/>historial<br/>… +4 más"]
+    end
+    C --> N["346<br/>Optimal transport"]
+    C -.-> IA["Uso en IA<br/>parte 17"]
+```
 
 ## 🧠 Idea rectora de la parte 17
 
 > Las cotas PAC acotan el error esperado, no garantizan el error observado.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `advanced_variational_inference` — Inferencia variacional: optimizar en lugar de muestrear.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (1) | `KL_final` |
+| ✅ Comprobaciones de invariante (1) | `converge_al_posterior` |
 
-- `posterior_real`
-- `familia_variacional`
-- `historial`
-- `solucion`
-- `KL_final`
-- `converge_al_posterior`
-- `VI_es_optimizacion`
-- `sesgo`
-- `mean_field`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-17-frontera-matematica-para-ia-e-investigacion/345-variational-inference-avanzada/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 345
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -69,20 +76,52 @@ existía antes del resultado.
 
 Score matching fundamenta los modelos de difusión; el transporte óptimo aparece en flow matching; la teoría estadística del aprendizaje explica el scaling.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en investigación aplicada?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
 - Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
 - Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
 - Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 344 Hamiltonian Monte Carlo](../344-hamiltonian-monte-carlo/README.md) · [📚 Parte 17](../README.md) · [🏠 Programa](../../../README.md) · [346 Optimal transport ➡️](../346-optimal-transport/README.md)

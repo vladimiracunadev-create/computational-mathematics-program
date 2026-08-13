@@ -1,0 +1,1224 @@
+part: "00"
+titulo: "Pensamiento matemático desde cero"
+
+resumen_extendido: |
+  Esta parte no enseña «matemática básica»: reconstruye la aritmética con el nivel de
+  precisión que exige escribir código que otra persona ejecutará. La diferencia es real.
+  En la escuela, `1/3 = 0.33` es una respuesta aceptable; en un programa, esa igualdad es
+  falsa y su error se propaga a todo lo que venga después.
+
+  El hilo conductor son tres preguntas que se repetirán en las 360 clases del programa:
+
+  1. **¿Qué es este número?** Un natural, un entero, un racional exacto o una aproximación
+     decimal no son el mismo objeto, aunque se escriban parecido y la calculadora los
+     mezcle sin avisar.
+  2. **¿En qué unidad y en qué escala vive?** Un 15 sin unidad no es una cantidad: es una
+     cadena de dígitos. Casi todo error de modelado empieza aquí.
+  3. **¿Cómo sé que el resultado es correcto?** Un cálculo sin verificación independiente
+     es una conjetura con formato de respuesta.
+
+  La proporcionalidad es el eje del bloque central (clases 006 a 007). Es la primera
+  función lineal que aprendemos sin llamarla así, y reaparece literalmente en cada capa
+  densa de una red neuronal: `y = kx` es el caso unidimensional de `y = Wx`. Quien no
+  distingue una proporcionalidad directa de una inversa tampoco distinguirá después una
+  relación lineal de una recíproca en un modelo.
+
+  El bloque de potencias, raíces y notación científica (008 a 011) construye el vocabulario
+  para hablar de **órdenes de magnitud**. En IA esa competencia es cotidiana: un modelo de
+  7·10⁹ parámetros y otro de 7·10¹¹ no se diferencian en «tamaño», se diferencian en dos
+  órdenes de magnitud, y esa es la unidad en la que se razona sobre coste, memoria y
+  tiempo de entrenamiento.
+
+  El cierre (013 a 019) instala los hábitos que separan un cálculo de una afirmación:
+  redondear como decisión declarada, estimar antes de calcular, traducir un enunciado a
+  ecuaciones y —sobre todo— **buscar el contraejemplo antes que la confirmación**. La clase
+  019 demuestra una conjetura que resiste 40 verificaciones consecutivas y cae en la
+  cuadragésima primera: es la lección más importante de toda la parte.
+
+  Nada de esto requiere talento matemático previo. Requiere aceptar que la precisión no es
+  pedantería: es la única forma de que un resultado siga siendo cierto cuando lo ejecuta
+  otra máquina, otro día, con otros datos.
+
+mapa: |
+  flowchart TD
+      A["001-004<br/>Tipos de número<br/>natural · entero · racional · decimal"] --> B["005-007<br/>Proporcionalidad<br/>porcentaje · razón · regla de tres"]
+      A --> C["008-011<br/>Órdenes de magnitud<br/>potencias · raíces · notación científica"]
+      B --> D["012-014<br/>Medida y aproximación<br/>unidades · redondeo · estimación"]
+      C --> D
+      D --> E["015-018<br/>Lenguaje algebraico<br/>variables · fórmulas · patrones"]
+      E --> F["019-020<br/>Verificación<br/>contraejemplo · capstone"]
+      F ==> G["Parte 01<br/>Representación numérica<br/>en la máquina"]
+      B -.-> H["Capa densa y = Wx<br/>Parte 05"]
+      C -.-> I["Escalas logarítmicas<br/>Parte 02"]
+
+glosario:
+  - termino: "Número natural"
+    definicion: "Entero no negativo usado para contar objetos discretos. No admite división exacta general."
+    clase: "001"
+  - termino: "Valor absoluto"
+    definicion: "Distancia de un número al cero. Siempre no negativo y simétrico: |a−b| = |b−a|."
+    clase: "002"
+  - termino: "Número racional"
+    definicion: "Cociente exacto de dos enteros con denominador no nulo. Su desarrollo decimal es finito o periódico."
+    clase: "003"
+  - termino: "Desarrollo periódico"
+    definicion: "Decimal que repite indefinidamente un bloque de dígitos. Señala que la fracción no tiene forma decimal finita."
+    clase: "004"
+  - termino: "Punto porcentual"
+    definicion: "Diferencia absoluta entre dos porcentajes. Pasar del 10 % al 12 % son 2 puntos porcentuales, no un 2 % de aumento."
+    clase: "005"
+  - termino: "Razón"
+    definicion: "Cociente entre dos cantidades. Si las unidades difieren, la razón es una tasa y conserva unidad (km/h)."
+    clase: "006"
+  - termino: "Proporcionalidad directa"
+    definicion: "Relación en la que el cociente y/x permanece constante. Su gráfica es una recta que pasa por el origen."
+    clase: "007"
+  - termino: "Proporcionalidad inversa"
+    definicion: "Relación en la que el producto x·y permanece constante. Su gráfica es una hipérbola."
+    clase: "007"
+  - termino: "Exponente"
+    definicion: "Número de veces que la base se multiplica por sí misma. Extendido a enteros negativos y fracciones por continuidad de las leyes."
+    clase: "008"
+  - termino: "Radical"
+    definicion: "Raíz n-ésima, equivalente al exponente fraccionario 1/n. Su dominio real depende de la paridad del índice."
+    clase: "009"
+  - termino: "Precedencia"
+    definicion: "Orden en que se aplican las operaciones de una expresión. La potenciación asocia por la derecha."
+    clase: "010"
+  - termino: "Orden de magnitud"
+    definicion: "Exponente de la potencia de 10 más cercana. Permite comparar cantidades que difieren en varios factores de 10."
+    clase: "011"
+  - termino: "Factor unitario"
+    definicion: "Cociente igual a 1 entre dos expresiones de la misma cantidad en unidades distintas. Multiplicar por él convierte sin alterar el valor."
+    clase: "012"
+  - termino: "Cifra significativa"
+    definicion: "Dígito que aporta información sobre la precisión de una medida. Los ceros a la izquierda no cuentan."
+    clase: "013"
+  - termino: "Redondeo bancario"
+    definicion: "Regla que redondea el caso 0.5 al par más cercano, para que el sesgo acumulado tienda a cero."
+    clase: "013"
+  - termino: "Estimación de Fermi"
+    definicion: "Aproximación por órdenes de magnitud usando descomposición en factores estimables. Sirve para detectar resultados absurdos."
+    clase: "014"
+  - termino: "Incógnita"
+    definicion: "Símbolo que representa un valor concreto pero desconocido, determinado por las restricciones del problema."
+    clase: "015"
+  - termino: "Parámetro"
+    definicion: "Símbolo que representa un valor fijo pero no especificado. Distinto de la incógnita: no se despeja, se elige."
+    clase: "016"
+  - termino: "Progresión aritmética"
+    definicion: "Sucesión con diferencia constante entre términos consecutivos."
+    clase: "017"
+  - termino: "Progresión geométrica"
+    definicion: "Sucesión con razón constante entre términos consecutivos. Modela crecimiento exponencial discreto."
+    clase: "017"
+  - termino: "Contraejemplo"
+    definicion: "Caso concreto que satisface la hipótesis y viola la conclusión. Un solo contraejemplo refuta una afirmación universal."
+    clase: "019"
+
+clases:
+  "001":
+    concepto: "Contar es establecer una biyección entre un conjunto y un tramo inicial de los naturales."
+    formulas:
+      - "1 + 2 + ... + n = n(n+1)/2"
+      - "|{1, 2, ..., n}| = n"
+    desarrollo: |
+      Contar parece trivial hasta que se intenta programar. Cuando decimos que un conjunto
+      tiene 7 elementos, estamos afirmando que existe una correspondencia uno a uno entre
+      ese conjunto y `{1,2,3,4,5,6,7}`. Esa definición —debida a la construcción de los
+      naturales que formalizaron Peano y Dedekind a finales del siglo XIX— es la que
+      permite contar cosas que no se pueden señalar con el dedo: las combinaciones posibles
+      de una contraseña, los caminos en un grafo, los estados de un programa.
+
+      La suma de los primeros n naturales ilustra la diferencia entre **contar** y
+      **calcular**. Sumar uno a uno cuesta n operaciones; la fórmula cerrada cuesta tres,
+      independientemente de n. El argumento clásico —atribuido a Gauss siendo niño, aunque
+      la anécdota es probablemente apócrifa— consiste en emparejar el primer término con el
+      último, el segundo con el penúltimo, y observar que cada pareja suma n+1 y que hay
+      n/2 parejas.
+
+      Esta distinción reaparece durante todo el programa. En la parte 04 se llamará
+      «complejidad algorítmica»; en la parte 11, «coste de un método numérico». Aquí es
+      simplemente la observación de que dos procedimientos correctos pueden diferir en
+      cuántas operaciones necesitan, y que esa diferencia importa cuando n es grande.
+
+      Un detalle que el laboratorio comprueba: la fórmula cerrada y la suma iterativa dan
+      **exactamente** el mismo entero. Con enteros de Python esto es cierto siempre. En la
+      parte 01 veremos que con números en punto flotante la coincidencia deja de estar
+      garantizada, y por qué.
+    ejemplo: |
+      Sumar los enteros de 1 a 100.
+
+      ```text
+      Iterativo:  1 + 2 + 3 + ... + 100      → 100 sumas
+      Emparejado: (1+100) + (2+99) + ...     → 50 parejas de 101
+                  50 · 101 = 5050
+      Cerrado:    n(n+1)/2 = 100·101/2 = 5050 → 3 operaciones
+      ```
+
+      Verificación cruzada: ambos caminos deben dar 5050. Si no coinciden, uno de los dos
+      está mal implementado. Esa comprobación —dos caminos independientes al mismo
+      resultado— es el patrón de verificación que se usará en todo el programa.
+    errores:
+      - "Confundir el número de elementos con el último índice: de 1 a 100 hay 100 números, pero de 0 a 100 hay 101."
+      - "Aplicar n(n+1)/2 a una secuencia que no empieza en 1 sin ajustar el desplazamiento."
+      - "Suponer que «contar» y «sumar» son la misma operación: contar es cardinalidad, sumar es agregación."
+    aplicacion: |
+      Toda estimación de coste computacional empieza por un conteo. El número de
+      comparaciones de un algoritmo de ordenación, el número de parejas en un producto
+      cartesiano y el número de operaciones de una multiplicación de matrices son sumas de
+      este tipo. En la parte 04 el conteo se vuelve combinatoria; en la 09, probabilidad.
+    referencias:
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988, cap. 1](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+      - "[Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 2 (sumas)](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)"
+      - "[Peano axioms — Encyclopedia of Mathematics](https://encyclopediaofmath.org/wiki/Peano_axioms)"
+
+  "002":
+    concepto: "El signo indica dirección en la recta numérica; el valor absoluto indica distancia."
+    formulas:
+      - "|x| = x si x ≥ 0, −x si x < 0"
+      - "d(a, b) = |a − b| = |b − a|"
+    desarrollo: |
+      Los enteros negativos tardaron siglos en aceptarse. Hasta el siglo XVII se los
+      llamaba «números absurdos» porque no se podía tener −3 ovejas. La aceptación llegó
+      cuando se dejó de exigir que un número representara una cantidad y se admitió que
+      podía representar una **posición relativa a un origen**: temperatura respecto al punto
+      de congelación, saldo respecto a cero, desplazamiento respecto a un punto de partida.
+
+      Esa lectura resuelve de golpe la regla de los signos, que de otro modo hay que
+      memorizar. Multiplicar por −1 es «dar media vuelta» en la recta. Dar media vuelta dos
+      veces deja el sentido original: (−1)·(−1) = +1. No es una convención arbitraria: es
+      la única definición que mantiene válida la propiedad distributiva.
+
+      El valor absoluto separa dos preguntas que el signo mezcla: **cuánto** y **hacia
+      dónde**. La distancia `|a − b|` es simétrica por construcción, y esa simetría es lo
+      que la convierte en una distancia en el sentido matemático. En la parte 05 esa misma
+      idea se generaliza a vectores como la norma, y en la parte 03 aparece como distancia
+      euclídea. El valor absoluto es la norma de dimensión 1.
+
+      Conviene notar desde ya una asimetría que la parte 01 explotará: en un entero de
+      ancho fijo con complemento a dos, hay un negativo más que positivos, y por eso
+      `abs(-128)` desborda en un `int8`. El valor absoluto no siempre es representable.
+    ejemplo: |
+      Distancia entre las posiciones −7 y 4 en la recta.
+
+      ```text
+      a = −7,  b = 4
+      a − b = −11      → dirección: de b hacia a se retrocede
+      |a − b| = 11     → distancia
+      b − a = 11
+      |b − a| = 11     → misma distancia, simetría verificada
+      ```
+
+      Con signos: el producto de los signos de a y b es (−1)·(+1) = −1, lo que indica que
+      están en semirrectas opuestas respecto al origen. Esa lectura —el signo del producto
+      como indicador de posición relativa— es la que se usará en la clase 222 (bisección)
+      para decidir en qué mitad del intervalo está la raíz.
+    errores:
+      - "Leer −3² como (−3)²: la potenciación tiene mayor precedencia que el signo, así que −3² = −9."
+      - "Suponer que |a + b| = |a| + |b|: solo se cumple si a y b tienen el mismo signo (desigualdad triangular)."
+      - "Tratar el valor absoluto como «quitar el signo» en lugar de «medir distancia»: la segunda lectura es la que generaliza."
+    aplicacion: |
+      El error absoluto de la parte 01, la norma L1 de la parte 05, la pérdida MAE de la
+      parte 15 y el criterio de cambio de signo de la bisección (clase 222) son todos el
+      mismo objeto. Cualquier función de pérdida robusta a valores atípicos se construye
+      sobre valor absoluto en lugar de sobre cuadrados.
+    referencias:
+      - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002, secc. 1](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988, cap. 2](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+
+  "003":
+    concepto: "Un racional es un cociente exacto de enteros; un decimal es casi siempre una aproximación suya."
+    formulas:
+      - "a/b + c/d = (ad + bc)/(bd)"
+      - "a/b = c/d ⟺ ad = bc"
+    desarrollo: |
+      Los racionales existen porque los enteros no están cerrados bajo división: 1 dividido
+      entre 3 no es un entero. La construcción formal define un racional como una clase de
+      equivalencia de pares de enteros `(a, b)` con `b ≠ 0`, donde `(a,b) ~ (c,d)` si
+      `ad = bc`. Por eso 2/4 y 1/2 son *el mismo número* escrito de dos formas.
+
+      La consecuencia práctica es la que importa aquí: **la fracción es el objeto exacto y
+      el decimal es su sombra**. `Fraction(1,3)` guarda dos enteros y responde con exactitud
+      a cualquier operación; `0.3333` guarda una aproximación y arrastra un error que se
+      acumula. Python distingue las dos cosas: `fractions.Fraction` implementa la aritmética
+      exacta, y `float` la aproximada.
+
+      El laboratorio de esta clase muestra el caso mínimo donde la diferencia se ve:
+      `1/3 + 1/6` es exactamente `1/2` en aritmética racional, y en punto flotante da un
+      número que *parece* 0.5 pero cuya igualdad con 0.5 depende de detalles de
+      representación. Aquí conviene resistir la tentación de concluir «los floats están
+      rotos»: no lo están; simplemente no son racionales exactos, y la parte 01 explica por
+      qué.
+
+      Un criterio útil para decidir qué usar: si el resultado se va a comparar con `==`, o
+      si representa dinero, o si va a alimentar cientos de miles de operaciones encadenadas,
+      la aritmética exacta paga su coste. Si el resultado se va a graficar o alimentar un
+      modelo estadístico, el float es suficiente y mucho más rápido.
+    ejemplo: |
+      Sumar un tercio y un sexto por los dos caminos.
+
+      ```text
+      Exacto:   1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2
+                denominador reducido: 2
+                ¿es igual a 1/2? Sí, por construcción.
+
+      Flotante: 0.3333333333333333 + 0.16666666666666666
+              = 0.5                    (aparentemente)
+              ¿es igual a 0.5? depende del redondeo de cada sumando
+      ```
+
+      La lección no es que un camino sea correcto y el otro incorrecto: es que responden
+      preguntas distintas. El exacto responde «¿cuál es el número?»; el flotante responde
+      «¿cuál es el número representable más cercano?».
+    errores:
+      - "Escribir 1/3 como 0.33 y arrastrar ese error al resto del cálculo sin declararlo."
+      - "Sumar numeradores y denominadores por separado: 1/2 + 1/3 no es 2/5."
+      - "Creer que simplificar una fracción cambia su valor: 2/4 y 1/2 son el mismo número."
+    aplicacion: |
+      Cualquier cálculo con dinero, con probabilidades exactas o con proporciones de
+      inventario. En la parte 01 (clase 038) la aritmética racional exacta se usa para
+      medir cuánto error acumula la aritmética flotante: la fracción actúa como patrón de
+      referencia contra el que se mide.
+    referencias:
+      - "[Python: módulo `fractions`](https://docs.python.org/3/library/fractions.html)"
+      - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
+
+  "004":
+    concepto: "El desarrollo decimal de una fracción es finito o periódico, y qué caso ocurre depende solo del denominador."
+    formulas:
+      - "a/b tiene desarrollo finito ⟺ b (reducido) solo tiene factores 2 y 5"
+      - "0.abcabc... = abc/999"
+    desarrollo: |
+      Toda fracción tiene desarrollo decimal finito o periódico; nunca uno infinito sin
+      patrón. La razón es de conteo puro: al dividir por b, los restos posibles son
+      `0, 1, ..., b−1`. Si aparece el resto 0, el desarrollo termina. Si no, en a lo sumo b
+      pasos algún resto se repite —hay más pasos que restos posibles— y desde ahí el
+      desarrollo se repite. Es el principio del palomar (clase 090) aplicado antes de
+      haberlo enunciado.
+
+      Cuál de los dos casos ocurre depende únicamente de los factores primos del
+      denominador reducido. Nuestro sistema decimal es base 10 = 2·5, así que solo las
+      fracciones cuyo denominador se factoriza en potencias de 2 y 5 tienen desarrollo
+      finito: 3/8 sí (8 = 2³), 1/7 no (7 no divide ninguna potencia de 10).
+
+      Esta observación es la clave para entender la parte 01. En base 2, los denominadores
+      «buenos» son solo las potencias de 2. Y 1/10 —que en decimal es finito y trivial— no
+      lo es en binario. De ahí que 0.1 no sea representable exactamente en un float, que es
+      exactamente el asunto de la clase 029. La rareza no está en la máquina: está en que
+      cambiar de base cambia qué fracciones son «redondas».
+
+      El camino inverso —de periódico a fracción— usa una identidad limpia: el periodo de
+      longitud k se escribe sobre k nueves. `0.142857142857... = 142857/999999`, que
+      simplificado es exactamente 1/7.
+    ejemplo: |
+      Clasificar dos fracciones y reconstruir una desde su periodo.
+
+      ```text
+      3/8:  8 = 2³           → solo factores 2      → finito
+            3/8 = 0.375
+
+      1/7:  7 primo ≠ 2, 5   → periódico
+            1/7 = 0.142857 142857 142857...
+            periodo = "142857", longitud 6
+
+      Reconstrucción: 142857/999999
+                    = 142857/999999   (dividir num. y den. por 142857)
+                    = 1/7             ✓
+      ```
+
+      La longitud del periodo de 1/7 es 6 = 7−1. No es casualidad: está relacionada con el
+      orden multiplicativo de 10 módulo 7, tema de la clase 098.
+    errores:
+      - "Truncar en lugar de redondear al convertir a decimal, y no declarar cuál de las dos cosas se hizo."
+      - "Suponer que un decimal con muchos dígitos es irracional: los irracionales no tienen periodo, y eso no se ve mirando 15 dígitos."
+      - "Olvidar reducir la fracción antes de mirar los factores del denominador: 5/10 parece problemático y es 1/2."
+    aplicacion: |
+      Explica por qué los sistemas financieros trabajan en centavos enteros o con `Decimal`,
+      y por qué un total de factura calculado en float puede diferir en un céntimo del
+      calculado a mano. Es el prerrequisito directo de las clases 029 y 037.
+    referencias:
+      - "[Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)"
+      - "[Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008, cap. 9](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)"
+
+  "005":
+    concepto: "Un porcentaje es una razón con denominador 100; los cambios porcentuales se componen multiplicando, no sumando."
+    formulas:
+      - "x % de A = A · x/100"
+      - "aumento de p % seguido de descuento de p %: A · (1+p)(1−p) = A(1 − p²)"
+    desarrollo: |
+      El error más caro con porcentajes no es de cálculo, es de composición. Un aumento del
+      20 % seguido de un descuento del 20 % **no** devuelve el precio original: devuelve el
+      96 % de él. La razón es que los dos porcentajes se aplican a bases distintas —el
+      segundo se aplica sobre el precio ya aumentado— y por eso los cambios relativos se
+      componen multiplicando factores, no sumando tasas.
+
+      El factor es la herramienta correcta: aumentar un 20 % es multiplicar por 1.20;
+      descontar un 20 % es multiplicar por 0.80. Encadenar cambios es multiplicar factores,
+      y el orden no altera el resultado porque la multiplicación es conmutativa. Lo que sí
+      cambia es cuál es el descuento que revierte exactamente un aumento: para deshacer un
+      ×1.20 hace falta un ×1/1.20, es decir un descuento del 16.67 %, no del 20 %.
+
+      La segunda confusión frecuente es entre **punto porcentual** y **porcentaje**. Si una
+      tasa de conversión pasa del 10 % al 12 %, ha subido 2 puntos porcentuales, que es un
+      aumento relativo del 20 %. Ambas cifras son correctas y describen cosas distintas;
+      publicar una sin decir cuál es se usa habitualmente para exagerar resultados. La
+      clase 219 (A/B testing) retoma exactamente esta distinción.
+
+      Para dinero, esta clase usa `Decimal` deliberadamente. Los porcentajes producen
+      divisiones por 100 que en binario no son exactas, y el descuadre por redondeo al
+      repartir un total es un fenómeno real que el capstone de la parte hace visible.
+    ejemplo: |
+      Un producto de 1000 sube un 20 % y luego baja un 20 %.
+
+      ```text
+      Precio inicial            1000
+      Tras +20 %:  1000 × 1.20 = 1200
+      Tras −20 %:  1200 × 0.80 =  960
+
+      Variación neta: 960/1000 − 1 = −4 %      (= −p² con p = 0.20)
+
+      ¿Qué descuento revierte exactamente el +20 %?
+      1 − 1/1.20 = 0.1667 → 16.67 %
+      1200 × (1 − 0.1667) = 1000  ✓
+      ```
+    errores:
+      - "Sumar porcentajes encadenados: +20 % y −20 % no se cancelan."
+      - "Confundir «subió 2 puntos porcentuales» con «subió un 2 %»."
+      - "Calcular el porcentaje sobre la base equivocada: el descuento se aplica sobre el precio ya modificado."
+    aplicacion: |
+      Interés compuesto (parte 07), tasas de conversión y lift en experimentos (clase 219),
+      y cualquier métrica relativa de un modelo. Un «20 % de mejora» sin base declarada es
+      una afirmación incompleta.
+    referencias:
+      - "[Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)"
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+
+  "006":
+    concepto: "Una razón compara dos cantidades por cociente; si las unidades difieren, es una tasa y conserva unidad."
+    formulas:
+      - "razón = a/b (adimensional si a y b comparten unidad)"
+      - "tasa = cantidad/unidad de referencia (km/h, €/kg, tokens/s)"
+    desarrollo: |
+      La distinción entre razón y tasa parece terminológica y es operativa. Una razón entre
+      dos cantidades de la misma unidad —tres manzanas por cada dos peras— es adimensional:
+      su valor no cambia si se mide en docenas en lugar de en unidades. Una tasa relaciona
+      unidades distintas y **conserva la unidad en el resultado**: 80 km/h no es «80», es
+      80 kilómetros por cada hora.
+
+      Arrastrar la unidad no es formalismo escolar: es el mecanismo de verificación más
+      barato que existe. Si un cálculo produce «kilómetros por hora al cuadrado» donde se
+      esperaba una velocidad, hay un error de modelado, y se detecta sin comprobar ni un
+      solo número. La clase 012 sistematiza esta idea como análisis dimensional.
+
+      Las tasas se componen por multiplicación de factores unitarios, y esa composición es
+      la que permite responder preguntas sin fórmulas memorizadas. Si una tarea consume
+      3 GB por hora y hay 5 tareas, el consumo es 15 GB/h; el tiempo hasta llenar 120 GB es
+      `120 GB ÷ 15 GB/h = 8 h`, donde los GB se cancelan y queda la unidad correcta.
+
+      En IA las tasas están por todas partes y casi nunca se declaran con unidad completa:
+      «tokens por segundo», «muestras por época», «FLOPs por parámetro», «coste por millón
+      de tokens». Comparar dos modelos por una tasa cuyo denominador difiere es el error de
+      benchmarking más común.
+    ejemplo: |
+      Un vehículo recorre 240 km en 3 horas.
+
+      ```text
+      Tasa:  240 km / 3 h = 80 km/h        (unidad: km/h, no adimensional)
+
+      ¿Cuánto tarda en recorrer 400 km a esa tasa?
+      400 km ÷ 80 km/h = 5 h
+                ↑ los km se cancelan, queda h   ✓
+
+      Razón (misma unidad): 240 km / 400 km = 0.6   → adimensional
+      ```
+
+      Comprobación por unidades: si el resultado hubiera salido en `km²/h`, sabríamos que
+      multiplicamos donde había que dividir, sin necesidad de revisar la aritmética.
+    errores:
+      - "Reportar una tasa sin unidad: «la velocidad es 80» no dice si son km/h o m/s."
+      - "Sumar tasas con denominadores distintos: 60 km/h y 30 km/h de dos tramos no promedian 45 km/h salvo que los tiempos sean iguales."
+      - "Confundir razón (adimensional) con tasa (con unidad) al comparar dos sistemas."
+    aplicacion: |
+      Throughput y latencia de un sistema, coste por inferencia, tasa de aprendizaje
+      (que es una tasa: cuánto se mueve el parámetro por unidad de gradiente) y cualquier
+      métrica normalizada de la parte 10.
+    referencias:
+      - "[BIPM. *The International System of Units (SI)*, 9ª ed., 2019](https://www.bipm.org/en/publications/si-brochure)"
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+
+  "007":
+    concepto: "En la proporcionalidad directa el cociente es constante; en la inversa lo es el producto."
+    formulas:
+      - "directa:  y/x = k  ⟹  y = kx"
+      - "inversa:  x·y = k  ⟹  y = k/x"
+      - "producto cruzado: a/b = c/d ⟺ ad = bc"
+    desarrollo: |
+      La «regla de tres» se enseña como una receta y por eso se aplica mal: se usa la
+      directa donde corresponde la inversa. El criterio para decidir no es el enunciado
+      sino la pregunta *¿qué permanece constante?*. Si al duplicar x se duplica y, lo
+      constante es el cociente y hay proporcionalidad directa. Si al duplicar x se reduce y
+      a la mitad, lo constante es el producto y la proporcionalidad es inversa.
+
+      Casos típicos de cada una: el precio total frente a la cantidad comprada es directo
+      (más unidades, proporcionalmente más precio). El tiempo de una obra frente al número
+      de trabajadores es inverso (más trabajadores, proporcionalmente menos tiempo), bajo el
+      supuesto —rara vez cierto en la práctica— de que los trabajadores no se estorban.
+      Declarar ese supuesto es parte del modelado.
+
+      La proporcionalidad directa es la primera función lineal del programa. `y = kx` es
+      una recta por el origen, y su generalización a varias variables, `y = Wx`, es
+      exactamente lo que hace una capa densa de una red neuronal (clase 110). Quien
+      internaliza aquí que «k es cuánto cambia y por cada unidad de x» ya tiene la
+      intuición correcta de lo que es un peso en un modelo lineal.
+
+      Una advertencia que el programa repetirá: la proporcionalidad es un **modelo**, no una
+      ley. Casi ninguna relación real es proporcional en todo su rango. El precio por
+      unidad baja con el volumen, el rendimiento por trabajador cae con el tamaño del
+      equipo, y el error de un modelo no baja proporcionalmente con los datos. Usar la
+      regla de tres fuera de su rango de validez es el error de modelado más frecuente.
+    ejemplo: |
+      Si 4 unidades cuestan 10, ¿cuánto cuestan 6?
+
+      ```text
+      Directa (precio ∝ cantidad):
+        10/4 = x/6  →  x = 10·6/4 = 15
+        comprobación cruzada: 4·15 = 60 = 10·6   ✓
+
+      Si en cambio el problema fuera: 4 trabajadores tardan 10 días,
+      ¿cuánto tardan 6?
+
+      Inversa (tiempo ∝ 1/trabajadores):
+        4·10 = 6·x  →  x = 40/6 = 6.67 días
+        comprobación: el producto se conserva, 40 = 40   ✓
+      ```
+
+      El mismo par de números da 15 o 6.67 según el tipo de proporcionalidad. Elegir mal no
+      produce un error pequeño: produce una respuesta sin relación con la pregunta.
+    errores:
+      - "Aplicar proporcionalidad directa a una relación inversa (o al revés) sin preguntarse qué permanece constante."
+      - "Extrapolar fuera del rango donde la proporcionalidad es válida."
+      - "Olvidar el supuesto de independencia: 9 mujeres no gestan un bebé en un mes."
+    aplicacion: |
+      Escalado de recursos, conversión de unidades, ajuste de recetas y presupuestos. En IA
+      es el modelo mental correcto para el learning rate y para leer una ley de escala,
+      cuya forma es una proporcionalidad en escala logarítmica (clase 359).
+    referencias:
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+      - "[Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it)"
+
+  "008":
+    concepto: "Las leyes de exponentes se derivan de contar factores, y su extensión a exponentes negativos y cero es la única que las conserva."
+    formulas:
+      - "aᵐ · aⁿ = aᵐ⁺ⁿ"
+      - "(aᵐ)ⁿ = aᵐⁿ"
+      - "a⁰ = 1 (a ≠ 0),   a⁻ⁿ = 1/aⁿ"
+    desarrollo: |
+      Con exponentes naturales, las leyes son literalmente contar: `a³·a²` es
+      `(a·a·a)·(a·a)`, cinco factores, luego `a⁵`. Nada que memorizar. Lo interesante ocurre
+      al extender la definición fuera de los naturales, porque ahí ya no hay «número de
+      factores» que contar.
+
+      La extensión no es arbitraria: se elige la **única** que mantiene las leyes válidas.
+      Si queremos que `aᵐ·aⁿ = aᵐ⁺ⁿ` siga siendo cierto con n = 0, entonces
+      `aᵐ·a⁰ = aᵐ`, y por tanto `a⁰` debe ser 1. Con el mismo argumento,
+      `aⁿ·a⁻ⁿ = a⁰ = 1` obliga a definir `a⁻ⁿ = 1/aⁿ`. Este patrón —extender una definición
+      preservando las propiedades estructurales— es cómo funciona buena parte de la
+      matemática, y reaparecerá en la clase 009 con los exponentes fraccionarios.
+
+      El caso `0⁰` queda genuinamente indefinido: los dos argumentos naturales
+      (`a⁰ = 1` y `0ⁿ = 0`) apuntan a valores distintos. En análisis se toma
+      convencionalmente `0⁰ = 1` porque hace que las series de potencias funcionen sin caso
+      especial, y Python devuelve `1`; conviene saber que es un convenio, no un teorema.
+
+      La ley que más se confunde es la de la potencia iterada. `(aᵐ)ⁿ = aᵐⁿ` pero
+      `a^(mⁿ)` es otra cosa completamente distinta, y la potenciación asocia por la derecha:
+      `2**3**2` es `2**(3**2) = 2⁹ = 512`, no `(2³)² = 64`. La clase 010 vuelve sobre esto.
+    ejemplo: |
+      Verificar las leyes con a = 2, m = 5, n = 3.
+
+      ```text
+      Producto:   2⁵ · 2³ = 32 · 8 = 256
+                  2⁵⁺³   = 2⁸      = 256          ✓
+
+      Potencia:   (2⁵)³  = 32³     = 32768
+                  2⁵ˑ³   = 2¹⁵     = 32768        ✓
+
+      Extensión:  2⁰ = 1
+                  2⁻³ = 1/8 = 0.125
+                  2³ · 2⁻³ = 8 · 0.125 = 1 = 2⁰   ✓
+      ```
+
+      Cada igualdad es una comprobación independiente. Si alguna fallara, la implementación
+      —no la matemática— tendría un error.
+    errores:
+      - "Leer (aᵐ)ⁿ y a^(mⁿ) como lo mismo."
+      - "Suponer que la potenciación asocia por la izquierda: 2**3**2 = 512, no 64."
+      - "Aplicar aᵐ·bᵐ = (ab)ᵐ a bases distintas con exponentes distintos: 2³·3² no se simplifica."
+    aplicacion: |
+      Complejidad exponencial (parte 04), crecimiento compuesto (parte 02), tamaño del
+      espacio de búsqueda de una contraseña (clase 087) y el conteo de parámetros de un
+      modelo. La escala logarítmica de la clase 011 es la inversa de esta.
+    referencias:
+      - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
+      - "[Knuth, D. *Two notes on notation*. Amer. Math. Monthly, 1992](https://arxiv.org/abs/math/9205211)"
+
+  "009":
+    concepto: "La raíz n-ésima es el exponente 1/n, y su dominio real depende de la paridad del índice."
+    formulas:
+      - "ⁿ√a = a^(1/n)"
+      - "(ⁿ√a)ⁿ = a  para a ≥ 0"
+      - "√(a²) = |a|,  no a"
+    desarrollo: |
+      Definir la raíz como exponente fraccionario es la extensión natural de la clase 008:
+      si `(a^(1/n))ⁿ = a^(n/n) = a`, entonces `a^(1/n)` es precisamente el número que
+      elevado a n devuelve a. La notación de radical y la de exponente describen el mismo
+      objeto, y la segunda es la que se generaliza sin esfuerzo a exponentes reales.
+
+      El dominio depende de la paridad del índice, y esta es la fuente de confusión más
+      común. Con índice impar, todo real tiene raíz real única: la raíz cúbica de −8 es −2.
+      Con índice par, los negativos no tienen raíz real, porque ningún real elevado a una
+      potencia par da negativo. Ahí es donde aparecen los números complejos, que el programa
+      usa desde la parte 13 (transformada de Fourier).
+
+      La identidad `√(x²) = |x|` sorprende hasta que se piensa en el dominio: la raíz
+      cuadrada devuelve por convenio la rama no negativa, así que `√((−3)²) = √9 = 3`, no
+      −3. Olvidarlo produce errores de signo silenciosos al despejar en una ecuación
+      cuadrática, tema de la clase 048.
+
+      Numéricamente hay un detalle que la parte 01 explota: `√2` no es representable en
+      punto flotante, así que `(√2)²` no devuelve exactamente 2. El error es minúsculo pero
+      real, y comprobarlo aquí prepara el terreno para el concepto de error de redondeo.
+    ejemplo: |
+      Ida y vuelta con la raíz cuadrada de 2.
+
+      ```text
+      √2         = 1.4142135623730951    (float64, no exacto)
+      2**0.5     = 1.4142135623730951    (misma cosa)
+      (√2)²      = 2.0000000000000004
+      error      = 4.44e-16              ≈ 2 ulp
+
+      Raíz cúbica de −8:  índice impar → −2 en los reales
+      Raíz cuadrada de −8: índice par  → no existe en ℝ
+      ```
+
+      El error de 4.44·10⁻¹⁶ no es un fallo: es el tamaño del hueco entre floats cerca de 2.
+      La clase 031 le pondrá nombre (ULP).
+    errores:
+      - "Escribir √(x²) = x olvidando el valor absoluto."
+      - "Buscar raíces pares de números negativos en los reales."
+      - "Comparar (√a)² con a usando ==: hace falta una tolerancia declarada."
+    aplicacion: |
+      La norma euclídea (clase 104) es una raíz cuadrada; la desviación estándar
+      (clase 190) también; el factor 1/√d de la atención escalada (clase 325) es una raíz
+      cuya justificación es de varianza.
+    referencias:
+      - "[Python: `math.isqrt` y aritmética de raíces](https://docs.python.org/3/library/math.html#math.isqrt)"
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+
+  "010":
+    concepto: "La precedencia y la asociatividad determinan qué expresión representa una cadena de símbolos."
+    formulas:
+      - "orden: paréntesis → potencias → producto/división → suma/resta"
+      - "la potenciación asocia por la derecha: a**b**c = a**(b**c)"
+      - "−a**n = −(aⁿ)"
+    desarrollo: |
+      Una expresión escrita en una línea es una notación comprimida de un árbol. `2+3*4` no
+      es ambiguo para una máquina porque las reglas de precedencia determinan un único
+      árbol: la multiplicación se agrupa antes que la suma. La ambigüedad está solo en la
+      cabeza de quien lee sin conocer las reglas.
+
+      Dos reglas concentran casi todos los errores. La primera es la asociatividad de la
+      potenciación **por la derecha**: `2**3**2` es `2**(3**2) = 2⁹ = 512`. Es la convención
+      matemática estándar y la que implementan Python, R y las calculadoras científicas;
+      algunas hojas de cálculo hacen lo contrario, lo que produce discrepancias reales entre
+      un cuaderno y un script.
+
+      La segunda es que el signo menos unario tiene **menor** precedencia que la
+      potenciación: `−3**2` es `−(3²) = −9`, no `(−3)² = 9`. Este error aparece
+      constantemente al trasladar una fórmula de un paper a código, y no produce una
+      excepción: produce un número con el signo equivocado.
+
+      La conclusión práctica no es memorizar la tabla completa, sino adoptar un hábito:
+      **poner paréntesis donde la lectura no sea inmediata**. Los paréntesis redundantes no
+      cuestan nada en tiempo de ejecución y eliminan una clase entera de errores. En una
+      fórmula que otra persona va a auditar, la claridad vale más que la brevedad.
+    ejemplo: |
+      Cuatro expresiones que se leen mal con frecuencia.
+
+      ```text
+      2 + 3 * 4      = 2 + 12 = 14      (no 20)
+      (2 + 3) * 4    = 5 * 4  = 20
+
+      2 ** 3 ** 2    = 2 ** 9 = 512     (asocia por la derecha)
+      (2 ** 3) ** 2  = 8 ** 2 = 64
+
+      -3 ** 2        = -(3²)  = -9      (el menos va después)
+      (-3) ** 2      = 9
+      ```
+
+      Escribir `(2 ** 3) ** 2` cuando se quiere decir eso no es redundancia: es
+      documentación ejecutable.
+    errores:
+      - "Suponer que la potenciación asocia por la izquierda."
+      - "Escribir -x**2 esperando (-x)**2."
+      - "Confiar en la precedencia entre herramientas distintas: hoja de cálculo y Python no siempre coinciden."
+    aplicacion: |
+      Trasladar fórmulas de un paper a código sin cambiar su significado. Es la causa
+      número uno de discrepancias al reproducir un resultado publicado.
+    referencias:
+      - "[Python: precedencia de operadores](https://docs.python.org/3/reference/expressions.html#operator-precedence)"
+      - "[Knuth, D. *Two notes on notation*. Amer. Math. Monthly, 1992](https://arxiv.org/abs/math/9205211)"
+
+  "011":
+    concepto: "La notación científica separa la magnitud (exponente) de la precisión (mantisa)."
+    formulas:
+      - "x = m · 10ᵉ  con 1 ≤ |m| < 10"
+      - "orden de magnitud = ⌊log₁₀|x|⌋"
+    desarrollo: |
+      La notación científica no es una forma abreviada de escribir números grandes: es una
+      **descomposición** que separa dos informaciones independientes. La mantisa dice qué
+      dígitos conocemos —es decir, cuánta precisión tenemos— y el exponente dice en qué
+      escala estamos. Esa separación es exactamente la que usa el formato IEEE 754 en base
+      2, tema central de la clase 028.
+
+      Razonar por órdenes de magnitud es una habilidad, no un atajo. Decir que un modelo
+      tiene «siete mil millones de parámetros» y otro «setecientos mil millones» invita a
+      compararlos como si la diferencia fuera de grado; decir 7·10⁹ frente a 7·10¹¹ deja
+      claro que hay un factor 100 de diferencia, con el coste de memoria y cómputo que eso
+      implica.
+
+      Dos números del mismo orden de magnitud son comparables; dos que difieren en tres
+      órdenes casi nunca lo son en la práctica, porque el factor 1000 suele cambiar qué
+      solución es viable. Este criterio es el que se usa en la clase 014 para validar una
+      estimación: si la estimación y el cálculo exacto comparten orden de magnitud, la
+      estimación cumplió su función.
+
+      Al escribir código, conviene usar la notación de Python (`1.2e-9`) en lugar de contar
+      ceros. `0.0000000012` y `0.000000012` son visualmente casi idénticos y difieren en un
+      factor 10; `1.2e-9` y `1.2e-8` no se confunden.
+    ejemplo: |
+      Descomponer 0.00000012345.
+
+      ```text
+      valor        = 1.2345e-7
+      exponente    = ⌊log₁₀(1.2345e-7)⌋ = −7
+      mantisa      = 1.2345e-7 / 10⁻⁷ = 1.2345
+      condición    1 ≤ 1.2345 < 10                ✓
+      reconstruido = 1.2345 × 10⁻⁷ = 0.00000012345 ✓
+
+      Orden de magnitud: −7
+      ```
+
+      Comparación por órdenes: 7·10⁹ frente a 7·10¹¹ → dos órdenes de diferencia, factor
+      100. No es «un poco más grande»: es otra categoría de problema.
+    errores:
+      - "Dejar la mantisa fuera del rango [1, 10): 12.3e5 no está en forma normalizada."
+      - "Contar ceros a mano en lugar de usar el exponente."
+      - "Confundir la precisión (número de dígitos de la mantisa) con la magnitud (exponente)."
+    aplicacion: |
+      Presupuestos de cómputo, tamaños de modelo, tolerancias numéricas y cualquier
+      comparación entre cantidades de escalas distintas. Es la base de la representación en
+      punto flotante (clase 028).
+    referencias:
+      - "[NIST. *Guide for the Use of the International System of Units*](https://www.nist.gov/pml/special-publication-811)"
+      - "[Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)"
+
+  "012":
+    concepto: "Convertir unidades es multiplicar por factores iguales a 1; las unidades se cancelan como factores algebraicos."
+    formulas:
+      - "1 = 1000 m / 1 km = 1 h / 3600 s"
+      - "[velocidad] = L·T⁻¹"
+    desarrollo: |
+      El análisis dimensional trata las unidades como objetos algebraicos que se multiplican
+      y se cancelan. Un factor unitario es un cociente entre dos expresiones de la misma
+      cantidad —`1000 m / 1 km`— cuyo valor es exactamente 1, de modo que multiplicar por él
+      cambia la unidad sin cambiar la cantidad. Encadenar factores unitarios convierte
+      cualquier unidad en cualquier otra sin memorizar fórmulas.
+
+      La verdadera potencia del método no es convertir, es **verificar**. Antes de comprobar
+      un solo número, el análisis dimensional detecta si una fórmula es imposible: una
+      ecuación que iguala metros con segundos está mal, y eso se ve sin calculadora. En
+      física esta comprobación es rutina; en modelado de datos se omite casi siempre, y de
+      ahí salen features que mezclan escalas incompatibles.
+
+      El desastre más citado —la pérdida del Mars Climate Orbiter en 1999, donde un sistema
+      trabajaba en libras-fuerza·segundo y otro en newton·segundo— es el ejemplo canónico de
+      que declarar la unidad no es una formalidad. Ningún número estaba mal calculado; la
+      interfaz entre dos sistemas no declaraba unidad.
+
+      En machine learning aparece disfrazado: estandarizar features es, en el fondo,
+      convertirlas todas a una unidad común (desviaciones estándar) para que una distancia
+      euclídea tenga sentido. La clase 288 muestra cómo cambia una predicción de k-NN si una
+      variable se mide en una escala 100 veces mayor.
+    ejemplo: |
+      Convertir 90 km/h a m/s encadenando factores unitarios.
+
+      ```text
+      90 km   1000 m    1 h        90 · 1000
+      ----- × ------ × ------  =  ----------- m/s = 25 m/s
+       1 h     1 km    3600 s        3600
+
+      Cancelaciones: km/km = 1, h/h = 1  → quedan m/s   ✓
+
+      Vuelta:  25 m/s × 3600 s/h × 1 km/1000 m = 90 km/h   ✓
+      Atajo verificado: dividir entre 3.6
+      ```
+
+      Si el resultado hubiera salido en `km²/h²`, el error estaría en la estructura del
+      cálculo, no en la aritmética.
+    errores:
+      - "Multiplicar cuando había que dividir por el factor: siempre se comprueba qué unidad se cancela."
+      - "Mezclar sistemas (imperial y SI) sin declararlo en la interfaz entre módulos."
+      - "Comparar features de escalas distintas con una distancia euclídea sin estandarizar."
+    aplicacion: |
+      Interfaces entre sistemas, física computacional, y el preprocesado de datos: la
+      estandarización de la parte 14 es análisis dimensional aplicado a estadística.
+    referencias:
+      - "[BIPM. *The International System of Units (SI)*, 9ª ed., 2019](https://www.bipm.org/en/publications/si-brochure)"
+      - "[NASA. *Mars Climate Orbiter Mishap Investigation Board Report*, 1999](https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf)"
+
+  "013":
+    concepto: "Redondear es una decisión de modelado con regla declarada, no un accidente de la calculadora."
+    formulas:
+      - "half-even (bancario): 0.5 → 0, 1.5 → 2, 2.5 → 2"
+      - "half-up (aritmético): 0.5 → 1, 1.5 → 2, 2.5 → 3"
+    desarrollo: |
+      Cuando el valor a redondear cae exactamente en la mitad, hay que elegir hacia dónde
+      va, y las dos elecciones habituales tienen consecuencias estadísticas distintas. El
+      redondeo aritmético (half-up) siempre sube, y por tanto introduce un **sesgo positivo**
+      que se acumula al sumar muchos valores. El redondeo bancario (half-even) manda al par
+      más cercano, con lo que los casos intermedios se reparten y el sesgo tiende a cero.
+
+      Por eso el estándar IEEE 754 fija half-even como modo por defecto, y por eso la
+      función `round` de Python hace lo mismo: `round(0.5)` devuelve 0, no 1. Quien espera
+      el comportamiento escolar lo interpreta como un bug; es la elección correcta para
+      cadenas largas de cálculos.
+
+      Las cifras significativas son el otro lado de la misma moneda: dicen **cuánta**
+      información contiene el número, no cuántos dígitos se imprimen. Un valor medido como
+      2.50 comunica precisión de centésimas; escrito como 2.5 comunica precisión de décimas;
+      escrito como 2.500000 comunica una precisión que probablemente no se tiene. Reportar
+      más dígitos de los que la medida soporta es una forma de exagerar la certeza.
+
+      La regla práctica del programa: redondear **al final**, nunca en pasos intermedios, y
+      declarar siempre la regla usada. Redondear intermedio destruye información que ya no
+      se recupera, y es una causa habitual de que dos implementaciones «iguales» devuelvan
+      totales distintos.
+    ejemplo: |
+      Redondear los cuatro casos intermedios y medir el sesgo.
+
+      ```text
+      valores        0.5   1.5   2.5   3.5     suma original = 8.0
+
+      half-even       0     2     2     4      suma = 8   → sesgo  0.0
+      half-up         1     2     3     4      suma = 10  → sesgo +2.0
+      round() Python  0     2     2     4      (half-even)
+      ```
+
+      Con cuatro valores el sesgo de half-up ya es de 2 unidades. Sobre un millón de
+      importes, el descuadre es sistemático y siempre en la misma dirección.
+    errores:
+      - "Esperar que round(0.5) devuelva 1 en Python."
+      - "Redondear en pasos intermedios y no solo en la presentación final."
+      - "Reportar más cifras significativas de las que la medida soporta."
+    aplicacion: |
+      Contabilidad, reparto de totales, informes de métricas y cualquier agregación de
+      muchos valores redondeados. Es prerrequisito directo del capstone de esta parte y de
+      la clase 034 (propagación de errores)."
+    referencias:
+      - "[IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)"
+      - "[Python: modos de redondeo de `decimal`](https://docs.python.org/3/library/decimal.html#rounding-modes)"
+
+  "014":
+    concepto: "Estimar por órdenes de magnitud detecta resultados absurdos antes de invertir esfuerzo en calcularlos."
+    formulas:
+      - "error relativo = |estimado − exacto| / |exacto|"
+      - "mismo orden de magnitud ⟺ ⌊log₁₀ a⌋ = ⌊log₁₀ b⌋"
+    desarrollo: |
+      La estimación no compite con el cálculo exacto: lo protege. Antes de ejecutar una
+      operación cara —o de aceptar el número que devuelve— conviene tener una expectativa
+      del orden de magnitud del resultado. Si el cálculo devuelve algo tres órdenes por
+      encima de la expectativa, hay un error en alguna parte y se busca antes de seguir.
+
+      El método de Fermi consiste en descomponer una cantidad difícil en factores que sí se
+      pueden estimar, aceptando que cada factor tendrá error. La clave es que los errores
+      tienden a compensarse: si algunos factores se sobreestiman y otros se subestiman, el
+      producto queda cerca. Enrico Fermi es célebre por haber estimado la potencia de la
+      primera prueba nuclear soltando papelitos y midiendo su desplazamiento.
+
+      Redondear a la potencia de 10 más cercana antes de multiplicar convierte cualquier
+      producto en una suma de exponentes, que se hace mentalmente. `4873 × 297` es
+      aproximadamente `5·10³ × 3·10²= 15·10⁵ = 1.5·10⁶`, y el valor exacto es 1447281: mismo
+      orden de magnitud, error relativo del 3.6 %. Para decidir si un enfoque es viable,
+      esa precisión sobra.
+
+      En la práctica profesional esta habilidad se usa para descartar rápido: si un cálculo
+      de coste de entrenamiento da tres órdenes de magnitud por encima del presupuesto, no
+      hace falta refinarlo. La estimación no responde «cuánto», responde «¿es siquiera
+      posible?».
+    ejemplo: |
+      Estimar 4873 × 297 antes de calcularlo.
+
+      ```text
+      Estimación:  4873 ≈ 5000 = 5·10³
+                    297 ≈  300 = 3·10²
+                    producto ≈ 15·10⁵ = 1.5·10⁶
+
+      Exacto:      4873 × 297 = 1 447 281 ≈ 1.45·10⁶
+
+      Error relativo = |1.5e6 − 1.447e6| / 1.447e6 = 3.6 %
+      Mismo orden de magnitud (10⁶)                      ✓
+      ```
+
+      Si el cálculo hubiera devuelto 1.4·10⁵ o 1.4·10⁷, la estimación habría detectado el
+      error de inmediato.
+    errores:
+      - "Confundir estimación con cálculo aproximado descuidado: una estimación declara su margen."
+      - "Redondear todos los factores en la misma dirección, que amplifica el sesgo en lugar de compensarlo."
+      - "Usar la estimación como resultado final en lugar de como control de sanidad."
+    aplicacion: |
+      Dimensionar infraestructura, validar la salida de un modelo, revisar un presupuesto y
+      detectar errores de unidad. En entrevistas técnicas es una competencia evaluada
+      explícitamente."
+    referencias:
+      - "[Weinstein & Adam. *Guesstimation*. Princeton University Press, 2008](https://press.princeton.edu/books/paperback/9780691129495/guesstimation)"
+      - "[Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it)"
+
+  "015":
+    concepto: "Una incógnita es un valor concreto pero desconocido; las restricciones del problema lo determinan."
+    formulas:
+      - "ax + b = c  ⟹  x = (c − b)/a,  a ≠ 0"
+      - "residuo = a·x + b − c  (debe ser 0)"
+    desarrollo: |
+      Introducir una letra para lo que no se conoce es el paso que convierte un acertijo en
+      un problema resoluble. Antes de al-Juarismi —cuyo tratado del siglo IX da nombre al
+      álgebra y al algoritmo— los problemas se resolvían con recetas verbales específicas
+      para cada caso. La letra permite escribir la relación **antes** de conocer el valor, y
+      luego manipularla mecánicamente.
+
+      Conviene distinguir tres papeles que juegan las letras, porque se confunden a menudo:
+      la **incógnita** tiene un valor concreto que hay que despejar; el **parámetro** es
+      fijo pero no especificado (la `a` de `ax + b`); y la **variable** recorre un conjunto
+      de valores (la x de una función). Un mismo símbolo puede cambiar de papel según el
+      contexto, y no darse cuenta produce confusiones reales en la parte 02.
+
+      Despejar es aplicar operaciones inversas manteniendo la igualdad. Cada paso es
+      legítimo mientras la operación sea reversible: sumar y restar siempre lo son; dividir
+      lo es solo si el divisor no es cero. Ese detalle —`a ≠ 0`— no es un tecnicismo: si a
+      es cero, la ecuación `0·x = 0` tiene infinitas soluciones y `0·x = 5` no tiene
+      ninguna. Declarar el caso degenerado es parte de resolver.
+
+      La verificación es obligatoria y barata: sustituir la solución en la ecuación original
+      y comprobar que el residuo es cero. Es el mismo hábito que en la parte 05 se llamará
+      «comprobar el residuo del sistema lineal» y en la 11, «criterio de parada».
+    ejemplo: |
+      Resolver 3x + 7 = 25 y verificar.
+
+      ```text
+      3x + 7 = 25
+      3x     = 25 − 7 = 18        (restar 7 a ambos lados)
+       x     = 18/3   = 6          (dividir por 3, válido porque 3 ≠ 0)
+
+      Verificación:  3·6 + 7 = 18 + 7 = 25    ✓
+      Residuo:       3·6 + 7 − 25 = 0         ✓
+
+      Casos degenerados:
+        0·x = 0  → infinitas soluciones
+        0·x = 5  → ninguna solución
+      ```
+    errores:
+      - "Dividir por una expresión que puede ser cero sin declarar el caso."
+      - "Aplicar una operación a un solo lado de la igualdad."
+      - "Dar la solución sin sustituirla en la ecuación original."
+    aplicacion: |
+      Toda resolución de sistemas (parte 05), todo despeje en una derivación (parte 07) y la
+      condición de primer orden ∇f = 0 de la optimización (parte 12) son despejes con más
+      variables."
+    referencias:
+      - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
+      - "[Katz, V. *A History of Mathematics*, 3ª ed., Pearson, 2008, cap. 7](https://www.pearson.com/en-us/subject-catalog/p/history-of-mathematics-a/P200000006166)"
+
+  "016":
+    concepto: "Una fórmula es una relación entre cantidades con dominio y unidades declarados."
+    formulas:
+      - "A = πr²  (r > 0, A en unidad²)"
+      - "P = 2πr  ⟹  A/P = r/2"
+    desarrollo: |
+      Evaluar una fórmula es fácil; usarla bien exige tres cosas que rara vez se escriben:
+      su **dominio de validez**, las **unidades** de cada símbolo y los **supuestos** bajo
+      los que se dedujo. Una fórmula sin esas tres declaraciones es una máquina de producir
+      números plausibles fuera de contexto.
+
+      El área del círculo, `A = πr²`, ilustra los tres. Dominio: r > 0, porque un radio
+      negativo no tiene interpretación. Unidades: si r está en metros, A está en metros
+      **cuadrados**, y esa elevación al cuadrado es lo que hace que duplicar el radio
+      cuadruplique el área —un hecho que sorprende a mucha gente y que se deduce sin
+      calcular nada, solo mirando el exponente.
+
+      La relación entre área y perímetro, `A/P = r/2`, muestra otra habilidad: combinar
+      fórmulas para obtener relaciones que ninguna de las dos expresa por separado. Que el
+      cociente dependa solo de r —y linealmente— dice algo estructural sobre el círculo, no
+      sobre un círculo concreto.
+
+      Este es el hábito que la parte 07 formaliza como análisis de sensibilidad: preguntar
+      «¿qué le pasa a la salida si esta entrada cambia un poco?» antes de meter números. El
+      exponente de cada variable responde esa pregunta de forma inmediata: en `A = πr²`, un
+      error del 1 % en r produce aproximadamente un 2 % de error en A.
+    ejemplo: |
+      Círculo de radio 2.5 m.
+
+      ```text
+      A = π · 2.5² = π · 6.25 ≈ 19.635 m²
+      P = 2π · 2.5           ≈ 15.708 m
+
+      A/P = 19.635 / 15.708 = 1.25 m
+      r/2 = 2.5/2           = 1.25 m       ✓ (relación estructural)
+
+      Sensibilidad: si r sube un 1 % (2.525 m),
+        A = π·2.525² ≈ 20.030 m²  → +2.01 %
+        el exponente 2 predice el factor de amplificación
+      ```
+    errores:
+      - "Evaluar una fórmula fuera de su dominio (radio negativo, logaritmo de cero)."
+      - "Olvidar que el área escala con el cuadrado de la longitud y el volumen con el cubo."
+      - "Usar una fórmula sin conocer los supuestos bajo los que se dedujo."
+    aplicacion: |
+      Cualquier modelo es una fórmula con dominio. El análisis de sensibilidad por
+      exponentes es la versión elemental del gradiente (parte 08) y del número de condición
+      (clase 035)."
+    referencias:
+      - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
+      - "[BIPM. *The International System of Units (SI)*, 9ª ed., 2019](https://www.bipm.org/en/publications/si-brochure)"
+
+  "017":
+    concepto: "Detectar una regla en una secuencia es una conjetura; extrapolarla sin justificación es un salto injustificado."
+    formulas:
+      - "aritmética:  aₙ = a₁ + (n−1)d"
+      - "geométrica:  aₙ = a₁·rⁿ⁻¹"
+      - "Fibonacci:   Fₙ = Fₙ₋₁ + Fₙ₋₂,  Fₙ₊₁/Fₙ → φ = (1+√5)/2"
+    desarrollo: |
+      Ver un patrón es barato; demostrarlo no. Dada la secuencia 3, 7, 11, 15, la regla
+      «suma 4» es la más simple, pero infinitas fórmulas producen esos cuatro términos y
+      luego divergen. La matemática distingue entre **conjeturar** una regla y
+      **demostrarla**, y esa distinción es el puente entre esta clase y la 091 (inducción).
+
+      Las dos familias fundamentales se distinguen por qué operación es constante. En la
+      aritmética lo constante es la **diferencia** entre términos consecutivos; su
+      crecimiento es lineal. En la geométrica lo constante es la **razón**; su crecimiento
+      es exponencial. Confundirlas al modelar produce predicciones que fallan por órdenes de
+      magnitud, no por un poco.
+
+      Fibonacci añade un tercer tipo: la recurrencia, donde cada término depende de varios
+      anteriores. Su comportamiento asintótico es sorprendente y demostrable: el cociente
+      entre términos consecutivos converge a la razón áurea φ ≈ 1.618, que es la raíz
+      positiva de `x² = x + 1`. Que una recurrencia de enteros converja a un irracional es
+      un buen ejemplo de que el comportamiento asintótico no se lee en los primeros
+      términos.
+
+      El hábito que instala esta clase: al proponer una regla, indicar **qué operación
+      permanece constante** y hasta dónde se ha verificado. «Suma 4, verificado en 4
+      términos» es una afirmación honesta; «la regla es sumar 4» no lo es.
+    ejemplo: |
+      Tres secuencias y su regla.
+
+      ```text
+      Aritmética:  3, 7, 11, 15, 19        diferencia constante = 4
+                   a₆ = 3 + 5·4 = 23
+
+      Geométrica:  2, 6, 18, 54, 162       razón constante = 3
+                   a₆ = 2·3⁵ = 486
+
+      Fibonacci:   1, 1, 2, 3, 5, 8, 13, 21, 34, 55
+                   55/34 = 1.6176...
+                   φ     = 1.6180...       converge, no coincide aún
+      ```
+
+      La secuencia aritmética crece 4 por paso; la geométrica multiplica por 3 por paso. En
+      diez pasos la primera llega a 39 y la segunda a 39366.
+    errores:
+      - "Afirmar una regla como demostrada tras verificar unos pocos términos."
+      - "Confundir diferencia constante (lineal) con razón constante (exponencial)."
+      - "Extrapolar una secuencia empírica fuera del rango observado."
+    aplicacion: |
+      Análisis de complejidad (parte 04), crecimiento compuesto (parte 02), series
+      temporales (parte 13) y la lectura de curvas de aprendizaje: distinguir si un error
+      baja linealmente o exponencialmente cambia por completo la decisión."
+    referencias:
+      - "[OEIS — Enciclopedia en línea de secuencias de enteros](https://oeis.org/)"
+      - "[Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)"
+
+  "018":
+    concepto: "Modelar es traducir un enunciado a ecuaciones declarando qué representa cada símbolo."
+    formulas:
+      - "sistema 2×2:  x + y = T,   p₁x + p₂y = M"
+      - "solución:  y = (M − p₁T)/(p₂ − p₁),  x = T − y"
+    desarrollo: |
+      La dificultad de un problema verbal casi nunca está en el álgebra: está en la
+      traducción. El procedimiento fiable tiene cuatro pasos y conviene seguirlos en orden:
+      (1) nombrar las incógnitas **con su unidad**, (2) escribir una ecuación por cada
+      restricción del enunciado, (3) resolver el sistema, (4) comprobar que la solución
+      tiene sentido en el problema original, no solo en las ecuaciones.
+
+      El paso 4 es el que más se omite y el que más errores atrapa. Un sistema puede tener
+      solución matemática y ninguna solución real: si el reparto da −3 unidades de un
+      producto, el modelo es correcto y el enunciado es imposible. Distinguir «no hay
+      solución» de «el modelo está mal» exige volver al enunciado.
+
+      Contar restricciones es el control de sanidad previo. Dos incógnitas necesitan dos
+      ecuaciones independientes; con una sola hay infinitas soluciones, y con tres es
+      probable que el sistema sea incompatible. Esta cuenta reaparece en la parte 05 como
+      la relación entre rango, número de incógnitas y existencia de solución.
+
+      Polya, en *How to Solve It* (1945), sistematizó este método en cuatro fases:
+      comprender el problema, concebir un plan, ejecutarlo y examinar la solución. Sigue
+      siendo la mejor descripción del proceso, y su última fase —examinar— es exactamente
+      el paso que la prisa elimina.
+    ejemplo: |
+      «Se venden 30 unidades entre dos productos, uno a 1500 y otro a 2500, recaudando
+      61 000. ¿Cuántas de cada uno?»
+
+      ```text
+      Paso 1 — incógnitas con unidad
+        x = unidades del producto A
+        y = unidades del producto B
+
+      Paso 2 — una ecuación por restricción
+        x + y = 30                    (total de unidades)
+        1500x + 2500y = 61000         (recaudación)
+
+      Paso 3 — resolver
+        y = (61000 − 1500·30)/(2500 − 1500) = 16000/1000 = 16
+        x = 30 − 16 = 14
+
+      Paso 4 — comprobar contra el enunciado
+        14 + 16 = 30                            ✓
+        1500·14 + 2500·16 = 21000 + 40000 = 61000 ✓
+        ambas cantidades ≥ 0 → solución factible  ✓
+      ```
+    errores:
+      - "Empezar a operar antes de nombrar las incógnitas y sus unidades."
+      - "Escribir menos ecuaciones que incógnitas y no notar que el problema queda indeterminado."
+      - "Aceptar una solución matemáticamente válida pero imposible en el problema (cantidades negativas)."
+    aplicacion: |
+      Es la habilidad central del modelado: formular un problema real como un objeto
+      matemático. Reaparece en cada capstone del programa, y en la parte 12 como la
+      construcción de la función objetivo y sus restricciones."
+    referencias:
+      - "[Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it)"
+      - "[Schoenfeld, A. *Mathematical Problem Solving*. Academic Press, 1985](https://www.elsevier.com/books/mathematical-problem-solving/schoenfeld/978-0-12-628870-4)"
+
+  "019":
+    concepto: "Un contraejemplo refuta una afirmación universal; ninguna cantidad de confirmaciones la demuestra."
+    formulas:
+      - "¬(∀x P(x)) ⟺ ∃x ¬P(x)"
+      - "n² + n + 41 es primo para n = 0..39, compuesto para n = 40"
+    desarrollo: |
+      La asimetría entre verificar y demostrar es el contenido de esta clase, y es la
+      lección más transferible de toda la parte. Una afirmación universal —«para todo n se
+      cumple P(n)»— no queda demostrada por muchos casos favorables, pero queda refutada por
+      **uno solo** desfavorable. Verificar y demostrar son operaciones de coste y de valor
+      radicalmente distintos.
+
+      El polinomio de Euler `n² + n + 41` es el ejemplo canónico. Produce números primos
+      para n = 0, 1, 2, ..., 39: cuarenta confirmaciones consecutivas, más de las que
+      cualquiera revisaría antes de convencerse. Y falla en n = 40, donde vale
+      `40² + 40 + 41 = 1681 = 41²`. La razón es visible en retrospectiva: al sustituir
+      n = 41 (o 40) aparece el factor 41 explícitamente.
+
+      Trasladado al software, esto es exactamente la relación entre pruebas y corrección:
+      «los tests pasan» significa que no se encontró contraejemplo en los casos probados, no
+      que el código sea correcto. Dijkstra lo formuló en 1970 con una frase que resume la
+      clase: las pruebas pueden mostrar la presencia de errores, nunca su ausencia.
+
+      La estrategia práctica que se deriva es contraintuitiva y muy eficaz: al evaluar una
+      afirmación propia, **buscar activamente el caso que la rompa** en lugar de acumular
+      casos que la confirmen. Los casos límite —cero, negativos, vacío, uno, el máximo
+      representable— son donde viven los contraejemplos.
+    ejemplo: |
+      La conjetura de Euler y su caída.
+
+      ```text
+      n:   0  1  2  3  ...  38  39   |  40
+      n²+n+41: 41 43 47 53 ... 1523 1601  |  1681
+
+      n = 0..39  → los 40 valores son primos
+      n = 40     → 1681 = 41 × 41       ✗ COMPUESTO
+
+      Regla:  40 confirmaciones no demuestran
+              1 contraejemplo refuta
+      ```
+
+      Nótese que el contraejemplo no requiere teoría avanzada: requiere seguir probando
+      cuando ya «parecía» cierto.
+    errores:
+      - "Concluir que una afirmación es cierta porque no se encontró contraejemplo en pocos casos."
+      - "Probar solo casos favorables o típicos, evitando los límites."
+      - "Confundir «los tests pasan» con «el código es correcto»."
+    aplicacion: |
+      Diseño de pruebas, validación de modelos y evaluación de resultados publicados. En la
+      parte 10 reaparece como la lógica de las pruebas de hipótesis: no se demuestra H₁, se
+      rechaza H₀."
+    referencias:
+      - "[Dijkstra, E. W. *Notes on Structured Programming*, EWD249, 1970](https://www.cs.utexas.edu/~EWD/ewd02xx/EWD249.PDF)"
+      - "[Lakatos, I. *Proofs and Refutations*. Cambridge University Press, 1976](https://www.cambridge.org/core/books/proofs-and-refutations/575FC6BB16BD500BB0B04D2B0A1EA2C9)"
+      - "[Euler's prime-generating polynomial — Wolfram MathWorld](https://mathworld.wolfram.com/Prime-GeneratingPolynomial.html)"
+
+  "020":
+    concepto: "Modelar un presupuesto integra dinero exacto, porcentajes, redondeo y verificación en un solo problema."
+    formulas:
+      - "Σ pᵢ = 1  (los porcentajes deben sumar la unidad)"
+      - "descuadre = ingreso − Σ redondeo(ingreso · pᵢ)"
+    desarrollo: |
+      El capstone reúne todo lo de la parte en un problema con consecuencias reales:
+      repartir un ingreso en categorías según porcentajes. Parece trivial y contiene tres
+      trampas que las clases anteriores anticiparon.
+
+      La primera: los porcentajes deben sumar exactamente 1. Comprobarlo con `Decimal` es
+      trivial; comprobarlo con `float` no lo es, porque 0.35 + 0.20 + 0.10 + 0.20 + 0.15
+      puede no dar exactamente 1.0 en binario. Esta es la primera vez en el programa que la
+      representación numérica cambia el resultado de una comprobación lógica.
+
+      La segunda: redondear cada categoría a la unidad monetaria hace que la suma de las
+      partes **no** coincida con el total. El descuadre es pequeño pero sistemático, y
+      cualquier sistema contable real necesita una política explícita para él: asignar el
+      resto a una categoría, distribuirlo, o llevar el redondeo por acumulación. No decidir
+      es también una decisión, y produce descuadres impredecibles.
+
+      La tercera: proyectar hacia el futuro. «¿Cuántos meses para ahorrar 5 millones?» es
+      una división, pero su resultado es un número real y la respuesta es un entero de
+      meses —hay que redondear **hacia arriba**, porque a mitad de mes no se ha ahorrado la
+      cantidad—. Elegir la dirección del redondeo según el significado del problema, y no
+      según la costumbre, es la competencia que cierra la parte.
+    ejemplo: |
+      Repartir un ingreso de 1 250 000 en cinco categorías.
+
+      ```text
+      categoría      %      importe (Decimal, redondeado a 1)
+      vivienda      35 %      437 500
+      alimentación  20 %      250 000
+      transporte    10 %      125 000
+      ahorro        20 %      250 000
+      otros         15 %      187 500
+      ─────────────────────────────────
+      suma %       100 %  ✓
+      suma importes        1 250 000
+      descuadre                    0    (aquí los porcentajes dan exactos)
+
+      Meses para ahorrar 5 000 000 con 250 000/mes:
+        5 000 000 / 250 000 = 20 meses exactos
+        (si diera 20.3, la respuesta operativa sería 21)
+      ```
+
+      Con porcentajes como 1/3 el descuadre aparece y hay que decidir dónde va el resto.
+    errores:
+      - "Comprobar que los porcentajes suman 1 usando float y == en lugar de Decimal."
+      - "No definir una política para el descuadre por redondeo."
+      - "Redondear hacia abajo un número de periodos: a los 20.3 meses aún no se alcanzó la meta."
+    aplicacion: |
+      Contabilidad, presupuestos personales y empresariales, reparto de costes entre
+      equipos y prorrateo de recursos en la nube. La política de descuadre es un requisito
+      real en cualquier sistema de facturación."
+    referencias:
+      - "[Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)"
+      - "[IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)"

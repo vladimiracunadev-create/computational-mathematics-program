@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any, Dict
@@ -19,7 +20,7 @@ from typing import Any, Dict
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from computational_math import curriculum, engines  # noqa: E402
+from computational_math import content, curriculum, engines  # noqa: E402
 
 REPOS_CONECTADOS = [
     ("artificial-intelligence-evolution-program", "evolución completa de la IA"),
@@ -184,6 +185,7 @@ def _demo_info(class_id: str) -> Dict[str, Any]:
         "name": nombre,
         "summary": resumen,
         "keys": claves,
+        "values": resultado,
         "n_keys": len(resultado),
     }
 
@@ -192,85 +194,274 @@ def _fmt_lista(items, prefijo="- ") -> str:
     return "\n".join(f"{prefijo}{item}" for item in items)
 
 
+def _vecinos(clase):
+    """Clase anterior y siguiente en el orden global del programa."""
+    indice = int(clase["id"])
+    anterior = curriculum.find_class(f"{indice - 1:03d}") if indice > 1 else None
+    siguiente = curriculum.find_class(f"{indice + 1:03d}") if indice < 360 else None
+    return anterior, siguiente
+
+
+def _enlace_clase(clase, desde) -> str:
+    """Enlace relativo desde el directorio de ``desde`` al de ``clase``."""
+    if clase is None:
+        return ""
+    destino = curriculum.class_dir(clase)
+    origen = curriculum.class_dir(desde)
+    return f"{os.path.relpath(destino, origen).replace(os.sep, '/')}/README.md"
+
+
+def _navegacion(clase, parte) -> str:
+    anterior, siguiente = _vecinos(clase)
+    piezas = []
+    if anterior:
+        piezas.append(f"[⬅️ {anterior['id']} {anterior['title']}]({_enlace_clase(anterior, clase)})")
+    piezas.append(f"[📚 Parte {parte['id']}](../README.md)")
+    piezas.append("[🏠 Programa](../../../README.md)")
+    if siguiente:
+        piezas.append(f"[{siguiente['id']} {siguiente['title']} ➡️]({_enlace_clase(siguiente, clase)})")
+    return " · ".join(piezas)
+
+
+def _clasifica_salidas(demo):
+    """Agrupa las claves de la demostración en parámetros, resultados y verificaciones."""
+    verificaciones, numericos, otros = [], [], []
+    for clave, valor in demo["values"].items():
+        if isinstance(valor, bool):
+            verificaciones.append(clave)
+        elif isinstance(valor, (int, float)):
+            numericos.append(clave)
+        else:
+            otros.append(clave)
+    return verificaciones, numericos, otros
+
+
+def _diagrama_clase(clase, parte, demo) -> str:
+    """Diagrama del flujo del laboratorio, construido con sus salidas reales."""
+    verificaciones, numericos, otros = _clasifica_salidas(demo)
+    anterior, siguiente = _vecinos(clase)
+    prev = f"{anterior['id']}<br/>{_wrap(anterior['title'], 22)}" if anterior else "Diagnóstico<br/>inicial"
+    nxt = f"{siguiente['id']}<br/>{_wrap(siguiente['title'], 22)}" if siguiente else "Fin del<br/>programa"
+
+    def muestra(claves, n=3):
+        if not claves:
+            return "—"
+        visibles = [c.replace('"', "'") for c in claves[:n]]
+        extra = f"<br/>… +{len(claves) - n} más" if len(claves) > n else ""
+        return "<br/>".join(visibles) + extra
+
+    return f"""```mermaid
+flowchart LR
+    P["{prev}"] --> C
+    subgraph C["{clase['id']} · {_wrap(clase['title'], 26)}"]
+        direction TB
+        D["Demostración<br/><code>{demo['name']}</code>"] --> R["Resultados numéricos<br/>{muestra(numericos)}"]
+        D --> V["Verificaciones<br/>{muestra(verificaciones)}"]
+        D --> O["Contexto y estructura<br/>{muestra(otros)}"]
+    end
+    C --> N["{nxt}"]
+    C -.-> IA["Uso en IA<br/>parte {parte['id']}"]
+```"""
+
+
+def _wrap(texto, ancho):
+    """Parte un texto en líneas para que quepa dentro de un nodo Mermaid."""
+    palabras = texto.replace('"', "").replace("(", "").replace(")", "").split()
+    lineas, actual = [], ""
+    for palabra in palabras:
+        if len(actual) + len(palabra) + 1 > ancho and actual:
+            lineas.append(actual)
+            actual = palabra
+        else:
+            actual = f"{actual} {palabra}".strip()
+    if actual:
+        lineas.append(actual)
+    return "<br/>".join(lineas)
+
+
 def _readme(clase, parte, demo) -> str:
+    registro = content.class_content(clase["id"])
     idea = parte["key_ideas"][(clase["index_in_part"] - 1) % len(parte["key_ideas"])]
-    errores = parte["pitfalls"][(clase["index_in_part"] - 1) % len(parte["pitfalls"])]
-    return f"""# {clase['id']} — {clase['title']}
+    error_parte = parte["pitfalls"][(clase["index_in_part"] - 1) % len(parte["pitfalls"])]
+    verificaciones, numericos, _ = _clasifica_salidas(demo)
+    nav = _navegacion(clase, parte)
 
-**Parte:** {parte['id']} — {parte['title']}
-**Nivel:** {parte['level']}
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.{parte['engine']}` · demostración `{demo['name']}`
+    bloques = [
+        f"# {clase['id']} — {clase['title']}",
+        "",
+        f"> {nav}",
+        "",
+        f"**Parte:** {parte['id']} — {parte['title']} · **Nivel:** `{parte['level']}` · "
+        f"**Horas estimadas:** 4",
+        f"**Motor:** `engines.{parte['engine']}` · **Demostración:** `{demo['name']}` · "
+        f"**Clase {clase['index_in_part']} de {len(parte['classes'])}** de la parte",
+        "",
+        "---",
+        "",
+        "## 🎯 Propósito",
+        "",
+    ]
 
-## 🎯 Propósito
+    if registro.get("concepto"):
+        bloques += [
+            f"**{registro['concepto']}**",
+            "",
+            f"{parte['summary']}",
+            "",
+        ]
+    else:
+        bloques += [
+            parte["summary"],
+            "",
+            f"Esta clase concreta ese objetivo sobre **{clase['title']}**: qué es, cómo se",
+            "calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica",
+            "que el resultado es correcto y no solo plausible.",
+            "",
+        ]
 
-{parte['summary']}
+    bloques += [
+        "## ✅ Resultados de aprendizaje",
+        "",
+        "Al terminar podrás:",
+        "",
+        f"1. Explicar **{clase['title']}** con lenguaje cotidiano y con notación matemática.",
+        "2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.",
+        f"3. Ejecutar y modificar `lab.py`, que corre la demostración `{demo['name']}`.",
+        f"4. Interpretar las {demo['n_keys']} salidas del laboratorio y decir qué comprueba cada una.",
+        f"5. Detectar el error típico de esta parte: {error_parte.lower().rstrip('.')}.",
+        "",
+    ]
 
-Esta clase concreta ese objetivo sobre **{clase['title']}**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+    if registro.get("formulas"):
+        bloques += [
+            "## 🧩 Fórmulas de la clase",
+            "",
+            "```text",
+            *registro["formulas"],
+            "```",
+            "",
+        ]
 
-## ✅ Resultados de aprendizaje
+    bloques += [
+        "## 🗺️ Ubicación en el programa",
+        "",
+        _diagrama_clase(clase, parte, demo),
+        "",
+    ]
 
-Al terminar podrás:
+    if registro.get("desarrollo"):
+        bloques += ["## 📖 Fundamentos", "", registro["desarrollo"].rstrip(), ""]
+    else:
+        bloques += [
+            f"## 🧠 Idea rectora de la parte {parte['id']}",
+            "",
+            f"> {idea}",
+            "",
+        ]
 
-1. Explicar **{clase['title']}** con lenguaje cotidiano y con notación matemática.
-2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `{demo['name']}` del motor de la parte.
-4. Interpretar las {demo['n_keys']} salidas del laboratorio y decir qué invariante comprueba cada una.
-5. Detectar el error típico de esta parte: {errores.lower().rstrip('.')}.
+    if registro.get("ejemplo"):
+        bloques += ["## 🧮 Ejemplo trabajado", "", registro["ejemplo"].rstrip(), ""]
 
-## 🧠 Idea rectora de la parte {parte['id']}
+    bloques += [
+        "## 🔬 Qué ejecuta el laboratorio",
+        "",
+        f"`{demo['name']}` — {demo['summary']}",
+        "",
+        "| Grupo | Salidas |",
+        "|---|---|",
+        f"| 🔢 Resultados numéricos ({len(numericos)}) | "
+        + (", ".join(f"`{k}`" for k in numericos) if numericos else "—") + " |",
+        f"| ✅ Comprobaciones de invariante ({len(verificaciones)}) | "
+        + (", ".join(f"`{k}`" for k in verificaciones) if verificaciones else "—") + " |",
+        "",
+        "Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico",
+        "no sería fiable aunque el programa terminase sin error.",
+        "",
+        "```bash",
+        f"python classes/part-{parte['id']}-{parte['slug']}/{clase['slug']}/lab.py",
+        f"compmath run {clase['id']}",
+        "```",
+        "",
+        "> [!TIP]",
+        "> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que",
+        "> esperabas enseña tanto como uno que te contradice, pero solo si la predicción",
+        "> existía antes del resultado.",
+        "",
+    ]
 
-> {idea}
+    if registro.get("errores"):
+        bloques += ["## ⚠️ Errores conceptuales frecuentes", ""]
+        bloques += [f"{i}. {e}" for i, e in enumerate(registro["errores"], start=1)]
+        bloques.append("")
+    else:
+        bloques += ["## ⚠️ Errores frecuentes en esta parte", "", _fmt_lista(parte["pitfalls"]), ""]
 
-## 🧩 Qué calcula el laboratorio
+    if registro.get("aplicacion"):
+        bloques += ["## 🚀 Dónde se usa de verdad", "", registro["aplicacion"].rstrip(), ""]
 
-`{demo['name']}` — {demo['summary']}
+    bloques += [
+        "## 🤖 Conexión con IA",
+        "",
+        parte["ai_link"],
+        "",
+        "## 📓 Notebooks",
+        "",
+        "| Archivo | Para qué |",
+        "|---|---|",
+        "| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |",
+        "| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |",
+        "| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |",
+        "",
+        "## 📝 Evaluación",
+        "",
+        "| Criterio | Peso |",
+        "|---|---:|",
+        "| Comprensión conceptual | 25 % |",
+        "| Resolución manual | 25 % |",
+        "| Implementación y verificación | 25 % |",
+        "| Interpretación y comunicación | 15 % |",
+        "| Conexión con aplicación real | 10 % |",
+        "",
+        "Detalle y criterios de error crítico en [`assessment.md`](assessment.md).",
+        "",
+        "## ❓ Preguntas de comprobación",
+        "",
+        "1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?",
+        "2. ¿Qué operación domina el comportamiento del resultado?",
+        "3. ¿Qué caso extremo revelaría un error conceptual?",
+        "4. ¿Cómo verificarías el resultado por un método independiente?",
+        f"5. ¿Dónde aparece esto en {parte['applications'].split(',')[0]}?",
+        "",
+        "Si necesitas releer el código para responderlas, la clase todavía no está superada.",
+        "",
+        "## 📥 Entregable",
+        "",
+        "`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar",
+        "código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.",
+        "",
+        "## 🔗 Referencias",
+        "",
+    ]
 
-Salidas que devuelve:
+    if registro.get("referencias"):
+        bloques += [_fmt_lista(registro["referencias"]), ""]
+        bloques += ["Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).", ""]
+    else:
+        bloques += [_fmt_lista(parte["references"]), ""]
 
-{_fmt_lista(f"`{k}`" for k in demo['keys'])}
-
-## 🧪 Cómo ejecutarlo
-
-```bash
-python classes/part-{parte['id']}-{parte['slug']}/{clase['slug']}/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
-compmath run {clase['id']}
-```
-
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
-
-## ⚠️ Errores frecuentes en esta parte
-
-{_fmt_lista(parte['pitfalls'])}
-
-## 🤖 Conexión con IA
-
-{parte['ai_link']}
-
-## 📥 Entregable
-
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
-
-## 📚 Referencias de la parte
-
-{_fmt_lista(parte['references'])}
-
-## 🔗 Siguiente paso
-
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
-"""
+    bloques += [
+        "## 📂 Material de la clase",
+        "",
+        "[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · "
+        "[`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · "
+        "[`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)",
+        "",
+        "---",
+        "",
+        f"> {nav}",
+        "",
+    ]
+    return "\n".join(bloques)
 
 
 def _intuition(clase, parte, demo) -> str:
@@ -808,61 +999,201 @@ def _notebook_solution(clase, parte, demo) -> str:
     ])
 
 
+def _emoji_parte(part_id: str) -> str:
+    return {
+        "00": "🔢", "01": "💾", "02": "📐", "03": "📏", "04": "🧩", "05": "🟪",
+        "06": "🔷", "07": "📈", "08": "🌐", "09": "🎲", "10": "📊", "11": "🧮",
+        "12": "⚙️", "13": "📡", "14": "🤖", "15": "🧠", "16": "🛰️", "17": "🔭",
+    }.get(part_id, "📚")
+
+
+def _mermaid_secuencia(parte, clases) -> str:
+    """Diagrama de la secuencia de las 20 clases de la parte, agrupadas de cinco en cinco."""
+    lineas = ["```mermaid", "flowchart LR"]
+    grupos = [clases[i:i + 5] for i in range(0, len(clases), 5)]
+    for indice, grupo in enumerate(grupos, start=1):
+        lineas.append(f'    subgraph B{indice}["Bloque {indice}"]')
+        lineas.append("        direction TB")
+        for clase in grupo:
+            lineas.append(f'        L{clase["id"]}["{clase["id"]}<br/>{_wrap(clase["title"], 24)}"]')
+        for a, b in zip(grupo, grupo[1:]):
+            lineas.append(f'        L{a["id"]} --> L{b["id"]}')
+        lineas.append("    end")
+    for a, b in zip(grupos, grupos[1:]):
+        lineas.append(f'    L{a[-1]["id"]} --> L{b[0]["id"]}')
+    lineas.append("```")
+    return "\n".join(lineas)
+
+
+def _tabla_clases_parte(parte, clases) -> str:
+    filas = []
+    for clase in clases:
+        demo, funcion = engines.demo_for_class(clase["id"])
+        resumen = (funcion.__doc__ or "").strip().splitlines()[0]
+        registro = content.class_content(clase["id"])
+        concepto = registro.get("concepto") or resumen
+        filas.append(
+            f"| `{clase['id']}` | [{clase['title']}]({clase['slug']}/README.md) "
+            f"| `{demo}` | {concepto} |"
+        )
+    return "\n".join(filas)
+
+
 def _part_readme(parte, clases) -> str:
-    secuencia = "\n".join(
-        f"{i}. [{c['id']} — {c['title']}]({c['slug']}/README.md)"
-        for i, c in enumerate(clases, start=1)
-    )
-    return f"""# Parte {parte['id']} — {parte['title']}
+    extra = content.part_content(parte["id"])
+    partes = curriculum.parts()
+    idx = [p["id"] for p in partes].index(parte["id"])
+    anterior = partes[idx - 1] if idx > 0 else None
+    siguiente = partes[idx + 1] if idx < len(partes) - 1 else None
 
-**Nivel:** {parte['level']}
-**Clases:** {len(clases)}
-**Horas estimadas:** {len(clases) * 4}
-**Motor ejecutable:** `src/computational_math/engines/{parte['engine']}.py`
+    nav = []
+    if anterior:
+        nav.append(f"[⬅️ Parte {anterior['id']} — {anterior['title']}](../part-{anterior['id']}-{anterior['slug']}/README.md)")
+    nav.append("[🏠 Programa](../../README.md)")
+    nav.append("[📇 Catálogo](../README.md)")
+    if siguiente:
+        nav.append(f"[Parte {siguiente['id']} — {siguiente['title']} ➡️](../part-{siguiente['id']}-{siguiente['slug']}/README.md)")
+    navegacion = " · ".join(nav)
 
-{parte['summary']}
+    bloques = [
+        f"# {_emoji_parte(parte['id'])} Parte {parte['id']} — {parte['title']}",
+        "",
+        f"> {navegacion}",
+        "",
+        f"**Nivel:** `{parte['level']}` · **Clases:** {len(clases)} · "
+        f"**Horas estimadas:** {len(clases) * 4} · **Motor:** "
+        f"[`{parte['engine']}.py`](../../src/computational_math/engines/{parte['engine']}.py)",
+        "",
+        "---",
+        "",
+        "## 🎯 De qué trata esta parte",
+        "",
+        parte["summary"],
+        "",
+    ]
 
-## 🧠 Ideas centrales
+    if extra.get("resumen_extendido"):
+        bloques += [extra["resumen_extendido"].rstrip(), ""]
 
-{_fmt_lista(parte['key_ideas'])}
+    if extra.get("mapa"):
+        bloques += [
+            "## 🗺️ Mapa conceptual",
+            "",
+            "```mermaid",
+            extra["mapa"].rstrip(),
+            "```",
+            "",
+        ]
 
-## 🤖 Por qué importa en IA
+    bloques += [
+        "## 🧠 Ideas centrales",
+        "",
+        _fmt_lista(parte["key_ideas"]),
+        "",
+        "## 🤖 Por qué importa en IA",
+        "",
+        "> [!IMPORTANT]",
+        f"> {parte['ai_link']}",
+        "",
+        "## ⚠️ Errores frecuentes de esta parte",
+        "",
+        _fmt_lista(parte["pitfalls"]),
+        "",
+        "## 🧭 Secuencia de la parte",
+        "",
+        _mermaid_secuencia(parte, clases),
+        "",
+        "## 📚 Las clases",
+        "",
+        "| # | Clase | Demostración | Idea central |",
+        "|---|---|---|---|",
+        _tabla_clases_parte(parte, clases),
+        "",
+    ]
 
-{parte['ai_link']}
+    if extra.get("glosario"):
+        bloques += [
+            f"## 📖 Glosario de la parte ({len(extra['glosario'])} términos)",
+            "",
+            "Definiciones precisas en [`GLOSARIO.md`](GLOSARIO.md).",
+            "",
+        ]
 
-## ⚠️ Errores frecuentes
+    bloques += [
+        "## 🧰 Stack de referencia",
+        "",
+        ", ".join(f"`{s}`" for s in parte["stack"]),
+        "",
+        "Los laboratorios se ejecutan con biblioteca estándar; estas herramientas aparecen",
+        "como contraste profesional, no como requisito.",
+        "",
+        "## 🧪 Ejecutar toda la parte",
+        "",
+        "```bash",
+        f"compmath run --part {parte['id']}",
+        f"compmath catalog --part {parte['id']}",
+        "```",
+        "",
+        "## 📊 Evaluación de la parte",
+        "",
+        "| Componente | Peso |",
+        "|---|---:|",
+        "| Clases y ejercicios | 40 % |",
+        "| Laboratorios y notebooks | 25 % |",
+        "| Explicación oral o escrita | 15 % |",
+        f"| Capstone ([{clases[-1]['id']}]({clases[-1]['slug']}/README.md)) | 20 % |",
+        "",
+        "## 📖 Bibliografía",
+        "",
+        _fmt_lista(parte["references"]),
+        "",
+        "---",
+        "",
+        f"> {navegacion}",
+        "",
+    ]
+    return "\n".join(bloques)
 
-{_fmt_lista(parte['pitfalls'])}
 
-## 🧰 Stack de referencia
+def _glosario_parte(parte, clases) -> str:
+    terminos = content.glossary(parte["id"])
+    if not terminos:
+        return ""
+    filas = []
+    for item in sorted(terminos, key=lambda t: t["termino"].lower()):
+        clase_id = item.get("clase")
+        if clase_id:
+            clase = curriculum.find_class(clase_id)
+            enlace = f"[{clase_id}]({clase['slug']}/README.md)"
+        else:
+            enlace = "—"
+        filas.append(f"| **{item['termino']}** | {item['definicion']} | {enlace} |")
+    return f"""# 📖 Glosario — Parte {parte['id']}: {parte['title']}
 
-{', '.join(f'`{s}`' for s in parte['stack'])}
+> [⬆️ Volver a la parte](README.md) · [🏠 Programa](../../README.md) ·
+> [📚 Glosario general](../../docs/GLOSSARY.md)
 
-Los laboratorios se ejecutan con biblioteca estándar; estas herramientas
-aparecen como contraste profesional, no como requisito.
+{len(terminos)} términos definidos con la precisión que exige esta parte. Cada uno enlaza
+a la clase donde se estudia y se ejecuta.
 
-## 📚 Secuencia
+| Término | Definición | Clase |
+|---|---|---|
+{chr(10).join(filas)}
 
-{secuencia}
+## Cómo usar este glosario
 
-## 🧪 Ejecutar toda la parte
+No memorices las definiciones: **usa la columna de clase**. Un término se entiende cuando
+puedes ejecutar su demostración y explicar qué comprueba, no cuando puedes recitar su
+definición.
 
 ```bash
-compmath run --part {parte['id']}
+compmath show <clase>    # ficha de la clase donde vive el término
+compmath run <clase>     # ejecutar su demostración
 ```
 
-## 📊 Evaluación de la parte
+---
 
-| Componente | Peso |
-|---|---:|
-| Clases y ejercicios | 40 % |
-| Laboratorios y notebooks | 25 % |
-| Explicación oral o escrita | 15 % |
-| Capstone de la parte | 20 % |
-
-## 📖 Bibliografía
-
-{_fmt_lista(parte['references'])}
+> [⬆️ Volver a la parte](README.md) · [🏠 Programa](../../README.md)
 """
 
 
@@ -1099,6 +1430,9 @@ def generar(check: bool = False) -> int:
 
         parte_dir = ROOT / "classes" / f"part-{parte['id']}-{parte['slug']}"
         escribir(parte_dir / "README.md", _part_readme(parte, clases_de_parte))
+        glosario = _glosario_parte(parte, clases_de_parte)
+        if glosario:
+            escribir(parte_dir / "GLOSARIO.md", glosario)
 
     escribir(ROOT / "classes" / "README.md", _classes_index())
 

@@ -1,9 +1,11 @@
 # 324 — Query, Key y Value
 
-**Parte:** 16 — Matemática de Transformers, modelos generativos, grafos y RL
-**Nivel:** experto
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part16` · demostración `query_key_value`
+> [⬅️ 323 Positional encoding](../323-positional-encoding/README.md) · [📚 Parte 16](../README.md) · [🏠 Programa](../../../README.md) · [325 Scaled dot-product attention ➡️](../325-scaled-dot-product-attention/README.md)
+
+**Parte:** 16 — Matemática de Transformers, modelos generativos, grafos y RL · **Nivel:** `experto` · **Horas estimadas:** 4
+**Motor:** `engines.part16` · **Demostración:** `query_key_value` · **Clase 4 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,47 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Query, Key y Value** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `query_key_value` del motor de la parte.
-4. Interpretar las 11 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `query_key_value`.
+4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: olvidar la máscara causal en el modelado autoregresivo.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["323<br/>Positional encoding"] --> C
+    subgraph C["324 · Query, Key y Value"]
+        direction TB
+        D["Demostración<br/><code>query_key_value</code>"] --> R["Resultados numéricos<br/>d_model<br/>d_k<br/>parametros_por_cabeza"]
+        D --> V["Verificaciones<br/>son_proyecciones_lineales"]
+        D --> O["Contexto y estructura<br/>token_de_entrada<br/>query<br/>key<br/>… +4 más"]
+    end
+    C --> N["325<br/>Scaled dot-product<br/>attention"]
+    C -.-> IA["Uso en IA<br/>parte 16"]
+```
 
 ## 🧠 Idea rectora de la parte 16
 
 > El ELBO acota inferiormente la log-verosimilitud con un término de reconstrucción y uno KL.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `query_key_value` — Q, K, V: tres proyecciones distintas del mismo token.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (3) | `d_model`, `d_k`, `parametros_por_cabeza` |
+| ✅ Comprobaciones de invariante (1) | `son_proyecciones_lineales` |
 
-- `token_de_entrada`
-- `d_model`
-- `d_k`
-- `query`
-- `key`
-- `value`
-- `roles`
-- `parametros_por_cabeza`
-- `son_proyecciones_lineales`
-- `en_self_attention`
-- `en_cross_attention`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/324-query-key-y-value/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 324
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -71,20 +76,52 @@ existía antes del resultado.
 
 Esta parte es la traducción matemática directa de los papers que definen el estado del arte actual.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en LLM?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
 - Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
 - Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
 - Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 323 Positional encoding](../323-positional-encoding/README.md) · [📚 Parte 16](../README.md) · [🏠 Programa](../../../README.md) · [325 Scaled dot-product attention ➡️](../325-scaled-dot-product-attention/README.md)

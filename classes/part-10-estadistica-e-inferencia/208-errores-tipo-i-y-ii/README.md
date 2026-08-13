@@ -1,9 +1,11 @@
 # 208 — Errores tipo I y II
 
-**Parte:** 10 — Estadística e inferencia
-**Nivel:** universitario-avanzado
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part10` · demostración `type_errors`
+> [⬅️ 207 p-value correctamente interpretado](../207-p-value-correctamente-interpretado/README.md) · [📚 Parte 10](../README.md) · [🏠 Programa](../../../README.md) · [209 Potencia estadística ➡️](../209-potencia-estadistica/README.md)
+
+**Parte:** 10 — Estadística e inferencia · **Nivel:** `universitario-avanzado` · **Horas estimadas:** 4
+**Motor:** `engines.part10` · **Demostración:** `type_errors` · **Clase 8 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,43 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Errores tipo I y II** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `type_errors` del motor de la parte.
-4. Interpretar las 7 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `type_errors`.
+4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir significancia estadística con relevancia práctica.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["207<br/>p-value correctamente<br/>interpretado"] --> C
+    subgraph C["208 · Errores tipo I y II"]
+        direction TB
+        D["Demostración<br/><code>type_errors</code>"] --> R["Resultados numéricos<br/>alfa_nominal<br/>tasa_error_tipo_I_observada<br/>efecto_real<br/>… +2 más"]
+        D --> V["Verificaciones<br/>bajar_alfa_sube_beta"]
+        D --> O["Contexto y estructura<br/>solucion"]
+    end
+    C --> N["209<br/>Potencia estadística"]
+    C -.-> IA["Uso en IA<br/>parte 10"]
+```
 
 ## 🧠 Idea rectora de la parte 10
 
 > Sin potencia declarada, un resultado no significativo no dice nada.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `type_errors` — Errores tipo I y II: el compromiso es inevitable.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (5) | `alfa_nominal`, `tasa_error_tipo_I_observada`, `efecto_real`, `tasa_error_tipo_II_(beta)`, `potencia_1-beta` |
+| ✅ Comprobaciones de invariante (1) | `bajar_alfa_sube_beta` |
 
-- `alfa_nominal`
-- `tasa_error_tipo_I_observada`
-- `efecto_real`
-- `tasa_error_tipo_II_(beta)`
-- `potencia_1-beta`
-- `bajar_alfa_sube_beta`
-- `solucion`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-10-estadistica-e-inferencia/208-errores-tipo-i-y-ii/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 208
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -67,19 +76,51 @@ existía antes del resultado.
 
 Evaluar un modelo es inferencia estadística: métricas con intervalo, comparaciones múltiples corregidas y detección de leakage.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en experimentación de producto?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Wasserman, L. *All of Statistics*. Springer, 2004.
 - Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
 - Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 207 p-value correctamente interpretado](../207-p-value-correctamente-interpretado/README.md) · [📚 Parte 10](../README.md) · [🏠 Programa](../../../README.md) · [209 Potencia estadística ➡️](../209-potencia-estadistica/README.md)

@@ -1,9 +1,11 @@
 # 126 — Diagonalización
 
-**Parte:** 06 — Álgebra lineal II: descomposiciones y tensores
-**Nivel:** intermedio-avanzado
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part06` · demostración `diagonalization`
+> [⬅️ 125 Autovalores y autovectores](../125-autovalores-y-autovectores/README.md) · [📚 Parte 06](../README.md) · [🏠 Programa](../../../README.md) · [127 Matrices positivas definidas ➡️](../127-matrices-positivas-definidas/README.md)
+
+**Parte:** 06 — Álgebra lineal II: descomposiciones y tensores · **Nivel:** `intermedio-avanzado` · **Horas estimadas:** 4
+**Motor:** `engines.part06` · **Demostración:** `diagonalization` · **Clase 6 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,43 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Diagonalización** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `diagonalization` del motor de la parte.
-4. Interpretar las 7 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `diagonalization`.
+4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir el orden de los índices al reordenar un tensor.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["125<br/>Autovalores y<br/>autovectores"] --> C
+    subgraph C["126 · Diagonalización"]
+        direction TB
+        D["Demostración<br/><code>diagonalization</code>"] --> R["Resultados numéricos<br/>—"]
+        D --> V["Verificaciones<br/>reconstruccion_ok"]
+        D --> O["Contexto y estructura<br/>A<br/>D_diagonal<br/>P_ortogonal<br/>… +3 más"]
+    end
+    C --> N["127<br/>Matrices positivas<br/>definidas"]
+    C -.-> IA["Uso en IA<br/>parte 06"]
+```
 
 ## 🧠 Idea rectora de la parte 06
 
 > Diagonalizar es elegir la base donde la transformación solo escala.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `diagonalization` — A = PDP⁻¹: la base donde la transformación solo escala.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (0) | — |
+| ✅ Comprobaciones de invariante (1) | `reconstruccion_ok` |
 
-- `A`
-- `D_diagonal`
-- `P_ortogonal`
-- `PDPᵀ`
-- `reconstruccion_ok`
-- `A^10_via_D`
-- `ventaja`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/126-diagonalizacion/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 126
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -67,19 +76,51 @@ existía antes del resultado.
 
 LoRA factoriza matrices de bajo rango, la atención se define con productos tensoriales y la estabilidad del entrenamiento depende del espectro de los pesos.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en compresión?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
 - Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
 - Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 125 Autovalores y autovectores](../125-autovalores-y-autovectores/README.md) · [📚 Parte 06](../README.md) · [🏠 Programa](../../../README.md) · [127 Matrices positivas definidas ➡️](../127-matrices-positivas-definidas/README.md)

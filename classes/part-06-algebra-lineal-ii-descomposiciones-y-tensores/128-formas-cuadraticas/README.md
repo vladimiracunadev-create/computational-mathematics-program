@@ -1,9 +1,11 @@
 # 128 — Formas cuadráticas
 
-**Parte:** 06 — Álgebra lineal II: descomposiciones y tensores
-**Nivel:** intermedio-avanzado
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part06` · demostración `quadratic_forms`
+> [⬅️ 127 Matrices positivas definidas](../127-matrices-positivas-definidas/README.md) · [📚 Parte 06](../README.md) · [🏠 Programa](../../../README.md) · [129 Descomposición LU ➡️](../129-descomposicion-lu/README.md)
+
+**Parte:** 06 — Álgebra lineal II: descomposiciones y tensores · **Nivel:** `intermedio-avanzado` · **Horas estimadas:** 4
+**Motor:** `engines.part06` · **Demostración:** `quadratic_forms` · **Clase 8 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,43 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Formas cuadráticas** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `quadratic_forms` del motor de la parte.
-4. Interpretar las 7 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `quadratic_forms`.
+4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar autovalores complejos como error de cálculo.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["127<br/>Matrices positivas<br/>definidas"] --> C
+    subgraph C["128 · Formas cuadráticas"]
+        direction TB
+        D["Demostración<br/><code>quadratic_forms</code>"] --> R["Resultados numéricos<br/>minimo_en_la_esfera_unitaria<br/>maximo_en_la_esfera_unitaria"]
+        D --> V["Verificaciones<br/>—"]
+        D --> O["Contexto y estructura<br/>A<br/>forma<br/>valores<br/>… +2 más"]
+    end
+    C --> N["129<br/>Descomposición LU"]
+    C -.-> IA["Uso en IA<br/>parte 06"]
+```
 
 ## 🧠 Idea rectora de la parte 06
 
 > PCA es la SVD de los datos centrados: no hay magia estadística adicional.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `quadratic_forms` — La forma cuadrática xᵀAx y sus curvas de nivel.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (2) | `minimo_en_la_esfera_unitaria`, `maximo_en_la_esfera_unitaria` |
+| ✅ Comprobaciones de invariante (0) | — |
 
-- `A`
-- `forma`
-- `valores`
-- `minimo_en_la_esfera_unitaria`
-- `maximo_en_la_esfera_unitaria`
-- `curvas_de_nivel`
-- `gradiente_es_2Ax`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/128-formas-cuadraticas/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 128
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -67,19 +76,51 @@ existía antes del resultado.
 
 LoRA factoriza matrices de bajo rango, la atención se define con productos tensoriales y la estabilidad del entrenamiento depende del espectro de los pesos.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en compresión?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
 - Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
 - Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 127 Matrices positivas definidas](../127-matrices-positivas-definidas/README.md) · [📚 Parte 06](../README.md) · [🏠 Programa](../../../README.md) · [129 Descomposición LU ➡️](../129-descomposicion-lu/README.md)

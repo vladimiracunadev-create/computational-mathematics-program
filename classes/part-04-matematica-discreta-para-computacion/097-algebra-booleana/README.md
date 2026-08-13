@@ -1,9 +1,11 @@
 # 097 — Álgebra booleana
 
-**Parte:** 04 — Matemática discreta para computación
-**Nivel:** intermedio
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part04` · demostración `boolean_algebra`
+> [⬅️ 096 DAG y orden topológico](../096-dag-y-orden-topologico/README.md) · [📚 Parte 04](../README.md) · [🏠 Programa](../../../README.md) · [098 Aritmética modular ➡️](../098-aritmetica-modular/README.md)
+
+**Parte:** 04 — Matemática discreta para computación · **Nivel:** `intermedio` · **Horas estimadas:** 4
+**Motor:** `engines.part04` · **Demostración:** `boolean_algebra` · **Clase 17 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,42 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Álgebra booleana** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `boolean_algebra` del motor de la parte.
-4. Interpretar las 6 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `boolean_algebra`.
+4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["096<br/>DAG y orden topológico"] --> C
+    subgraph C["097 · Álgebra booleana"]
+        direction TB
+        D["Demostración<br/><code>boolean_algebra</code>"] --> R["Resultados numéricos<br/>casos<br/>puertas_ahorradas"]
+        D --> V["Verificaciones<br/>equivalentes<br/>absorcion_a∨(a∧b)"]
+        D --> O["Contexto y estructura<br/>expresion<br/>simplificada"]
+    end
+    C --> N["098<br/>Aritmética modular"]
+    C -.-> IA["Uso en IA<br/>parte 04"]
+```
 
 ## 🧠 Idea rectora de la parte 04
 
 > Permutación cuenta orden; combinación cuenta selección.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `boolean_algebra` — Álgebra booleana: simplificación y equivalencia funcional.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (2) | `casos`, `puertas_ahorradas` |
+| ✅ Comprobaciones de invariante (2) | `equivalentes`, `absorcion_a∨(a∧b)` |
 
-- `expresion`
-- `simplificada`
-- `casos`
-- `equivalentes`
-- `absorcion_a∨(a∧b)`
-- `puertas_ahorradas`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-04-matematica-discreta-para-computacion/097-algebra-booleana/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 097
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -66,19 +76,51 @@ existía antes del resultado.
 
 Los grafos de cómputo, la búsqueda en árbol y las GNN son estructuras discretas; el conteo sostiene la probabilidad que después usa todo modelo generativo.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en algoritmos?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
 - Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
 - Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 096 DAG y orden topológico](../096-dag-y-orden-topologico/README.md) · [📚 Parte 04](../README.md) · [🏠 Programa](../../../README.md) · [098 Aritmética modular ➡️](../098-aritmetica-modular/README.md)

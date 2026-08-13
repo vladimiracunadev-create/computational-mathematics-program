@@ -1,9 +1,11 @@
 # 266 — Información mutua
 
-**Parte:** 13 — Teoría de la información, señales y series
-**Nivel:** avanzado
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part13` · demostración `mutual_information`
+> [⬅️ 265 Jensen-Shannon divergence](../265-jensen-shannon-divergence/README.md) · [📚 Parte 13](../README.md) · [🏠 Programa](../../../README.md) · [267 Principio de máxima entropía ➡️](../267-principio-de-maxima-entropia/README.md)
+
+**Parte:** 13 — Teoría de la información, señales y series · **Nivel:** `avanzado` · **Horas estimadas:** 4
+**Motor:** `engines.part13` · **Demostración:** `mutual_information` · **Clase 6 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,44 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Información mutua** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `mutual_information` del motor de la parte.
-4. Interpretar las 8 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `mutual_information`.
+4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: muestrear por debajo de nyquist y culpar al modelo del ruido resultante.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["265<br/>Jensen-Shannon<br/>divergence"] --> C
+    subgraph C["266 · Información mutua"]
+        direction TB
+        D["Demostración<br/><code>mutual_information</code>"] --> R["Resultados numéricos<br/>H(X)<br/>H(Y)<br/>I(X;Y)<br/>… +1 más"]
+        D --> V["Verificaciones<br/>I=0_sii_independientes<br/>I(X;Y)=H(X)-H(X|Y)"]
+        D --> O["Contexto y estructura<br/>conjunta_dependiente<br/>detecta_relaciones_no_lineales"]
+    end
+    C --> N["267<br/>Principio de máxima<br/>entropía"]
+    C -.-> IA["Uso en IA<br/>parte 13"]
+```
 
 ## 🧠 Idea rectora de la parte 13
 
 > La entropía es el límite inferior de compresión sin pérdida.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `mutual_information` — Información mutua: cuánto reduce Y la incertidumbre de X.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (4) | `H(X)`, `H(Y)`, `I(X;Y)`, `I_en_el_caso_independiente` |
+| ✅ Comprobaciones de invariante (2) | `I=0_sii_independientes`, `I(X;Y)=H(X)-H(X|Y)` |
 
-- `conjunta_dependiente`
-- `H(X)`
-- `H(Y)`
-- `I(X;Y)`
-- `I_en_el_caso_independiente`
-- `I=0_sii_independientes`
-- `I(X;Y)=H(X)-H(X|Y)`
-- `detecta_relaciones_no_lineales`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-13-teoria-de-la-informacion-senales-y-series/266-informacion-mutua/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 266
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -68,19 +76,51 @@ existía antes del resultado.
 
 La función de pérdida de casi todo clasificador es entropía cruzada; el VAE optimiza un ELBO con un término KL; las CNN son convoluciones aprendidas.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en compresión?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
 - MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
 - Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 265 Jensen-Shannon divergence](../265-jensen-shannon-divergence/README.md) · [📚 Parte 13](../README.md) · [🏠 Programa](../../../README.md) · [267 Principio de máxima entropía ➡️](../267-principio-de-maxima-entropia/README.md)

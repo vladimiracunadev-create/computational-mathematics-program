@@ -1,9 +1,11 @@
 # 353 — Score matching
 
-**Parte:** 17 — Frontera matemática para IA e investigación
-**Nivel:** frontera-investigacion
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part17` · demostración `score_matching`
+> [⬅️ 352 Neural ODEs](../352-neural-odes/README.md) · [📚 Parte 17](../README.md) · [🏠 Programa](../../../README.md) · [354 Spectral graph theory ➡️](../354-spectral-graph-theory/README.md)
+
+**Parte:** 17 — Frontera matemática para IA e investigación · **Nivel:** `frontera-investigacion` · **Horas estimadas:** 4
+**Motor:** `engines.part17` · **Demostración:** `score_matching` · **Clase 13 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,46 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Score matching** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `score_matching` del motor de la parte.
-4. Interpretar las 10 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `score_matching`.
+4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["352<br/>Neural ODEs"] --> C
+    subgraph C["353 · Score matching"]
+        direction TB
+        D["Demostración<br/><code>score_matching</code>"] --> R["Resultados numéricos<br/>score_con_constante_arbitraria"]
+        D --> V["Verificaciones<br/>es_el_mismo"]
+        D --> O["Contexto y estructura<br/>distribucion<br/>score<br/>comparacion<br/>… +5 más"]
+    end
+    C --> N["354<br/>Spectral graph theory"]
+    C -.-> IA["Uso en IA<br/>parte 17"]
+```
 
 ## 🧠 Idea rectora de la parte 17
 
 > La distancia de Wasserstein compara distribuciones sin exigir soporte común.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `score_matching` — Score matching: aprender ∇ log p sin conocer la constante de normalización.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (1) | `score_con_constante_arbitraria` |
+| ✅ Comprobaciones de invariante (1) | `es_el_mismo` |
 
-- `distribucion`
-- `score`
-- `comparacion`
-- `score_con_constante_arbitraria`
-- `es_el_mismo`
-- `por_que_importa`
-- `muestreo_de_Langevin`
-- `relacion_con_difusion`
-- `denoising_score_matching`
-- `referencia`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-17-frontera-matematica-para-ia-e-investigacion/353-score-matching/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 353
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -70,20 +76,52 @@ existía antes del resultado.
 
 Score matching fundamenta los modelos de difusión; el transporte óptimo aparece en flow matching; la teoría estadística del aprendizaje explica el scaling.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en investigación aplicada?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
 - Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
 - Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
 - Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 352 Neural ODEs](../352-neural-odes/README.md) · [📚 Parte 17](../README.md) · [🏠 Programa](../../../README.md) · [354 Spectral graph theory ➡️](../354-spectral-graph-theory/README.md)

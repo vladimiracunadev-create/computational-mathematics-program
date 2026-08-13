@@ -1,9 +1,11 @@
 # 243 — Gradiente y direcciones de descenso
 
-**Parte:** 12 — Optimización matemática y computacional
-**Nivel:** avanzado
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part12` · demostración `descent_directions`
+> [⬅️ 242 Convexidad](../242-convexidad/README.md) · [📚 Parte 12](../README.md) · [🏠 Programa](../../../README.md) · [244 Gradient descent ➡️](../244-gradient-descent/README.md)
+
+**Parte:** 12 — Optimización matemática y computacional · **Nivel:** `avanzado` · **Horas estimadas:** 4
+**Motor:** `engines.part12` · **Demostración:** `descent_directions` · **Clase 3 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,42 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Gradiente y direcciones de descenso** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `descent_directions` del motor de la parte.
-4. Interpretar las 6 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `descent_directions`.
+4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: declarar convergencia por número de épocas y no por criterio numérico.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["242<br/>Convexidad"] --> C
+    subgraph C["243 · Gradiente y direcciones de<br/>descenso"]
+        direction TB
+        D["Demostración<br/><code>descent_directions</code>"] --> R["Resultados numéricos<br/>f_inicial"]
+        D --> V["Verificaciones<br/>—"]
+        D --> O["Contexto y estructura<br/>-gradiente<br/>coordenada_x<br/>aleatoria_valida<br/>… +2 más"]
+    end
+    C --> N["244<br/>Gradient descent"]
+    C -.-> IA["Uso en IA<br/>parte 12"]
+```
 
 ## 🧠 Idea rectora de la parte 12
 
 > Momentum promedia gradientes; Adam además normaliza por su escala.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `descent_directions` — Cualquier dirección con dᵀ∇f < 0 hace descender la función.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (1) | `f_inicial` |
+| ✅ Comprobaciones de invariante (0) | — |
 
-- `-gradiente`
-- `coordenada_x`
-- `aleatoria_valida`
-- `ascenso`
-- `f_inicial`
-- `la_mas_empinada`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-12-optimizacion-matematica-y-computacional/243-gradiente-y-direcciones-de-descenso/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 243
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -66,19 +76,51 @@ existía antes del resultado.
 
 AdamW es el optimizador por defecto del entrenamiento moderno; entender su actualización explica el weight decay, el warmup y el gradient clipping.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en logística?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
 - Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
 - Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 242 Convexidad](../242-convexidad/README.md) · [📚 Parte 12](../README.md) · [🏠 Programa](../../../README.md) · [244 Gradient descent ➡️](../244-gradient-descent/README.md)

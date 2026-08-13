@@ -1,9 +1,11 @@
 # 085 — Relaciones y propiedades
 
-**Parte:** 04 — Matemática discreta para computación
-**Nivel:** intermedio
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part04` · demostración `relations`
+> [⬅️ 084 Conjuntos y operaciones](../084-conjuntos-y-operaciones/README.md) · [📚 Parte 04](../README.md) · [🏠 Programa](../../../README.md) · [086 Funciones discretas ➡️](../086-funciones-discretas/README.md)
+
+**Parte:** 04 — Matemática discreta para computación · **Nivel:** `intermedio` · **Horas estimadas:** 4
+**Motor:** `engines.part04` · **Demostración:** `relations` · **Clase 5 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,43 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Relaciones y propiedades** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `relations` del motor de la parte.
-4. Interpretar las 7 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `relations`.
+4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: confundir implicación con equivalencia lógica.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["084<br/>Conjuntos y<br/>operaciones"] --> C
+    subgraph C["085 · Relaciones y propiedades"]
+        direction TB
+        D["Demostración<br/><code>relations</code>"] --> R["Resultados numéricos<br/>—"]
+        D --> V["Verificaciones<br/>reflexiva<br/>simetrica<br/>transitiva<br/>… +2 más"]
+        D --> O["Contexto y estructura<br/>relacion<br/>clases_de_equivalencia"]
+    end
+    C --> N["086<br/>Funciones discretas"]
+    C -.-> IA["Uso en IA<br/>parte 04"]
+```
 
 ## 🧠 Idea rectora de la parte 04
 
 > El principio del palomar demuestra colisiones sin construir un ejemplo.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `relations` — Reflexiva, simétrica y transitiva: la receta de una relación de equivalencia.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (0) | — |
+| ✅ Comprobaciones de invariante (5) | `reflexiva`, `simetrica`, `transitiva`, `es_equivalencia`, `particiona_el_universo` |
 
-- `relacion`
-- `reflexiva`
-- `simetrica`
-- `transitiva`
-- `es_equivalencia`
-- `clases_de_equivalencia`
-- `particiona_el_universo`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-04-matematica-discreta-para-computacion/085-relaciones-y-propiedades/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 085
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -67,19 +76,51 @@ existía antes del resultado.
 
 Los grafos de cómputo, la búsqueda en árbol y las GNN son estructuras discretas; el conteo sostiene la probabilidad que después usa todo modelo generativo.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en algoritmos?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
 - Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
 - Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 084 Conjuntos y operaciones](../084-conjuntos-y-operaciones/README.md) · [📚 Parte 04](../README.md) · [🏠 Programa](../../../README.md) · [086 Funciones discretas ➡️](../086-funciones-discretas/README.md)

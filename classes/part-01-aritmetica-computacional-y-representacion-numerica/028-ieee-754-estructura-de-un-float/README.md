@@ -1,9 +1,11 @@
 # 028 — IEEE 754: estructura de un float
 
-**Parte:** 01 — Aritmética computacional y representación numérica
-**Nivel:** basico-computacional
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part01` · demostración `ieee754_layout`
+> [⬅️ 027 Punto fijo frente a punto flotante](../027-punto-fijo-frente-a-punto-flotante/README.md) · [📚 Parte 01](../README.md) · [🏠 Programa](../../../README.md) · [029 Por qué 0.1 + 0.2 no es exactamente 0.3 ➡️](../029-por-que-0-1-0-2-no-es-exactamente-0-3/README.md)
+
+**Parte:** 01 — Aritmética computacional y representación numérica · **Nivel:** `basico-computacional` · **Horas estimadas:** 4
+**Motor:** `engines.part01` · **Demostración:** `ieee754_layout` · **Clase 8 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,44 +21,50 @@ Al terminar podrás:
 
 1. Explicar **IEEE 754: estructura de un float** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `ieee754_layout` del motor de la parte.
-4. Interpretar las 8 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `ieee754_layout`.
+4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: suponer que la suma de floats es asociativa.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["027<br/>Punto fijo frente a<br/>punto flotante"] --> C
+    subgraph C["028 · IEEE 754: estructura de un<br/>float"]
+        direction TB
+        D["Demostración<br/><code>ieee754_layout</code>"] --> R["Resultados numéricos<br/>valor<br/>exponente_bruto<br/>sesgo<br/>… +2 más"]
+        D --> V["Verificaciones<br/>—"]
+        D --> O["Contexto y estructura<br/>bits<br/>signo<br/>mantisa_bits"]
+    end
+    C --> N["029<br/>Por qué 0.1 + 0.2 no<br/>es exactamente 0.3"]
+    C -.-> IA["Uso en IA<br/>parte 01"]
+```
 
 ## 🧠 Idea rectora de la parte 01
 
 > Condicionamiento es del problema; estabilidad es del algoritmo.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `ieee754_layout` — Signo, exponente y mantisa de un float64.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (5) | `valor`, `exponente_bruto`, `sesgo`, `exponente_real`, `reconstruido` |
+| ✅ Comprobaciones de invariante (0) | — |
 
-- `valor`
-- `bits`
-- `signo`
-- `exponente_bruto`
-- `sesgo`
-- `exponente_real`
-- `mantisa_bits`
-- `reconstruido`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-01-aritmetica-computacional-y-representacion-numerica/028-ieee-754-estructura-de-un-float/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 028
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -68,19 +76,51 @@ existía antes del resultado.
 
 float32, bfloat16 y la cuantización a int8 son decisiones de representación. Los NaN en un entrenamiento casi siempre nacen aquí, no en la arquitectura.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en motores numéricos?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
 - Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
 - IEEE 754-2019 Standard for Floating-Point Arithmetic.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 027 Punto fijo frente a punto flotante](../027-punto-fijo-frente-a-punto-flotante/README.md) · [📚 Parte 01](../README.md) · [🏠 Programa](../../../README.md) · [029 Por qué 0.1 + 0.2 no es exactamente 0.3 ➡️](../029-por-que-0-1-0-2-no-es-exactamente-0-3/README.md)

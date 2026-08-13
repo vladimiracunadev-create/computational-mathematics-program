@@ -1,9 +1,11 @@
 # 027 — Punto fijo frente a punto flotante
 
-**Parte:** 01 — Aritmética computacional y representación numérica
-**Nivel:** basico-computacional
-**Duración estimada:** 4 h
-**Motor:** `computational_math.engines.part01` · demostración `fixed_vs_floating`
+> [⬅️ 026 Rango, overflow y wraparound](../026-rango-overflow-y-wraparound/README.md) · [📚 Parte 01](../README.md) · [🏠 Programa](../../../README.md) · [028 IEEE 754: estructura de un float ➡️](../028-ieee-754-estructura-de-un-float/README.md)
+
+**Parte:** 01 — Aritmética computacional y representación numérica · **Nivel:** `basico-computacional` · **Horas estimadas:** 4
+**Motor:** `engines.part01` · **Demostración:** `fixed_vs_floating` · **Clase 7 de 20** de la parte
+
+---
 
 ## 🎯 Propósito
 
@@ -19,42 +21,50 @@ Al terminar podrás:
 
 1. Explicar **Punto fijo frente a punto flotante** con lenguaje cotidiano y con notación matemática.
 2. Resolver un caso pequeño a mano y anticipar el orden de magnitud del resultado.
-3. Ejecutar y modificar `lab.py`, que corre la demostración `fixed_vs_floating` del motor de la parte.
-4. Interpretar las 6 salidas del laboratorio y decir qué invariante comprueba cada una.
+3. Ejecutar y modificar `lab.py`, que corre la demostración `fixed_vs_floating`.
+4. Interpretar las 6 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: comparar floats con `==` en lugar de una tolerancia razonada.
+
+## 🗺️ Ubicación en el programa
+
+```mermaid
+flowchart LR
+    P["026<br/>Rango, overflow y<br/>wraparound"] --> C
+    subgraph C["027 · Punto fijo frente a punto<br/>flotante"]
+        direction TB
+        D["Demostración<br/><code>fixed_vs_floating</code>"] --> R["Resultados numéricos<br/>suma_float_de_0.1_x10<br/>error<br/>suma_en_centavos_enteros<br/>… +1 más"]
+        D --> V["Verificaciones<br/>es_exactamente_1.0<br/>punto_fijo_exacto"]
+        D --> O["Contexto y estructura<br/>—"]
+    end
+    C --> N["028<br/>IEEE 754: estructura<br/>de un float"]
+    C -.-> IA["Uso en IA<br/>parte 01"]
+```
 
 ## 🧠 Idea rectora de la parte 01
 
 > El error relativo, no el absoluto, es la magnitud que se propaga.
 
-## 🧩 Qué calcula el laboratorio
+## 🔬 Qué ejecuta el laboratorio
 
 `fixed_vs_floating` — Punto fijo (centavos enteros) frente a punto flotante.
 
-Salidas que devuelve:
+| Grupo | Salidas |
+|---|---|
+| 🔢 Resultados numéricos (4) | `suma_float_de_0.1_x10`, `error`, `suma_en_centavos_enteros`, `centavos_a_unidades` |
+| ✅ Comprobaciones de invariante (2) | `es_exactamente_1.0`, `punto_fijo_exacto` |
 
-- `suma_float_de_0.1_x10`
-- `es_exactamente_1.0`
-- `error`
-- `suma_en_centavos_enteros`
-- `centavos_a_unidades`
-- `punto_fijo_exacto`
-
-## 🧪 Cómo ejecutarlo
+Las claves booleanas no son adorno: si alguna fuera `False`, el resultado numérico
+no sería fiable aunque el programa terminase sin error.
 
 ```bash
 python classes/part-01-aritmetica-computacional-y-representacion-numerica/027-punto-fijo-frente-a-punto-flotante/lab.py
-```
-
-o desde la CLI del programa:
-
-```bash
 compmath run 027
 ```
 
-Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
-esperabas enseña tanto como uno que te contradice, pero solo si la predicción
-existía antes del resultado.
+> [!TIP]
+> Antes de ejecutar, **escribe tu predicción**. Un laboratorio que confirma lo que
+> esperabas enseña tanto como uno que te contradice, pero solo si la predicción
+> existía antes del resultado.
 
 ## ⚠️ Errores frecuentes en esta parte
 
@@ -66,19 +76,51 @@ existía antes del resultado.
 
 float32, bfloat16 y la cuantización a int8 son decisiones de representación. Los NaN en un entrenamiento casi siempre nacen aquí, no en la arquitectura.
 
+## 📓 Notebooks
+
+| Archivo | Para qué |
+|---|---|
+| [`notebook.ipynb`](notebook.ipynb) | recorrido guiado con la demostración ejecutada |
+| [`notebook_student.ipynb`](notebook_student.ipynb) | versión con `TODO` para resolver |
+| [`notebook_solution.ipynb`](notebook_solution.ipynb) | solución de referencia verificada |
+
+## 📝 Evaluación
+
+| Criterio | Peso |
+|---|---:|
+| Comprensión conceptual | 25 % |
+| Resolución manual | 25 % |
+| Implementación y verificación | 25 % |
+| Interpretación y comunicación | 15 % |
+| Conexión con aplicación real | 10 % |
+
+Detalle y criterios de error crítico en [`assessment.md`](assessment.md).
+
+## ❓ Preguntas de comprobación
+
+1. ¿Cuál es la entrada, cuál la salida y qué unidades tienen?
+2. ¿Qué operación domina el comportamiento del resultado?
+3. ¿Qué caso extremo revelaría un error conceptual?
+4. ¿Cómo verificarías el resultado por un método independiente?
+5. ¿Dónde aparece esto en motores numéricos?
+
+Si necesitas releer el código para responderlas, la clase todavía no está superada.
+
 ## 📥 Entregable
 
-`notebook_student.ipynb` resuelto más un párrafo que explique el resultado sin
-citar código: qué entra, qué sale, qué invariante se comprueba y qué pasaría en
-un caso límite.
+`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
+código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 📚 Referencias de la parte
+## 🔗 Referencias
 
 - Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
 - Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
 - IEEE 754-2019 Standard for Floating-Point Arithmetic.
 
-## 🔗 Siguiente paso
+## 📂 Material de la clase
 
-[`where-is-this-used.md`](where-is-this-used.md) conecta esta clase con las rutas
-especializadas del ecosistema.
+[`intuition.md`](intuition.md) · [`theory.md`](theory.md) · [`derivation.md`](derivation.md) · [`exercises.md`](exercises.md) · [`assessment.md`](assessment.md) · [`where-is-this-used.md`](where-is-this-used.md) · [`lesson.yaml`](lesson.yaml)
+
+---
+
+> [⬅️ 026 Rango, overflow y wraparound](../026-rango-overflow-y-wraparound/README.md) · [📚 Parte 01](../README.md) · [🏠 Programa](../../../README.md) · [028 IEEE 754: estructura de un float ➡️](../028-ieee-754-estructura-de-un-float/README.md)
