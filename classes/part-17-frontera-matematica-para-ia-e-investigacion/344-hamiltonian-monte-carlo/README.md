@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Con gradientes se proponen estados lejanos que se aceptan el 99,8 % de las veces.**
 
-Esta clase concreta ese objetivo sobre **Hamiltonian Monte Carlo**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `hamiltonian_monte_carlo`.
 4. Interpretar las 13 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+energía: H(q,p) = −log p(q) + ‖p‖²/2
+integrador leapfrog, simpléctico
+aceptación basada en la conservación de H
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La geometría de la información dota al espacio de parámetros de una métrica natural.
+Hamiltonian Monte Carlo sustituye la propuesta aleatoria por una simulación de dinámica
+física. Se interpreta el logaritmo negativo de la densidad como una energía potencial, se
+añade una variable de momento con energía cinética, y se simula el movimiento de una
+partícula en ese paisaje.
+
+La ventaja es que la partícula **sigue el gradiente** y se desplaza a regiones lejanas que
+conservan alta densidad. Donde Metropolis-Hastings tantea a ciegas y rechaza a menudo, HMC
+propone estados informados y los acepta casi siempre. En el ejemplo, la tasa de aceptación
+es del 99,8 % con propuestas mucho más lejanas.
+
+El integrador tiene que ser **simpléctico**, y por eso se usa leapfrog y no Euler. Un
+integrador simpléctico conserva el volumen del espacio de fases, lo que es exactamente la
+condición que hace válida la propuesta reversible. Con un integrador cualquiera, la cadena
+no muestrearía la distribución correcta. Es un caso donde la elección del método numérico
+de la parte 11 no es una cuestión de precisión sino de corrección.
+
+Sus dos hiperparámetros —el tamaño de paso y el número de saltos de leapfrog— son delicados
+de ajustar, y **NUTS** los adapta automáticamente. Esa es la razón de que HMC y NUTS sean
+hoy el motor por defecto de Stan, PyMC y NumPyro. Su límite es que exige gradientes, y por
+tanto no sirve con parámetros discretos.
+
+## 🧮 Ejemplo trabajado
+
+HMC frente a random walk sobre el mismo objetivo.
+
+```text
+objetivo: Normal(2,0 ; 1,5)
+3 000 iteraciones
+step size ε = 0,35      pasos de leapfrog: 12
+
+tasa de aceptación: 0,9983
+media estimada: 2,0051      error 0,005
+
+Comparación con Metropolis-Hastings:
+  MH  con paso 0,2:  aceptación 0,95, media 2,4552
+  HMC con ε = 0,35:  aceptación 0,998, media 2,0051
+
+HMC acepta más Y explora más lejos, porque las
+propuestas siguen el gradiente en vez de ser ciegas.
+
+El integrador debe ser simpléctico: con Euler
+la cadena muestrearía la distribución equivocada.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 344
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Usar un integrador no simpléctico y muestrear la distribución equivocada.
+2. Ajustar ε y el número de saltos a mano existiendo NUTS.
+3. Aplicar HMC a modelos con parámetros discretos.
+
+## 🚀 Dónde se usa de verdad
+
+Motores de inferencia bayesiana como Stan y PyMC, modelos jerárquicos complejos, física
+computacional y cuantificación de incertidumbre en redes.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Neal, R. *MCMC using Hamiltonian dynamics*, Handbook of MCMC, 2011](https://arxiv.org/abs/1206.1901)
+- [Betancourt, M. *A Conceptual Introduction to Hamiltonian Monte Carlo*, 2017](https://arxiv.org/abs/1701.02434)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Una función es kernel válido si y solo si su matriz de Gram es siempre semidefinida positiva.**
 
-Esta clase concreta ese objetivo sobre **Kernel methods avanzados**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `advanced_kernels`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+K(a,b) = φ(a)ᵀφ(b) para alguna φ
+Mercer: matriz de Gram semidefinida positiva
+suma y producto de kernels son kernels
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> HMC usa gradientes para proponer estados lejanos con alta aceptación.
+Un kernel codifica una noción de similitud, y elegirlo es elegir qué se considera parecido.
+Cada familia impone supuestos distintos sobre las funciones que el modelo puede
+representar, y esos supuestos son la parte del modelado que realmente importa.
+
+El **RBF** o gaussiano supone funciones infinitamente suaves y decae con la distancia; es
+el punto de partida razonable. El **polinómico** captura interacciones de grado fijo. La
+familia **Matérn** es más flexible: su parámetro controla la suavidad, y Matérn 3/2 o 5/2
+suelen ajustarse mejor a datos reales que el RBF, que a menudo es demasiado suave.
+
+La **condición de Mercer** caracteriza qué funciones son kernels legítimos: aquellas cuya
+matriz de Gram es semidefinida positiva para cualquier conjunto de puntos. Esa condición
+garantiza que existe un espacio de características —posiblemente de dimensión infinita—
+donde el kernel es el producto escalar, y es lo que hace válido el truco de la clase 290.
+
+Las **reglas de composición** permiten construir kernels a medida sin verificar Mercer cada
+vez: sumas, productos y escalados de kernels válidos siguen siendo válidos. Con eso se
+combinan estructuras —periodicidad más tendencia más ruido— de forma modular, que es como
+se modelan series temporales complejas con GP.
+
+## 🧮 Ejemplo trabajado
+
+Cuatro kernels y la verificación de Mercer.
+
+```text
+valores sobre un mismo par de puntos:
+  RBF                  0,32465247
+  polinómico grado 3  42,87500000
+  Matérn 3/2           0,26770000
+
+matriz de Gram del RBF (4 puntos):
+  [1,000000  0,882497  0,606531  0,324652]
+  [0,882497  1,000000  0,882497  0,606531]
+  [ ...                                  ]
+
+autovalores:
+  [3,11850065 ; 0,78879628 ; 0,08864872 ; 0,00405435]
+
+todos ≥ 0  →  semidefinida positiva                  ✓
+cumple Mercer                                        ✓
+
+El menor autovalor es 0,004: casi singular.
+Sin jitter, Cholesky fallaría.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 342
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Usar como kernel una función que no cumple Mercer.
+2. Elegir RBF por defecto cuando los datos no son tan suaves.
+3. Combinar kernels sin normalizar sus escalas.
+
+## 🚀 Dónde se usa de verdad
+
+Procesos gaussianos, SVM no lineales, PCA con kernel, modelado de series temporales
+estructuradas y comparación de objetos complejos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Schölkopf, B.; Smola, A. *Learning with Kernels*, MIT Press, 2002](https://mitpress.mit.edu/9780262536578/learning-with-kernels/)
+- [Duvenaud, D. *Automatic Model Construction with Gaussian Processes*, tesis, 2014](https://www.cs.toronto.edu/~duvenaud/thesis.pdf)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

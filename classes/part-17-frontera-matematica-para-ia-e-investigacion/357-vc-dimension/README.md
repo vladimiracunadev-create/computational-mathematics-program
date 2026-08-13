@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Una clase con infinitas hipótesis puede tener dimensión VC igual a 1.**
 
-Esta clase concreta ese objetivo sobre **VC dimension**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `vc_dimension`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+VC = tamaño del mayor conjunto que la clase fragmenta
+umbrales en 1D: VC = 1
+hiperplanos en ℝᵈ: VC = d + 1
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> HMC usa gradientes para proponer estados lejanos con alta aceptación.
+La dimensión de Vapnik-Chervonenkis mide la capacidad de una clase de hipótesis por lo que
+**puede hacer**, no por cuántas hipótesis contiene. Una clase **fragmenta** un conjunto de
+puntos si puede realizar todas las `2ⁿ` etiquetaciones posibles, y la dimensión VC es el
+tamaño del mayor conjunto que consigue fragmentar.
+
+La distinción con el número de hipótesis es la aportación conceptual. La clase de los
+umbrales en una dimensión es **infinita** —hay un umbral por cada número real— y su
+dimensión VC es **1**: puede etiquetar un punto de las dos formas, pero con dos puntos no
+puede producir la etiquetación «derecha positiva, izquierda negativa». Contar hipótesis no
+mide capacidad; fragmentar sí.
+
+Los valores conocidos son informativos. Los intervalos en una dimensión tienen VC 2, porque
+no pueden etiquetar `+ − +`. Los hiperplanos en `ℝᵈ` tienen VC `d+1`, así que en el plano
+son 3: con cuatro puntos en las esquinas de un cuadrado, la configuración XOR no es
+separable, exactamente el problema del perceptrón de la clase 301.
+
+Su papel es dar cotas de generalización que dependen de la capacidad y no del número de
+hipótesis. Su límite práctico es severo: para redes neuronales la dimensión VC crece con el
+número de parámetros, lo que predice que las redes modernas no deberían generalizar en
+absoluto. La teoría es correcta y la cota es tan holgada que no informa; medidas
+alternativas como la complejidad de Rademacher o las basadas en normas se comportan algo
+mejor, sin resolver del todo la cuestión.
+
+## 🧮 Ejemplo trabajado
+
+Dimensión VC de tres clases de hipótesis.
+
+```text
+Umbrales en 1D:
+  fragmenta 1 punto:  sí
+  fragmenta 2 puntos: no
+  VC = 1
+  (la clase es infinita y su VC vale 1)
+
+Intervalos en 1D:
+  VC = 2
+  razón: no puede etiquetar + − + con un solo intervalo
+
+Hiperplanos en ℝᵈ:
+  VC = d + 1
+  en ℝ²: VC = 3
+
+Por qué no 4 puntos en ℝ²:
+  XOR en las esquinas de un cuadrado no es separable,
+  el mismo obstáculo del perceptrón.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 357
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Medir capacidad por el número de hipótesis en vez de por fragmentación.
+2. Aplicar cotas basadas en VC a redes profundas esperando predicciones útiles.
+3. Confundir dimensión VC con número de parámetros.
+
+## 🚀 Dónde se usa de verdad
+
+Cotas de generalización, comparación de familias de modelos, teoría del aprendizaje y
+análisis de complejidad de clases de hipótesis.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Vapnik, V. *The Nature of Statistical Learning Theory*, Springer, 1995](https://doi.org/10.1007/978-1-4757-3264-1)
+- [Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*, Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

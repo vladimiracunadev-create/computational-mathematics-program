@@ -1,0 +1,1374 @@
+part: "17"
+titulo: "Frontera matemática para IA e investigación"
+
+resumen_extendido: |
+  Esta última parte recorre la matemática que aparece en los artículos de investigación
+  actuales y que rara vez se enseña en un curso introductorio. No es un apéndice decorativo:
+  score matching **es** el fundamento de los modelos de difusión, el transporte óptimo aparece
+  en flow matching, y la teoría estadística del aprendizaje es lo que da marco a las leyes de
+  escala. Quien quiera leer papers y reproducirlos necesita estas herramientas.
+
+  Las clases 341 a 345 tratan la inferencia. Un **proceso gaussiano** define una distribución
+  sobre **funciones** en vez de sobre parámetros, y su virtud es que la incertidumbre es
+  honesta: mínima donde hay datos, y de vuelta al prior donde no los hay. Los métodos de
+  muestreo aparecen con su diagnóstico obligatorio: Metropolis-Hastings tiene una tasa de
+  aceptación óptima cercana a 0,44 y un paso mal elegido produce cadenas que aceptan casi todo
+  y no exploran nada. **HMC** usa el gradiente para proponer estados lejanos con altísima
+  aceptación, y la **inferencia variacional** cambia muestrear por optimizar.
+
+  Las clases 346 y 347 introducen el **transporte óptimo**, que responde a cuánto cuesta mover
+  una distribución hasta otra. Su ventaja decisiva sobre la KL es que funciona **sin soporte
+  común**: cuando dos distribuciones no se solapan, la KL es infinita o constante y su gradiente
+  inútil, mientras que Wasserstein sigue midiendo la separación real. Eso es exactamente lo que
+  arregló WGAN, y lo que hace del transporte óptimo el lenguaje del flow matching.
+
+  Las clases 348 a 350 aportan geometría. La **hipótesis de la variedad** —los datos reales
+  viven en una variedad de dimensión intrínseca mucho menor que la del espacio ambiente— es lo
+  que explica que el aprendizaje sea posible en dimensión alta. La **geometría de la
+  información** dota al espacio de parámetros de una métrica natural: la información de Fisher
+  es la curvatura local de la divergencia KL, y de ahí salen la cota de Cramér-Rao y el
+  gradiente natural, invariante a reparametrizaciones.
+
+  Las clases 351 a 355 tratan la dinámica y la causalidad. Las **ecuaciones diferenciales
+  estocásticas** describen procesos con ruido continuo y son la formulación en tiempo continuo
+  de la difusión; los **Neural ODE** tratan la profundidad como variable continua y usan el
+  método adjunto para no almacenar toda la trayectoria; el **score matching** aprende
+  `∇ log p` sin necesitar la constante de normalización, que es precisamente la cantidad
+  intratable; y la **inferencia causal** muestra con números cómo el ajuste por puerta trasera
+  recupera un efecto real de cero que la correlación cruda estimaba en 1,02.
+
+  El cierre (356 a 359) es teoría del aprendizaje: riesgo empírico frente a riesgo verdadero,
+  dimensión VC, cotas PAC y teoría de aproximación. Conviene decir con claridad qué aportan y
+  qué no. Las cotas PAC son correctas y **enormemente holgadas** en la práctica: predicen que
+  las redes profundas no deberían generalizar y generalizan. Su valor es cualitativo —cómo
+  escala la muestra necesaria con `1/ε` y con la complejidad— no cuantitativo.
+
+  El capstone reproduce el núcleo matemático de un resultado publicado: el estimador de Sinkhorn
+  converge al transporte óptimo cuando la regularización entrópica tiende a cero. Verificar un
+  resultado de un artículo con código propio y datos donde el óptimo se conoce por fuerza bruta
+  es la habilidad que este programa entero ha estado construyendo desde la primera clase.
+
+mapa: |
+  flowchart TD
+      A["Clases 341-342 · Procesos gaussianos y kernels"] --> B["Clases 343-345 · MCMC, HMC y variacional"]
+      B --> C["Clases 346-347 · Transporte optimo y Wasserstein"]
+      C --> D["Clases 348-350 · Variedades y geometria de la informacion"]
+      D --> E["Clases 351-353 · SDE, Neural ODE y score matching"]
+      A --> F["Clases 354-355 · Grafos espectrales y causalidad"]
+      E --> G["Clases 356-359 · Teoria del aprendizaje y escala"]
+      F --> G
+      G --> H["Clase 360 · Capstone reproducir un paper"]
+      C -.-> I["Divergencias KL y JS · Parte 13"]
+      E -.-> J["Modelos de difusion · Parte 16"]
+      B -.-> K["Inferencia bayesiana · Parte 10"]
+
+glosario:
+  - termino: "Proceso gaussiano"
+    definicion: "Distribución sobre funciones definida por una media y un kernel de covarianza."
+    clase: "341"
+  - termino: "Jitter numérico"
+    definicion: "Pequeña constante sumada a la diagonal para que la covarianza sea invertible."
+    clase: "341"
+  - termino: "Condición de Mercer"
+    definicion: "Una función es kernel válido si su matriz de Gram es siempre semidefinida positiva."
+    clase: "342"
+  - termino: "Matriz de Gram"
+    definicion: "Matriz de todos los productos kernel entre pares de puntos."
+    clase: "342"
+  - termino: "Metropolis-Hastings"
+    definicion: "Propone un estado y lo acepta con probabilidad dependiente de la razón de densidades."
+    clase: "343"
+  - termino: "Tasa de aceptación"
+    definicion: "Fracción de propuestas aceptadas. El óptimo en una dimensión ronda 0,44."
+    clase: "343"
+  - termino: "Burn-in"
+    definicion: "Iteraciones iniciales descartadas hasta que la cadena alcanza su distribución estacionaria."
+    clase: "343"
+  - termino: "Hamiltonian Monte Carlo"
+    definicion: "Usa el gradiente y dinámica hamiltoniana para proponer estados lejanos con alta aceptación."
+    clase: "344"
+  - termino: "Leapfrog"
+    definicion: "Integrador simpléctico que conserva el volumen y hace válida la propuesta de HMC."
+    clase: "344"
+  - termino: "Inferencia variacional"
+    definicion: "Aproximar una posterior optimizando dentro de una familia en vez de muestrear."
+    clase: "345"
+  - termino: "Familia variacional"
+    definicion: "Conjunto de distribuciones candidatas entre las que se busca la mejor aproximación."
+    clase: "345"
+  - termino: "Transporte óptimo"
+    definicion: "Plan de mínimo coste para transformar una distribución en otra."
+    clase: "346"
+  - termino: "Algoritmo de Sinkhorn"
+    definicion: "Resuelve el transporte con regularización entrópica mediante escalados alternos."
+    clase: "346"
+  - termino: "Distancia de Wasserstein"
+    definicion: "Coste mínimo de transporte. Es una métrica verdadera y funciona sin soporte común."
+    clase: "347"
+  - termino: "Hipótesis de la variedad"
+    definicion: "Los datos reales viven cerca de una variedad de dimensión mucho menor que la ambiente."
+    clase: "348"
+  - termino: "Dimensión intrínseca"
+    definicion: "Número de grados de libertad reales de los datos, independiente del espacio de representación."
+    clase: "348"
+  - termino: "Tensor métrico"
+    definicion: "Objeto que define distancias y ángulos localmente en una variedad."
+    clase: "349"
+  - termino: "Geodésica"
+    definicion: "Curva de longitud mínima entre dos puntos de una variedad."
+    clase: "349"
+  - termino: "Información de Fisher"
+    definicion: "Curvatura local de la KL. Métrica natural del espacio de parámetros."
+    clase: "350"
+  - termino: "Cota de Cramér-Rao"
+    definicion: "Ningún estimador insesgado tiene varianza menor que la inversa de la información de Fisher."
+    clase: "350"
+  - termino: "Gradiente natural"
+    definicion: "Gradiente preacondicionado por la inversa de Fisher. Invariante a reparametrizaciones."
+    clase: "350"
+  - termino: "Ecuación diferencial estocástica"
+    definicion: "Ecuación con un término de deriva y otro de ruido browniano."
+    clase: "351"
+  - termino: "Euler-Maruyama"
+    definicion: "Integrador de SDE. El ruido escala como √dt, no como dt."
+    clase: "351"
+  - termino: "Neural ODE"
+    definicion: "Red donde la profundidad es continua y la salida es la solución de una EDO aprendida."
+    clase: "352"
+  - termino: "Método adjunto"
+    definicion: "Calcula gradientes resolviendo una EDO hacia atrás, con memoria constante."
+    clase: "352"
+  - termino: "Score"
+    definicion: "∇ₓ log p(x). No depende de la constante de normalización."
+    clase: "353"
+  - termino: "Constante de normalización"
+    definicion: "Z que hace que la densidad integre 1. Suele ser intratable y el score la evita."
+    clase: "353"
+  - termino: "Vector de Fiedler"
+    definicion: "Autovector del segundo autovalor del Laplaciano. Su signo sugiere el corte del grafo."
+    clase: "354"
+  - termino: "Conectividad algebraica"
+    definicion: "Segundo autovalor del Laplaciano. Mide cuán difícil es partir el grafo."
+    clase: "354"
+  - termino: "Criterio de puerta trasera"
+    definicion: "Ajustar por un conjunto que bloquee todos los caminos no causales entre X e Y."
+    clase: "355"
+  - termino: "Colisionador"
+    definicion: "Variable causada por dos otras. Condicionar sobre ella crea asociación espuria."
+    clase: "355"
+  - termino: "Riesgo empírico"
+    definicion: "Error medido sobre la muestra de entrenamiento."
+    clase: "356"
+  - termino: "Brecha de generalización"
+    definicion: "Diferencia entre riesgo verdadero y riesgo empírico."
+    clase: "356"
+  - termino: "Dimensión VC"
+    definicion: "Tamaño del mayor conjunto que la clase de hipótesis puede etiquetar de todas las formas."
+    clase: "357"
+  - termino: "Fragmentar"
+    definicion: "Realizar todas las 2ⁿ etiquetaciones posibles de n puntos."
+    clase: "357"
+  - termino: "Aprendizaje PAC"
+    definicion: "Probablemente aproximadamente correcto: error ≤ ε con probabilidad ≥ 1 − δ."
+    clase: "358"
+  - termino: "Complejidad muestral"
+    definicion: "Número de ejemplos necesarios para garantizar (ε, δ). Crece como 1/ε y log(1/δ)."
+    clase: "358"
+  - termino: "Ley de escala"
+    definicion: "Error que decae como una potencia del número de parámetros o de datos."
+    clase: "359"
+
+clases:
+  "341":
+    concepto: "Un proceso gaussiano distribuye sobre funciones, y su incertidumbre crece donde no hay datos."
+    formulas:
+      - "f ~ GP(m(x), k(x,x'))"
+      - "media posterior: K*ᵀ(K + σ²I)⁻¹y"
+      - "varianza posterior: k** − K*ᵀ(K + σ²I)⁻¹K*"
+    desarrollo: |
+      Un proceso gaussiano cambia el objeto sobre el que se pone la distribución. En vez de
+      definir un modelo paramétrico y distribuir sobre sus parámetros, distribuye directamente
+      sobre **funciones**: cualquier conjunto finito de evaluaciones sigue una normal
+      multivariante determinada por el kernel.
+
+      Su propiedad más valiosa es que la **incertidumbre es honesta**. Cerca de un punto
+      observado la varianza posterior es casi nula, porque la función tiene que pasar por ahí;
+      lejos de todos los datos, vuelve a la varianza del prior. Ningún modelo paramétrico da eso
+      gratis, y es la razón de que los GP dominen la optimización bayesiana, donde hay que decidir
+      dónde explorar a continuación.
+
+      El precio es el coste. Invertir la matriz de covarianza cuesta `O(n³)` en tiempo y `O(n²)`
+      en memoria, lo que limita el método a unos miles de puntos sin aproximaciones. Las técnicas
+      de puntos inductores y los GP dispersos existen precisamente para sortear ese muro.
+
+      Una advertencia de implementación que no es opcional: la matriz de covarianza es
+      teóricamente definida positiva pero **numéricamente casi singular** cuando hay puntos
+      próximos. Sin sumar un pequeño **jitter** a la diagonal, la factorización de Cholesky
+      falla. Es el mismo problema de condicionamiento de la parte 11, y la solución es la misma
+      idea que Ridge: sumar `λI`.
+    ejemplo: |
+      GP con kernel RBF sobre cinco observaciones.
+
+      ```text
+      observaciones: 5      kernel: RBF con escala 1,0
+      ruido: 0,0001
+
+      predicción en x = −1,0:
+        media = −0,841409
+        desviación = 0,009999
+        valor real de sin(−1) = −0,841471                  ✓
+
+      En un punto observado la varianza es mínima          ✓
+      Lejos de los datos la varianza vuelve al prior: 1,0
+
+      Esa es la propiedad clave: el modelo sabe
+      dónde no sabe.
+
+      Coste: invertir la covarianza es O(n³).
+      Con n = 10 000 ya es inviable sin aproximar.
+      ```
+    errores:
+      - "Invertir la covarianza sin sumar jitter a la diagonal."
+      - "Aplicar GP exacto a decenas de miles de puntos."
+      - "Elegir el kernel sin considerar qué suavidad implica sobre las funciones."
+    aplicacion: |
+      Optimización bayesiana de hiperparámetros, regresión con incertidumbre calibrada,
+      geoestadística, diseño experimental y modelos sustitutos de simuladores costosos.
+    referencias:
+      - "[Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*, MIT Press, 2006](https://gaussianprocess.org/gpml/)"
+      - "[Snoek, J.; Larochelle, H.; Adams, R. *Practical Bayesian Optimization*, NeurIPS, 2012](https://arxiv.org/abs/1206.2944)"
+
+  "342":
+    concepto: "Una función es kernel válido si y solo si su matriz de Gram es siempre semidefinida positiva."
+    formulas:
+      - "K(a,b) = φ(a)ᵀφ(b) para alguna φ"
+      - "Mercer: matriz de Gram semidefinida positiva"
+      - "suma y producto de kernels son kernels"
+    desarrollo: |
+      Un kernel codifica una noción de similitud, y elegirlo es elegir qué se considera parecido.
+      Cada familia impone supuestos distintos sobre las funciones que el modelo puede
+      representar, y esos supuestos son la parte del modelado que realmente importa.
+
+      El **RBF** o gaussiano supone funciones infinitamente suaves y decae con la distancia; es
+      el punto de partida razonable. El **polinómico** captura interacciones de grado fijo. La
+      familia **Matérn** es más flexible: su parámetro controla la suavidad, y Matérn 3/2 o 5/2
+      suelen ajustarse mejor a datos reales que el RBF, que a menudo es demasiado suave.
+
+      La **condición de Mercer** caracteriza qué funciones son kernels legítimos: aquellas cuya
+      matriz de Gram es semidefinida positiva para cualquier conjunto de puntos. Esa condición
+      garantiza que existe un espacio de características —posiblemente de dimensión infinita—
+      donde el kernel es el producto escalar, y es lo que hace válido el truco de la clase 290.
+
+      Las **reglas de composición** permiten construir kernels a medida sin verificar Mercer cada
+      vez: sumas, productos y escalados de kernels válidos siguen siendo válidos. Con eso se
+      combinan estructuras —periodicidad más tendencia más ruido— de forma modular, que es como
+      se modelan series temporales complejas con GP.
+    ejemplo: |
+      Cuatro kernels y la verificación de Mercer.
+
+      ```text
+      valores sobre un mismo par de puntos:
+        RBF                  0,32465247
+        polinómico grado 3  42,87500000
+        Matérn 3/2           0,26770000
+
+      matriz de Gram del RBF (4 puntos):
+        [1,000000  0,882497  0,606531  0,324652]
+        [0,882497  1,000000  0,882497  0,606531]
+        [ ...                                  ]
+
+      autovalores:
+        [3,11850065 ; 0,78879628 ; 0,08864872 ; 0,00405435]
+
+      todos ≥ 0  →  semidefinida positiva                  ✓
+      cumple Mercer                                        ✓
+
+      El menor autovalor es 0,004: casi singular.
+      Sin jitter, Cholesky fallaría.
+      ```
+    errores:
+      - "Usar como kernel una función que no cumple Mercer."
+      - "Elegir RBF por defecto cuando los datos no son tan suaves."
+      - "Combinar kernels sin normalizar sus escalas."
+    aplicacion: |
+      Procesos gaussianos, SVM no lineales, PCA con kernel, modelado de series temporales
+      estructuradas y comparación de objetos complejos.
+    referencias:
+      - "[Schölkopf, B.; Smola, A. *Learning with Kernels*, MIT Press, 2002](https://mitpress.mit.edu/9780262536578/learning-with-kernels/)"
+      - "[Duvenaud, D. *Automatic Model Construction with Gaussian Processes*, tesis, 2014](https://www.cs.toronto.edu/~duvenaud/thesis.pdf)"
+
+  "343":
+    concepto: "Aceptar el 95 % de las propuestas no es buena señal: significa que no se explora."
+    formulas:
+      - "aceptar con probabilidad min(1, p(x')/p(x))"
+      - "tasa óptima en 1D ≈ 0,44"
+      - "descartar el burn-in antes de estimar"
+    desarrollo: |
+      Metropolis-Hastings genera muestras de una distribución conocida solo hasta una constante,
+      que es la situación habitual en inferencia bayesiana: la posterior se conoce salvo por la
+      evidencia, que es una integral intratable. El algoritmo propone un estado y lo acepta con
+      probabilidad proporcional a la razón de densidades, en la que la constante se cancela.
+
+      El **tamaño del paso** de la propuesta controla todo el comportamiento, y sus dos extremos
+      son igual de malos. Un paso pequeño acepta casi todas las propuestas pero se mueve muy
+      despacio, produciendo muestras fuertemente autocorrelacionadas que aportan poca información
+      nueva. Un paso grande propone estados improbables que se rechazan, y la cadena se queda
+      quieta.
+
+      La teoría da un objetivo concreto: la tasa óptima de aceptación en una dimensión ronda
+      **0,44**, y en dimensiones altas converge a 0,234. Una tasa del 95 % no indica un buen
+      muestreador sino un paso demasiado tímido, y es un error de lectura frecuente.
+
+      Ningún resultado MCMC debe reportarse sin **diagnóstico**. Descartar el burn-in inicial,
+      examinar la autocorrelación, calcular el tamaño de muestra efectivo y ejecutar varias
+      cadenas comprobando el estadístico R̂ son pasos obligatorios. Una cadena que no ha
+      convergido produce números perfectamente plausibles y completamente equivocados.
+    ejemplo: |
+      Efecto del tamaño de paso sobre la exploración.
+
+      ```text
+      objetivo: Normal(2,0 ; 1,5)
+      8 000 iteraciones, burn-in 2 000
+
+      paso = 0,2:
+        tasa de aceptación: 0,9547
+        media estimada: 2,4552          error 0,455
+        acepta casi todo pero explora muy despacio         ✗
+
+      paso óptimo (tasa ≈ 0,44):
+        media estimada mucho más cercana a 2,0
+
+      Tasa óptima teórica:
+        1 dimensión:     0,44
+        alta dimensión:  0,234
+
+      Una tasa alta no es buena señal: es síntoma
+      de que la cadena apenas se mueve.
+      ```
+    errores:
+      - "Interpretar una tasa de aceptación alta como buena convergencia."
+      - "Reportar resultados MCMC sin diagnóstico ni burn-in."
+      - "Ejecutar una sola cadena y no poder calcular R̂."
+    aplicacion: |
+      Inferencia bayesiana con posteriores complejas, física estadística, modelos jerárquicos y
+      cuantificación de incertidumbre.
+    referencias:
+      - "[Brooks, S. et al. *Handbook of Markov Chain Monte Carlo*, CRC, 2011](https://doi.org/10.1201/b10905)"
+      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)"
+
+  "344":
+    concepto: "Con gradientes se proponen estados lejanos que se aceptan el 99,8 % de las veces."
+    formulas:
+      - "energía: H(q,p) = −log p(q) + ‖p‖²/2"
+      - "integrador leapfrog, simpléctico"
+      - "aceptación basada en la conservación de H"
+    desarrollo: |
+      Hamiltonian Monte Carlo sustituye la propuesta aleatoria por una simulación de dinámica
+      física. Se interpreta el logaritmo negativo de la densidad como una energía potencial, se
+      añade una variable de momento con energía cinética, y se simula el movimiento de una
+      partícula en ese paisaje.
+
+      La ventaja es que la partícula **sigue el gradiente** y se desplaza a regiones lejanas que
+      conservan alta densidad. Donde Metropolis-Hastings tantea a ciegas y rechaza a menudo, HMC
+      propone estados informados y los acepta casi siempre. En el ejemplo, la tasa de aceptación
+      es del 99,8 % con propuestas mucho más lejanas.
+
+      El integrador tiene que ser **simpléctico**, y por eso se usa leapfrog y no Euler. Un
+      integrador simpléctico conserva el volumen del espacio de fases, lo que es exactamente la
+      condición que hace válida la propuesta reversible. Con un integrador cualquiera, la cadena
+      no muestrearía la distribución correcta. Es un caso donde la elección del método numérico
+      de la parte 11 no es una cuestión de precisión sino de corrección.
+
+      Sus dos hiperparámetros —el tamaño de paso y el número de saltos de leapfrog— son delicados
+      de ajustar, y **NUTS** los adapta automáticamente. Esa es la razón de que HMC y NUTS sean
+      hoy el motor por defecto de Stan, PyMC y NumPyro. Su límite es que exige gradientes, y por
+      tanto no sirve con parámetros discretos.
+    ejemplo: |
+      HMC frente a random walk sobre el mismo objetivo.
+
+      ```text
+      objetivo: Normal(2,0 ; 1,5)
+      3 000 iteraciones
+      step size ε = 0,35      pasos de leapfrog: 12
+
+      tasa de aceptación: 0,9983
+      media estimada: 2,0051      error 0,005
+
+      Comparación con Metropolis-Hastings:
+        MH  con paso 0,2:  aceptación 0,95, media 2,4552
+        HMC con ε = 0,35:  aceptación 0,998, media 2,0051
+
+      HMC acepta más Y explora más lejos, porque las
+      propuestas siguen el gradiente en vez de ser ciegas.
+
+      El integrador debe ser simpléctico: con Euler
+      la cadena muestrearía la distribución equivocada.
+      ```
+    errores:
+      - "Usar un integrador no simpléctico y muestrear la distribución equivocada."
+      - "Ajustar ε y el número de saltos a mano existiendo NUTS."
+      - "Aplicar HMC a modelos con parámetros discretos."
+    aplicacion: |
+      Motores de inferencia bayesiana como Stan y PyMC, modelos jerárquicos complejos, física
+      computacional y cuantificación de incertidumbre en redes.
+    referencias:
+      - "[Neal, R. *MCMC using Hamiltonian dynamics*, Handbook of MCMC, 2011](https://arxiv.org/abs/1206.1901)"
+      - "[Betancourt, M. *A Conceptual Introduction to Hamiltonian Monte Carlo*, 2017](https://arxiv.org/abs/1701.02434)"
+
+  "345":
+    concepto: "Cambiar muestreo por optimización: más rápido, aproximado y con sesgo conocido."
+    formulas:
+      - "minimizar KL(q ‖ p) sobre la familia variacional"
+      - "equivale a maximizar el ELBO"
+      - "el resultado depende de la familia elegida"
+    desarrollo: |
+      La inferencia variacional plantea la aproximación de una posterior como un problema de
+      **optimización**: elegir una familia de distribuciones tratables y buscar dentro de ella la
+      que minimiza la divergencia KL respecto de la posterior real. Sustituye muestrear por
+      minimizar.
+
+      La ventaja es la velocidad y la escala. Donde MCMC necesita miles de evaluaciones
+      secuenciales, la inferencia variacional aprovecha descenso de gradiente, minilotes y GPU. Es
+      lo que hace viable la inferencia bayesiana en modelos con millones de parámetros, y es la
+      razón de que el VAE de la clase 331 funcione.
+
+      El precio es un **sesgo sistemático**. Como se minimiza `KL(q‖p)` —la dirección de búsqueda
+      de modo, según la clase 264— la aproximación tiende a **subestimar la varianza** y a
+      concentrarse en un modo. MCMC es asintóticamente exacto; la inferencia variacional es
+      rápida y sesgada, y ese sesgo no desaparece con más cómputo.
+
+      La elección de familia determina el resultado. La aproximación de **campo medio**, que
+      supone independencia entre parámetros, es la más común y la que peor captura correlaciones
+      posteriores. Familias más expresivas —flujos normalizadores— reducen el sesgo a cambio de
+      coste. El criterio práctico es claro: MCMC cuando el modelo es pequeño y la exactitud
+      importa; variacional cuando el modelo es grande y la escala manda.
+    ejemplo: |
+      Aproximación variacional de una posterior normal.
+
+      ```text
+      posterior real: Normal(mu = 3,0 ; sigma = 0,8)
+      familia variacional: Normal(m, s)
+
+      paso     m         s         KL
+        1    0,46875   0,945303   5,03687513
+        …
+      final  3,00000   0,800000   ≈ 0
+
+      La familia contiene la posterior real, así que
+      la aproximación es exacta y KL llega a 0.        ✓
+
+      En un caso real la familia NO contiene la posterior,
+      y KL se estanca en un valor positivo: ese residuo
+      es el sesgo del método.
+
+      Con campo medio, s quedaría por debajo del real:
+      la varianza se subestima sistemáticamente.
+      ```
+    errores:
+      - "Reportar la incertidumbre variacional como si fuera exacta."
+      - "Usar campo medio con posteriores fuertemente correlacionadas."
+      - "Comparar valores de ELBO entre familias variacionales distintas."
+    aplicacion: |
+      VAE, redes bayesianas a escala, topic models, inferencia en modelos grandes y
+      cuantificación rápida de incertidumbre.
+    referencias:
+      - "[Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670)"
+      - "[Rezende, D.; Mohamed, S. *Variational Inference with Normalizing Flows*, ICML, 2015](https://arxiv.org/abs/1505.05770)"
+
+  "346":
+    concepto: "Sinkhorn convierte un problema de programación lineal en escalados alternos."
+    formulas:
+      - "min_P Σ Pᵢⱼ·Cᵢⱼ  sujeto a marginales fijas"
+      - "regularizado: + ε·Σ Pᵢⱼ·log Pᵢⱼ"
+      - "solución: escalados alternos de filas y columnas"
+    desarrollo: |
+      El transporte óptimo pregunta cuál es la forma más barata de mover una distribución de masa
+      hasta convertirla en otra, dado un coste por unidad transportada. La formulación de
+      Kantorovich lo plantea como un programa lineal sobre planes de transporte con marginales
+      fijas.
+
+      Resolver ese programa lineal exactamente cuesta `O(n³ log n)`, prohibitivo para
+      distribuciones grandes. La aportación de Cuturi fue añadir una **regularización
+      entrópica**: penalizar planes de baja entropía suaviza el problema, lo vuelve
+      estrictamente convexo, y su solución adopta una forma que se calcula con **escalados
+      alternos** de filas y columnas.
+
+      Ese algoritmo —Sinkhorn— es sencillo, paralelizable y **diferenciable**, lo que permite
+      usarlo como capa dentro de una red neuronal. Esas tres propiedades juntas son las que
+      llevaron el transporte óptimo de la matemática pura al aprendizaje automático aplicado en
+      apenas unos años.
+
+      El parámetro `ε` controla el compromiso. Valores grandes dan convergencia rápida y planes
+      muy difusos, lejos del óptimo verdadero; valores pequeños se acercan al transporte exacto
+      pero convergen despacio y sufren problemas numéricos por desbordamiento en los
+      exponentes. El capstone de la clase 360 mide exactamente esa convergencia.
+    ejemplo: |
+      Sinkhorn entre dos distribuciones de tres átomos.
+
+      ```text
+      origen:  [0,4 ; 0,3 ; 0,3]
+      destino: [0,2 ; 0,5 ; 0,3]
+
+      matriz de coste:
+        [0,5  1,5  3,0]
+        [0,5  0,5  2,0]
+        [1,5  0,5  1,0]
+
+      regularización ε = 0,05
+
+      plan de transporte:
+        [0,200000  0,199750  0,000000]
+        [0,000000  0,299813  0,000000]
+        [0,000000  0,000437  0,299999]
+
+      marginales de fila: [0,399751 ; 0,299813 ; 0,300436]
+      coinciden con el origen                              ✓
+
+      El plan evita las celdas caras (coste 3,0 y 2,0)
+      y concentra la masa en las baratas.
+      ```
+    errores:
+      - "Usar ε demasiado pequeño y provocar desbordamiento numérico."
+      - "Interpretar el plan regularizado como el transporte exacto."
+      - "Olvidar comprobar que las marginales del plan coinciden con las distribuciones."
+    aplicacion: |
+      Comparación de distribuciones, adaptación de dominios, flow matching, emparejamiento de
+      formas y análisis de datos de una sola célula.
+    referencias:
+      - "[Cuturi, M. *Sinkhorn Distances: Lightspeed Computation of Optimal Transport*, NeurIPS, 2013](https://arxiv.org/abs/1306.0895)"
+      - "[Peyré, G.; Cuturi, M. *Computational Optimal Transport*, 2019](https://arxiv.org/abs/1803.00567)"
+
+  "347":
+    concepto: "Wasserstein mide la separación real cuando la KL se vuelve infinita o constante."
+    formulas:
+      - "W₁(P,Q) = ínfimo del coste de transporte con coste |x−y|"
+      - "en 1D: W₁ = ∫|F_P(x) − F_Q(x)| dx"
+      - "es una métrica verdadera"
+    desarrollo: |
+      La distancia de Wasserstein es el coste del transporte óptimo, y a diferencia de la KL o
+      la JS es una **métrica en sentido estricto**: simétrica, no negativa, nula solo si las
+      distribuciones coinciden, y cumple la desigualdad triangular.
+
+      Su ventaja decisiva aparece cuando los **soportes no se solapan**. Dos distribuciones
+      disjuntas tienen KL infinita y JS constante en su valor máximo; en ambos casos el gradiente
+      es inútil para acercarlas. Wasserstein, en cambio, mide cuán lejos están y su gradiente
+      apunta en la dirección correcta. Esa es exactamente la motivación de **WGAN**.
+
+      Su interpretación es intuitiva y le da el nombre informal de distancia del transportista:
+      si cada distribución es un montón de tierra, la distancia es el trabajo mínimo necesario
+      para transformar uno en el otro. En una dimensión tiene una forma especialmente simple: el
+      área entre las funciones de distribución acumuladas.
+
+      El resultado numérico es limpio: para dos normales con la misma varianza, `W₁` es
+      aproximadamente la diferencia de medias, y lo sigue siendo cuando están muy separadas. Con
+      medias 0 y 5, `W₁ ≈ 5,04` mientras que la KL empírica se vuelve inestable. La distancia
+      escala con la separación real, que es lo que se quiere de una medida geométrica.
+    ejemplo: |
+      Wasserstein-1 entre normales cercanas y lejanas.
+
+      ```text
+      2 000 muestras de cada distribución
+
+      W₁(N(0,1) , N(0,5;1)) = 0,535306
+        diferencia de medias teórica: 0,5             ✓
+
+      W₁(N(0,1) , N(5;1))   = 5,042759
+        diferencia teórica: 5,0                       ✓
+
+      KL empírica en el caso cercano: 0,144536
+      KL empírica en el caso lejano: inestable o infinita
+
+      Wasserstein escala linealmente con la separación.
+      La KL no distingue "lejos" de "muy lejos": ambas
+      son igual de infinitas.
+      ```
+    errores:
+      - "Usar KL para comparar distribuciones con soportes disjuntos."
+      - "Confundir la versión regularizada de Sinkhorn con la distancia exacta."
+      - "Comparar valores de Wasserstein calculados con costes distintos."
+    aplicacion: |
+      WGAN, evaluación de modelos generativos, adaptación de dominios, análisis de formas y
+      comparación de distribuciones empíricas.
+    referencias:
+      - "[Arjovsky, M.; Chintala, S.; Bottou, L. *Wasserstein GAN*, ICML, 2017](https://arxiv.org/abs/1701.07875)"
+      - "[Villani, C. *Optimal Transport: Old and New*, Springer, 2009](https://doi.org/10.1007/978-3-540-71050-9)"
+
+  "348":
+    concepto: "PCA no encuentra una variedad curva: ve tres dimensiones donde solo hay una."
+    formulas:
+      - "dimensión intrínseca ≪ dimensión ambiente"
+      - "PCA solo detecta subespacios lineales"
+      - "métodos no lineales: Isomap, LLE, t-SNE, UMAP"
+    desarrollo: |
+      La **hipótesis de la variedad** sostiene que los datos reales de dimensión alta se
+      concentran cerca de una variedad de dimensión intrínseca mucho menor. Una imagen de 1000×1000
+      píxeles vive en un espacio de un millón de dimensiones, pero el conjunto de imágenes de
+      caras es un subconjunto minúsculo y estructurado de ese espacio.
+
+      Esa hipótesis es lo que hace posible el aprendizaje en dimensión alta. Si los datos
+      ocuparan uniformemente el espacio ambiente, la maldición de la dimensionalidad de la clase
+      288 sería insuperable. Como no lo hacen, un modelo puede aprender la estructura de la
+      variedad con una cantidad razonable de ejemplos.
+
+      **PCA solo encuentra subespacios lineales**, y esa limitación se ve con claridad en el
+      ejemplo. Una hélice es una curva de dimensión intrínseca 1 sumergida en tres dimensiones;
+      PCA reparte la varianza entre las tres componentes —49 %, 36 % y 14 %— sin detectar en
+      ningún momento que hay un solo grado de libertad. La variedad es curva y PCA solo ve rectas.
+
+      Los métodos no lineales atacan justamente eso. **Isomap** usa distancias geodésicas sobre
+      el grafo de vecinos en vez de distancias euclídeas; **t-SNE** y **UMAP** preservan la
+      estructura local y son las herramientas estándar de visualización. Con una precaución
+      importante: t-SNE y UMAP **no preservan distancias globales**, así que el tamaño y la
+      separación de los grupos en sus gráficos no son interpretables.
+    ejemplo: |
+      Una hélice: dimensión intrínseca 1 en un espacio de 3.
+
+      ```text
+      120 puntos sobre una hélice
+      dimensión ambiente: 3
+      dimensión intrínseca: 1
+
+      autovalores de la covarianza:
+        [0,177520 ; 0,129535 ; 0,052063]
+
+      varianza explicada:
+        [49,43 % ; 36,07 % ; 14,50 %]
+
+      PCA reparte la varianza entre las tres componentes
+      y no detecta que hay un solo grado de libertad.     ✗
+
+      Un método basado en distancias geodésicas sobre el
+      grafo de vecinos sí recuperaría la dimensión 1.
+      ```
+    errores:
+      - "Usar PCA para variedades curvas y concluir que la dimensión es alta."
+      - "Interpretar distancias globales en un gráfico de t-SNE o UMAP."
+      - "Fijar los hiperparámetros de UMAP sin comprobar la estabilidad del resultado."
+    aplicacion: |
+      Visualización de datos de alta dimensión, reducción de dimensión no lineal, análisis de
+      espacios latentes y exploración de embeddings.
+    referencias:
+      - "[Tenenbaum, J.; de Silva, V.; Langford, J. *A global geometric framework for nonlinear dimensionality reduction*, Science, 2000](https://doi.org/10.1126/science.290.5500.2319)"
+      - "[McInnes, L.; Healy, J.; Melville, J. *UMAP*, 2018](https://arxiv.org/abs/1802.03426)"
+
+  "349":
+    concepto: "La longitud de una curva es la integral de su rapidez, y eso se verifica numéricamente."
+    formulas:
+      - "velocidad: r'(t)"
+      - "rapidez: ‖r'(t)‖"
+      - "longitud de arco: ∫ ‖r'(t)‖ dt"
+    desarrollo: |
+      La geometría diferencial estudia espacios curvos con las herramientas del cálculo. Su
+      objeto central es el **tensor métrico**, que define cómo medir distancias y ángulos
+      localmente, y del que se derivan longitudes, geodésicas y curvatura.
+
+      El caso más simple es una curva parametrizada. Su **velocidad** es la derivada del vector
+      de posición, su **rapidez** es la norma de esa velocidad, y la **longitud de arco** es la
+      integral de la rapidez. Para una hélice el cálculo es exacto y sirve de verificación
+      numérica: la rapidez teórica `√(1 + 0,09) = 1,044031` coincide con la calculada, y la
+      longitud sobre un periodo también.
+
+      Las **geodésicas** son las curvas de longitud mínima, la generalización de la recta a
+      espacios curvos. En una esfera son arcos de círculo máximo, que es la razón de que las
+      rutas aéreas parezcan curvas en un mapa plano. La distancia geodésica es la que Isomap usa
+      en la clase anterior.
+
+      Su relevancia para el aprendizaje automático llega por dos vías. La **hipótesis de la
+      variedad** convierte el espacio de datos en un objeto geométrico donde la distancia
+      relevante es la geodésica y no la euclídea. Y la **geometría de la información** de la
+      clase siguiente aplica estas mismas herramientas al espacio de parámetros, dotándolo de
+      una métrica natural.
+    ejemplo: |
+      Hélice: rapidez y longitud de arco verificadas.
+
+      ```text
+      curva: r(t) = (cos t , sin t , 0,3t)
+
+      velocidad en t = 1:
+        (−0,841471 ; 0,540302 ; 0,300000)
+
+      rapidez = ‖r'(1)‖ = 1,044031
+      teórica = √(1 + 0,09) = 1,044031                     ✓
+
+      longitud de arco de 0 a 2π:
+        calculada = 6,559838
+        teórica   = 2π · 1,044031 = 6,559838               ✓
+
+      La rapidez es constante porque la hélice avanza
+      de forma uniforme: es una parametrización natural.
+      ```
+    errores:
+      - "Confundir la longitud del recorrido con la distancia entre extremos."
+      - "Usar distancia euclídea donde la geometría del problema pide geodésica."
+      - "Suponer que una parametrización cualquiera tiene rapidez constante."
+    aplicacion: |
+      Aprendizaje sobre variedades, robótica y planificación de trayectorias, relatividad,
+      geometría de espacios latentes y optimización sobre variedades.
+    referencias:
+      - "[do Carmo, M. *Differential Geometry of Curves and Surfaces*, 2ª ed., Dover, 2016](https://store.doverpublications.com/products/9780486806990)"
+      - "[Bronstein, M. et al. *Geometric Deep Learning*, 2021](https://arxiv.org/abs/2104.13478)"
+
+  "350":
+    concepto: "La información de Fisher es la curvatura de la KL, y de ella salen Cramér-Rao y el gradiente natural."
+    formulas:
+      - "I(θ) = E[(∂ log p/∂θ)²]"
+      - "KL(p_θ ‖ p_{θ+ε}) ≈ ½·I(θ)·ε²"
+      - "Cramér-Rao: Var(θ̂) ≥ 1/(n·I(θ))"
+    desarrollo: |
+      La geometría de la información trata el conjunto de distribuciones de una familia
+      paramétrica como una **variedad**, donde cada punto es una distribución. La pregunta
+      natural es qué métrica usar en ese espacio, y la respuesta es la **información de Fisher**.
+
+      Su significado es que la KL, localmente, se comporta como una forma cuadrática cuya matriz
+      es Fisher. La comprobación numérica lo confirma: para un desplazamiento minúsculo `ε`, la
+      KL entre `p` y `p+ε` coincide con `½·I(p)·ε²` con razón 1,0. Esa identidad es lo que
+      convierte a Fisher en la métrica natural del espacio de parámetros, no una elección
+      arbitraria.
+
+      De ahí salen dos resultados centrales. La **cota de Cramér-Rao** establece un límite
+      inferior a la varianza de cualquier estimador insesgado: donde la información es alta, se
+      puede estimar con precisión; donde es baja, ningún estimador puede ser preciso. En la
+      Bernoulli, la información es máxima en los extremos —11,1 para `p = 0,1`— y mínima en 0,5,
+      lo que dice que es más fácil estimar un parámetro cercano a los extremos.
+
+      El **gradiente natural** preacondiciona el gradiente con la inversa de Fisher, con lo que
+      la dirección de descenso deja de depender de cómo se hayan parametrizado los pesos. Es
+      elegante y costoso —requiere invertir Fisher— y de ahí vienen aproximaciones prácticas como
+      K-FAC. La restricción de KL de PPO en la clase 339 es una manifestación de la misma idea:
+      medir el cambio de la política en el espacio de distribuciones, no en el de parámetros.
+    ejemplo: |
+      Información de Fisher y su relación con la KL.
+
+      ```text
+      Bernoulli:
+        p = 0,1  →  I = 11,111111
+        p = 0,5  →  I =  4,000000
+        p = 0,9  →  I = 11,111111
+      máxima en los extremos                               ✓
+
+      Normal:
+        σ = 0,5  →  I = 4,00
+        σ = 1,0  →  I = 1,00
+        σ = 2,0  →  I = 0,25
+
+      KL localmente es una métrica (p = 0,1):
+        KL(p ‖ p+ε)  = 5,5523e-08
+        ½·I(p)·ε²    = 5,5556e-08
+        razón ≈ 1,0                                        ✓
+
+      Cramér-Rao: Var(θ̂) ≥ 1/(n·I(θ))
+      Gradiente natural: ∇̃ = I(θ)⁻¹∇
+      ```
+    errores:
+      - "Interpretar Fisher como una constante en vez de como función de θ."
+      - "Aplicar Cramér-Rao a estimadores sesgados."
+      - "Invertir Fisher exactamente en modelos grandes en vez de aproximarla."
+    aplicacion: |
+      Gradiente natural y K-FAC, PPO, diseño experimental óptimo, cotas de precisión de
+      estimadores y análisis de identificabilidad.
+    referencias:
+      - "[Amari, S. *Information Geometry and Its Applications*, Springer, 2016](https://doi.org/10.1007/978-4-431-55978-8)"
+      - "[Martens, J. *New insights and perspectives on the natural gradient method*, JMLR, 2020](https://arxiv.org/abs/1412.1193)"
+
+  "351":
+    concepto: "En una SDE el ruido escala como √dt, no como dt: esa raíz lo cambia todo."
+    formulas:
+      - "dX = f(X,t)dt + g(X,t)dW"
+      - "Euler-Maruyama: X ← X + f·dt + g·√dt·ξ"
+      - "Ornstein-Uhlenbeck: dX = θ(μ − X)dt + σ dW"
+    desarrollo: |
+      Una ecuación diferencial estocástica añade a la dinámica determinista un término de ruido
+      continuo. El primer término, la **deriva**, describe hacia dónde tiende el sistema; el
+      segundo, la **difusión**, describe la magnitud de las fluctuaciones aleatorias.
+
+      El detalle que hay que interiorizar es el escalado del ruido. El movimiento browniano tiene
+      incrementos de varianza proporcional al tiempo, así que la **desviación** escala como
+      `√dt`. En el integrador de Euler-Maruyama eso significa multiplicar el ruido por `√dt` y no
+      por `dt`. Usar `dt` produce una simulación con la magnitud de ruido completamente
+      equivocada, y es el error más frecuente al implementar SDE.
+
+      Ese mismo hecho tiene una consecuencia teórica: las trayectorias brownianas son continuas
+      pero **no derivables en ningún punto**, y por eso el cálculo ordinario no sirve. El cálculo
+      de Itô y su lema son la herramienta correcta, y son la razón de que la fórmula de
+      Black-Scholes tenga el término adicional que tiene.
+
+      El proceso de **Ornstein-Uhlenbeck** del ejemplo es el prototipo con reversión a la media:
+      la deriva empuja hacia `μ` con fuerza proporcional a la distancia, mientras el ruido lo
+      aparta. Su distribución estacionaria es normal, y aparece en modelos de tipos de interés, en
+      física y en la formulación en tiempo continuo de los modelos de difusión de la clase 334.
+    ejemplo: |
+      Ornstein-Uhlenbeck simulado con Euler-Maruyama.
+
+      ```text
+      SDE: dX = θ(μ − X)dt + σ dW
+      θ = 1,5    μ = 2,0    σ = 0,8
+      dt = 0,01     400 réplicas
+
+      paso    t       x
+        1    0,01   0,014091
+      101    1,01   1,xxxxxx
+        …             → oscila alrededor de μ = 2,0
+
+      Escalado del ruido:
+        correcto:    σ·√dt·ξ = 0,8·0,1·ξ = 0,08·ξ
+        incorrecto:  σ·dt·ξ  = 0,8·0,01·ξ = 0,008·ξ
+        factor 10 de diferencia
+
+      Con el escalado incorrecto la simulación parecería
+      casi determinista.
+      ```
+    errores:
+      - "Escalar el ruido con dt en vez de con √dt."
+      - "Aplicar cálculo ordinario a trayectorias brownianas."
+      - "Usar pasos grandes y perder la estructura estadística del proceso."
+    aplicacion: |
+      Modelos de difusión en tiempo continuo, finanzas cuantitativas, física estadística,
+      dinámica de Langevin y modelado de ruido en sistemas.
+    referencias:
+      - "[Øksendal, B. *Stochastic Differential Equations*, 6ª ed., Springer, 2003](https://doi.org/10.1007/978-3-642-14394-6)"
+      - "[Song, Y. et al. *Score-Based Generative Modeling through SDEs*, ICLR, 2021](https://arxiv.org/abs/2011.13456)"
+
+  "352":
+    concepto: "El método adjunto calcula gradientes con memoria constante, sin guardar la trayectoria."
+    formulas:
+      - "dz/dt = f(z, t, θ)"
+      - "salida: z(T) = z(0) + ∫₀ᵀ f dt"
+      - "gradientes por una EDO adjunta hacia atrás"
+    desarrollo: |
+      Un Neural ODE observa que una red residual —`z ← z + f(z)`— es un paso de Euler de una
+      ecuación diferencial, y lleva la idea al límite: en vez de un número discreto de capas, una
+      dinámica continua integrada por un solver numérico. La profundidad deja de ser un entero y
+      pasa a ser un intervalo de tiempo.
+
+      La ventaja más citada es el **método adjunto** para calcular gradientes. En vez de guardar
+      todas las activaciones intermedias como hace backpropagation, se resuelve una EDO auxiliar
+      **hacia atrás** que reconstruye lo necesario sobre la marcha. El coste de memoria pasa a ser
+      constante, independiente de la profundidad efectiva.
+
+      La otra ventaja es el **cómputo adaptativo**: un solver con paso adaptativo dedica más
+      evaluaciones donde la dinámica es complicada y menos donde es suave. El modelo ajusta su
+      esfuerzo al problema en vez de tener un número fijo de capas.
+
+      El coste es la velocidad. Los solvers adaptativos requieren muchas evaluaciones de la red y
+      son más lentos que una pila de capas discretas. Su valor práctico está en dominios donde la
+      dinámica continua es natural: series temporales irregularmente muestreadas, física, y los
+      flujos continuos normalizadores. Toda la parte 11 se vuelve directamente relevante:
+      elegir el integrador y su tolerancia es una decisión de modelado.
+    ejemplo: |
+      Neural ODE lineal con solución analítica conocida.
+
+      ```text
+      ODE: dz/dt = −θz        solución: z₀·e^(−θt)
+
+      z(T) exacto = 0,16529889
+
+      convergencia de Euler:
+        5 pasos:  z(T) = 0,10737418   error 0,0579
+       20 pasos:  ...                  error menor
+       80 pasos:  ...                  error/4 por duplicación
+
+      Orden 1 confirmado, como en la clase 236.           ✓
+
+      pérdida: L = (z(T) − 0,2)²
+      dL/dθ por método adjunto = 0,168375
+
+      El adjunto obtiene el gradiente sin haber guardado
+      ninguna activación intermedia.
+      ```
+    errores:
+      - "Usar tolerancias muy bajas y hacer el entrenamiento inviable."
+      - "Aplicar Neural ODE donde una red discreta sería más rápida y suficiente."
+      - "Olvidar que el número de evaluaciones varía entre lotes con solvers adaptativos."
+    aplicacion: |
+      Series temporales irregulares, flujos continuos normalizadores, modelado físico, dinámica
+      de sistemas y modelos de difusión en tiempo continuo.
+    referencias:
+      - "[Chen, R. et al. *Neural Ordinary Differential Equations*, NeurIPS, 2018](https://arxiv.org/abs/1806.07366)"
+      - "[Kidger, P. *On Neural Differential Equations*, tesis, 2022](https://arxiv.org/abs/2202.02435)"
+
+  "353":
+    concepto: "El score no depende de la constante de normalización, y esa es precisamente la parte intratable."
+    formulas:
+      - "score: s(x) = ∇ₓ log p(x)"
+      - "log p(x) = log p̃(x) − log Z"
+      - "∇ₓ log Z = 0, luego el score ignora Z"
+    desarrollo: |
+      El **score** es el gradiente del logaritmo de la densidad respecto de la entrada. Apunta
+      hacia las regiones de mayor densidad, y su magnitud indica cuán pronunciada es la subida.
+      Es un campo vectorial que describe la distribución tan completamente como la densidad
+      misma.
+
+      Su propiedad decisiva es que **no depende de la constante de normalización**. Como el
+      logaritmo convierte el producto en suma y la constante no depende de `x`, su gradiente es
+      cero y desaparece. Eso importa muchísimo porque `Z` es una integral sobre todo el espacio,
+      intratable en cualquier modelo interesante, y es lo que bloqueaba históricamente el
+      entrenamiento de modelos basados en energía.
+
+      La demostración numérica es directa: multiplicar la densidad por una constante arbitraria no
+      cambia el score en ningún punto. Se puede modelar la distribución salvo un factor y aun así
+      caracterizarla completamente.
+
+      Conocido el score, la **dinámica de Langevin** genera muestras: seguir el score con un poco
+      de ruido converge a la distribución. Combinar esa idea con múltiples niveles de ruido es
+      exactamente lo que hacen los modelos de difusión de la clase 335 —la red que predice el
+      ruido está estimando el score— y esa equivalencia unifica dos líneas de trabajo que
+      parecían distintas.
+    ejemplo: |
+      Score de una normal, con y sin constante arbitraria.
+
+      ```text
+      distribución: Normal(1,5 ; 0,7)
+      score analítico: −(x − μ)/σ²
+
+      x        analítico     numérico
+      0,0      3,061224      3,061224                      ✓
+      1,5      0,000000      0,000000                      ✓
+      2,5     −2,040816     −2,040816                      ✓
+
+      Con la densidad multiplicada por una constante:
+        score en x = 1,0:  1,020408
+        idéntico al de la densidad normalizada             ✓
+
+      El score en el máximo vale 0: es donde la densidad
+      deja de crecer.
+
+      Por eso importa: Z es una integral intratable,
+      y el score no la necesita.
+      ```
+    errores:
+      - "Suponer que el score identifica la densidad sin fijar la normalización."
+      - "Estimar el score en regiones de densidad casi nula, donde es inestable."
+      - "Confundir el score respecto de x con el score respecto de los parámetros."
+    aplicacion: |
+      Modelos de difusión, modelos basados en energía, dinámica de Langevin, estimación de
+      densidad y generación de imágenes.
+    referencias:
+      - "[Hyvärinen, A. *Estimation of non-normalized statistical models by score matching*, JMLR, 2005](https://jmlr.org/papers/v6/hyvarinen05a.html)"
+      - "[Song, Y.; Ermon, S. *Generative Modeling by Estimating Gradients of the Data Distribution*, NeurIPS, 2019](https://arxiv.org/abs/1907.05600)"
+
+  "354":
+    concepto: "El signo del vector de Fiedler dice por dónde partir el grafo en dos."
+    formulas:
+      - "L = D − A;  autovalores 0 = λ₁ ≤ λ₂ ≤ …"
+      - "λ₂ = conectividad algebraica"
+      - "partición por el signo del autovector de λ₂"
+    desarrollo: |
+      El agrupamiento espectral resuelve un problema difícil mediante una **relajación
+      continua**. Partir un grafo minimizando el número de aristas cortadas es un problema
+      combinatorio NP-difícil; relajarlo a variables continuas lo convierte en un problema de
+      autovectores, que se resuelve en tiempo polinómico.
+
+      El autovector asociado al segundo autovalor —el **vector de Fiedler**— es la solución de esa
+      relajación, y el signo de cada componente indica a qué lado del corte asignar cada nodo. En
+      el ejemplo, cuatro nodos tienen componente negativa y cuatro positiva, y esa partición
+      corresponde exactamente a la estructura de comunidades del grafo.
+
+      La **conectividad algebraica** `λ₂` cuantifica cuán bien separado está el grafo. Un valor
+      pequeño —0,29 en el ejemplo, frente a autovalores posteriores de 2 y 4— indica que existe
+      un corte barato y que la partición es significativa. Si `λ₂` fuera comparable a los demás,
+      el corte sería arbitrario.
+
+      El método se generaliza a más de dos grupos usando los primeros `k` autovectores como
+      coordenadas y aplicando k-means en ese espacio. Su ventaja sobre k-means directo es que
+      **funciona con grupos no convexos**, que es justamente donde k-means falla. Su límite es el
+      coste: calcular autovectores de un grafo enorme requiere métodos iterativos como los de la
+      parte 11.
+    ejemplo: |
+      Grafo de 8 nodos partido por el vector de Fiedler.
+
+      ```text
+      8 nodos, 11 aristas
+
+      autovalores del Laplaciano:
+        [0,0 ; 0,29072464 ; 2,0 ; 2,80606343 ; 4,0 ; 4,0 ; 4,0 ; 4,90321193]
+
+      multiplicidad de 0: 1  →  grafo conexo             ✓
+      conectividad algebraica: 0,29072464
+
+      vector de Fiedler:
+        [−0,432487 ; −0,369619 ; −0,369619 ; −0,199295 ;
+          0,199295 ;  0,369619 ;  0,369619 ;  0,432487]
+
+      partición por signo:
+        grupo A: nodos 0, 1, 2, 3
+        grupo B: nodos 4, 5, 6, 7
+
+      λ₂ = 0,29 frente a λ₃ = 2,0: el corte es claro.
+      ```
+    errores:
+      - "Aplicar el método a grafos no conexos sin tratar cada componente por separado."
+      - "Interpretar la partición cuando λ₂ es comparable a los autovalores siguientes."
+      - "Calcular todos los autovectores cuando solo hacen falta los primeros."
+    aplicacion: |
+      Detección de comunidades, segmentación de imágenes, partición de mallas, análisis de redes
+      sociales y agrupamiento de datos no convexos.
+    referencias:
+      - "[von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189)"
+      - "[Shi, J.; Malik, J. *Normalized cuts and image segmentation*, IEEE TPAMI, 2000](https://doi.org/10.1109/34.868688)"
+
+  "355":
+    concepto: "El coeficiente sin ajustar estima 1,02 un efecto que en realidad es cero."
+    formulas:
+      - "criterio de puerta trasera: bloquear todos los caminos X ← … → Y"
+      - "confusor: Z → X y Z → Y"
+      - "colisionador: X → C ← Y, condicionar crea asociación"
+    desarrollo: |
+      La inferencia causal formaliza qué significa que `X` cause `Y` y cuándo se puede estimar ese
+      efecto a partir de datos observacionales. Su lenguaje son los grafos causales dirigidos,
+      donde las flechas representan relaciones causales y los caminos determinan qué asociaciones
+      aparecen.
+
+      El **criterio de puerta trasera** dice qué variables hay que ajustar: un conjunto que
+      bloquee todos los caminos no causales entre `X` e `Y`. Ajustar por ese conjunto permite
+      estimar el efecto causal correctamente. La demostración numérica es contundente: con un
+      efecto causal real de **cero**, el coeficiente sin ajustar estima 1,02 —una relación fuerte
+      e inexistente— y al ajustar por el confusor baja a 0,007.
+
+      El resultado que más contradice la intuición es el **sesgo de colisionador**. Si dos
+      variables independientes causan una tercera, condicionar sobre esa tercera **crea**
+      correlación entre ellas donde no había ninguna. Ajustar por todo lo disponible no es una
+      estrategia conservadora: puede introducir sesgo donde no lo había.
+
+      La conclusión metodológica es que **no se puede decidir qué ajustar mirando solo los
+      datos**. Hace falta un modelo causal, es decir, conocimiento del dominio sobre qué causa
+      qué. Los datos por sí solos no distinguen un confusor de un colisionador, y esa es la razón
+      profunda de que la aleatorización sea tan valiosa: rompe todos los caminos de puerta trasera
+      a la vez, conocidos y desconocidos.
+    ejemplo: |
+      Efecto real cero, estimado en 1,02 sin ajustar.
+
+      ```text
+      estructura: Z → X,  Z → Y,  X ↛ Y
+      efecto causal real de X sobre Y: 0,0
+
+      coeficiente sin ajustar:      1,0243        ✗
+      coeficiente ajustando por Z:  0,0074        ✓
+
+      El ajuste recupera el efecto real.
+
+      Criterio de puerta trasera:
+        bloquear todos los caminos X ← … → Y
+
+      Colisionador (X → C ← Y):
+        correlación X-Y sin condicionar C: −0,0145
+        (independientes, como deben ser)
+        al condicionar sobre C aparecería correlación
+        donde no la hay.
+      ```
+    errores:
+      - "Ajustar por todas las variables disponibles sin un modelo causal."
+      - "Condicionar sobre un colisionador y crear asociación espuria."
+      - "Interpretar coeficientes de regresión como efectos causales en datos observacionales."
+    aplicacion: |
+      Evaluación de políticas y tratamientos, atribución en marketing, análisis de equidad
+      algorítmica, epidemiología y diseño de experimentos.
+    referencias:
+      - "[Pearl, J. *Causality*, 2ª ed., Cambridge, 2009](https://doi.org/10.1017/CBO9780511803161)"
+      - "[Hernán, M.; Robins, J. *Causal Inference: What If*, CRC, 2020](https://miguelhernan.org/whatifbook)"
+
+  "356":
+    concepto: "Con 25 parámetros y 30 datos se acierta el 80 % en entrenamiento sobre etiquetas aleatorias."
+    formulas:
+      - "R(h) = R_emp(h) + brecha de generalización"
+      - "la brecha crece con la complejidad y decrece con n"
+      - "cota uniforme: sup_h |R(h) − R_emp(h)|"
+    desarrollo: |
+      La teoría estadística del aprendizaje separa dos cantidades que se confunden a diario. El
+      **riesgo empírico** es el error medido sobre la muestra de entrenamiento; el **riesgo
+      verdadero** es el error esperado sobre la distribución real. Minimizar el primero es lo que
+      se puede hacer; controlar el segundo es lo que interesa.
+
+      La diferencia entre ambos es la **brecha de generalización**, y depende de dos cosas: la
+      complejidad de la clase de hipótesis y el número de ejemplos. Con muchos datos y una clase
+      simple la brecha es pequeña; con pocos datos y una clase rica puede ser enorme, y el modelo
+      memoriza en vez de aprender.
+
+      La demostración usa etiquetas **completamente aleatorias**, sin ninguna señal que aprender,
+      y por tanto con accuracy esperada de 0,5. Con 30 observaciones y 25 parámetros, el modelo
+      acierta el 80 % en entrenamiento y el 48,5 % en test: la brecha entera es memorización. El
+      número de entrenamiento no mide nada.
+
+      Las cotas teóricas acotan el **peor caso sobre toda la clase de hipótesis**, no el caso
+      concreto. Esa uniformidad es lo que las hace válidas y también lo que las hace holgadas:
+      son correctas y muy pesimistas. En redes profundas predicen que no debería haber
+      generalización, y la hay. Explicar esa discrepancia es un área abierta, y conviene
+      presentarla así en vez de fingir que la teoría clásica describe lo que ocurre.
+    ejemplo: |
+      Memorización pura sobre etiquetas aleatorias.
+
+      ```text
+      señal real en los datos: NINGUNA
+      accuracy esperada: 0,5
+
+      n = 30, d = 25:
+        accuracy train: 0,800
+        accuracy test:  0,485
+        brecha: 0,315
+
+      El 80 % de entrenamiento es memorización completa:
+      con 25 parámetros y 30 datos hay capacidad de sobra
+      para ajustar ruido.
+
+      El test confirma que no se aprendió nada: 0,485
+      es indistinguible del azar.
+
+      Descomposición: R(h) = R_emp(h) + brecha
+      ```
+    errores:
+      - "Reportar el error de entrenamiento como medida de calidad."
+      - "Usar más parámetros que datos sin regularizar."
+      - "Interpretar una cota teórica como predicción del error real."
+    aplicacion: |
+      Diseño de experimentos de aprendizaje, elección de capacidad, comprensión del sobreajuste y
+      justificación de la validación.
+    referencias:
+      - "[Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*, Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)"
+      - "[Zhang, C. et al. *Understanding deep learning requires rethinking generalization*, ICLR, 2017](https://arxiv.org/abs/1611.03530)"
+
+  "357":
+    concepto: "Una clase con infinitas hipótesis puede tener dimensión VC igual a 1."
+    formulas:
+      - "VC = tamaño del mayor conjunto que la clase fragmenta"
+      - "umbrales en 1D: VC = 1"
+      - "hiperplanos en ℝᵈ: VC = d + 1"
+    desarrollo: |
+      La dimensión de Vapnik-Chervonenkis mide la capacidad de una clase de hipótesis por lo que
+      **puede hacer**, no por cuántas hipótesis contiene. Una clase **fragmenta** un conjunto de
+      puntos si puede realizar todas las `2ⁿ` etiquetaciones posibles, y la dimensión VC es el
+      tamaño del mayor conjunto que consigue fragmentar.
+
+      La distinción con el número de hipótesis es la aportación conceptual. La clase de los
+      umbrales en una dimensión es **infinita** —hay un umbral por cada número real— y su
+      dimensión VC es **1**: puede etiquetar un punto de las dos formas, pero con dos puntos no
+      puede producir la etiquetación «derecha positiva, izquierda negativa». Contar hipótesis no
+      mide capacidad; fragmentar sí.
+
+      Los valores conocidos son informativos. Los intervalos en una dimensión tienen VC 2, porque
+      no pueden etiquetar `+ − +`. Los hiperplanos en `ℝᵈ` tienen VC `d+1`, así que en el plano
+      son 3: con cuatro puntos en las esquinas de un cuadrado, la configuración XOR no es
+      separable, exactamente el problema del perceptrón de la clase 301.
+
+      Su papel es dar cotas de generalización que dependen de la capacidad y no del número de
+      hipótesis. Su límite práctico es severo: para redes neuronales la dimensión VC crece con el
+      número de parámetros, lo que predice que las redes modernas no deberían generalizar en
+      absoluto. La teoría es correcta y la cota es tan holgada que no informa; medidas
+      alternativas como la complejidad de Rademacher o las basadas en normas se comportan algo
+      mejor, sin resolver del todo la cuestión.
+    ejemplo: |
+      Dimensión VC de tres clases de hipótesis.
+
+      ```text
+      Umbrales en 1D:
+        fragmenta 1 punto:  sí
+        fragmenta 2 puntos: no
+        VC = 1
+        (la clase es infinita y su VC vale 1)
+
+      Intervalos en 1D:
+        VC = 2
+        razón: no puede etiquetar + − + con un solo intervalo
+
+      Hiperplanos en ℝᵈ:
+        VC = d + 1
+        en ℝ²: VC = 3
+
+      Por qué no 4 puntos en ℝ²:
+        XOR en las esquinas de un cuadrado no es separable,
+        el mismo obstáculo del perceptrón.
+      ```
+    errores:
+      - "Medir capacidad por el número de hipótesis en vez de por fragmentación."
+      - "Aplicar cotas basadas en VC a redes profundas esperando predicciones útiles."
+      - "Confundir dimensión VC con número de parámetros."
+    aplicacion: |
+      Cotas de generalización, comparación de familias de modelos, teoría del aprendizaje y
+      análisis de complejidad de clases de hipótesis.
+    referencias:
+      - "[Vapnik, V. *The Nature of Statistical Learning Theory*, Springer, 1995](https://doi.org/10.1007/978-1-4757-3264-1)"
+      - "[Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*, Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)"
+
+  "358":
+    concepto: "Reducir el error a la mitad duplica los datos; subir la confianza cuesta un logaritmo."
+    formulas:
+      - "con probabilidad ≥ 1−δ, error ≤ ε"
+      - "n ≈ (1/ε)·(VC + log(1/δ))"
+      - "crece como 1/ε y como log(1/δ)"
+    desarrollo: |
+      El marco PAC —probablemente aproximadamente correcto— formaliza qué significa aprender.
+      No se exige acertar siempre ni exactamente: se exige que, con probabilidad al menos
+      `1−δ`, el error de la hipótesis elegida sea a lo sumo `ε`. Dos parámetros, dos formas de
+      fallar admitidas.
+
+      La **complejidad muestral** es el número de ejemplos necesarios para garantizar eso, y su
+      forma revela una asimetría muy útil. Crece como `1/ε`: reducir el error a la mitad
+      **duplica** los datos necesarios. Pero crece solo como `log(1/δ)`: pasar de un 95 % a un
+      99,9 % de confianza cuesta muy poco. **Precisión es cara, confianza es barata.**
+
+      La dependencia de la complejidad de la clase es lineal en la dimensión VC. Con `ε = 0,1` y
+      `δ = 0,05`, una clase de VC 10 necesita 261 ejemplos y una de VC 100 necesita 2 331. Diez
+      veces más capacidad, diez veces más datos: la relación es directa y da una intuición
+      correcta sobre el coste de la complejidad.
+
+      Hay que ser explícito sobre su alcance. Las cotas son **válidas y muy holgadas**: aplicadas
+      a una red moderna piden más ejemplos que átomos hay en el universo observable. Su valor es
+      cualitativo —cómo escalan las cosas— no cuantitativo. Interpretarlas como predicción del
+      error real es un error de lectura, y decirlo evita presentar la teoría como algo que no es.
+    ejemplo: |
+      Muestras necesarias para distintos ε y complejidades.
+
+      ```text
+      δ = 0,05  (confianza del 95 %)
+
+      con ε = 0,1:
+        clase de 1 000 hipótesis:    100 ejemplos
+        VC = 10:                     261 ejemplos
+        VC = 100:                  2 331 ejemplos
+
+      Escalado:
+        ε a la mitad  →  datos × 2
+        δ a la décima →  datos + log(10), casi nada
+        VC × 10       →  datos × 10 aproximadamente
+
+      Precisión es cara; confianza es barata.
+
+      Aplicado a una red con 10⁹ parámetros, la cota
+      pediría un número de ejemplos absurdo. La teoría
+      es correcta; la cota, inservible en la práctica.
+      ```
+    errores:
+      - "Usar la cota PAC como estimación del error real."
+      - "Suponer que más confianza cuesta tanto como más precisión."
+      - "Aplicar el marco PAC sin comprobar el supuesto de datos iid."
+    aplicacion: |
+      Fundamentos teóricos del aprendizaje, dimensionamiento conceptual de conjuntos de datos,
+      comparación de familias de modelos y análisis de aprendibilidad.
+    referencias:
+      - "[Valiant, L. *A theory of the learnable*, Communications of the ACM, 1984](https://doi.org/10.1145/1968.1972)"
+      - "[Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*, Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)"
+
+  "359":
+    concepto: "El error decae como una potencia del tamaño, y ese exponente es lo que predice el escalado."
+    formulas:
+      - "error ≈ C·(parámetros)^α"
+      - "polinomios sobre funciones suaves: convergencia muy rápida"
+      - "lineal por trozos: error / 4 al duplicar los trozos"
+    desarrollo: |
+      La teoría de aproximación estudia con qué precisión una familia de funciones puede
+      representar otra, y cómo mejora esa precisión al aumentar los recursos. Es la base teórica
+      de las **leyes de escala** que gobiernan el desarrollo de modelos grandes.
+
+      La forma general del resultado es una **ley de potencias**: el error decae como el número de
+      parámetros elevado a un exponente negativo. Ese exponente depende de la suavidad de la
+      función objetivo y de la familia aproximante, y es lo que determina si merece la pena
+      aumentar el tamaño.
+
+      El ejemplo lo muestra en dos regímenes. Con polinomios sobre una función suave, el
+      exponente empírico es `−7,68`: convergencia extraordinariamente rápida, porque la función
+      es analítica. Con aproximación lineal por trozos, duplicar el número de trozos divide el
+      error por 4, lo que corresponde a un exponente de `−2`: mucho más lento pero **robusto**,
+      sin depender de la suavidad global.
+
+      La conexión con el aprendizaje profundo es directa. Las leyes de escala de Kaplan y de
+      Hoffmann son leyes de potencias empíricas que relacionan pérdida con parámetros, datos y
+      cómputo, y permiten **predecir el rendimiento de un modelo antes de entrenarlo**. La
+      corrección de Chinchilla —que los modelos estaban infraentrenados en datos— salió de tomar
+      en serio esos exponentes. Ninguna ley de potencias es eterna: hay saturación cuando se agota
+      la información disponible, y ese límite es hoy una pregunta abierta.
+    ejemplo: |
+      Dos regímenes de aproximación sobre la misma función.
+
+      ```text
+      objetivo: e^(−x)·sin(4x) en [0,1]
+
+      Aproximación polinómica:
+        grado 1  (2 parámetros):  error máximo 0,7920526488
+        grado 3  ( ... ):          error mucho menor
+        exponente de escala empírico: −7,6813
+        convergencia rapidísima: la función es analítica
+
+      Aproximación lineal por trozos:
+        2 trozos:  error máximo 0,3797908445
+        4 trozos:  error menor
+        razón de error al duplicar: 3,9755 ≈ 4
+        exponente ≈ −2
+
+      Lectura: error ≈ C·(parámetros)^exponente
+
+      Los polinomios ganan aquí porque la función es suave;
+      con una función con esquinas, la victoria sería
+      del método por trozos.
+      ```
+    errores:
+      - "Extrapolar una ley de potencias fuera del rango medido."
+      - "Suponer que un exponente favorable se mantiene al agotar los datos."
+      - "Comparar exponentes obtenidos con métricas o unidades distintas."
+    aplicacion: |
+      Leyes de escala de modelos de lenguaje, planificación de presupuestos de cómputo, elección
+      de arquitecturas y teoría de aproximación con redes neuronales.
+    referencias:
+      - "[Kaplan, J. et al. *Scaling Laws for Neural Language Models*, 2020](https://arxiv.org/abs/2001.08361)"
+      - "[Hoffmann, J. et al. *Training Compute-Optimal Large Language Models*, 2022](https://arxiv.org/abs/2203.15556)"
+
+  "360":
+    concepto: "Reproducir un resultado publicado con datos donde el óptimo se conoce por fuerza bruta."
+    formulas:
+      - "coste de Sinkhorn → transporte óptimo cuando ε → 0"
+      - "óptimo exacto verificado por barrido de todos los planes"
+      - "reportar semilla, protocolo y discrepancia"
+    desarrollo: |
+      El capstone final del programa reproduce el núcleo matemático de un resultado publicado: el
+      estimador de Sinkhorn converge al transporte óptimo verdadero cuando la regularización
+      entrópica tiende a cero, según Cuturi en 2013. No es una implementación decorativa: es una
+      verificación.
+
+      El diseño experimental es lo que hace la verificación válida. Se elige un problema
+      **suficientemente pequeño** para que el óptimo se pueda calcular por fuerza bruta —barriendo
+      todos los planes de transporte posibles— de modo que exista una referencia exacta contra la
+      que comparar. Sin esa referencia, «el algoritmo converge» sería una afirmación no
+      verificable.
+
+      Después se ejecuta Sinkhorn con `ε` decreciente y se comprueba que el coste se aproxima
+      monótonamente al óptimo conocido. Lo que se está verificando no es que el código funcione,
+      sino que **el enunciado del artículo es cierto** en un caso donde se puede comprobar.
+
+      Esa es la habilidad que el programa entero ha construido, clase a clase: leer un enunciado
+      matemático, traducirlo a código, diseñar un caso donde la respuesta se conoce, comparar, y
+      reportar el protocolo completo con semilla y discrepancias. Trescientas sesenta clases
+      después de contar con los dedos en la parte 00, esa es la diferencia entre creer un
+      resultado y saberlo.
+    ejemplo: |
+      Verificación del resultado de Cuturi sobre un caso exacto.
+
+      ```text
+      resultado reproducido:
+        el coste de Sinkhorn converge al transporte óptimo
+        cuando la regularización entrópica tiende a cero
+
+      fuente: Cuturi, M. Sinkhorn Distances, NIPS 2013
+
+      protocolo:
+        dos masas uniformes de 2 átomos en ℝ
+        coste cuadrático (x − y)²
+
+      matriz de coste:
+        [0,0   9,0]
+        [1,0   4,0]
+
+      óptimo exacto por barrido: 2,0
+      plan óptimo:
+        [0,5  0,0]
+        [0,0  0,5]
+
+      Sinkhorn con ε decreciente se acerca a 2,0
+      monótonamente: el enunciado se sostiene.       ✓
+      ```
+    errores:
+      - "Reproducir un resultado sin un caso donde la respuesta se conozca."
+      - "Reportar la reproducción sin semilla ni protocolo completo."
+      - "Ocultar las discrepancias con el artículo original en vez de analizarlas."
+    aplicacion: |
+      Reproducción de artículos, validación de implementaciones, investigación aplicada,
+      revisión por pares y verificación de resultados antes de construir sobre ellos.
+    referencias:
+      - "[Cuturi, M. *Sinkhorn Distances: Lightspeed Computation of Optimal Transport*, NeurIPS, 2013](https://arxiv.org/abs/1306.0895)"
+      - "[Peyré, G.; Cuturi, M. *Computational Optimal Transport*, 2019](https://arxiv.org/abs/1803.00567)"

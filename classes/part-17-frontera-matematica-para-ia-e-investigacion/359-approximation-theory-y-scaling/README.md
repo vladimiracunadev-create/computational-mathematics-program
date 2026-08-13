@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**El error decae como una potencia del tamaño, y ese exponente es lo que predice el escalado.**
 
-Esta clase concreta ese objetivo sobre **Approximation theory y scaling**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `approximation_theory`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+error ≈ C·(parámetros)^α
+polinomios sobre funciones suaves: convergencia muy rápida
+lineal por trozos: error / 4 al duplicar los trozos
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,55 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La geometría de la información dota al espacio de parámetros de una métrica natural.
+La teoría de aproximación estudia con qué precisión una familia de funciones puede
+representar otra, y cómo mejora esa precisión al aumentar los recursos. Es la base teórica
+de las **leyes de escala** que gobiernan el desarrollo de modelos grandes.
+
+La forma general del resultado es una **ley de potencias**: el error decae como el número de
+parámetros elevado a un exponente negativo. Ese exponente depende de la suavidad de la
+función objetivo y de la familia aproximante, y es lo que determina si merece la pena
+aumentar el tamaño.
+
+El ejemplo lo muestra en dos regímenes. Con polinomios sobre una función suave, el
+exponente empírico es `−7,68`: convergencia extraordinariamente rápida, porque la función
+es analítica. Con aproximación lineal por trozos, duplicar el número de trozos divide el
+error por 4, lo que corresponde a un exponente de `−2`: mucho más lento pero **robusto**,
+sin depender de la suavidad global.
+
+La conexión con el aprendizaje profundo es directa. Las leyes de escala de Kaplan y de
+Hoffmann son leyes de potencias empíricas que relacionan pérdida con parámetros, datos y
+cómputo, y permiten **predecir el rendimiento de un modelo antes de entrenarlo**. La
+corrección de Chinchilla —que los modelos estaban infraentrenados en datos— salió de tomar
+en serio esos exponentes. Ninguna ley de potencias es eterna: hay saturación cuando se agota
+la información disponible, y ese límite es hoy una pregunta abierta.
+
+## 🧮 Ejemplo trabajado
+
+Dos regímenes de aproximación sobre la misma función.
+
+```text
+objetivo: e^(−x)·sin(4x) en [0,1]
+
+Aproximación polinómica:
+  grado 1  (2 parámetros):  error máximo 0,7920526488
+  grado 3  ( ... ):          error mucho menor
+  exponente de escala empírico: −7,6813
+  convergencia rapidísima: la función es analítica
+
+Aproximación lineal por trozos:
+  2 trozos:  error máximo 0,3797908445
+  4 trozos:  error menor
+  razón de error al duplicar: 3,9755 ≈ 4
+  exponente ≈ −2
+
+Lectura: error ≈ C·(parámetros)^exponente
+
+Los polinomios ganan aquí porque la función es suave;
+con una función con esquinas, la victoria sería
+del método por trozos.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +119,16 @@ compmath run 359
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Extrapolar una ley de potencias fuera del rango medido.
+2. Suponer que un exponente favorable se mantiene al agotar los datos.
+3. Comparar exponentes obtenidos con métricas o unidades distintas.
+
+## 🚀 Dónde se usa de verdad
+
+Leyes de escala de modelos de lenguaje, planificación de presupuestos de cómputo, elección
+de arquitecturas y teoría de aproximación con redes neuronales.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +171,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Kaplan, J. et al. *Scaling Laws for Neural Language Models*, 2020](https://arxiv.org/abs/2001.08361)
+- [Hoffmann, J. et al. *Training Compute-Optimal Large Language Models*, 2022](https://arxiv.org/abs/2203.15556)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

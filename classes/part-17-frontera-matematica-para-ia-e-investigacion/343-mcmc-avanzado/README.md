@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Aceptar el 95 % de las propuestas no es buena señal: significa que no se explora.**
 
-Esta clase concreta ese objetivo sobre **MCMC avanzado**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `advanced_mcmc`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar una cota teórica como predicción del error real.
+
+## 🧩 Fórmulas de la clase
+
+```text
+aceptar con probabilidad min(1, p(x')/p(x))
+tasa óptima en 1D ≈ 0,44
+descartar el burn-in antes de estimar
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La distancia de Wasserstein compara distribuciones sin exigir soporte común.
+Metropolis-Hastings genera muestras de una distribución conocida solo hasta una constante,
+que es la situación habitual en inferencia bayesiana: la posterior se conoce salvo por la
+evidencia, que es una integral intratable. El algoritmo propone un estado y lo acepta con
+probabilidad proporcional a la razón de densidades, en la que la constante se cancela.
+
+El **tamaño del paso** de la propuesta controla todo el comportamiento, y sus dos extremos
+son igual de malos. Un paso pequeño acepta casi todas las propuestas pero se mueve muy
+despacio, produciendo muestras fuertemente autocorrelacionadas que aportan poca información
+nueva. Un paso grande propone estados improbables que se rechazan, y la cadena se queda
+quieta.
+
+La teoría da un objetivo concreto: la tasa óptima de aceptación en una dimensión ronda
+**0,44**, y en dimensiones altas converge a 0,234. Una tasa del 95 % no indica un buen
+muestreador sino un paso demasiado tímido, y es un error de lectura frecuente.
+
+Ningún resultado MCMC debe reportarse sin **diagnóstico**. Descartar el burn-in inicial,
+examinar la autocorrelación, calcular el tamaño de muestra efectivo y ejecutar varias
+cadenas comprobando el estadístico R̂ son pasos obligatorios. Una cadena que no ha
+convergido produce números perfectamente plausibles y completamente equivocados.
+
+## 🧮 Ejemplo trabajado
+
+Efecto del tamaño de paso sobre la exploración.
+
+```text
+objetivo: Normal(2,0 ; 1,5)
+8 000 iteraciones, burn-in 2 000
+
+paso = 0,2:
+  tasa de aceptación: 0,9547
+  media estimada: 2,4552          error 0,455
+  acepta casi todo pero explora muy despacio         ✗
+
+paso óptimo (tasa ≈ 0,44):
+  media estimada mucho más cercana a 2,0
+
+Tasa óptima teórica:
+  1 dimensión:     0,44
+  alta dimensión:  0,234
+
+Una tasa alta no es buena señal: es síntoma
+de que la cadena apenas se mueve.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 343
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Interpretar una tasa de aceptación alta como buena convergencia.
+2. Reportar resultados MCMC sin diagnóstico ni burn-in.
+3. Ejecutar una sola cadena y no poder calcular R̂.
+
+## 🚀 Dónde se usa de verdad
+
+Inferencia bayesiana con posteriores complejas, física estadística, modelos jerárquicos y
+cuantificación de incertidumbre.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Brooks, S. et al. *Handbook of Markov Chain Monte Carlo*, CRC, 2011](https://doi.org/10.1201/b10905)
+- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

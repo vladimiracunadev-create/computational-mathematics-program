@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Reducir el error a la mitad duplica los datos; subir la confianza cuesta un logaritmo.**
 
-Esta clase concreta ese objetivo sobre **PAC learning**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `pac_learning`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar una cota teórica como predicción del error real.
+
+## 🧩 Fórmulas de la clase
+
+```text
+con probabilidad ≥ 1−δ, error ≤ ε
+n ≈ (1/ε)·(VC + log(1/δ))
+crece como 1/ε y como log(1/δ)
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La distancia de Wasserstein compara distribuciones sin exigir soporte común.
+El marco PAC —probablemente aproximadamente correcto— formaliza qué significa aprender.
+No se exige acertar siempre ni exactamente: se exige que, con probabilidad al menos
+`1−δ`, el error de la hipótesis elegida sea a lo sumo `ε`. Dos parámetros, dos formas de
+fallar admitidas.
+
+La **complejidad muestral** es el número de ejemplos necesarios para garantizar eso, y su
+forma revela una asimetría muy útil. Crece como `1/ε`: reducir el error a la mitad
+**duplica** los datos necesarios. Pero crece solo como `log(1/δ)`: pasar de un 95 % a un
+99,9 % de confianza cuesta muy poco. **Precisión es cara, confianza es barata.**
+
+La dependencia de la complejidad de la clase es lineal en la dimensión VC. Con `ε = 0,1` y
+`δ = 0,05`, una clase de VC 10 necesita 261 ejemplos y una de VC 100 necesita 2 331. Diez
+veces más capacidad, diez veces más datos: la relación es directa y da una intuición
+correcta sobre el coste de la complejidad.
+
+Hay que ser explícito sobre su alcance. Las cotas son **válidas y muy holgadas**: aplicadas
+a una red moderna piden más ejemplos que átomos hay en el universo observable. Su valor es
+cualitativo —cómo escalan las cosas— no cuantitativo. Interpretarlas como predicción del
+error real es un error de lectura, y decirlo evita presentar la teoría como algo que no es.
+
+## 🧮 Ejemplo trabajado
+
+Muestras necesarias para distintos ε y complejidades.
+
+```text
+δ = 0,05  (confianza del 95 %)
+
+con ε = 0,1:
+  clase de 1 000 hipótesis:    100 ejemplos
+  VC = 10:                     261 ejemplos
+  VC = 100:                  2 331 ejemplos
+
+Escalado:
+  ε a la mitad  →  datos × 2
+  δ a la décima →  datos + log(10), casi nada
+  VC × 10       →  datos × 10 aproximadamente
+
+Precisión es cara; confianza es barata.
+
+Aplicado a una red con 10⁹ parámetros, la cota
+pediría un número de ejemplos absurdo. La teoría
+es correcta; la cota, inservible en la práctica.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 358
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Usar la cota PAC como estimación del error real.
+2. Suponer que más confianza cuesta tanto como más precisión.
+3. Aplicar el marco PAC sin comprobar el supuesto de datos iid.
+
+## 🚀 Dónde se usa de verdad
+
+Fundamentos teóricos del aprendizaje, dimensionamiento conceptual de conjuntos de datos,
+comparación de familias de modelos y análisis de aprendibilidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Valiant, L. *A theory of the learnable*, Communications of the ACM, 1984](https://doi.org/10.1145/1968.1972)
+- [Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*, Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

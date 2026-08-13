@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**La información de Fisher es la curvatura de la KL, y de ella salen Cramér-Rao y el gradiente natural.**
 
-Esta clase concreta ese objetivo sobre **Information geometry**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `information_geometry`.
 4. Interpretar las 7 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+I(θ) = E[(∂ log p/∂θ)²]
+KL(p_θ ‖ p_{θ+ε}) ≈ ½·I(θ)·ε²
+Cramér-Rao: Var(θ̂) ≥ 1/(n·I(θ))
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,54 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Las cotas PAC acotan el error esperado, no garantizan el error observado.
+La geometría de la información trata el conjunto de distribuciones de una familia
+paramétrica como una **variedad**, donde cada punto es una distribución. La pregunta
+natural es qué métrica usar en ese espacio, y la respuesta es la **información de Fisher**.
+
+Su significado es que la KL, localmente, se comporta como una forma cuadrática cuya matriz
+es Fisher. La comprobación numérica lo confirma: para un desplazamiento minúsculo `ε`, la
+KL entre `p` y `p+ε` coincide con `½·I(p)·ε²` con razón 1,0. Esa identidad es lo que
+convierte a Fisher en la métrica natural del espacio de parámetros, no una elección
+arbitraria.
+
+De ahí salen dos resultados centrales. La **cota de Cramér-Rao** establece un límite
+inferior a la varianza de cualquier estimador insesgado: donde la información es alta, se
+puede estimar con precisión; donde es baja, ningún estimador puede ser preciso. En la
+Bernoulli, la información es máxima en los extremos —11,1 para `p = 0,1`— y mínima en 0,5,
+lo que dice que es más fácil estimar un parámetro cercano a los extremos.
+
+El **gradiente natural** preacondiciona el gradiente con la inversa de Fisher, con lo que
+la dirección de descenso deja de depender de cómo se hayan parametrizado los pesos. Es
+elegante y costoso —requiere invertir Fisher— y de ahí vienen aproximaciones prácticas como
+K-FAC. La restricción de KL de PPO en la clase 339 es una manifestación de la misma idea:
+medir el cambio de la política en el espacio de distribuciones, no en el de parámetros.
+
+## 🧮 Ejemplo trabajado
+
+Información de Fisher y su relación con la KL.
+
+```text
+Bernoulli:
+  p = 0,1  →  I = 11,111111
+  p = 0,5  →  I =  4,000000
+  p = 0,9  →  I = 11,111111
+máxima en los extremos                               ✓
+
+Normal:
+  σ = 0,5  →  I = 4,00
+  σ = 1,0  →  I = 1,00
+  σ = 2,0  →  I = 0,25
+
+KL localmente es una métrica (p = 0,1):
+  KL(p ‖ p+ε)  = 5,5523e-08
+  ½·I(p)·ε²    = 5,5556e-08
+  razón ≈ 1,0                                        ✓
+
+Cramér-Rao: Var(θ̂) ≥ 1/(n·I(θ))
+Gradiente natural: ∇̃ = I(θ)⁻¹∇
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +118,16 @@ compmath run 350
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Interpretar Fisher como una constante en vez de como función de θ.
+2. Aplicar Cramér-Rao a estimadores sesgados.
+3. Invertir Fisher exactamente en modelos grandes en vez de aproximarla.
+
+## 🚀 Dónde se usa de verdad
+
+Gradiente natural y K-FAC, PPO, diseño experimental óptimo, cotas de precisión de
+estimadores y análisis de identificabilidad.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Amari, S. *Information Geometry and Its Applications*, Springer, 2016](https://doi.org/10.1007/978-4-431-55978-8)
+- [Martens, J. *New insights and perspectives on the natural gradient method*, JMLR, 2020](https://arxiv.org/abs/1412.1193)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

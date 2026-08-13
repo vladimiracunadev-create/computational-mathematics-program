@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**El coeficiente sin ajustar estima 1,02 un efecto que en realidad es cero.**
 
-Esta clase concreta ese objetivo sobre **Causal inference**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `causal_inference`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar una cota teórica como predicción del error real.
+
+## 🧩 Fórmulas de la clase
+
+```text
+criterio de puerta trasera: bloquear todos los caminos X ← … → Y
+confusor: Z → X y Z → Y
+colisionador: X → C ← Y, condicionar crea asociación
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Las cotas PAC acotan el error esperado, no garantizan el error observado.
+La inferencia causal formaliza qué significa que `X` cause `Y` y cuándo se puede estimar ese
+efecto a partir de datos observacionales. Su lenguaje son los grafos causales dirigidos,
+donde las flechas representan relaciones causales y los caminos determinan qué asociaciones
+aparecen.
+
+El **criterio de puerta trasera** dice qué variables hay que ajustar: un conjunto que
+bloquee todos los caminos no causales entre `X` e `Y`. Ajustar por ese conjunto permite
+estimar el efecto causal correctamente. La demostración numérica es contundente: con un
+efecto causal real de **cero**, el coeficiente sin ajustar estima 1,02 —una relación fuerte
+e inexistente— y al ajustar por el confusor baja a 0,007.
+
+El resultado que más contradice la intuición es el **sesgo de colisionador**. Si dos
+variables independientes causan una tercera, condicionar sobre esa tercera **crea**
+correlación entre ellas donde no había ninguna. Ajustar por todo lo disponible no es una
+estrategia conservadora: puede introducir sesgo donde no lo había.
+
+La conclusión metodológica es que **no se puede decidir qué ajustar mirando solo los
+datos**. Hace falta un modelo causal, es decir, conocimiento del dominio sobre qué causa
+qué. Los datos por sí solos no distinguen un confusor de un colisionador, y esa es la razón
+profunda de que la aleatorización sea tan valiosa: rompe todos los caminos de puerta trasera
+a la vez, conocidos y desconocidos.
+
+## 🧮 Ejemplo trabajado
+
+Efecto real cero, estimado en 1,02 sin ajustar.
+
+```text
+estructura: Z → X,  Z → Y,  X ↛ Y
+efecto causal real de X sobre Y: 0,0
+
+coeficiente sin ajustar:      1,0243        ✗
+coeficiente ajustando por Z:  0,0074        ✓
+
+El ajuste recupera el efecto real.
+
+Criterio de puerta trasera:
+  bloquear todos los caminos X ← … → Y
+
+Colisionador (X → C ← Y):
+  correlación X-Y sin condicionar C: −0,0145
+  (independientes, como deben ser)
+  al condicionar sobre C aparecería correlación
+  donde no la hay.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 355
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Ajustar por todas las variables disponibles sin un modelo causal.
+2. Condicionar sobre un colisionador y crear asociación espuria.
+3. Interpretar coeficientes de regresión como efectos causales en datos observacionales.
+
+## 🚀 Dónde se usa de verdad
+
+Evaluación de políticas y tratamientos, atribución en marketing, análisis de equidad
+algorítmica, epidemiología y diseño de experimentos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Pearl, J. *Causality*, 2ª ed., Cambridge, 2009](https://doi.org/10.1017/CBO9780511803161)
+- [Hernán, M.; Robins, J. *Causal Inference: What If*, CRC, 2020](https://miguelhernan.org/whatifbook)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Con 25 parámetros y 30 datos se acierta el 80 % en entrenamiento sobre etiquetas aleatorias.**
 
-Esta clase concreta ese objetivo sobre **Statistical learning theory**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `statistical_learning_theory`.
 4. Interpretar las 8 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+R(h) = R_emp(h) + brecha de generalización
+la brecha crece con la complejidad y decrece con n
+cota uniforme: sup_h |R(h) − R_emp(h)|
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Un proceso gaussiano define una distribución sobre funciones, no sobre parámetros.
+La teoría estadística del aprendizaje separa dos cantidades que se confunden a diario. El
+**riesgo empírico** es el error medido sobre la muestra de entrenamiento; el **riesgo
+verdadero** es el error esperado sobre la distribución real. Minimizar el primero es lo que
+se puede hacer; controlar el segundo es lo que interesa.
+
+La diferencia entre ambos es la **brecha de generalización**, y depende de dos cosas: la
+complejidad de la clase de hipótesis y el número de ejemplos. Con muchos datos y una clase
+simple la brecha es pequeña; con pocos datos y una clase rica puede ser enorme, y el modelo
+memoriza en vez de aprender.
+
+La demostración usa etiquetas **completamente aleatorias**, sin ninguna señal que aprender,
+y por tanto con accuracy esperada de 0,5. Con 30 observaciones y 25 parámetros, el modelo
+acierta el 80 % en entrenamiento y el 48,5 % en test: la brecha entera es memorización. El
+número de entrenamiento no mide nada.
+
+Las cotas teóricas acotan el **peor caso sobre toda la clase de hipótesis**, no el caso
+concreto. Esa uniformidad es lo que las hace válidas y también lo que las hace holgadas:
+son correctas y muy pesimistas. En redes profundas predicen que no debería haber
+generalización, y la hay. Explicar esa discrepancia es un área abierta, y conviene
+presentarla así en vez de fingir que la teoría clásica describe lo que ocurre.
+
+## 🧮 Ejemplo trabajado
+
+Memorización pura sobre etiquetas aleatorias.
+
+```text
+señal real en los datos: NINGUNA
+accuracy esperada: 0,5
+
+n = 30, d = 25:
+  accuracy train: 0,800
+  accuracy test:  0,485
+  brecha: 0,315
+
+El 80 % de entrenamiento es memorización completa:
+con 25 parámetros y 30 datos hay capacidad de sobra
+para ajustar ruido.
+
+El test confirma que no se aprendió nada: 0,485
+es indistinguible del azar.
+
+Descomposición: R(h) = R_emp(h) + brecha
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 356
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Reportar el error de entrenamiento como medida de calidad.
+2. Usar más parámetros que datos sin regularizar.
+3. Interpretar una cota teórica como predicción del error real.
+
+## 🚀 Dónde se usa de verdad
+
+Diseño de experimentos de aprendizaje, elección de capacidad, comprensión del sobreajuste y
+justificación de la validación.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*, Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/)
+- [Zhang, C. et al. *Understanding deep learning requires rethinking generalization*, ICLR, 2017](https://arxiv.org/abs/1611.03530)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

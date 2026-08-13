@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Sinkhorn convierte un problema de programación lineal en escalados alternos.**
 
-Esta clase concreta ese objetivo sobre **Optimal transport**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `optimal_transport`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar una cota teórica como predicción del error real.
+
+## 🧩 Fórmulas de la clase
+
+```text
+min_P Σ Pᵢⱼ·Cᵢⱼ  sujeto a marginales fijas
+regularizado: + ε·Σ Pᵢⱼ·log Pᵢⱼ
+solución: escalados alternos de filas y columnas
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,55 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Un proceso gaussiano define una distribución sobre funciones, no sobre parámetros.
+El transporte óptimo pregunta cuál es la forma más barata de mover una distribución de masa
+hasta convertirla en otra, dado un coste por unidad transportada. La formulación de
+Kantorovich lo plantea como un programa lineal sobre planes de transporte con marginales
+fijas.
+
+Resolver ese programa lineal exactamente cuesta `O(n³ log n)`, prohibitivo para
+distribuciones grandes. La aportación de Cuturi fue añadir una **regularización
+entrópica**: penalizar planes de baja entropía suaviza el problema, lo vuelve
+estrictamente convexo, y su solución adopta una forma que se calcula con **escalados
+alternos** de filas y columnas.
+
+Ese algoritmo —Sinkhorn— es sencillo, paralelizable y **diferenciable**, lo que permite
+usarlo como capa dentro de una red neuronal. Esas tres propiedades juntas son las que
+llevaron el transporte óptimo de la matemática pura al aprendizaje automático aplicado en
+apenas unos años.
+
+El parámetro `ε` controla el compromiso. Valores grandes dan convergencia rápida y planes
+muy difusos, lejos del óptimo verdadero; valores pequeños se acercan al transporte exacto
+pero convergen despacio y sufren problemas numéricos por desbordamiento en los
+exponentes. El capstone de la clase 360 mide exactamente esa convergencia.
+
+## 🧮 Ejemplo trabajado
+
+Sinkhorn entre dos distribuciones de tres átomos.
+
+```text
+origen:  [0,4 ; 0,3 ; 0,3]
+destino: [0,2 ; 0,5 ; 0,3]
+
+matriz de coste:
+  [0,5  1,5  3,0]
+  [0,5  0,5  2,0]
+  [1,5  0,5  1,0]
+
+regularización ε = 0,05
+
+plan de transporte:
+  [0,200000  0,199750  0,000000]
+  [0,000000  0,299813  0,000000]
+  [0,000000  0,000437  0,299999]
+
+marginales de fila: [0,399751 ; 0,299813 ; 0,300436]
+coinciden con el origen                              ✓
+
+El plan evita las celdas caras (coste 3,0 y 2,0)
+y concentra la masa en las baratas.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +119,16 @@ compmath run 346
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Usar ε demasiado pequeño y provocar desbordamiento numérico.
+2. Interpretar el plan regularizado como el transporte exacto.
+3. Olvidar comprobar que las marginales del plan coinciden con las distribuciones.
+
+## 🚀 Dónde se usa de verdad
+
+Comparación de distribuciones, adaptación de dominios, flow matching, emparejamiento de
+formas y análisis de datos de una sola célula.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +171,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Cuturi, M. *Sinkhorn Distances: Lightspeed Computation of Optimal Transport*, NeurIPS, 2013](https://arxiv.org/abs/1306.0895)
+- [Peyré, G.; Cuturi, M. *Computational Optimal Transport*, 2019](https://arxiv.org/abs/1803.00567)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

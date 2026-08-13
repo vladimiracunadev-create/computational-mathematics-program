@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**El signo del vector de Fiedler dice por dónde partir el grafo en dos.**
 
-Esta clase concreta ese objetivo sobre **Spectral graph theory**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `spectral_graph_theory`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+L = D − A;  autovalores 0 = λ₁ ≤ λ₂ ≤ …
+λ₂ = conectividad algebraica
+partición por el signo del autovector de λ₂
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La geometría de la información dota al espacio de parámetros de una métrica natural.
+El agrupamiento espectral resuelve un problema difícil mediante una **relajación
+continua**. Partir un grafo minimizando el número de aristas cortadas es un problema
+combinatorio NP-difícil; relajarlo a variables continuas lo convierte en un problema de
+autovectores, que se resuelve en tiempo polinómico.
+
+El autovector asociado al segundo autovalor —el **vector de Fiedler**— es la solución de esa
+relajación, y el signo de cada componente indica a qué lado del corte asignar cada nodo. En
+el ejemplo, cuatro nodos tienen componente negativa y cuatro positiva, y esa partición
+corresponde exactamente a la estructura de comunidades del grafo.
+
+La **conectividad algebraica** `λ₂` cuantifica cuán bien separado está el grafo. Un valor
+pequeño —0,29 en el ejemplo, frente a autovalores posteriores de 2 y 4— indica que existe
+un corte barato y que la partición es significativa. Si `λ₂` fuera comparable a los demás,
+el corte sería arbitrario.
+
+El método se generaliza a más de dos grupos usando los primeros `k` autovectores como
+coordenadas y aplicando k-means en ese espacio. Su ventaja sobre k-means directo es que
+**funciona con grupos no convexos**, que es justamente donde k-means falla. Su límite es el
+coste: calcular autovectores de un grafo enorme requiere métodos iterativos como los de la
+parte 11.
+
+## 🧮 Ejemplo trabajado
+
+Grafo de 8 nodos partido por el vector de Fiedler.
+
+```text
+8 nodos, 11 aristas
+
+autovalores del Laplaciano:
+  [0,0 ; 0,29072464 ; 2,0 ; 2,80606343 ; 4,0 ; 4,0 ; 4,0 ; 4,90321193]
+
+multiplicidad de 0: 1  →  grafo conexo             ✓
+conectividad algebraica: 0,29072464
+
+vector de Fiedler:
+  [−0,432487 ; −0,369619 ; −0,369619 ; −0,199295 ;
+    0,199295 ;  0,369619 ;  0,369619 ;  0,432487]
+
+partición por signo:
+  grupo A: nodos 0, 1, 2, 3
+  grupo B: nodos 4, 5, 6, 7
+
+λ₂ = 0,29 frente a λ₃ = 2,0: el corte es claro.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 354
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Aplicar el método a grafos no conexos sin tratar cada componente por separado.
+2. Interpretar la partición cuando λ₂ es comparable a los autovalores siguientes.
+3. Calcular todos los autovectores cuando solo hacen falta los primeros.
+
+## 🚀 Dónde se usa de verdad
+
+Detección de comunidades, segmentación de imágenes, partición de mallas, análisis de redes
+sociales y agrupamiento de datos no convexos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189)
+- [Shi, J.; Malik, J. *Normalized cuts and image segmentation*, IEEE TPAMI, 2000](https://doi.org/10.1109/34.868688)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

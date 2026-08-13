@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**En una SDE el ruido escala como √dt, no como dt: esa raíz lo cambia todo.**
 
-Esta clase concreta ese objetivo sobre **Stochastic differential equations**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `stochastic_differential_equations`.
 4. Interpretar las 13 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+dX = f(X,t)dt + g(X,t)dW
+Euler-Maruyama: X ← X + f·dt + g·√dt·ξ
+Ornstein-Uhlenbeck: dX = θ(μ − X)dt + σ dW
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Un proceso gaussiano define una distribución sobre funciones, no sobre parámetros.
+Una ecuación diferencial estocástica añade a la dinámica determinista un término de ruido
+continuo. El primer término, la **deriva**, describe hacia dónde tiende el sistema; el
+segundo, la **difusión**, describe la magnitud de las fluctuaciones aleatorias.
+
+El detalle que hay que interiorizar es el escalado del ruido. El movimiento browniano tiene
+incrementos de varianza proporcional al tiempo, así que la **desviación** escala como
+`√dt`. En el integrador de Euler-Maruyama eso significa multiplicar el ruido por `√dt` y no
+por `dt`. Usar `dt` produce una simulación con la magnitud de ruido completamente
+equivocada, y es el error más frecuente al implementar SDE.
+
+Ese mismo hecho tiene una consecuencia teórica: las trayectorias brownianas son continuas
+pero **no derivables en ningún punto**, y por eso el cálculo ordinario no sirve. El cálculo
+de Itô y su lema son la herramienta correcta, y son la razón de que la fórmula de
+Black-Scholes tenga el término adicional que tiene.
+
+El proceso de **Ornstein-Uhlenbeck** del ejemplo es el prototipo con reversión a la media:
+la deriva empuja hacia `μ` con fuerza proporcional a la distancia, mientras el ruido lo
+aparta. Su distribución estacionaria es normal, y aparece en modelos de tipos de interés, en
+física y en la formulación en tiempo continuo de los modelos de difusión de la clase 334.
+
+## 🧮 Ejemplo trabajado
+
+Ornstein-Uhlenbeck simulado con Euler-Maruyama.
+
+```text
+SDE: dX = θ(μ − X)dt + σ dW
+θ = 1,5    μ = 2,0    σ = 0,8
+dt = 0,01     400 réplicas
+
+paso    t       x
+  1    0,01   0,014091
+101    1,01   1,xxxxxx
+  …             → oscila alrededor de μ = 2,0
+
+Escalado del ruido:
+  correcto:    σ·√dt·ξ = 0,8·0,1·ξ = 0,08·ξ
+  incorrecto:  σ·dt·ξ  = 0,8·0,01·ξ = 0,008·ξ
+  factor 10 de diferencia
+
+Con el escalado incorrecto la simulación parecería
+casi determinista.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 351
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Escalar el ruido con dt en vez de con √dt.
+2. Aplicar cálculo ordinario a trayectorias brownianas.
+3. Usar pasos grandes y perder la estructura estadística del proceso.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos de difusión en tiempo continuo, finanzas cuantitativas, física estadística,
+dinámica de Langevin y modelado de ruido en sistemas.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Øksendal, B. *Stochastic Differential Equations*, 6ª ed., Springer, 2003](https://doi.org/10.1007/978-3-642-14394-6)
+- [Song, Y. et al. *Score-Based Generative Modeling through SDEs*, ICLR, 2021](https://arxiv.org/abs/2011.13456)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

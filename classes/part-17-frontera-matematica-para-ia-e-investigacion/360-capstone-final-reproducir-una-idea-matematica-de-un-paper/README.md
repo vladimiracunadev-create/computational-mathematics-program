@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Reproducir un resultado publicado con datos donde el óptimo se conoce por fuerza bruta.**
 
-Esta clase concreta ese objetivo sobre **Capstone final: reproducir una idea matemática de un paper**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `capstone_reproduce_paper_idea`.
 4. Interpretar las 22 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+coste de Sinkhorn → transporte óptimo cuando ε → 0
+óptimo exacto verificado por barrido de todos los planes
+reportar semilla, protocolo y discrepancia
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,56 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Las cotas PAC acotan el error esperado, no garantizan el error observado.
+El capstone final del programa reproduce el núcleo matemático de un resultado publicado: el
+estimador de Sinkhorn converge al transporte óptimo verdadero cuando la regularización
+entrópica tiende a cero, según Cuturi en 2013. No es una implementación decorativa: es una
+verificación.
+
+El diseño experimental es lo que hace la verificación válida. Se elige un problema
+**suficientemente pequeño** para que el óptimo se pueda calcular por fuerza bruta —barriendo
+todos los planes de transporte posibles— de modo que exista una referencia exacta contra la
+que comparar. Sin esa referencia, «el algoritmo converge» sería una afirmación no
+verificable.
+
+Después se ejecuta Sinkhorn con `ε` decreciente y se comprueba que el coste se aproxima
+monótonamente al óptimo conocido. Lo que se está verificando no es que el código funcione,
+sino que **el enunciado del artículo es cierto** en un caso donde se puede comprobar.
+
+Esa es la habilidad que el programa entero ha construido, clase a clase: leer un enunciado
+matemático, traducirlo a código, diseñar un caso donde la respuesta se conoce, comparar, y
+reportar el protocolo completo con semilla y discrepancias. Trescientas sesenta clases
+después de contar con los dedos en la parte 00, esa es la diferencia entre creer un
+resultado y saberlo.
+
+## 🧮 Ejemplo trabajado
+
+Verificación del resultado de Cuturi sobre un caso exacto.
+
+```text
+resultado reproducido:
+  el coste de Sinkhorn converge al transporte óptimo
+  cuando la regularización entrópica tiende a cero
+
+fuente: Cuturi, M. Sinkhorn Distances, NIPS 2013
+
+protocolo:
+  dos masas uniformes de 2 átomos en ℝ
+  coste cuadrático (x − y)²
+
+matriz de coste:
+  [0,0   9,0]
+  [1,0   4,0]
+
+óptimo exacto por barrido: 2,0
+plan óptimo:
+  [0,5  0,0]
+  [0,0  0,5]
+
+Sinkhorn con ε decreciente se acerca a 2,0
+monótonamente: el enunciado se sostiene.       ✓
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +120,16 @@ compmath run 360
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Reproducir un resultado sin un caso donde la respuesta se conozca.
+2. Reportar la reproducción sin semilla ni protocolo completo.
+3. Ocultar las discrepancias con el artículo original en vez de analizarlas.
+
+## 🚀 Dónde se usa de verdad
+
+Reproducción de artículos, validación de implementaciones, investigación aplicada,
+revisión por pares y verificación de resultados antes de construir sobre ellos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +172,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Cuturi, M. *Sinkhorn Distances: Lightspeed Computation of Optimal Transport*, NeurIPS, 2013](https://arxiv.org/abs/1306.0895)
+- [Peyré, G.; Cuturi, M. *Computational Optimal Transport*, 2019](https://arxiv.org/abs/1803.00567)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

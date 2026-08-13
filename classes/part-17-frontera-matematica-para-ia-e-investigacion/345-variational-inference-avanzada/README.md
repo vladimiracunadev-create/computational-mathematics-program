@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Cambiar muestreo por optimización: más rápido, aproximado y con sesgo conocido.**
 
-Esta clase concreta ese objetivo sobre **Variational inference avanzada**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `advanced_variational_inference`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+minimizar KL(q ‖ p) sobre la familia variacional
+equivale a maximizar el ELBO
+el resultado depende de la familia elegida
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Las cotas PAC acotan el error esperado, no garantizan el error observado.
+La inferencia variacional plantea la aproximación de una posterior como un problema de
+**optimización**: elegir una familia de distribuciones tratables y buscar dentro de ella la
+que minimiza la divergencia KL respecto de la posterior real. Sustituye muestrear por
+minimizar.
+
+La ventaja es la velocidad y la escala. Donde MCMC necesita miles de evaluaciones
+secuenciales, la inferencia variacional aprovecha descenso de gradiente, minilotes y GPU. Es
+lo que hace viable la inferencia bayesiana en modelos con millones de parámetros, y es la
+razón de que el VAE de la clase 331 funcione.
+
+El precio es un **sesgo sistemático**. Como se minimiza `KL(q‖p)` —la dirección de búsqueda
+de modo, según la clase 264— la aproximación tiende a **subestimar la varianza** y a
+concentrarse en un modo. MCMC es asintóticamente exacto; la inferencia variacional es
+rápida y sesgada, y ese sesgo no desaparece con más cómputo.
+
+La elección de familia determina el resultado. La aproximación de **campo medio**, que
+supone independencia entre parámetros, es la más común y la que peor captura correlaciones
+posteriores. Familias más expresivas —flujos normalizadores— reducen el sesgo a cambio de
+coste. El criterio práctico es claro: MCMC cuando el modelo es pequeño y la exactitud
+importa; variacional cuando el modelo es grande y la escala manda.
+
+## 🧮 Ejemplo trabajado
+
+Aproximación variacional de una posterior normal.
+
+```text
+posterior real: Normal(mu = 3,0 ; sigma = 0,8)
+familia variacional: Normal(m, s)
+
+paso     m         s         KL
+  1    0,46875   0,945303   5,03687513
+  …
+final  3,00000   0,800000   ≈ 0
+
+La familia contiene la posterior real, así que
+la aproximación es exacta y KL llega a 0.        ✓
+
+En un caso real la familia NO contiene la posterior,
+y KL se estanca en un valor positivo: ese residuo
+es el sesgo del método.
+
+Con campo medio, s quedaría por debajo del real:
+la varianza se subestima sistemáticamente.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 345
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Reportar la incertidumbre variacional como si fuera exacta.
+2. Usar campo medio con posteriores fuertemente correlacionadas.
+3. Comparar valores de ELBO entre familias variacionales distintas.
+
+## 🚀 Dónde se usa de verdad
+
+VAE, redes bayesianas a escala, topic models, inferencia en modelos grandes y
+cuantificación rápida de incertidumbre.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670)
+- [Rezende, D.; Mohamed, S. *Variational Inference with Normalizing Flows*, ICML, 2015](https://arxiv.org/abs/1505.05770)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

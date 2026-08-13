@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**PCA no encuentra una variedad curva: ve tres dimensiones donde solo hay una.**
 
-Esta clase concreta ese objetivo sobre **Manifold learning**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `manifold_learning`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: invertir una matriz de covarianza sin jitter numérico.
+
+## 🧩 Fórmulas de la clase
+
+```text
+dimensión intrínseca ≪ dimensión ambiente
+PCA solo detecta subespacios lineales
+métodos no lineales: Isomap, LLE, t-SNE, UMAP
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,50 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La distancia de Wasserstein compara distribuciones sin exigir soporte común.
+La **hipótesis de la variedad** sostiene que los datos reales de dimensión alta se
+concentran cerca de una variedad de dimensión intrínseca mucho menor. Una imagen de 1000×1000
+píxeles vive en un espacio de un millón de dimensiones, pero el conjunto de imágenes de
+caras es un subconjunto minúsculo y estructurado de ese espacio.
+
+Esa hipótesis es lo que hace posible el aprendizaje en dimensión alta. Si los datos
+ocuparan uniformemente el espacio ambiente, la maldición de la dimensionalidad de la clase
+288 sería insuperable. Como no lo hacen, un modelo puede aprender la estructura de la
+variedad con una cantidad razonable de ejemplos.
+
+**PCA solo encuentra subespacios lineales**, y esa limitación se ve con claridad en el
+ejemplo. Una hélice es una curva de dimensión intrínseca 1 sumergida en tres dimensiones;
+PCA reparte la varianza entre las tres componentes —49 %, 36 % y 14 %— sin detectar en
+ningún momento que hay un solo grado de libertad. La variedad es curva y PCA solo ve rectas.
+
+Los métodos no lineales atacan justamente eso. **Isomap** usa distancias geodésicas sobre
+el grafo de vecinos en vez de distancias euclídeas; **t-SNE** y **UMAP** preservan la
+estructura local y son las herramientas estándar de visualización. Con una precaución
+importante: t-SNE y UMAP **no preservan distancias globales**, así que el tamaño y la
+separación de los grupos en sus gráficos no son interpretables.
+
+## 🧮 Ejemplo trabajado
+
+Una hélice: dimensión intrínseca 1 en un espacio de 3.
+
+```text
+120 puntos sobre una hélice
+dimensión ambiente: 3
+dimensión intrínseca: 1
+
+autovalores de la covarianza:
+  [0,177520 ; 0,129535 ; 0,052063]
+
+varianza explicada:
+  [49,43 % ; 36,07 % ; 14,50 %]
+
+PCA reparte la varianza entre las tres componentes
+y no detecta que hay un solo grado de libertad.     ✗
+
+Un método basado en distancias geodésicas sobre el
+grafo de vecinos sí recuperaría la dimensión 1.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +114,16 @@ compmath run 348
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Usar PCA para variedades curvas y concluir que la dimensión es alta.
+2. Interpretar distancias globales en un gráfico de t-SNE o UMAP.
+3. Fijar los hiperparámetros de UMAP sin comprobar la estabilidad del resultado.
+
+## 🚀 Dónde se usa de verdad
+
+Visualización de datos de alta dimensión, reducción de dimensión no lineal, análisis de
+espacios latentes y exploración de embeddings.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Tenenbaum, J.; de Silva, V.; Langford, J. *A global geometric framework for nonlinear dimensionality reduction*, Science, 2000](https://doi.org/10.1126/science.290.5500.2319)
+- [McInnes, L.; Healy, J.; Melville, J. *UMAP*, 2018](https://arxiv.org/abs/1802.03426)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

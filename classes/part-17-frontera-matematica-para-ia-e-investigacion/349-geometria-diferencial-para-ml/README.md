@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**La longitud de una curva es la integral de su rapidez, y eso se verifica numéricamente.**
 
-Esta clase concreta ese objetivo sobre **Geometría diferencial para ML**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `differential_geometry`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: interpretar una cota teórica como predicción del error real.
+
+## 🧩 Fórmulas de la clase
+
+```text
+velocidad: r'(t)
+rapidez: ‖r'(t)‖
+longitud de arco: ∫ ‖r'(t)‖ dt
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,49 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La geometría de la información dota al espacio de parámetros de una métrica natural.
+La geometría diferencial estudia espacios curvos con las herramientas del cálculo. Su
+objeto central es el **tensor métrico**, que define cómo medir distancias y ángulos
+localmente, y del que se derivan longitudes, geodésicas y curvatura.
+
+El caso más simple es una curva parametrizada. Su **velocidad** es la derivada del vector
+de posición, su **rapidez** es la norma de esa velocidad, y la **longitud de arco** es la
+integral de la rapidez. Para una hélice el cálculo es exacto y sirve de verificación
+numérica: la rapidez teórica `√(1 + 0,09) = 1,044031` coincide con la calculada, y la
+longitud sobre un periodo también.
+
+Las **geodésicas** son las curvas de longitud mínima, la generalización de la recta a
+espacios curvos. En una esfera son arcos de círculo máximo, que es la razón de que las
+rutas aéreas parezcan curvas en un mapa plano. La distancia geodésica es la que Isomap usa
+en la clase anterior.
+
+Su relevancia para el aprendizaje automático llega por dos vías. La **hipótesis de la
+variedad** convierte el espacio de datos en un objeto geométrico donde la distancia
+relevante es la geodésica y no la euclídea. Y la **geometría de la información** de la
+clase siguiente aplica estas mismas herramientas al espacio de parámetros, dotándolo de
+una métrica natural.
+
+## 🧮 Ejemplo trabajado
+
+Hélice: rapidez y longitud de arco verificadas.
+
+```text
+curva: r(t) = (cos t , sin t , 0,3t)
+
+velocidad en t = 1:
+  (−0,841471 ; 0,540302 ; 0,300000)
+
+rapidez = ‖r'(1)‖ = 1,044031
+teórica = √(1 + 0,09) = 1,044031                     ✓
+
+longitud de arco de 0 a 2π:
+  calculada = 6,559838
+  teórica   = 2π · 1,044031 = 6,559838               ✓
+
+La rapidez es constante porque la hélice avanza
+de forma uniforme: es una parametrización natural.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +113,16 @@ compmath run 349
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Confundir la longitud del recorrido con la distancia entre extremos.
+2. Usar distancia euclídea donde la geometría del problema pide geodésica.
+3. Suponer que una parametrización cualquiera tiene rapidez constante.
+
+## 🚀 Dónde se usa de verdad
+
+Aprendizaje sobre variedades, robótica y planificación de trayectorias, relatividad,
+geometría de espacios latentes y optimización sobre variedades.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [do Carmo, M. *Differential Geometry of Curves and Surfaces*, 2ª ed., Dover, 2016](https://store.doverpublications.com/products/9780486806990)
+- [Bronstein, M. et al. *Geometric Deep Learning*, 2021](https://arxiv.org/abs/2104.13478)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

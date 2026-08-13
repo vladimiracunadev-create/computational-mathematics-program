@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Un proceso gaussiano distribuye sobre funciones, y su incertidumbre crece donde no hay datos.**
 
-Esta clase concreta ese objetivo sobre **Gaussian Processes**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `gaussian_processes`.
 4. Interpretar las 9 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+f ~ GP(m(x), k(x,x'))
+media posterior: K*ᵀ(K + σ²I)⁻¹y
+varianza posterior: k** − K*ᵀ(K + σ²I)⁻¹K*
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,51 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> Un proceso gaussiano define una distribución sobre funciones, no sobre parámetros.
+Un proceso gaussiano cambia el objeto sobre el que se pone la distribución. En vez de
+definir un modelo paramétrico y distribuir sobre sus parámetros, distribuye directamente
+sobre **funciones**: cualquier conjunto finito de evaluaciones sigue una normal
+multivariante determinada por el kernel.
+
+Su propiedad más valiosa es que la **incertidumbre es honesta**. Cerca de un punto
+observado la varianza posterior es casi nula, porque la función tiene que pasar por ahí;
+lejos de todos los datos, vuelve a la varianza del prior. Ningún modelo paramétrico da eso
+gratis, y es la razón de que los GP dominen la optimización bayesiana, donde hay que decidir
+dónde explorar a continuación.
+
+El precio es el coste. Invertir la matriz de covarianza cuesta `O(n³)` en tiempo y `O(n²)`
+en memoria, lo que limita el método a unos miles de puntos sin aproximaciones. Las técnicas
+de puntos inductores y los GP dispersos existen precisamente para sortear ese muro.
+
+Una advertencia de implementación que no es opcional: la matriz de covarianza es
+teóricamente definida positiva pero **numéricamente casi singular** cuando hay puntos
+próximos. Sin sumar un pequeño **jitter** a la diagonal, la factorización de Cholesky
+falla. Es el mismo problema de condicionamiento de la parte 11, y la solución es la misma
+idea que Ridge: sumar `λI`.
+
+## 🧮 Ejemplo trabajado
+
+GP con kernel RBF sobre cinco observaciones.
+
+```text
+observaciones: 5      kernel: RBF con escala 1,0
+ruido: 0,0001
+
+predicción en x = −1,0:
+  media = −0,841409
+  desviación = 0,009999
+  valor real de sin(−1) = −0,841471                  ✓
+
+En un punto observado la varianza es mínima          ✓
+Lejos de los datos la varianza vuelve al prior: 1,0
+
+Esa es la propiedad clave: el modelo sabe
+dónde no sabe.
+
+Coste: invertir la covarianza es O(n³).
+Con n = 10 000 ya es inviable sin aproximar.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +115,16 @@ compmath run 341
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Invertir la covarianza sin sumar jitter a la diagonal.
+2. Aplicar GP exacto a decenas de miles de puntos.
+3. Elegir el kernel sin considerar qué suavidad implica sobre las funciones.
+
+## 🚀 Dónde se usa de verdad
+
+Optimización bayesiana de hiperparámetros, regresión con incertidumbre calibrada,
+geoestadística, diseño experimental y modelos sustitutos de simuladores costosos.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*, MIT Press, 2006](https://gaussianprocess.org/gpml/)
+- [Snoek, J.; Larochelle, H.; Adams, R. *Practical Bayesian Optimization*, NeurIPS, 2012](https://arxiv.org/abs/1206.2944)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

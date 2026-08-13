@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**El score no depende de la constante de normalización, y esa es precisamente la parte intratable.**
 
-Esta clase concreta ese objetivo sobre **Score matching**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `score_matching`.
 4. Interpretar las 10 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+score: s(x) = ∇ₓ log p(x)
+log p(x) = log p̃(x) − log Z
+∇ₓ log Z = 0, luego el score ignora Z
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,52 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> La distancia de Wasserstein compara distribuciones sin exigir soporte común.
+El **score** es el gradiente del logaritmo de la densidad respecto de la entrada. Apunta
+hacia las regiones de mayor densidad, y su magnitud indica cuán pronunciada es la subida.
+Es un campo vectorial que describe la distribución tan completamente como la densidad
+misma.
+
+Su propiedad decisiva es que **no depende de la constante de normalización**. Como el
+logaritmo convierte el producto en suma y la constante no depende de `x`, su gradiente es
+cero y desaparece. Eso importa muchísimo porque `Z` es una integral sobre todo el espacio,
+intratable en cualquier modelo interesante, y es lo que bloqueaba históricamente el
+entrenamiento de modelos basados en energía.
+
+La demostración numérica es directa: multiplicar la densidad por una constante arbitraria no
+cambia el score en ningún punto. Se puede modelar la distribución salvo un factor y aun así
+caracterizarla completamente.
+
+Conocido el score, la **dinámica de Langevin** genera muestras: seguir el score con un poco
+de ruido converge a la distribución. Combinar esa idea con múltiples niveles de ruido es
+exactamente lo que hacen los modelos de difusión de la clase 335 —la red que predice el
+ruido está estimando el score— y esa equivalencia unifica dos líneas de trabajo que
+parecían distintas.
+
+## 🧮 Ejemplo trabajado
+
+Score de una normal, con y sin constante arbitraria.
+
+```text
+distribución: Normal(1,5 ; 0,7)
+score analítico: −(x − μ)/σ²
+
+x        analítico     numérico
+0,0      3,061224      3,061224                      ✓
+1,5      0,000000      0,000000                      ✓
+2,5     −2,040816     −2,040816                      ✓
+
+Con la densidad multiplicada por una constante:
+  score en x = 1,0:  1,020408
+  idéntico al de la densidad normalizada             ✓
+
+El score en el máximo vale 0: es donde la densidad
+deja de crecer.
+
+Por eso importa: Z es una integral intratable,
+y el score no la necesita.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +116,16 @@ compmath run 353
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Suponer que el score identifica la densidad sin fijar la normalización.
+2. Estimar el score en regiones de densidad casi nula, donde es inestable.
+3. Confundir el score respecto de x con el score respecto de los parámetros.
+
+## 🚀 Dónde se usa de verdad
+
+Modelos de difusión, modelos basados en energía, dinámica de Langevin, estimación de
+densidad y generación de imágenes.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Hyvärinen, A. *Estimation of non-normalized statistical models by score matching*, JMLR, 2005](https://jmlr.org/papers/v6/hyvarinen05a.html)
+- [Song, Y.; Ermon, S. *Generative Modeling by Estimating Gradients of the Data Distribution*, NeurIPS, 2019](https://arxiv.org/abs/1907.05600)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 

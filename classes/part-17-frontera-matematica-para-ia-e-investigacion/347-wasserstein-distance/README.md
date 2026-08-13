@@ -9,11 +9,9 @@
 
 ## 🎯 Propósito
 
-Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
+**Wasserstein mide la separación real cuando la KL se vuelve infinita o constante.**
 
-Esta clase concreta ese objetivo sobre **Wasserstein distance**: qué es, cómo se
-calcula a mano, cómo se implementa sin ocultar el procedimiento y cómo se verifica
-que el resultado es correcto y no solo plausible.
+Procesos gaussianos, MCMC avanzado, inferencia variacional, transporte óptimo, geometría diferencial e informacional, SDE, Neural ODE, score matching y teoría del aprendizaje.
 
 ## ✅ Resultados de aprendizaje
 
@@ -24,6 +22,14 @@ Al terminar podrás:
 3. Ejecutar y modificar `lab.py`, que corre la demostración `wasserstein_distance`.
 4. Interpretar las 11 salidas del laboratorio y decir qué comprueba cada una.
 5. Detectar el error típico de esta parte: reportar resultados de mcmc sin diagnóstico de convergencia.
+
+## 🧩 Fórmulas de la clase
+
+```text
+W₁(P,Q) = ínfimo del coste de transporte con coste |x−y|
+en 1D: W₁ = ∫|F_P(x) − F_Q(x)| dx
+es una métrica verdadera
+```
 
 ## 🗺️ Ubicación en el programa
 
@@ -41,9 +47,47 @@ flowchart LR
     V -.-> IA["Aplicacion en IA · parte 17"]
 ```
 
-## 🧠 Idea rectora de la parte 17
+## 📖 Fundamentos
 
-> HMC usa gradientes para proponer estados lejanos con alta aceptación.
+La distancia de Wasserstein es el coste del transporte óptimo, y a diferencia de la KL o
+la JS es una **métrica en sentido estricto**: simétrica, no negativa, nula solo si las
+distribuciones coinciden, y cumple la desigualdad triangular.
+
+Su ventaja decisiva aparece cuando los **soportes no se solapan**. Dos distribuciones
+disjuntas tienen KL infinita y JS constante en su valor máximo; en ambos casos el gradiente
+es inútil para acercarlas. Wasserstein, en cambio, mide cuán lejos están y su gradiente
+apunta en la dirección correcta. Esa es exactamente la motivación de **WGAN**.
+
+Su interpretación es intuitiva y le da el nombre informal de distancia del transportista:
+si cada distribución es un montón de tierra, la distancia es el trabajo mínimo necesario
+para transformar uno en el otro. En una dimensión tiene una forma especialmente simple: el
+área entre las funciones de distribución acumuladas.
+
+El resultado numérico es limpio: para dos normales con la misma varianza, `W₁` es
+aproximadamente la diferencia de medias, y lo sigue siendo cuando están muy separadas. Con
+medias 0 y 5, `W₁ ≈ 5,04` mientras que la KL empírica se vuelve inestable. La distancia
+escala con la separación real, que es lo que se quiere de una medida geométrica.
+
+## 🧮 Ejemplo trabajado
+
+Wasserstein-1 entre normales cercanas y lejanas.
+
+```text
+2 000 muestras de cada distribución
+
+W₁(N(0,1) , N(0,5;1)) = 0,535306
+  diferencia de medias teórica: 0,5             ✓
+
+W₁(N(0,1) , N(5;1))   = 5,042759
+  diferencia teórica: 5,0                       ✓
+
+KL empírica en el caso cercano: 0,144536
+KL empírica en el caso lejano: inestable o infinita
+
+Wasserstein escala linealmente con la separación.
+La KL no distingue "lejos" de "muy lejos": ambas
+son igual de infinitas.
+```
 
 ## 🔬 Qué ejecuta el laboratorio
 
@@ -67,11 +111,16 @@ compmath run 347
 > esperabas enseña tanto como uno que te contradice, pero solo si la predicción
 > existía antes del resultado.
 
-## ⚠️ Errores frecuentes en esta parte
+## ⚠️ Errores conceptuales frecuentes
 
-- Reportar resultados de MCMC sin diagnóstico de convergencia.
-- Invertir una matriz de covarianza sin jitter numérico.
-- Interpretar una cota teórica como predicción del error real.
+1. Usar KL para comparar distribuciones con soportes disjuntos.
+2. Confundir la versión regularizada de Sinkhorn con la distancia exacta.
+3. Comparar valores de Wasserstein calculados con costes distintos.
+
+## 🚀 Dónde se usa de verdad
+
+WGAN, evaluación de modelos generativos, adaptación de dominios, análisis de formas y
+comparación de distribuciones empíricas.
 
 ## 🤖 Conexión con IA
 
@@ -114,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
-- Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
-- Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
-- Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+- [Arjovsky, M.; Chintala, S.; Bottou, L. *Wasserstein GAN*, ICML, 2017](https://arxiv.org/abs/1701.07875)
+- [Villani, C. *Optimal Transport: Old and New*, Springer, 2009](https://doi.org/10.1007/978-3-540-71050-9)
+
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
 
 ## 📂 Material de la clase
 
