@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)
-- [McElreath, R. *Statistical Rethinking*, 2ª ed., CRC, 2020](https://xcelab.net/rm/statistical-rethinking/)
+- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](https://www.stat.columbia.edu/~gelman/book/) — *uso:* obra de referencia consultada en «Inferencia bayesiana».
+- [McElreath, R. *Statistical Rethinking*, 2ª ed., CRC, 2020](https://xcelab.net/rm/statistical-rethinking/) — *uso:* obra de referencia consultada en «Inferencia bayesiana».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

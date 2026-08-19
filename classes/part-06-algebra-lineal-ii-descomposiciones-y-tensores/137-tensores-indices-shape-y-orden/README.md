@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [NumPy: indexación y orden en memoria](https://numpy.org/doc/stable/reference/arrays.ndarray.html#internal-memory-layout-of-an-ndarray)
-- [Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009](https://epubs.siam.org/doi/10.1137/07070111X)
+- [NumPy: indexación y orden en memoria](https://numpy.org/doc/stable/reference/arrays.ndarray.html#internal-memory-layout-of-an-ndarray) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Tensores: índices, shape y orden».
+- [Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009](https://epubs.siam.org/doi/10.1137/07070111X) — *uso:* artículo de origen consultado en «Tensores: índices, shape y orden».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

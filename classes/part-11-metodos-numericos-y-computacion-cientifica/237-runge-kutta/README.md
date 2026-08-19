@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1)
-- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 17](http://numerical.recipes/)
+- [Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1) — *uso:* desarrollo formal del tema en «Runge-Kutta».
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 17](https://numerical.recipes/) — *uso:* obra de referencia consultada en «Runge-Kutta».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

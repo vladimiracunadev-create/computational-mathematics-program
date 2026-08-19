@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Oppenheim & Schafer. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003226)
-- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](http://numerical.recipes/)
+- [Oppenheim & Schafer. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003226) — *uso:* obra de referencia consultada en «Capstone: optimizar y acumular una señal».
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](https://numerical.recipes/) — *uso:* obra de referencia consultada en «Capstone: optimizar y acumular una señal».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Neal, R. *MCMC using Hamiltonian dynamics*, Handbook of MCMC, 2011](https://arxiv.org/abs/1206.1901)
-- [Betancourt, M. *A Conceptual Introduction to Hamiltonian Monte Carlo*, 2017](https://arxiv.org/abs/1701.02434)
+- [Neal, R. *MCMC using Hamiltonian dynamics*, Handbook of MCMC, 2011](https://arxiv.org/abs/1206.1901) — *uso:* artículo de origen consultado en «Hamiltonian Monte Carlo».
+- [Betancourt, M. *A Conceptual Introduction to Hamiltonian Monte Carlo*, 2017](https://arxiv.org/abs/1701.02434) — *uso:* artículo de origen consultado en «Hamiltonian Monte Carlo».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

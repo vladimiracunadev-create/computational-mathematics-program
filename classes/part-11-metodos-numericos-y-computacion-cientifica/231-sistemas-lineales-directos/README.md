@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*, SIAM, 1997](https://doi.org/10.1137/1.9780898719574)
-- [Golub, G.; Van Loan, C. *Matrix Computations*, 4ª ed., JHU Press, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+- [Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*, SIAM, 1997](https://doi.org/10.1137/1.9780898719574) — *uso:* desarrollo formal del tema en «Sistemas lineales directos».
+- [Golub, G.; Van Loan, C. *Matrix Computations*, 4ª ed., JHU Press, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations) — *uso:* obra de referencia consultada en «Sistemas lineales directos».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

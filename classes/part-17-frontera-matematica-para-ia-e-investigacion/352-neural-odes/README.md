@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Chen, R. et al. *Neural Ordinary Differential Equations*, NeurIPS, 2018](https://arxiv.org/abs/1806.07366)
-- [Kidger, P. *On Neural Differential Equations*, tesis, 2022](https://arxiv.org/abs/2202.02435)
+- [Chen, R. et al. *Neural Ordinary Differential Equations*, NeurIPS, 2018](https://arxiv.org/abs/1806.07366) — *uso:* artículo de origen consultado en «Neural ODEs».
+- [Kidger, P. *On Neural Differential Equations*, tesis, 2022](https://arxiv.org/abs/2202.02435) — *uso:* artículo de origen consultado en «Neural ODEs».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

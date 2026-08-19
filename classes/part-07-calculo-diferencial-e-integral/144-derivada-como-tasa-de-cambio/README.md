@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 9](https://www.mathpop.com/calculus)
-- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 8](https://link.springer.com/book/10.1007/978-0-387-40065-5)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 9](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Derivada como tasa de cambio».
+- [Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 8](https://link.springer.com/book/10.1007/978-0-387-40065-5) — *uso:* desarrollo formal del tema en «Derivada como tasa de cambio».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

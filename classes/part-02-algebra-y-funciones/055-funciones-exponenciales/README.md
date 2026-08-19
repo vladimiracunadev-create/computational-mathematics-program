@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)
-- [Bartlett, A. *Arithmetic, Population and Energy* (conferencia sobre crecimiento exponencial)](https://www.albartlett.org/presentations/arithmetic_population_energy.html)
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/) — *uso:* obra de referencia consultada en «Funciones exponenciales».
+- [Bartlett, A. *Arithmetic, Population and Energy* (conferencia sobre crecimiento exponencial)](https://www.albartlett.org/presentations/arithmetic_population_energy.html) — *uso:* obra de referencia consultada en «Funciones exponenciales».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

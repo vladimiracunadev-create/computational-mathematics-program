@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 7-10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574)
-- [Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 5](https://jhupbooks.press.jhu.edu/title/matrix-computations)
+- [Trefethen & Bau. *Numerical Linear Algebra*, SIAM, 1997, lecc. 7-10](https://epubs.siam.org/doi/book/10.1137/1.9780898719574) — *uso:* desarrollo formal del tema en «Descomposición QR».
+- [Golub & Van Loan. *Matrix Computations*, 4ª ed., 2013, cap. 5](https://jhupbooks.press.jhu.edu/title/matrix-computations) — *uso:* obra de referencia consultada en «Descomposición QR».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

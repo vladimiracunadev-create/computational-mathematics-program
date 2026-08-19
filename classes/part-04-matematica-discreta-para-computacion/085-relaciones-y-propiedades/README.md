@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 9](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
-- [Halmos, P. *Naive Set Theory*. Springer, 1974](https://link.springer.com/book/10.1007/978-1-4757-1645-0)
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019, cap. 9](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html) — *uso:* obra de referencia consultada en «Relaciones y propiedades».
+- [Halmos, P. *Naive Set Theory*. Springer, 1974](https://link.springer.com/book/10.1007/978-1-4757-1645-0) — *uso:* desarrollo formal del tema en «Relaciones y propiedades».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -169,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Rumelhart, D.; Hinton, G.; Williams, R. *Learning representations by back-propagating errors*, Nature, 1986](https://doi.org/10.1038/323533a0)
-- [Cybenko, G. *Approximation by superpositions of a sigmoidal function*, 1989](https://doi.org/10.1007/BF02551274)
+- [Rumelhart, D.; Hinton, G.; Williams, R. *Learning representations by back-propagating errors*, Nature, 1986](https://doi.org/10.1038/323533a0) — *uso:* artículo de origen consultado en «MLP como composición de funciones».
+- [Cybenko, G. *Approximation by superpositions of a sigmoidal function*, 1989](https://doi.org/10.1007/BF02551274) — *uso:* artículo de origen consultado en «MLP como composición de funciones».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

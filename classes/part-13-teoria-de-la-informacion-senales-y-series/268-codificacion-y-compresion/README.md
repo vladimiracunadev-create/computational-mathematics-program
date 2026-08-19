@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Huffman, D. *A method for the construction of minimum-redundancy codes*, Proceedings of the IRE, 1952](https://doi.org/10.1109/JRPROC.1952.273898)
-- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 5](https://doi.org/10.1002/047174882X)
+- [Huffman, D. *A method for the construction of minimum-redundancy codes*, Proceedings of the IRE, 1952](https://doi.org/10.1109/JRPROC.1952.273898) — *uso:* artículo de origen consultado en «Codificación y compresión».
+- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 5](https://doi.org/10.1002/047174882X) — *uso:* artículo de origen consultado en «Codificación y compresión».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

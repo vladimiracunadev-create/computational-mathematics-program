@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Eiben, A.; Smith, J. *Introduction to Evolutionary Computing*, 2ª ed., Springer, 2015](https://doi.org/10.1007/978-3-662-44874-8)
-- [Hansen, N.; Ostermeier, A. *Completely derandomized self-adaptation in evolution strategies*, 2001](https://doi.org/10.1162/106365601750190398)
+- [Eiben, A.; Smith, J. *Introduction to Evolutionary Computing*, 2ª ed., Springer, 2015](https://doi.org/10.1007/978-3-662-44874-8) — *uso:* desarrollo formal del tema en «Optimización evolutiva».
+- [Hansen, N.; Ostermeier, A. *Completely derandomized self-adaptation in evolution strategies*, 2001](https://doi.org/10.1162/106365601750190398) — *uso:* artículo de origen consultado en «Optimización evolutiva».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)
-- [Lin, M.; Chen, Q.; Yan, S. *Network In Network*, ICLR, 2014](https://arxiv.org/abs/1312.4400)
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Pooling y downsampling».
+- [Lin, M.; Chen, Q.; Yan, S. *Network In Network*, ICLR, 2014](https://arxiv.org/abs/1312.4400) — *uso:* artículo de origen consultado en «Pooling y downsampling».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

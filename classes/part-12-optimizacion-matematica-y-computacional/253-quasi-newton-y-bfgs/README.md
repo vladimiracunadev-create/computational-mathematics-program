@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 6](https://doi.org/10.1007/978-0-387-40065-5)
-- [Liu, D.; Nocedal, J. *On the limited memory BFGS method*, Mathematical Programming, 1989](https://doi.org/10.1007/BF01589116)
+- [Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 6](https://doi.org/10.1007/978-0-387-40065-5) — *uso:* desarrollo formal del tema en «Quasi-Newton y BFGS».
+- [Liu, D.; Nocedal, J. *On the limited memory BFGS method*, Mathematical Programming, 1989](https://doi.org/10.1007/BF01589116) — *uso:* artículo de origen consultado en «Quasi-Newton y BFGS».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

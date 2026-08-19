@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Breiman, L. et al. *Classification and Regression Trees*, Wadsworth, 1984](https://doi.org/10.1201/9781315139470)
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 9](https://hastie.su.domains/ElemStatLearn/)
+- [Breiman, L. et al. *Classification and Regression Trees*, Wadsworth, 1984](https://doi.org/10.1201/9781315139470) — *uso:* desarrollo formal del tema en «Árboles: entropía y Gini».
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 9](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Árboles: entropía y Gini».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

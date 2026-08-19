@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Kullback, S.; Leibler, R. *On information and sufficiency*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729694)
-- [MacKay, D. *Information Theory, Inference, and Learning Algorithms*, Cambridge, 2003](https://www.inference.org.uk/mackay/itila/)
+- [Kullback, S.; Leibler, R. *On information and sufficiency*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729694) — *uso:* artículo de origen consultado en «Divergencia KL».
+- [MacKay, D. *Information Theory, Inference, and Learning Algorithms*, Cambridge, 2003](https://www.inference.org.uk/mackay/itila/) — *uso:* obra de referencia consultada en «Divergencia KL».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

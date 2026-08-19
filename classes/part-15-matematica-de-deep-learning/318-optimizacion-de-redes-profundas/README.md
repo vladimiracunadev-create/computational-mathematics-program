@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Goyal, P. et al. *Accurate, Large Minibatch SGD*, 2017](https://arxiv.org/abs/1706.02677)
-- [Loshchilov, I.; Hutter, F. *SGDR: Stochastic Gradient Descent with Warm Restarts*, ICLR, 2017](https://arxiv.org/abs/1608.03983)
+- [Goyal, P. et al. *Accurate, Large Minibatch SGD*, 2017](https://arxiv.org/abs/1706.02677) — *uso:* artículo de origen consultado en «Optimización de redes profundas».
+- [Loshchilov, I.; Hutter, F. *SGDR: Stochastic Gradient Descent with Warm Restarts*, ICLR, 2017](https://arxiv.org/abs/1608.03983) — *uso:* artículo de origen consultado en «Optimización de redes profundas».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

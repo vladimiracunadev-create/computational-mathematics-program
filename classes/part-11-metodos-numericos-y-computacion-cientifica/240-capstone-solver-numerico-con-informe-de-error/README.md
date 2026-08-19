@@ -170,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018](https://doi.org/10.1137/1.9781611975581)
-- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](http://numerical.recipes/)
+- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018](https://doi.org/10.1137/1.9781611975581) — *uso:* desarrollo formal del tema en «Capstone: solver numérico con informe de error».
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](https://numerical.recipes/) — *uso:* obra de referencia consultada en «Capstone: solver numérico con informe de error».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

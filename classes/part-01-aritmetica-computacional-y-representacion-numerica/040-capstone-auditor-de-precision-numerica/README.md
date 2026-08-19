@@ -158,10 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)
-- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6)
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) — *uso:* desarrollo formal del tema en «Capstone: auditor de precisión numérica».
+- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6) — *uso:* desarrollo formal del tema en «Capstone: auditor de precisión numérica».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

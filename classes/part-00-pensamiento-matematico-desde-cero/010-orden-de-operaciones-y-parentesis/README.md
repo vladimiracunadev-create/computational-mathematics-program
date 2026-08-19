@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: precedencia de operadores](https://docs.python.org/3/reference/expressions.html#operator-precedence)
-- [Knuth, D. *Two notes on notation*. Amer. Math. Monthly, 1992](https://arxiv.org/abs/math/9205211)
+- [Python: precedencia de operadores](https://docs.python.org/3/reference/expressions.html#operator-precedence) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Orden de operaciones y paréntesis».
+- [Knuth, D. *Two notes on notation*. Amer. Math. Monthly, 1992](https://arxiv.org/abs/math/9205211) — *uso:* artículo de origen consultado en «Orden de operaciones y paréntesis».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

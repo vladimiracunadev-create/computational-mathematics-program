@@ -158,10 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5)
-- [SymPy: simplificación simbólica](https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html)
+- [Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5) — *uso:* artículo de origen consultado en «Expresiones algebraicas y términos».
+- [SymPy: simplificación simbólica](https://docs.sympy.org/latest/tutorials/intro-tutorial/simplification.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Expresiones algebraicas y términos».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

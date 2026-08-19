@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Baydin, A. et al. *Automatic differentiation in machine learning: a survey*, JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)
-- [Karpathy, A. *micrograd*, 2020](https://github.com/karpathy/micrograd)
+- [Baydin, A. et al. *Automatic differentiation in machine learning: a survey*, JMLR, 2018](https://jmlr.org/papers/v18/17-468.html) — *uso:* obra de referencia consultada en «Computational graphs».
+- [Karpathy, A. *micrograd*, 2020](https://github.com/karpathy/micrograd) — *uso:* obra de referencia consultada en «Computational graphs».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

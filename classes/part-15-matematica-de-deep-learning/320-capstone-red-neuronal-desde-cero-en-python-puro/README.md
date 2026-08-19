@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Karpathy, A. *Neural Networks: Zero to Hero*, 2022](https://karpathy.ai/zero-to-hero.html)
-- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016](https://www.deeplearningbook.org/)
+- [Karpathy, A. *Neural Networks: Zero to Hero*, 2022](https://karpathy.ai/zero-to-hero.html) — *uso:* exposición alternativa del tema en «Capstone: red neuronal desde cero en Python puro».
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Capstone: red neuronal desde cero en Python puro».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

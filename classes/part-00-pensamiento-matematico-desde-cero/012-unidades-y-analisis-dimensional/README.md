@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [BIPM. *The International System of Units (SI)*, 9ª ed., 2019](https://www.bipm.org/en/publications/si-brochure)
-- [NASA. *Mars Climate Orbiter Mishap Investigation Board Report*, 1999](https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf)
+- [BIPM. *The International System of Units (SI)*, 9ª ed., 2019](https://www.bipm.org/en/publications/si-brochure) — *uso:* referencia normativa consultada en «Unidades y análisis dimensional».
+- [NASA. *Mars Climate Orbiter Mishap Investigation Board Report*, 1999](https://llis.nasa.gov/llis_lib/pdf/1009464main1_0641-mr.pdf) — *uso:* obra de referencia consultada en «Unidades y análisis dimensional».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

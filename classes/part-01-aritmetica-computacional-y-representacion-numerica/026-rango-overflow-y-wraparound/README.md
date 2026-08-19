@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [ESA. *Ariane 5 Flight 501 Failure — Report by the Inquiry Board*, 1996](https://esamultimedia.esa.int/docs/esa-x-1819eng.pdf)
-- [CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html)
+- [ESA. *Ariane 5 Flight 501 Failure — Report by the Inquiry Board*, 1996](https://esamultimedia.esa.int/docs/esa-x-1819eng.pdf) — *uso:* obra de referencia consultada en «Rango, overflow y wraparound».
+- [CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html) — *uso:* referencia normativa consultada en «Rango, overflow y wraparound».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -169,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
-- [Elhage, N. et al. *A Mathematical Framework for Transformer Circuits*, Anthropic, 2021](https://transformer-circuits.pub/2021/framework/index.html)
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762) — *uso:* artículo de origen consultado en «Capstone: mini-Transformer matemático».
+- [Elhage, N. et al. *A Mathematical Framework for Transformer Circuits*, Anthropic, 2021](https://transformer-circuits.pub/2021/framework/index.html) — *uso:* exposición alternativa del tema en «Capstone: mini-Transformer matemático».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

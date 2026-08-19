@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html)
-- [Knuth, D. *The Art of Computer Programming*, vol. 4A, 2011](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)
+- [Rosen, K. *Discrete Mathematics and Its Applications*, 8ª ed., 2019](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html) — *uso:* obra de referencia consultada en «Tablas de verdad y equivalencias».
+- [Knuth, D. *The Art of Computer Programming*, vol. 4A, 2011](https://www-cs-faculty.stanford.edu/~knuth/taocp.html) — *uso:* obra de referencia consultada en «Tablas de verdad y equivalencias».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

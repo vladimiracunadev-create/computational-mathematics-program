@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Cooley, J.; Tukey, J. *An algorithm for the machine calculation of complex Fourier series*, 1965](https://doi.org/10.1090/S0025-5718-1965-0178586-1)
-- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 12](http://numerical.recipes/)
+- [Cooley, J.; Tukey, J. *An algorithm for the machine calculation of complex Fourier series*, 1965](https://doi.org/10.1090/S0025-5718-1965-0178586-1) — *uso:* artículo de origen consultado en «FFT».
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 12](https://numerical.recipes/) — *uso:* obra de referencia consultada en «FFT».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

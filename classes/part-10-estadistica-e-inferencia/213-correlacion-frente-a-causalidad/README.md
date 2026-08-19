@@ -170,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Pearl, J.; Mackenzie, D. *The Book of Why*, Basic Books, 2018](https://bayes.cs.ucla.edu/WHY/)
-- [Hernán, M.; Robins, J. *Causal Inference: What If*, CRC, 2020](https://miguelhernan.org/whatifbook)
+- [Pearl, J.; Mackenzie, D. *The Book of Why*, Basic Books, 2018](https://bayes.cs.ucla.edu/WHY/) — *uso:* obra de referencia consultada en «Correlación frente a causalidad».
+- [Hernán, M.; Robins, J. *Causal Inference: What If*, CRC, 2020](https://miguelhernan.org/whatifbook) — *uso:* obra de referencia consultada en «Correlación frente a causalidad».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

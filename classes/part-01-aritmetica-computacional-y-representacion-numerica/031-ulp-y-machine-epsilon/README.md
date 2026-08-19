@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., Birkhäuser, 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6)
-- [Python: `math.ulp` y `math.nextafter`](https://docs.python.org/3/library/math.html#math.ulp)
+- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., Birkhäuser, 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6) — *uso:* desarrollo formal del tema en «ULP y machine epsilon».
+- [Python: `math.ulp` y `math.nextafter`](https://docs.python.org/3/library/math.html#math.ulp) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «ULP y machine epsilon».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*, 2ª ed., MIT Press, 2018](http://incompleteideas.net/book/the-book.html)
-- [Bellman, R. *Dynamic Programming*, Princeton University Press, 1957](https://press.princeton.edu/books/paperback/9780691146683/dynamic-programming)
+- [Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*, 2ª ed., MIT Press, 2018](http://incompleteideas.net/book/the-book.html) — *uso:* obra de referencia consultada en «Bellman equations».
+- [Bellman, R. *Dynamic Programming*, Princeton University Press, 1957](https://press.princeton.edu/books/paperback/9780691146683/dynamic-programming) — *uso:* desarrollo formal del tema en «Bellman equations».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

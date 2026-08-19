@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hochreiter, S.; Schmidhuber, J. *Long Short-Term Memory*, Neural Computation, 1997](https://doi.org/10.1162/neco.1997.9.8.1735)
-- [Olah, C. *Understanding LSTM Networks*, 2015](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+- [Hochreiter, S.; Schmidhuber, J. *Long Short-Term Memory*, Neural Computation, 1997](https://doi.org/10.1162/neco.1997.9.8.1735) — *uso:* artículo de origen consultado en «LSTM y compuertas».
+- [Olah, C. *Understanding LSTM Networks*, 2015](https://colah.github.io/posts/2015-08-Understanding-LSTMs/) — *uso:* exposición alternativa del tema en «LSTM y compuertas».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

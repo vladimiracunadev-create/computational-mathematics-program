@@ -171,10 +171,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Mikolov, T. et al. *Efficient estimation of word representations in vector space*, 2013](https://arxiv.org/abs/1301.3781)
-- [Bolukbasi, T. et al. *Man is to computer programmer as woman is to homemaker?*, NeurIPS, 2016](https://arxiv.org/abs/1607.06520)
+- [Mikolov, T. et al. *Efficient estimation of word representations in vector space*, 2013](https://arxiv.org/abs/1301.3781) — *uso:* artículo de origen consultado en «Embeddings como espacios vectoriales».
+- [Bolukbasi, T. et al. *Man is to computer programmer as woman is to homemaker?*, NeurIPS, 2016](https://arxiv.org/abs/1607.06520) — *uso:* artículo de origen consultado en «Embeddings como espacios vectoriales».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

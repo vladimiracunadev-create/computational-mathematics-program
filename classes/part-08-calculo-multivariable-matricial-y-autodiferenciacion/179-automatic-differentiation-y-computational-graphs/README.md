@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html)
-- [Griewank & Walther. *Evaluating Derivatives*, 2ª ed., SIAM, 2008](https://epubs.siam.org/doi/book/10.1137/1.9780898717761)
+- [Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018](https://jmlr.org/papers/v18/17-468.html) — *uso:* obra de referencia consultada en «Automatic differentiation y computational graphs».
+- [Griewank & Walther. *Evaluating Derivatives*, 2ª ed., SIAM, 2008](https://epubs.siam.org/doi/book/10.1137/1.9780898717761) — *uso:* desarrollo formal del tema en «Automatic differentiation y computational graphs».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

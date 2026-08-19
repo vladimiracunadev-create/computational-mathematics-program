@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [NumPy: broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html)
-- [PyTorch: broadcasting semantics](https://pytorch.org/docs/stable/notes/broadcasting.html)
+- [NumPy: broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Broadcasting como operación tensorial».
+- [PyTorch: broadcasting semantics](https://pytorch.org/docs/stable/notes/broadcasting.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Broadcasting como operación tensorial».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

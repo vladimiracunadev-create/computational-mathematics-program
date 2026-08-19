@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: funciones `bin`, `int` y `format`](https://docs.python.org/3/library/functions.html#bin)
-- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.1](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)
+- [Python: funciones `bin`, `int` y `format`](https://docs.python.org/3/library/functions.html#bin) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Conversión decimal a binario».
+- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.1](https://www-cs-faculty.stanford.edu/~knuth/taocp.html) — *uso:* obra de referencia consultada en «Conversión decimal a binario».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

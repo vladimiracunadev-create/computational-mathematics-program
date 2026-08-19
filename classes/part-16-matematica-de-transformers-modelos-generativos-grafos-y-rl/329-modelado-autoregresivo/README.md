@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Bengio, Y. et al. *A neural probabilistic language model*, JMLR, 2003](https://jmlr.org/papers/v3/bengio03a.html)
-- [Radford, A. et al. *Language Models are Unsupervised Multitask Learners*, 2019](https://openai.com/research/better-language-models)
+- [Bengio, Y. et al. *A neural probabilistic language model*, JMLR, 2003](https://jmlr.org/papers/v3/bengio03a.html) — *uso:* obra de referencia consultada en «Modelado autoregresivo».
+- [Radford, A. et al. *Language Models are Unsupervised Multitask Learners*, 2019](https://openai.com/research/better-language-models) — *uso:* obra de referencia consultada en «Modelado autoregresivo».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

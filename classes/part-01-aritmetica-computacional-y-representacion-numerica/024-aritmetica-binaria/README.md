@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Warren, H. *Hacker's Delight*, 2ª ed., Addison-Wesley, 2012](https://www.oreilly.com/library/view/hackers-delight-second/9780133084993/)
-- [Python: operaciones bit a bit](https://docs.python.org/3/library/stdtypes.html#bitwise-operations-on-integer-types)
+- [Warren, H. *Hacker's Delight*, 2ª ed., Addison-Wesley, 2012](https://www.oreilly.com/library/view/hackers-delight-second/9780133084993/) — *uso:* desarrollo formal del tema en «Aritmética binaria».
+- [Python: operaciones bit a bit](https://docs.python.org/3/library/stdtypes.html#bitwise-operations-on-integer-types) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Aritmética binaria».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Bengio, Y.; Simard, P.; Frasconi, P. *Learning long-term dependencies with gradient descent is difficult*, 1994](https://doi.org/10.1109/72.279181)
-- [Pascanu, R.; Mikolov, T.; Bengio, Y. *On the difficulty of training recurrent neural networks*, ICML, 2013](https://arxiv.org/abs/1211.5063)
+- [Bengio, Y.; Simard, P.; Frasconi, P. *Learning long-term dependencies with gradient descent is difficult*, 1994](https://doi.org/10.1109/72.279181) — *uso:* artículo de origen consultado en «Vanishing y exploding gradients».
+- [Pascanu, R.; Mikolov, T.; Bengio, Y. *On the difficulty of training recurrent neural networks*, ICML, 2013](https://arxiv.org/abs/1211.5063) — *uso:* artículo de origen consultado en «Vanishing y exploding gradients».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Lin, J. *Divergence measures based on the Shannon entropy*, IEEE Trans. Information Theory, 1991](https://doi.org/10.1109/18.61115)
-- [Goodfellow, I. et al. *Generative Adversarial Networks*, NeurIPS, 2014](https://arxiv.org/abs/1406.2661)
+- [Lin, J. *Divergence measures based on the Shannon entropy*, IEEE Trans. Information Theory, 1991](https://doi.org/10.1109/18.61115) — *uso:* artículo de origen consultado en «Jensen-Shannon divergence».
+- [Goodfellow, I. et al. *Generative Adversarial Networks*, NeurIPS, 2014](https://arxiv.org/abs/1406.2661) — *uso:* artículo de origen consultado en «Jensen-Shannon divergence».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

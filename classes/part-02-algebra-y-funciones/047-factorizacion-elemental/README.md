@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131)
-- [Vieta's formulas — Wolfram MathWorld](https://mathworld.wolfram.com/VietasFormulas.html)
+- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131) — *uso:* obra de referencia consultada en «Factorización elemental».
+- [Vieta's formulas — Wolfram MathWorld](https://mathworld.wolfram.com/VietasFormulas.html) — *uso:* exposición alternativa del tema en «Factorización elemental».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

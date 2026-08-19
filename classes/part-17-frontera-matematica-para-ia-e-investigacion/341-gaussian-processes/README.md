@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*, MIT Press, 2006](https://gaussianprocess.org/gpml/)
-- [Snoek, J.; Larochelle, H.; Adams, R. *Practical Bayesian Optimization*, NeurIPS, 2012](https://arxiv.org/abs/1206.2944)
+- [Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*, MIT Press, 2006](https://gaussianprocess.org/gpml/) — *uso:* obra de referencia consultada en «Gaussian Processes».
+- [Snoek, J.; Larochelle, H.; Adams, R. *Practical Bayesian Optimization*, NeurIPS, 2012](https://arxiv.org/abs/1206.2944) — *uso:* artículo de origen consultado en «Gaussian Processes».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -157,10 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 15](https://www.mathpop.com/calculus)
-- [Needham, T. *Visual Complex Analysis*. Oxford University Press, 1997](https://global.oup.com/academic/product/visual-complex-analysis-9780198534464)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 15](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Derivadas trigonométricas».
+- [Needham, T. *Visual Complex Analysis*. Oxford University Press, 1997](https://global.oup.com/academic/product/visual-complex-analysis-9780198534464) — *uso:* desarrollo formal del tema en «Derivadas trigonométricas».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

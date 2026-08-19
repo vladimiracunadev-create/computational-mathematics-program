@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)
-- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)
+- [Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Capstone: modelar un problema cotidiano con matemáticas».
+- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/) — *uso:* referencia normativa consultada en «Capstone: modelar un problema cotidiano con matemáticas».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

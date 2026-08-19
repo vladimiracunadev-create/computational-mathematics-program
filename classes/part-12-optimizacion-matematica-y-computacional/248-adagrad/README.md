@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Duchi, J.; Hazan, E.; Singer, Y. *Adaptive subgradient methods*, JMLR, 2011](https://jmlr.org/papers/v12/duchi11a.html)
-- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/)
+- [Duchi, J.; Hazan, E.; Singer, Y. *Adaptive subgradient methods*, JMLR, 2011](https://jmlr.org/papers/v12/duchi11a.html) — *uso:* obra de referencia consultada en «AdaGrad».
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 8](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «AdaGrad».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

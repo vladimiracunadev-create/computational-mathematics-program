@@ -157,10 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/)
-- [Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., 2009](https://hastie.su.domains/ElemStatLearn/)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 3](https://math.mit.edu/~gs/linearalgebra/) — *uso:* exposición alternativa del tema en «Independencia y dependencia lineal».
+- [Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., 2009](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Independencia y dependencia lineal».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

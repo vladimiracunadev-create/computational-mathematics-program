@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 6](https://hastie.su.domains/ElemStatLearn/)
-- [Domingos, P.; Pazzani, M. *On the optimality of the simple Bayesian classifier*, Machine Learning, 1997](https://doi.org/10.1023/A:1007413511361)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 6](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Naive Bayes».
+- [Domingos, P.; Pazzani, M. *On the optimality of the simple Bayesian classifier*, Machine Learning, 1997](https://doi.org/10.1023/A:1007413511361) — *uso:* artículo de origen consultado en «Naive Bayes».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

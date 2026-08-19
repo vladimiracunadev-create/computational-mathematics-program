@@ -170,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 7](https://hastie.su.domains/ElemStatLearn/)
-- [Belkin, M. et al. *Reconciling modern machine-learning practice and the classical bias-variance trade-off*, PNAS, 2019](https://doi.org/10.1073/pnas.1903070116)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 7](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Bias-variance tradeoff».
+- [Belkin, M. et al. *Reconciling modern machine-learning practice and the classical bias-variance trade-off*, PNAS, 2019](https://doi.org/10.1073/pnas.1903070116) — *uso:* artículo de origen consultado en «Bias-variance tradeoff».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020, cap. 3](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)
-- [CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html)
+- [Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020, cap. 3](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6) — *uso:* desarrollo formal del tema en «Enteros con signo y complemento a dos».
+- [CWE-190: Integer Overflow or Wraparound](https://cwe.mitre.org/data/definitions/190.html) — *uso:* referencia normativa consultada en «Enteros con signo y complemento a dos».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

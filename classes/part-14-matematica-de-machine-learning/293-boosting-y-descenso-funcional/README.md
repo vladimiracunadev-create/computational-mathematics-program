@@ -169,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Friedman, J. *Greedy function approximation: a gradient boosting machine*, Annals of Statistics, 2001](https://doi.org/10.1214/aos/1013203451)
-- [Chen, T.; Guestrin, C. *XGBoost: A Scalable Tree Boosting System*, KDD, 2016](https://arxiv.org/abs/1603.02754)
+- [Friedman, J. *Greedy function approximation: a gradient boosting machine*, Annals of Statistics, 2001](https://doi.org/10.1214/aos/1013203451) — *uso:* artículo de origen consultado en «Boosting y descenso funcional».
+- [Chen, T.; Guestrin, C. *XGBoost: A Scalable Tree Boosting System*, KDD, 2016](https://arxiv.org/abs/1603.02754) — *uso:* artículo de origen consultado en «Boosting y descenso funcional».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

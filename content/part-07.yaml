@@ -779,7 +779,7 @@ clases:
       cualquier magnitud que se obtenga sumando contribuciones infinitesimales.
     referencias:
       - "[Apostol, T. *Calculus*, vol. 1, 2ª ed., Wiley, 1967](https://www.wiley.com/en-us/Calculus%2C+Volume+1%2C+2nd+Edition-p-9780471000051)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](https://numerical.recipes/)"
 
   "154":
     concepto: "La integral definida es aditiva en el intervalo y cambia de signo al invertir la orientación."
@@ -1080,7 +1080,7 @@ clases:
       Probabilidades de la distribución normal, cálculo de expectativas, integración de
       señales y cualquier integral sin forma cerrada.
     referencias:
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](https://numerical.recipes/)"
       - "[Burden & Faires. *Numerical Analysis*, 10ª ed., Cengage, 2015](https://www.cengage.com/c/numerical-analysis-10e-burden/)"
 
   "160":
@@ -1133,4 +1133,4 @@ clases:
       localización de extremos en curvas experimentales.
     referencias:
       - "[Oppenheim & Schafer. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003226)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](https://numerical.recipes/)"

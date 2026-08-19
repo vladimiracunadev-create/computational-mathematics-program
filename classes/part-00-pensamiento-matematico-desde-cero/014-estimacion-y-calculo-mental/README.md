@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Weinstein & Adam. *Guesstimation*. Princeton University Press, 2008](https://press.princeton.edu/books/paperback/9780691129495/guesstimation)
-- [Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it)
+- [Weinstein & Adam. *Guesstimation*. Princeton University Press, 2008](https://press.princeton.edu/books/paperback/9780691129495/guesstimation) — *uso:* desarrollo formal del tema en «Estimación y cálculo mental».
+- [Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it) — *uso:* desarrollo formal del tema en «Estimación y cálculo mental».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)
-- [Wasserstein, R.; Lazar, N. *The ASA statement on p-values*, The American Statistician, 2016](https://doi.org/10.1080/00031305.2016.1154108)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9) — *uso:* desarrollo formal del tema en «p-value correctamente interpretado».
+- [Wasserstein, R.; Lazar, N. *The ASA statement on p-values*, The American Statistician, 2016](https://doi.org/10.1080/00031305.2016.1154108) — *uso:* artículo de origen consultado en «p-value correctamente interpretado».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 6](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)
-- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., MIT Press, 2022, cap. 4](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/)
+- [Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 6](https://www-cs-faculty.stanford.edu/~knuth/gkp.html) — *uso:* obra de referencia consultada en «Recurrencias».
+- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., MIT Press, 2022, cap. 4](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/) — *uso:* desarrollo formal del tema en «Recurrencias».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -163,11 +163,11 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: `math.isclose` y PEP 485](https://peps.python.org/pep-0485/)
-- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)
-- [0.30000000000000004.com — el mismo fenómeno en 40 lenguajes](https://0.30000000000000004.com/)
+- [Python: `math.isclose` y PEP 485](https://peps.python.org/pep-0485/) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Por qué 0.1 + 0.2 no es exactamente 0.3».
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163) — *uso:* artículo de origen consultado en «Por qué 0.1 + 0.2 no es exactamente 0.3».
+- [0.30000000000000004.com — el mismo fenómeno en 40 lenguajes](https://0.30000000000000004.com/) — *uso:* exposición alternativa del tema en «Por qué 0.1 + 0.2 no es exactamente 0.3».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

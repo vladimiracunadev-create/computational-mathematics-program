@@ -25,7 +25,7 @@ from typing import Any, Dict, List
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from computational_math import __version__, content, curriculum, engines  # noqa: E402
+from computational_math import __version__, content, curriculum, engines, sources  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -290,7 +290,8 @@ def _seccion_clase(clase, parte) -> str:
 
     if registro.get("referencias"):
         bloques.append("<h4>Referencias</h4>")
-        bloques.append("<ul>" + "".join(f"<li>{_inline(r)}</li>" for r in registro["referencias"]) + "</ul>")
+        lineas = sources.class_block(clase["id"], clase["title"])
+        bloques.append("<ul>" + "".join(f"<li>{_inline(r)}</li>" for r in lineas) + "</ul>")
 
     bloques.append("</div>")
     return "".join(bloques)

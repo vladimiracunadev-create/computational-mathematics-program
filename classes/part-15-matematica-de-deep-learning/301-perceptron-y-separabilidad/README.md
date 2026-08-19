@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Rosenblatt, F. *The perceptron: a probabilistic model*, Psychological Review, 1958](https://doi.org/10.1037/h0042519)
-- [Minsky, M.; Papert, S. *Perceptrons*, MIT Press, 1969](https://mitpress.mit.edu/9780262534772/perceptrons/)
+- [Rosenblatt, F. *The perceptron: a probabilistic model*, Psychological Review, 1958](https://doi.org/10.1037/h0042519) — *uso:* artículo de origen consultado en «Perceptrón y separabilidad».
+- [Minsky, M.; Papert, S. *Perceptrons*, MIT Press, 1969](https://mitpress.mit.edu/9780262534772/perceptrons/) — *uso:* desarrollo formal del tema en «Perceptrón y separabilidad».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

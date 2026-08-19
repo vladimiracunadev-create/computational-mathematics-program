@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Dumoulin, V.; Visin, F. *A guide to convolution arithmetic for deep learning*, 2016](https://arxiv.org/abs/1603.07285)
-- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)
+- [Dumoulin, V.; Visin, F. *A guide to convolution arithmetic for deep learning*, 2016](https://arxiv.org/abs/1603.07285) — *uso:* artículo de origen consultado en «Convolución discreta».
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Convolución discreta».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

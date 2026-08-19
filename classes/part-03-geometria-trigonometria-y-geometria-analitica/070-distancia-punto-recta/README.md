@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Cortes, C.; Vapnik, V. *Support-Vector Networks*. Machine Learning, 1995](https://link.springer.com/article/10.1007/BF00994018)
-- [Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., Cambridge, 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/)
+- [Cortes, C.; Vapnik, V. *Support-Vector Networks*. Machine Learning, 1995](https://link.springer.com/article/10.1007/BF00994018) — *uso:* artículo de origen consultado en «Distancia punto-recta».
+- [Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., Cambridge, 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/) — *uso:* obra de referencia consultada en «Distancia punto-recta».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

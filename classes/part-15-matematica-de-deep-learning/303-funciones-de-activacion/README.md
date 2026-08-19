@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Glorot, X.; Bordes, A.; Bengio, Y. *Deep sparse rectifier neural networks*, AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html)
-- [Hendrycks, D.; Gimpel, K. *Gaussian Error Linear Units*, 2016](https://arxiv.org/abs/1606.08415)
+- [Glorot, X.; Bordes, A.; Bengio, Y. *Deep sparse rectifier neural networks*, AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html) — *uso:* obra de referencia consultada en «Funciones de activación».
+- [Hendrycks, D.; Gimpel, K. *Gaussian Error Linear Units*, 2016](https://arxiv.org/abs/1606.08415) — *uso:* artículo de origen consultado en «Funciones de activación».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

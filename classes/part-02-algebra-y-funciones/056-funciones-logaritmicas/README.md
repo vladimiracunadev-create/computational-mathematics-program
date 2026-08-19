@@ -158,10 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: `math.log` y variantes](https://docs.python.org/3/library/math.html#math.log)
-- [Cover & Thomas. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X)
+- [Python: `math.log` y variantes](https://docs.python.org/3/library/math.html#math.log) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Funciones logarítmicas».
+- [Cover & Thomas. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — *uso:* artículo de origen consultado en «Funciones logarítmicas».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -169,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
-- [Su, J. et al. *RoFormer: Enhanced Transformer with Rotary Position Embedding*, 2021](https://arxiv.org/abs/2104.09864)
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762) — *uso:* artículo de origen consultado en «Positional encoding».
+- [Su, J. et al. *RoFormer: Enhanced Transformer with Rotary Position Embedding*, 2021](https://arxiv.org/abs/2104.09864) — *uso:* artículo de origen consultado en «Positional encoding».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

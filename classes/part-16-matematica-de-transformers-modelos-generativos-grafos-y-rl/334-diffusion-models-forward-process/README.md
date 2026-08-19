@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*, NeurIPS, 2020](https://arxiv.org/abs/2006.11239)
-- [Nichol, A.; Dhariwal, P. *Improved Denoising Diffusion Probabilistic Models*, ICML, 2021](https://arxiv.org/abs/2102.09672)
+- [Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*, NeurIPS, 2020](https://arxiv.org/abs/2006.11239) — *uso:* artículo de origen consultado en «Diffusion models: forward process».
+- [Nichol, A.; Dhariwal, P. *Improved Denoising Diffusion Probabilistic Models*, ICML, 2021](https://arxiv.org/abs/2102.09672) — *uso:* artículo de origen consultado en «Diffusion models: forward process».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

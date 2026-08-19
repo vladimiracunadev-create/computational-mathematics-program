@@ -158,10 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 18](https://www.mathpop.com/calculus)
-- [Maor, E. *e: The Story of a Number*. Princeton University Press, 1994](https://press.princeton.edu/books/paperback/9780691168487/e-the-story-of-a-number)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 18](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Derivadas de exponenciales y logaritmos».
+- [Maor, E. *e: The Story of a Number*. Princeton University Press, 1994](https://press.princeton.edu/books/paperback/9780691168487/e-the-story-of-a-number) — *uso:* desarrollo formal del tema en «Derivadas de exponenciales y logaritmos».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

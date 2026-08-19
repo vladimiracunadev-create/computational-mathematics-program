@@ -157,10 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
-- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 5](https://www.deeplearningbook.org/)
+- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf) — *uso:* obra de referencia consultada en «Derivadas respecto de vectores y matrices».
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 5](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Derivadas respecto de vectores y matrices».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

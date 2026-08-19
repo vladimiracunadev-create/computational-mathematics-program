@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/)
-- [Shumway, R.; Stoffer, D. *Time Series Analysis and Its Applications*, 4ª ed., Springer, 2017](https://doi.org/10.1007/978-3-319-52452-8)
+- [Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/) — *uso:* obra de referencia consultada en «Autocorrelación».
+- [Shumway, R.; Stoffer, D. *Time Series Analysis and Its Applications*, 4ª ed., Springer, 2017](https://doi.org/10.1007/978-3-319-52452-8) — *uso:* desarrollo formal del tema en «Autocorrelación».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

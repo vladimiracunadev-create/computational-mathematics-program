@@ -1160,7 +1160,7 @@ clases:
       Tests A/B bayesianos, bandidos multibrazo, cuantificación de incertidumbre en modelos y
       estimación con datos escasos.
     referencias:
-      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)"
+      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](https://www.stat.columbia.edu/~gelman/book/)"
       - "[McElreath, R. *Statistical Rethinking*, 2ª ed., CRC, 2020](https://xcelab.net/rm/statistical-rethinking/)"
 
   "218":

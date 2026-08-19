@@ -169,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Ricci, Rokach & Shapira. *Recommender Systems Handbook*, 3ª ed., Springer, 2022](https://link.springer.com/book/10.1007/978-1-0716-2197-4)
-- [Koren, Bell & Volinsky. *Matrix Factorization Techniques for Recommender Systems*. IEEE Computer, 2009](https://ieeexplore.ieee.org/document/5197422)
+- [Ricci, Rokach & Shapira. *Recommender Systems Handbook*, 3ª ed., Springer, 2022](https://link.springer.com/book/10.1007/978-1-0716-2197-4) — *uso:* desarrollo formal del tema en «Capstone: resolver un sistema de recomendación lineal».
+- [Koren, Bell & Volinsky. *Matrix Factorization Techniques for Recommender Systems*. IEEE Computer, 2009](https://ieeexplore.ieee.org/document/5197422) — *uso:* referencia normativa consultada en «Capstone: resolver un sistema de recomendación lineal».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

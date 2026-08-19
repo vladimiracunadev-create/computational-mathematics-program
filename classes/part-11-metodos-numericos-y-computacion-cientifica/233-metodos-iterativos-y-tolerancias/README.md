@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027)
-- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 2](http://numerical.recipes/)
+- [Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027) — *uso:* desarrollo formal del tema en «Métodos iterativos y tolerancias».
+- [Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 2](https://numerical.recipes/) — *uso:* obra de referencia consultada en «Métodos iterativos y tolerancias».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

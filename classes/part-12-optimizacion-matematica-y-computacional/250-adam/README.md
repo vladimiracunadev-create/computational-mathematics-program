@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980)
-- [Reddi, S.; Kale, S.; Kumar, S. *On the convergence of Adam and beyond*, ICLR, 2018](https://arxiv.org/abs/1904.09237)
+- [Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980) — *uso:* artículo de origen consultado en «Adam».
+- [Reddi, S.; Kale, S.; Kumar, S. *On the convergence of Adam and beyond*, ICLR, 2018](https://arxiv.org/abs/1904.09237) — *uso:* artículo de origen consultado en «Adam».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

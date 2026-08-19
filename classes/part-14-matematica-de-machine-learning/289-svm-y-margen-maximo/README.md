@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Cortes, C.; Vapnik, V. *Support-vector networks*, Machine Learning, 1995](https://doi.org/10.1007/BF00994018)
-- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 7](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+- [Cortes, C.; Vapnik, V. *Support-vector networks*, Machine Learning, 1995](https://doi.org/10.1007/BF00994018) — *uso:* artículo de origen consultado en «SVM y margen máximo».
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 7](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/) — *uso:* obra de referencia consultada en «SVM y margen máximo».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Jolliffe, I. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://doi.org/10.1007/b98835)
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 14](https://hastie.su.domains/ElemStatLearn/)
+- [Jolliffe, I. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://doi.org/10.1007/b98835) — *uso:* artículo de origen consultado en «PCA aplicado a ML».
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 14](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «PCA aplicado a ML».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -169,10 +169,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Simonyan, K.; Zisserman, A. *Very Deep Convolutional Networks (VGG)*, ICLR, 2015](https://arxiv.org/abs/1409.1556)
-- [Luo, W. et al. *Understanding the effective receptive field*, NeurIPS, 2016](https://arxiv.org/abs/1701.04128)
+- [Simonyan, K.; Zisserman, A. *Very Deep Convolutional Networks (VGG)*, ICLR, 2015](https://arxiv.org/abs/1409.1556) — *uso:* artículo de origen consultado en «CNN y receptive fields».
+- [Luo, W. et al. *Understanding the effective receptive field*, NeurIPS, 2016](https://arxiv.org/abs/1701.04128) — *uso:* artículo de origen consultado en «CNN y receptive fields».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [do Carmo, M. *Differential Geometry of Curves and Surfaces*, 2ª ed., Dover, 2016](https://store.doverpublications.com/products/9780486806990)
-- [Bronstein, M. et al. *Geometric Deep Learning*, 2021](https://arxiv.org/abs/2104.13478)
+- [do Carmo, M. *Differential Geometry of Curves and Surfaces*, 2ª ed., Dover, 2016](https://store.doverpublications.com/products/9780486806990) — *uso:* desarrollo formal del tema en «Geometría diferencial para ML».
+- [Bronstein, M. et al. *Geometric Deep Learning*, 2021](https://arxiv.org/abs/2104.13478) — *uso:* artículo de origen consultado en «Geometría diferencial para ML».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

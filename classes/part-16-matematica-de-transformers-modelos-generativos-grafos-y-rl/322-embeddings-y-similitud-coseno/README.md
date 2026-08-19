@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Mikolov, T. et al. *Distributed representations of words and phrases*, NeurIPS, 2013](https://arxiv.org/abs/1310.4546)
-- [Reimers, N.; Gurevych, I. *Sentence-BERT*, EMNLP, 2019](https://arxiv.org/abs/1908.10084)
+- [Mikolov, T. et al. *Distributed representations of words and phrases*, NeurIPS, 2013](https://arxiv.org/abs/1310.4546) — *uso:* artículo de origen consultado en «Embeddings y similitud coseno».
+- [Reimers, N.; Gurevych, I. *Sentence-BERT*, EMNLP, 2019](https://arxiv.org/abs/1908.10084) — *uso:* artículo de origen consultado en «Embeddings y similitud coseno».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

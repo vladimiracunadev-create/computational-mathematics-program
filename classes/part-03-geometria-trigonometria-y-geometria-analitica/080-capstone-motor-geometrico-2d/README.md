@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Shoelace formula — Wolfram MathWorld](https://mathworld.wolfram.com/PolygonArea.html)
-- [de Berg, M. et al. *Computational Geometry*, 3ª ed., Springer, 2008](https://link.springer.com/book/10.1007/978-3-540-77974-2)
+- [Shoelace formula — Wolfram MathWorld](https://mathworld.wolfram.com/PolygonArea.html) — *uso:* exposición alternativa del tema en «Capstone: motor geométrico 2D».
+- [de Berg, M. et al. *Computational Geometry*, 3ª ed., Springer, 2008](https://link.springer.com/book/10.1007/978-3-540-77974-2) — *uso:* desarrollo formal del tema en «Capstone: motor geométrico 2D».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

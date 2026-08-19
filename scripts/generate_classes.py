@@ -20,7 +20,7 @@ from typing import Any, Dict
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from computational_math import content, curriculum, engines  # noqa: E402
+from computational_math import content, curriculum, engines, sources  # noqa: E402
 
 REPOS_CONECTADOS = [
     ("artificial-intelligence-evolution-program", "evolución completa de la IA"),
@@ -455,8 +455,15 @@ def _readme(clase, parte, demo) -> str:
     ]
 
     if registro.get("referencias"):
-        bloques += [_fmt_lista(registro["referencias"]), ""]
-        bloques += ["Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).", ""]
+        # Cada fuente declara **el uso que esta clase hace de ella**, no solo la obra.
+        bloques += [_fmt_lista(sources.class_block(clase["id"], clase["title"])), ""]
+        bloques += [
+            "Bibliografía completa de la parte en "
+            "[`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · "
+            "localizador verificable de cada obra en "
+            "[`sources/bibliography.json`](../../../sources/bibliography.json).",
+            "",
+        ]
     else:
         bloques += [_fmt_lista(parte["references"]), ""]
 

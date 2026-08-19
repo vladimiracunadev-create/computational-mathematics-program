@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Cohen, J. *Statistical Power Analysis for the Behavioral Sciences*, 2ª ed., Routledge, 1988](https://doi.org/10.4324/9780203771587)
-- [Button, K. et al. *Power failure: why small sample size undermines the reliability of neuroscience*, Nature Reviews Neuroscience, 2013](https://doi.org/10.1038/nrn3475)
+- [Cohen, J. *Statistical Power Analysis for the Behavioral Sciences*, 2ª ed., Routledge, 1988](https://doi.org/10.4324/9780203771587) — *uso:* desarrollo formal del tema en «Potencia estadística».
+- [Button, K. et al. *Power failure: why small sample size undermines the reliability of neuroscience*, Nature Reviews Neuroscience, 2013](https://doi.org/10.1038/nrn3475) — *uso:* artículo de origen consultado en «Potencia estadística».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

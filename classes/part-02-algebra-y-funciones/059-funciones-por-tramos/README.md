@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Glorot, Bordes & Bengio. *Deep Sparse Rectifier Neural Networks*. AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html)
-- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)
+- [Glorot, Bordes & Bengio. *Deep Sparse Rectifier Neural Networks*. AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html) — *uso:* obra de referencia consultada en «Funciones por tramos».
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Funciones por tramos».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

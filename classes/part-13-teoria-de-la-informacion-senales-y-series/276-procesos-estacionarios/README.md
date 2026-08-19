@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/)
-- [Box, G.; Jenkins, G.; Reinsel, G. *Time Series Analysis*, 5ª ed., Wiley, 2015](https://doi.org/10.1002/9781118619193)
+- [Hyndman, R.; Athanasopoulos, G. *Forecasting: Principles and Practice*, 3ª ed., OTexts, 2021](https://otexts.com/fpp3/) — *uso:* obra de referencia consultada en «Procesos estacionarios».
+- [Box, G.; Jenkins, G.; Reinsel, G. *Time Series Analysis*, 5ª ed., Wiley, 2015](https://doi.org/10.1002/9781118619193) — *uso:* desarrollo formal del tema en «Procesos estacionarios».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

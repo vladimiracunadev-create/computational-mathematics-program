@@ -170,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/)
-- [Demšar, J. *Statistical comparisons of classifiers over multiple data sets*, JMLR, 2006](https://jmlr.org/papers/v7/demsar06a.html)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Capstone: derivar y comparar 6 algoritmos ML».
+- [Demšar, J. *Statistical comparisons of classifiers over multiple data sets*, JMLR, 2006](https://jmlr.org/papers/v7/demsar06a.html) — *uso:* obra de referencia consultada en «Capstone: derivar y comparar 6 algoritmos ML».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

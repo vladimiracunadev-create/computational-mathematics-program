@@ -20,7 +20,7 @@ from typing import Any, Dict, List
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from computational_math import __version__, content, curriculum, engines  # noqa: E402
+from computational_math import __version__, content, curriculum, engines, sources  # noqa: E402
 
 SITE = ROOT / "site"
 REPO = "vladimiracunadev-create/computational-mathematics-program"
@@ -741,7 +741,7 @@ def _class_page(clase: Dict[str, Any], parte: Dict[str, Any], indice: List[Dict[
         if ped.get("aplicacion") else ""
     )
     referencias = (
-        f'\n  <h2>Fuentes</h2>\n{_lista(ped["referencias"])}'
+        f'\n  <h2>Fuentes</h2>\n{_lista(sources.class_block(clase["id"], clase["title"]))}'
         if ped.get("referencias") else ""
     )
 

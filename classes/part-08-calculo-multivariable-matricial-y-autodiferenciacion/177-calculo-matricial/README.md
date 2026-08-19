@@ -158,10 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf)
-- [Magnus & Neudecker. *Matrix Differential Calculus*, 3ª ed., Wiley, 2019](https://www.wiley.com/en-us/Matrix+Differential+Calculus+with+Applications+in+Statistics+and+Econometrics%2C+3rd+Edition-p-9781119541202)
+- [Petersen & Pedersen. *The Matrix Cookbook*, 2012](https://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf) — *uso:* obra de referencia consultada en «Cálculo matricial».
+- [Magnus & Neudecker. *Matrix Differential Calculus*, 3ª ed., Wiley, 2019](https://www.wiley.com/en-us/Matrix+Differential+Calculus+with+Applications+in+Statistics+and+Econometrics%2C+3rd+Edition-p-9781119541202) — *uso:* desarrollo formal del tema en «Cálculo matricial».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

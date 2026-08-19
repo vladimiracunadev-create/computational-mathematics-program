@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Holtzman, A. et al. *The Curious Case of Neural Text Degeneration*, ICLR, 2020](https://arxiv.org/abs/1904.09751)
-- [Fan, A.; Lewis, M.; Dauphin, Y. *Hierarchical Neural Story Generation*, ACL, 2018](https://arxiv.org/abs/1805.04833)
+- [Holtzman, A. et al. *The Curious Case of Neural Text Degeneration*, ICLR, 2020](https://arxiv.org/abs/1904.09751) — *uso:* artículo de origen consultado en «Sampling, temperatura, top-k y top-p».
+- [Fan, A.; Lewis, M.; Dauphin, Y. *Hierarchical Neural Story Generation*, ACL, 2018](https://arxiv.org/abs/1805.04833) — *uso:* artículo de origen consultado en «Sampling, temperatura, top-k y top-p».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

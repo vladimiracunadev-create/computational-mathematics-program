@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 6](https://www.mathpop.com/calculus)
-- [Weierstrass function — Wolfram MathWorld](https://mathworld.wolfram.com/WeierstrassFunction.html)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 6](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Continuidad».
+- [Weierstrass function — Wolfram MathWorld](https://mathworld.wolfram.com/WeierstrassFunction.html) — *uso:* exposición alternativa del tema en «Continuidad».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

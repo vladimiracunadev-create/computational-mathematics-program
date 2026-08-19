@@ -157,10 +157,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 10](https://www.mathpop.com/calculus)
-- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015](https://www.cengage.com/c/calculus-8e-stewart/)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 10](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Reglas de derivación».
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015](https://www.cengage.com/c/calculus-8e-stewart/) — *uso:* obra de referencia consultada en «Reglas de derivación».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

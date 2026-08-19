@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Rumelhart, D.; Hinton, G.; Williams, R. *Learning representations by back-propagating errors*, Nature, 1986](https://doi.org/10.1038/323533a0)
-- [Nielsen, M. *Neural Networks and Deep Learning*, cap. 2, 2015](http://neuralnetworksanddeeplearning.com/chap2.html)
+- [Rumelhart, D.; Hinton, G.; Williams, R. *Learning representations by back-propagating errors*, Nature, 1986](https://doi.org/10.1038/323533a0) — *uso:* artículo de origen consultado en «Backpropagation paso a paso».
+- [Nielsen, M. *Neural Networks and Deep Learning*, cap. 2, 2015](http://neuralnetworksanddeeplearning.com/chap2.html) — *uso:* exposición alternativa del tema en «Backpropagation paso a paso».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

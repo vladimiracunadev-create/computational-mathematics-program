@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/)
-- [Apostol, T. *Mathematical Analysis*, 2ª ed., 1974](https://www.pearson.com/en-us/subject-catalog/p/mathematical-analysis/P200000006155)
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 14](https://www.cengage.com/c/calculus-8e-stewart/) — *uso:* obra de referencia consultada en «Plano tangente».
+- [Apostol, T. *Mathematical Analysis*, 2ª ed., 1974](https://www.pearson.com/en-us/subject-catalog/p/mathematical-analysis/P200000006155) — *uso:* obra de referencia consultada en «Plano tangente».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

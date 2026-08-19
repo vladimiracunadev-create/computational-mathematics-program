@@ -170,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Amari, S. *Information Geometry and Its Applications*, Springer, 2016](https://doi.org/10.1007/978-4-431-55978-8)
-- [Martens, J. *New insights and perspectives on the natural gradient method*, JMLR, 2020](https://arxiv.org/abs/1412.1193)
+- [Amari, S. *Information Geometry and Its Applications*, Springer, 2016](https://doi.org/10.1007/978-4-431-55978-8) — *uso:* desarrollo formal del tema en «Information geometry».
+- [Martens, J. *New insights and perspectives on the natural gradient method*, JMLR, 2020](https://arxiv.org/abs/1412.1193) — *uso:* artículo de origen consultado en «Information geometry».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

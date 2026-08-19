@@ -274,7 +274,7 @@ clases:
       búsqueda de puntos de cruce en curvas monótonas.
     referencias:
       - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](https://numerical.recipes/)"
 
   "223":
     concepto: "Newton duplica los dígitos correctos en cada paso, pero solo si empieza cerca."
@@ -390,7 +390,7 @@ clases:
       y ajuste de umbrales en funciones costosas de evaluar.
     referencias:
       - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](https://numerical.recipes/)"
 
   "225":
     concepto: "Subir el grado del polinomio interpolador empeora la aproximación en vez de mejorarla."
@@ -617,7 +617,7 @@ clases:
       Integración en métodos de elementos finitos, cálculo de esperanzas en modelos
       probabilísticos, evaluación de funciones especiales y física computacional.
     referencias:
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](https://numerical.recipes/)"
       - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
 
   "229":
@@ -729,7 +729,7 @@ clases:
       procesamiento de señales muestreadas y base de los métodos adaptativos.
     referencias:
       - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](https://numerical.recipes/)"
 
   "231":
     concepto: "Factorizar una vez y sustituir muchas: LU convierte O(n³) en O(n²) por sistema."
@@ -899,7 +899,7 @@ clases:
       punto fijo y control de convergencia en simulación.
     referencias:
       - "[Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 2](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 2](https://numerical.recipes/)"
 
   "234":
     concepto: "Las ecuaciones normales elevan al cuadrado el número de condición; QR no."
@@ -1125,7 +1125,7 @@ clases:
       difusión y motores físicos.
     referencias:
       - "[Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 17](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 17](https://numerical.recipes/)"
 
   "238":
     concepto: "La condición de estabilidad no es una recomendación: violarla hace explotar la simulación."
@@ -1304,4 +1304,4 @@ clases:
       integradores y documentación de resultados numéricos.
     referencias:
       - "[Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018](https://doi.org/10.1137/1.9781611975581)"
-      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](http://numerical.recipes/)"
+      - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](https://numerical.recipes/)"

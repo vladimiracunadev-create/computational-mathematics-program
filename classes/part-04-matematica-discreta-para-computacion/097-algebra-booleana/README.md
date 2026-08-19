@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Shannon, C. *A Symbolic Analysis of Relay and Switching Circuits*. MIT, 1937](https://dspace.mit.edu/handle/1721.1/11173)
-- [Cook, S. *The Complexity of Theorem-Proving Procedures*. STOC, 1971](https://dl.acm.org/doi/10.1145/800157.805047)
+- [Shannon, C. *A Symbolic Analysis of Relay and Switching Circuits*. MIT, 1937](https://dspace.mit.edu/handle/1721.1/11173) — *uso:* exposición alternativa del tema en «Álgebra booleana».
+- [Cook, S. *The Complexity of Theorem-Proving Procedures*. STOC, 1971](https://dl.acm.org/doi/10.1145/800157.805047) — *uso:* artículo de origen consultado en «Álgebra booleana».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

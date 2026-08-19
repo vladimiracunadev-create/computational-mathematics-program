@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)
-- [Meng, X.-L. *Statistical paradises and paradoxes in big data*, Annals of Applied Statistics, 2018](https://doi.org/10.1214/18-AOAS1161SF)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9) — *uso:* desarrollo formal del tema en «Población, muestra y sesgo de selección».
+- [Meng, X.-L. *Statistical paradises and paradoxes in big data*, Annals of Applied Statistics, 2018](https://doi.org/10.1214/18-AOAS1161SF) — *uso:* artículo de origen consultado en «Población, muestra y sesgo de selección».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

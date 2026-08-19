@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Tenenbaum, J.; de Silva, V.; Langford, J. *A global geometric framework for nonlinear dimensionality reduction*, Science, 2000](https://doi.org/10.1126/science.290.5500.2319)
-- [McInnes, L.; Healy, J.; Melville, J. *UMAP*, 2018](https://arxiv.org/abs/1802.03426)
+- [Tenenbaum, J.; de Silva, V.; Langford, J. *A global geometric framework for nonlinear dimensionality reduction*, Science, 2000](https://doi.org/10.1126/science.290.5500.2319) — *uso:* artículo de origen consultado en «Manifold learning».
+- [McInnes, L.; Healy, J.; Melville, J. *UMAP*, 2018](https://arxiv.org/abs/1802.03426) — *uso:* artículo de origen consultado en «Manifold learning».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

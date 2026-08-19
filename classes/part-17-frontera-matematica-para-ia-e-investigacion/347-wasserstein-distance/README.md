@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Arjovsky, M.; Chintala, S.; Bottou, L. *Wasserstein GAN*, ICML, 2017](https://arxiv.org/abs/1701.07875)
-- [Villani, C. *Optimal Transport: Old and New*, Springer, 2009](https://doi.org/10.1007/978-3-540-71050-9)
+- [Arjovsky, M.; Chintala, S.; Bottou, L. *Wasserstein GAN*, ICML, 2017](https://arxiv.org/abs/1701.07875) — *uso:* artículo de origen consultado en «Wasserstein distance».
+- [Villani, C. *Optimal Transport: Old and New*, Springer, 2009](https://doi.org/10.1007/978-3-540-71050-9) — *uso:* desarrollo formal del tema en «Wasserstein distance».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -504,7 +504,7 @@ clases:
       clasificadores con clases desbalanceadas.
     referencias:
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)"
-      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)"
+      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](https://www.stat.columbia.edu/~gelman/book/)"
 
   "187":
     concepto: "Una variable aleatoria discreta se describe por su masa de probabilidad y su acumulada."
@@ -1290,5 +1290,5 @@ clases:
       Tests A/B bayesianos, bandidos multibrazo con Thompson sampling, calibración de modelos y
       estimación de tasas con pocos datos.
     referencias:
-      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](http://www.stat.columbia.edu/~gelman/book/)"
+      - "[Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](https://www.stat.columbia.edu/~gelman/book/)"
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 8](https://projects.iq.harvard.edu/stat110/home)"

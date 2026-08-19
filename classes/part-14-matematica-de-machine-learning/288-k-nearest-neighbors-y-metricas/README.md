@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 13](https://hastie.su.domains/ElemStatLearn/)
-- [Beyer, K. et al. *When is nearest neighbor meaningful?*, ICDT, 1999](https://doi.org/10.1007/3-540-49257-7_15)
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 13](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «k-Nearest Neighbors y métricas».
+- [Beyer, K. et al. *When is nearest neighbor meaningful?*, ICDT, 1999](https://doi.org/10.1007/3-540-49257-7_15) — *uso:* artículo de origen consultado en «k-Nearest Neighbors y métricas».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

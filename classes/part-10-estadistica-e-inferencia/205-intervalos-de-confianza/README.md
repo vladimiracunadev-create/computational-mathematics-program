@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)
-- [Morey, R. et al. *The fallacy of placing confidence in confidence intervals*, Psychonomic Bulletin, 2016](https://doi.org/10.3758/s13423-015-0947-8)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9) — *uso:* desarrollo formal del tema en «Intervalos de confianza».
+- [Morey, R. et al. *The fallacy of placing confidence in confidence intervals*, Psychonomic Bulletin, 2016](https://doi.org/10.3758/s13423-015-0947-8) — *uso:* artículo de origen consultado en «Intervalos de confianza».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Golub & Van Loan. *Matrix Computations*, 4ª ed., Johns Hopkins, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations)
-- [Strassen, V. *Gaussian elimination is not optimal*. Numer. Math., 1969](https://link.springer.com/article/10.1007/BF02165411)
+- [Golub & Van Loan. *Matrix Computations*, 4ª ed., Johns Hopkins, 2013](https://jhupbooks.press.jhu.edu/title/matrix-computations) — *uso:* obra de referencia consultada en «Producto de matrices».
+- [Strassen, V. *Gaussian elimination is not optimal*. Numer. Math., 1969](https://link.springer.com/article/10.1007/BF02165411) — *uso:* artículo de origen consultado en «Producto de matrices».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

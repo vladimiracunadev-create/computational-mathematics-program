@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 7](https://link.springer.com/book/10.1007/978-0-387-21736-9)
-- [Tukey, J. *Exploratory Data Analysis*, Addison-Wesley, 1977](https://archive.org/details/exploratorydataa0000tuke)
+- [Wasserman, L. *All of Statistics*, Springer, 2004, cap. 7](https://link.springer.com/book/10.1007/978-0-387-21736-9) — *uso:* desarrollo formal del tema en «Estadística descriptiva».
+- [Tukey, J. *Exploratory Data Analysis*, Addison-Wesley, 1977](https://archive.org/details/exploratorydataa0000tuke) — *uso:* obra de referencia consultada en «Estadística descriptiva».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

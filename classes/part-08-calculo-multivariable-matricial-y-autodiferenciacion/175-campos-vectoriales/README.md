@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/)
-- [Balduzzi, D. et al. *The Mechanics of n-Player Differentiable Games*. ICML, 2018](https://arxiv.org/abs/1802.05642)
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/) — *uso:* obra de referencia consultada en «Campos vectoriales».
+- [Balduzzi, D. et al. *The Mechanics of n-Player Differentiable Games*. ICML, 2018](https://arxiv.org/abs/1802.05642) — *uso:* artículo de origen consultado en «Campos vectoriales».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

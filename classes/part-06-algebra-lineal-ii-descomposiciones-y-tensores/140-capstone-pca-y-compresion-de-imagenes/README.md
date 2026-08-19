@@ -163,10 +163,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Eckart, C.; Young, G. *The approximation of one matrix by another of lower rank*. Psychometrika, 1936](https://link.springer.com/article/10.1007/BF02288367)
-- [Halko, Martinsson & Tropp. *Finding Structure with Randomness*. SIAM Review, 2011](https://epubs.siam.org/doi/10.1137/090771806)
+- [Eckart, C.; Young, G. *The approximation of one matrix by another of lower rank*. Psychometrika, 1936](https://link.springer.com/article/10.1007/BF02288367) — *uso:* artículo de origen consultado en «Capstone: PCA y compresión de imágenes».
+- [Halko, Martinsson & Tropp. *Finding Structure with Randomness*. SIAM Review, 2011](https://epubs.siam.org/doi/10.1137/090771806) — *uso:* artículo de origen consultado en «Capstone: PCA y compresión de imágenes».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Cho, K. et al. *Learning phrase representations using RNN encoder-decoder*, EMNLP, 2014](https://arxiv.org/abs/1406.1078)
-- [Chung, J. et al. *Empirical evaluation of gated recurrent neural networks*, 2014](https://arxiv.org/abs/1412.3555)
+- [Cho, K. et al. *Learning phrase representations using RNN encoder-decoder*, EMNLP, 2014](https://arxiv.org/abs/1406.1078) — *uso:* artículo de origen consultado en «GRU».
+- [Chung, J. et al. *Empirical evaluation of gated recurrent neural networks*, 2014](https://arxiv.org/abs/1412.3555) — *uso:* artículo de origen consultado en «GRU».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

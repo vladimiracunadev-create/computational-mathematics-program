@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670)
-- [Rezende, D.; Mohamed, S. *Variational Inference with Normalizing Flows*, ICML, 2015](https://arxiv.org/abs/1505.05770)
+- [Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670) — *uso:* artículo de origen consultado en «Variational inference avanzada».
+- [Rezende, D.; Mohamed, S. *Variational Inference with Normalizing Flows*, ICML, 2015](https://arxiv.org/abs/1505.05770) — *uso:* artículo de origen consultado en «Variational inference avanzada».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

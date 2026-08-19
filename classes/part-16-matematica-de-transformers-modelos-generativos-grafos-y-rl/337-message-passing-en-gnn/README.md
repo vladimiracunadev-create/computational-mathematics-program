@@ -170,10 +170,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Kipf, T.; Welling, M. *Semi-Supervised Classification with Graph Convolutional Networks*, ICLR, 2017](https://arxiv.org/abs/1609.02907)
-- [Gilmer, J. et al. *Neural Message Passing for Quantum Chemistry*, ICML, 2017](https://arxiv.org/abs/1704.01212)
+- [Kipf, T.; Welling, M. *Semi-Supervised Classification with Graph Convolutional Networks*, ICLR, 2017](https://arxiv.org/abs/1609.02907) — *uso:* artículo de origen consultado en «Message passing en GNN».
+- [Gilmer, J. et al. *Neural Message Passing for Quantum Chemistry*, ICML, 2017](https://arxiv.org/abs/1704.01212) — *uso:* artículo de origen consultado en «Message passing en GNN».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

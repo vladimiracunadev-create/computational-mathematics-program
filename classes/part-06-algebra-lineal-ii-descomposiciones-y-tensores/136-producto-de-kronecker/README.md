@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Van Loan, C. *The ubiquitous Kronecker product*. J. Comput. Appl. Math., 2000](https://www.sciencedirect.com/science/article/pii/S0377042700003939)
-- [Martens, J.; Grosse, R. *Optimizing Neural Networks with Kronecker-factored Approximate Curvature*. ICML, 2015](https://arxiv.org/abs/1503.05671)
+- [Van Loan, C. *The ubiquitous Kronecker product*. J. Comput. Appl. Math., 2000](https://www.sciencedirect.com/science/article/pii/S0377042700003939) — *uso:* obra de referencia consultada en «Producto de Kronecker».
+- [Martens, J.; Grosse, R. *Optimizing Neural Networks with Kronecker-factored Approximate Curvature*. ICML, 2015](https://arxiv.org/abs/1503.05671) — *uso:* artículo de origen consultado en «Producto de Kronecker».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

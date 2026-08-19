@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Williams, R. *Simple statistical gradient-following algorithms*, Machine Learning, 1992](https://doi.org/10.1007/BF00992696)
-- [Schulman, J. et al. *Proximal Policy Optimization Algorithms*, 2017](https://arxiv.org/abs/1707.06347)
+- [Williams, R. *Simple statistical gradient-following algorithms*, Machine Learning, 1992](https://doi.org/10.1007/BF00992696) — *uso:* artículo de origen consultado en «Policy gradients».
+- [Schulman, J. et al. *Proximal Policy Optimization Algorithms*, 2017](https://arxiv.org/abs/1707.06347) — *uso:* artículo de origen consultado en «Policy gradients».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

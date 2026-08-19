@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)
-- [Karush, W.; Kuhn, H.; Tucker, A. *Nonlinear programming*, 1951](https://doi.org/10.1525/9780520411586-036)
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/) — *uso:* obra de referencia consultada en «Condiciones KKT».
+- [Karush, W.; Kuhn, H.; Tucker, A. *Nonlinear programming*, 1951](https://doi.org/10.1525/9780520411586-036) — *uso:* desarrollo formal del tema en «Condiciones KKT».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

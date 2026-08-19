@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it)
-- [Schoenfeld, A. *Mathematical Problem Solving*. Academic Press, 1985](https://www.elsevier.com/books/mathematical-problem-solving/schoenfeld/978-0-12-628870-4)
+- [Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it) — *uso:* desarrollo formal del tema en «Problemas verbales a lenguaje matemático».
+- [Schoenfeld, A. *Mathematical Problem Solving*. Academic Press, 1985](https://www.elsevier.com/books/mathematical-problem-solving/schoenfeld/978-0-12-628870-4) — *uso:* desarrollo formal del tema en «Problemas verbales a lenguaje matemático».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

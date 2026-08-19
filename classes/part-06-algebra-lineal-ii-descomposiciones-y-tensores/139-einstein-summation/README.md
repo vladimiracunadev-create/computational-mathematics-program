@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [NumPy: `einsum`](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html)
-- [Rocktäschel, T. *Einsum is All You Need*, 2018](https://rockt.ai/2018/04/30/einsum)
+- [NumPy: `einsum`](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Einstein summation».
+- [Rocktäschel, T. *Einsum is All You Need*, 2018](https://rockt.ai/2018/04/30/einsum) — *uso:* exposición alternativa del tema en «Einstein summation».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

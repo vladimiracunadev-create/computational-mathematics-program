@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Paszke, A. et al. *PyTorch: An Imperative Style, High-Performance Deep Learning Library*, NeurIPS, 2019](https://arxiv.org/abs/1912.01703)
-- [Bradbury, J. et al. *JAX: composable transformations of Python+NumPy programs*, 2018](https://github.com/google/jax)
+- [Paszke, A. et al. *PyTorch: An Imperative Style, High-Performance Deep Learning Library*, NeurIPS, 2019](https://arxiv.org/abs/1912.01703) — *uso:* artículo de origen consultado en «Autodiff con PyTorch/JAX».
+- [Bradbury, J. et al. *JAX: composable transformations of Python+NumPy programs*, 2018](https://github.com/google/jax) — *uso:* obra de referencia consultada en «Autodiff con PyTorch/JAX».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

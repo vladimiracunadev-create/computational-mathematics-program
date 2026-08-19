@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*, ICLR, 2014](https://arxiv.org/abs/1312.6114)
-- [Doersch, C. *Tutorial on Variational Autoencoders*, 2016](https://arxiv.org/abs/1606.05908)
+- [Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*, ICLR, 2014](https://arxiv.org/abs/1312.6114) — *uso:* artículo de origen consultado en «Variational Autoencoders».
+- [Doersch, C. *Tutorial on Variational Autoencoders*, 2016](https://arxiv.org/abs/1606.05908) — *uso:* artículo de origen consultado en «Variational Autoencoders».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

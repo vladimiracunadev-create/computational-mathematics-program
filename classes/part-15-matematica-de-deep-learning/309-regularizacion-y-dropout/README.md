@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Srivastava, N. et al. *Dropout: a simple way to prevent neural networks from overfitting*, JMLR, 2014](https://jmlr.org/papers/v15/srivastava14a.html)
-- [Gal, Y.; Ghahramani, Z. *Dropout as a Bayesian approximation*, ICML, 2016](https://arxiv.org/abs/1506.02142)
+- [Srivastava, N. et al. *Dropout: a simple way to prevent neural networks from overfitting*, JMLR, 2014](https://jmlr.org/papers/v15/srivastava14a.html) — *uso:* obra de referencia consultada en «Regularización y dropout».
+- [Gal, Y.; Ghahramani, Z. *Dropout as a Bayesian approximation*, ICML, 2016](https://arxiv.org/abs/1506.02142) — *uso:* artículo de origen consultado en «Regularización y dropout».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

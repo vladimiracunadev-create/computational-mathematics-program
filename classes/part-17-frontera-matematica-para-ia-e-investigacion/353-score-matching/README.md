@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hyvärinen, A. *Estimation of non-normalized statistical models by score matching*, JMLR, 2005](https://jmlr.org/papers/v6/hyvarinen05a.html)
-- [Song, Y.; Ermon, S. *Generative Modeling by Estimating Gradients of the Data Distribution*, NeurIPS, 2019](https://arxiv.org/abs/1907.05600)
+- [Hyvärinen, A. *Estimation of non-normalized statistical models by score matching*, JMLR, 2005](https://jmlr.org/papers/v6/hyvarinen05a.html) — *uso:* obra de referencia consultada en «Score matching».
+- [Song, Y.; Ermon, S. *Generative Modeling by Estimating Gradients of the Data Distribution*, NeurIPS, 2019](https://arxiv.org/abs/1907.05600) — *uso:* artículo de origen consultado en «Score matching».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

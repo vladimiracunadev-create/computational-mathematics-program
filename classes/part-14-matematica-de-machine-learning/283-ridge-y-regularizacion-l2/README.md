@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Hoerl, A.; Kennard, R. *Ridge regression: biased estimation for nonorthogonal problems*, Technometrics, 1970](https://doi.org/10.1080/00401706.1970.10488634)
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 3](https://hastie.su.domains/ElemStatLearn/)
+- [Hoerl, A.; Kennard, R. *Ridge regression: biased estimation for nonorthogonal problems*, Technometrics, 1970](https://doi.org/10.1080/00401706.1970.10488634) — *uso:* artículo de origen consultado en «Ridge y regularización L2».
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 3](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Ridge y regularización L2».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

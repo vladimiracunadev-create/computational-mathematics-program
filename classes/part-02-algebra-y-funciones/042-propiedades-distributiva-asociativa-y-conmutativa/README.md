@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)
-- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011, cap. 1](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131)
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163) — *uso:* artículo de origen consultado en «Propiedades distributiva, asociativa y conmutativa».
+- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011, cap. 1](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131) — *uso:* obra de referencia consultada en «Propiedades distributiva, asociativa y conmutativa».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

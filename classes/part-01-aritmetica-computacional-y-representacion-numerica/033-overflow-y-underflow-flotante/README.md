@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)
-- [Python: `sys.float_info`](https://docs.python.org/3/library/sys.html#sys.float_info)
+- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/) — *uso:* referencia normativa consultada en «Overflow y underflow flotante».
+- [Python: `sys.float_info`](https://docs.python.org/3/library/sys.html#sys.float_info) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Overflow y underflow flotante».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

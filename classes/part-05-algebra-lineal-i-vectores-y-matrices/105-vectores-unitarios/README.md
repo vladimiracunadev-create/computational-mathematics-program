@@ -159,10 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/)
-- [Ba, Kiros & Hinton. *Layer Normalization*. arXiv, 2016](https://arxiv.org/abs/1607.06450)
+- [Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023](https://math.mit.edu/~gs/linearalgebra/) — *uso:* exposición alternativa del tema en «Vectores unitarios».
+- [Ba, Kiros & Hinton. *Layer Normalization*. arXiv, 2016](https://arxiv.org/abs/1607.06450) — *uso:* artículo de origen consultado en «Vectores unitarios».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

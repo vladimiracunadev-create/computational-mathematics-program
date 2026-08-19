@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: `math.comb` e `itertools.combinations`](https://docs.python.org/3/library/math.html#math.comb)
-- [Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 5](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)
+- [Python: `math.comb` e `itertools.combinations`](https://docs.python.org/3/library/math.html#math.comb) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Combinaciones».
+- [Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 5](https://www-cs-faculty.stanford.edu/~knuth/gkp.html) — *uso:* obra de referencia consultada en «Combinaciones».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

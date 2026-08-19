@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)
-- [Michel, P.; Levy, O.; Neubig, G. *Are sixteen heads really better than one?*, NeurIPS, 2019](https://arxiv.org/abs/1905.10650)
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762) — *uso:* artículo de origen consultado en «Multi-head attention».
+- [Michel, P.; Levy, O.; Neubig, G. *Are sixteen heads really better than one?*, NeurIPS, 2019](https://arxiv.org/abs/1905.10650) — *uso:* artículo de origen consultado en «Multi-head attention».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

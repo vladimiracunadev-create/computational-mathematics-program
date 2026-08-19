@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Coxeter, H. S. M. *Introduction to Geometry*, 2ª ed., Wiley, 1989](https://www.wiley.com/en-us/Introduction+to+Geometry%2C+2nd+Edition-p-9780471504580)
-- [Haldane, J. B. S. *On Being the Right Size*, 1926](https://www.phys.ufl.edu/courses/phy3221/spring10/HaldaneRightSize.pdf)
+- [Coxeter, H. S. M. *Introduction to Geometry*, 2ª ed., Wiley, 1989](https://www.wiley.com/en-us/Introduction+to+Geometry%2C+2nd+Edition-p-9780471504580) — *uso:* desarrollo formal del tema en «Triángulos y semejanza».
+- [Haldane, J. B. S. *On Being the Right Size*, 1926](https://www.phys.ufl.edu/courses/phy3221/spring10/HaldaneRightSize.pdf) — *uso:* obra de referencia consultada en «Triángulos y semejanza».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

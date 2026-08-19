@@ -171,10 +171,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Ioffe, S.; Szegedy, C. *Batch Normalization*, ICML, 2015](https://arxiv.org/abs/1502.03167)
-- [Santurkar, S. et al. *How does batch normalization help optimization?*, NeurIPS, 2018](https://arxiv.org/abs/1805.11604)
+- [Ioffe, S.; Szegedy, C. *Batch Normalization*, ICML, 2015](https://arxiv.org/abs/1502.03167) — *uso:* artículo de origen consultado en «Batch normalization y layer normalization».
+- [Santurkar, S. et al. *How does batch normalization help optimization?*, NeurIPS, 2018](https://arxiv.org/abs/1805.11604) — *uso:* artículo de origen consultado en «Batch normalization y layer normalization».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

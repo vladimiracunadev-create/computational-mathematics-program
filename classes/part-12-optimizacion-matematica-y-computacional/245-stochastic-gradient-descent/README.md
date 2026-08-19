@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Bottou, L.; Curtis, F.; Nocedal, J. *Optimization methods for large-scale machine learning*, SIAM Review, 2018](https://doi.org/10.1137/16M1080173)
-- [Robbins, H.; Monro, S. *A stochastic approximation method*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729586)
+- [Bottou, L.; Curtis, F.; Nocedal, J. *Optimization methods for large-scale machine learning*, SIAM Review, 2018](https://doi.org/10.1137/16M1080173) — *uso:* artículo de origen consultado en «Stochastic gradient descent».
+- [Robbins, H.; Monro, S. *A stochastic approximation method*, Annals of Mathematical Statistics, 1951](https://doi.org/10.1214/aoms/1177729586) — *uso:* artículo de origen consultado en «Stochastic gradient descent».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

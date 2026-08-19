@@ -162,10 +162,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 3](https://www.mathpop.com/calculus)
-- [Gelfand, Glagoleva & Shnol. *Functions and Graphs*. Dover, 2002](https://store.doverpublications.com/products/9780486425641)
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 3](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Funciones: dominio y rango».
+- [Gelfand, Glagoleva & Shnol. *Functions and Graphs*. Dover, 2002](https://store.doverpublications.com/products/9780486425641) — *uso:* desarrollo formal del tema en «Funciones: dominio y rango».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [LeVeque, R. *Finite Difference Methods for Ordinary and Partial Differential Equations*, SIAM, 2007](https://doi.org/10.1137/1.9780898717839)
-- [Courant, R.; Friedrichs, K.; Lewy, H. *Über die partiellen Differenzengleichungen der mathematischen Physik*, 1928](https://doi.org/10.1007/BF01448839)
+- [LeVeque, R. *Finite Difference Methods for Ordinary and Partial Differential Equations*, SIAM, 2007](https://doi.org/10.1137/1.9780898717839) — *uso:* desarrollo formal del tema en «Introducción a PDE y discretización».
+- [Courant, R.; Friedrichs, K.; Lewy, H. *Über die partiellen Differenzengleichungen der mathematischen Physik*, 1928](https://doi.org/10.1007/BF01448839) — *uso:* artículo de origen consultado en «Introducción a PDE y discretización».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

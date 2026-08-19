@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)
-- [Bai, Kolter & Koltun. *Deep Equilibrium Models*. NeurIPS, 2019](https://arxiv.org/abs/1909.01377)
+- [Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Derivación implícita».
+- [Bai, Kolter & Koltun. *Deep Equilibrium Models*. NeurIPS, 2019](https://arxiv.org/abs/1909.01377) — *uso:* artículo de origen consultado en «Derivación implícita».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

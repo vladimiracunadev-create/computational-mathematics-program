@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Dempster, A.; Laird, N.; Rubin, D. *Maximum likelihood from incomplete data via the EM algorithm*, JRSS-B, 1977](https://doi.org/10.1111/j.2517-6161.1977.tb01600.x)
-- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 9](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+- [Dempster, A.; Laird, N.; Rubin, D. *Maximum likelihood from incomplete data via the EM algorithm*, JRSS-B, 1977](https://doi.org/10.1111/j.2517-6161.1977.tb01600.x) — *uso:* artículo de origen consultado en «EM algorithm».
+- [Bishop, C. *Pattern Recognition and Machine Learning*, Springer, 2006, cap. 9](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/) — *uso:* obra de referencia consultada en «EM algorithm».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

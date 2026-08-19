@@ -159,10 +159,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/)
-- [Chung, F. *Spectral Graph Theory*. AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html)
+- [Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 16](https://www.cengage.com/c/calculus-8e-stewart/) — *uso:* obra de referencia consultada en «Divergencia y rotacional».
+- [Chung, F. *Spectral Graph Theory*. AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html) — *uso:* obra de referencia consultada en «Divergencia y rotacional».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

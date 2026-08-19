@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Polyak, B. *Some methods of speeding up the convergence of iteration methods*, 1964](https://doi.org/10.1016/0041-5553(64)90137-5)
-- [Goh, G. *Why momentum really works*, Distill, 2017](https://distill.pub/2017/momentum/)
+- [Polyak, B. *Some methods of speeding up the convergence of iteration methods*, 1964](https://doi.org/10.1016/0041-5553(64)90137-5) — *uso:* artículo de origen consultado en «Momentum».
+- [Goh, G. *Why momentum really works*, Distill, 2017](https://distill.pub/2017/momentum/) — *uso:* exposición alternativa del tema en «Momentum».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

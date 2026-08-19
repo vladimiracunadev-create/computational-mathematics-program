@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Jaynes, E. T. *Information theory and statistical mechanics*, Physical Review, 1957](https://doi.org/10.1103/PhysRev.106.620)
-- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 12](https://doi.org/10.1002/047174882X)
+- [Jaynes, E. T. *Information theory and statistical mechanics*, Physical Review, 1957](https://doi.org/10.1103/PhysRev.106.620) — *uso:* artículo de origen consultado en «Principio de máxima entropía».
+- [Cover, T.; Thomas, J. *Elements of Information Theory*, 2ª ed., Wiley, 2006, cap. 12](https://doi.org/10.1002/047174882X) — *uso:* artículo de origen consultado en «Principio de máxima entropía».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

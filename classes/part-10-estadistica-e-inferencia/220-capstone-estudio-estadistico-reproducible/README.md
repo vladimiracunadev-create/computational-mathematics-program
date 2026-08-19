@@ -168,10 +168,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Kohavi, R.; Tang, D.; Xu, Y. *Trustworthy Online Controlled Experiments*, Cambridge, 2020](https://experimentguide.com/)
-- [Wilson, G. et al. *Good enough practices in scientific computing*, PLOS Computational Biology, 2017](https://doi.org/10.1371/journal.pcbi.1005510)
+- [Kohavi, R.; Tang, D.; Xu, Y. *Trustworthy Online Controlled Experiments*, Cambridge, 2020](https://experimentguide.com/) — *uso:* obra de referencia consultada en «Capstone: estudio estadístico reproducible».
+- [Wilson, G. et al. *Good enough practices in scientific computing*, PLOS Computational Biology, 2017](https://doi.org/10.1371/journal.pcbi.1005510) — *uso:* artículo de origen consultado en «Capstone: estudio estadístico reproducible».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

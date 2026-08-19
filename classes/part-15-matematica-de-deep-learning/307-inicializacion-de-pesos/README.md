@@ -167,10 +167,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*, AISTATS, 2010](https://proceedings.mlr.press/v9/glorot10a.html)
-- [He, K. et al. *Delving Deep into Rectifiers*, ICCV, 2015](https://arxiv.org/abs/1502.01852)
+- [Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*, AISTATS, 2010](https://proceedings.mlr.press/v9/glorot10a.html) — *uso:* obra de referencia consultada en «Inicialización de pesos».
+- [He, K. et al. *Delving Deep into Rectifiers*, ICCV, 2015](https://arxiv.org/abs/1502.01852) — *uso:* artículo de origen consultado en «Inicialización de pesos».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

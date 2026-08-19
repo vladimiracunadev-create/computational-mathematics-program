@@ -166,10 +166,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Chung, F. *Spectral Graph Theory*, AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html)
-- [von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189)
+- [Chung, F. *Spectral Graph Theory*, AMS, 1997](https://mathweb.ucsd.edu/~fan/research/revised.html) — *uso:* obra de referencia consultada en «Graph Laplacian».
+- [von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189) — *uso:* artículo de origen consultado en «Graph Laplacian».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

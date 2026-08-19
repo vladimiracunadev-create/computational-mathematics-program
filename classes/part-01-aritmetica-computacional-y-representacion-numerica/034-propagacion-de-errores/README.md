@@ -160,10 +160,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Kahan, W. *Further remarks on reducing truncation errors*. CACM, 1965](https://dl.acm.org/doi/10.1145/363707.363723)
-- [Python: `math.fsum`](https://docs.python.org/3/library/math.html#math.fsum)
+- [Kahan, W. *Further remarks on reducing truncation errors*. CACM, 1965](https://dl.acm.org/doi/10.1145/363707.363723) — *uso:* artículo de origen consultado en «Propagación de errores».
+- [Python: `math.fsum`](https://docs.python.org/3/library/math.html#math.fsum) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Propagación de errores».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

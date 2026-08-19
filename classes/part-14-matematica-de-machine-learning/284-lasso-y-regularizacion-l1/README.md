@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x)
-- [Zou, H.; Hastie, T. *Regularization and variable selection via the elastic net*, JRSS-B, 2005](https://doi.org/10.1111/j.1467-9868.2005.00503.x)
+- [Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x) — *uso:* artículo de origen consultado en «Lasso y regularización L1».
+- [Zou, H.; Hastie, T. *Regularization and variable selection via the elastic net*, JRSS-B, 2005](https://doi.org/10.1111/j.1467-9868.2005.00503.x) — *uso:* artículo de origen consultado en «Lasso y regularización L1».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

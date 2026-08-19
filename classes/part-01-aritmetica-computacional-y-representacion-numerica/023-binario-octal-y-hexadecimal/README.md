@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: literales numéricos](https://docs.python.org/3/reference/lexical_analysis.html#integer-literals)
-- [Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6)
+- [Python: literales numéricos](https://docs.python.org/3/reference/lexical_analysis.html#integer-literals) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Binario, octal y hexadecimal».
+- [Patterson & Hennessy. *Computer Organization and Design*, 6ª ed., 2020](https://www.elsevier.com/books/computer-organization-and-design-risc-v-edition/patterson/978-0-12-820331-6) — *uso:* desarrollo formal del tema en «Binario, octal y hexadecimal».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

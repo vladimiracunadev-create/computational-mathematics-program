@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)
-- [Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008, cap. 9](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)
+- [Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Decimales y conversiones».
+- [Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008, cap. 9](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865) — *uso:* desarrollo formal del tema en «Decimales y conversiones».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

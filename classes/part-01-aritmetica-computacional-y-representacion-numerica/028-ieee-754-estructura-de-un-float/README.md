@@ -166,11 +166,11 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)
-- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163)
-- [Kahan, W. *Lecture Notes on the Status of IEEE 754*, UC Berkeley, 1997](https://people.eecs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF)
+- [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/) — *uso:* referencia normativa consultada en «IEEE 754: estructura de un float».
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163) — *uso:* artículo de origen consultado en «IEEE 754: estructura de un float».
+- [Kahan, W. *Lecture Notes on the Status of IEEE 754*, UC Berkeley, 1997](https://people.eecs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF) — *uso:* obra de referencia consultada en «IEEE 754: estructura de un float».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

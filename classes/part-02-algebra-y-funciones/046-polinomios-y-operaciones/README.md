@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.6](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)
-- [NumPy: `polyval` y el esquema de Horner](https://numpy.org/doc/stable/reference/generated/numpy.polyval.html)
+- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.6](https://www-cs-faculty.stanford.edu/~knuth/taocp.html) — *uso:* obra de referencia consultada en «Polinomios y operaciones».
+- [NumPy: `polyval` y el esquema de Horner](https://numpy.org/doc/stable/reference/generated/numpy.polyval.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Polinomios y operaciones».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

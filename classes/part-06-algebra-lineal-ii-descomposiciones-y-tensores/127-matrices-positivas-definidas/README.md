@@ -158,10 +158,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, apéndice A](https://web.stanford.edu/~boyd/cvxbook/)
-- [Horn & Johnson. *Matrix Analysis*, 2ª ed., Cambridge, 2012](https://www.cambridge.org/core/books/matrix-analysis/8C8B0C4A0C8E4B9C0C0C0C0C0C0C0C0C)
+- [Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, apéndice A](https://web.stanford.edu/~boyd/cvxbook/) — *uso:* obra de referencia consultada en «Matrices positivas definidas».
+- [Horn & Johnson. *Matrix Analysis*, 2ª ed., Cambridge, 2012](https://www.cambridge.org/core/books/matrix-analysis/8C8B0C4A0C8E4B9C0C0C0C0C0C0C0C0C) — *uso:* obra de referencia consultada en «Matrices positivas definidas».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

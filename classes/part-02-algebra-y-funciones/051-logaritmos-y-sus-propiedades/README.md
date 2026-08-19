@@ -164,10 +164,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Napier, J. *Mirifici Logarithmorum Canonis Descriptio*, 1614 — contexto histórico](https://mathshistory.st-andrews.ac.uk/Biographies/Napier/)
-- [Python: `math.log`, `math.log1p`, `math.log2`](https://docs.python.org/3/library/math.html#math.log)
+- [Napier, J. *Mirifici Logarithmorum Canonis Descriptio*, 1614 — contexto histórico](https://mathshistory.st-andrews.ac.uk/Biographies/Napier/) — *uso:* exposición alternativa del tema en «Logaritmos y sus propiedades».
+- [Python: `math.log`, `math.log1p`, `math.log2`](https://docs.python.org/3/library/math.html#math.log) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Logaritmos y sus propiedades».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

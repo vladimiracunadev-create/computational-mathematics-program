@@ -161,10 +161,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Python: `math.isqrt` y aritmética de raíces](https://docs.python.org/3/library/math.html#math.isqrt)
-- [Lang, S. *Basic Mathematics*. Springer, 1988](https://link.springer.com/book/10.1007/978-1-4757-1836-2)
+- [Python: `math.isqrt` y aritmética de raíces](https://docs.python.org/3/library/math.html#math.isqrt) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Raíces y radicales».
+- [Lang, S. *Basic Mathematics*. Springer, 1988](https://link.springer.com/book/10.1007/978-1-4757-1836-2) — *uso:* desarrollo formal del tema en «Raíces y radicales».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

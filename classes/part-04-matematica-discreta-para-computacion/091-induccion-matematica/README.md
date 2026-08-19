@@ -165,10 +165,10 @@ código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría e
 
 ## 🔗 Referencias
 
-- [Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019, cap. 6](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A)
-- [Gries, D. *The Science of Programming*. Springer, 1981](https://link.springer.com/book/10.1007/978-1-4612-5983-1)
+- [Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019, cap. 6](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A) — *uso:* obra de referencia consultada en «Inducción matemática».
+- [Gries, D. *The Science of Programming*. Springer, 1981](https://link.springer.com/book/10.1007/978-1-4612-5983-1) — *uso:* desarrollo formal del tema en «Inducción matemática».
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md).
+Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 
