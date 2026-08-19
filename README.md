@@ -56,6 +56,7 @@ Deep Learning, Transformers, modelos generativos, GNN y Reinforcement Learning.*
 | Manual | ✅ documento completo en HTML y PDF, generado ejecutando las 360 demostraciones |
 | Contenido pedagógico | ✅ 360/360 clases con desarrollo, ejemplo trabajado, errores y fuentes |
 | Glosarios y diagramas | ✅ 489 términos en 18 glosarios y un mapa mermaid por parte |
+| Trazabilidad de fuentes | ✅ toda obra citada tiene entrada con localizador en [`sources/bibliography.json`](sources/bibliography.json), verificada en CI ([cifras abajo](#-trazabilidad-de-fuentes)) |
 | CI | ✅ 3 sistemas operativos × 3 versiones de Python, tests y validación estricta |
 | Seguridad | ✅ `pip-audit`, `bandit`, `zizmor` y CodeQL en cada push |
 | Dependencias científicas | ⚪ opcionales: ningún laboratorio las necesita para ejecutarse |
@@ -347,15 +348,62 @@ referencia como superficies de aplicación. Ver [docs/integrations/README.md](do
 | [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | por qué el programa está diseñado así |
 | [docs/GLOSSARY.md](docs/GLOSSARY.md) | vocabulario preciso del programa |
 | [docs/BIBLIOGRAPHY.md](docs/BIBLIOGRAPHY.md) | bibliografía primaria por parte |
+| [sources/bibliography.json](sources/bibliography.json) | registro de fuentes con localizador verificable por obra |
+| [sources/README.md](sources/README.md) | esquema del registro, política y cómo se verifica |
 | `classes/part-NN-*/GLOSARIO.md` | glosario de cada parte, enlazado a sus clases |
 | [INSTALL.md](INSTALL.md) | instalación en Windows, macOS y Linux |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | cómo contribuir sin romper el contrato |
 
+## 🔎 Trazabilidad de fuentes
+
+Cada obra que cita una clase tiene una entrada en
+[`sources/bibliography.json`](sources/bibliography.json) con un **localizador resoluble**
+—ISBN-13, DOI o URL de la fuente primaria— y un estado: `verificada` si ese localizador se
+resolvió contra su autoridad, `pendiente` si todavía no. Lo que no se resuelve **se marca,
+no se borra ni se rellena a ojo**: un hueco declarado es información, un hueco inventado es
+una bibliografía falsa.
+
+Dos capas separadas, a propósito:
+
+| Script | Red | Qué hace |
+|---|---|---|
+| [`scripts/verify_sources.py`](scripts/verify_sources.py) | no | esquema, dígito de control del ISBN, forma canónica del localizador, cobertura, bloques repetidos y cifras del README. **Corre en CI y bloquea.** |
+| [`scripts/refresh_sources.py`](scripts/refresh_sources.py) | sí | resuelve ISBN contra Open Library y DOI contra Crossref/DataCite, comprueba las URL y actualiza fechas. Manual, **no bloquea**. |
+
+<!-- fuentes:inicio -->
+
+> Cifras generadas por `python scripts/verify_sources.py --sync`. No se escriben a mano.
+
+| Métrica | Valor |
+|---|---:|
+| Obras en el registro | **334** |
+| Citas en las clases | 724 |
+| Clases con bloque de fuentes | 360 de 360 |
+| Bloques de fuentes distintos | 360 |
+| Cobertura del registro | **100.0 %** |
+| Localizador resuelto contra su autoridad | 304 (91.0 %) |
+| Pendientes de resolver | 30 |
+| Entradas con DOI | 169 |
+| Entradas con ISBN-13 | 75 |
+| Última resolución en red | 2026-08-19 |
+
+| Etapa | Obra rectora | Citas en la etapa | Localizador |
+|---|---|---:|---|
+| **1 — Cimientos** | Stewart — *Precalculus* | 14 | [reference](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/) |
+| **2 — El lenguaje de los modelos** | Strang — *Introduction to Linear Algebra* | 21 | [book](https://openlibrary.org/isbn/9781733146678) |
+| **3 — Incertidumbre y cómputo** | Blitzstein et al. — *Introduction to Probability* | 21 | [reference](https://projects.iq.harvard.edu/stat110/home) |
+| **4 — La matemática de la IA** | Hastie et al. — *The Elements of Statistical Learning* | 12 | [book](https://openlibrary.org/isbn/9780387848570) |
+| **5 — Frontera e investigación** | Shalev-Shwartz et al. — *Understanding Machine Learning* | 3 | [book](https://openlibrary.org/isbn/9781139950619) |
+
+Registro completo en [`sources/bibliography.json`](sources/bibliography.json): 334 obras, 75 libros, 135 artículos, 7 normas y 117 referencias.
+
+<!-- fuentes:fin -->
+
 ## 📖 Pauta derivada de la bibliografía de referencia
 
 Cada parte sigue explícitamente la secuencia y los énfasis de la literatura estándar de su
-área. Las **724 referencias** de las clases y las **56** de las partes apuntan a la fuente
-concreta —capítulo incluido cuando aplica— para que puedas ir al original.
+área. Cada referencia de clase declara **el uso que esa clase hace de la obra** y apunta a la
+fuente concreta —capítulo incluido cuando aplica— para que puedas ir al original.
 
 | Área | Obras de referencia |
 |---|---|

@@ -3,6 +3,41 @@
 Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 Este proyecto sigue [Versionado Semántico](https://semver.org/lang/es/).
 
+## [No publicado]
+
+Trazabilidad de fuentes: las clases ya citaban obras reales, pero nada permitía comprobar
+que un enlace llevara de verdad a la obra que decía. Esta entrega añade el aparato que lo
+hace verificable.
+
+### Añadido
+
+- **`sources/bibliography.json`**: registro con una entrada por obra citada, cada una con
+  localizador resoluble (ISBN-13, DOI o URL de la fuente primaria), autoridad que responde
+  por él, fecha de consulta, clases que la usan y estado `verificada` / `pendiente`.
+- `src/computational_math/sources.py`: extracción de identificadores que **ya viajan dentro
+  de la URL citada** (DOI de Springer y SIAM, ISBN-13 en el sufijo del DOI o en la ficha de
+  la editorial, DOI canónico de arXiv), validación del dígito de control del ISBN-13 y
+  forma canónica del localizador por tipo.
+- `scripts/verify_sources.py`: verificador **offline y determinista**. Corre en CI y
+  bloquea. Comprueba esquema, dígito de control, forma del localizador, cobertura completa,
+  que ningún DOI escrito en una clase falte del registro, que ningún bloque de fuentes se
+  repita entre clases y que las cifras del README coincidan con el recuento.
+- `scripts/refresh_sources.py`: resolutor **en red**, manual y sin poder de bloqueo.
+  Resuelve ISBN contra Open Library y DOI contra Crossref y DataCite, comprueba las URL y
+  reporta lo que dejó de resolver **sin borrarlo**. De un libro sin ISBN solo adopta el de
+  **la edición citada** —título, autor y año—, nunca el de otra edición de la misma obra.
+- `sources/README.md` con el esquema, la política y cómo leer cada estado.
+- `tests/test_sources.py` y el paso «Trazabilidad de fuentes» en el workflow de CI.
+- Objetivos `make verify-sources` y `make refresh-sources`.
+
+### Cambiado
+
+- Cada referencia de clase declara ahora **el uso que esa clase hace de la obra**, no solo
+  la obra. Eso vale también para el sitio y el manual, que comparten el mismo renderizador.
+- El README enlaza el registro y publica sus cifras y la obra rectora de cada etapa; las
+  cifras las produce el verificador (`--sync`), ya no se escriben a mano.
+- Dos enlaces de clase pasan de `http` a `https` tras comprobar que la sede lo sirve.
+
 ## [0.2.0] — 2026-08-13
 
 Reescritura del núcleo del programa: el contenido pasa de plantilla a artefacto

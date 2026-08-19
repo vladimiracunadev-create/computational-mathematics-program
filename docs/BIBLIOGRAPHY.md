@@ -7,6 +7,13 @@ profundidad formal que el programa declara **no** cubrir.
 > Este listado se deriva de `curriculum.yaml`. Si editas una referencia allí, regenera
 > las clases con `python scripts/generate_classes.py`.
 
+> [!IMPORTANT]
+> Este documento es la **vista legible por parte**. La fuente de verdad comprobable es
+> [`sources/bibliography.json`](../sources/bibliography.json): ahí cada obra citada por
+> alguna clase tiene un localizador resoluble —ISBN-13, DOI o URL de la fuente primaria—,
+> la autoridad que responde por él y un estado (`verificada` o `pendiente`).
+> `python scripts/verify_sources.py` comprueba ese registro en CI, sin tocar la red.
+
 ## Parte 00 — Pensamiento matemático desde cero
 
 *Reconstruye la aritmética y el lenguaje matemático básico con el rigor que exige escribir código: cada número tiene dominio, unidad y representación.*

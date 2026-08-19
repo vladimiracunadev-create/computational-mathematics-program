@@ -38,6 +38,7 @@ src/computational_math/
 ├── __init__.py                 versión y reexportaciones
 ├── curriculum.py               acceso al currículo, catálogo y rutas de clase
 ├── content.py                  acceso al contenido pedagógico y su cobertura real
+├── sources.py                  registro de fuentes: identificadores, uso por clase y cifras
 ├── cli.py                      CLI `compmath`
 ├── helpers.py                  utilidades numéricas de biblioteca estándar
 └── engines/
@@ -55,9 +56,12 @@ scripts/
 ├── build_manual.py             → manual/ en HTML y PDF
 ├── run_capstone_labs.py        ejecuta los 18 capstone como procesos independientes
 ├── validate_repository.py      coherencia global (modo --strict en CI)
+├── verify_sources.py           trazabilidad de fuentes, offline y determinista (CI)
+├── refresh_sources.py          resolución en red del registro (manual, no bloquea)
 ├── validate_site.py            artefacto de Pages antes de publicar
 └── validate_pages.py           sitio ya publicado, tras el despliegue
 
+sources/                        registro de fuentes con localizador por obra
 tests/                          currículo, contenido, motores, estructura, CLI, sitio y manual
 docs/                           documentación del programa
 learning-paths/                 12 rutas por perfil profesional
@@ -65,7 +69,7 @@ site/                           portal estático (generado, no versionado)
 manual/                         manual completo HTML y PDF (generado, no versionado)
 ```
 
-## Las tres capas
+## Las cuatro capas
 
 ### 1. Declaración — `curriculum.yaml` y `content/`
 
@@ -133,6 +137,17 @@ navegador descarga al abrir la página) de un **enlace de navegación** (`href` 
 que no se descarga). Los recursos externos siguen prohibidos; las citas pueden apuntar a
 su origen.
 
+### 4. Trazabilidad — `sources/`
+
+`sources/bibliography.json` es la cuarta capa: una entrada por obra citada, con
+localizador resoluble (ISBN-13, DOI o URL de la fuente primaria), la autoridad que
+responde por él y un estado. `verify_sources.py` la comprueba **sin red** —esquema,
+dígito de control, forma canónica del localizador, cobertura, bloques de fuentes
+repetidos y las cifras que publica el README—, y `refresh_sources.py` la resuelve
+**con red** contra Open Library, Crossref y DataCite. Están separados a propósito: un
+verificador que depende de la red acaba ignorándose. Detalle en
+[`sources/README.md`](../sources/README.md).
+
 ## Contrato de clase
 
 Los 12 archivos de cada clase, y qué garantiza cada uno:
@@ -157,6 +172,7 @@ Los 12 archivos de cada clase, y qué garantiza cada uno:
 ```bash
 python scripts/generate_classes.py --check     # nada quedó desfasado
 python scripts/validate_repository.py --strict # coherencia + 360 laboratorios + versiones
+python scripts/verify_sources.py               # trazabilidad de fuentes, sin tocar la red
 python -m unittest discover -s tests -v        # contrato, motores, CLI y sitio
 python scripts/generate_site.py                # construir el portal
 python scripts/validate_site.py                # enlaces, conteos y cero recursos externos
