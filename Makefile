@@ -1,4 +1,4 @@
-.PHONY: help install generate manual site validate test lint labs capstones all clean
+.PHONY: help install generate manual site validate verify-sources refresh-sources test lint labs capstones all clean
 
 PYTHON ?= python
 
@@ -21,6 +21,13 @@ site: manual  ## Genera y valida el portal estático en site/ (incluye el manual
 validate:  ## Validación estricta del repositorio (la que corre en CI)
 	$(PYTHON) scripts/generate_classes.py --check
 	$(PYTHON) scripts/validate_repository.py --strict
+	$(PYTHON) scripts/verify_sources.py
+
+verify-sources:  ## Verifica el registro de fuentes sin tocar la red (lo que corre en CI)
+	$(PYTHON) scripts/verify_sources.py
+
+refresh-sources:  ## Resuelve el registro contra Open Library, Crossref y DataCite (usa red)
+	$(PYTHON) scripts/refresh_sources.py
 
 test:  ## Ejecuta la suite de tests
 	$(PYTHON) -m unittest discover -s tests -v
@@ -34,7 +41,7 @@ labs:  ## Ejecuta las 360 demostraciones
 capstones:  ## Ejecuta los 18 laboratorios capstone como scripts independientes
 	$(PYTHON) scripts/run_capstone_labs.py
 
-all: generate manual site validate test lint labs capstones  ## Todo lo que exige CI
+all: generate manual site validate verify-sources test lint labs capstones  ## Todo lo que exige CI
 
 clean:  ## Borra artefactos generados y cachés
 	rm -rf site .ruff_cache .pytest_cache build dist *.egg-info

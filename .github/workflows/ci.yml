@@ -32,6 +32,8 @@ jobs:
         run: python scripts/generate_classes.py --check
       - name: Validación estricta del repositorio
         run: python scripts/validate_repository.py --strict
+      - name: Trazabilidad de fuentes (offline, sin red)
+        run: python scripts/verify_sources.py
       - name: Compilar todo el Python del repositorio
         run: python -m compileall -q src scripts tests classes
 
