@@ -1,0 +1,221 @@
+# Vocabulario de áreas: el puente comprobable entre una obra y la clase que la cita.
+#
+# Cada obra del registro declara en `covers` qué áreas trata —un hecho sobre la obra, no
+# sobre dónde se cita—. Cada parte declara el área que enseña (`nucleo`) y las áreas con
+# las que su material conecta (`conexiones`). Con eso, `scripts/verify_sources.py`
+# comprueba dos cosas en cada clase, sin tocar la red:
+#
+#   1. ANCLA        cada clase cita al menos una obra del área que la clase enseña;
+#   2. PERTINENCIA  ninguna cita queda fuera del área de la parte ni de sus conexiones.
+#
+# Una clase puede declarar su propia área en `content/part-NN.yaml` (`areas:`) cuando su
+# tema no es el de su parte —vectores dentro de geometría, gradientes dentro de cálculo—.
+# Si no la declara, hereda el núcleo de su parte.
+#
+# Este archivo se escribe a mano y se revisa a ojo: es la afirmación temática del programa.
+
+schema_version: 1
+
+politica: |
+  Un área describe de qué trata una obra, no dónde nos convino citarla. Si una obra no
+  cubre el área de la clase que la cita, el problema es la cita: se cambia la fuente, no
+  el área. Ampliar `covers` para que un cruce pase es falsear el registro.
+
+# Área que se acepta en cualquier parte: la documentación de la herramienta con la que se
+# ejecuta el laboratorio. Nunca sirve de ancla — una clase no puede sostenerse solo en el
+# manual de referencia de la biblioteca que usa.
+transversales:
+  - herramientas-de-computo
+
+areas:
+  fundamentos-matematicos:
+    nombre: "Fundamentos y lenguaje matemático"
+    definicion: "Número, magnitud, unidad, estimación y el lenguaje con el que se escribe una afirmación matemática."
+  historia-de-la-matematica:
+    nombre: "Historia de la matemática"
+    definicion: "Origen y evolución de los conceptos: quién los planteó, contra qué problema y con qué notación."
+  logica-y-demostracion:
+    nombre: "Lógica y demostración"
+    definicion: "Proposiciones, cuantificadores, conjuntos, técnicas de prueba y corrección de programas."
+  teoria-de-numeros:
+    nombre: "Teoría de números"
+    definicion: "Divisibilidad, primos, congruencias, racionales y estructura aritmética de los enteros."
+  matematica-discreta:
+    nombre: "Matemática discreta"
+    definicion: "Conteo, recurrencias, inducción, relaciones y estructuras finitas."
+  algoritmos-y-complejidad:
+    nombre: "Algoritmos y complejidad"
+    definicion: "Diseño y análisis de algoritmos, coste asintótico y límites de computabilidad."
+  criptografia:
+    nombre: "Criptografía"
+    definicion: "Cifrado, funciones resumen, protocolos y el uso aplicado de la aritmética modular."
+  grafos-y-redes:
+    nombre: "Grafos y redes"
+    definicion: "Estructura de grafos, recorridos, espectro del laplaciano y aprendizaje sobre grafos."
+  ingenieria-de-software:
+    nombre: "Ingeniería de software y fallos reales"
+    definicion: "Práctica de programación, reproducibilidad y análisis de fallos documentados en producción."
+  aritmetica-de-maquina:
+    nombre: "Aritmética de máquina"
+    definicion: "Representación numérica en hardware, IEEE 754, error de redondeo, condicionamiento y estabilidad."
+  algebra-y-funciones:
+    nombre: "Álgebra y funciones"
+    definicion: "Manipulación simbólica, polinomios y las familias de funciones elementales."
+  geometria:
+    nombre: "Geometría y trigonometría"
+    definicion: "Distancia, ángulo, figuras, coordenadas y transformaciones del plano y del espacio."
+  geometria-diferencial:
+    nombre: "Geometría diferencial"
+    definicion: "Curvas, superficies, variedades y métricas; incluye geometría de la información."
+  algebra-lineal:
+    nombre: "Álgebra lineal"
+    definicion: "Vectores, matrices, subespacios, autovalores, descomposiciones y tensores."
+  algebra-lineal-numerica:
+    nombre: "Álgebra lineal numérica"
+    definicion: "Factorizaciones en punto flotante, estabilidad, métodos iterativos y coste computacional."
+  calculo:
+    nombre: "Cálculo"
+    definicion: "Límite, derivada, integral, series y teoremas fundamentales en una variable."
+  analisis-matematico:
+    nombre: "Análisis matemático"
+    definicion: "Fundamento riguroso del cálculo: convergencia, continuidad, medida y análisis complejo."
+  calculo-matricial:
+    nombre: "Cálculo multivariable y matricial"
+    definicion: "Gradiente, jacobiano, hessiano, derivadas respecto de matrices y optimización multivariable."
+  autodiferenciacion:
+    nombre: "Diferenciación automática"
+    definicion: "Modo directo y reverso, grafo de cómputo y retropropagación como regla de la cadena."
+  ecuaciones-diferenciales:
+    nombre: "Ecuaciones diferenciales"
+    definicion: "Ecuaciones ordinarias y en derivadas parciales, y sus esquemas de integración."
+  metodos-numericos:
+    nombre: "Métodos numéricos"
+    definicion: "Raíces, interpolación, cuadratura, sistemas y convergencia de esquemas aproximados."
+  computacion-cientifica:
+    nombre: "Computación científica"
+    definicion: "Práctica del cálculo numérico: bibliotecas, cómputo vectorizado, rendimiento y reproducibilidad."
+  teoria-de-la-aproximacion:
+    nombre: "Teoría de la aproximación"
+    definicion: "Cuán bien y con qué error una familia de funciones representa a otra."
+  optimizacion:
+    nombre: "Optimización"
+    definicion: "Convexidad, condiciones de optimalidad, descenso, métodos de segundo orden y restricciones."
+  probabilidad:
+    nombre: "Probabilidad"
+    definicion: "Espacio muestral, variables aleatorias, distribuciones, esperanza y teoremas límite."
+  procesos-estocasticos:
+    nombre: "Procesos estocásticos"
+    definicion: "Cadenas de Markov, procesos en tiempo continuo y ecuaciones diferenciales estocásticas."
+  metodos-de-monte-carlo:
+    nombre: "Métodos de Monte Carlo"
+    definicion: "Simulación, muestreo, MCMC y estimación por remuestreo."
+  estadistica:
+    nombre: "Estadística e inferencia"
+    definicion: "Estimación, contraste de hipótesis, intervalos, regresión y regularización."
+  inferencia-bayesiana:
+    nombre: "Inferencia bayesiana"
+    definicion: "Prior, verosimilitud, posterior, inferencia variacional y modelado jerárquico."
+  inferencia-causal:
+    nombre: "Inferencia causal"
+    definicion: "Intervención, contrafactual, confusión y diagramas causales."
+  metodologia-experimental:
+    nombre: "Metodología experimental"
+    definicion: "Diseño de experimentos, potencia estadística e interpretación de resultados."
+  teoria-de-la-informacion:
+    nombre: "Teoría de la información"
+    definicion: "Entropía, información mutua, divergencias, codificación y límites de compresión."
+  procesamiento-de-senales:
+    nombre: "Procesamiento de señales"
+    definicion: "Muestreo, convolución, transformada de Fourier, filtrado y análisis espectral."
+  series-temporales:
+    nombre: "Series temporales"
+    definicion: "Dependencia temporal, estacionariedad, modelos ARIMA y previsión."
+  machine-learning:
+    nombre: "Machine learning"
+    definicion: "Modelos supervisados y no supervisados, evaluación, regularización y selección de modelo."
+  teoria-del-aprendizaje:
+    nombre: "Teoría del aprendizaje"
+    definicion: "Generalización, dimensión VC, aprendizaje PAC y los límites formales de lo aprendible."
+  metodos-de-kernel:
+    nombre: "Métodos de kernel"
+    definicion: "Truco del núcleo, espacios de Hilbert con núcleo reproductor y máquinas de vector soporte."
+  procesos-gaussianos:
+    nombre: "Procesos gaussianos"
+    definicion: "Modelos no paramétricos con incertidumbre calibrada y optimización bayesiana."
+  deep-learning:
+    nombre: "Deep learning"
+    definicion: "Redes profundas: arquitectura, inicialización, normalización, entrenamiento y regularización."
+  modelos-generativos:
+    nombre: "Modelos generativos"
+    definicion: "Autoencoders variacionales, GAN, flujos normalizantes y modelos de difusión."
+  modelos-de-lenguaje:
+    nombre: "Modelos de lenguaje"
+    definicion: "Representaciones distribuidas, atención, transformers y escalado de modelos de lenguaje."
+  aprendizaje-por-refuerzo:
+    nombre: "Aprendizaje por refuerzo"
+    definicion: "Decisión secuencial, valor, política y gradiente de política."
+  transporte-optimo:
+    nombre: "Transporte óptimo"
+    definicion: "Distancia de Wasserstein, formulación de Kantorovich y algoritmos de Sinkhorn."
+  herramientas-de-computo:
+    nombre: "Herramientas de cómputo"
+    definicion: "Documentación de Python, NumPy, SciPy, SymPy, PyTorch y JAX: la herramienta que ejecuta el laboratorio."
+
+# Qué enseña cada parte y con qué conecta. `nucleo` es el tema de la parte: una clase se
+# ancla ahí salvo que declare su propia área. `conexiones` son las áreas que la parte
+# toca de forma deliberada —casi siempre, la aplicación en IA del tema que enseña—.
+partes:
+  "00":
+    nucleo: [fundamentos-matematicos, logica-y-demostracion, algebra-y-funciones, teoria-de-numeros]
+    conexiones: [aritmetica-de-maquina, matematica-discreta, algoritmos-y-complejidad, historia-de-la-matematica, ingenieria-de-software]
+  "01":
+    nucleo: [aritmetica-de-maquina, metodos-numericos]
+    conexiones: [algebra-lineal, algebra-lineal-numerica, algoritmos-y-complejidad, teoria-de-numeros, matematica-discreta, ingenieria-de-software]
+  "02":
+    nucleo: [algebra-y-funciones]
+    conexiones: [calculo, analisis-matematico, algebra-lineal, algebra-lineal-numerica, aritmetica-de-maquina, metodos-numericos, optimizacion, probabilidad, estadistica, teoria-de-la-informacion, machine-learning, deep-learning, modelos-generativos, historia-de-la-matematica]
+  "03":
+    nucleo: [geometria]
+    conexiones: [algebra-lineal, algebra-lineal-numerica, algebra-y-funciones, calculo, analisis-matematico, metodos-numericos, optimizacion, estadistica, machine-learning, metodos-de-kernel, deep-learning, modelos-de-lenguaje, historia-de-la-matematica]
+  "04":
+    nucleo: [matematica-discreta, logica-y-demostracion, algoritmos-y-complejidad, teoria-de-numeros]
+    conexiones: [grafos-y-redes, criptografia, probabilidad, autodiferenciacion, machine-learning, teoria-del-aprendizaje, deep-learning, modelos-generativos, ingenieria-de-software, historia-de-la-matematica]
+  "05":
+    nucleo: [algebra-lineal]
+    conexiones: [algebra-lineal-numerica, aritmetica-de-maquina, metodos-numericos, algoritmos-y-complejidad, estadistica, machine-learning, deep-learning, modelos-de-lenguaje]
+  "06":
+    nucleo: [algebra-lineal, algebra-lineal-numerica]
+    conexiones: [computacion-cientifica, metodos-numericos, optimizacion, estadistica, metodos-de-monte-carlo, machine-learning, deep-learning]
+  "07":
+    nucleo: [calculo, analisis-matematico]
+    conexiones: [calculo-matricial, autodiferenciacion, algebra-lineal, algebra-lineal-numerica, aritmetica-de-maquina, metodos-numericos, computacion-cientifica, ecuaciones-diferenciales, optimizacion, probabilidad, procesamiento-de-senales, machine-learning, deep-learning, modelos-generativos, geometria, historia-de-la-matematica]
+  "08":
+    nucleo: [calculo-matricial, calculo, autodiferenciacion]
+    conexiones: [algebra-lineal, analisis-matematico, metodos-numericos, optimizacion, probabilidad, estadistica, inferencia-bayesiana, metodos-de-monte-carlo, grafos-y-redes, machine-learning, deep-learning]
+  "09":
+    nucleo: [probabilidad, procesos-estocasticos]
+    conexiones: [estadistica, inferencia-bayesiana, metodos-de-monte-carlo, procesamiento-de-senales, machine-learning]
+  "10":
+    nucleo: [estadistica, metodologia-experimental, inferencia-bayesiana]
+    conexiones: [probabilidad, metodos-de-monte-carlo, inferencia-causal, computacion-cientifica, ingenieria-de-software, machine-learning]
+  "11":
+    nucleo: [metodos-numericos, computacion-cientifica, ecuaciones-diferenciales, teoria-de-la-aproximacion, algebra-lineal-numerica]
+    conexiones: [algebra-lineal, aritmetica-de-maquina, analisis-matematico, optimizacion, probabilidad, estadistica]
+  "12":
+    nucleo: [optimizacion]
+    conexiones: [metodos-numericos, probabilidad, estadistica, machine-learning, deep-learning]
+  "13":
+    nucleo: [teoria-de-la-informacion, procesamiento-de-senales, series-temporales]
+    conexiones: [probabilidad, estadistica, inferencia-bayesiana, analisis-matematico, metodos-numericos, computacion-cientifica, algoritmos-y-complejidad, machine-learning, deep-learning, modelos-generativos, modelos-de-lenguaje]
+  "14":
+    nucleo: [machine-learning, teoria-del-aprendizaje, metodos-de-kernel]
+    conexiones: [probabilidad, estadistica, inferencia-bayesiana, metodologia-experimental, optimizacion, algebra-lineal, algoritmos-y-complejidad, geometria, procesamiento-de-senales, deep-learning]
+  "15":
+    nucleo: [deep-learning]
+    conexiones: [autodiferenciacion, optimizacion, analisis-matematico, estadistica, inferencia-bayesiana, teoria-del-aprendizaje, machine-learning, modelos-de-lenguaje]
+  "16":
+    nucleo: [deep-learning, modelos-de-lenguaje, modelos-generativos, aprendizaje-por-refuerzo, grafos-y-redes]
+    conexiones: [algebra-lineal, probabilidad, inferencia-bayesiana, optimizacion, algoritmos-y-complejidad, transporte-optimo, machine-learning]
+  "17":
+    nucleo: [teoria-del-aprendizaje, procesos-gaussianos, transporte-optimo, geometria-diferencial, modelos-generativos, inferencia-bayesiana, procesos-estocasticos]
+    conexiones: [algebra-lineal, analisis-matematico, ecuaciones-diferenciales, optimizacion, estadistica, inferencia-causal, metodos-de-monte-carlo, grafos-y-redes, metodos-de-kernel, teoria-de-la-informacion, machine-learning, deep-learning, modelos-de-lenguaje]

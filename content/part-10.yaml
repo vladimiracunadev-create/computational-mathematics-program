@@ -397,7 +397,7 @@ clases:
       de estimadores de gradiente y elección entre modelos simples y complejos.
     referencias:
       - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 6](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
-      - "[Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002](https://www.cengage.com/)"
+      - "[Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002](https://openlibrary.org/isbn/9780534243128)"
 
   "205":
     concepto: "El 95 % de un intervalo de confianza es una propiedad del procedimiento, no del parámetro."
@@ -512,7 +512,7 @@ clases:
       clínicos.
     referencias:
       - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
-      - "[Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002, cap. 8](https://www.cengage.com/)"
+      - "[Casella, G.; Berger, R. *Statistical Inference*, 2ª ed., Duxbury, 2002, cap. 8](https://openlibrary.org/isbn/9780534243128)"
 
   "207":
     concepto: "El p-value mide la rareza de los datos bajo H0, no la probabilidad de que H0 sea cierta."
@@ -803,7 +803,7 @@ clases:
       detección de asociación entre variables categóricas.
     referencias:
       - "[Wasserman, L. *All of Statistics*, Springer, 2004, cap. 10](https://link.springer.com/book/10.1007/978-0-387-21736-9)"
-      - "[Agresti, A. *Categorical Data Analysis*, 3ª ed., Wiley, 2013](https://doi.org/10.1002/9780470594001)"
+      - "[Agresti, A. *Categorical Data Analysis*, 3ª ed., Wiley, 2012](https://openlibrary.org/isbn/9780470463635)"
 
   "212":
     concepto: "ANOVA compara varias medias a la vez sin inflar la tasa de falsos positivos."

@@ -207,6 +207,7 @@ clases:
     aplicacion: |
       Toda la trigonometría computacional, rotaciones en gráficos y robótica, positional
       encoding de los Transformers (clase 323) y análisis de Fourier (parte 13).
+    areas: [geometria, calculo]
     referencias:
       - "[Python: `math.radians` y `math.degrees`](https://docs.python.org/3/library/math.html#math.radians)"
       - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 15](https://www.mathpop.com/calculus)"
@@ -591,6 +592,7 @@ clases:
     aplicacion: |
       Fronteras de decisión lineales, detección de colisiones, ajuste de rectas y geometría
       computacional en general.
+    areas: [geometria, algebra-y-funciones]
     referencias:
       - "[Hastie, Tibshirani & Friedman. *The Elements of Statistical Learning*, 2ª ed., 2009, cap. 4](https://hastie.su.domains/ElemStatLearn/)"
       - "[Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/)"
@@ -753,6 +755,7 @@ clases:
     aplicacion: |
       Similitud coseno entre embeddings, proyecciones, detección de ortogonalidad, iluminación
       en gráficos (producto punto entre normal y dirección de luz) y capas densas.
+    areas: [geometria, algebra-lineal]
     referencias:
       - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 1](https://math.mit.edu/~gs/linearalgebra/)"
       - "[3Blue1Brown. *Essence of Linear Algebra*](https://www.3blue1brown.com/topics/linear-algebra)"
@@ -914,6 +917,7 @@ clases:
     aplicacion: |
       Cambio de variable en integrales múltiples, jacobiano en transformaciones de
       distribuciones, detección de degeneración en geometría computacional y normalizing flows.
+    areas: [geometria, algebra-lineal]
     referencias:
       - "[Strang, G. *Introduction to Linear Algebra*, 6ª ed., 2023, cap. 5](https://math.mit.edu/~gs/linearalgebra/)"
       - "[3Blue1Brown. *The determinant*](https://www.3blue1brown.com/lessons/determinant)"
@@ -963,6 +967,7 @@ clases:
     aplicacion: |
       Problemas con simetría radial, patrones de radiación, transformadas en coordenadas
       polares, robótica y representación de fase y magnitud en señales complejas.
+    areas: [geometria, calculo]
     referencias:
       - "[Python: `math.atan2` y `cmath.polar`](https://docs.python.org/3/library/cmath.html#cmath.polar)"
       - "[Stewart, J. *Calculus*, 8ª ed., Cengage, 2015, cap. 10](https://www.cengage.com/c/calculus-8e-stewart/)"

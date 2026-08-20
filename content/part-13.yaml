@@ -671,7 +671,7 @@ clases:
       Audio digital, sensores e IoT, adquisición de datos biomédicos y preprocesamiento de
       series para modelos.
     referencias:
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 1](https://www.pearson.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 1](https://openlibrary.org/isbn/9780131988422)"
       - "[Smith, S. *The Scientist and Engineer's Guide to Digital Signal Processing*, 1997](https://www.dspguide.com/)"
 
   "270":
@@ -786,7 +786,7 @@ clases:
       detección de patrones.
     referencias:
       - "[Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 9](https://www.deeplearningbook.org/)"
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://openlibrary.org/isbn/9780131988422)"
 
   "272":
     concepto: "La correlación cruzada localiza dónde aparece un patrón dentro de una señal."
@@ -840,7 +840,7 @@ clases:
       Emparejamiento de plantillas, sincronización de señales, radar y sonar, alineación de
       series y mecanismo de atención.
     referencias:
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://openlibrary.org/isbn/9780131988422)"
       - "[Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762)"
 
   "273":
@@ -895,8 +895,8 @@ clases:
       Análisis de audio y vibraciones, compresión JPEG y MP3, filtrado en frecuencia y
       codificación posicional en Transformers.
     referencias:
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 8](https://www.pearson.com/)"
-      - "[Bracewell, R. *The Fourier Transform and Its Applications*, 3ª ed., McGraw-Hill, 2000](https://www.mheducation.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 8](https://openlibrary.org/isbn/9780131988422)"
+      - "[Bracewell, R. *The Fourier Transform and Its Applications*, 3ª ed., McGraw-Hill, 2000](https://openlibrary.org/isbn/9780073039381)"
 
   "274":
     concepto: "La FFT da el mismo resultado que la DFT y convierte n² en n log n."
@@ -1009,7 +1009,7 @@ clases:
       Eliminación de ruido en sensores, ecualización de audio, suavizado de series financieras y
       preprocesamiento de señales biomédicas.
     referencias:
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 7](https://www.pearson.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 7](https://openlibrary.org/isbn/9780131988422)"
       - "[Smith, S. *The Scientist and Engineer's Guide to Digital Signal Processing*, 1997](https://www.dspguide.com/)"
 
   "276":
@@ -1181,7 +1181,7 @@ clases:
       para modelos de reconocimiento de voz.
     referencias:
       - "[Harris, F. J. *On the use of windows for harmonic analysis with the DFT*, Proceedings of the IEEE, 1978](https://doi.org/10.1109/PROC.1978.10837)"
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://openlibrary.org/isbn/9780131988422)"
 
   "279":
     concepto: "La potencia va con el cuadrado de la amplitud: doble amplitud es cuádruple potencia."
@@ -1239,7 +1239,7 @@ clases:
       Caracterización de ruido, análisis de EEG por bandas, MFCC en reconocimiento de voz y
       diagnóstico de maquinaria por vibraciones.
     referencias:
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 10](https://www.pearson.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009, cap. 10](https://openlibrary.org/isbn/9780131988422)"
       - "[Welch, P. *The use of FFT for the estimation of power spectra*, IEEE Trans. Audio, 1967](https://doi.org/10.1109/TAU.1967.1161901)"
 
   "280":
@@ -1302,5 +1302,5 @@ clases:
       Clasificación de audio, reconocimiento de actividad con acelerómetros, diagnóstico de
       maquinaria, análisis de EEG y detección de anomalías en sensores.
     referencias:
-      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/)"
+      - "[Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://openlibrary.org/isbn/9780131988422)"
       - "[Peeters, G. *A large set of audio features for sound description*, IRCAM, 2004](https://recherche.ircam.fr/anasyn/peeters/ARTICLES/Peeters_2003_cuidadoaudiofeatures.pdf)"

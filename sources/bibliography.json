@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "verified_on": "2026-08-19",
+  "verified_on": "2026-08-20",
   "policy": "Toda afirmación del programa se apoya en una entrada de este registro. Ninguna entrada se acepta sin localizador verificable.",
   "entries": [
     {
@@ -16,6 +16,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/029-por-que-0-1-0-2-no-es-exactamente-0-3"
+      ],
+      "covers": [
+        "aritmetica-de-maquina"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -36,6 +39,9 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/072-vectores-geometricos-2d"
       ],
+      "covers": [
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -54,6 +60,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/106-combinaciones-lineales"
+      ],
+      "covers": [
+        "algebra-lineal"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -75,6 +84,9 @@
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/110-producto-matriz-vector",
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/123-transformaciones-lineales"
       ],
+      "covers": [
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -94,6 +106,9 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/075-matrices-de-transformacion",
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/117-determinantes"
+      ],
+      "covers": [
+        "algebra-lineal"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -116,29 +131,35 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/061-puntos-segmentos-y-distancias"
       ],
+      "covers": [
+        "machine-learning",
+        "geometria"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
     {
       "id": "agresti-categorical-data-analysis",
-      "key": "isbn:9780470594001",
+      "key": "isbn:9780470463635",
       "type": "book",
       "authors": [
         "Agresti, A."
       ],
       "title": "Categorical Data Analysis",
-      "published": "2013",
-      "url": "https://doi.org/10.1002/9780470594001",
-      "isbn13": "9780470594001",
-      "doi": "10.1002/9780470594001",
-      "locator": "https://openlibrary.org/isbn/9780470594001",
+      "published": "2012",
+      "url": "https://openlibrary.org/isbn/9780470463635",
+      "isbn13": "9780470463635",
+      "locator": "https://openlibrary.org/isbn/9780470463635",
       "authority": "International ISBN Agency (comprobado vía Open Library)",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/211-chi-cuadrado-y-tablas-de-contingencia"
       ],
-      "status": "pendiente",
-      "note": "Open Library no resuelve el ISBN 9780470594001 (URLError: <urlopen error [WinError 10060] Se produjo un error durante el intento de conexión ya que la parte conectada no respondió adecuadamente tras un periodo de tiempo, o bien se produjo un error en la conexión establecida ya que el host conectado no ha podido responder>)"
+      "covers": [
+        "estadistica"
+      ],
+      "status": "verificada",
+      "note": "ISBN resuelto en Open Library como «Categorical data analysis»"
     },
     {
       "id": "akenine-moller-real-time-rendering",
@@ -157,6 +178,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/079-aplicaciones-en-vision-robotica-y-videojuegos"
+      ],
+      "covers": [
+        "geometria"
       ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2018) confirmado en Open Library como «Real-Time Rendering, Fourth Edition»",
@@ -177,6 +201,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/324-query-key-y-value"
+      ],
+      "covers": [
+        "deep-learning",
+        "modelos-de-lenguaje"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -199,6 +227,11 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/350-information-geometry"
       ],
+      "covers": [
+        "geometria-diferencial",
+        "teoria-de-la-informacion",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Information Geometry and Its Applications»"
     },
@@ -218,6 +251,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/214-regresion-lineal-estadistica"
+      ],
+      "covers": [
+        "estadistica",
+        "metodologia-experimental"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Graphs in Statistical Analysis»"
@@ -242,6 +279,10 @@
         "classes/part-07-calculo-diferencial-e-integral/154-integral-definida",
         "classes/part-07-calculo-diferencial-e-integral/156-teorema-fundamental-del-calculo"
       ],
+      "covers": [
+        "calculo",
+        "analisis-matematico"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Calculus»"
     },
@@ -261,6 +302,10 @@
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/163-derivadas-parciales",
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/166-plano-tangente"
+      ],
+      "covers": [
+        "analisis-matematico",
+        "calculo"
       ],
       "status": "verificada",
       "note": "ISBN de la edición citada (1974) confirmado en Open Library como «Mathematical Analysis»",
@@ -285,6 +330,10 @@
       "used_in": [
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/118-matrices-ortogonales"
       ],
+      "covers": [
+        "deep-learning",
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Unitary Evolution Recurrent Neural Networks»"
     },
@@ -308,6 +357,11 @@
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/333-gan-y-juegos-minimax",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/347-wasserstein-distance"
       ],
+      "covers": [
+        "modelos-generativos",
+        "transporte-optimo",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Wasserstein GAN»"
     },
@@ -327,6 +381,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/254-line-search"
+      ],
+      "covers": [
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Minimization of functions having Lipschitz continuous first partial derivatives»"
@@ -349,6 +406,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/294-k-means-como-optimizacion"
       ],
+      "covers": [
+        "machine-learning",
+        "algoritmos-y-complejidad"
+      ],
       "status": "pendiente",
       "note": "el DOI no resuelve (crossref HTTP 404 · datacite HTTP 404)"
     },
@@ -368,6 +429,10 @@
       "used_in": [
         "classes/part-02-algebra-y-funciones/042-propiedades-distributiva-asociativa-y-conmutativa",
         "classes/part-02-algebra-y-funciones/047-factorizacion-elemental"
+      ],
+      "covers": [
+        "algebra-y-funciones",
+        "algebra-lineal"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -393,6 +458,9 @@
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/123-transformaciones-lineales",
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/124-nucleo-e-imagen"
       ],
+      "covers": [
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2024); ediciones disponibles: 2004, 2014"
     },
@@ -414,6 +482,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/105-vectores-unitarios"
+      ],
+      "covers": [
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Layer Normalization»"
@@ -437,6 +508,10 @@
       "used_in": [
         "classes/part-07-calculo-diferencial-e-integral/150-derivacion-implicita"
       ],
+      "covers": [
+        "deep-learning",
+        "ecuaciones-diferenciales"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Deep Equilibrium Models»"
     },
@@ -457,6 +532,10 @@
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/175-campos-vectoriales"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «The Mechanics of n-Player Differentiable Games»"
     },
@@ -475,6 +554,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-02-algebra-y-funciones/055-funciones-exponenciales"
+      ],
+      "covers": [
+        "fundamentos-matematicos",
+        "algebra-y-funciones"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -499,6 +582,10 @@
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/179-automatic-differentiation-y-computational-graphs",
         "classes/part-15-matematica-de-deep-learning/306-computational-graphs"
       ],
+      "covers": [
+        "autodiferenciacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -518,6 +605,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/266-informacion-mutua"
+      ],
+      "covers": [
+        "teoria-de-la-informacion",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «MINE: Mutual Information Neural Estimation»"
@@ -539,6 +630,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/298-bias-variance-tradeoff"
       ],
+      "covers": [
+        "teoria-del-aprendizaje",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Reconciling modern machine-learning practice and the classical bias–variance trade-off»"
     },
@@ -559,6 +654,11 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/338-bellman-equations"
       ],
+      "covers": [
+        "optimizacion",
+        "aprendizaje-por-refuerzo",
+        "algoritmos-y-complejidad"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Dynamic Programming\r\n            \r\n                Princeton Landmarks in Mathematics»"
     },
@@ -577,6 +677,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/329-modelado-autoregresivo"
+      ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -600,6 +704,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/314-vanishing-y-exploding-gradients"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Learning long-term dependencies with gradient descent is difficult»"
     },
@@ -619,6 +726,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/344-hamiltonian-monte-carlo"
+      ],
+      "covers": [
+        "metodos-de-monte-carlo",
+        "inferencia-bayesiana"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «A Conceptual Introduction to Hamiltonian Monte Carlo»"
@@ -640,6 +751,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/288-k-nearest-neighbors-y-metricas"
       ],
+      "covers": [
+        "machine-learning",
+        "geometria"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «When Is “Nearest Neighbor” Meaningful?»"
     },
@@ -660,6 +775,9 @@
         "classes/part-00-pensamiento-matematico-desde-cero/006-razones-tasas-y-proporciones",
         "classes/part-00-pensamiento-matematico-desde-cero/012-unidades-y-analisis-dimensional",
         "classes/part-00-pensamiento-matematico-desde-cero/016-expresiones-y-formulas"
+      ],
+      "covers": [
+        "fundamentos-matematicos"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -688,6 +806,11 @@
         "classes/part-14-matematica-de-machine-learning/295-gaussian-mixture-models",
         "classes/part-14-matematica-de-machine-learning/296-em-algorithm"
       ],
+      "covers": [
+        "machine-learning",
+        "probabilidad",
+        "inferencia-bayesiana"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2006); ediciones disponibles: 2008"
     },
@@ -706,12 +829,16 @@
       "doi": "10.1137/1.9781611971484",
       "locator": "https://openlibrary.org/isbn/9781611971484",
       "authority": "International ISBN Agency (comprobado vía Open Library)",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/131-minimos-cuadrados-lineales"
       ],
-      "status": "pendiente",
-      "note": "Open Library no resuelve el ISBN 9781611971484 (URLError: <urlopen error [WinError 10054] Se ha forzado la interrupción de una conexión existente por el host remoto>)"
+      "covers": [
+        "algebra-lineal-numerica",
+        "metodos-numericos"
+      ],
+      "status": "verificada",
+      "note": "ISBN resuelto en Open Library como «Numerical Methods for Least Squares Problems»"
     },
     {
       "id": "blei-variational-inference-a-review-for-statisticians",
@@ -733,6 +860,10 @@
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/332-elbo-y-variational-inference",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/345-variational-inference-avanzada"
       ],
+      "covers": [
+        "inferencia-bayesiana",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Variational Inference: A Review for Statisticians»"
     },
@@ -749,7 +880,7 @@
       "url": "https://projects.iq.harvard.edu/stat110/home",
       "locator": "https://projects.iq.harvard.edu/stat110/home",
       "authority": "Harvard University",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-09-probabilidad-y-procesos-aleatorios/181-experimentos-espacio-muestral-y-eventos",
         "classes/part-09-probabilidad-y-procesos-aleatorios/182-axiomas-de-probabilidad",
@@ -773,6 +904,9 @@
         "classes/part-09-probabilidad-y-procesos-aleatorios/200-capstone-simulador-probabilistico-y-bayesiano",
         "classes/part-10-estadistica-e-inferencia/203-muestreo-y-distribuciones-muestrales"
       ],
+      "covers": [
+        "probabilidad"
+      ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 403; Open Library tiene la obra pero no la edición citada (2019); ediciones disponibles: 2014"
     },
@@ -792,6 +926,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/317-embeddings-como-espacios-vectoriales"
+      ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Man is to Computer Programmer as Woman is to Homemaker? Debiasing Word Embeddings»"
@@ -815,6 +953,10 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/245-stochastic-gradient-descent"
       ],
+      "covers": [
+        "optimizacion",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Optimization Methods for Large-Scale Machine Learning»"
     },
@@ -837,6 +979,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/276-procesos-estacionarios"
+      ],
+      "covers": [
+        "series-temporales",
+        "estadistica"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Time Series Analysis»"
@@ -870,28 +1016,36 @@
         "classes/part-12-optimizacion-matematica-y-computacional/257-condiciones-kkt",
         "classes/part-12-optimizacion-matematica-y-computacional/258-optimizacion-cuadratica"
       ],
+      "covers": [
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2004) confirmado en Open Library como «Convex Optimization»",
       "isbn13": "9780511804441"
     },
     {
       "id": "bracewell-the-fourier-transform-and-its-applications",
-      "key": "url:https://www.mheducation.com",
-      "type": "reference",
+      "key": "isbn:9780073039381",
+      "type": "book",
       "authors": [
         "Bracewell, R."
       ],
       "title": "The Fourier Transform and Its Applications",
       "published": "2000",
-      "url": "https://www.mheducation.com/",
-      "locator": "https://www.mheducation.com/",
-      "authority": "www.mheducation.com",
-      "accessed": "2026-08-19",
+      "url": "https://openlibrary.org/isbn/9780073039381",
+      "isbn13": "9780073039381",
+      "locator": "https://openlibrary.org/isbn/9780073039381",
+      "authority": "International ISBN Agency (comprobado vía Open Library)",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/273-series-y-transformada-de-fourier"
       ],
+      "covers": [
+        "procesamiento-de-senales",
+        "analisis-matematico"
+      ],
       "status": "verificada",
-      "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2000); ediciones disponibles: 1999, 2004"
+      "note": "ISBN resuelto en Open Library como «The Fourier transform and its applications»"
     },
     {
       "id": "bradbury-jax-composable-transformations-of-python-numpy",
@@ -908,6 +1062,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/319-autodiff-con-pytorch-jax"
+      ],
+      "covers": [
+        "herramientas-de-computo",
+        "autodiferenciacion"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -930,6 +1088,9 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/291-arboles-entropia-y-gini"
       ],
+      "covers": [
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Classification and Regression Trees»"
     },
@@ -950,29 +1111,35 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/292-random-forest-desde-probabilidad"
       ],
+      "covers": [
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Random Forests»"
     },
     {
       "id": "bridle-probabilistic-interpretation-of-feedforward",
-      "key": "isbn:9783642761539",
-      "type": "book",
+      "key": "doi:10.1007/978-3-642-76153-9_28",
+      "type": "paper",
       "authors": [
         "Bridle, J."
       ],
       "title": "Probabilistic interpretation of feedforward classification network outputs",
       "published": "1990",
       "url": "https://doi.org/10.1007/978-3-642-76153-9_28",
-      "isbn13": "9783642761539",
       "doi": "10.1007/978-3-642-76153-9_28",
-      "locator": "https://openlibrary.org/isbn/9783642761539",
-      "authority": "International ISBN Agency (comprobado vía Open Library)",
-      "accessed": "2026-08-19",
+      "locator": "https://doi.org/10.1007/978-3-642-76153-9_28",
+      "authority": "Crossref (agencia de registro del DOI)",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/321-softmax-y-distribuciones-categoricas"
       ],
-      "status": "pendiente",
-      "note": "el ISBN 9783642761539 resuelve a «Neurocomputing», que no coincide con la cita «Probabilistic interpretation of feedforward classification network outputs»: revisar el enlace de la clase"
+      "covers": [
+        "deep-learning",
+        "probabilidad"
+      ],
+      "status": "verificada",
+      "note": "DOI resuelto en Crossref como «Probabilistic Interpretation of Feedforward Classification Network Outputs, with Relationships to Statistical Pattern Recognition»"
     },
     {
       "id": "bronstein-geometric-deep-learning",
@@ -990,6 +1157,11 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/349-geometria-diferencial-para-ml"
+      ],
+      "covers": [
+        "deep-learning",
+        "geometria-diferencial",
+        "grafos-y-redes"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges»"
@@ -1011,28 +1183,46 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/343-mcmc-avanzado"
       ],
+      "covers": [
+        "metodos-de-monte-carlo",
+        "inferencia-bayesiana"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Handbook of Markov Chain Monte Carlo»"
     },
     {
       "id": "burden-numerical-analysis",
-      "key": "url:https://www.cengage.com/c/numerical-analysis-10e-burden",
-      "type": "reference",
+      "key": "isbn:9781305253667",
+      "type": "book",
       "authors": [
-        "Burden",
-        "Faires"
+        "Burden, R.",
+        "Faires, J."
       ],
       "title": "Numerical Analysis",
       "published": "2015",
-      "url": "https://www.cengage.com/c/numerical-analysis-10e-burden/",
-      "locator": "https://www.cengage.com/c/numerical-analysis-10e-burden/",
-      "authority": "www.cengage.com",
-      "accessed": "2026-08-19",
+      "url": "https://openlibrary.org/isbn/9781305253667",
+      "isbn13": "9781305253667",
+      "locator": "https://openlibrary.org/isbn/9781305253667",
+      "authority": "International ISBN Agency (comprobado vía Open Library)",
+      "accessed": "2026-08-20",
       "used_in": [
-        "classes/part-07-calculo-diferencial-e-integral/159-integracion-numerica-introductoria"
+        "classes/part-07-calculo-diferencial-e-integral/159-integracion-numerica-introductoria",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/222-biseccion",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/223-newton-raphson",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/224-metodo-de-la-secante",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/225-interpolacion-de-lagrange",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/226-splines",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/228-cuadratura-numerica",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/229-regla-del-trapecio",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/230-simpson",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/235-ecuaciones-diferenciales-ordinarias",
+        "classes/part-11-metodos-numericos-y-computacion-cientifica/236-metodo-de-euler"
       ],
-      "status": "pendiente",
-      "note": "la URL respondió HTTP 302; Open Library tiene la obra pero no la edición citada (2015); ediciones disponibles: 2005"
+      "covers": [
+        "metodos-numericos"
+      ],
+      "status": "verificada",
+      "note": "ISBN resuelto en Open Library como «Numerical Analysis»"
     },
     {
       "id": "button-power-failure-why-small-sample-size-undermines",
@@ -1051,39 +1241,38 @@
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/209-potencia-estadistica"
       ],
+      "covers": [
+        "metodologia-experimental",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Power failure: why small sample size undermines the reliability of neuroscience»"
     },
     {
       "id": "casella-statistical-inference",
-      "key": "url:https://www.cengage.com",
-      "type": "reference",
+      "key": "isbn:9780534243128",
+      "type": "book",
       "authors": [
         "Casella, G.",
         "Berger, R."
       ],
       "title": "Statistical Inference",
       "published": "2002",
-      "url": "https://www.cengage.com/",
-      "locator": "https://www.cengage.com/",
-      "authority": "www.cengage.com",
-      "accessed": "2026-08-19",
+      "url": "https://openlibrary.org/isbn/9780534243128",
+      "isbn13": "9780534243128",
+      "locator": "https://openlibrary.org/isbn/9780534243128",
+      "authority": "International ISBN Agency (comprobado vía Open Library)",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/204-estimadores-y-propiedades",
-        "classes/part-10-estadistica-e-inferencia/206-pruebas-de-hipotesis",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/222-biseccion",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/223-newton-raphson",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/224-metodo-de-la-secante",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/225-interpolacion-de-lagrange",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/226-splines",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/228-cuadratura-numerica",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/229-regla-del-trapecio",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/230-simpson",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/235-ecuaciones-diferenciales-ordinarias",
-        "classes/part-11-metodos-numericos-y-computacion-cientifica/236-metodo-de-euler"
+        "classes/part-10-estadistica-e-inferencia/206-pruebas-de-hipotesis"
+      ],
+      "covers": [
+        "estadistica",
+        "probabilidad"
       ],
       "status": "verificada",
-      "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2002); ediciones disponibles: 2006, 2008, 2024"
+      "note": "ISBN resuelto en Open Library como «Statistical Inference»"
     },
     {
       "id": "chen-neural-ordinary-differential-equations",
@@ -1101,6 +1290,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/352-neural-odes"
+      ],
+      "covers": [
+        "deep-learning",
+        "ecuaciones-diferenciales"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Neural Ordinary Differential Equations»"
@@ -1123,6 +1316,9 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/293-boosting-y-descenso-funcional"
       ],
+      "covers": [
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «XGBoost: A Scalable Tree Boosting System»"
     },
@@ -1142,6 +1338,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/316-gru"
+      ],
+      "covers": [
+        "deep-learning",
+        "modelos-de-lenguaje"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation»"
@@ -1163,6 +1363,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/316-gru"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling»"
     },
@@ -1178,10 +1381,14 @@
       "url": "https://mathweb.ucsd.edu/~fan/research/revised.html",
       "locator": "https://mathweb.ucsd.edu/~fan/research/revised.html",
       "authority": "mathweb.ucsd.edu",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/176-divergencia-y-rotacional",
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/336-graph-laplacian"
+      ],
+      "covers": [
+        "grafos-y-redes",
+        "algebra-lineal"
       ],
       "status": "pendiente",
       "note": "la URL respondió URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)>; Open Library tiene la obra pero no la edición citada (1997); ediciones disponibles: 1999"
@@ -1205,6 +1412,10 @@
         "classes/part-10-estadistica-e-inferencia/208-errores-tipo-i-y-ii",
         "classes/part-10-estadistica-e-inferencia/209-potencia-estadistica"
       ],
+      "covers": [
+        "estadistica",
+        "metodologia-experimental"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Statistical Power Analysis for the Behavioral Sciences»"
     },
@@ -1224,6 +1435,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/097-algebra-booleana"
+      ],
+      "covers": [
+        "algoritmos-y-complejidad",
+        "logica-y-demostracion"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The complexity of theorem-proving procedures»"
@@ -1245,6 +1460,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/274-fft"
+      ],
+      "covers": [
+        "procesamiento-de-senales",
+        "algoritmos-y-complejidad"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «An algorithm for the machine calculation of complex Fourier series»"
@@ -1270,6 +1489,10 @@
         "classes/part-04-matematica-discreta-para-computacion/095-arboles-y-arboles-de-expansion",
         "classes/part-04-matematica-discreta-para-computacion/100-capstone-modelar-dependencias-con-grafos"
       ],
+      "covers": [
+        "algoritmos-y-complejidad",
+        "matematica-discreta"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Introduction to Algorithms, Fourth Edition»"
     },
@@ -1292,6 +1515,10 @@
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/070-distancia-punto-recta",
         "classes/part-14-matematica-de-machine-learning/289-svm-y-margen-maximo"
       ],
+      "covers": [
+        "metodos-de-kernel",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Support-vector networks»"
     },
@@ -1313,6 +1540,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/238-introduccion-a-pde-y-discretizacion"
+      ],
+      "covers": [
+        "ecuaciones-diferenciales",
+        "metodos-numericos"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «�ber die partiellen Differenzengleichungen der mathematischen Physik»"
@@ -1340,6 +1571,10 @@
         "classes/part-13-teoria-de-la-informacion-senales-y-series/267-principio-de-maxima-entropia",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/268-codificacion-y-compresion"
       ],
+      "covers": [
+        "teoria-de-la-informacion",
+        "probabilidad"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Elements of Information Theory»"
     },
@@ -1360,6 +1595,9 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/063-triangulos-y-semejanza",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/071-circunferencias-y-conicas"
+      ],
+      "covers": [
+        "geometria"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Introduction to Geometry»"
@@ -1382,6 +1620,10 @@
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/346-optimal-transport",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/360-capstone-final-reproducir-una-idea-matematica-de-un-paper"
       ],
+      "covers": [
+        "transporte-optimo",
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Sinkhorn Distances: Lightspeed Computation of Optimal Transportation Distances»"
     },
@@ -1399,6 +1641,10 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/025-enteros-con-signo-y-complemento-a-dos",
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/026-rango-overflow-y-wraparound"
+      ],
+      "covers": [
+        "aritmetica-de-maquina",
+        "ingenieria-de-software"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -1419,6 +1665,11 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/302-mlp-como-composicion-de-funciones"
+      ],
+      "covers": [
+        "teoria-del-aprendizaje",
+        "deep-learning",
+        "analisis-matematico"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Approximation by superpositions of a sigmoidal function»"
@@ -1441,6 +1692,10 @@
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/169-hessiano",
         "classes/part-12-optimizacion-matematica-y-computacional/242-convexidad"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Identifying and attacking the saddle point problem in high-dimensional non-convex optimization»"
     },
@@ -1462,6 +1717,10 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/080-capstone-motor-geometrico-2d"
       ],
+      "covers": [
+        "geometria",
+        "algoritmos-y-complejidad"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Computational Geometry»"
     },
@@ -1482,6 +1741,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/226-splines"
+      ],
+      "covers": [
+        "teoria-de-la-aproximacion",
+        "metodos-numericos"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «A Practical Guide to Splines»"
@@ -1505,6 +1768,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/296-em-algorithm"
       ],
+      "covers": [
+        "estadistica",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Maximum Likelihood from Incomplete Data Via the\n                    <i>EM</i>\n                    Algorithm»"
     },
@@ -1523,6 +1790,11 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/300-capstone-derivar-y-comparar-6-algoritmos-ml"
+      ],
+      "covers": [
+        "metodologia-experimental",
+        "machine-learning",
+        "estadistica"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -1543,6 +1815,10 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/068-coordenadas-cartesianas"
       ],
+      "covers": [
+        "geometria",
+        "historia-de-la-matematica"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -1561,6 +1837,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/019-comprobacion-y-contraejemplos"
+      ],
+      "covers": [
+        "ingenieria-de-software",
+        "logica-y-demostracion"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -1582,6 +1862,9 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/349-geometria-diferencial-para-ml"
       ],
+      "covers": [
+        "geometria-diferencial"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Differential Geometry of Curves and Surfaces»"
     },
@@ -1598,6 +1881,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/239-computacion-cientifica-con-scipy"
+      ],
+      "covers": [
+        "herramientas-de-computo",
+        "computacion-cientifica"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -1618,6 +1905,11 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/331-variational-autoencoders"
+      ],
+      "covers": [
+        "modelos-generativos",
+        "inferencia-bayesiana",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Tutorial on Variational Autoencoders»"
@@ -1640,6 +1932,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/287-naive-bayes"
       ],
+      "covers": [
+        "machine-learning",
+        "probabilidad"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «On the Optimality of the Simple Bayesian Classifier under Zero-One Loss»"
     },
@@ -1661,6 +1957,9 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/248-adagrad"
       ],
+      "covers": [
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -1681,6 +1980,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/310-convolucion-discreta"
+      ],
+      "covers": [
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «A guide to convolution arithmetic for deep learning»"
@@ -1705,6 +2007,9 @@
         "classes/part-09-probabilidad-y-procesos-aleatorios/196-ley-de-los-grandes-numeros",
         "classes/part-09-probabilidad-y-procesos-aleatorios/199-cadenas-de-markov"
       ],
+      "covers": [
+        "probabilidad"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2019); ediciones disponibles: 2004"
     },
@@ -1723,6 +2028,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/342-kernel-methods-avanzados"
+      ],
+      "covers": [
+        "procesos-gaussianos",
+        "machine-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -1746,6 +2055,10 @@
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/133-svd-y-compresion",
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/140-capstone-pca-y-compresion-de-imagenes"
       ],
+      "covers": [
+        "algebra-lineal",
+        "algebra-lineal-numerica"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The Approximation of One Matrix by Another of Lower Rank»"
     },
@@ -1767,6 +2080,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/218-bootstrap-y-remuestreo"
+      ],
+      "covers": [
+        "estadistica",
+        "metodos-de-monte-carlo"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Introduction to the Bootstrap»"
@@ -1790,6 +2107,9 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/259-optimizacion-evolutiva"
       ],
+      "covers": [
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Introduction to Evolutionary Computing»"
     },
@@ -1808,6 +2128,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/340-capstone-mini-transformer-matematico"
+      ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -1829,6 +2153,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/313-rnn-y-recurrencia"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Finding Structure in Time»"
     },
@@ -1848,6 +2175,10 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/026-rango-overflow-y-wraparound"
       ],
+      "covers": [
+        "aritmetica-de-maquina",
+        "ingenieria-de-software"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -1864,6 +2195,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/019-comprobacion-y-contraejemplos"
+      ],
+      "covers": [
+        "teoria-de-numeros",
+        "logica-y-demostracion"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -1887,6 +2222,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/330-sampling-temperatura-top-k-y-top-p"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "modelos-generativos"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Hierarchical Neural Story Generation»"
     },
@@ -1906,6 +2245,10 @@
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/212-anova"
       ],
+      "covers": [
+        "metodologia-experimental",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (1935); ediciones disponibles: 1971"
     },
@@ -1924,6 +2267,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/036-estabilidad-de-algoritmos"
+      ],
+      "covers": [
+        "aritmetica-de-maquina",
+        "metodos-numericos"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -1945,6 +2292,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/293-boosting-y-descenso-funcional"
       ],
+      "covers": [
+        "machine-learning",
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Greedy function approximation: A gradient boosting machine.»"
     },
@@ -1965,6 +2316,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/309-regularizacion-y-dropout"
+      ],
+      "covers": [
+        "deep-learning",
+        "inferencia-bayesiana"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning»"
@@ -1993,6 +2348,9 @@
         "classes/part-02-algebra-y-funciones/043-ecuaciones-lineales-de-una-variable",
         "classes/part-02-algebra-y-funciones/050-exponentes-algebraicos"
       ],
+      "covers": [
+        "algebra-y-funciones"
+      ],
       "status": "pendiente",
       "note": "el DOI no resuelve (crossref HTTP 404 · datacite HTTP 404)"
     },
@@ -2014,6 +2372,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-02-algebra-y-funciones/052-funciones-dominio-y-rango"
+      ],
+      "covers": [
+        "algebra-y-funciones"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Functions and Graphs (Dover Books on Mathematics)»"
@@ -2037,6 +2398,9 @@
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/066-identidades-trigonometricas-basicas",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/067-circulo-unitario"
       ],
+      "covers": [
+        "geometria"
+      ],
       "status": "pendiente",
       "note": "el DOI no resuelve (crossref HTTP 404 · datacite HTTP 404)"
     },
@@ -2059,6 +2423,10 @@
         "classes/part-10-estadistica-e-inferencia/217-inferencia-bayesiana",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/343-mcmc-avanzado"
       ],
+      "covers": [
+        "inferencia-bayesiana",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2013) confirmado en Open Library como «Bayesian Data Analysis Third Edition  3rd Edition\r\n            \r\n                Chapman  HallCRC Texts in Statistical Science»",
       "isbn13": "9781439840955"
@@ -2079,6 +2447,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/337-message-passing-en-gnn"
+      ],
+      "covers": [
+        "grafos-y-redes",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Neural Message Passing for Quantum Chemistry»"
@@ -2102,6 +2474,9 @@
         "classes/part-02-algebra-y-funciones/059-funciones-por-tramos",
         "classes/part-15-matematica-de-deep-learning/303-funciones-de-activacion"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -2122,6 +2497,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/307-inicializacion-de-pesos"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -2140,6 +2518,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/246-momentum"
+      ],
+      "covers": [
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -2166,6 +2547,9 @@
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/039-reproducibilidad-numerica-entre-plataformas",
         "classes/part-02-algebra-y-funciones/042-propiedades-distributiva-asociativa-y-conmutativa"
       ],
+      "covers": [
+        "aritmetica-de-maquina"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «What every computer scientist should know about floating-point arithmetic»"
     },
@@ -2191,6 +2575,10 @@
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/132-svd-desde-la-intuicion",
         "classes/part-11-metodos-numericos-y-computacion-cientifica/231-sistemas-lineales-directos",
         "classes/part-11-metodos-numericos-y-computacion-cientifica/234-minimos-cuadrados-numericos"
+      ],
+      "covers": [
+        "algebra-lineal-numerica",
+        "algebra-lineal"
       ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2013) confirmado en Open Library como «Matrix computations»",
@@ -2231,6 +2619,10 @@
         "classes/part-15-matematica-de-deep-learning/320-capstone-red-neuronal-desde-cero-en-python-puro",
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/321-softmax-y-distribuciones-categoricas"
       ],
+      "covers": [
+        "deep-learning",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2016) confirmado en Open Library como «Deep Learning»",
       "isbn13": "9780262337373"
@@ -2253,6 +2645,10 @@
         "classes/part-13-teoria-de-la-informacion-senales-y-series/265-jensen-shannon-divergence",
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/333-gan-y-juegos-minimax"
       ],
+      "covers": [
+        "modelos-generativos",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Generative Adversarial Networks»"
     },
@@ -2272,6 +2668,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/318-optimizacion-de-redes-profundas"
+      ],
+      "covers": [
+        "deep-learning",
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour»"
@@ -2298,6 +2698,10 @@
         "classes/part-04-matematica-discreta-para-computacion/089-combinaciones",
         "classes/part-04-matematica-discreta-para-computacion/092-recurrencias"
       ],
+      "covers": [
+        "matematica-discreta",
+        "algoritmos-y-complejidad"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (1994) confirmado en Open Library como «Concrete Mathematics»",
       "isbn13": "9788131708415"
@@ -2320,6 +2724,10 @@
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/091-induccion-matematica"
       ],
+      "covers": [
+        "logica-y-demostracion",
+        "ingenieria-de-software"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Science of Programming»"
     },
@@ -2341,6 +2749,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/179-automatic-differentiation-y-computational-graphs"
+      ],
+      "covers": [
+        "autodiferenciacion",
+        "calculo-matricial"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Evaluating Derivatives»"
@@ -2366,6 +2778,10 @@
         "classes/part-11-metodos-numericos-y-computacion-cientifica/235-ecuaciones-diferenciales-ordinarias",
         "classes/part-11-metodos-numericos-y-computacion-cientifica/237-runge-kutta"
       ],
+      "covers": [
+        "ecuaciones-diferenciales",
+        "metodos-numericos"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Solving Ordinary Differential Equations I»"
     },
@@ -2388,6 +2804,10 @@
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/236-metodo-de-euler"
       ],
+      "covers": [
+        "ecuaciones-diferenciales",
+        "metodos-numericos"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Solving Ordinary Differential Equations II»"
     },
@@ -2403,9 +2823,13 @@
       "url": "https://www.phys.ufl.edu/courses/phy3221/spring10/HaldaneRightSize.pdf",
       "locator": "https://www.phys.ufl.edu/courses/phy3221/spring10/HaldaneRightSize.pdf",
       "authority": "sitio de la obra o de su editorial",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/063-triangulos-y-semejanza"
+      ],
+      "covers": [
+        "geometria",
+        "fundamentos-matematicos"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 404; sin coincidencia de título y autor en Open Library"
@@ -2429,6 +2853,10 @@
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/140-capstone-pca-y-compresion-de-imagenes"
       ],
+      "covers": [
+        "algebra-lineal-numerica",
+        "metodos-de-monte-carlo"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Finding Structure with Randomness: Probabilistic Algorithms for Constructing Approximate Matrix Decompositions»"
     },
@@ -2450,6 +2878,10 @@
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/085-relaciones-y-propiedades"
       ],
+      "covers": [
+        "logica-y-demostracion",
+        "matematica-discreta"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Naive Set Theory»"
     },
@@ -2470,6 +2902,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/259-optimizacion-evolutiva"
+      ],
+      "covers": [
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Completely Derandomized Self-Adaptation in Evolution Strategies»"
@@ -2495,8 +2930,35 @@
         "classes/part-04-matematica-discreta-para-computacion/098-aritmetica-modular",
         "classes/part-04-matematica-discreta-para-computacion/099-numeros-primos-y-maximo-comun-divisor"
       ],
+      "covers": [
+        "teoria-de-numeros"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «An Introduction to the Theory of Numbers»"
+    },
+    {
+      "id": "harris-array-programming-with-numpy",
+      "key": "doi:10.1038/s41586-020-2649-2",
+      "type": "paper",
+      "authors": [
+        "Harris, C. et al."
+      ],
+      "title": "Array programming with NumPy",
+      "published": "2020",
+      "url": "https://doi.org/10.1038/s41586-020-2649-2",
+      "doi": "10.1038/s41586-020-2649-2",
+      "locator": "https://doi.org/10.1038/s41586-020-2649-2",
+      "authority": "Crossref (agencia de registro del DOI)",
+      "accessed": "2026-08-20",
+      "used_in": [
+        "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/138-broadcasting-como-operacion-tensorial"
+      ],
+      "covers": [
+        "computacion-cientifica",
+        "herramientas-de-computo"
+      ],
+      "status": "verificada",
+      "note": "DOI resuelto en Crossref como «Array programming with NumPy»"
     },
     {
       "id": "harris-on-the-use-of-windows-for-harmonic-analysis",
@@ -2514,6 +2976,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/278-series-temporales-y-ventanas"
+      ],
+      "covers": [
+        "procesamiento-de-senales"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «On the use of windows for harmonic analysis with the discrete Fourier transform»"
@@ -2537,6 +3002,10 @@
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/073-transformaciones-traslacion-y-escala",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/078-proyecciones-y-perspectiva",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/079-aplicaciones-en-vision-robotica-y-videojuegos"
+      ],
+      "covers": [
+        "geometria",
+        "algebra-lineal"
       ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2004) confirmado en Open Library como «Multiple View Geometry in Computer Vision»",
@@ -2575,6 +3044,10 @@
         "classes/part-14-matematica-de-machine-learning/299-generalizacion-validacion-y-leakage",
         "classes/part-14-matematica-de-machine-learning/300-capstone-derivar-y-comparar-6-algoritmos-ml"
       ],
+      "covers": [
+        "machine-learning",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2009) confirmado en Open Library como «The Elements of Statistical Learning»",
       "isbn13": "9780387848570"
@@ -2595,6 +3068,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/307-inicializacion-de-pesos"
+      ],
+      "covers": [
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification»"
@@ -2620,6 +3096,10 @@
         "classes/part-11-metodos-numericos-y-computacion-cientifica/232-jacobi-y-gauss-seidel",
         "classes/part-11-metodos-numericos-y-computacion-cientifica/240-capstone-solver-numerico-con-informe-de-error"
       ],
+      "covers": [
+        "computacion-cientifica",
+        "metodos-numericos"
+      ],
       "status": "pendiente",
       "note": "Open Library no resuelve el ISBN 9781611975581 (HTTP 404)"
     },
@@ -2641,6 +3121,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/303-funciones-de-activacion"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Gaussian Error Linear Units (GELUs)»"
     },
@@ -2661,6 +3144,10 @@
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/213-correlacion-frente-a-causalidad",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/355-causal-inference"
+      ],
+      "covers": [
+        "inferencia-causal",
+        "estadistica"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -2693,6 +3180,11 @@
         "classes/part-11-metodos-numericos-y-computacion-cientifica/221-errores-numericos-y-convergencia",
         "classes/part-11-metodos-numericos-y-computacion-cientifica/233-metodos-iterativos-y-tolerancias"
       ],
+      "covers": [
+        "aritmetica-de-maquina",
+        "metodos-numericos",
+        "algebra-lineal-numerica"
+      ],
       "status": "pendiente",
       "note": "Open Library no resuelve el ISBN 9780898718027 (HTTP 404)"
     },
@@ -2711,6 +3203,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/249-rmsprop"
+      ],
+      "covers": [
+        "deep-learning",
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -2735,6 +3231,10 @@
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/334-diffusion-models-forward-process",
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/335-diffusion-models-reverse-process"
       ],
+      "covers": [
+        "modelos-generativos",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Denoising Diffusion Probabilistic Models»"
     },
@@ -2755,6 +3255,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/315-lstm-y-compuertas"
+      ],
+      "covers": [
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Long Short-Term Memory»"
@@ -2777,6 +3280,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/283-ridge-y-regularizacion-l2"
       ],
+      "covers": [
+        "estadistica",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Ridge Regression: Biased Estimation for Nonorthogonal Problems»"
     },
@@ -2796,6 +3303,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/359-approximation-theory-y-scaling"
+      ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Training Compute-Optimal Large Language Models»"
@@ -2817,6 +3328,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/330-sampling-temperatura-top-k-y-top-p"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "modelos-generativos"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «The Curious Case of Neural Text Degeneration»"
     },
@@ -2836,6 +3351,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/127-matrices-positivas-definidas"
+      ],
+      "covers": [
+        "algebra-lineal"
       ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2012) confirmado en Open Library como «Matrix Analysis»",
@@ -2859,6 +3377,10 @@
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/115-forma-escalonada-y-rango",
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/133-svd-y-compresion"
       ],
+      "covers": [
+        "deep-learning",
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «LoRA: Low-Rank Adaptation of Large Language Models»"
     },
@@ -2879,6 +3401,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/304-funciones-de-perdida"
       ],
+      "covers": [
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Robust Estimation of a Location Parameter»"
     },
@@ -2898,6 +3423,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/268-codificacion-y-compresion"
+      ],
+      "covers": [
+        "teoria-de-la-informacion",
+        "algoritmos-y-complejidad"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «A Method for the Construction of Minimum-Redundancy Codes»"
@@ -2920,6 +3449,10 @@
         "classes/part-13-teoria-de-la-informacion-senales-y-series/276-procesos-estacionarios",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/277-autocorrelacion"
       ],
+      "covers": [
+        "series-temporales",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -2938,6 +3471,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/353-score-matching"
+      ],
+      "covers": [
+        "modelos-generativos",
+        "estadistica"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -2961,6 +3498,9 @@
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/033-overflow-y-underflow-flotante",
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/037-precision-arbitraria-y-decimal"
       ],
+      "covers": [
+        "aritmetica-de-maquina"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -2982,6 +3522,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/308-batch-normalization-y-layer-normalization"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift»"
     },
@@ -2998,6 +3541,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/168-jacobiano"
+      ],
+      "covers": [
+        "autodiferenciacion",
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -3018,6 +3565,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/267-principio-de-maxima-entropia"
+      ],
+      "covers": [
+        "teoria-de-la-informacion",
+        "probabilidad"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Information Theory and Statistical Mechanics»"
@@ -3040,6 +3591,11 @@
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/135-pca-desde-algebra-lineal",
         "classes/part-14-matematica-de-machine-learning/297-pca-aplicado-a-ml"
       ],
+      "covers": [
+        "machine-learning",
+        "algebra-lineal",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Principal Component Analysis»"
     },
@@ -3060,6 +3616,10 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/034-propagacion-de-errores"
       ],
+      "covers": [
+        "aritmetica-de-maquina",
+        "metodos-numericos"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Pracniques: further remarks on reducing truncation errors»"
     },
@@ -3078,6 +3638,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/028-ieee-754-estructura-de-un-float"
+      ],
+      "covers": [
+        "aritmetica-de-maquina"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -3100,6 +3663,10 @@
         "classes/part-04-matematica-discreta-para-computacion/096-dag-y-orden-topologico",
         "classes/part-04-matematica-discreta-para-computacion/100-capstone-modelar-dependencias-con-grafos"
       ],
+      "covers": [
+        "grafos-y-redes",
+        "algoritmos-y-complejidad"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Topological sorting of large networks»"
     },
@@ -3120,6 +3687,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/359-approximation-theory-y-scaling"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Scaling Laws for Neural Language Models»"
     },
@@ -3139,6 +3710,10 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/306-computational-graphs"
       ],
+      "covers": [
+        "autodiferenciacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -3157,6 +3732,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/320-capstone-red-neuronal-desde-cero-en-python-puro"
+      ],
+      "covers": [
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -3181,6 +3759,9 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/257-condiciones-kkt"
       ],
+      "covers": [
+        "optimizacion"
+      ],
       "status": "pendiente",
       "note": "Open Library no resuelve el ISBN 9780520411586 (HTTP 404)"
     },
@@ -3199,6 +3780,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/015-variables-como-cantidades-desconocidas"
+      ],
+      "covers": [
+        "historia-de-la-matematica"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2008); ediciones disponibles: 2003, 2009"
@@ -3220,6 +3804,10 @@
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/299-generalizacion-validacion-y-leakage"
       ],
+      "covers": [
+        "machine-learning",
+        "metodologia-experimental"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Leakage in data mining»"
     },
@@ -3239,6 +3827,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/352-neural-odes"
+      ],
+      "covers": [
+        "ecuaciones-diferenciales",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «On Neural Differential Equations»"
@@ -3262,6 +3854,10 @@
         "classes/part-12-optimizacion-matematica-y-computacional/250-adam",
         "classes/part-12-optimizacion-matematica-y-computacional/251-adamw"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Adam: A Method for Stochastic Optimization»"
     },
@@ -3282,6 +3878,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/332-elbo-y-variational-inference"
+      ],
+      "covers": [
+        "modelos-generativos",
+        "inferencia-bayesiana"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «An Introduction to Variational Autoencoders»"
@@ -3304,6 +3904,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/331-variational-autoencoders"
       ],
+      "covers": [
+        "modelos-generativos",
+        "inferencia-bayesiana"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Auto-Encoding Variational Bayes»"
     },
@@ -3324,6 +3928,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/337-message-passing-en-gnn"
+      ],
+      "covers": [
+        "grafos-y-redes",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Semi-Supervised Classification with Graph Convolutional Networks»"
@@ -3347,6 +3955,11 @@
         "classes/part-04-matematica-discreta-para-computacion/082-tablas-de-verdad-y-equivalencias",
         "classes/part-04-matematica-discreta-para-computacion/095-arboles-y-arboles-de-expansion"
       ],
+      "covers": [
+        "algoritmos-y-complejidad",
+        "matematica-discreta",
+        "teoria-de-numeros"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (1997); ediciones disponibles: 1968"
     },
@@ -3367,6 +3980,10 @@
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/008-potencias-y-leyes-de-exponentes",
         "classes/part-00-pensamiento-matematico-desde-cero/010-orden-de-operaciones-y-parentesis"
+      ],
+      "covers": [
+        "fundamentos-matematicos",
+        "matematica-discreta"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Two notes on notation»"
@@ -3390,6 +4007,10 @@
         "classes/part-10-estadistica-e-inferencia/219-a-b-testing-y-diseno-experimental",
         "classes/part-10-estadistica-e-inferencia/220-capstone-estudio-estadistico-reproducible"
       ],
+      "covers": [
+        "metodologia-experimental",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2020) confirmado en Open Library como «Trustworthy Online Controlled Experiments»",
       "isbn13": "9781108601375"
@@ -3412,6 +4033,10 @@
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/137-tensores-indices-shape-y-orden"
       ],
+      "covers": [
+        "algebra-lineal",
+        "algebra-lineal-numerica"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Tensor Decompositions and Applications»"
     },
@@ -3429,9 +4054,13 @@
       "url": "https://ieeexplore.ieee.org/document/5197422",
       "locator": "https://ieeexplore.ieee.org/document/5197422",
       "authority": "IEEE Xplore",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/120-capstone-resolver-un-sistema-de-recomendacion-lineal"
+      ],
+      "covers": [
+        "machine-learning",
+        "algebra-lineal"
       ],
       "status": "pendiente",
       "note": "la URL respondió 202"
@@ -3454,6 +4083,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/351-stochastic-differential-equations"
       ],
+      "covers": [
+        "procesos-estocasticos",
+        "ecuaciones-diferenciales"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Stochastic Differential Equations»"
     },
@@ -3475,6 +4108,10 @@
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/264-divergencia-kl"
       ],
+      "covers": [
+        "teoria-de-la-informacion",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «On Information and Sufficiency»"
     },
@@ -3490,36 +4127,43 @@
       "url": "https://www.cambridge.org/core/books/proofs-and-refutations/575FC6BB16BD500BB0B04D2B0A1EA2C9",
       "locator": "https://www.cambridge.org/core/books/proofs-and-refutations/575FC6BB16BD500BB0B04D2B0A1EA2C9",
       "authority": "sitio de la obra o de su editorial",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/019-comprobacion-y-contraejemplos"
+      ],
+      "covers": [
+        "logica-y-demostracion",
+        "historia-de-la-matematica"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 500; Open Library tiene la obra pero no la edición citada (1976); ediciones disponibles: 2012, 2013, 2015"
     },
     {
       "id": "lang-basic-mathematics",
-      "key": "isbn:9781475718362",
+      "key": "isbn:9780387967875",
       "type": "book",
       "authors": [
         "Lang, S."
       ],
       "title": "Basic Mathematics",
       "published": "1988",
-      "url": "https://link.springer.com/book/10.1007/978-1-4757-1836-2",
-      "isbn13": "9781475718362",
-      "doi": "10.1007/978-1-4757-1836-2",
-      "locator": "https://openlibrary.org/isbn/9781475718362",
+      "url": "https://openlibrary.org/isbn/9780387967875",
+      "isbn13": "9780387967875",
+      "locator": "https://openlibrary.org/isbn/9780387967875",
       "authority": "International ISBN Agency (comprobado vía Open Library)",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/001-numeros-naturales-y-conteo",
         "classes/part-00-pensamiento-matematico-desde-cero/002-enteros-signo-y-recta-numerica",
         "classes/part-00-pensamiento-matematico-desde-cero/005-porcentajes-desde-cero",
         "classes/part-00-pensamiento-matematico-desde-cero/009-raices-y-radicales"
       ],
-      "status": "pendiente",
-      "note": "el ISBN 9781475718362 resuelve a «Problems in Geometry», que no coincide con la cita «Basic Mathematics»: revisar el enlace de la clase"
+      "covers": [
+        "fundamentos-matematicos",
+        "algebra-y-funciones"
+      ],
+      "status": "verificada",
+      "note": "ISBN resuelto en Open Library como «Basic Mathematics»"
     },
     {
       "id": "lengyel-mathematics-for-3d-game-programming-and",
@@ -3533,12 +4177,16 @@
       "url": "https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/",
       "locator": "https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/",
       "authority": "sitio de la obra o de su editorial",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/065-seno-coseno-y-tangente",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/073-transformaciones-traslacion-y-escala",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/074-rotaciones-2d",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/077-geometria-3d-y-planos"
+      ],
+      "covers": [
+        "geometria",
+        "algebra-lineal"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 302; Open Library tiene la obra pero no la edición citada (2011); ediciones disponibles: 2012, 2020"
@@ -3561,6 +4209,10 @@
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/238-introduccion-a-pde-y-discretizacion"
       ],
+      "covers": [
+        "ecuaciones-diferenciales",
+        "metodos-numericos"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Finite Difference Methods for Ordinary and Partial Differential Equations»"
     },
@@ -3581,6 +4233,10 @@
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/162-superficies-y-curvas-de-nivel"
       ],
+      "covers": [
+        "deep-learning",
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Visualizing the Loss Landscape of Neural Nets»"
     },
@@ -3600,6 +4256,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/265-jensen-shannon-divergence"
+      ],
+      "covers": [
+        "teoria-de-la-informacion"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Divergence measures based on the Shannon entropy»"
@@ -3623,6 +4282,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/312-pooling-y-downsampling"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Network In Network»"
     },
@@ -3636,9 +4298,13 @@
       "url": "https://mathworld.wolfram.com/LiouvillesTheorem.html",
       "locator": "https://mathworld.wolfram.com/LiouvillesTheorem.html",
       "authority": "Wolfram Research",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-07-calculo-diferencial-e-integral/155-antiderivadas"
+      ],
+      "covers": [
+        "calculo",
+        "analisis-matematico"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 404"
@@ -3661,6 +4327,9 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/253-quasi-newton-y-bfgs"
       ],
+      "covers": [
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «On the limited memory BFGS method for large scale optimization»"
     },
@@ -3680,6 +4349,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/294-k-means-como-optimizacion"
+      ],
+      "covers": [
+        "machine-learning",
+        "procesamiento-de-senales"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Least squares quantization in PCM»"
@@ -3702,6 +4375,10 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/251-adamw"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Decoupled Weight Decay Regularization»"
     },
@@ -3723,6 +4400,10 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/318-optimizacion-de-redes-profundas"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «SGDR: Stochastic Gradient Descent with Warm Restarts»"
     },
@@ -3743,6 +4424,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/311-cnn-y-receptive-fields"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Understanding the Effective Receptive Field in Deep Convolutional Neural Networks»"
     },
@@ -3762,6 +4446,11 @@
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/261-informacion-y-sorpresa",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/264-divergencia-kl"
+      ],
+      "covers": [
+        "teoria-de-la-informacion",
+        "inferencia-bayesiana",
+        "machine-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -3784,6 +4473,10 @@
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/177-calculo-matricial"
       ],
+      "covers": [
+        "calculo-matricial",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Matrix Differential Calculus with Applications in Statistics and Econometrics»"
     },
@@ -3803,6 +4496,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-07-calculo-diferencial-e-integral/148-derivadas-de-exponenciales-y-logaritmos"
+      ],
+      "covers": [
+        "historia-de-la-matematica",
+        "calculo"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «e»"
@@ -3824,6 +4521,10 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/064-teorema-de-pitagoras"
       ],
+      "covers": [
+        "historia-de-la-matematica",
+        "geometria"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Pythagorean Theorem»"
     },
@@ -3843,6 +4544,11 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/350-information-geometry"
+      ],
+      "covers": [
+        "optimizacion",
+        "geometria-diferencial",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «New insights and perspectives on the natural gradient method»"
@@ -3865,6 +4571,11 @@
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/136-producto-de-kronecker"
       ],
+      "covers": [
+        "algebra-lineal",
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Optimizing Neural Networks with Kronecker-factored Approximate Curvature»"
     },
@@ -3883,6 +4594,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/217-inferencia-bayesiana"
+      ],
+      "covers": [
+        "inferencia-bayesiana",
+        "estadistica"
       ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2020) confirmado en Open Library como «Statistical Rethinking»",
@@ -3907,6 +4622,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/348-manifold-learning"
       ],
+      "covers": [
+        "machine-learning",
+        "geometria-diferencial"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction»"
     },
@@ -3926,6 +4645,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/202-poblacion-muestra-y-sesgo-de-seleccion"
+      ],
+      "covers": [
+        "estadistica",
+        "metodologia-experimental"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Statistical paradises and paradoxes in big data (I): Law of large populations, big data paradox, and the 2016 US presidential election»"
@@ -3949,6 +4672,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/327-multi-head-attention"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Are Sixteen Heads Really Better than One?»"
     },
@@ -3969,6 +4696,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/322-embeddings-y-similitud-coseno"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Distributed Representations of Words and Phrases and their Compositionality»"
     },
@@ -3988,6 +4719,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/317-embeddings-como-espacios-vectoriales"
+      ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Efficient Estimation of Word Representations in Vector Space»"
@@ -4010,6 +4745,10 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/301-perceptron-y-separabilidad"
       ],
+      "covers": [
+        "deep-learning",
+        "teoria-del-aprendizaje"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Perceptrons»"
     },
@@ -4029,6 +4768,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/205-intervalos-de-confianza"
+      ],
+      "covers": [
+        "estadistica",
+        "metodologia-experimental"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The fallacy of placing confidence in confidence intervals»"
@@ -4051,6 +4794,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/031-ulp-y-machine-epsilon",
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/040-capstone-auditor-de-precision-numerica"
+      ],
+      "covers": [
+        "aritmetica-de-maquina"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Handbook of Floating-Point Arithmetic»"
@@ -4075,6 +4821,10 @@
         "classes/part-14-matematica-de-machine-learning/285-regresion-logistica-y-sigmoid",
         "classes/part-14-matematica-de-machine-learning/295-gaussian-mixture-models"
       ],
+      "covers": [
+        "machine-learning",
+        "probabilidad"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -4094,6 +4844,10 @@
       "used_in": [
         "classes/part-02-algebra-y-funciones/051-logaritmos-y-sus-propiedades"
       ],
+      "covers": [
+        "historia-de-la-matematica",
+        "algebra-y-funciones"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -4112,6 +4866,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/012-unidades-y-analisis-dimensional"
+      ],
+      "covers": [
+        "fundamentos-matematicos",
+        "ingenieria-de-software"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -4133,6 +4891,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/344-hamiltonian-monte-carlo"
       ],
+      "covers": [
+        "metodos-de-monte-carlo",
+        "inferencia-bayesiana"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «MCMC using Hamiltonian dynamics»"
     },
@@ -4153,6 +4915,10 @@
       "used_in": [
         "classes/part-07-calculo-diferencial-e-integral/149-derivadas-trigonometricas"
       ],
+      "covers": [
+        "analisis-matematico",
+        "geometria"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Visual complex analysis»"
     },
@@ -4171,6 +4937,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/247-nesterov-accelerated-gradient"
+      ],
+      "covers": [
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -4191,6 +4960,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/093-grafos-vertices-y-aristas"
+      ],
+      "covers": [
+        "grafos-y-redes"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Networks»"
@@ -4213,6 +4985,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/334-diffusion-models-forward-process"
       ],
+      "covers": [
+        "modelos-generativos",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Improved Denoising Diffusion Probabilistic Models»"
     },
@@ -4228,9 +5004,12 @@
       "url": "http://neuralnetworksanddeeplearning.com/chap2.html",
       "locator": "http://neuralnetworksanddeeplearning.com/chap2.html",
       "authority": "neuralnetworksanddeeplearning.com",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/305-backpropagation-paso-a-paso"
+      ],
+      "covers": [
+        "deep-learning"
       ],
       "status": "pendiente",
       "note": "la fuente primaria responde pero no sirve https"
@@ -4251,6 +5030,9 @@
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/011-notacion-cientifica"
       ],
+      "covers": [
+        "fundamentos-matematicos"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4267,6 +5049,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/087-principios-de-conteo"
+      ],
+      "covers": [
+        "criptografia",
+        "ingenieria-de-software"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4312,6 +5098,10 @@
         "classes/part-12-optimizacion-matematica-y-computacional/258-optimizacion-cuadratica",
         "classes/part-12-optimizacion-matematica-y-computacional/260-capstone-banco-de-optimizadores-comparables"
       ],
+      "covers": [
+        "optimizacion",
+        "metodos-numericos"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Numerical Optimization»"
     },
@@ -4328,6 +5118,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/138-broadcasting-como-operacion-tensorial"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4346,6 +5139,10 @@
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/139-einstein-summation"
       ],
+      "covers": [
+        "herramientas-de-computo",
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4362,6 +5159,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/137-tensores-indices-shape-y-orden"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4380,6 +5180,10 @@
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/134-pseudoinversa-de-moore-penrose"
       ],
+      "covers": [
+        "herramientas-de-computo",
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4396,6 +5200,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-02-algebra-y-funciones/046-polinomios-y-operaciones"
+      ],
+      "covers": [
+        "herramientas-de-computo",
+        "algoritmos-y-complejidad"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4414,6 +5222,10 @@
       "used_in": [
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/116-inversa-de-una-matriz"
       ],
+      "covers": [
+        "herramientas-de-computo",
+        "algebra-lineal-numerica"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4430,6 +5242,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/017-patrones-secuencias-y-regularidades"
+      ],
+      "covers": [
+        "teoria-de-numeros",
+        "matematica-discreta"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4450,33 +5266,15 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/315-lstm-y-compuertas"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
     {
       "id": "oppenheim-discrete-time-signal-processing",
-      "key": "url:https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003226",
-      "type": "book",
-      "authors": [
-        "Oppenheim",
-        "Schafer"
-      ],
-      "title": "Discrete-Time Signal Processing",
-      "published": "2009",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003226",
-      "locator": "https://openlibrary.org/isbn/9780132067096",
-      "authority": "International ISBN Agency (comprobado vía Open Library)",
-      "accessed": "2026-08-19",
-      "used_in": [
-        "classes/part-07-calculo-diferencial-e-integral/160-capstone-optimizar-y-acumular-una-senal"
-      ],
-      "status": "verificada",
-      "note": "ISBN de la edición citada (2009) confirmado en Open Library como «Discrete-Time Signal Processing»",
-      "isbn13": "9780132067096"
-    },
-    {
-      "id": "oppenheim-discrete-time-signal-processing-2",
-      "key": "url:https://www.pearson.com",
+      "key": "isbn:9780131988422",
       "type": "book",
       "authors": [
         "Oppenheim, A.",
@@ -4484,17 +5282,13 @@
       ],
       "title": "Discrete-Time Signal Processing",
       "published": "2009",
-      "url": "https://www.pearson.com/",
-      "locator": "https://openlibrary.org/isbn/9780132067096",
+      "url": "https://openlibrary.org/isbn/9780131988422",
+      "isbn13": "9780131988422",
+      "locator": "https://openlibrary.org/isbn/9780131988422",
       "authority": "International ISBN Agency (comprobado vía Open Library)",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
-        "classes/part-09-probabilidad-y-procesos-aleatorios/181-experimentos-espacio-muestral-y-eventos",
-        "classes/part-09-probabilidad-y-procesos-aleatorios/183-reglas-de-suma-y-producto",
-        "classes/part-09-probabilidad-y-procesos-aleatorios/184-probabilidad-condicional",
-        "classes/part-09-probabilidad-y-procesos-aleatorios/187-variables-aleatorias-discretas",
-        "classes/part-09-probabilidad-y-procesos-aleatorios/189-esperanza-matematica",
-        "classes/part-09-probabilidad-y-procesos-aleatorios/192-bernoulli-y-binomial",
+        "classes/part-07-calculo-diferencial-e-integral/160-capstone-optimizar-y-acumular-una-senal",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/269-senales-discretas-y-continuas",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/271-convolucion",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/272-correlacion-de-senales",
@@ -4504,9 +5298,11 @@
         "classes/part-13-teoria-de-la-informacion-senales-y-series/279-espectro-y-densidad-espectral",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/280-capstone-analizar-senal-y-construir-features"
       ],
+      "covers": [
+        "procesamiento-de-senales"
+      ],
       "status": "verificada",
-      "note": "ISBN de la edición citada (2009) confirmado en Open Library como «Discrete-Time Signal Processing»",
-      "isbn13": "9780132067096"
+      "note": "ISBN resuelto en Open Library como «Discrete-time signal processing»"
     },
     {
       "id": "papamakarios-normalizing-flows-for-probabilistic-modeling",
@@ -4525,6 +5321,11 @@
         "classes/part-02-algebra-y-funciones/058-funciones-inversas",
         "classes/part-04-matematica-discreta-para-computacion/086-funciones-discretas",
         "classes/part-07-calculo-diferencial-e-integral/157-integracion-por-sustitucion"
+      ],
+      "covers": [
+        "modelos-generativos",
+        "probabilidad",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -4548,6 +5349,10 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/314-vanishing-y-exploding-gradients"
       ],
+      "covers": [
+        "deep-learning",
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «On the difficulty of training Recurrent Neural Networks»"
     },
@@ -4567,6 +5372,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/319-autodiff-con-pytorch-jax"
+      ],
+      "covers": [
+        "herramientas-de-computo",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «PyTorch: An Imperative Style, High-Performance Deep Learning Library»"
@@ -4591,6 +5400,10 @@
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/023-binario-octal-y-hexadecimal",
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/025-enteros-con-signo-y-complemento-a-dos"
       ],
+      "covers": [
+        "aritmetica-de-maquina",
+        "algoritmos-y-complejidad"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Computer Organization and Design RISC-V Edition»"
     },
@@ -4607,6 +5420,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/001-numeros-naturales-y-conteo"
+      ],
+      "covers": [
+        "logica-y-demostracion",
+        "fundamentos-matematicos"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4629,6 +5446,9 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/355-causal-inference"
       ],
+      "covers": [
+        "inferencia-causal"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Causality»"
     },
@@ -4649,6 +5469,9 @@
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/213-correlacion-frente-a-causalidad"
       ],
+      "covers": [
+        "inferencia-causal"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2018) confirmado en Open Library como «The Book of Why»",
       "isbn13": "9781543695267"
@@ -4665,9 +5488,12 @@
       "url": "https://recherche.ircam.fr/anasyn/peeters/ARTICLES/Peeters_2003_cuidadoaudiofeatures.pdf",
       "locator": "https://recherche.ircam.fr/anasyn/peeters/ARTICLES/Peeters_2003_cuidadoaudiofeatures.pdf",
       "authority": "recherche.ircam.fr",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/280-capstone-analizar-senal-y-construir-features"
+      ],
+      "covers": [
+        "procesamiento-de-senales"
       ],
       "status": "pendiente",
       "note": "la URL respondió URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1010)>; sin coincidencia de título y autor en Open Library"
@@ -4684,9 +5510,12 @@
       "url": "https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/generalized-inverse-for-matrices/5F4516D6D3B34D0E8F7E7C7F0F7E7C7F",
       "locator": "https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/generalized-inverse-for-matrices/5F4516D6D3B34D0E8F7E7C7F0F7E7C7F",
       "authority": "www.cambridge.org",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/134-pseudoinversa-de-moore-penrose"
+      ],
+      "covers": [
+        "algebra-lineal"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 500; sin coincidencia de título y autor en Open Library"
@@ -4711,6 +5540,10 @@
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/177-calculo-matricial",
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/178-derivadas-respecto-de-vectores-y-matrices"
       ],
+      "covers": [
+        "calculo-matricial",
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -4733,6 +5566,10 @@
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/346-optimal-transport",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/360-capstone-final-reproducir-una-idea-matematica-de-un-paper"
       ],
+      "covers": [
+        "transporte-optimo",
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Computational Optimal Transport»"
     },
@@ -4753,6 +5590,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/325-scaled-dot-product-attention"
+      ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Formal Algorithms for Transformers»"
@@ -4776,6 +5617,10 @@
         "classes/part-00-pensamiento-matematico-desde-cero/014-estimacion-y-calculo-mental",
         "classes/part-00-pensamiento-matematico-desde-cero/018-problemas-verbales-a-lenguaje-matematico"
       ],
+      "covers": [
+        "fundamentos-matematicos",
+        "logica-y-demostracion"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «How to Solve It»"
     },
@@ -4795,6 +5640,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/246-momentum"
+      ],
+      "covers": [
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Some methods of speeding up the convergence of iteration methods»"
@@ -4825,6 +5673,10 @@
         "classes/part-11-metodos-numericos-y-computacion-cientifica/240-capstone-solver-numerico-con-informe-de-error",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/274-fft"
       ],
+      "covers": [
+        "computacion-cientifica",
+        "metodos-numericos"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2007); ediciones disponibles: 1992"
     },
@@ -4841,6 +5693,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/094-caminos-ciclos-y-conectividad"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4859,6 +5714,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/022-conversion-decimal-a-binario"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4875,6 +5733,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/023-binario-octal-y-hexadecimal"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4893,6 +5754,9 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/065-seno-coseno-y-tangente"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4909,6 +5773,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/076-coordenadas-polares"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4927,6 +5794,9 @@
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/089-combinaciones"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4943,6 +5813,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/061-puntos-segmentos-y-distancias"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4961,6 +5834,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/032-cancelacion-catastrofica"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -4977,6 +5853,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/067-circulo-unitario"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -4995,6 +5874,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/034-propagacion-de-errores"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5011,6 +5893,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/099-numeros-primos-y-maximo-comun-divisor"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5029,6 +5914,9 @@
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/064-teorema-de-pitagoras"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5045,6 +5933,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/030-error-absoluto-y-error-relativo"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5063,6 +5954,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/029-por-que-0-1-0-2-no-es-exactamente-0-3"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5079,6 +5973,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/009-raices-y-radicales"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5098,6 +5995,9 @@
         "classes/part-02-algebra-y-funciones/051-logaritmos-y-sus-propiedades",
         "classes/part-02-algebra-y-funciones/056-funciones-logaritmicas"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5114,6 +6014,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/088-permutaciones"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5132,6 +6035,9 @@
       "used_in": [
         "classes/part-02-algebra-y-funciones/050-exponentes-algebraicos"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5148,6 +6054,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/062-angulos-y-radianes"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5166,6 +6075,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/031-ulp-y-machine-epsilon"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5182,6 +6094,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/013-aproximacion-redondeo-y-cifras-significativas"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5204,6 +6119,9 @@
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/027-punto-fijo-frente-a-punto-flotante",
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/037-precision-arbitraria-y-decimal"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5222,6 +6140,9 @@
         "classes/part-00-pensamiento-matematico-desde-cero/003-fracciones-y-numeros-racionales",
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/038-racional-exacto-y-fraction"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5238,6 +6159,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/024-aritmetica-binaria"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5256,6 +6180,9 @@
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/098-aritmetica-modular"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5272,6 +6199,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/010-orden-de-operaciones-y-parentesis"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5290,6 +6220,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/033-overflow-y-underflow-flotante"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5306,6 +6239,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/084-conjuntos-y-operaciones"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5324,6 +6260,9 @@
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/138-broadcasting-como-operacion-tensorial"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5341,6 +6280,9 @@
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/039-reproducibilidad-numerica-entre-plataformas"
       ],
+      "covers": [
+        "herramientas-de-computo"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
     },
@@ -5354,9 +6296,13 @@
       "url": "https://pytorch.org/docs/stable/generated/torch.autograd.gradcheck.html",
       "locator": "https://pytorch.org/docs/stable/generated/torch.autograd.gradcheck.html",
       "authority": "PyTorch Foundation",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/180-capstone-backpropagation-manual-y-automatica"
+      ],
+      "covers": [
+        "herramientas-de-computo",
+        "autodiferenciacion"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 404"
@@ -5377,6 +6323,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/326-self-attention"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -5395,6 +6345,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/329-modelado-autoregresivo"
+      ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -5415,6 +6369,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/341-gaussian-processes"
+      ],
+      "covers": [
+        "procesos-gaussianos",
+        "machine-learning"
       ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2006) confirmado en Open Library como «Gaussian Processes for Machine Learning»",
@@ -5439,6 +6397,9 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/250-adam"
       ],
+      "covers": [
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «On the Convergence of Adam and Beyond»"
     },
@@ -5460,6 +6421,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/322-embeddings-y-similitud-coseno"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks»"
     },
@@ -5480,6 +6445,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/345-variational-inference-avanzada"
+      ],
+      "covers": [
+        "modelos-generativos",
+        "inferencia-bayesiana"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Variational Inference with Normalizing Flows»"
@@ -5504,6 +6473,9 @@
       "used_in": [
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/120-capstone-resolver-un-sistema-de-recomendacion-lineal"
       ],
+      "covers": [
+        "machine-learning"
+      ],
       "status": "pendiente",
       "note": "Open Library no resuelve el ISBN 9781071621974 (HTTP 404)"
     },
@@ -5524,6 +6496,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/245-stochastic-gradient-descent"
+      ],
+      "covers": [
+        "optimizacion",
+        "probabilidad"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «A Stochastic Approximation Method»"
@@ -5548,6 +6524,10 @@
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/173-integrales-dobles",
         "classes/part-09-probabilidad-y-procesos-aleatorios/198-metodos-monte-carlo"
       ],
+      "covers": [
+        "metodos-de-monte-carlo",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Monte Carlo Statistical Methods»"
     },
@@ -5566,6 +6546,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/139-einstein-summation"
+      ],
+      "covers": [
+        "algebra-lineal",
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -5592,6 +6576,10 @@
         "classes/part-04-matematica-discreta-para-computacion/087-principios-de-conteo",
         "classes/part-04-matematica-discreta-para-computacion/090-principio-del-palomar"
       ],
+      "covers": [
+        "matematica-discreta",
+        "logica-y-demostracion"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (2019); ediciones disponibles: 1991, 1995, 1999, 2002, 2006, 2011, 2018"
     },
@@ -5612,8 +6600,40 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/301-perceptron-y-separabilidad"
       ],
+      "covers": [
+        "deep-learning",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The perceptron: A probabilistic model for information storage and organization in the brain.»"
+    },
+    {
+      "id": "ross-a-first-course-in-probability",
+      "key": "isbn:9780134753119",
+      "type": "book",
+      "authors": [
+        "Ross, S."
+      ],
+      "title": "A First Course in Probability",
+      "published": "2018",
+      "url": "https://openlibrary.org/isbn/9780134753119",
+      "isbn13": "9780134753119",
+      "locator": "https://openlibrary.org/isbn/9780134753119",
+      "authority": "International ISBN Agency (comprobado vía Open Library)",
+      "accessed": "2026-08-20",
+      "used_in": [
+        "classes/part-09-probabilidad-y-procesos-aleatorios/181-experimentos-espacio-muestral-y-eventos",
+        "classes/part-09-probabilidad-y-procesos-aleatorios/183-reglas-de-suma-y-producto",
+        "classes/part-09-probabilidad-y-procesos-aleatorios/184-probabilidad-condicional",
+        "classes/part-09-probabilidad-y-procesos-aleatorios/187-variables-aleatorias-discretas",
+        "classes/part-09-probabilidad-y-procesos-aleatorios/189-esperanza-matematica",
+        "classes/part-09-probabilidad-y-procesos-aleatorios/192-bernoulli-y-binomial"
+      ],
+      "covers": [
+        "probabilidad"
+      ],
+      "status": "verificada",
+      "note": "ISBN resuelto en Open Library como «A First Course in Probability»"
     },
     {
       "id": "ruder-an-overview-of-gradient-descent-optimization",
@@ -5633,33 +6653,15 @@
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/164-gradiente",
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/171-optimizacion-sin-restricciones"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «An overview of gradient descent optimization algorithms»"
     },
     {
       "id": "rumelhart-learning-representations-by-back-propagating",
-      "key": "url:https://www.nature.com/articles/323533a0",
-      "type": "reference",
-      "authors": [
-        "Rumelhart",
-        "Hinton",
-        "Williams"
-      ],
-      "title": "Learning representations by back-propagating errors",
-      "published": "1986",
-      "url": "https://www.nature.com/articles/323533a0",
-      "locator": "https://www.nature.com/articles/323533a0",
-      "authority": "www.nature.com",
-      "accessed": "2026-08-19",
-      "used_in": [
-        "classes/part-07-calculo-diferencial-e-integral/147-regla-de-la-cadena",
-        "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/180-capstone-backpropagation-manual-y-automatica"
-      ],
-      "status": "verificada",
-      "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
-    },
-    {
-      "id": "rumelhart-learning-representations-by-back-propagating-2",
       "key": "doi:10.1038/323533a0",
       "type": "paper",
       "authors": [
@@ -5675,8 +6677,14 @@
       "authority": "Crossref (agencia de registro del DOI)",
       "accessed": "2026-08-19",
       "used_in": [
+        "classes/part-07-calculo-diferencial-e-integral/147-regla-de-la-cadena",
+        "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/180-capstone-backpropagation-manual-y-automatica",
         "classes/part-15-matematica-de-deep-learning/302-mlp-como-composicion-de-funciones",
         "classes/part-15-matematica-de-deep-learning/305-backpropagation-paso-a-paso"
+      ],
+      "covers": [
+        "autodiferenciacion",
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Learning representations by back-propagating errors»"
@@ -5699,6 +6707,10 @@
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/232-jacobi-y-gauss-seidel"
       ],
+      "covers": [
+        "algebra-lineal-numerica",
+        "metodos-numericos"
+      ],
       "status": "pendiente",
       "note": "Open Library no resuelve el ISBN 9780898718003 (HTTP 404)"
     },
@@ -5718,6 +6730,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/308-batch-normalization-y-layer-normalization"
+      ],
+      "covers": [
+        "deep-learning",
+        "optimizacion"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «How Does Batch Normalization Help Optimization?»"
@@ -5741,6 +6757,10 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/260-capstone-banco-de-optimizadores-comparables"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Descending through a Crowded Valley - Benchmarking Deep Learning Optimizers»"
     },
@@ -5760,6 +6780,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/018-problemas-verbales-a-lenguaje-matematico"
+      ],
+      "covers": [
+        "fundamentos-matematicos"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Mathematical problem solving»"
@@ -5783,6 +6806,10 @@
         "classes/part-14-matematica-de-machine-learning/290-kernel-trick",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/342-kernel-methods-avanzados"
       ],
+      "covers": [
+        "metodos-de-kernel",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Learning with Kernels - Support Vector Machines, Regularization, Optimization, and Beyond»"
     },
@@ -5803,6 +6830,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/339-policy-gradients"
       ],
+      "covers": [
+        "aprendizaje-por-refuerzo",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Proximal Policy Optimization Algorithms»"
     },
@@ -5819,6 +6850,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/129-descomposicion-lu"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5843,6 +6877,10 @@
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/357-vc-dimension",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/358-pac-learning"
       ],
+      "covers": [
+        "teoria-del-aprendizaje",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2014) confirmado en Open Library como «Understanding Machine Learning»",
       "isbn13": "9781139950619"
@@ -5865,6 +6903,9 @@
         "classes/part-13-teoria-de-la-informacion-senales-y-series/261-informacion-y-sorpresa",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/262-entropia-de-shannon"
       ],
+      "covers": [
+        "teoria-de-la-informacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «A Mathematical Theory of Communication»"
     },
@@ -5880,9 +6921,14 @@
       "url": "https://dspace.mit.edu/handle/1721.1/11173",
       "locator": "https://dspace.mit.edu/handle/1721.1/11173",
       "authority": "MIT Libraries",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/097-algebra-booleana"
+      ],
+      "covers": [
+        "logica-y-demostracion",
+        "matematica-discreta",
+        "historia-de-la-matematica"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 405; sin coincidencia de título y autor en Open Library"
@@ -5903,6 +6949,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/270-muestreo-y-aliasing"
+      ],
+      "covers": [
+        "teoria-de-la-informacion",
+        "procesamiento-de-senales"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Communication in the Presence of Noise»"
@@ -5925,6 +6975,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/354-spectral-graph-theory"
       ],
+      "covers": [
+        "grafos-y-redes",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Normalized cuts and image segmentation»"
     },
@@ -5945,6 +6999,10 @@
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/135-pca-desde-algebra-lineal"
       ],
+      "covers": [
+        "algebra-lineal",
+        "machine-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «A Tutorial on Principal Component Analysis»"
     },
@@ -5961,6 +7019,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/080-capstone-motor-geometrico-2d"
+      ],
+      "covers": [
+        "geometria"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -5984,6 +7045,10 @@
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/277-autocorrelacion"
       ],
+      "covers": [
+        "series-temporales",
+        "estadistica"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Time Series Analysis and Its Applications»"
     },
@@ -6005,6 +7070,9 @@
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/311-cnn-y-receptive-fields"
       ],
+      "covers": [
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Very Deep Convolutional Networks for Large-Scale Image Recognition»"
     },
@@ -6024,6 +7092,9 @@
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/269-senales-discretas-y-continuas",
         "classes/part-13-teoria-de-la-informacion-senales-y-series/275-filtros-y-respuesta-en-frecuencia"
+      ],
+      "covers": [
+        "procesamiento-de-senales"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: Open Library tiene la obra pero no la edición citada (1997); ediciones disponibles: 1999"
@@ -6047,6 +7118,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/341-gaussian-processes"
       ],
+      "covers": [
+        "procesos-gaussianos",
+        "optimizacion"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Practical Bayesian Optimization of Machine Learning Algorithms»"
     },
@@ -6069,6 +7144,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/335-diffusion-models-reverse-process"
       ],
+      "covers": [
+        "modelos-generativos",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Denoising Diffusion Implicit Models»"
     },
@@ -6090,6 +7169,9 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/353-score-matching"
       ],
+      "covers": [
+        "modelos-generativos"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Generative Modeling by Estimating Gradients of the Data Distribution»"
     },
@@ -6109,6 +7191,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/351-stochastic-differential-equations"
+      ],
+      "covers": [
+        "modelos-generativos",
+        "procesos-estocasticos"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Score-Based Generative Modeling through Stochastic Differential Equations»"
@@ -6148,6 +7234,10 @@
         "classes/part-07-calculo-diferencial-e-integral/157-integracion-por-sustitucion",
         "classes/part-07-calculo-diferencial-e-integral/158-integracion-por-partes"
       ],
+      "covers": [
+        "calculo",
+        "analisis-matematico"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2008) confirmado en Open Library como «Calculus»",
       "isbn13": "9780914098911"
@@ -6167,6 +7257,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-15-matematica-de-deep-learning/309-regularizacion-y-dropout"
+      ],
+      "covers": [
+        "deep-learning"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
@@ -6199,6 +7292,9 @@
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/175-campos-vectoriales",
         "classes/part-08-calculo-multivariable-matricial-y-autodiferenciacion/176-divergencia-y-rotacional"
       ],
+      "covers": [
+        "calculo"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2015) confirmado en Open Library como «Calculus»",
       "isbn13": "9781285740621"
@@ -6215,7 +7311,7 @@
       "url": "https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/",
       "locator": "https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/",
       "authority": "sitio de la obra o de su editorial",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/006-razones-tasas-y-proporciones",
         "classes/part-00-pensamiento-matematico-desde-cero/007-regla-de-tres-y-escalas",
@@ -6231,6 +7327,9 @@
         "classes/part-02-algebra-y-funciones/060-capstone-construir-y-comparar-modelos-funcionales",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/068-coordenadas-cartesianas",
         "classes/part-03-geometria-trigonometria-y-geometria-analitica/069-pendiente-y-ecuacion-de-la-recta"
+      ],
+      "covers": [
+        "algebra-y-funciones"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 302; Open Library tiene la obra pero no la edición citada (2015); ediciones disponibles: 2003, 2005, 2006, 2007, 2011, 2012, 2014"
@@ -6252,6 +7351,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-04-matematica-discreta-para-computacion/090-principio-del-palomar"
+      ],
+      "covers": [
+        "criptografia",
+        "teoria-de-numeros"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Cryptography: Theory and Practice (Textbooks in Mathematics)»"
@@ -6298,6 +7401,9 @@
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/128-formas-cuadraticas",
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/131-minimos-cuadrados-lineales"
       ],
+      "covers": [
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2023) confirmado en Open Library como «Introduction to Linear Algebra»",
       "isbn13": "9781733146678"
@@ -6319,6 +7425,10 @@
       "used_in": [
         "classes/part-05-algebra-lineal-i-vectores-y-matrices/111-producto-de-matrices"
       ],
+      "covers": [
+        "algoritmos-y-complejidad",
+        "algebra-lineal-numerica"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Gaussian elimination is not optimal»"
     },
@@ -6338,6 +7448,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/210-t-test-y-comparacion-de-medias"
+      ],
+      "covers": [
+        "estadistica"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The Probable Error of a Mean»"
@@ -6359,6 +7472,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/323-positional-encoding"
       ],
+      "covers": [
+        "modelos-de-lenguaje",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «RoFormer: Enhanced Transformer with Rotary Position Embedding»"
     },
@@ -6378,6 +7495,10 @@
       "used_in": [
         "classes/part-12-optimizacion-matematica-y-computacional/247-nesterov-accelerated-gradient"
       ],
+      "covers": [
+        "optimizacion",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
     },
@@ -6394,9 +7515,12 @@
       "url": "http://incompleteideas.net/book/the-book.html",
       "locator": "http://incompleteideas.net/book/the-book.html",
       "authority": "incompleteideas.net",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/338-bellman-equations"
+      ],
+      "covers": [
+        "aprendizaje-por-refuerzo"
       ],
       "status": "pendiente",
       "note": "la fuente primaria responde pero no sirve https"
@@ -6414,6 +7538,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-02-algebra-y-funciones/041-expresiones-algebraicas-y-terminos"
+      ],
+      "covers": [
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -6437,36 +7564,21 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/348-manifold-learning"
       ],
+      "covers": [
+        "machine-learning",
+        "geometria-diferencial"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «A Global Geometric Framework for Nonlinear Dimensionality Reduction»"
     },
     {
       "id": "tibshirani-regression-shrinkage-and-selection-via-the-lasso",
-      "key": "url:https://www.jstor.org/stable/2346178",
-      "type": "reference",
-      "authors": [
-        "Tibshirani, R."
-      ],
-      "title": "Regression Shrinkage and Selection via the Lasso",
-      "published": "1996",
-      "url": "https://www.jstor.org/stable/2346178",
-      "locator": "https://www.jstor.org/stable/2346178",
-      "authority": "www.jstor.org",
-      "accessed": "2026-08-19",
-      "used_in": [
-        "classes/part-05-algebra-lineal-i-vectores-y-matrices/104-normas-y-distancias"
-      ],
-      "status": "verificada",
-      "note": "URL de la fuente primaria comprobada con GET; sin ISBN adoptado: sin coincidencia de título y autor en Open Library"
-    },
-    {
-      "id": "tibshirani-regression-shrinkage-and-selection-via-the-lasso-2",
       "key": "doi:10.1111/j.2517-6161.1996.tb02080.x",
       "type": "paper",
       "authors": [
         "Tibshirani, R."
       ],
-      "title": "Regression shrinkage and selection via the lasso",
+      "title": "Regression Shrinkage and Selection via the Lasso",
       "published": "1996",
       "url": "https://doi.org/10.1111/j.2517-6161.1996.tb02080.x",
       "doi": "10.1111/j.2517-6161.1996.tb02080.x",
@@ -6474,8 +7586,13 @@
       "authority": "Crossref (agencia de registro del DOI)",
       "accessed": "2026-08-19",
       "used_in": [
+        "classes/part-05-algebra-lineal-i-vectores-y-matrices/104-normas-y-distancias",
         "classes/part-12-optimizacion-matematica-y-computacional/255-regularizacion-como-optimizacion",
         "classes/part-14-matematica-de-machine-learning/284-lasso-y-regularizacion-l1"
+      ],
+      "covers": [
+        "estadistica",
+        "machine-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Regression Shrinkage and Selection Via the Lasso»"
@@ -6497,6 +7614,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/225-interpolacion-de-lagrange"
+      ],
+      "covers": [
+        "teoria-de-la-aproximacion",
+        "metodos-numericos"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Approximation Theory and Approximation Practice, Extended Edition»"
@@ -6531,6 +7652,10 @@
         "classes/part-11-metodos-numericos-y-computacion-cientifica/231-sistemas-lineales-directos",
         "classes/part-11-metodos-numericos-y-computacion-cientifica/234-minimos-cuadrados-numericos"
       ],
+      "covers": [
+        "algebra-lineal-numerica",
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Numerical Linear Algebra»"
     },
@@ -6552,6 +7677,10 @@
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/229-regla-del-trapecio"
       ],
+      "covers": [
+        "metodos-numericos",
+        "analisis-matematico"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The Exponentially Convergent Trapezoidal Rule»"
     },
@@ -6567,9 +7696,13 @@
       "url": "https://archive.org/details/exploratorydataa0000tuke",
       "locator": "https://archive.org/details/exploratorydataa0000tuke",
       "authority": "sitio de la obra o de su editorial",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/201-estadistica-descriptiva"
+      ],
+      "covers": [
+        "estadistica",
+        "metodologia-experimental"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 404; Open Library tiene la obra pero no la edición citada (1977); ediciones disponibles: 2019"
@@ -6591,6 +7724,9 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/358-pac-learning"
       ],
+      "covers": [
+        "teoria-del-aprendizaje"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «A theory of the learnable»"
     },
@@ -6606,9 +7742,12 @@
       "url": "https://www.sciencedirect.com/science/article/pii/S0377042700003939",
       "locator": "https://www.sciencedirect.com/science/article/pii/S0377042700003939",
       "authority": "www.sciencedirect.com",
-      "accessed": "2026-08-19",
+      "accessed": "2026-08-20",
       "used_in": [
         "classes/part-06-algebra-lineal-ii-descomposiciones-y-tensores/136-producto-de-kronecker"
+      ],
+      "covers": [
+        "algebra-lineal"
       ],
       "status": "pendiente",
       "note": "la URL respondió HTTP 403; sin coincidencia de título y autor en Open Library"
@@ -6630,6 +7769,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/357-vc-dimension"
+      ],
+      "covers": [
+        "teoria-del-aprendizaje",
+        "machine-learning"
       ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Nature of Statistical Learning Theory»"
@@ -6660,6 +7803,10 @@
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/328-transformer-completo",
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/340-capstone-mini-transformer-matematico"
       ],
+      "covers": [
+        "deep-learning",
+        "modelos-de-lenguaje"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Attention Is All You Need»"
     },
@@ -6681,6 +7828,9 @@
         "classes/part-04-matematica-discreta-para-computacion/083-logica-de-predicados-y-cuantificadores",
         "classes/part-04-matematica-discreta-para-computacion/091-induccion-matematica"
       ],
+      "covers": [
+        "logica-y-demostracion"
+      ],
       "status": "verificada",
       "note": "ISBN de la edición citada (2019) confirmado en Open Library como «How to Prove It»",
       "isbn13": "9781108539890"
@@ -6698,6 +7848,9 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-02-algebra-y-funciones/047-factorizacion-elemental"
+      ],
+      "covers": [
+        "algebra-y-funciones"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -6720,6 +7873,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/347-wasserstein-distance"
       ],
+      "covers": [
+        "transporte-optimo",
+        "analisis-matematico"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Optimal transport»"
     },
@@ -6739,6 +7896,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-11-metodos-numericos-y-computacion-cientifica/239-computacion-cientifica-con-scipy"
+      ],
+      "covers": [
+        "computacion-cientifica",
+        "herramientas-de-computo"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «SciPy 1.0: fundamental algorithms for scientific computing in Python»"
@@ -6761,6 +7922,11 @@
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/336-graph-laplacian",
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/354-spectral-graph-theory"
       ],
+      "covers": [
+        "grafos-y-redes",
+        "machine-learning",
+        "algebra-lineal"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «A Tutorial on Spectral Clustering»"
     },
@@ -6780,6 +7946,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-01-aritmetica-computacional-y-representacion-numerica/024-aritmetica-binaria"
+      ],
+      "covers": [
+        "aritmetica-de-maquina",
+        "algoritmos-y-complejidad"
       ],
       "status": "pendiente",
       "note": "Open Library no resuelve el ISBN 9780133084993 (HTTP 404)"
@@ -6821,6 +7991,10 @@
         "classes/part-10-estadistica-e-inferencia/218-bootstrap-y-remuestreo",
         "classes/part-10-estadistica-e-inferencia/219-a-b-testing-y-diseno-experimental"
       ],
+      "covers": [
+        "estadistica",
+        "probabilidad"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «All of Statistics»"
     },
@@ -6842,6 +8016,10 @@
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/207-p-value-correctamente-interpretado"
       ],
+      "covers": [
+        "estadistica",
+        "metodologia-experimental"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The ASA Statement on\n                    <i>p</i>\n                    -Values: Context, Process, and Purpose»"
     },
@@ -6858,6 +8036,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-07-calculo-diferencial-e-integral/143-continuidad"
+      ],
+      "covers": [
+        "analisis-matematico",
+        "calculo"
       ],
       "status": "verificada",
       "note": "URL de la fuente primaria comprobada con GET"
@@ -6880,6 +8062,9 @@
       "used_in": [
         "classes/part-00-pensamiento-matematico-desde-cero/014-estimacion-y-calculo-mental"
       ],
+      "covers": [
+        "fundamentos-matematicos"
+      ],
       "status": "verificada",
       "note": "ISBN resuelto en Open Library como «Guesstimation»"
     },
@@ -6899,6 +8084,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/279-espectro-y-densidad-espectral"
+      ],
+      "covers": [
+        "procesamiento-de-senales",
+        "estadistica"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «The use of fast Fourier transform for the estimation of power spectra: A method based on time averaging over short, modified periodograms»"
@@ -6920,6 +8109,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/339-policy-gradients"
       ],
+      "covers": [
+        "aprendizaje-por-refuerzo",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Simple statistical gradient-following algorithms for connectionist reinforcement learning»"
     },
@@ -6939,6 +8132,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-10-estadistica-e-inferencia/220-capstone-estudio-estadistico-reproducible"
+      ],
+      "covers": [
+        "ingenieria-de-software",
+        "computacion-cientifica"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Good enough practices in scientific computing»"
@@ -6960,6 +8157,10 @@
       "used_in": [
         "classes/part-16-matematica-de-transformers-modelos-generativos-grafos-y-rl/328-transformer-completo"
       ],
+      "covers": [
+        "deep-learning",
+        "modelos-de-lenguaje"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «On Layer Normalization in the Transformer Architecture»"
     },
@@ -6979,6 +8180,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-13-teoria-de-la-informacion-senales-y-series/270-muestreo-y-aliasing"
+      ],
+      "covers": [
+        "deep-learning",
+        "procesamiento-de-senales"
       ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Making Convolutional Networks Shift-Invariant Again»"
@@ -7000,6 +8205,10 @@
       "used_in": [
         "classes/part-17-frontera-matematica-para-ia-e-investigacion/356-statistical-learning-theory"
       ],
+      "covers": [
+        "teoria-del-aprendizaje",
+        "deep-learning"
+      ],
       "status": "verificada",
       "note": "DOI resuelto en DataCite como «Understanding deep learning requires rethinking generalization»"
     },
@@ -7020,6 +8229,10 @@
       "accessed": "2026-08-19",
       "used_in": [
         "classes/part-14-matematica-de-machine-learning/284-lasso-y-regularizacion-l1"
+      ],
+      "covers": [
+        "estadistica",
+        "machine-learning"
       ],
       "status": "verificada",
       "note": "DOI resuelto en Crossref como «Regularization and Variable Selection Via the Elastic Net»"

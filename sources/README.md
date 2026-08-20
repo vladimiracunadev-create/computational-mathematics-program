@@ -3,8 +3,14 @@
 `bibliography.json` es el aparato que hace **comprobable** lo que las clases citan.
 
 El contenido de las clases ya estaba: cada una cita obras reales, con capítulo cuando
-aplica. Lo que faltaba era poder responder a la pregunta *«¿esa obra existe y este enlace
-lleva de verdad a ella?»* sin que la respuesta dependa de la buena fe de nadie.
+aplica. Lo que faltaba era poder responder a dos preguntas sin que la respuesta dependa de
+la buena fe de nadie:
+
+1. *«¿esa obra existe y este enlace lleva de verdad a ella?»* → el **localizador** de este
+   registro (`bibliography.json`);
+2. *«¿esa obra trata de lo que enseña la clase que la cita?»* → el **área** que declara cada
+   obra en `covers`, cruzada con lo que declara cada parte en
+   [`areas.yaml`](areas.yaml).
 
 ## La política
 
@@ -42,6 +48,7 @@ Tres consecuencias que se aplican sin excepción:
       "authority": "quién responde por la fuente",
       "accessed": "AAAA-MM-DD",
       "used_in": ["classes/part-NN-…/NNN-…"],
+      "covers": ["algebra-lineal"],   // de qué trata la obra, en el vocabulario de areas.yaml
       "status": "verificada | pendiente",
       "note": "qué se comprobó, o por qué sigue pendiente"
     }
@@ -67,6 +74,35 @@ las expulsa del registro ni se les inventa un espejo: se quedan `pendiente` y su
 dice. El verificador solo acepta un `locator` `http://` si la entrada está `pendiente` y lo
 explica.
 
+## El área: qué trata la obra
+
+`covers` describe **de qué trata la obra**, no dónde nos convino citarla. Es un hecho sobre
+el libro o el artículo, y por eso es revisable por cualquiera que lo conozca. El vocabulario
+—44 áreas con nombre y definición— vive en [`areas.yaml`](areas.yaml), junto con lo que
+declara cada parte del programa:
+
+- `nucleo`: el área que la parte **enseña**;
+- `conexiones`: las áreas con las que su material conecta a propósito, casi siempre el uso
+  en IA del tema que enseña.
+
+Una clase puede declarar su propia área en `content/part-NN.yaml` (`areas:`) cuando su tema
+no es exactamente el de su parte —los vectores dentro de geometría, el gradiente dentro de
+cálculo—. Si no la declara, hereda el núcleo de su parte.
+
+Con eso, el verificador comprueba dos cosas en cada clase, sin red:
+
+| Comprobación | Qué exige | Por qué |
+|---|---|---|
+| **ancla** | al menos una obra citada cubre el área que la clase enseña | una clase no puede sostenerse solo en la documentación de la biblioteca que usa |
+| **pertinencia** | ninguna obra citada queda fuera del área de la parte ni de sus conexiones | detecta la cita fuera de tema: un libro de probabilidad dentro de una clase de punto flotante |
+
+`herramientas-de-computo` es el área transversal: la documentación de Python, NumPy, SciPy,
+SymPy, PyTorch o JAX se acepta en cualquier parte, pero **nunca sirve de ancla**.
+
+> Regla que no se negocia: si una obra no cubre el área de la clase que la cita, el problema
+> es la cita. Se cambia la fuente, no el área. Ampliar `covers` para que un cruce pase es
+> falsear el registro.
+
 ## Las dos capas
 
 Separadas a propósito. Si la red entra en el CI, el CI se vuelve inestable y se acaba
@@ -77,11 +113,11 @@ ignorando.
 | Red | no | sí |
 | Dónde corre | CI, en cada push | a mano o programado |
 | ¿Bloquea? | **sí** | no |
-| Qué comprueba | esquema, dígito de control del ISBN, forma del localizador, cobertura, bloques repetidos, cifras del README | que el ISBN, el DOI y la URL resuelven de verdad y describen la obra citada |
+| Qué comprueba | esquema, dígito de control del ISBN, forma del localizador, cobertura, **ancla y pertinencia de cada cita**, bloque del README | que el ISBN, el DOI y la URL resuelven de verdad y describen la obra citada |
 
 ```bash
 python scripts/verify_sources.py          # verifica (lo que corre en CI)
-python scripts/verify_sources.py --sync   # recalcula usos y cifras del README
+python scripts/verify_sources.py --sync   # recalcula usos y el bloque del README
 python scripts/refresh_sources.py         # resuelve en red y actualiza estados
 ```
 

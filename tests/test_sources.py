@@ -105,17 +105,59 @@ class TestEtiquetas(unittest.TestCase):
         self.assertEqual(datos["authors"], ["Hastie, T.", "Tibshirani, R.", "Friedman, J."])
 
 
-class TestUsoDeclarado(unittest.TestCase):
-    def test_cada_referencia_declara_su_uso(self):
-        for clase in curriculum.classes():
-            for linea in sources.class_block(clase["id"], clase["title"]):
-                self.assertIn("*uso:*", linea, f"clase {clase['id']}")
-                self.assertIn(clase["title"], linea, f"clase {clase['id']}")
+class TestAreas(unittest.TestCase):
+    """El vocabulario que cruza el tema de una obra con el de la clase."""
 
-    def test_ningun_bloque_de_fuentes_se_repite(self):
-        bloques = [bloque for _, bloque in sources.iter_class_blocks()]
-        self.assertEqual(len(bloques), len(set(bloques)))
-        self.assertTrue(all(bloques))
+    def test_toda_parte_declara_lo_que_ensena(self):
+        for parte in curriculum.parts():
+            areas = sources.part_areas(parte["id"])
+            self.assertTrue(areas["nucleo"], f"parte {parte['id']} sin núcleo")
+            transversales = set(sources.transversal_areas())
+            self.assertTrue(
+                set(areas["nucleo"]) - transversales,
+                f"la parte {parte['id']} solo declara áreas transversales",
+            )
+
+    def test_toda_clase_tiene_area_y_toda_obra_declara_la_suya(self):
+        for clase in curriculum.classes():
+            self.assertTrue(sources.class_areas(clase["id"]), f"clase {clase['id']}")
+        registro = sources.load_registry()
+        for entrada in registro["entries"]:
+            self.assertTrue(entrada.get("covers"), f"{entrada['id']} no declara covers")
+
+    def test_una_obra_fuera_de_tema_no_pasa_el_cruce(self):
+        """La comprobación tiene filo: un libro de probabilidad no vale en IEEE 754."""
+        registro = sources.load_registry()
+        por_id = {e["id"]: e for e in registro["entries"]}
+        fuera = sources.citation_fit(
+            "028", por_id["blitzstein-introduction-to-probability"]["key"], registro
+        )
+        self.assertEqual(fuera.role, "fuera-de-tema")
+        dentro = sources.citation_fit(
+            "028", por_id["goldberg-what-every-computer-scientist-should-know-about"]["key"],
+            registro,
+        )
+        self.assertEqual(dentro.role, "ancla")
+
+
+class TestBibliografiaDeCadaClase(unittest.TestCase):
+    def test_cada_clase_declara_por_que_cita_cada_obra(self):
+        for clase in curriculum.classes():
+            bloque = sources.class_block(clase["id"])
+            self.assertTrue(bloque, f"clase {clase['id']} sin bibliografía")
+            for linea in bloque:
+                self.assertIn(" — ", linea, f"clase {clase['id']}")
+                self.assertNotIn("fuera del tema", linea, f"clase {clase['id']}")
+
+    def test_cada_clase_se_ancla_en_una_obra_de_su_tema(self):
+        registro = sources.load_registry()
+        for clase in curriculum.classes():
+            papeles = {
+                sources.citation_fit(uso.class_id, uso.key, registro).role
+                for uso in sources.usages()
+                if uso.class_id == clase["id"]
+            }
+            self.assertIn("ancla", papeles, f"clase {clase['id']} sin obra de su tema")
 
 
 class TestRegistro(unittest.TestCase):
@@ -137,11 +179,13 @@ class TestRegistro(unittest.TestCase):
     def test_el_verificador_offline_pasa(self):
         errores = []
         verify_sources.comprueba(self.registro, errores)
-        verify_sources.comprueba_bloques(errores)
+        verify_sources.comprueba_areas(errores)
+        verify_sources.comprueba_covers(self.registro, errores)
+        verify_sources.comprueba_pertinencia(self.registro, errores)
         verify_sources.comprueba_readme(self.registro, errores)
         self.assertEqual(errores, [], "\n".join(errores))
 
-    def test_las_cifras_del_readme_salen_del_registro(self):
+    def test_el_bloque_de_bibliografia_del_readme_sale_del_registro(self):
         texto = (ROOT / "README.md").read_text(encoding="utf-8")
         self.assertIn(verify_sources.bloque_readme(self.registro), texto)
 

@@ -213,6 +213,7 @@ clases:
       Máscaras de bits, permisos de sistema de archivos, banderas de configuración,
       direcciones de red y cualquier serialización binaria. Es el prerrequisito de la
       representación IEEE 754.
+    areas: [aritmetica-de-maquina, teoria-de-numeros]
     referencias:
       - "[Python: funciones `bin`, `int` y `format`](https://docs.python.org/3/library/functions.html#bin)"
       - "[Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.1](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)"
@@ -1097,6 +1098,7 @@ clases:
     aplicacion: |
       Verificación de implementaciones numéricas, cálculo simbólico ligero, probabilidades
       exactas en combinatoria y generación de casos de prueba con valor esperado conocido.
+    areas: [aritmetica-de-maquina, teoria-de-numeros]
     referencias:
       - "[Python: módulo `fractions`](https://docs.python.org/3/library/fractions.html)"
       - "[Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865)"

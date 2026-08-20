@@ -273,7 +273,7 @@ clases:
       Búsqueda robusta de raíces, calibración de umbrales, respaldo dentro de métodos híbridos y
       búsqueda de puntos de cruce en curvas monótonas.
     referencias:
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://openlibrary.org/isbn/9781305253667)"
       - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](https://numerical.recipes/)"
 
   "223":
@@ -331,7 +331,7 @@ clases:
       Optimización de segundo orden, resolución de sistemas no lineales, cálculo de funciones
       inversas y calibración de modelos.
     referencias:
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://openlibrary.org/isbn/9781305253667)"
       - "[Nocedal, J.; Wright, S. *Numerical Optimization*, 2ª ed., Springer, 2006](https://doi.org/10.1007/978-0-387-40065-5)"
 
   "224":
@@ -389,7 +389,7 @@ clases:
       Búsqueda de raíces sin derivada analítica, métodos cuasi-Newton, calibración de parámetros
       y ajuste de umbrales en funciones costosas de evaluar.
     referencias:
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 2](https://openlibrary.org/isbn/9781305253667)"
       - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 9](https://numerical.recipes/)"
 
   "225":
@@ -447,7 +447,7 @@ clases:
       aproximación de funciones costosas y remuestreo de señales.
     referencias:
       - "[Trefethen, L. N. *Approximation Theory and Approximation Practice*, SIAM, 2019](https://doi.org/10.1137/1.9781611975949)"
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://openlibrary.org/isbn/9781305253667)"
 
   "226":
     concepto: "Muchos trozos de grado bajo baten a un único polinomio de grado alto."
@@ -506,7 +506,7 @@ clases:
       robótica y modelos aditivos generalizados.
     referencias:
       - "[de Boor, C. *A Practical Guide to Splines*, ed. rev., Springer, 2001](https://doi.org/10.1007/978-1-4612-6333-3)"
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 3](https://openlibrary.org/isbn/9781305253667)"
 
   "227":
     concepto: "La diferencia central cuesta lo mismo que la adelantada y tiene un orden más."
@@ -618,7 +618,7 @@ clases:
       probabilísticos, evaluación de funciones especiales y física computacional.
     referencias:
       - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](https://numerical.recipes/)"
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://openlibrary.org/isbn/9781305253667)"
 
   "229":
     concepto: "El trapecio es de orden 2: duplicar los subintervalos divide el error por cuatro."
@@ -672,7 +672,7 @@ clases:
       Integración de datos experimentales muestreados, cálculo de áreas bajo curvas ROC,
       métodos espectrales con funciones periódicas y base del método de Romberg.
     referencias:
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://openlibrary.org/isbn/9781305253667)"
       - "[Trefethen, L. N.; Weideman, J. *The exponentially convergent trapezoidal rule*, SIAM Review, 2014](https://doi.org/10.1137/130932132)"
 
   "230":
@@ -728,7 +728,7 @@ clases:
       Integración numérica de propósito general, cálculo de momentos de distribuciones,
       procesamiento de señales muestreadas y base de los métodos adaptativos.
     referencias:
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 4](https://openlibrary.org/isbn/9781305253667)"
       - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](https://numerical.recipes/)"
 
   "231":
@@ -1012,7 +1012,7 @@ clases:
       Modelos dinámicos en física e ingeniería, farmacocinética, modelos epidemiológicos,
       sistemas de control y Neural ODE.
     referencias:
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://openlibrary.org/isbn/9781305253667)"
       - "[Hairer, E.; Nørsett, S.; Wanner, G. *Solving Ordinary Differential Equations I*, 2ª ed., Springer, 1993](https://doi.org/10.1007/978-3-540-78862-1)"
 
   "236":
@@ -1069,7 +1069,7 @@ clases:
       Prototipado rápido de simulaciones, comprensión conceptual de integradores, esquemas de
       difusión discretizados y base del descenso por gradiente visto como flujo.
     referencias:
-      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://www.cengage.com/)"
+      - "[Burden, R.; Faires, J. *Numerical Analysis*, 10ª ed., Cengage, 2015, cap. 5](https://openlibrary.org/isbn/9781305253667)"
       - "[Hairer, E.; Wanner, G. *Solving Ordinary Differential Equations II*, 2ª ed., Springer, 1996](https://doi.org/10.1007/978-3-642-05221-7)"
 
   "237":

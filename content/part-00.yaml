@@ -169,7 +169,7 @@ clases:
       cartesiano y el número de operaciones de una multiplicación de matrices son sumas de
       este tipo. En la parte 04 el conteo se vuelve combinatoria; en la 09, probabilidad.
     referencias:
-      - "[Lang, S. *Basic Mathematics*. Springer, 1988, cap. 1](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988, cap. 1](https://openlibrary.org/isbn/9780387967875)"
       - "[Graham, Knuth & Patashnik. *Concrete Mathematics*, 2ª ed., 1994, cap. 2 (sumas)](https://www-cs-faculty.stanford.edu/~knuth/gkp.html)"
       - "[Peano axioms — Encyclopedia of Mathematics](https://encyclopediaofmath.org/wiki/Peano_axioms)"
 
@@ -225,7 +225,7 @@ clases:
       sobre valor absoluto en lugar de sobre cuadrados.
     referencias:
       - "[Gelfand & Shen. *Algebra*. Birkhäuser, 2002, secc. 1](https://link.springer.com/book/10.1007/978-1-4612-0335-5)"
-      - "[Lang, S. *Basic Mathematics*. Springer, 1988, cap. 2](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988, cap. 2](https://openlibrary.org/isbn/9780387967875)"
 
   "003":
     concepto: "Un racional es un cociente exacto de enteros; un decimal es casi siempre una aproximación suya."
@@ -392,7 +392,7 @@ clases:
       una afirmación incompleta.
     referencias:
       - "[Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)"
-      - "[Lang, S. *Basic Mathematics*. Springer, 1988](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988](https://openlibrary.org/isbn/9780387967875)"
 
   "006":
     concepto: "Una razón compara dos cantidades por cociente; si las unidades difieren, es una tasa y conserva unidad."
@@ -614,7 +614,7 @@ clases:
       cuya justificación es de varianza.
     referencias:
       - "[Python: `math.isqrt` y aritmética de raíces](https://docs.python.org/3/library/math.html#math.isqrt)"
-      - "[Lang, S. *Basic Mathematics*. Springer, 1988](https://link.springer.com/book/10.1007/978-1-4757-1836-2)"
+      - "[Lang, S. *Basic Mathematics*. Springer, 1988](https://openlibrary.org/isbn/9780387967875)"
 
   "010":
     concepto: "La precedencia y la asociatividad determinan qué expresión representa una cadena de símbolos."
@@ -826,6 +826,7 @@ clases:
       Contabilidad, reparto de totales, informes de métricas y cualquier agregación de
       muchos valores redondeados. Es prerrequisito directo del capstone de esta parte y de
       la clase 034 (propagación de errores)."
+    areas: [aritmetica-de-maquina, fundamentos-matematicos]
     referencias:
       - "[IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)"
       - "[Python: modos de redondeo de `decimal`](https://docs.python.org/3/library/decimal.html#rounding-modes)"
@@ -1219,6 +1220,7 @@ clases:
       Contabilidad, presupuestos personales y empresariales, reparto de costes entre
       equipos y prorrateo de recursos en la nube. La política de descuadre es un requisito
       real en cualquier sistema de facturación."
+    areas: [fundamentos-matematicos, aritmetica-de-maquina]
     referencias:
       - "[Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html)"
       - "[IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/)"

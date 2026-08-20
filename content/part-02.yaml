@@ -426,6 +426,7 @@ clases:
       Evaluación de funciones especiales en bibliotecas matemáticas, interpolación
       (clase 225), ajuste polinómico y aritmética de precisión arbitraria. La convolución
       de coeficientes es la misma operación que en señales.
+    areas: [algebra-y-funciones, algoritmos-y-complejidad]
     referencias:
       - "[Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.6](https://www-cs-faculty.stanford.edu/~knuth/taocp.html)"
       - "[NumPy: `polyval` y el esquema de Horner](https://numpy.org/doc/stable/reference/generated/numpy.polyval.html)"
@@ -957,6 +958,7 @@ clases:
     aplicacion: |
       Escalas de medida, visualización de rangos amplios, log-verosimilitud, entropía,
       perplejidad y lectura de leyes de escala en log-log.
+    areas: [algebra-y-funciones, teoria-de-la-informacion]
     referencias:
       - "[Python: `math.log` y variantes](https://docs.python.org/3/library/math.html#math.log)"
       - "[Cover & Thomas. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X)"
@@ -1008,6 +1010,7 @@ clases:
     aplicacion: |
       Arquitectura de redes neuronales, pipelines de transformación de datos, cambio de
       variable en integración (clase 157) y la regla de la cadena.
+    areas: [algebra-y-funciones, calculo]
     referencias:
       - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
       - "[Spivak, M. *Calculus*, 4ª ed., 2008](https://www.mathpop.com/calculus)"
@@ -1061,6 +1064,7 @@ clases:
     aplicacion: |
       Desestandarizar predicciones, normalizing flows, cambio de variable en probabilidad
       (con su jacobiano) y la relación entre exponencial y logaritmo.
+    areas: [algebra-y-funciones, calculo]
     referencias:
       - "[Spivak, M. *Calculus*, 4ª ed., 2008, cap. 12](https://www.mathpop.com/calculus)"
       - "[Papamakarios, G. et al. *Normalizing Flows for Probabilistic Modeling and Inference*. JMLR, 2021](https://jmlr.org/papers/v22/19-1028.html)"
@@ -1118,6 +1122,7 @@ clases:
     aplicacion: |
       Activaciones ReLU y Leaky ReLU, funciones de pérdida robustas como Huber (clase 304),
       tarifas por tramos e impuestos progresivos.
+    areas: [algebra-y-funciones, deep-learning]
     referencias:
       - "[Glorot, Bordes & Bengio. *Deep Sparse Rectifier Neural Networks*. AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html)"
       - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"

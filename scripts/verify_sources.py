@@ -11,7 +11,10 @@ Comprueba que:
 - toda obra usada en una clase existe en el registro, y todo DOI escrito en el cuerpo
   de una clase también;
 - ninguna entrada del registro queda sin usar;
-- ningún bloque de fuentes se repite entre clases;
+- **cada obra declara qué áreas cubre** y esas áreas existen en `sources/areas.yaml`;
+- **cada clase se ancla**: cita al menos una obra del área que la clase enseña;
+- **ninguna cita queda fuera de tema**: toda obra citada cubre el área de la parte o
+  una de sus conexiones declaradas, salvo la documentación de la herramienta;
 - las cifras que publica el README coinciden con el recuento del registro.
 
     python scripts/verify_sources.py           # verifica (modo CI)
@@ -31,7 +34,7 @@ from typing import Any, Dict, List
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from computational_math import curriculum, sources  # noqa: E402
+from computational_math import content, curriculum, sources  # noqa: E402
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -132,6 +135,7 @@ def esqueleto(ficha: Dict[str, Any], tomados: set, hoy: str) -> Dict[str, Any]:
     entrada["authority"] = _authority(entrada)
     entrada["accessed"] = hoy
     entrada["used_in"] = list(ficha["used_in"])
+    entrada["covers"] = []
     entrada["status"] = "pendiente"
     entrada["note"] = "sin resolver todavía: ejecuta `python scripts/refresh_sources.py`"
     return entrada
@@ -142,50 +146,86 @@ def esqueleto(ficha: Dict[str, Any], tomados: set, hoy: str) -> Dict[str, Any]:
 # --------------------------------------------------------------------------- #
 
 
+def obra_rectora(registry: Dict[str, Any], part_id: str):
+    """Obra más citada por una parte **como fuente de su propio tema**.
+
+    Se descartan las citas de conexión y la documentación de la herramienta: la
+    obra rectora de una parte es la que sostiene lo que la parte enseña.
+    """
+    conteo: Dict[str, int] = {}
+    for uso in sources.usages():
+        if uso.part_id != part_id:
+            continue
+        if sources.citation_fit(uso.class_id, uso.key, registry).role != "ancla":
+            continue
+        conteo[uso.key] = conteo.get(uso.key, 0) + 1
+    catalogo = sources.entries_by_key(registry)
+    for clave, veces in sorted(conteo.items(), key=lambda kv: (-kv[1], kv[0])):
+        if clave in catalogo:
+            return catalogo[clave], veces
+    return None, 0
+
+
+def _firma(entrada: Dict[str, Any]) -> str:
+    autores = entrada.get("authors") or []
+    if not autores:
+        return entrada.get("authority", "").split(" (")[0]
+    firma = autores[0].split(",")[0]
+    return f"{firma} et al." if len(autores) > 1 else firma
+
+
 def bloque_readme(registry: Dict[str, Any]) -> str:
     cifras = sources.registry_stats(registry)
     fecha = cifras["verified_on"] or "sin resolver"
+    tipos = cifras["tipos"]
+
     lineas = [
         MARCA_INICIO,
         "",
-        "> Cifras generadas por `python scripts/verify_sources.py --sync`. No se escriben a mano.",
+        "> Bloque generado por `python scripts/verify_sources.py --sync` a partir de las "
+        "citas de las clases. No se escribe a mano.",
         "",
-        "| Métrica | Valor |",
-        "|---|---:|",
-        f"| Obras en el registro | **{cifras['obras']}** |",
-        f"| Citas en las clases | {cifras['usos']} |",
-        f"| Clases con bloque de fuentes | {cifras['clases_con_bloque']} de {cifras['clases']} |",
-        f"| Bloques de fuentes distintos | {cifras['bloques_distintos']} |",
-        f"| Cobertura del registro | **{cifras['cobertura_%']} %** |",
-        f"| Localizador resuelto contra su autoridad | {cifras['verificadas']} "
-        f"({cifras['verificadas_%']} %) |",
-        f"| Pendientes de resolver | {cifras['pendientes']} |",
-        f"| Entradas con DOI | {cifras['con_doi']} |",
-        f"| Entradas con ISBN-13 | {cifras['con_isbn13']} |",
-        f"| Última resolución en red | {fecha} |",
+        f"**{cifras['obras']} obras reales** —{tipos['book']} libros, {tipos['paper']} "
+        f"artículos, {tipos['standard']} normas y {tipos['reference']} referencias— "
+        f"sostienen las **{cifras['usos']} citas** de las {cifras['clases']} clases. "
+        f"Las **{cifras['clases_ancladas']} de {cifras['clases']}** clases citan al menos "
+        f"una obra del área que enseñan. De los localizadores, {cifras['verificadas']} "
+        f"están resueltos contra su autoridad y {cifras['pendientes']} siguen pendientes "
+        f"(última resolución en red: {fecha}).",
         "",
-        "| Etapa | Obra rectora | Citas en la etapa | Localizador |",
-        "|---|---|---:|---|",
+        "Así se ve la bibliografía de una clase —"
+        "[028 · IEEE 754: estructura de un float]"
+        "(classes/part-01-aritmetica-computacional-y-representacion-numerica/"
+        "028-ieee-754-estructura-de-un-float/README.md)—, "
+        "generada con el porqué de cada obra y el estado de su localizador:",
+        "",
     ]
-    for numero, nombre, partes in sources.STAGES:
-        rectora = sources.leading_work(registry, partes)
-        if not rectora:
-            continue
-        entrada = rectora["entry"]
-        autores = entrada.get("authors") or []
-        firma = autores[0].split(",")[0] if autores else entrada.get("authority", "")
-        if len(autores) > 1:
-            firma = f"{firma} et al."
+    for linea in sources.class_block("028"):
+        lineas.append(f"> - {linea}")
+    lineas += [
+        "",
+        "| Parte | Lo que enseña | Obra rectora de la parte | Citas |",
+        "|---|---|---|---:|",
+    ]
+    for parte in curriculum.parts():
+        areas = sources.part_areas(parte["id"])
+        entrada, veces = obra_rectora(registry, parte["id"])
+        rectora = (
+            f"{_firma(entrada)} — *{entrada['title']}* [↗]({entrada['locator']})"
+            if entrada else "—"
+        )
+        citas = sum(1 for uso in sources.usages() if uso.part_id == parte["id"])
+        ensena = " · ".join(sources.area_label(a) for a in areas["nucleo"])
         lineas.append(
-            f"| **{numero} — {nombre}** | {firma} — *{entrada['title']}* | "
-            f"{rectora['count']} | [{entrada['type']}]({entrada['locator']}) |"
+            f"| **{parte['id']}** {parte['title']} | {ensena} | {rectora} | {citas} |"
         )
     lineas += [
         "",
-        f"Registro completo en [`sources/bibliography.json`](sources/bibliography.json): "
-        f"{cifras['obras']} obras, "
-        f"{cifras['tipos']['book']} libros, {cifras['tipos']['paper']} artículos, "
-        f"{cifras['tipos']['standard']} normas y {cifras['tipos']['reference']} referencias.",
+        f"Detalle clase por clase en [docs/BIBLIOGRAPHY.md](docs/BIBLIOGRAPHY.md) · "
+        f"localizador y estado de cada obra en "
+        f"[sources/bibliography.json](sources/bibliography.json) · "
+        f"vocabulario de las {cifras['areas']} áreas en "
+        f"[sources/areas.yaml](sources/areas.yaml).",
         "",
         MARCA_FIN,
     ]
@@ -286,19 +326,104 @@ def comprueba(registry: Dict[str, Any], errores: List[str]) -> None:
             )
 
 
-def comprueba_bloques(errores: List[str]) -> None:
-    vistos: Dict[tuple, str] = {}
-    sin_bloque: List[str] = []
-    for class_id, bloque in sources.iter_class_blocks():
-        if not bloque:
-            sin_bloque.append(class_id)
+def comprueba_areas(errores: List[str]) -> None:
+    """El vocabulario de áreas y lo que declara cada parte."""
+    datos = sources.load_areas()
+    if datos.get("schema_version") != sources.SCHEMA_VERSION:
+        errores.append(f"areas.yaml: schema_version debe ser {sources.SCHEMA_VERSION}")
+    if not datos.get("politica"):
+        errores.append("areas.yaml: no declara su política")
+
+    vocabulario = datos.get("areas") or {}
+    if not vocabulario:
+        errores.append("areas.yaml: no define ningún área")
+    for slug, ficha in vocabulario.items():
+        if not ID_RE.match(slug):
+            errores.append(f"areas.yaml: el área {slug!r} no es kebab-case")
+        if not (ficha or {}).get("nombre") or not (ficha or {}).get("definicion"):
+            errores.append(f"areas.yaml: el área {slug!r} no declara nombre y definición")
+
+    transversales = set(datos.get("transversales") or ())
+    for slug in sorted(transversales - set(vocabulario)):
+        errores.append(f"areas.yaml: área transversal desconocida {slug!r}")
+
+    partes = datos.get("partes") or {}
+    for parte in curriculum.parts():
+        ficha = partes.get(parte["id"])
+        if not ficha:
+            errores.append(f"areas.yaml: la parte {parte['id']} no declara sus áreas")
             continue
-        if bloque in vistos:
-            errores.append(f"la clase {class_id} repite el bloque de fuentes de la clase {vistos[bloque]}")
-        else:
-            vistos[bloque] = class_id
+        nucleo, conexiones = set(ficha.get("nucleo") or ()), set(ficha.get("conexiones") or ())
+        if not nucleo:
+            errores.append(f"areas.yaml: la parte {parte['id']} no declara núcleo")
+        if nucleo <= transversales:
+            errores.append(f"areas.yaml: el núcleo de la parte {parte['id']} solo tiene áreas transversales")
+        for slug in sorted((nucleo | conexiones) - set(vocabulario)):
+            errores.append(f"areas.yaml: la parte {parte['id']} declara un área desconocida: {slug}")
+        for slug in sorted(nucleo & conexiones):
+            errores.append(f"areas.yaml: la parte {parte['id']} repite {slug} en núcleo y conexiones")
+
+    for clase in curriculum.classes():
+        propias = content.class_content(clase["id"]).get("areas") or ()
+        for slug in propias:
+            if slug not in vocabulario:
+                errores.append(f"la clase {clase['id']} declara un área desconocida: {slug}")
+        if propias and set(propias) <= transversales:
+            errores.append(f"la clase {clase['id']} solo declara áreas transversales")
+
+
+def comprueba_covers(registry: Dict[str, Any], errores: List[str]) -> None:
+    """Toda obra dice de qué trata, y lo dice con el vocabulario común."""
+    vocabulario = set((sources.load_areas().get("areas") or {}))
+    for entrada in registry.get("entries", []):
+        cubre = entrada.get("covers") or []
+        if not cubre:
+            errores.append(f"{entrada['id']}: no declara qué áreas cubre (campo covers)")
+            continue
+        if not isinstance(cubre, list):
+            errores.append(f"{entrada['id']}: covers debe ser una lista de áreas")
+            continue
+        for slug in cubre:
+            if slug not in vocabulario:
+                errores.append(f"{entrada['id']}: área desconocida en covers: {slug}")
+        if len(set(cubre)) != len(cubre):
+            errores.append(f"{entrada['id']}: covers repite un área")
+
+
+def comprueba_pertinencia(registry: Dict[str, Any], errores: List[str]) -> None:
+    """El cruce que sostiene la bibliografía: la obra trata lo que la clase enseña."""
+    sin_bloque: List[str] = []
+    sin_ancla: List[str] = []
+    for clase in curriculum.classes():
+        citas = content.class_content(clase["id"]).get("referencias") or []
+        if not citas:
+            sin_bloque.append(clase["id"])
+            continue
+        anclada = False
+        for cruda in citas:
+            match = sources.REF_RE.match(cruda.strip())
+            if not match:
+                errores.append(f"la clase {clase['id']} tiene una referencia sin enlace: {cruda[:60]}")
+                continue
+            clave = sources.source_key(match.group("url"))
+            encaje = sources.citation_fit(clase["id"], clave, registry)
+            anclada = anclada or encaje.role == "ancla"
+            if encaje.role == "fuera-de-tema":
+                errores.append(
+                    f"la clase {clase['id']} cita una obra fuera de tema: "
+                    f"{sources.parse_label(match.group('label'))['title']!r} "
+                    f"cubre [{', '.join(encaje.areas) or 'nada'}] y la parte "
+                    f"{clase['part']} no declara ninguna de esas áreas"
+                )
+        if not anclada:
+            sin_ancla.append(clase["id"])
     if sin_bloque:
-        errores.append(f"{len(sin_bloque)} clase(s) sin bloque de fuentes: {sin_bloque[:5]}")
+        errores.append(f"{len(sin_bloque)} clase(s) sin bibliografía: {sin_bloque[:5]}")
+    if sin_ancla:
+        errores.append(
+            f"{len(sin_ancla)} clase(s) sin ninguna obra del área que enseñan "
+            f"(añade una fuente del tema, no vale la documentación de la herramienta): {sin_ancla[:5]}"
+        )
 
 
 def comprueba_dois_del_cuerpo(registry: Dict[str, Any], errores: List[str]) -> None:
@@ -354,6 +479,13 @@ def sincroniza(registry: Dict[str, Any]) -> Dict[str, Any]:
             entrada["title"] = datos["title"]
             entrada["published"] = datos["published"]
             entrada["used_in"] = list(ficha["used_in"])
+    # Una obra que ya no cita ninguna clase sale del registro: el registro describe
+    # lo que el programa usa hoy, no lo que usó alguna vez.
+    sobrantes = [e for e in registry.get("entries", []) if e["key"] not in usadas]
+    if sobrantes:
+        registry["entries"] = [e for e in registry["entries"] if e["key"] in usadas]
+        for entrada in sobrantes:
+            print(f"  · retirada del registro (ya no se cita): {entrada['id']}")
     registry.setdefault("schema_version", sources.SCHEMA_VERSION)
     registry.setdefault("verified_on", None)
     registry["policy"] = sources.POLICY
@@ -392,7 +524,9 @@ def main() -> int:
     errores: List[str] = []
     print("Verificando el registro de fuentes (offline)…")
     comprueba(registry, errores)
-    comprueba_bloques(errores)
+    comprueba_areas(errores)
+    comprueba_covers(registry, errores)
+    comprueba_pertinencia(registry, errores)
     comprueba_dois_del_cuerpo(registry, errores)
     comprueba_readme(registry, errores)
 

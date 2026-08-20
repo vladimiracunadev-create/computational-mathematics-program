@@ -882,6 +882,7 @@ clases:
     aplicacion: |
       Series temporales irregulares, flujos continuos normalizadores, modelado físico, dinámica
       de sistemas y modelos de difusión en tiempo continuo.
+    areas: [ecuaciones-diferenciales, deep-learning]
     referencias:
       - "[Chen, R. et al. *Neural Ordinary Differential Equations*, NeurIPS, 2018](https://arxiv.org/abs/1806.07366)"
       - "[Kidger, P. *On Neural Differential Equations*, tesis, 2022](https://arxiv.org/abs/2202.02435)"
@@ -1002,6 +1003,7 @@ clases:
     aplicacion: |
       Detección de comunidades, segmentación de imágenes, partición de mallas, análisis de redes
       sociales y agrupamiento de datos no convexos.
+    areas: [grafos-y-redes, algebra-lineal]
     referencias:
       - "[von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189)"
       - "[Shi, J.; Malik, J. *Normalized cuts and image segmentation*, IEEE TPAMI, 2000](https://doi.org/10.1109/34.868688)"
@@ -1062,6 +1064,7 @@ clases:
     aplicacion: |
       Evaluación de políticas y tratamientos, atribución en marketing, análisis de equidad
       algorítmica, epidemiología y diseño de experimentos.
+    areas: [inferencia-causal, estadistica]
     referencias:
       - "[Pearl, J. *Causality*, 2ª ed., Cambridge, 2009](https://doi.org/10.1017/CBO9780511803161)"
       - "[Hernán, M.; Robins, J. *Causal Inference: What If*, CRC, 2020](https://miguelhernan.org/whatifbook)"
@@ -1305,6 +1308,7 @@ clases:
     aplicacion: |
       Leyes de escala de modelos de lenguaje, planificación de presupuestos de cómputo, elección
       de arquitecturas y teoría de aproximación con redes neuronales.
+    areas: [deep-learning, modelos-de-lenguaje]
     referencias:
       - "[Kaplan, J. et al. *Scaling Laws for Neural Language Models*, 2020](https://arxiv.org/abs/2001.08361)"
       - "[Hoffmann, J. et al. *Training Compute-Optimal Large Language Models*, 2022](https://arxiv.org/abs/2203.15556)"

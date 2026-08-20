@@ -318,6 +318,7 @@ clases:
     aplicacion: |
       Descenso de gradiente y todas sus variantes, criterios de parada, mapas de saliencia en
       interpretabilidad y ataques adversariales.
+    areas: [calculo-matricial, optimizacion]
     referencias:
       - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
       - "[Ruder, S. *An overview of gradient descent optimization algorithms*. arXiv, 2016](https://arxiv.org/abs/1609.04747)"
@@ -582,6 +583,7 @@ clases:
     aplicacion: |
       Clasificación de puntos críticos, método de Newton, análisis de convergencia,
       aproximación de Laplace en inferencia bayesiana y K-FAC.
+    areas: [calculo-matricial, optimizacion]
     referencias:
       - "[Dauphin, Y. et al. *Identifying and attacking the saddle point problem in high-dimensional non-convex optimization*. NeurIPS, 2014](https://arxiv.org/abs/1406.2572)"
       - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
@@ -630,6 +632,7 @@ clases:
     aplicacion: |
       Método de Newton, análisis de convergencia, aproximación de Laplace y justificación de
       los optimizadores adaptativos.
+    areas: [calculo-matricial, metodos-numericos]
     referencias:
       - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 2](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
       - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004](https://web.stanford.edu/~boyd/cvxbook/)"
@@ -683,6 +686,7 @@ clases:
     aplicacion: |
       Entrenamiento de cualquier modelo por gradiente, ajuste del learning rate y diagnóstico de
       divergencias.
+    areas: [calculo-matricial, optimizacion]
     referencias:
       - "[Ruder, S. *An overview of gradient descent optimization algorithms*. arXiv, 2016](https://arxiv.org/abs/1609.04747)"
       - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
@@ -739,6 +743,7 @@ clases:
     aplicacion: |
       Optimización con restricciones, SVM con margen máximo, regularización vista como
       restricción, y precios sombra en asignación de recursos.
+    areas: [calculo-matricial, optimizacion]
     referencias:
       - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 5](https://web.stanford.edu/~boyd/cvxbook/)"
       - "[Nocedal & Wright. *Numerical Optimization*, 2ª ed., Springer, 2006, cap. 12](https://link.springer.com/book/10.1007/978-0-387-40065-5)"
@@ -1157,5 +1162,5 @@ clases:
       Depuración de gradientes, implementación de capas personalizadas, comprensión de
       `loss.backward()` y diagnóstico de gradientes que se desvanecen.
     referencias:
-      - "[Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://www.nature.com/articles/323533a0)"
+      - "[Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://doi.org/10.1038/323533a0)"
       - "[PyTorch: `torch.autograd.gradcheck`](https://pytorch.org/docs/stable/generated/torch.autograd.gradcheck.html)"

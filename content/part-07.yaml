@@ -470,8 +470,9 @@ clases:
     aplicacion: |
       Backpropagation, autodiferenciación, cambio de variable en integrales, propagación de
       incertidumbre y análisis de gradientes que se desvanecen o explotan.
+    areas: [calculo, autodiferenciacion]
     referencias:
-      - "[Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://www.nature.com/articles/323533a0)"
+      - "[Rumelhart, Hinton & Williams. *Learning representations by back-propagating errors*. Nature, 1986](https://doi.org/10.1038/323533a0)"
       - "[Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/)"
 
   "148":
@@ -1079,9 +1080,10 @@ clases:
     aplicacion: |
       Probabilidades de la distribución normal, cálculo de expectativas, integración de
       señales y cualquier integral sin forma cerrada.
+    areas: [calculo, metodos-numericos]
     referencias:
       - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007, cap. 4](https://numerical.recipes/)"
-      - "[Burden & Faires. *Numerical Analysis*, 10ª ed., Cengage, 2015](https://www.cengage.com/c/numerical-analysis-10e-burden/)"
+      - "[Burden & Faires. *Numerical Analysis*, 10ª ed., Cengage, 2015](https://openlibrary.org/isbn/9781305253667)"
 
   "160":
     concepto: "Derivar localiza; integrar acumula. Un mismo problema suele necesitar las dos."
@@ -1131,6 +1133,7 @@ clases:
     aplicacion: |
       Análisis de señales, cálculo de energía en física, métricas acumuladas en el tiempo y
       localización de extremos en curvas experimentales.
+    areas: [calculo, metodos-numericos]
     referencias:
-      - "[Oppenheim & Schafer. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://www.pearson.com/en-us/subject-catalog/p/discrete-time-signal-processing/P200000003226)"
+      - "[Oppenheim & Schafer. *Discrete-Time Signal Processing*, 3ª ed., Pearson, 2009](https://openlibrary.org/isbn/9780131988422)"
       - "[Press, W. et al. *Numerical Recipes*, 3ª ed., Cambridge, 2007](https://numerical.recipes/)"

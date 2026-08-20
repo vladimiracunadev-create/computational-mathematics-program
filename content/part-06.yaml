@@ -1079,9 +1079,11 @@ clases:
     aplicacion: |
       Suma de sesgos, normalización por eje, cálculo de matrices de distancias, aplicación de
       máscaras y prácticamente cualquier operación vectorizada.
+    areas: [computacion-cientifica, algebra-lineal]
     referencias:
       - "[NumPy: broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html)"
       - "[PyTorch: broadcasting semantics](https://pytorch.org/docs/stable/notes/broadcasting.html)"
+      - "[Harris, C. et al. *Array programming with NumPy*. Nature, 2020](https://doi.org/10.1038/s41586-020-2649-2)"
 
   "139":
     concepto: "En notación de Einstein los índices repetidos se suman, y una sola expresión cubre producto, traza y contracción."

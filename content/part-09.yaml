@@ -226,7 +226,7 @@ clases:
       pruebas aleatorizadas y cualquier modelado que empiece por enumerar lo que puede pasar.
     referencias:
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 1](https://projects.iq.harvard.edu/stat110/home)"
-      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 2](https://www.pearson.com/)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 2](https://openlibrary.org/isbn/9780134753119)"
 
   "182":
     concepto: "Tres axiomas de Kolmogorov generan toda la teoría de la probabilidad."
@@ -334,7 +334,7 @@ clases:
       datos y factorización autorregresiva de secuencias.
     referencias:
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)"
-      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://www.pearson.com/)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://openlibrary.org/isbn/9780134753119)"
 
   "184":
     concepto: "Condicionar es reducir el espacio muestral, no cambiar la realidad."
@@ -387,7 +387,7 @@ clases:
       condicional que usan los modelos generativos.
     referencias:
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 2](https://projects.iq.harvard.edu/stat110/home)"
-      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://www.pearson.com/)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 3](https://openlibrary.org/isbn/9780134753119)"
 
   "185":
     concepto: "La independencia es una igualdad que se verifica, no una suposición cómoda."
@@ -558,7 +558,7 @@ clases:
       clases en clasificación y muestreo por transformada inversa.
     referencias:
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 3](https://projects.iq.harvard.edu/stat110/home)"
-      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://www.pearson.com/)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://openlibrary.org/isbn/9780134753119)"
 
   "188":
     concepto: "En una variable continua la densidad no es probabilidad y puede superar 1."
@@ -667,7 +667,7 @@ clases:
       medio de ejecución y estimadores de gradiente por muestreo.
     referencias:
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 4](https://projects.iq.harvard.edu/stat110/home)"
-      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 7](https://www.pearson.com/)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 7](https://openlibrary.org/isbn/9780134753119)"
 
   "190":
     concepto: "La varianza mide dispersión al cuadrado; dividir entre n−1 la vuelve insesgada."
@@ -831,7 +831,7 @@ clases:
       logística y entropía cruzada binaria.
     referencias:
       - "[Blitzstein, J.; Hwang, J. *Introduction to Probability*, 2ª ed., CRC, 2019, cap. 3](https://projects.iq.harvard.edu/stat110/home)"
-      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://www.pearson.com/)"
+      - "[Ross, S. *A First Course in Probability*, 10ª ed., Pearson, 2018, cap. 4](https://openlibrary.org/isbn/9780134753119)"
 
   "193":
     concepto: "Poisson cuenta eventos raros por intervalo; la exponencial mide el tiempo entre ellos."

@@ -54,8 +54,13 @@ __all__ = [
     "usages",
     "sources_used",
     "reference_line",
-    "use_role",
-    "use_note",
+    "AREAS_PATH",
+    "load_areas",
+    "area_label",
+    "part_areas",
+    "class_areas",
+    "work_areas",
+    "citation_fit",
     "class_block",
     "load_registry",
     "dump_registry",
@@ -66,6 +71,7 @@ __all__ = [
 ]
 
 REGISTRY_PATH = ROOT / "sources" / "bibliography.json"
+AREAS_PATH = ROOT / "sources" / "areas.yaml"
 SCHEMA_VERSION = 1
 TIPOS = ("book", "paper", "standard", "reference", "dataset")
 ESTADOS = ("verificada", "pendiente")
@@ -78,6 +84,7 @@ POLICY = (
 REF_RE = re.compile(r"^\[(?P<label>.+)\]\((?P<url>https?://\S+)\)$")
 DOI_IN_URL_RE = re.compile(r"(10\.\d{4,9}/[^\s?#]+)", re.IGNORECASE)
 ISBN13_IN_TEXT_RE = re.compile(r"97[89][- ]?(?:\d[- ]?){9}\d")
+CHAPTER_DOI_RE = re.compile(r"_\d+$")
 ARXIV_RE = re.compile(r"^https?://arxiv\.org/abs/(?P<id>.+?)(?:v\d+)?/?$", re.IGNORECASE)
 YEAR_RE = re.compile(r"\b(1[6-9]\d{2}|20\d{2})\b")
 INITIALS_RE = re.compile(r"^(?:[A-ZÁÉÍÓÚÑ]\.?[- ]?){1,4}(?:et al\.?)?$")
@@ -91,38 +98,6 @@ STANDARD_HOSTS = frozenset({
     "pages.nist.gov",
     "cwe.mitre.org",
     "peps.python.org",
-})
-
-# Documentación de las herramientas que ejecutan los laboratorios.
-DOC_HOSTS = frozenset({
-    "docs.python.org",
-    "docs.scipy.org",
-    "docs.sympy.org",
-    "docs.jax.dev",
-    "numpy.org",
-    "pytorch.org",
-    "peps.python.org",
-})
-
-# Cursos abiertos, notas de clase y divulgación: exposición alternativa del tema.
-COURSE_HOSTS = frozenset({
-    "projects.iq.harvard.edu",
-    "math.mit.edu",
-    "dspace.mit.edu",
-    "www.3blue1brown.com",
-    "www.mathpop.com",
-    "distill.pub",
-    "colah.github.io",
-    "jalammar.github.io",
-    "karpathy.ai",
-    "neuralnetworksanddeeplearning.com",
-    "mathworld.wolfram.com",
-    "encyclopediaofmath.org",
-    "mathshistory.st-andrews.ac.uk",
-    "oeis.org",
-    "transformer-circuits.pub",
-    "rockt.ai",
-    "0.30000000000000004.com",
 })
 
 # Las cinco etapas del programa, por identificador de parte.
@@ -218,10 +193,16 @@ def derive_identifiers(url: str) -> Dict[str, Optional[str]]:
                 isbn = normalise_isbn(match.group(0))
                 break
 
+    # Un DOI de capítulo (…_28) lleva el ISBN del **libro que lo contiene**, no el de la
+    # obra citada: adoptarlo mandaría al lector a otro título. El capítulo se identifica
+    # por su DOI y nada más.
+    if doi and CHAPTER_DOI_RE.search(doi):
+        isbn = None
+
     return {"doi": doi, "isbn13": isbn}
 
 
-DOI_IN_TEXT_RE = re.compile(r"10\.\d{4,9}/[^\s\"'<>\]]+")
+DOI_IN_TEXT_RE = re.compile(r"10\.\d{4,9}/[^\s\"'<>\]`]+")
 
 
 def dois_in_text(text: str) -> List[str]:
@@ -328,7 +309,7 @@ def normalise_title(title: str) -> str:
 
 
 # --------------------------------------------------------------------------- #
-# Uso declarado en cada clase
+# Áreas: el puente entre la obra y la clase que la cita
 # --------------------------------------------------------------------------- #
 
 
@@ -336,47 +317,132 @@ def _host(url: str) -> str:
     return url.split("//", 1)[-1].split("/", 1)[0].lower()
 
 
-def use_role(url: str, label: str = "") -> str:
-    """Papel que la clase asigna a la fuente, deducido de su naturaleza.
+@functools.lru_cache(maxsize=1)
+def load_areas() -> Dict[str, Any]:
+    """Vocabulario de áreas y lo que declara cada parte."""
+    import yaml
 
-    Se decide con lo que la cita ya contiene —sede, identificador y forma de la
-    etiqueta— y nunca con una suposición sobre el contenido de la obra.
+    with AREAS_PATH.open(encoding="utf-8") as handle:
+        return yaml.safe_load(handle) or {}
+
+
+def area_label(slug: str) -> str:
+    """Nombre legible de un área; el propio identificador si no está definida."""
+    ficha = (load_areas().get("areas") or {}).get(slug) or {}
+    return ficha.get("nombre") or slug
+
+
+def transversal_areas() -> Tuple[str, ...]:
+    """Áreas admitidas en cualquier parte (la documentación de la herramienta)."""
+    return tuple(load_areas().get("transversales") or ())
+
+
+def part_areas(part_id: str) -> Dict[str, Tuple[str, ...]]:
+    """Área que enseña la parte (``nucleo``) y áreas con las que conecta."""
+    ficha = (load_areas().get("partes") or {}).get(part_id) or {}
+    return {
+        "nucleo": tuple(ficha.get("nucleo") or ()),
+        "conexiones": tuple(ficha.get("conexiones") or ()),
+    }
+
+
+def class_areas(class_id: str) -> Tuple[str, ...]:
+    """Área que enseña la clase: la que declara, o el núcleo de su parte."""
+    propias = content.class_content(class_id).get("areas")
+    if propias:
+        return tuple(propias)
+    part_id = f"{(int(class_id) - 1) // 20:02d}"
+    return part_areas(part_id)["nucleo"]
+
+
+def work_areas(key: str, registry: Optional[Dict[str, Any]] = None) -> Tuple[str, ...]:
+    """Áreas que declara cubrir la obra registrada bajo esa clave canónica."""
+    registry = registry if registry is not None else load_registry()
+    entrada = entries_by_key(registry).get(key) or {}
+    return tuple(entrada.get("covers") or ())
+
+
+class Fit(NamedTuple):
+    """Encaje comprobado entre una obra y la clase que la cita."""
+
+    role: str                   # ancla | conexion | herramienta | fuera-de-tema
+    areas: Tuple[str, ...]      # áreas que justifican ese encaje
+    reason: str                 # frase que se publica en la clase
+
+
+def citation_fit(class_id: str, key: str, registry: Optional[Dict[str, Any]] = None) -> Fit:
+    """Compara el tema de la obra con el de la clase y el de su parte.
+
+    Es la comprobación que sostiene la bibliografía: una obra solo se admite si
+    trata el tema de la clase (**ancla**), una conexión que la parte declara, o
+    es la documentación de la herramienta que ejecuta el laboratorio.
     """
-    host = _host(url)
-    ids = derive_identifiers(url)
-    if host in DOC_HOSTS:
-        return "documentación de la herramienta que ejecuta el laboratorio"
-    if host in STANDARD_HOSTS:
-        return "referencia normativa consultada"
-    if host in COURSE_HOSTS:
-        return "exposición alternativa del tema"
-    if ids["isbn13"]:
-        return "desarrollo formal del tema"
-    if ids["doi"]:
-        return "artículo de origen consultado"
-    if "*" in label:  # la etiqueta cita una obra con título propio
-        return "obra de referencia consultada"
-    return "lectura de apoyo"
+    part_id = f"{(int(class_id) - 1) // 20:02d}"
+    cubre = set(work_areas(key, registry))
+    transversales = set(transversal_areas())
+    propias = set(class_areas(class_id)) - transversales
+    parte = part_areas(part_id)
+    conexiones = (set(parte["nucleo"]) | set(parte["conexiones"])) - transversales
+
+    ancla = sorted(cubre & propias)
+    if ancla:
+        temas = " y ".join(area_label(a) for a in ancla)
+        return Fit("ancla", tuple(ancla), f"{temas}: el tema de esta clase")
+
+    enlace = sorted(cubre & conexiones)
+    if enlace:
+        temas = " y ".join(area_label(a) for a in enlace)
+        return Fit("conexion", tuple(enlace), f"{temas}: conexión declarada de esta parte")
+
+    if cubre & transversales:
+        return Fit(
+            "herramienta",
+            tuple(sorted(cubre & transversales)),
+            "documentación de la herramienta que ejecuta el laboratorio",
+        )
+
+    temas = ", ".join(area_label(a) for a in sorted(cubre)) or "sin tema declarado"
+    return Fit("fuera-de-tema", tuple(sorted(cubre)), f"{temas}: fuera del tema de esta parte")
 
 
-def use_note(url: str, class_title: str, label: str = "") -> str:
-    """Frase que declara **el uso que esta clase hace** de esta fuente."""
-    return f"{use_role(url, label)} en «{class_title}»"
+def locator_note(key: str, registry: Optional[Dict[str, Any]] = None) -> str:
+    """Estado del localizador de la obra, tal y como lo dejó la resolución en red."""
+    registry = registry if registry is not None else load_registry()
+    entrada = entries_by_key(registry).get(key)
+    if not entrada:
+        return "sin entrada en el registro"
+    if entrada.get("isbn13"):
+        localizador, participio = f"ISBN-13 `{entrada['isbn13']}`", "verificado"
+    elif entrada.get("doi"):
+        localizador, participio = f"DOI `{entrada['doi']}`", "verificado"
+    else:
+        localizador, participio = "URL de la fuente primaria", "comprobada"
+    if entrada.get("status") != "verificada":
+        return f"{localizador}, pendiente de resolver"
+    autoridad = (entrada.get("authority") or "su autoridad").split(" (")[0]
+    return f"{localizador} {participio} en {autoridad} ({entrada.get('accessed')})"
 
 
-def reference_line(raw: str, class_title: str) -> str:
-    """Línea de referencia tal y como se publica en la clase, con su uso."""
+def reference_line(raw: str, class_id: str, registry: Optional[Dict[str, Any]] = None) -> str:
+    """Línea de referencia tal y como se publica en la clase.
+
+    Declara **por qué esa obra está en esa clase** —el área que comparten— y en
+    qué estado quedó su localizador. Nada de eso se escribe a mano: sale del
+    registro y del vocabulario de áreas.
+    """
     match = REF_RE.match(raw.strip())
     if not match:
         return raw.strip()
-    uso = use_note(match.group("url"), class_title, match.group("label"))
-    return f"{raw.strip()} — *uso:* {uso}."
+    key = source_key(match.group("url"))
+    fit = citation_fit(class_id, key, registry)
+    return f"{raw.strip()} — {fit.reason} · {locator_note(key, registry)}."
 
 
-def class_block(class_id: str, class_title: str) -> List[str]:
-    """Bloque de fuentes completo de una clase, con el uso de cada obra."""
+def class_block(class_id: str, class_title: str = "") -> List[str]:
+    """Bloque de bibliografía de una clase, con el porqué de cada obra."""
     registro = content.class_content(class_id)
-    return [reference_line(r, class_title) for r in (registro.get("referencias") or [])]
+    registry = load_registry() if REGISTRY_PATH.exists() else {"entries": []}
+    return [reference_line(r, class_id, registry) for r in (registro.get("referencias") or [])]
 
 
 # --------------------------------------------------------------------------- #
@@ -503,7 +569,18 @@ def registry_stats(registry: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     en_registro = set(entries_by_key(registry))
     usadas = set(sources_used())
 
+    papeles: Dict[str, int] = {"ancla": 0, "conexion": 0, "herramienta": 0, "fuera-de-tema": 0}
+    ancladas: Set[str] = set()
+    for uso in usos:
+        encaje = citation_fit(uso.class_id, uso.key, registry)
+        papeles[encaje.role] = papeles.get(encaje.role, 0) + 1
+        if encaje.role == "ancla":
+            ancladas.add(uso.class_id)
+
     return {
+        "papeles": papeles,
+        "clases_ancladas": len(ancladas),
+        "areas": len((load_areas().get("areas") or {})),
         "obras": len(entradas),
         "usos": len(usos),
         "clases": len(bloques),

@@ -1017,6 +1017,7 @@ clases:
     aplicacion: |
       Ridge y Lasso, weight decay en redes, selección de variables, compressed sensing y control
       del sobreajuste.
+    areas: [optimizacion, estadistica]
     referencias:
       - "[Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/)"
       - "[Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x)"

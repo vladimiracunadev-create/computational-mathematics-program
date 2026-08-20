@@ -315,8 +315,9 @@ clases:
     aplicacion: |
       Regularización Ridge y Lasso, funciones de pérdida MSE y MAE, robustez adversarial
       acotada en L∞ y criterios de convergencia.
+    areas: [algebra-lineal, optimizacion]
     referencias:
-      - "[Tibshirani, R. *Regression Shrinkage and Selection via the Lasso*. JRSS-B, 1996](https://www.jstor.org/stable/2346178)"
+      - "[Tibshirani, R. *Regression Shrinkage and Selection via the Lasso*. JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x)"
       - "[Boyd & Vandenberghe. *Convex Optimization*. Cambridge, 2004, cap. 2](https://web.stanford.edu/~boyd/cvxbook/)"
 
   "105":
@@ -936,6 +937,7 @@ clases:
     aplicacion: |
       Matriz de precisión en modelos gaussianos, análisis de sensibilidad y transformaciones
       inversas en gráficos. Para resolver sistemas, siempre factorización.
+    areas: [algebra-lineal, algebra-lineal-numerica]
     referencias:
       - "[Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027)"
       - "[NumPy: por qué usar `solve` en lugar de `inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html)"
