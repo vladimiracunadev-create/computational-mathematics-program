@@ -158,12 +158,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) — *uso:* desarrollo formal del tema en «Fórmula cuadrática y discriminante».
-- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/) — *uso:* obra de referencia consultada en «Fórmula cuadrática y discriminante».
+Esta clase enseña **Álgebra y funciones**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) — Álgebra lineal numérica y Aritmética de máquina y Métodos numéricos: conexión declarada de esta parte · ISBN-13 `9780898718027`, pendiente de resolver.
+- [Stewart, J. *Precalculus*, 7ª ed., Cengage, 2015](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/) — Álgebra y funciones: el tema de esta clase · URL de la fuente primaria, pendiente de resolver.
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

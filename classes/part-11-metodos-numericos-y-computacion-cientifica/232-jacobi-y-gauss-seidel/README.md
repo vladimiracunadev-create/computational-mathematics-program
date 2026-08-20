@@ -162,12 +162,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Saad, Y. *Iterative Methods for Sparse Linear Systems*, 2ª ed., SIAM, 2003](https://doi.org/10.1137/1.9780898718003) — *uso:* desarrollo formal del tema en «Jacobi y Gauss-Seidel».
-- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 11](https://doi.org/10.1137/1.9781611975581) — *uso:* desarrollo formal del tema en «Jacobi y Gauss-Seidel».
+Esta clase enseña **Métodos numéricos · Computación científica · Ecuaciones diferenciales · Teoría de la aproximación · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Saad, Y. *Iterative Methods for Sparse Linear Systems*, 2ª ed., SIAM, 2003](https://doi.org/10.1137/1.9780898718003) — Álgebra lineal numérica y Métodos numéricos: el tema de esta clase · ISBN-13 `9780898718003`, pendiente de resolver.
+- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 11](https://doi.org/10.1137/1.9781611975581) — Computación científica y Métodos numéricos: el tema de esta clase · ISBN-13 `9781611975581`, pendiente de resolver.
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -166,12 +166,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it) — *uso:* desarrollo formal del tema en «Problemas verbales a lenguaje matemático».
-- [Schoenfeld, A. *Mathematical Problem Solving*. Academic Press, 1985](https://www.elsevier.com/books/mathematical-problem-solving/schoenfeld/978-0-12-628870-4) — *uso:* desarrollo formal del tema en «Problemas verbales a lenguaje matemático».
+Esta clase enseña **Fundamentos y lenguaje matemático · Lógica y demostración · Álgebra y funciones · Teoría de números**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Polya, G. *How to Solve It*. Princeton University Press, 1945](https://press.princeton.edu/books/paperback/9780691164076/how-to-solve-it) — Fundamentos y lenguaje matemático y Lógica y demostración: el tema de esta clase · ISBN-13 `9780691164076` verificado en International ISBN Agency (2026-08-19).
+- [Schoenfeld, A. *Mathematical Problem Solving*. Academic Press, 1985](https://www.elsevier.com/books/mathematical-problem-solving/schoenfeld/978-0-12-628870-4) — Fundamentos y lenguaje matemático: el tema de esta clase · ISBN-13 `9780126288704` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -164,12 +164,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Baydin, A. et al. *Automatic differentiation in machine learning: a survey*, JMLR, 2018](https://jmlr.org/papers/v18/17-468.html) — *uso:* obra de referencia consultada en «Computational graphs».
-- [Karpathy, A. *micrograd*, 2020](https://github.com/karpathy/micrograd) — *uso:* obra de referencia consultada en «Computational graphs».
+Esta clase enseña **Deep learning**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Baydin, A. et al. *Automatic differentiation in machine learning: a survey*, JMLR, 2018](https://jmlr.org/papers/v18/17-468.html) — Deep learning: el tema de esta clase · URL de la fuente primaria comprobada en Journal of Machine Learning Research (2026-08-19).
+- [Karpathy, A. *micrograd*, 2020](https://github.com/karpathy/micrograd) — Deep learning: el tema de esta clase · URL de la fuente primaria comprobada en github.com (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

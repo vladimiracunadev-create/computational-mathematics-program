@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Srivastava, N. et al. *Dropout: a simple way to prevent neural networks from overfitting*, JMLR, 2014](https://jmlr.org/papers/v15/srivastava14a.html) — *uso:* obra de referencia consultada en «Regularización y dropout».
-- [Gal, Y.; Ghahramani, Z. *Dropout as a Bayesian approximation*, ICML, 2016](https://arxiv.org/abs/1506.02142) — *uso:* artículo de origen consultado en «Regularización y dropout».
+Esta clase enseña **Deep learning**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Srivastava, N. et al. *Dropout: a simple way to prevent neural networks from overfitting*, JMLR, 2014](https://jmlr.org/papers/v15/srivastava14a.html) — Deep learning: el tema de esta clase · URL de la fuente primaria comprobada en Journal of Machine Learning Research (2026-08-19).
+- [Gal, Y.; Ghahramani, Z. *Dropout as a Bayesian approximation*, ICML, 2016](https://arxiv.org/abs/1506.02142) — Deep learning: el tema de esta clase · DOI `10.48550/arxiv.1506.02142` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

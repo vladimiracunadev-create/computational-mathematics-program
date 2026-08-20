@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Lloyd, S. *Least squares quantization in PCM*, IEEE Trans. Information Theory, 1982](https://doi.org/10.1109/TIT.1982.1056489) — *uso:* artículo de origen consultado en «k-means como optimización».
-- [Arthur, D.; Vassilvitskii, S. *k-means++: the advantages of careful seeding*, SODA, 2007](https://dl.acm.org/doi/10.5555/1283383.1283494) — *uso:* artículo de origen consultado en «k-means como optimización».
+Esta clase enseña **Machine learning · Teoría del aprendizaje · Métodos de kernel**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Lloyd, S. *Least squares quantization in PCM*, IEEE Trans. Information Theory, 1982](https://doi.org/10.1109/TIT.1982.1056489) — Machine learning: el tema de esta clase · DOI `10.1109/tit.1982.1056489` verificado en Crossref (2026-08-19).
+- [Arthur, D.; Vassilvitskii, S. *k-means++: the advantages of careful seeding*, SODA, 2007](https://dl.acm.org/doi/10.5555/1283383.1283494) — Machine learning: el tema de esta clase · DOI `10.5555/1283383.1283494`, pendiente de resolver.
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

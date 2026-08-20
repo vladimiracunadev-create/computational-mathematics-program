@@ -169,12 +169,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Cuturi, M. *Sinkhorn Distances: Lightspeed Computation of Optimal Transport*, NeurIPS, 2013](https://arxiv.org/abs/1306.0895) — *uso:* artículo de origen consultado en «Optimal transport».
-- [Peyré, G.; Cuturi, M. *Computational Optimal Transport*, 2019](https://arxiv.org/abs/1803.00567) — *uso:* artículo de origen consultado en «Optimal transport».
+Esta clase enseña **Teoría del aprendizaje · Procesos gaussianos · Transporte óptimo · Geometría diferencial · Modelos generativos · Inferencia bayesiana · Procesos estocásticos**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Cuturi, M. *Sinkhorn Distances: Lightspeed Computation of Optimal Transport*, NeurIPS, 2013](https://arxiv.org/abs/1306.0895) — Transporte óptimo: el tema de esta clase · DOI `10.48550/arxiv.1306.0895` verificado en DataCite (2026-08-19).
+- [Peyré, G.; Cuturi, M. *Computational Optimal Transport*, 2019](https://arxiv.org/abs/1803.00567) — Transporte óptimo: el tema de esta clase · DOI `10.48550/arxiv.1803.00567` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -199,9 +199,13 @@ compmath catalog --part 12
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Boyd, S.; Vandenberghe, L. *Convex Optimization*. Cambridge, 2004.
 - Nocedal, J.; Wright, S. *Numerical Optimization*. 2ª ed., Springer, 2006.
 - Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*. ICLR, 2019.
+
+Las 20 clases de esta parte citan 23 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-12-optimizacion-matematica-y-computacional).
 
 ---
 

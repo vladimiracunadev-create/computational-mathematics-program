@@ -159,12 +159,15 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [NumPy: broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Broadcasting como operación tensorial».
-- [PyTorch: broadcasting semantics](https://pytorch.org/docs/stable/notes/broadcasting.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Broadcasting como operación tensorial».
+Esta clase enseña **Computación científica · Álgebra lineal**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [NumPy: broadcasting](https://numpy.org/doc/stable/user/basics.broadcasting.html) — documentación de la herramienta que ejecuta el laboratorio · URL de la fuente primaria comprobada en NumPy developers (2026-08-19).
+- [PyTorch: broadcasting semantics](https://pytorch.org/docs/stable/notes/broadcasting.html) — documentación de la herramienta que ejecuta el laboratorio · URL de la fuente primaria comprobada en PyTorch Foundation (2026-08-19).
+- [Harris, C. et al. *Array programming with NumPy*. Nature, 2020](https://doi.org/10.1038/s41586-020-2649-2) — Computación científica: el tema de esta clase · DOI `10.1038/s41586-020-2649-2` verificado en Crossref (2026-08-20).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

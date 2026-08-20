@@ -204,9 +204,13 @@ compmath catalog --part 10
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Wasserman, L. *All of Statistics*. Springer, 2004.
 - Gelman, A. et al. *Bayesian Data Analysis*. 3ª ed., CRC, 2013.
 - Efron, B.; Tibshirani, R. *An Introduction to the Bootstrap*. Chapman & Hall, 1993.
+
+Las 20 clases de esta parte citan 22 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-10-estadistica-e-inferencia).
 
 ---
 

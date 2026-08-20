@@ -289,7 +289,7 @@ def _seccion_clase(clase, parte) -> str:
         bloques.append(md_a_html(registro["aplicacion"]))
 
     if registro.get("referencias"):
-        bloques.append("<h4>Referencias</h4>")
+        bloques.append("<h4>Bibliografía de la clase</h4>")
         lineas = sources.class_block(clase["id"], clase["title"])
         bloques.append("<ul>" + "".join(f"<li>{_inline(r)}</li>" for r in lineas) + "</ul>")
 

@@ -165,12 +165,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Schölkopf, B.; Smola, A. *Learning with Kernels*, MIT Press, 2002](https://mitpress.mit.edu/9780262536578/learning-with-kernels/) — *uso:* desarrollo formal del tema en «Kernel methods avanzados».
-- [Duvenaud, D. *Automatic Model Construction with Gaussian Processes*, tesis, 2014](https://www.cs.toronto.edu/~duvenaud/thesis.pdf) — *uso:* obra de referencia consultada en «Kernel methods avanzados».
+Esta clase enseña **Teoría del aprendizaje · Procesos gaussianos · Transporte óptimo · Geometría diferencial · Modelos generativos · Inferencia bayesiana · Procesos estocásticos**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Schölkopf, B.; Smola, A. *Learning with Kernels*, MIT Press, 2002](https://mitpress.mit.edu/9780262536578/learning-with-kernels/) — Machine learning y Métodos de kernel: conexión declarada de esta parte · ISBN-13 `9780262536578` verificado en International ISBN Agency (2026-08-19).
+- [Duvenaud, D. *Automatic Model Construction with Gaussian Processes*, tesis, 2014](https://www.cs.toronto.edu/~duvenaud/thesis.pdf) — Procesos gaussianos: el tema de esta clase · URL de la fuente primaria comprobada en www.cs.toronto.edu (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

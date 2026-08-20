@@ -191,9 +191,13 @@ compmath catalog --part 02
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Axler, S. *Precalculus: A Prelude to Calculus*. 3ª ed., Wiley, 2017.
 - Gelfand, I. M.; Glagoleva, E.; Shnol, E. *Functions and Graphs*. Dover, 2002.
 - Stewart, J. *Precalculus: Mathematics for Calculus*. 7ª ed., Cengage, 2015.
+
+Las 20 clases de esta parte citan 23 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-02-algebra-y-funciones).
 
 ---
 

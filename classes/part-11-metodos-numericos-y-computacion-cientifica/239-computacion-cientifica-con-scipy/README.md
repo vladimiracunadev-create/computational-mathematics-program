@@ -167,12 +167,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Virtanen, P. et al. *SciPy 1.0: fundamental algorithms for scientific computing*, Nature Methods, 2020](https://doi.org/10.1038/s41592-019-0686-2) — *uso:* artículo de origen consultado en «Computación científica con SciPy».
-- [Documentación de SciPy](https://docs.scipy.org/doc/scipy/) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Computación científica con SciPy».
+Esta clase enseña **Métodos numéricos · Computación científica · Ecuaciones diferenciales · Teoría de la aproximación · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Virtanen, P. et al. *SciPy 1.0: fundamental algorithms for scientific computing*, Nature Methods, 2020](https://doi.org/10.1038/s41592-019-0686-2) — Computación científica: el tema de esta clase · DOI `10.1038/s41592-019-0686-2` verificado en Crossref (2026-08-19).
+- [Documentación de SciPy](https://docs.scipy.org/doc/scipy/) — Computación científica: el tema de esta clase · URL de la fuente primaria comprobada en SciPy developers (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

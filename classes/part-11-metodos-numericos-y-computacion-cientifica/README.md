@@ -204,9 +204,13 @@ compmath catalog --part 11
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Burden, R.; Faires, J. *Numerical Analysis*. 10ª ed., Cengage, 2015.
 - Press, W. et al. *Numerical Recipes*. 3ª ed., Cambridge, 2007.
 - Heath, M. *Scientific Computing: An Introductory Survey*. 2ª ed., SIAM, 2018.
+
+Las 20 clases de esta parte citan 17 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-11-metodos-numericos-y-computacion-cientifica).
 
 ---
 

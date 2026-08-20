@@ -202,9 +202,13 @@ compmath catalog --part 14
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*. 2ª ed., Springer, 2009.
 - Bishop, C. *Pattern Recognition and Machine Learning*. Springer, 2006.
 - Murphy, K. *Probabilistic Machine Learning: An Introduction*. MIT Press, 2022.
+
+Las 20 clases de esta parte citan 22 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-14-matematica-de-machine-learning).
 
 ---
 

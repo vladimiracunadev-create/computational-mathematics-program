@@ -160,12 +160,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Penrose, R. *A generalized inverse for matrices*. Math. Proc. Cambridge Phil. Soc., 1955](https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/generalized-inverse-for-matrices/5F4516D6D3B34D0E8F7E7C7F0F7E7C7F) — *uso:* obra de referencia consultada en «Pseudoinversa de Moore-Penrose».
-- [NumPy: `numpy.linalg.pinv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.pinv.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Pseudoinversa de Moore-Penrose».
+Esta clase enseña **Álgebra lineal · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Penrose, R. *A generalized inverse for matrices*. Math. Proc. Cambridge Phil. Soc., 1955](https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/generalized-inverse-for-matrices/5F4516D6D3B34D0E8F7E7C7F0F7E7C7F) — Álgebra lineal: el tema de esta clase · URL de la fuente primaria, pendiente de resolver.
+- [NumPy: `numpy.linalg.pinv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.pinv.html) — Álgebra lineal: el tema de esta clase · URL de la fuente primaria comprobada en NumPy developers (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

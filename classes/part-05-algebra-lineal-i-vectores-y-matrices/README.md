@@ -192,9 +192,13 @@ compmath catalog --part 05
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Strang, G. *Introduction to Linear Algebra*. 6ª ed., Wellesley-Cambridge, 2023.
 - Axler, S. *Linear Algebra Done Right*. 4ª ed., Springer, 2024.
 - Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
+
+Las 20 clases de esta parte citan 21 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-05-algebra-lineal-i-vectores-y-matrices).
 
 ---
 

@@ -165,12 +165,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Breiman, L. *Random Forests*, Machine Learning, 2001](https://doi.org/10.1023/A:1010933404324) — *uso:* artículo de origen consultado en «Random Forest desde probabilidad».
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 15](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Random Forest desde probabilidad».
+Esta clase enseña **Machine learning · Teoría del aprendizaje · Métodos de kernel**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Breiman, L. *Random Forests*, Machine Learning, 2001](https://doi.org/10.1023/A:1010933404324) — Machine learning: el tema de esta clase · DOI `10.1023/a:1010933404324` verificado en Crossref (2026-08-19).
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009, cap. 15](https://hastie.su.domains/ElemStatLearn/) — Machine learning: el tema de esta clase · ISBN-13 `9780387848570` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

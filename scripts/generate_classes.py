@@ -450,17 +450,25 @@ def _readme(clase, parte, demo) -> str:
         "`notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar",
         "código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.",
         "",
-        "## 🔗 Referencias",
+        "## 📚 Bibliografía de la clase",
         "",
     ]
 
     if registro.get("referencias"):
-        # Cada fuente declara **el uso que esta clase hace de ella**, no solo la obra.
-        bloques += [_fmt_lista(sources.class_block(clase["id"], clase["title"])), ""]
+        # Cada obra declara **qué área comparte con esta clase** y en qué estado quedó su
+        # localizador. Lo comprueba `scripts/verify_sources.py` en CI.
+        temas = " · ".join(sources.area_label(a) for a in sources.class_areas(clase["id"]))
         bloques += [
-            "Bibliografía completa de la parte en "
-            "[`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · "
-            "localizador verificable de cada obra en "
+            f"Esta clase enseña **{temas}**. Cada obra dice qué aporta aquí y cómo se "
+            "comprobó su localizador:",
+            "",
+            _fmt_lista(sources.class_block(clase["id"], clase["title"])),
+            "",
+        ]
+        bloques += [
+            "Bibliografía de todas las clases, con el porqué de cada obra, en "
+            "[`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · "
+            "localizador y estado de cada obra en "
             "[`sources/bibliography.json`](../../../sources/bibliography.json).",
             "",
         ]
@@ -1057,6 +1065,17 @@ def _tabla_clases_parte(parte, clases) -> str:
     return "\n".join(filas)
 
 
+def _obras_de_la_parte(clases) -> int:
+    """Obras distintas que citan las clases de una parte."""
+    claves = set()
+    for clase in clases:
+        for cruda in content.class_content(clase["id"]).get("referencias") or []:
+            match = sources.REF_RE.match(cruda.strip())
+            if match:
+                claves.add(sources.source_key(match.group("url")))
+    return len(claves)
+
+
 def _part_readme(parte, clases) -> str:
     extra = content.part_content(parte["id"])
     partes = curriculum.parts()
@@ -1163,7 +1182,13 @@ def _part_readme(parte, clases) -> str:
         "",
         "## 📖 Bibliografía",
         "",
+        "Obras de referencia de la parte:",
+        "",
         _fmt_lista(parte["references"]),
+        "",
+        f"Las {len(clases)} clases de esta parte citan {_obras_de_la_parte(clases)} obras "
+        "distintas. Cuál sostiene cada clase, y por qué, en "
+        f"[`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-{parte['id']}-{parte['slug']}).",
         "",
         "---",
         "",
@@ -1406,6 +1431,174 @@ compmath run <clase>        # ejecutar su laboratorio
 """
 
 
+TIPO_EN_ESPANOL = {
+    "book": "libro",
+    "paper": "artículo",
+    "standard": "norma",
+    "reference": "referencia",
+    "dataset": "conjunto de datos",
+}
+
+MARCA_PAPEL = {
+    "ancla": "🎯",
+    "conexion": "🔗",
+    "herramienta": "🛠️",
+    "fuera-de-tema": "⚠️",
+}
+
+
+def _celda(texto: str) -> str:
+    """Texto seguro dentro de una celda de tabla markdown."""
+    return texto.replace("|", "\\|").replace("\n", " ").strip()
+
+
+def _localizador_md(entrada: Dict[str, Any]) -> str:
+    """Localizador de una obra, con su estado, dentro de una celda."""
+    if not entrada:
+        return "—"
+    if entrada.get("isbn13"):
+        etiqueta = f"ISBN {entrada['isbn13']}"
+    elif entrada.get("doi"):
+        etiqueta = f"DOI {entrada['doi']}"
+    else:
+        etiqueta = "fuente primaria"
+    marca = "✅" if entrada.get("status") == "verificada" else "⏳"
+    return f"{marca} [{_celda(etiqueta)}]({entrada['locator']})"
+
+
+def _porque_md(fit) -> str:
+    """Por qué esa obra está en esa clase, dentro de una celda."""
+    marca = MARCA_PAPEL.get(fit.role, "")
+    if fit.role == "herramienta":
+        return f"{marca} herramienta del laboratorio"
+    temas = " · ".join(sources.area_label(a) for a in fit.areas) or "sin tema declarado"
+    if fit.role == "conexion":
+        return f"{marca} {temas} (conexión de la parte)"
+    if fit.role == "fuera-de-tema":
+        return f"{marca} {temas} — fuera del tema de la parte"
+    return f"{marca} {temas}"
+
+
+def _bibliografia_md() -> str:
+    """`docs/BIBLIOGRAPHY.md`: qué obra sostiene cada clase y por qué.
+
+    Es la vista que hace comprobable la afirmación del repositorio: nada se
+    escribió de la nada. Sale de las citas de `content/`, de los localizadores de
+    `sources/bibliography.json` y de los temas de `sources/areas.yaml`.
+    """
+    registry = sources.load_registry()
+    por_clave = sources.entries_by_key(registry)
+    cifras = sources.registry_stats(registry)
+
+    indice, secciones = [], []
+    for parte in curriculum.parts():
+        areas = sources.part_areas(parte["id"])
+        obras_de_parte, filas = {}, []
+        for clase in parte["classes"]:
+            enlace_clase = (
+                f"[{clase['id']}](../classes/part-{parte['id']}-{parte['slug']}/"
+                f"{clase['slug']}/README.md)"
+            )
+            citas = content.class_content(clase["id"]).get("referencias") or []
+            for numero, cruda in enumerate(citas):
+                match = sources.REF_RE.match(cruda.strip())
+                if not match:
+                    continue
+                clave = sources.source_key(match.group("url"))
+                entrada = por_clave.get(clave, {})
+                fit = sources.citation_fit(clase["id"], clave, registry)
+                obras_de_parte.setdefault(clave, entrada)
+                filas.append(
+                    f"| {enlace_clase if numero == 0 else '↳'} "
+                    f"| {_celda(clase['title']) if numero == 0 else ''} "
+                    f"| [{_celda(match.group('label'))}]({match.group('url')}) "
+                    f"| {_porque_md(fit)} | {_localizador_md(entrada)} |"
+                )
+        ensena = " · ".join(sources.area_label(a) for a in areas["nucleo"])
+        conecta = " · ".join(sources.area_label(a) for a in areas["conexiones"]) or "—"
+        ancla_id = f"parte-{parte['id']}-{parte['slug']}"
+        indice.append(
+            f"| [{parte['id']} — {parte['title']}](#{ancla_id}) | {_celda(ensena)} "
+            f"| {len(obras_de_parte)} | {len(filas)} |"
+        )
+        secciones.append(
+            f"<a id=\"{ancla_id}\"></a>\n\n"
+            f"## Parte {parte['id']} — {parte['title']}\n\n"
+            f"*{parte['summary']}*\n\n"
+            f"**Enseña:** {ensena}  \n"
+            f"**Conecta con:** {conecta}\n\n"
+            f"{len(obras_de_parte)} obras sostienen {len(filas)} citas en sus "
+            f"{len(parte['classes'])} clases.\n\n"
+            "| Clase | Título | Obra citada | Por qué está aquí | Localizador |\n"
+            "|---|---|---|---|---|\n" + "\n".join(filas)
+        )
+
+    catalogo = sources.sources_used()
+    obras = []
+    for clave, ficha in sorted(catalogo.items(),
+                               key=lambda kv: sources.normalise_title(max(kv[1]["labels"], key=len))):
+        entrada = por_clave.get(clave, {})
+        partes = ", ".join(sorted(set(ficha["parts"])))
+        temas = " · ".join(sources.area_label(a) for a in (entrada.get("covers") or []))
+        obras.append(
+            f"| {_celda(max(ficha['labels'], key=len))} "
+            f"| {TIPO_EN_ESPANOL.get(entrada.get('type'), '—')} | {_celda(temas)} "
+            f"| {len(ficha['used_in'])} cita(s) · partes {partes} "
+            f"| {_localizador_md(entrada)} |"
+        )
+
+    return f"""# 📚 Bibliografía por parte y por clase
+
+Este documento existe para que cualquier afirmación del programa se pueda rastrear hasta
+una obra real. **{cifras['obras']} obras** —libros, artículos, normas y documentación
+oficial— sostienen las **{cifras['usos']} citas** repartidas por las {cifras['clases']}
+clases, y cada una aparece aquí al lado de la clase concreta que la usa.
+
+La redacción del programa es original: estas obras son la fuente del contenido y la vía
+para la profundidad formal que el programa declara **no** cubrir. No se reproduce su
+contenido.
+
+> Documento **generado** por `python scripts/generate_classes.py` a partir de las citas de
+> `content/part-NN.yaml`, los localizadores de
+> [`sources/bibliography.json`](../sources/bibliography.json) y los temas de
+> [`sources/areas.yaml`](../sources/areas.yaml). No se escribe a mano.
+
+## Cómo se lee
+
+La columna **por qué está aquí** dice qué relación tiene la obra con la clase que la cita.
+No es una opinión: sale de cruzar el área que la obra declara cubrir con el área que la
+clase enseña.
+
+| Marca | Significado |
+|---|---|
+| 🎯 | la obra trata **el tema de la clase**: es la fuente que sostiene su contenido |
+| 🔗 | la obra trata un área con la que la parte **declara conectar** (casi siempre, el uso en IA del tema) |
+| 🛠️ | documentación de la herramienta con la que se ejecuta el laboratorio |
+| ✅ | localizador resuelto contra su autoridad (ISBN en Open Library, DOI en Crossref, URL comprobada) |
+| ⏳ | localizador todavía sin resolver: se marca, no se rellena a ojo |
+
+`python scripts/verify_sources.py` bloquea la CI si una clase se queda sin ninguna obra 🎯
+o si alguna cita no encaja en el tema de su parte. Hoy: **{cifras['clases_ancladas']} de
+{cifras['clases']} clases** ancladas en una obra de su propio tema,
+**{cifras['papeles']['ancla']}** citas 🎯, **{cifras['papeles']['conexion']}** citas 🔗 y
+**{cifras['papeles']['herramienta']}** de herramienta.
+
+## Índice de partes
+
+| Parte | Qué enseña | Obras | Citas |
+|---|---|---:|---:|
+{chr(10).join(indice)}
+
+{(chr(10) + chr(10)).join(secciones)}
+
+## Índice de obras ({cifras['obras']})
+
+| Obra | Tipo | Temas que cubre | Uso en el programa | Localizador |
+|---|---|---|---|---|
+{chr(10).join(obras)}
+"""
+
+
 def generar(check: bool = False) -> int:
     """Genera (o verifica) clases, catálogo, índices, rutas por perfil e integraciones."""
     escritos = 0
@@ -1453,6 +1646,7 @@ def generar(check: bool = False) -> int:
             escribir(parte_dir / "GLOSARIO.md", glosario)
 
     escribir(ROOT / "classes" / "README.md", _classes_index())
+    escribir(ROOT / "docs" / "BIBLIOGRAPHY.md", _bibliografia_md())
 
     for slug, titulo, perfil, partes, hitos, objetivo in RUTAS:
         escribir(ROOT / "learning-paths" / f"{slug}.md",

@@ -191,9 +191,13 @@ compmath catalog --part 07
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Spivak, M. *Calculus*. 4ª ed., Publish or Perish, 2008.
 - Apostol, T. *Calculus, Vol. 1*. 2ª ed., Wiley, 1967.
 - Strang, G. *Calculus*. 3ª ed., Wellesley-Cambridge, 2017.
+
+Las 20 clases de esta parte citan 17 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-07-calculo-diferencial-e-integral).
 
 ---
 

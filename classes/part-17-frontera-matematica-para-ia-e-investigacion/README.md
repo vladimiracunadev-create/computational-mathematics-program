@@ -203,10 +203,14 @@ compmath catalog --part 17
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Rasmussen, C.; Williams, C. *Gaussian Processes for Machine Learning*. MIT Press, 2006.
 - Neal, R. *MCMC using Hamiltonian dynamics*. Handbook of MCMC, 2011.
 - Peyré, G.; Cuturi, M. *Computational Optimal Transport*. 2019.
 - Shalev-Shwartz, S.; Ben-David, S. *Understanding Machine Learning*. Cambridge, 2014.
+
+Las 20 clases de esta parte citan 36 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-17-frontera-matematica-para-ia-e-investigacion).
 
 ---
 

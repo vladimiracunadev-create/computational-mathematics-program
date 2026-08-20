@@ -162,12 +162,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Python: `math.hypot`](https://docs.python.org/3/library/math.html#math.hypot) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Teorema de Pitágoras».
-- [Maor, E. *The Pythagorean Theorem: A 4,000-Year History*. Princeton, 2007](https://press.princeton.edu/books/paperback/9780691196886/the-pythagorean-theorem) — *uso:* desarrollo formal del tema en «Teorema de Pitágoras».
+Esta clase enseña **Geometría y trigonometría**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Python: `math.hypot`](https://docs.python.org/3/library/math.html#math.hypot) — documentación de la herramienta que ejecuta el laboratorio · URL de la fuente primaria comprobada en Python Software Foundation (2026-08-19).
+- [Maor, E. *The Pythagorean Theorem: A 4,000-Year History*. Princeton, 2007](https://press.princeton.edu/books/paperback/9780691196886/the-pythagorean-theorem) — Geometría y trigonometría: el tema de esta clase · ISBN-13 `9780691196886` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

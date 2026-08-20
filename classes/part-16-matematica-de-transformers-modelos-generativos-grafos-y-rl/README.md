@@ -202,10 +202,14 @@ compmath catalog --part 16
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017.
 - Kingma, D.; Welling, M. *Auto-Encoding Variational Bayes*. ICLR, 2014.
 - Ho, J.; Jain, A.; Abbeel, P. *Denoising Diffusion Probabilistic Models*. NeurIPS, 2020.
 - Sutton, R.; Barto, A. *Reinforcement Learning: An Introduction*. 2ª ed., MIT Press, 2018.
+
+Las 20 clases de esta parte citan 33 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-16-matematica-de-transformers-modelos-generativos-grafos-y-rl).
 
 ---
 

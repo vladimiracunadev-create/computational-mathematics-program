@@ -164,12 +164,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670) — *uso:* artículo de origen consultado en «ELBO y variational inference».
-- [Kingma, D.; Welling, M. *An Introduction to Variational Autoencoders*, 2019](https://arxiv.org/abs/1906.02691) — *uso:* artículo de origen consultado en «ELBO y variational inference».
+Esta clase enseña **Deep learning · Modelos de lenguaje · Modelos generativos · Aprendizaje por refuerzo · Grafos y redes**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Blei, D.; Kucukelbir, A.; McAuliffe, J. *Variational inference: a review for statisticians*, JASA, 2017](https://arxiv.org/abs/1601.00670) — Inferencia bayesiana y Machine learning: conexión declarada de esta parte · DOI `10.48550/arxiv.1601.00670` verificado en DataCite (2026-08-19).
+- [Kingma, D.; Welling, M. *An Introduction to Variational Autoencoders*, 2019](https://arxiv.org/abs/1906.02691) — Modelos generativos: el tema de esta clase · DOI `10.48550/arxiv.1906.02691` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

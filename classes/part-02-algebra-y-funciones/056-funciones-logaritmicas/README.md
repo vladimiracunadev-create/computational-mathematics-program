@@ -156,12 +156,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Python: `math.log` y variantes](https://docs.python.org/3/library/math.html#math.log) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Funciones logarítmicas».
-- [Cover & Thomas. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — *uso:* artículo de origen consultado en «Funciones logarítmicas».
+Esta clase enseña **Álgebra y funciones · Teoría de la información**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Python: `math.log` y variantes](https://docs.python.org/3/library/math.html#math.log) — documentación de la herramienta que ejecuta el laboratorio · URL de la fuente primaria comprobada en Python Software Foundation (2026-08-19).
+- [Cover & Thomas. *Elements of Information Theory*, 2ª ed., Wiley, 2006](https://onlinelibrary.wiley.com/doi/book/10.1002/047174882X) — Teoría de la información: el tema de esta clase · DOI `10.1002/047174882x` verificado en Crossref (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

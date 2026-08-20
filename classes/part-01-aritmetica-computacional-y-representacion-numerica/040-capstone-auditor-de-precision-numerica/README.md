@@ -156,12 +156,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) — *uso:* desarrollo formal del tema en «Capstone: auditor de precisión numérica».
-- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6) — *uso:* desarrollo formal del tema en «Capstone: auditor de precisión numérica».
+Esta clase enseña **Aritmética de máquina · Métodos numéricos**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) — Aritmética de máquina y Métodos numéricos: el tema de esta clase · ISBN-13 `9780898718027`, pendiente de resolver.
+- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6) — Aritmética de máquina: el tema de esta clase · ISBN-13 `9783319765266` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

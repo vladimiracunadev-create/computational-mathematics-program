@@ -160,12 +160,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5) — *uso:* artículo de origen consultado en «Variables como cantidades desconocidas».
-- [Katz, V. *A History of Mathematics*, 3ª ed., Pearson, 2008, cap. 7](https://www.pearson.com/en-us/subject-catalog/p/history-of-mathematics-a/P200000006166) — *uso:* obra de referencia consultada en «Variables como cantidades desconocidas».
+Esta clase enseña **Fundamentos y lenguaje matemático · Lógica y demostración · Álgebra y funciones · Teoría de números**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Gelfand & Shen. *Algebra*. Birkhäuser, 2002](https://link.springer.com/book/10.1007/978-1-4612-0335-5) — Álgebra y funciones: el tema de esta clase · DOI `10.1007/978-1-4612-0335-5`, pendiente de resolver.
+- [Katz, V. *A History of Mathematics*, 3ª ed., Pearson, 2008, cap. 7](https://www.pearson.com/en-us/subject-catalog/p/history-of-mathematics-a/P200000006166) — Historia de la matemática: conexión declarada de esta parte · URL de la fuente primaria comprobada en sitio de la obra o de su editorial (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

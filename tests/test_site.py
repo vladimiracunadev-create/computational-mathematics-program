@@ -123,7 +123,7 @@ class TestSitioReflejaElContenido(unittest.TestCase):
                 self.assertIn("<h2>Desarrollo</h2>", texto)
                 self.assertIn("<h2>Ejemplo trabajado</h2>", texto)
                 self.assertIn("<h2>Errores comunes</h2>", texto)
-                self.assertIn("<h2>Fuentes</h2>", texto)
+                self.assertIn("<h2>Bibliografía de la clase</h2>", texto)
 
     def test_el_glosario_del_sitio_enlaza_a_clases_que_existen(self):
         enlace = re.compile(r'<a href="\.\./classes/(\d{3})\.html">\1</a>')

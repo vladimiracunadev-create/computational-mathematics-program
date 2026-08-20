@@ -206,9 +206,13 @@ compmath catalog --part 09
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Ross, S. *A First Course in Probability*. 10ª ed., Pearson, 2018.
 - Blitzstein, J.; Hwang, J. *Introduction to Probability*. 2ª ed., CRC, 2019.
 - Durrett, R. *Probability: Theory and Examples*. 5ª ed., Cambridge, 2019.
+
+Las 20 clases de esta parte citan 7 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-09-probabilidad-y-procesos-aleatorios).
 
 ---
 

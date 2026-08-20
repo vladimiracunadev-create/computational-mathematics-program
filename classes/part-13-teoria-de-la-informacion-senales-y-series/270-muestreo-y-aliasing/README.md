@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Shannon, C. *Communication in the presence of noise*, Proceedings of the IRE, 1949](https://doi.org/10.1109/JRPROC.1949.232969) — *uso:* artículo de origen consultado en «Muestreo y aliasing».
-- [Zhang, R. *Making convolutional networks shift-invariant again*, ICML, 2019](https://arxiv.org/abs/1904.11486) — *uso:* artículo de origen consultado en «Muestreo y aliasing».
+Esta clase enseña **Teoría de la información · Procesamiento de señales · Series temporales**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Shannon, C. *Communication in the presence of noise*, Proceedings of the IRE, 1949](https://doi.org/10.1109/JRPROC.1949.232969) — Procesamiento de señales y Teoría de la información: el tema de esta clase · DOI `10.1109/jrproc.1949.232969` verificado en Crossref (2026-08-19).
+- [Zhang, R. *Making convolutional networks shift-invariant again*, ICML, 2019](https://arxiv.org/abs/1904.11486) — Procesamiento de señales: el tema de esta clase · DOI `10.48550/arxiv.1904.11486` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

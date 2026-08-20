@@ -189,9 +189,13 @@ compmath catalog --part 08
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Petersen, K.; Pedersen, M. *The Matrix Cookbook*. 2012.
 - Baydin, A. et al. *Automatic Differentiation in Machine Learning: a Survey*. JMLR, 2018.
 - Magnus, J.; Neudecker, H. *Matrix Differential Calculus*. 3ª ed., Wiley, 2019.
+
+Las 20 clases de esta parte citan 19 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-08-calculo-multivariable-matricial-y-autodiferenciacion).
 
 ---
 

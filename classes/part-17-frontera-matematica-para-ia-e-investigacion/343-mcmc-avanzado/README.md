@@ -165,12 +165,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Brooks, S. et al. *Handbook of Markov Chain Monte Carlo*, CRC, 2011](https://doi.org/10.1201/b10905) — *uso:* artículo de origen consultado en «MCMC avanzado».
-- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](https://www.stat.columbia.edu/~gelman/book/) — *uso:* obra de referencia consultada en «MCMC avanzado».
+Esta clase enseña **Teoría del aprendizaje · Procesos gaussianos · Transporte óptimo · Geometría diferencial · Modelos generativos · Inferencia bayesiana · Procesos estocásticos**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Brooks, S. et al. *Handbook of Markov Chain Monte Carlo*, CRC, 2011](https://doi.org/10.1201/b10905) — Inferencia bayesiana: el tema de esta clase · DOI `10.1201/b10905` verificado en Crossref (2026-08-19).
+- [Gelman, A. et al. *Bayesian Data Analysis*, 3ª ed., CRC, 2013](https://www.stat.columbia.edu/~gelman/book/) — Inferencia bayesiana: el tema de esta clase · ISBN-13 `9781439840955` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

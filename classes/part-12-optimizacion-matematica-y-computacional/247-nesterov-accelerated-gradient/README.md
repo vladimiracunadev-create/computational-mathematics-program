@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Nesterov, Y. *A method for solving the convex programming problem with convergence rate O(1/k²)*, 1983](https://cir.nii.ac.jp/crid/1570572699326076416) — *uso:* obra de referencia consultada en «Nesterov accelerated gradient».
-- [Sutskever, I. et al. *On the importance of initialization and momentum in deep learning*, ICML, 2013](https://proceedings.mlr.press/v28/sutskever13.html) — *uso:* obra de referencia consultada en «Nesterov accelerated gradient».
+Esta clase enseña **Optimización**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Nesterov, Y. *A method for solving the convex programming problem with convergence rate O(1/k²)*, 1983](https://cir.nii.ac.jp/crid/1570572699326076416) — Optimización: el tema de esta clase · URL de la fuente primaria comprobada en cir.nii.ac.jp (2026-08-19).
+- [Sutskever, I. et al. *On the importance of initialization and momentum in deep learning*, ICML, 2013](https://proceedings.mlr.press/v28/sutskever13.html) — Optimización: el tema de esta clase · URL de la fuente primaria comprobada en Proceedings of Machine Learning Research (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -203,9 +203,13 @@ compmath catalog --part 15
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*. MIT Press, 2016.
 - Glorot, X.; Bengio, Y. *Understanding the difficulty of training deep feedforward neural networks*. AISTATS, 2010.
 - He, K. et al. *Delving Deep into Rectifiers*. ICCV, 2015.
+
+Las 20 clases de esta parte citan 35 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-15-matematica-de-deep-learning).
 
 ---
 

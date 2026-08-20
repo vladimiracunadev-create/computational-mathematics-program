@@ -165,12 +165,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Cohen, J. *Statistical Power Analysis for the Behavioral Sciences*, 2ª ed., Routledge, 1988](https://doi.org/10.4324/9780203771587) — *uso:* desarrollo formal del tema en «Potencia estadística».
-- [Button, K. et al. *Power failure: why small sample size undermines the reliability of neuroscience*, Nature Reviews Neuroscience, 2013](https://doi.org/10.1038/nrn3475) — *uso:* artículo de origen consultado en «Potencia estadística».
+Esta clase enseña **Estadística e inferencia · Metodología experimental · Inferencia bayesiana**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Cohen, J. *Statistical Power Analysis for the Behavioral Sciences*, 2ª ed., Routledge, 1988](https://doi.org/10.4324/9780203771587) — Estadística e inferencia y Metodología experimental: el tema de esta clase · ISBN-13 `9780203771587` verificado en International ISBN Agency (2026-08-19).
+- [Button, K. et al. *Power failure: why small sample size undermines the reliability of neuroscience*, Nature Reviews Neuroscience, 2013](https://doi.org/10.1038/nrn3475) — Estadística e inferencia y Metodología experimental: el tema de esta clase · DOI `10.1038/nrn3475` verificado en Crossref (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -162,12 +162,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 3](https://linear.axler.net/) — *uso:* obra de referencia consultada en «Transformaciones lineales».
-- [3Blue1Brown. *Linear transformations and matrices*](https://www.3blue1brown.com/lessons/linear-transformations) — *uso:* exposición alternativa del tema en «Transformaciones lineales».
+Esta clase enseña **Álgebra lineal · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Axler, S. *Linear Algebra Done Right*, 4ª ed., Springer, 2024, cap. 3](https://linear.axler.net/) — Álgebra lineal: el tema de esta clase · URL de la fuente primaria comprobada en sitio oficial del autor (2026-08-19).
+- [3Blue1Brown. *Linear transformations and matrices*](https://www.3blue1brown.com/lessons/linear-transformations) — Álgebra lineal: el tema de esta clase · URL de la fuente primaria comprobada en www.3blue1brown.com (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

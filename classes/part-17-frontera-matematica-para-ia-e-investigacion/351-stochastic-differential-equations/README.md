@@ -164,12 +164,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Øksendal, B. *Stochastic Differential Equations*, 6ª ed., Springer, 2003](https://doi.org/10.1007/978-3-642-14394-6) — *uso:* desarrollo formal del tema en «Stochastic differential equations».
-- [Song, Y. et al. *Score-Based Generative Modeling through SDEs*, ICLR, 2021](https://arxiv.org/abs/2011.13456) — *uso:* artículo de origen consultado en «Stochastic differential equations».
+Esta clase enseña **Teoría del aprendizaje · Procesos gaussianos · Transporte óptimo · Geometría diferencial · Modelos generativos · Inferencia bayesiana · Procesos estocásticos**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Øksendal, B. *Stochastic Differential Equations*, 6ª ed., Springer, 2003](https://doi.org/10.1007/978-3-642-14394-6) — Procesos estocásticos: el tema de esta clase · ISBN-13 `9783642143946` verificado en International ISBN Agency (2026-08-19).
+- [Song, Y. et al. *Score-Based Generative Modeling through SDEs*, ICLR, 2021](https://arxiv.org/abs/2011.13456) — Modelos generativos y Procesos estocásticos: el tema de esta clase · DOI `10.48550/arxiv.2011.13456` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

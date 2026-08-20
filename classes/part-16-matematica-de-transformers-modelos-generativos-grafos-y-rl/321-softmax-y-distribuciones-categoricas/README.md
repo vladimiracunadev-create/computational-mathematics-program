@@ -165,12 +165,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Softmax y distribuciones categóricas».
-- [Bridle, J. *Probabilistic interpretation of feedforward classification network outputs*, 1990](https://doi.org/10.1007/978-3-642-76153-9_28) — *uso:* desarrollo formal del tema en «Softmax y distribuciones categóricas».
+Esta clase enseña **Deep learning · Modelos de lenguaje · Modelos generativos · Aprendizaje por refuerzo · Grafos y redes**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/) — Deep learning: el tema de esta clase · ISBN-13 `9780262337373` verificado en International ISBN Agency (2026-08-19).
+- [Bridle, J. *Probabilistic interpretation of feedforward classification network outputs*, 1990](https://doi.org/10.1007/978-3-642-76153-9_28) — Deep learning: el tema de esta clase · DOI `10.1007/978-3-642-76153-9_28` verificado en Crossref (2026-08-20).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

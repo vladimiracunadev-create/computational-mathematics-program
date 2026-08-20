@@ -741,7 +741,7 @@ def _class_page(clase: Dict[str, Any], parte: Dict[str, Any], indice: List[Dict[
         if ped.get("aplicacion") else ""
     )
     referencias = (
-        f'\n  <h2>Fuentes</h2>\n{_lista(sources.class_block(clase["id"], clase["title"]))}'
+        f'\n  <h2>Bibliografía de la clase</h2>\n{_lista(sources.class_block(clase["id"], clase["title"]))}'
         if ped.get("referencias") else ""
     )
 

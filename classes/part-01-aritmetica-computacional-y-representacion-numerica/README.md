@@ -189,9 +189,13 @@ compmath catalog --part 01
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM Computing Surveys, 1991.
 - Higham, N. J. *Accuracy and Stability of Numerical Algorithms*. 2ª ed., SIAM, 2002.
 - IEEE 754-2019 Standard for Floating-Point Arithmetic.
+
+Las 20 clases de esta parte citan 27 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-01-aritmetica-computacional-y-representacion-numerica).
 
 ---
 

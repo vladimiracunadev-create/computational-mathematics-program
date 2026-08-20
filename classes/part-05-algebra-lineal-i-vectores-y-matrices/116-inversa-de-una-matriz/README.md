@@ -158,12 +158,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) — *uso:* desarrollo formal del tema en «Inversa de una matriz».
-- [NumPy: por qué usar `solve` en lugar de `inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Inversa de una matriz».
+Esta clase enseña **Álgebra lineal · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Higham, N. J. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://epubs.siam.org/doi/book/10.1137/1.9780898718027) — Álgebra lineal numérica: el tema de esta clase · ISBN-13 `9780898718027`, pendiente de resolver.
+- [NumPy: por qué usar `solve` en lugar de `inv`](https://numpy.org/doc/stable/reference/generated/numpy.linalg.solve.html) — Álgebra lineal numérica: el tema de esta clase · URL de la fuente primaria comprobada en NumPy developers (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -158,12 +158,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [NumPy: `einsum`](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Einstein summation».
-- [Rocktäschel, T. *Einsum is All You Need*, 2018](https://rockt.ai/2018/04/30/einsum) — *uso:* exposición alternativa del tema en «Einstein summation».
+Esta clase enseña **Álgebra lineal · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [NumPy: `einsum`](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html) — Álgebra lineal: el tema de esta clase · URL de la fuente primaria comprobada en NumPy developers (2026-08-19).
+- [Rocktäschel, T. *Einsum is All You Need*, 2018](https://rockt.ai/2018/04/30/einsum) — Álgebra lineal: el tema de esta clase · URL de la fuente primaria comprobada en rockt.ai (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

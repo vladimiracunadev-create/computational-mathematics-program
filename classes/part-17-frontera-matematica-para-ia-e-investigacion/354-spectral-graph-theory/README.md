@@ -166,12 +166,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189) — *uso:* artículo de origen consultado en «Spectral graph theory».
-- [Shi, J.; Malik, J. *Normalized cuts and image segmentation*, IEEE TPAMI, 2000](https://doi.org/10.1109/34.868688) — *uso:* artículo de origen consultado en «Spectral graph theory».
+Esta clase enseña **Grafos y redes · Álgebra lineal**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [von Luxburg, U. *A tutorial on spectral clustering*, Statistics and Computing, 2007](https://arxiv.org/abs/0711.0189) — Álgebra lineal y Grafos y redes: el tema de esta clase · DOI `10.48550/arxiv.0711.0189` verificado en DataCite (2026-08-19).
+- [Shi, J.; Malik, J. *Normalized cuts and image segmentation*, IEEE TPAMI, 2000](https://doi.org/10.1109/34.868688) — Grafos y redes: el tema de esta clase · DOI `10.1109/34.868688` verificado en Crossref (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

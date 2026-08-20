@@ -160,12 +160,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 3](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Funciones: dominio y rango».
-- [Gelfand, Glagoleva & Shnol. *Functions and Graphs*. Dover, 2002](https://store.doverpublications.com/products/9780486425641) — *uso:* desarrollo formal del tema en «Funciones: dominio y rango».
+Esta clase enseña **Álgebra y funciones**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 3](https://www.mathpop.com/calculus) — Análisis matemático y Cálculo: conexión declarada de esta parte · ISBN-13 `9780914098911` verificado en International ISBN Agency (2026-08-19).
+- [Gelfand, Glagoleva & Shnol. *Functions and Graphs*. Dover, 2002](https://store.doverpublications.com/products/9780486425641) — Álgebra y funciones: el tema de esta clase · ISBN-13 `9780486425641` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

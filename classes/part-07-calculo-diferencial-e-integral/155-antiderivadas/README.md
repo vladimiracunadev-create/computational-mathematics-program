@@ -158,12 +158,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Liouville's theorem on elementary integrals — Wolfram MathWorld](https://mathworld.wolfram.com/LiouvillesTheorem.html) — *uso:* exposición alternativa del tema en «Antiderivadas».
-- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 14](https://www.mathpop.com/calculus) — *uso:* exposición alternativa del tema en «Antiderivadas».
+Esta clase enseña **Cálculo · Análisis matemático**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Liouville's theorem on elementary integrals — Wolfram MathWorld](https://mathworld.wolfram.com/LiouvillesTheorem.html) — Análisis matemático y Cálculo: el tema de esta clase · URL de la fuente primaria, pendiente de resolver.
+- [Spivak, M. *Calculus*, 4ª ed., 2008, cap. 14](https://www.mathpop.com/calculus) — Análisis matemático y Cálculo: el tema de esta clase · ISBN-13 `9780914098911` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

@@ -201,9 +201,13 @@ compmath catalog --part 13
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Cover, T.; Thomas, J. *Elements of Information Theory*. 2ª ed., Wiley, 2006.
 - MacKay, D. *Information Theory, Inference, and Learning Algorithms*. Cambridge, 2003.
 - Oppenheim, A.; Schafer, R. *Discrete-Time Signal Processing*. 3ª ed., Pearson, 2009.
+
+Las 20 clases de esta parte citan 24 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-13-teoria-de-la-informacion-senales-y-series).
 
 ---
 

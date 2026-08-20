@@ -161,12 +161,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A) — *uso:* obra de referencia consultada en «Lógica de predicados y cuantificadores».
-- [Shalev-Shwartz & Ben-David. *Understanding Machine Learning*. Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/) — *uso:* obra de referencia consultada en «Lógica de predicados y cuantificadores».
+Esta clase enseña **Matemática discreta · Lógica y demostración · Algoritmos y complejidad · Teoría de números**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Velleman, D. *How to Prove It*, 3ª ed., Cambridge, 2019](https://www.cambridge.org/core/books/how-to-prove-it/6D2965D625C6836CD4A785A2C843B19A) — Lógica y demostración: el tema de esta clase · ISBN-13 `9781108539890` verificado en International ISBN Agency (2026-08-19).
+- [Shalev-Shwartz & Ben-David. *Understanding Machine Learning*. Cambridge, 2014](https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/) — Machine learning y Teoría del aprendizaje: conexión declarada de esta parte · ISBN-13 `9781139950619` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

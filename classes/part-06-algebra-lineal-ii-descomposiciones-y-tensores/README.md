@@ -189,9 +189,13 @@ compmath catalog --part 06
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Golub, G.; Van Loan, C. *Matrix Computations*. 4ª ed., Johns Hopkins, 2013.
 - Trefethen, L. N.; Bau, D. *Numerical Linear Algebra*. SIAM, 1997.
 - Kolda, T.; Bader, B. *Tensor Decompositions and Applications*. SIAM Review, 2009.
+
+Las 20 clases de esta parte citan 26 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-06-algebra-lineal-ii-descomposiciones-y-tensores).
 
 ---
 

@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/) — *uso:* obra de referencia consultada en «Regularización como optimización».
-- [Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x) — *uso:* artículo de origen consultado en «Regularización como optimización».
+Esta clase enseña **Optimización · Estadística e inferencia**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Hastie, T.; Tibshirani, R.; Friedman, J. *The Elements of Statistical Learning*, 2ª ed., Springer, 2009](https://hastie.su.domains/ElemStatLearn/) — Estadística e inferencia: el tema de esta clase · ISBN-13 `9780387848570` verificado en International ISBN Agency (2026-08-19).
+- [Tibshirani, R. *Regression shrinkage and selection via the lasso*, JRSS-B, 1996](https://doi.org/10.1111/j.2517-6161.1996.tb02080.x) — Estadística e inferencia: el tema de esta clase · DOI `10.1111/j.2517-6161.1996.tb02080.x` verificado en Crossref (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

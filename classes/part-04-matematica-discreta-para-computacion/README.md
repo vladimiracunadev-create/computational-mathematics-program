@@ -192,9 +192,13 @@ compmath catalog --part 04
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Rosen, K. *Discrete Mathematics and Its Applications*. 8ª ed., McGraw-Hill, 2019.
 - Graham, R.; Knuth, D.; Patashnik, O. *Concrete Mathematics*. 2ª ed., Addison-Wesley, 1994.
 - Cormen, T. et al. *Introduction to Algorithms*. 4ª ed., MIT Press, 2022.
+
+Las 20 clases de esta parte citan 23 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-04-matematica-discreta-para-computacion).
 
 ---
 

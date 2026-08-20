@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Glorot, Bordes & Bengio. *Deep Sparse Rectifier Neural Networks*. AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html) — *uso:* obra de referencia consultada en «Funciones por tramos».
-- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Funciones por tramos».
+Esta clase enseña **Álgebra y funciones · Deep learning**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Glorot, Bordes & Bengio. *Deep Sparse Rectifier Neural Networks*. AISTATS, 2011](https://proceedings.mlr.press/v15/glorot11a.html) — Deep learning: el tema de esta clase · URL de la fuente primaria comprobada en Proceedings of Machine Learning Research (2026-08-19).
+- [Goodfellow, Bengio & Courville. *Deep Learning*. MIT Press, 2016, cap. 6](https://www.deeplearningbook.org/) — Deep learning: el tema de esta clase · ISBN-13 `9780262337373` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

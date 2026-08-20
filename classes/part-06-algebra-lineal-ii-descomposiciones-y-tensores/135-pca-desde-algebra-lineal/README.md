@@ -168,12 +168,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Jolliffe, I. T. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://link.springer.com/book/10.1007/b98835) — *uso:* artículo de origen consultado en «PCA desde álgebra lineal».
-- [Shlens, J. *A Tutorial on Principal Component Analysis*. arXiv, 2014](https://arxiv.org/abs/1404.1100) — *uso:* artículo de origen consultado en «PCA desde álgebra lineal».
+Esta clase enseña **Álgebra lineal · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Jolliffe, I. T. *Principal Component Analysis*, 2ª ed., Springer, 2002](https://link.springer.com/book/10.1007/b98835) — Álgebra lineal: el tema de esta clase · DOI `10.1007/b98835` verificado en Crossref (2026-08-19).
+- [Shlens, J. *A Tutorial on Principal Component Analysis*. arXiv, 2014](https://arxiv.org/abs/1404.1100) — Álgebra lineal: el tema de esta clase · DOI `10.48550/arxiv.1404.1100` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

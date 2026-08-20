@@ -168,12 +168,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762) — *uso:* artículo de origen consultado en «Self-attention».
-- [Radford, A. et al. *Improving Language Understanding by Generative Pre-Training*, 2018](https://openai.com/research/language-unsupervised) — *uso:* obra de referencia consultada en «Self-attention».
+Esta clase enseña **Deep learning · Modelos de lenguaje · Modelos generativos · Aprendizaje por refuerzo · Grafos y redes**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Vaswani, A. et al. *Attention Is All You Need*, NeurIPS, 2017](https://arxiv.org/abs/1706.03762) — Deep learning y Modelos de lenguaje: el tema de esta clase · DOI `10.48550/arxiv.1706.03762` verificado en DataCite (2026-08-19).
+- [Radford, A. et al. *Improving Language Understanding by Generative Pre-Training*, 2018](https://openai.com/research/language-unsupervised) — Deep learning y Modelos de lenguaje: el tema de esta clase · URL de la fuente primaria comprobada en openai.com (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

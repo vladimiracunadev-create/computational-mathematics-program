@@ -164,12 +164,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 3](https://web.stanford.edu/~boyd/cvxbook/) — *uso:* obra de referencia consultada en «Convexidad».
-- [Dauphin, Y. et al. *Identifying and attacking the saddle point problem*, NeurIPS, 2014](https://arxiv.org/abs/1406.2572) — *uso:* artículo de origen consultado en «Convexidad».
+Esta clase enseña **Optimización**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Boyd, S.; Vandenberghe, L. *Convex Optimization*, Cambridge, 2004, cap. 3](https://web.stanford.edu/~boyd/cvxbook/) — Optimización: el tema de esta clase · ISBN-13 `9780511804441` verificado en International ISBN Agency (2026-08-19).
+- [Dauphin, Y. et al. *Identifying and attacking the saddle point problem*, NeurIPS, 2014](https://arxiv.org/abs/1406.2572) — Optimización: el tema de esta clase · DOI `10.48550/arxiv.1406.2572` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

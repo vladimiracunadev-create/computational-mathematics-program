@@ -161,12 +161,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/) — *uso:* obra de referencia consultada en «Aplicaciones en visión, robótica y videojuegos».
-- [Akenine-Möller, Haines & Hoffman. *Real-Time Rendering*, 4ª ed., CRC Press, 2018](https://www.realtimerendering.com/) — *uso:* obra de referencia consultada en «Aplicaciones en visión, robótica y videojuegos».
+Esta clase enseña **Geometría y trigonometría**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Hartley & Zisserman. *Multiple View Geometry in Computer Vision*, 2ª ed., 2004](https://www.robots.ox.ac.uk/~vgg/hzbook/) — Geometría y trigonometría: el tema de esta clase · ISBN-13 `9780511186189` verificado en International ISBN Agency (2026-08-19).
+- [Akenine-Möller, Haines & Hoffman. *Real-Time Rendering*, 4ª ed., CRC Press, 2018](https://www.realtimerendering.com/) — Geometría y trigonometría: el tema de esta clase · ISBN-13 `9780429225406` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

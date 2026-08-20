@@ -160,12 +160,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Aggarwal, Hinneburg & Keim. *On the Surprising Behavior of Distance Metrics in High Dimensional Space*. ICDT, 2001](https://bib.dbvis.de/uploadedFiles/155.pdf) — *uso:* obra de referencia consultada en «Puntos, segmentos y distancias».
-- [Python: `math.dist`](https://docs.python.org/3/library/math.html#math.dist) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Puntos, segmentos y distancias».
+Esta clase enseña **Geometría y trigonometría**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Aggarwal, Hinneburg & Keim. *On the Surprising Behavior of Distance Metrics in High Dimensional Space*. ICDT, 2001](https://bib.dbvis.de/uploadedFiles/155.pdf) — Geometría y trigonometría: el tema de esta clase · URL de la fuente primaria comprobada en bib.dbvis.de (2026-08-19).
+- [Python: `math.dist`](https://docs.python.org/3/library/math.html#math.dist) — documentación de la herramienta que ejecuta el laboratorio · URL de la fuente primaria comprobada en Python Software Foundation (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

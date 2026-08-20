@@ -188,9 +188,13 @@ compmath catalog --part 03
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Hartley, R.; Zisserman, A. *Multiple View Geometry in Computer Vision*. 2ª ed., Cambridge, 2004.
 - Coxeter, H. S. M. *Introduction to Geometry*. 2ª ed., Wiley, 1989.
 - Lengyel, E. *Mathematics for 3D Game Programming and Computer Graphics*. 3ª ed., 2011.
+
+Las 20 clases de esta parte citan 28 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-03-geometria-trigonometria-y-geometria-analitica).
 
 ---
 

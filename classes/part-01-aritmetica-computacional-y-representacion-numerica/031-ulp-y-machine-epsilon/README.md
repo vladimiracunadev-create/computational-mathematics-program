@@ -161,12 +161,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., Birkhäuser, 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6) — *uso:* desarrollo formal del tema en «ULP y machine epsilon».
-- [Python: `math.ulp` y `math.nextafter`](https://docs.python.org/3/library/math.html#math.ulp) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «ULP y machine epsilon».
+Esta clase enseña **Aritmética de máquina · Métodos numéricos**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Muller, J.-M. et al. *Handbook of Floating-Point Arithmetic*, 2ª ed., Birkhäuser, 2018](https://link.springer.com/book/10.1007/978-3-319-76526-6) — Aritmética de máquina: el tema de esta clase · ISBN-13 `9783319765266` verificado en International ISBN Agency (2026-08-19).
+- [Python: `math.ulp` y `math.nextafter`](https://docs.python.org/3/library/math.html#math.ulp) — documentación de la herramienta que ejecuta el laboratorio · URL de la fuente primaria comprobada en Python Software Foundation (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

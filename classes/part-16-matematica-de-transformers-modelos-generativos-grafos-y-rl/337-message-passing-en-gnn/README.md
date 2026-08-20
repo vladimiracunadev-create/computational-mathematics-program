@@ -168,12 +168,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Kipf, T.; Welling, M. *Semi-Supervised Classification with Graph Convolutional Networks*, ICLR, 2017](https://arxiv.org/abs/1609.02907) — *uso:* artículo de origen consultado en «Message passing en GNN».
-- [Gilmer, J. et al. *Neural Message Passing for Quantum Chemistry*, ICML, 2017](https://arxiv.org/abs/1704.01212) — *uso:* artículo de origen consultado en «Message passing en GNN».
+Esta clase enseña **Deep learning · Modelos de lenguaje · Modelos generativos · Aprendizaje por refuerzo · Grafos y redes**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Kipf, T.; Welling, M. *Semi-Supervised Classification with Graph Convolutional Networks*, ICLR, 2017](https://arxiv.org/abs/1609.02907) — Deep learning y Grafos y redes: el tema de esta clase · DOI `10.48550/arxiv.1609.02907` verificado en DataCite (2026-08-19).
+- [Gilmer, J. et al. *Neural Message Passing for Quantum Chemistry*, ICML, 2017](https://arxiv.org/abs/1704.01212) — Deep learning y Grafos y redes: el tema de esta clase · DOI `10.48550/arxiv.1704.01212` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

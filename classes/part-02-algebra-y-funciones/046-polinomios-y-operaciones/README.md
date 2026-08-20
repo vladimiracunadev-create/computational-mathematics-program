@@ -162,12 +162,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.6](https://www-cs-faculty.stanford.edu/~knuth/taocp.html) — *uso:* obra de referencia consultada en «Polinomios y operaciones».
-- [NumPy: `polyval` y el esquema de Horner](https://numpy.org/doc/stable/reference/generated/numpy.polyval.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Polinomios y operaciones».
+Esta clase enseña **Álgebra y funciones · Algoritmos y complejidad**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Knuth, D. *The Art of Computer Programming*, vol. 2, 3ª ed., 1997, secc. 4.6](https://www-cs-faculty.stanford.edu/~knuth/taocp.html) — Algoritmos y complejidad: el tema de esta clase · URL de la fuente primaria comprobada en sitio de la obra o de su editorial (2026-08-19).
+- [NumPy: `polyval` y el esquema de Horner](https://numpy.org/doc/stable/reference/generated/numpy.polyval.html) — Algoritmos y complejidad: el tema de esta clase · URL de la fuente primaria comprobada en NumPy developers (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

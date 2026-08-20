@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html) — *uso:* documentación de la herramienta que ejecuta el laboratorio en «Decimales y conversiones».
-- [Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008, cap. 9](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865) — *uso:* desarrollo formal del tema en «Decimales y conversiones».
+Esta clase enseña **Fundamentos y lenguaje matemático · Lógica y demostración · Álgebra y funciones · Teoría de números**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Python: módulo `decimal`](https://docs.python.org/3/library/decimal.html) — documentación de la herramienta que ejecuta el laboratorio · URL de la fuente primaria comprobada en Python Software Foundation (2026-08-19).
+- [Hardy & Wright. *An Introduction to the Theory of Numbers*, 6ª ed., 2008, cap. 9](https://global.oup.com/academic/product/an-introduction-to-the-theory-of-numbers-9780199219865) — Teoría de números: el tema de esta clase · ISBN-13 `9780199219865` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

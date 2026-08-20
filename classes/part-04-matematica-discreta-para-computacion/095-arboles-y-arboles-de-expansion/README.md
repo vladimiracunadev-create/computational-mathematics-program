@@ -161,12 +161,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/) — *uso:* desarrollo formal del tema en «Árboles y árboles de expansión».
-- [Knuth, D. *The Art of Computer Programming*, vol. 1, 3ª ed., 1997, secc. 2.3](https://www-cs-faculty.stanford.edu/~knuth/taocp.html) — *uso:* obra de referencia consultada en «Árboles y árboles de expansión».
+Esta clase enseña **Matemática discreta · Lógica y demostración · Algoritmos y complejidad · Teoría de números**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Cormen, T. et al. *Introduction to Algorithms*, 4ª ed., 2022](https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/) — Algoritmos y complejidad y Matemática discreta: el tema de esta clase · ISBN-13 `9780262046305` verificado en International ISBN Agency (2026-08-19).
+- [Knuth, D. *The Art of Computer Programming*, vol. 1, 3ª ed., 1997, secc. 2.3](https://www-cs-faculty.stanford.edu/~knuth/taocp.html) — Algoritmos y complejidad y Matemática discreta y Teoría de números: el tema de esta clase · URL de la fuente primaria comprobada en sitio de la obra o de su editorial (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

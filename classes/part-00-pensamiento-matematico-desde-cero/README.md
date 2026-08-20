@@ -192,9 +192,13 @@ compmath catalog --part 00
 
 ## 📖 Bibliografía
 
+Obras de referencia de la parte:
+
 - Lang, S. *Basic Mathematics*. Springer, 1988.
 - Gelfand, I. M.; Shen, A. *Algebra*. Birkhäuser, 2002.
 - Polya, G. *How to Solve It*. Princeton University Press, 1945.
+
+Las 20 clases de esta parte citan 25 obras distintas. Cuál sostiene cada clase, y por qué, en [`docs/BIBLIOGRAPHY.md`](../../docs/BIBLIOGRAPHY.md#parte-00-pensamiento-matematico-desde-cero).
 
 ---
 

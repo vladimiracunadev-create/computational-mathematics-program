@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*, ICLR, 2019](https://arxiv.org/abs/1711.05101) — *uso:* artículo de origen consultado en «AdamW».
-- [Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980) — *uso:* artículo de origen consultado en «AdamW».
+Esta clase enseña **Optimización**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Loshchilov, I.; Hutter, F. *Decoupled Weight Decay Regularization*, ICLR, 2019](https://arxiv.org/abs/1711.05101) — Optimización: el tema de esta clase · DOI `10.48550/arxiv.1711.05101` verificado en DataCite (2026-08-19).
+- [Kingma, D.; Ba, J. *Adam: A Method for Stochastic Optimization*, ICLR, 2015](https://arxiv.org/abs/1412.6980) — Optimización: el tema de esta clase · DOI `10.48550/arxiv.1412.6980` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

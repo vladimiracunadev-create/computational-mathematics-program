@@ -161,13 +161,15 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Dijkstra, E. W. *Notes on Structured Programming*, EWD249, 1970](https://www.cs.utexas.edu/~EWD/ewd02xx/EWD249.PDF) — *uso:* obra de referencia consultada en «Comprobación y contraejemplos».
-- [Lakatos, I. *Proofs and Refutations*. Cambridge University Press, 1976](https://www.cambridge.org/core/books/proofs-and-refutations/575FC6BB16BD500BB0B04D2B0A1EA2C9) — *uso:* obra de referencia consultada en «Comprobación y contraejemplos».
-- [Euler's prime-generating polynomial — Wolfram MathWorld](https://mathworld.wolfram.com/Prime-GeneratingPolynomial.html) — *uso:* exposición alternativa del tema en «Comprobación y contraejemplos».
+Esta clase enseña **Fundamentos y lenguaje matemático · Lógica y demostración · Álgebra y funciones · Teoría de números**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Dijkstra, E. W. *Notes on Structured Programming*, EWD249, 1970](https://www.cs.utexas.edu/~EWD/ewd02xx/EWD249.PDF) — Lógica y demostración: el tema de esta clase · URL de la fuente primaria comprobada en www.cs.utexas.edu (2026-08-19).
+- [Lakatos, I. *Proofs and Refutations*. Cambridge University Press, 1976](https://www.cambridge.org/core/books/proofs-and-refutations/575FC6BB16BD500BB0B04D2B0A1EA2C9) — Lógica y demostración: el tema de esta clase · URL de la fuente primaria, pendiente de resolver.
+- [Euler's prime-generating polynomial — Wolfram MathWorld](https://mathworld.wolfram.com/Prime-GeneratingPolynomial.html) — Lógica y demostración y Teoría de números: el tema de esta clase · URL de la fuente primaria comprobada en Wolfram Research (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

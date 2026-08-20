@@ -159,12 +159,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Gelfand, I. M.; Saul, M. *Trigonometry*. Birkhäuser, 2001](https://link.springer.com/book/10.1007/978-1-4612-0149-8) — *uso:* artículo de origen consultado en «Identidades trigonométricas básicas».
-- [Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017 (sección 3.5)](https://arxiv.org/abs/1706.03762) — *uso:* artículo de origen consultado en «Identidades trigonométricas básicas».
+Esta clase enseña **Geometría y trigonometría**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Gelfand, I. M.; Saul, M. *Trigonometry*. Birkhäuser, 2001](https://link.springer.com/book/10.1007/978-1-4612-0149-8) — Geometría y trigonometría: el tema de esta clase · DOI `10.1007/978-1-4612-0149-8`, pendiente de resolver.
+- [Vaswani, A. et al. *Attention Is All You Need*. NeurIPS, 2017 (sección 3.5)](https://arxiv.org/abs/1706.03762) — Deep learning y Modelos de lenguaje: conexión declarada de esta parte · DOI `10.48550/arxiv.1706.03762` verificado en DataCite (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

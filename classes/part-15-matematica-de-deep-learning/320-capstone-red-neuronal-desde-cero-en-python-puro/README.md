@@ -165,12 +165,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Karpathy, A. *Neural Networks: Zero to Hero*, 2022](https://karpathy.ai/zero-to-hero.html) — *uso:* exposición alternativa del tema en «Capstone: red neuronal desde cero en Python puro».
-- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016](https://www.deeplearningbook.org/) — *uso:* obra de referencia consultada en «Capstone: red neuronal desde cero en Python puro».
+Esta clase enseña **Deep learning**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Karpathy, A. *Neural Networks: Zero to Hero*, 2022](https://karpathy.ai/zero-to-hero.html) — Deep learning: el tema de esta clase · URL de la fuente primaria comprobada en karpathy.ai (2026-08-19).
+- [Goodfellow, I.; Bengio, Y.; Courville, A. *Deep Learning*, MIT Press, 2016](https://www.deeplearningbook.org/) — Deep learning: el tema de esta clase · ISBN-13 `9780262337373` verificado en International ISBN Agency (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

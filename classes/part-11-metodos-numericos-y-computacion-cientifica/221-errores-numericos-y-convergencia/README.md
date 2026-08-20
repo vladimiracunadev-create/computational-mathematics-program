@@ -163,12 +163,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 1](https://doi.org/10.1137/1.9781611975581) — *uso:* desarrollo formal del tema en «Errores numéricos y convergencia».
-- [Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027) — *uso:* desarrollo formal del tema en «Errores numéricos y convergencia».
+Esta clase enseña **Métodos numéricos · Computación científica · Ecuaciones diferenciales · Teoría de la aproximación · Álgebra lineal numérica**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Heath, M. *Scientific Computing: An Introductory Survey*, 2ª ed., SIAM, 2018, cap. 1](https://doi.org/10.1137/1.9781611975581) — Computación científica y Métodos numéricos: el tema de esta clase · ISBN-13 `9781611975581`, pendiente de resolver.
+- [Higham, N. *Accuracy and Stability of Numerical Algorithms*, 2ª ed., SIAM, 2002](https://doi.org/10.1137/1.9780898718027) — Álgebra lineal numérica y Métodos numéricos: el tema de esta clase · ISBN-13 `9780898718027`, pendiente de resolver.
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 

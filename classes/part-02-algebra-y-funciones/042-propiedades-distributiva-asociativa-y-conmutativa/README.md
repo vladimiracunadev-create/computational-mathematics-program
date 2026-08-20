@@ -162,12 +162,14 @@ Si necesitas releer el código para responderlas, la clase todavía no está sup
 `notebook_student.ipynb` resuelto más un párrafo que explique el resultado **sin citar
 código**: qué entra, qué sale, qué invariante se comprueba y qué pasaría en un caso límite.
 
-## 🔗 Referencias
+## 📚 Bibliografía de la clase
 
-- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163) — *uso:* artículo de origen consultado en «Propiedades distributiva, asociativa y conmutativa».
-- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011, cap. 1](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131) — *uso:* obra de referencia consultada en «Propiedades distributiva, asociativa y conmutativa».
+Esta clase enseña **Álgebra y funciones**. Cada obra dice qué aporta aquí y cómo se comprobó su localizador:
 
-Bibliografía completa de la parte en [`../../../docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador verificable de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
+- [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163) — Aritmética de máquina: conexión declarada de esta parte · DOI `10.1145/103162.103163` verificado en Crossref (2026-08-19).
+- [Artin, M. *Algebra*, 2ª ed., Pearson, 2011, cap. 1](https://www.pearson.com/en-us/subject-catalog/p/algebra/P200000006131) — Álgebra y funciones: el tema de esta clase · URL de la fuente primaria comprobada en www.pearson.com (2026-08-19).
+
+Bibliografía de todas las clases, con el porqué de cada obra, en [`docs/BIBLIOGRAPHY.md`](../../../docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [`sources/bibliography.json`](../../../sources/bibliography.json).
 
 ## 📂 Material de la clase
 
