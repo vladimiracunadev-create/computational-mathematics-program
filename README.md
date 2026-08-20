@@ -56,7 +56,7 @@ Deep Learning, Transformers, modelos generativos, GNN y Reinforcement Learning.*
 | Manual | ✅ documento completo en HTML y PDF, generado ejecutando las 360 demostraciones |
 | Contenido pedagógico | ✅ 360/360 clases con desarrollo, ejemplo trabajado, errores y fuentes |
 | Glosarios y diagramas | ✅ 489 términos en 18 glosarios y un mapa mermaid por parte |
-| Trazabilidad de fuentes | ✅ toda obra citada tiene entrada con localizador en [`sources/bibliography.json`](sources/bibliography.json), verificada en CI ([cifras abajo](#-trazabilidad-de-fuentes)) |
+| Bibliografía | ✅ cada clase cita obras reales con localizador resoluble, y CI comprueba que al menos una trata **el tema de la clase** ([abajo](#-bibliografía-de-dónde-sale-cada-clase)) |
 | CI | ✅ 3 sistemas operativos × 3 versiones de Python, tests y validación estricta |
 | Seguridad | ✅ `pip-audit`, `bandit`, `zizmor` y CodeQL en cada push |
 | Dependencias científicas | ⚪ opcionales: ningún laboratorio las necesita para ejecutarse |
@@ -347,83 +347,97 @@ referencia como superficies de aplicación. Ver [docs/integrations/README.md](do
 | [docs/INSTRUCTOR_GUIDE.md](docs/INSTRUCTOR_GUIDE.md) | uso en aula, evaluación y calendario |
 | [docs/METHODOLOGY.md](docs/METHODOLOGY.md) | por qué el programa está diseñado así |
 | [docs/GLOSSARY.md](docs/GLOSSARY.md) | vocabulario preciso del programa |
-| [docs/BIBLIOGRAPHY.md](docs/BIBLIOGRAPHY.md) | bibliografía primaria por parte |
+| [docs/BIBLIOGRAPHY.md](docs/BIBLIOGRAPHY.md) | **bibliografía por parte y por clase**: qué obra sostiene cada clase y por qué |
 | [sources/bibliography.json](sources/bibliography.json) | registro de fuentes con localizador verificable por obra |
 | [sources/README.md](sources/README.md) | esquema del registro, política y cómo se verifica |
+| [sources/areas.yaml](sources/areas.yaml) | vocabulario de áreas: el cruce entre el tema de una obra y el de la clase |
 | `classes/part-NN-*/GLOSARIO.md` | glosario de cada parte, enlazado a sus clases |
 | [INSTALL.md](INSTALL.md) | instalación en Windows, macOS y Linux |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | cómo contribuir sin romper el contrato |
 
-## 🔎 Trazabilidad de fuentes
+## 📚 Bibliografía: de dónde sale cada clase
 
-Cada obra que cita una clase tiene una entrada en
-[`sources/bibliography.json`](sources/bibliography.json) con un **localizador resoluble**
-—ISBN-13, DOI o URL de la fuente primaria— y un estado: `verificada` si ese localizador se
-resolvió contra su autoridad, `pendiente` si todavía no. Lo que no se resuelve **se marca,
-no se borra ni se rellena a ojo**: un hueco declarado es información, un hueco inventado es
-una bibliografía falsa.
+Nada de lo que enseña este programa sale de la nada. **Cada clase cita las obras concretas
+—libros, artículos, normas y documentación oficial— sobre las que se apoya**, y cada obra
+citada tiene una entrada con localizador resoluble (ISBN-13, DOI o URL de la fuente
+primaria) en [`sources/bibliography.json`](sources/bibliography.json).
 
-Dos capas separadas, a propósito:
+La bibliografía no es un adorno al final del documento: está **dentro de cada clase**,
+junto al material que sostiene, y dice para qué sirve ahí.
+
+### Qué se comprueba, y qué no
+
+Que una clase liste obras no prueba que esas obras traten de lo que la clase enseña. Por
+eso cada obra del registro declara **qué áreas cubre** —un hecho sobre la obra— y cada
+parte declara **qué área enseña** y con cuáles conecta, todo en
+[`sources/areas.yaml`](sources/areas.yaml). `scripts/verify_sources.py` cruza ambas cosas
+en CI, sin tocar la red, y **bloquea** si:
+
+- una clase se queda **sin ninguna obra del área que enseña** —citar solo la documentación
+  de NumPy no basta para sostener una clase de álgebra lineal—;
+- una cita **no encaja** ni en el área de su parte ni en las conexiones que esa parte
+  declara: un libro de probabilidad dentro de una clase de punto flotante falla el cruce;
+- una obra citada **no tiene entrada** en el registro, o su localizador no es canónico.
+
+Ese cruce ya encontró errores reales: cinco obras distintas —Ross, Oppenheim, Burden,
+Casella y Bracewell— citaban la **portada de la editorial** en lugar de su propia ficha, y
+el registro las estaba mezclando en una sola entrada. Ahora cada una resuelve contra su
+ISBN-13 en Open Library.
+
+Lo que el verificador **no** hace: no comprueba que el argumento de un párrafo esté en la
+página que dice la cita. Eso lo verifica quien lee la fuente, y para eso el localizador
+está ahí. Lo que sí garantiza es que la obra existe, que es localizable y que trata del
+tema de la clase que la cita.
+
+### Dos capas separadas, a propósito
 
 | Script | Red | Qué hace |
 |---|---|---|
-| [`scripts/verify_sources.py`](scripts/verify_sources.py) | no | esquema, dígito de control del ISBN, forma canónica del localizador, cobertura, bloques repetidos y cifras del README. **Corre en CI y bloquea.** |
+| [`scripts/verify_sources.py`](scripts/verify_sources.py) | no | esquema, dígito de control del ISBN, forma canónica del localizador, cobertura y **el cruce entre el tema de la obra y el de la clase**. Corre en CI y bloquea. |
 | [`scripts/refresh_sources.py`](scripts/refresh_sources.py) | sí | resuelve ISBN contra Open Library y DOI contra Crossref/DataCite, comprueba las URL y actualiza fechas. Manual, **no bloquea**. |
+
+Lo que no se resuelve **se marca, no se borra ni se rellena a ojo**: un hueco declarado es
+información, un hueco inventado es una bibliografía falsa.
 
 <!-- fuentes:inicio -->
 
-> Cifras generadas por `python scripts/verify_sources.py --sync`. No se escriben a mano.
+> Bloque generado por `python scripts/verify_sources.py --sync` a partir de las citas de las clases. No se escribe a mano.
 
-| Métrica | Valor |
-|---|---:|
-| Obras en el registro | **334** |
-| Citas en las clases | 724 |
-| Clases con bloque de fuentes | 360 de 360 |
-| Bloques de fuentes distintos | 360 |
-| Cobertura del registro | **100.0 %** |
-| Localizador resuelto contra su autoridad | 304 (91.0 %) |
-| Pendientes de resolver | 30 |
-| Entradas con DOI | 169 |
-| Entradas con ISBN-13 | 75 |
-| Última resolución en red | 2026-08-19 |
+**333 obras reales** —77 libros, 137 artículos, 7 normas y 112 referencias— sostienen las **725 citas** de las 360 clases. Las **360 de 360** clases citan al menos una obra del área que enseñan. De los localizadores, 308 están resueltos contra su autoridad y 25 siguen pendientes (última resolución en red: 2026-08-20).
 
-| Etapa | Obra rectora | Citas en la etapa | Localizador |
-|---|---|---:|---|
-| **1 — Cimientos** | Stewart — *Precalculus* | 14 | [reference](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/) |
-| **2 — El lenguaje de los modelos** | Strang — *Introduction to Linear Algebra* | 21 | [book](https://openlibrary.org/isbn/9781733146678) |
-| **3 — Incertidumbre y cómputo** | Blitzstein et al. — *Introduction to Probability* | 21 | [reference](https://projects.iq.harvard.edu/stat110/home) |
-| **4 — La matemática de la IA** | Hastie et al. — *The Elements of Statistical Learning* | 12 | [book](https://openlibrary.org/isbn/9780387848570) |
-| **5 — Frontera e investigación** | Shalev-Shwartz et al. — *Understanding Machine Learning* | 3 | [book](https://openlibrary.org/isbn/9781139950619) |
+Así se ve la bibliografía de una clase —[028 · IEEE 754: estructura de un float](classes/part-01-aritmetica-computacional-y-representacion-numerica/028-ieee-754-estructura-de-un-float/README.md)—, generada con el porqué de cada obra y el estado de su localizador:
 
-Registro completo en [`sources/bibliography.json`](sources/bibliography.json): 334 obras, 75 libros, 135 artículos, 7 normas y 117 referencias.
+> - [IEEE 754-2019 Standard for Floating-Point Arithmetic](https://standards.ieee.org/ieee/754/6210/) — Aritmética de máquina: el tema de esta clase · URL de la fuente primaria comprobada en IEEE Standards Association (2026-08-19).
+> - [Goldberg, D. *What Every Computer Scientist Should Know About Floating-Point Arithmetic*. ACM CSUR, 1991](https://dl.acm.org/doi/10.1145/103162.103163) — Aritmética de máquina: el tema de esta clase · DOI `10.1145/103162.103163` verificado en Crossref (2026-08-19).
+> - [Kahan, W. *Lecture Notes on the Status of IEEE 754*, UC Berkeley, 1997](https://people.eecs.berkeley.edu/~wkahan/ieee754status/IEEE754.PDF) — Aritmética de máquina: el tema de esta clase · URL de la fuente primaria comprobada en people.eecs.berkeley.edu (2026-08-19).
+
+| Parte | Lo que enseña | Obra rectora de la parte | Citas |
+|---|---|---|---:|
+| **00** Pensamiento matemático desde cero | Fundamentos y lenguaje matemático · Lógica y demostración · Álgebra y funciones · Teoría de números | Gelfand et al. — *Algebra* [↗](https://doi.org/10.1007/978-1-4612-0335-5) | 42 |
+| **01** Aritmética computacional y representación numérica | Aritmética de máquina · Métodos numéricos | Higham — *Accuracy and Stability of Numerical Algorithms* [↗](https://openlibrary.org/isbn/9780898718027) | 42 |
+| **02** Álgebra y funciones | Álgebra y funciones | Stewart — *Precalculus* [↗](https://www.cengage.com/c/precalculus-mathematics-for-calculus-7e-stewart/) | 40 |
+| **03** Geometría, trigonometría y geometría analítica | Geometría y trigonometría | Lengyel — *Mathematics for 3D Game Programming and Computer Graphics* [↗](https://www.cengage.com/c/mathematics-for-3d-game-programming-and-computer-graphics-3e-lengyel/) | 40 |
+| **04** Matemática discreta para computación | Matemática discreta · Lógica y demostración · Algoritmos y complejidad · Teoría de números | Rosen — *Discrete Mathematics and Its Applications* [↗](https://www.mheducation.com/highered/product/discrete-mathematics-applications-rosen.html) | 40 |
+| **05** Álgebra lineal I: vectores y matrices | Álgebra lineal | Strang — *Introduction to Linear Algebra* [↗](https://openlibrary.org/isbn/9781733146678) | 40 |
+| **06** Álgebra lineal II: descomposiciones y tensores | Álgebra lineal · Álgebra lineal numérica | Strang — *Introduction to Linear Algebra* [↗](https://openlibrary.org/isbn/9781733146678) | 41 |
+| **07** Cálculo diferencial e integral | Cálculo · Análisis matemático | Spivak — *Calculus* [↗](https://openlibrary.org/isbn/9780914098911) | 40 |
+| **08** Cálculo multivariable, matricial y autodiferenciación | Cálculo multivariable y matricial · Cálculo · Diferenciación automática | Stewart — *Calculus* [↗](https://openlibrary.org/isbn/9781285740621) | 40 |
+| **09** Probabilidad y procesos aleatorios | Probabilidad · Procesos estocásticos | Blitzstein et al. — *Introduction to Probability* [↗](https://projects.iq.harvard.edu/stat110/home) | 40 |
+| **10** Estadística e inferencia | Estadística e inferencia · Metodología experimental · Inferencia bayesiana | Wasserman — *All of Statistics* [↗](https://openlibrary.org/isbn/9780387217369) | 40 |
+| **11** Métodos numéricos y computación científica | Métodos numéricos · Computación científica · Ecuaciones diferenciales · Teoría de la aproximación · Álgebra lineal numérica | Burden et al. — *Numerical Analysis* [↗](https://openlibrary.org/isbn/9781305253667) | 40 |
+| **12** Optimización matemática y computacional | Optimización | Nocedal et al. — *Numerical Optimization* [↗](https://openlibrary.org/isbn/9780387400655) | 40 |
+| **13** Teoría de la información, señales y series | Teoría de la información · Procesamiento de señales · Series temporales | Oppenheim et al. — *Discrete-Time Signal Processing* [↗](https://openlibrary.org/isbn/9780131988422) | 40 |
+| **14** Matemática de Machine Learning | Machine learning · Teoría del aprendizaje · Métodos de kernel | Hastie et al. — *The Elements of Statistical Learning* [↗](https://openlibrary.org/isbn/9780387848570) | 40 |
+| **15** Matemática de Deep Learning | Deep learning | Goodfellow et al. — *Deep Learning* [↗](https://openlibrary.org/isbn/9780262337373) | 40 |
+| **16** Matemática de Transformers, modelos generativos, grafos y RL | Deep learning · Modelos de lenguaje · Modelos generativos · Aprendizaje por refuerzo · Grafos y redes | Vaswani — *Attention Is All You Need* [↗](https://doi.org/10.48550/arxiv.1706.03762) | 40 |
+| **17** Frontera matemática para IA e investigación | Teoría del aprendizaje · Procesos gaussianos · Transporte óptimo · Geometría diferencial · Modelos generativos · Inferencia bayesiana · Procesos estocásticos | Shalev-Shwartz et al. — *Understanding Machine Learning* [↗](https://openlibrary.org/isbn/9781139950619) | 40 |
+
+Detalle clase por clase en [docs/BIBLIOGRAPHY.md](docs/BIBLIOGRAPHY.md) · localizador y estado de cada obra en [sources/bibliography.json](sources/bibliography.json) · vocabulario de las 44 áreas en [sources/areas.yaml](sources/areas.yaml).
 
 <!-- fuentes:fin -->
 
-## 📖 Pauta derivada de la bibliografía de referencia
-
-Cada parte sigue explícitamente la secuencia y los énfasis de la literatura estándar de su
-área. Cada referencia de clase declara **el uso que esa clase hace de la obra** y apunta a la
-fuente concreta —capítulo incluido cuando aplica— para que puedas ir al original.
-
-| Área | Obras de referencia |
-|---|---|
-| **Aritmética de máquina** | Goldberg — *What Every Computer Scientist Should Know About Floating-Point* · Higham — *Accuracy and Stability of Numerical Algorithms* |
-| **Álgebra lineal** | Strang — *Introduction to Linear Algebra* · Axler — *Linear Algebra Done Right* · Trefethen & Bau — *Numerical Linear Algebra* |
-| **Cálculo** | Spivak — *Calculus* · Stewart — *Calculus: Early Transcendentals* |
-| **Matemática discreta** | Rosen — *Discrete Mathematics and Its Applications* · Graham, Knuth & Patashnik — *Concrete Mathematics* |
-| **Probabilidad** | Blitzstein & Hwang — *Introduction to Probability* · Ross — *A First Course in Probability* · Durrett — *Probability: Theory and Examples* |
-| **Estadística e inferencia** | Wasserman — *All of Statistics* · Gelman et al. — *Bayesian Data Analysis* · Efron & Tibshirani — *An Introduction to the Bootstrap* |
-| **Métodos numéricos** | Burden & Faires — *Numerical Analysis* · Press et al. — *Numerical Recipes* · Heath — *Scientific Computing* |
-| **Optimización** | Boyd & Vandenberghe — *Convex Optimization* · Nocedal & Wright — *Numerical Optimization* |
-| **Teoría de la información** | Cover & Thomas — *Elements of Information Theory* · MacKay — *Information Theory, Inference, and Learning Algorithms* |
-| **Señales** | Oppenheim & Schafer — *Discrete-Time Signal Processing* · Hyndman & Athanasopoulos — *Forecasting: Principles and Practice* |
-| **Machine Learning** | Hastie, Tibshirani & Friedman — *The Elements of Statistical Learning* · Bishop — *Pattern Recognition and ML* · Murphy — *Probabilistic Machine Learning* |
-| **Deep Learning** | Goodfellow, Bengio & Courville — *Deep Learning* · papers originales (Glorot, He, Kingma, Loshchilov) |
-| **Frontera** | Rasmussen & Williams — *Gaussian Processes for ML* · Peyré & Cuturi — *Computational Optimal Transport* · Shalev-Shwartz & Ben-David — *Understanding Machine Learning* |
-
 > Las referencias apuntan a las obras; **no se reproduce su contenido**. La redacción del
-> programa es original, y las derivaciones se rehacen desde cero para poder ejecutarlas.
-> Bibliografía completa por parte en [docs/BIBLIOGRAPHY.md](docs/BIBLIOGRAPHY.md).
+> programa es original y las derivaciones se rehacen desde cero para poder ejecutarlas.
 
 ## 🎯 Qué es y qué no es este programa
 
