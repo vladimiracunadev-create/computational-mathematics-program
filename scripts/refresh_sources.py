@@ -58,9 +58,16 @@ GUARDA_CADA = 20     # entradas entre guardados incrementales
 AÑO_RE = re.compile(r"\b(1[6-9]\d{2}|20\d{2})\b")
 
 
+ESQUEMAS_PERMITIDOS = ("http", "https")
+
+
 def _abre(url: str, timeout: int = ESPERA, method: str = "GET"):
+    esquema = urllib.parse.urlparse(url).scheme
+    if esquema not in ESQUEMAS_PERMITIDOS:
+        raise ValueError(f"esquema no permitido: {esquema!r} (solo http y https)")
     peticion = urllib.request.Request(url, headers=CABECERAS, method=method)
-    return urllib.request.urlopen(peticion, timeout=timeout)
+    # El esquema ya está validado arriba: solo http y https.
+    return urllib.request.urlopen(peticion, timeout=timeout)  # nosec B310
 
 
 def _con_reintentos(accion, intentos: int = INTENTOS):
